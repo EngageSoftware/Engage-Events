@@ -10,11 +10,11 @@ namespace Engage.Events
     /// <summary>
     /// This class inherits from BindingList for future support.
     /// </summary>
-    public class EventCollection: System.ComponentModel.BindingList<Event>
+    public class RsvpCollection: System.ComponentModel.BindingList<Rsvp>
     {
-        private EventCollection(){}
+        private RsvpCollection() { }
 
-        public static EventCollection Load(int portalId, string sortColumn, int index, int pageSize)
+        public static RsvpCollection Load(int portalId, string sortColumn, int index, int pageSize)
         {
             IDataProvider dp = DataProvider.Instance;
             try
@@ -25,7 +25,7 @@ namespace Engage.Events
                  Engage.Utility.CreateIntegerParam("@index", index),
                  Engage.Utility.CreateIntegerParam("@pageSize", pageSize)))
                 {
-                    return FillEvents(ds);
+                    return FillRsvps(ds);
                 }
             }
             catch (Exception se)
@@ -34,19 +34,19 @@ namespace Engage.Events
             }
         }
 
-        private static EventCollection FillEvents(DataSet ds)
+        private static RsvpCollection FillRsvps(DataSet ds)
         {
-            EventCollection events = new EventCollection();
+            RsvpCollection rsvps = new RsvpCollection();
             
             foreach (DataRow row in ds.Tables[0].Rows)
             {
-                Event e = Event.Fill(row);
+                Rsvp r = Rsvp.Fill(row);
                 //so on the outside EventCollection will report the total # of rows for paging.
-                events._totalRecords = e.TotalRecords;
-                events.Add(e);
+                rsvps._totalRecords = r.TotalRecords;
+                rsvps.Add(r);
             }
 
-            return events;
+            return rsvps;
         }
 
         #region Properties

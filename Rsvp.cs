@@ -10,14 +10,14 @@ using Engage.Data;
 
 namespace Engage.Events
 {
-    public class Event : IEditableObject, INotifyPropertyChanged
+    public class Rsvp : IEditableObject, INotifyPropertyChanged
     {
-        private Event()
+        private Rsvp()
         {
 
         }
 
-        private Event(int portalId, int moduleId,  string organizerEmail, string name, string overview, DateTime eventStart, int createdBy)
+        private Rsvp(int portalId, int moduleId, string organizerEmail, string name, string overview, DateTime eventStart, int createdBy)
         {
             _moduleId = moduleId;
             _portalId = portalId;
@@ -29,17 +29,17 @@ namespace Engage.Events
 
         #region Static Methods
 
-        public static Event Load(int id)
+        public static Rsvp Load(int id)
         {
             IDataProvider dp = DataProvider.Instance;
-            Event e = null;
+            Rsvp r = null;
 
             try
             {
                 using (DataSet ds = dp.ExecuteDataset(CommandType.StoredProcedure, dp.NamePrefix + "spGetEvent",
                  Engage.Utility.CreateIntegerParam("@EventId", id)))
                 {
-                    e = Fill(ds.Tables[0].Rows[0]);
+                    r = Fill(ds.Tables[0].Rows[0]);
                 }
             }
             catch (Exception se)
@@ -47,39 +47,39 @@ namespace Engage.Events
                 throw new DbException("spGetEvents", se);
             }
 
-            return e;
+            return r;
         }
 
-        public static Event Create(int portalId, int moduleId, string organizerEmail, string name, string overview, DateTime eventStart, int createdBy)
+        public static Rsvp Create(int portalId, int moduleId, string organizerEmail, string name, string overview, DateTime eventStart, int createdBy)
         {
-            return new Event(portalId, moduleId, organizerEmail, name, overview, eventStart, createdBy);
+            return new Rsvp(portalId, moduleId, organizerEmail, name, overview, eventStart, createdBy);
         }
 
-        internal static Event Fill(DataRow row)
+        internal static Rsvp Fill(DataRow row)
         {
-            Event e = new Event();
+            Rsvp r = new Rsvp();
 
-            e._id = (int) row["EventId"];
-            e._moduleId = (int) row["ModuleId"];
-            e._name = row["Name"].ToString();
-            e._overview = row["OverView"].ToString();
-            e._eventStart = (DateTime)row["EventStart"];
+            r._id = (int) row["EventId"];
+            r._moduleId = (int) row["ModuleId"];
+            r._name = row["Name"].ToString();
+            r._overview = row["OverView"].ToString();
+            r._eventStart = (DateTime)row["EventStart"];
             if (!(row["EventEnd"] is DBNull))
             {
-                e._eventEnd = (DateTime)row["EventEnd"];
+                r._eventEnd = (DateTime)row["EventEnd"];
             }
-            e._createdBy = (int)row["CreatedBy"];
+            r._createdBy = (int)row["CreatedBy"];
             //when constructing a collection of events the stored procedure for paging includes a TotalRecords
             //field. When loading a single Event this does not exist.hk
             if (row.Table.Columns.Contains("TotalRecords"))
             {
-                e._totalRecords = (int)row["TotalRecords"];
+                r._totalRecords = (int)row["TotalRecords"];
             }
-            e._organizer = row["Organizer"].ToString();
-            e._organizerEmail = row["OrganizerEmail"].ToString();
-            e._location = row["Location"].ToString();
+            r._organizer = row["Organizer"].ToString();
+            r._organizerEmail = row["OrganizerEmail"].ToString();
+            r._location = row["Location"].ToString();
 
-            return e;
+            return r;
         }
         
         #endregion

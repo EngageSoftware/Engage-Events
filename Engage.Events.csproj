@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rsvp.cs" />
+    <Compile Include="RsvpCollection.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="EventCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
