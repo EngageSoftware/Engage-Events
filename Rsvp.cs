@@ -10,24 +10,35 @@ using Engage.Data;
 
 namespace Engage.Events
 {
+    public enum RsvpStatus
+    {
+        NoResponse = 0,
+        Attending = 1,
+        NotAttending =2
+    }
+
     public class Rsvp : IEditableObject, INotifyPropertyChanged
     {
+
         private Rsvp()
         {
 
         }
 
-        private Rsvp(int portalId, int moduleId, string organizerEmail, string name, string overview, DateTime eventStart, int createdBy)
+        private Rsvp(int eventId, string firstName, string lastName, string email)
         {
-            _moduleId = moduleId;
-            _portalId = portalId;
-            _name = name;
-            _overview = overview;
-            _eventStart = eventStart;
-            _createdBy = createdBy;
+            _eventId = eventId;
+            _firstName = firstName;
+            _lastName = lastName;
+            _email = email;
         }
 
         #region Static Methods
+
+        public static Rsvp Load(int eventId, string email)
+        {
+            return new Rsvp();
+        }
 
         public static Rsvp Load(int id)
         {
@@ -36,7 +47,7 @@ namespace Engage.Events
 
             try
             {
-                using (DataSet ds = dp.ExecuteDataset(CommandType.StoredProcedure, dp.NamePrefix + "spGetEvent",
+                using (DataSet ds = dp.ExecuteDataset(CommandType.StoredProcedure, dp.NamePrefix + "spGetRsvp",
                  Engage.Utility.CreateIntegerParam("@EventId", id)))
                 {
                     r = Fill(ds.Tables[0].Rows[0]);
@@ -50,24 +61,21 @@ namespace Engage.Events
             return r;
         }
 
-        public static Rsvp Create(int portalId, int moduleId, string organizerEmail, string name, string overview, DateTime eventStart, int createdBy)
+        public static Rsvp Create(int eventId, string firstName, string lastName, string email)
         {
-            return new Rsvp(portalId, moduleId, organizerEmail, name, overview, eventStart, createdBy);
+            return new Rsvp(eventId, firstName, lastName, email);
         }
 
         internal static Rsvp Fill(DataRow row)
         {
             Rsvp r = new Rsvp();
 
-            r._id = (int) row["EventId"];
-            r._moduleId = (int) row["ModuleId"];
-            r._name = row["Name"].ToString();
-            r._overview = row["OverView"].ToString();
-            r._eventStart = (DateTime)row["EventStart"];
-            if (!(row["EventEnd"] is DBNull))
-            {
-                r._eventEnd = (DateTime)row["EventEnd"];
-            }
+            r._id = (int)row["RsvpId"];
+            r._eventId = (int)row["EventId"];
+            r._lastName = row["LastName"].ToString();
+            r._firstName = row["FirstName"].ToString();
+            r._email = row["Email"].ToString();
+            r._status = (RsvpStatus) Enum.Parse(typeof(RsvpStatus),  row["EventStart"].ToString());
             r._createdBy = (int)row["CreatedBy"];
             //when constructing a collection of events the stored procedure for paging includes a TotalRecords
             //field. When loading a single Event this does not exist.hk
@@ -75,9 +83,6 @@ namespace Engage.Events
             {
                 r._totalRecords = (int)row["TotalRecords"];
             }
-            r._organizer = row["Organizer"].ToString();
-            r._organizerEmail = row["OrganizerEmail"].ToString();
-            r._location = row["Location"].ToString();
 
             return r;
         }
@@ -90,36 +95,27 @@ namespace Engage.Events
         {
             if (_id < 0)
             {
-                InsertEvent(revisingUser);
+                Insert(revisingUser);
             }
             else
             {
-                UpdateEvent(revisingUser);
+                Update(revisingUser);
             }
         }
 
-        private void InsertEvent(int revisingUser)
+        private void Insert(int revisingUser)
         {
             IDataProvider dp = DataProvider.Instance;
 
             try
             {
-                _id = dp.ExecuteNonQuery(CommandType.StoredProcedure, dp.NamePrefix + "spInsertEvent",
-                Engage.Utility.CreateIntegerParam("@PortalId", _portalId),
-                Engage.Utility.CreateIntegerParam("@ModuleId", _moduleId),
-                Engage.Utility.CreateVarcharParam("@Name", _name),
-                Engage.Utility.CreateTextParam("@Overview", _overview),
-                Engage.Utility.CreateDateTimeParam("@EventStart", _eventStart),
-                Engage.Utility.CreateDateTimeParam("@EventEnd", _eventEnd),
-                Engage.Utility.CreateVarcharParam("@Organizer", _organizer),
-                Engage.Utility.CreateVarcharParam("@OrganizerEmail", _organizerEmail),
-                Engage.Utility.CreateVarcharParam("@Location", _location),
-                Engage.Utility.CreateVarcharParam("@LocationUrl", _locationUrl),
-                Engage.Utility.CreateVarcharParam("@InvitationUrl", _invitationUrl),
-                Engage.Utility.CreateVarcharParam("@RecapUrl", _recapUrl),
-                Engage.Utility.CreateIntegerParam("@RecurrenceId", _recurrenceId),
-                Engage.Utility.CreateBitParam("@CanRsvp", true),
-                Engage.Utility.CreateIntegerParam("@CreatedBy", revisingUser));
+                _id = dp.ExecuteNonQuery(CommandType.StoredProcedure, dp.NamePrefix + "spInsertRsvp",
+                Engage.Utility.CreateIntegerParam("@EventId", _eventId),
+                Engage.Utility.CreateVarcharParam("@FirstName", _firstName),
+                Engage.Utility.CreateVarcharParam("@LastName", _lastName),
+                Engage.Utility.CreateVarcharParam("@Email", _email),
+                Engage.Utility.CreateVarcharParam("@Status", _status.ToString()),
+                Engage.Utility.CreateIntegerParam("@RevisingUser", revisingUser));
             }
             catch (SystemException de)
             {
@@ -127,27 +123,19 @@ namespace Engage.Events
             }
         }
 
-        private void UpdateEvent(int revisingUser)
+        private void Update(int revisingUser)
         {
             IDataProvider dp = DataProvider.Instance;
 
             try
             {
-                dp.ExecuteNonQuery(CommandType.StoredProcedure, dp.NamePrefix + "spUpdateEvent",
-                Engage.Utility.CreateIntegerParam("@EventId", _id),
-                Engage.Utility.CreateVarcharParam("@Name", _name),
-                Engage.Utility.CreateTextParam("@Overview", _overview),
-                Engage.Utility.CreateDateTimeParam("@EventStart", _eventStart),
-                Engage.Utility.CreateDateTimeParam("@EventEnd", _eventEnd),
-                Engage.Utility.CreateVarcharParam("@Organizer", _organizer),
-                Engage.Utility.CreateVarcharParam("@OrganizerEmail", _organizerEmail),
-                Engage.Utility.CreateVarcharParam("@Location", _location),
-                Engage.Utility.CreateVarcharParam("@LocationUrl", _locationUrl),
-                Engage.Utility.CreateVarcharParam("@InvitationUrl", _invitationUrl),
-                Engage.Utility.CreateVarcharParam("@RecapUrl", _recapUrl),
-                Engage.Utility.CreateIntegerParam("@RecurrenceId", _recurrenceId),
-                Engage.Utility.CreateBitParam("@CanRsvp", true),
-                Engage.Utility.CreateIntegerParam("@RevisingUser", revisingUser));
+                dp.ExecuteNonQuery(CommandType.StoredProcedure, dp.NamePrefix + "spUpdateRsvp",
+                    Engage.Utility.CreateIntegerParam("@RsvpId", _id),
+                    Engage.Utility.CreateVarcharParam("@FirstName", _firstName),
+                    Engage.Utility.CreateVarcharParam("@LastName", _lastName),
+                    Engage.Utility.CreateVarcharParam("@Email", _email),
+                    Engage.Utility.CreateVarcharParam("@Status", _status.ToString()),
+                    Engage.Utility.CreateIntegerParam("@RevisingUser", revisingUser));
             }
             catch (SystemException de)
             {
@@ -156,100 +144,10 @@ namespace Engage.Events
 
         }
 
-        public string ToICal(string attendeeEmail)
-        {
-            iCalendar ic = GenerateICalendar(attendeeEmail);
-            return ic.ToString();
-        }
-
-        public void ToiCalAsFile(string pathAndFileName, string attendeeEmail)
-        {
-
-            iCalendar ic = GenerateICalendar(attendeeEmail);
-            ic.WriteToFile(pathAndFileName, iCalendarType.iCal);
-        }
-
-        private iCalendar GenerateICalendar(string attendeeEmail)
-        {
-            iCalendar ic = new iCalendar();
-            ic.OptimizedFormat = OptimizedFormat.Exchange2003;
-
-            //create the organizer
-            ic.Event.Organizer.FullName = _organizer;
-            ic.Event.Organizer.Email = _organizerEmail;
-
-            //set the timezone - this will need to be based on the current environment timezone.hk
-            ic.TimeZone.TimeZoneIndex = TimeZoneHelper.CentralAmericaGMTm0600;
-            ic.Type = iCalendarType.iCal;
-
-            //define the event
-            ic.Event.Summary.Text = _name;
-            ic.Event.Description.Text = _overview;
-
-            //set the location 
-            ic.Event.Location.Text = _location;
-
-            //set the dates.
-            //ic.Event.DateStart.Date = new DateTime(2008, 10, 31, 14, 0, 0);
-            //ic.Event.DateEnd.Date = new DateTime(2008, 10, 31, 15, 0, 0);
-            ic.Event.DateStart.Date = _eventStart;
-            if (_eventEnd != null)
-            {
-                ic.Event.DateEnd.Date = (DateTime)_eventEnd;
-            }
-           
-            //mark the time as busy (not available to free-busy searches).
-            ic.Event.TimeTransparency.TransparencyType = TransparencyType.Opaque;
-            ic.Method = new Method(Method.PublishMethod);
-
-            //set an alarm/reminder
-            Alarm a = new DisplayAlarm("This is a reminder of an upcoming event.");
-            // repeat the alarm for 10 times (snooze)
-            a.Repeat.Count = 10;
-
-            // triggers 30 minutes before the event starts			
-            a.Trigger.RelativeTrigger.Negative = true;
-            a.Trigger.RelativeTrigger.TimeSpan = new TimeSpan(0, 30, 0);
-
-            // delay period after which the alarm will repeat
-            a.DelayPeriod.TimeSpan = new TimeSpan(0, 10, 0);
-
-            //Add the Attendee
-            Attendee att1 = new Attendee();
-            //att1.FullName = attendeeEmail;
-            att1.Email = attendeeEmail;
-            att1.ParticipationStatus = ParticipationStatus.ACCEPTED;
-            att1.Role = RoleType.REQ_PARTICIPANT;
-            //att1.RSVP = true;
-            ic.Event.Attendees.Add(att1);
-
-            ic.Event.Classification.ClassificationType = ClassificationType.Private;
-            ic.Event.Categories.Add(CategoryType.APPOINTMENT);
-
-            if (IsRecurring)
-            {
-                //make this a recurring event
-                // Day 31 of every two months for 10 months. For some months it will fall on the last day.
-                MonthlyRecurrence mr = new MonthlyRecurrence();
-                mr.WeekStart = iCalendarDay.Sunday;  // change the default weekstart to sunday
-                mr.Interval = 2;
-                mr.Occurs = 10;
-                mr.DayNumber = 31;
-                ic.Event.Recurrence = mr;
-            }
-
-            return ic;
-        }
-
-        public bool IsRecurring
-        {
-            get { return false; }
-        }
-
         #endregion
         
         #region Properties
-
+                
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private int _id = -1;
         public int Id
@@ -259,101 +157,53 @@ namespace Engage.Events
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int _portalId = -1;
-        public int PortalId
+        private int _eventId = -1;
+        public int EventId
         {
             [DebuggerStepThrough]
-            get { return _portalId; }
+            get { return _eventId; }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int _moduleId = -1;
-        public int ModuleId
+        private string _firstName = string.Empty;
+        public string FirstName
         {
             [DebuggerStepThrough]
-            get { return _moduleId; }
+            get { return _firstName; }
+            [DebuggerStepThrough]
+            set { _firstName = value; }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string _name = string.Empty;
-        public string Name
+        private string _lastName = string.Empty;
+        public string LastName
         {
             [DebuggerStepThrough]
-            get { return _name; }
+            get { return _lastName; }
             [DebuggerStepThrough]
-            set { _name = value; }
+            set { _lastName = value; }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string _location = string.Empty;
-        public string Location
+        private string _email = string.Empty;
+        public string Email
         {
             [DebuggerStepThrough]
-            get { return _location; }
+            get { return _email; }
             [DebuggerStepThrough]
-            set { _location = value; }
+            set { _email = value; }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string _locationUrl = string.Empty;
-        public string LocationUrl
+        private RsvpStatus _status = RsvpStatus.NoResponse;
+        public RsvpStatus Status
         {
             [DebuggerStepThrough]
-            get { return _locationUrl; }
+            get { return _status; }
             [DebuggerStepThrough]
-            set { _locationUrl = value; }
+            set { _status = value; }
         }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string _invitationUrl = string.Empty;
-        public string InvitationUrl
-        {
-            [DebuggerStepThrough]
-            get { return _invitationUrl; }
-            [DebuggerStepThrough]
-            set { _invitationUrl = value; }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string _recapUrl = string.Empty;
-        public string RecapUrl
-        {
-            [DebuggerStepThrough]
-            get { return _recapUrl; }
-            [DebuggerStepThrough]
-            set { _recapUrl = value; }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string _overview = string.Empty;
-        public string Overview
-        {
-            [DebuggerStepThrough]
-            get { return _overview; }
-            [DebuggerStepThrough]
-            set { _overview = value; }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DateTime _eventStart;
-        public DateTime EventStart
-        {
-            [DebuggerStepThrough]
-            get { return _eventStart; }
-            [DebuggerStepThrough]
-            set { _eventStart = value; }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DateTime? _eventEnd;
-        public DateTime? EventEnd
-        {
-            [DebuggerStepThrough]
-            get { return _eventEnd; }
-            [DebuggerStepThrough]
-            set { _eventEnd = value; }
-        }
-
+           
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private int _createdBy = -1;
         public int CreatedBy
@@ -363,39 +213,11 @@ namespace Engage.Events
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int _recurrenceId;
-        public int RecurrenceId
-        {
-            [DebuggerStepThrough]
-            get { return _recurrenceId; }
-            [DebuggerStepThrough]
-            set { _recurrenceId = value; }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private int _totalRecords = 0;
         public int TotalRecords
         {
             [DebuggerStepThrough]
             get { return _totalRecords; }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string _organizer = string.Empty;
-        public string Organizer
-        {
-            [DebuggerStepThrough]
-            get { return _organizer; }
-            [DebuggerStepThrough]
-            set { _organizer = value; }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string _organizerEmail = string.Empty;
-        public string OrganizerEmail
-        {
-            [DebuggerStepThrough]
-            get {return _organizerEmail;}
         }
 
         #endregion

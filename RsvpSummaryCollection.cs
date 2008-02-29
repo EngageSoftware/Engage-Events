@@ -10,38 +10,37 @@ namespace Engage.Events
     /// <summary>
     /// This class inherits from BindingList for future support.
     /// </summary>
-    public class RsvpCollection: System.ComponentModel.BindingList<Rsvp>
+    public class RsvpSummaryCollection: System.ComponentModel.BindingList<RsvpSummary>
     {
-        private RsvpCollection() { }
+        private RsvpSummaryCollection() { }
 
-        public static RsvpCollection Load(int eventId, string status, string sortColumn, int index, int pageSize)
+        public static RsvpSummaryCollection Load(int portalId, string sortColumn, int index, int pageSize)
         {
             IDataProvider dp = DataProvider.Instance;
             try
             {
-                using (DataSet ds = dp.ExecuteDataset(CommandType.StoredProcedure, dp.NamePrefix + "spGetRsvps",
-                 Engage.Utility.CreateIntegerParam("@EventId", eventId),
-                 Engage.Utility.CreateVarcharParam("@Status", status),
+                using (DataSet ds = dp.ExecuteDataset(CommandType.StoredProcedure, dp.NamePrefix + "spGetRsvpSummary",
+                 Engage.Utility.CreateIntegerParam("@portalId", portalId),
                  Engage.Utility.CreateVarcharParam("@sortColumn", sortColumn, 200),
                  Engage.Utility.CreateIntegerParam("@index", index),
                  Engage.Utility.CreateIntegerParam("@pageSize", pageSize)))
                 {
-                    return FillRsvps(ds);
+                    return FillRsvpSummary(ds);
                 }
             }
             catch (Exception se)
             {
-                throw new DbException("spGetRsvps", se);
+                throw new DbException("spGetRsvpSummary", se);
             }
         }
 
-        private static RsvpCollection FillRsvps(DataSet ds)
+        private static RsvpSummaryCollection FillRsvpSummary(DataSet ds)
         {
-            RsvpCollection rsvps = new RsvpCollection();
+            RsvpSummaryCollection rsvps = new RsvpSummaryCollection();
             
             foreach (DataRow row in ds.Tables[0].Rows)
             {
-                Rsvp r = Rsvp.Fill(row);
+                RsvpSummary r = RsvpSummary.Fill(row);
                 //so on the outside EventCollection will report the total # of rows for paging.
                 rsvps._totalRecords = r.TotalRecords;
                 rsvps.Add(r);

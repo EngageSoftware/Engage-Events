@@ -17,14 +17,13 @@ namespace Engage.Events
 
         }
 
-        private Event(int portalId, int moduleId,  string organizerEmail, string name, string overview, DateTime eventStart, int createdBy)
+        private Event(int portalId, int moduleId,  string organizerEmail, string name, string overview, DateTime eventStart)
         {
             _moduleId = moduleId;
             _portalId = portalId;
             _name = name;
             _overview = overview;
             _eventStart = eventStart;
-            _createdBy = createdBy;
         }
 
         #region Static Methods
@@ -50,9 +49,9 @@ namespace Engage.Events
             return e;
         }
 
-        public static Event Create(int portalId, int moduleId, string organizerEmail, string name, string overview, DateTime eventStart, int createdBy)
+        public static Event Create(int portalId, int moduleId, string organizerEmail, string name, string overview, DateTime eventStart)
         {
-            return new Event(portalId, moduleId, organizerEmail, name, overview, eventStart, createdBy);
+            return new Event(portalId, moduleId, organizerEmail, name, overview, eventStart);
         }
 
         internal static Event Fill(DataRow row)
@@ -90,15 +89,15 @@ namespace Engage.Events
         {
             if (_id < 0)
             {
-                InsertEvent(revisingUser);
+                Insert(revisingUser);
             }
             else
             {
-                UpdateEvent(revisingUser);
+                Update(revisingUser);
             }
         }
 
-        private void InsertEvent(int revisingUser)
+        private void Insert(int revisingUser)
         {
             IDataProvider dp = DataProvider.Instance;
 
@@ -127,7 +126,7 @@ namespace Engage.Events
             }
         }
 
-        private void UpdateEvent(int revisingUser)
+        private void Update(int revisingUser)
         {
             IDataProvider dp = DataProvider.Instance;
 
