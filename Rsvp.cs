@@ -75,8 +75,9 @@ namespace Engage.Events
             r._lastName = row["LastName"].ToString();
             r._firstName = row["FirstName"].ToString();
             r._email = row["Email"].ToString();
-            r._status = (RsvpStatus) Enum.Parse(typeof(RsvpStatus),  row["EventStart"].ToString());
+            r._status = (RsvpStatus) Enum.Parse(typeof(RsvpStatus),  row["Status"].ToString());
             r._createdBy = (int)row["CreatedBy"];
+            r._creationDate = (DateTime)row["CreationDate"];
             //when constructing a collection of events the stored procedure for paging includes a TotalRecords
             //field. When loading a single Event this does not exist.hk
             if (row.Table.Columns.Contains("TotalRecords"))
@@ -165,6 +166,23 @@ namespace Engage.Events
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public string Name
+        {
+            [DebuggerStepThrough]
+            get { return _lastName +  ", " + _firstName; }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public string Company
+        {
+            [DebuggerStepThrough]
+            //Need to get this from somewhere without referencing the DotNetNuke.dll (userinfo class).
+            //May need to make part of engage_spGetRsvps to try and look this up from profile?? This 
+            //would still create a dependency though. hk
+            get { return ""; }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string _firstName = string.Empty;
         public string FirstName
         {
@@ -210,6 +228,14 @@ namespace Engage.Events
         {
             [DebuggerStepThrough]
             get { return _createdBy; }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DateTime _creationDate;
+        public DateTime CreationDate
+        {
+            [DebuggerStepThrough]
+            get { return _creationDate; }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
