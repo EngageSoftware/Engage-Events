@@ -66,6 +66,32 @@ namespace Engage.Events
             return new Rsvp(eventId, firstName, lastName, email);
         }
 
+        public static RsvpStatus GetRsvpStatus(int eventId, string email)
+        {
+            IDataProvider dp = DataProvider.Instance;
+            RsvpStatus status = RsvpStatus.NoResponse;
+
+            try
+            {
+                using (IDataReader dr = dp.ExecuteReader(CommandType.StoredProcedure, dp.NamePrefix + "spGetRsvpByEmail",
+                 Engage.Utility.CreateIntegerParam("@EventId", eventId),
+                 Engage.Utility.CreateVarcharParam("@Email", email)))
+                {
+                    if (dr.Read())
+                    {
+                        status = (RsvpStatus)Enum.Parse(typeof(RsvpStatus), dr["Status"].ToString());
+                    }
+                }
+            }
+            catch (Exception se)
+            {
+                throw new DbException("spGetRsvpByEmail", se);
+            }
+
+            return status;
+
+        }
+
         internal static Rsvp Fill(DataRow row)
         {
             Rsvp r = new Rsvp();

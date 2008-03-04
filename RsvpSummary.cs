@@ -18,21 +18,21 @@ namespace Engage.Events
 
         }
 
-        private RsvpSummary(int eventId, string name, DateTime eventStart, int attending, int notAttending, int noReponse)
+        private RsvpSummary(int eventId, string name, DateTime eventStart, int attending, int notAttending, int noResponse)
         {
             _eventId = eventId;
             _name = name;
             _eventStart = eventStart;
             _attending = attending;
             _notAttending = notAttending;
-            _noResponse = noReponse;
+            _noResponse = noResponse;
         }
 
         #region Static Methods
 
-        public static RsvpSummary Create(int eventId, string name, DateTime eventStart, int attending, int notAttending, int noReponse)
+        public static RsvpSummary Create(int eventId, string name, DateTime eventStart, int attending, int notAttending, int noResponse)
         {
-            return new RsvpSummary(eventId, name, eventStart, attending, notAttending, noReponse);
+            return new RsvpSummary(eventId, name, eventStart, attending, notAttending, noResponse);
         }
 
         internal static RsvpSummary Fill(DataRow row)
