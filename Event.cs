@@ -343,6 +343,12 @@ namespace Engage.Events
             set { _eventStart = value; }
         }
 
+        public string EventStartFormatted
+        {
+            [DebuggerStepThrough]
+            get { return _eventStart.ToString("M.dd.yyyy"); }
+        }
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DateTime? _eventEnd;
         public DateTime? EventEnd

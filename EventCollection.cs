@@ -34,6 +34,26 @@ namespace Engage.Events
             }
         }
 
+        public static EventCollection Load(int portalId, bool currentMonth, int index, int pageSize)
+        {
+            IDataProvider dp = DataProvider.Instance;
+            try
+            {
+                using (DataSet ds = dp.ExecuteDataset(CommandType.StoredProcedure, dp.NamePrefix + "spGetEventsSpecific",
+                 Engage.Utility.CreateIntegerParam("@portalId", portalId),
+                 Engage.Utility.CreateBitParam("@currentMonth", currentMonth),
+                 Engage.Utility.CreateIntegerParam("@index", index),
+                 Engage.Utility.CreateIntegerParam("@pageSize", pageSize)))
+                {
+                    return FillEvents(ds);
+                }
+            }
+            catch (Exception se)
+            {
+                throw new DbException("spGetEvents", se);
+            }
+        }
+
         private static EventCollection FillEvents(DataSet ds)
         {
             EventCollection events = new EventCollection();
