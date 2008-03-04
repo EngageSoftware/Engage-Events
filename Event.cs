@@ -228,7 +228,7 @@ namespace Engage.Events
 
             if (IsRecurring)
             {
-                //make this a recurring event
+                //make this a recurring event - NOT YET IMPLEMENTED!!!!!hk
                 // Day 31 of every two months for 10 months. For some months it will fall on the last day.
                 MonthlyRecurrence mr = new MonthlyRecurrence();
                 mr.WeekStart = iCalendarDay.Sunday;  // change the default weekstart to sunday
