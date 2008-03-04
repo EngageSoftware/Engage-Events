@@ -350,6 +350,12 @@ namespace Engage.Events
             get { return _eventStart.ToString("M.dd.yyyy"); }
         }
 
+        public string EventStartLongFormatted
+        {
+            [DebuggerStepThrough]
+            get { return _eventStart.ToString("dddd, MMMM d, yyyy, h:mm tt"); }
+        }
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DateTime? _eventEnd;
         public DateTime? EventEnd

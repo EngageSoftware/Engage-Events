@@ -85,6 +85,13 @@ namespace Engage.Events
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public string EventStartFormatted
+        {
+            [DebuggerStepThrough]
+            get { return _eventStart.ToString("dddd, MMMM d, yyyy, h:mm tt"); }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private int _attending;
         public int Attending
         {
