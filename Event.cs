@@ -74,6 +74,7 @@ namespace Engage.Events
             {
                 e._totalRecords = (int)row["TotalRecords"];
             }
+            e._archived = (bool)row["Archived"];
             e._organizer = row["Organizer"].ToString();
             e._organizerEmail = row["OrganizerEmail"].ToString();
             e._location = row["Location"].ToString();
@@ -375,6 +376,16 @@ namespace Engage.Events
             get { return _recurrenceId; }
             [DebuggerStepThrough]
             set { _recurrenceId = value; }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private bool _archived;
+        public bool Archived
+        {
+            [DebuggerStepThrough]
+            get { return _archived; }
+            [DebuggerStepThrough]
+            set { _archived = value; }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
