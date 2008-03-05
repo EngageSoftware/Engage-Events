@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Reflection;
 using System.IO;
 using System.Text;
 using aspNetEmail.Calendaring;
@@ -14,7 +15,6 @@ namespace Engage.Events
     {
         private Event()
         {
-
         }
 
         private Event(int portalId, int moduleId,  string organizerEmail, string name, string overview, DateTime eventStart)
@@ -171,6 +171,8 @@ namespace Engage.Events
 
         private iCalendar GenerateICalendar(string attendeeEmail)
         {
+            LoadEmailLicense();
+
             iCalendar ic = new iCalendar();
             ic.OptimizedFormat = OptimizedFormat.Exchange2003;
 
@@ -200,7 +202,8 @@ namespace Engage.Events
            
             //mark the time as busy (not available to free-busy searches).
             ic.Event.TimeTransparency.TransparencyType = TransparencyType.Opaque;
-            ic.Method = new Method(Method.PublishMethod);
+            //ic.Method = new Method(Method.PublishMethod);
+            ic.Method = new Method(Method.RequestMethod);
 
             //set an alarm/reminder
             Alarm a = new DisplayAlarm("This is a reminder of an upcoming event.");
@@ -247,7 +250,72 @@ namespace Engage.Events
         }
 
         #endregion
-        
+
+        //private static string AspNetEmailLicense
+        //{
+        //    get
+        //    {
+        //        System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+        //        doc.
+        //        StringBuilder key = new StringBuilder(256);
+
+        //        key.Append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+        //        key.Append("<license version=\"1.1\">");
+        //        key.Append("<Customer>");
+        //        key.Append("<name>advancedintellect-4511 Henry Kenuam   (Kenuam, Henry) 11819 Manchester Rd. St. Louis, MO	 63131 US United States 314.966.4000 num:1</name>");
+        //        key.Append("</Customer> <products>   <Product>  <name>aspNetEmail</name><version>3</version><licensetype>server</licensetype> ");
+        //        key.Append("<expires>-1</expires> ");
+        //        key.Append("</Product></products><LicenseInformation><Version>1.1</Version><H1>0</H1><H2>MKQAnFN/lhWGUILWW3NrHg==</H2> ");
+        //        key.Append("</LicenseInformation><Signature xmlns=\"http://www.w3.org/2000/09/xmldsig#\">");
+        //        key.Append("<SignedInfo><CanonicalizationMethod Algorithm=\"http://www.w3.org/TR/2001/REC-xml-c14n-20010315\" />");
+        //        key.Append("<SignatureMethod Algorithm=\"http://www.w3.org/2000/09/xmldsig#rsa-sha1\" />");
+        //        key.Append("<Reference URI=\"\"><Transforms><Transform Algorithm=\"http://www.w3.org/2000/09/xmldsig#enveloped-signature\" />");
+        //        key.Append("</Transforms><DigestMethod Algorithm=\"http://www.w3.org/2000/09/xmldsig#sha1\" /> ");
+        //        key.Append("<DigestValue>5t6PLBPCEjBdaexBExBz71Wxo0A=</DigestValue>");
+        //        key.Append("</Reference></SignedInfo><SignatureValue>HAbLpoccIVxp7dU+4Cb6cqUejItXGNr3RAMH/jMkTH5wPQ/kSEmg1JsoxMd8R8ILSdTB1c/tHn4NUtESkF3BVNXLYO7Jn/Ar5zP5TQo8xeNQYh7m7v0MZLIB3ulBU6O24nqOWFMesn9KRGAdRszexACTI1xhV/Rg/2Wpq7Jq8mg=</SignatureValue> ");
+        //        key.Append("</Signature></license>");
+
+        //        return key.ToString();
+        //    }
+        //}
+
+        #region helper methods to load an email message object
+        private bool LicenseLoaded = false;
+        private void LoadEmailLicense()
+        {
+            //we only need to load the license once. 
+            //aspNetEmail will cache it internally.
+
+            if (!LicenseLoaded)
+            {
+                //load the license, or an exception will be thrown about "unable to locate license"
+                string contents = GetLicenseString();
+                aspNetEmail.EmailMessage.LoadLicenseString(contents);
+
+                //set the flag that the license has already been loaded
+                LicenseLoaded = true;
+
+            }
+        }
+
+        private string GetLicenseString()
+        {
+            //embedded resources are embedded using the following convention
+            //namespace.foldername.subfolder.subfolder.subfolder.filename etc...
+            //in our case, the license is embedded as
+
+            string resourceLocation = "Engage.Events.aspnetemail.xml.lic"; //namespace.foldername.filename
+            Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceLocation);
+
+            StreamReader sr = new StreamReader(stream);
+            string contents = sr.ReadToEnd();
+            sr.Close();
+
+            return contents;
+        }
+
+        #endregion
+
         #region Properties
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
