@@ -241,6 +241,8 @@ namespace Engage.Events
                 ic.Event.Recurrence = mr;
             }
 
+            //ic.WriteToFile(@"c:\inetpub\wwwroot\aspnetgenerated.ics");
+
             return ic;
         }
 
