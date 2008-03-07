@@ -17,11 +17,11 @@ namespace Engage.Events
         {
         }
 
-        private Event(int portalId, int moduleId,  string organizerEmail, string name, string overview, DateTime eventStart)
+        private Event(int portalId, int moduleId,  string organizerEmail, string title, string overview, DateTime eventStart)
         {
             _moduleId = moduleId;
             _portalId = portalId;
-            _name = name;
+            _title = title;
             _overview = overview;
             _eventStart = eventStart;
         }
@@ -49,9 +49,9 @@ namespace Engage.Events
             return e;
         }
 
-        public static Event Create(int portalId, int moduleId, string organizerEmail, string name, string overview, DateTime eventStart)
+        public static Event Create(int portalId, int moduleId, string organizerEmail, string title, string overview, DateTime eventStart)
         {
-            return new Event(portalId, moduleId, organizerEmail, name, overview, eventStart);
+            return new Event(portalId, moduleId, organizerEmail, title, overview, eventStart);
         }
 
         internal static Event Fill(DataRow row)
@@ -60,7 +60,7 @@ namespace Engage.Events
 
             e._id = (int) row["EventId"];
             e._moduleId = (int) row["ModuleId"];
-            e._name = row["Name"].ToString();
+            e._title = row["Title"].ToString();
             e._overview = row["OverView"].ToString();
             e._eventStart = (DateTime)row["EventStart"];
             if (!(row["EventEnd"] is DBNull))
@@ -107,7 +107,7 @@ namespace Engage.Events
                 _id = dp.ExecuteNonQuery(CommandType.StoredProcedure, dp.NamePrefix + "spInsertEvent",
                 Engage.Utility.CreateIntegerParam("@PortalId", _portalId),
                 Engage.Utility.CreateIntegerParam("@ModuleId", _moduleId),
-                Engage.Utility.CreateVarcharParam("@Name", _name),
+                Engage.Utility.CreateVarcharParam("@Title", _title),
                 Engage.Utility.CreateTextParam("@Overview", _overview),
                 Engage.Utility.CreateDateTimeParam("@EventStart", _eventStart),
                 Engage.Utility.CreateDateTimeParam("@EventEnd", _eventEnd),
@@ -135,7 +135,7 @@ namespace Engage.Events
             {
                 dp.ExecuteNonQuery(CommandType.StoredProcedure, dp.NamePrefix + "spUpdateEvent",
                 Engage.Utility.CreateIntegerParam("@EventId", _id),
-                Engage.Utility.CreateVarcharParam("@Name", _name),
+                Engage.Utility.CreateVarcharParam("@Title", _title),
                 Engage.Utility.CreateTextParam("@Overview", _overview),
                 Engage.Utility.CreateDateTimeParam("@EventStart", _eventStart),
                 Engage.Utility.CreateDateTimeParam("@EventEnd", _eventEnd),
@@ -185,7 +185,7 @@ namespace Engage.Events
             ic.Type = iCalendarType.iCal;
 
             //define the event
-            ic.Event.Summary.Text = _name;
+            ic.Event.Summary.Text = _title;
             ic.Event.Description.Text = _overview;
 
             //set the location 
@@ -345,13 +345,13 @@ namespace Engage.Events
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string _name = string.Empty;
-        public string Name
+        private string _title = string.Empty;
+        public string Title
         {
             [DebuggerStepThrough]
-            get { return _name; }
+            get { return _title; }
             [DebuggerStepThrough]
-            set { _name = value; }
+            set { _title = value; }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
