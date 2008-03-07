@@ -78,6 +78,8 @@ namespace Engage.Events
             e._organizer = row["Organizer"].ToString();
             e._organizerEmail = row["OrganizerEmail"].ToString();
             e._location = row["Location"].ToString();
+            e._invitationUrl = row["InvitationUrl"].ToString();
+            e._recapUrl = row["RecapUrl"].ToString();
 
             return e;
         }
