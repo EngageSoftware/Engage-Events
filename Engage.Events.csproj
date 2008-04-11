@@ -57,7 +57,7 @@
       <Name>Engage.DataProvider</Name>
     </ProjectReference>
     <ProjectReference Include="..\Engage.Framework\Engage.Framework.csproj">
-      <Project>{C2173F8D-DCAC-4E50-A342-6F7340D66175}</Project>
+      <Project>{0EA52814-FB21-4258-A411-BF2A6B1699F0}</Project>
       <Name>Engage.Framework</Name>
     </ProjectReference>
     <ProjectReference Include="..\Engage.Routing\Engage.Routing.csproj">
