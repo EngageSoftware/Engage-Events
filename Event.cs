@@ -54,6 +54,22 @@ namespace Engage.Events
             return new Event(portalId, moduleId, organizerEmail, title, overview, eventStart);
         }
 
+        public static void Delete(int eventId)
+        {
+            IDataProvider dp = DataProvider.Instance;
+
+            try
+            {
+                dp.ExecuteNonQuery(CommandType.StoredProcedure, dp.NamePrefix + "spDeleteEvent",
+                 Engage.Utility.CreateIntegerParam("@EventId", eventId));
+            }
+            catch (Exception se)
+            {
+                throw new DbException("spDeleteEvent", se);
+            }
+
+        }
+
         internal static Event Fill(DataRow row)
         {
             Event e = new Event();
@@ -74,7 +90,7 @@ namespace Engage.Events
             {
                 e._totalRecords = (int)row["TotalRecords"];
             }
-            e._archived = (bool)row["Archived"];
+            e._cancelled = (bool)row["Cancelled"];
             e._organizer = row["Organizer"].ToString();
             e._organizerEmail = row["OrganizerEmail"].ToString();
             e._location = row["Location"].ToString();
@@ -457,13 +473,13 @@ namespace Engage.Events
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private bool _archived;
-        public bool Archived
+        private bool _cancelled;
+        public bool Cancelled
         {
             [DebuggerStepThrough]
-            get { return _archived; }
+            get { return _cancelled; }
             [DebuggerStepThrough]
-            set { _archived = value; }
+            set { _cancelled = value; }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
