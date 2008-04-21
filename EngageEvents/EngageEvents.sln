@@ -1,0 +1,126 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngageEvents", "EngageEvents.csproj", "{F9BEB83D-4945-45DE-BF7D-11FBD4A15080}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{319B4FE6-A016-41E0-93CE-748DA517D542} = {319B4FE6-A016-41E0-93CE-748DA517D542}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engage.Routing", "D:\Engage 3.0\Engage.Routing\Engage.Routing.csproj", "{CE72C274-F07E-4F4A-9854-DFB1354293E7}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engage.Utility", "D:\Engage 3.0\Engage.Utility\Engage.Utility.csproj", "{319B4FE6-A016-41E0-93CE-748DA517D542}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engage.Services", "D:\Engage 3.0\Engage.Services\Engage.Services.csproj", "{C446747D-B3DD-43E2-9908-13CC6663E45F}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engage.Framework", "D:\Engage 3.0\Engage.Framework\Engage.Framework.csproj", "{0EA52814-FB21-4258-A411-BF2A6B1699F0}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engage.DataProvider", "D:\Engage 3.0\Engage.DataProvider\Engage.DataProvider.csproj", "{36A4AB27-530A-4687-8016-7029E967DDE0}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engage.Communication", "d:\Engage 3.0\Engage.Communication\Engage.Communication.csproj", "{55CBD824-C0E0-4F1B-AECA-905B84C5A600}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engage.Events", "d:\Engage 3.0\Engage.Events\Engage.Events.csproj", "{34458836-3711-4D60-B394-B44347A8F0DF}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 9
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs2008.etg-inc.net:8080/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = EngageEvents.csproj
+		SccLocalPath1 = .
+		SccProjectUniqueName2 = D:\\Engage\u00203.0\\Engage.Utility\\Engage.Utility.csproj
+		SccProjectName2 = ../../Engage\u00203.0/Engage.Utility
+		SccLocalPath2 = D:\\Engage\u00203.0\\Engage.Utility
+		SccProjectUniqueName3 = D:\\Engage\u00203.0\\Engage.Routing\\Engage.Routing.csproj
+		SccProjectName3 = ../../Engage\u00203.0/Engage.Routing
+		SccLocalPath3 = D:\\Engage\u00203.0\\Engage.Routing
+		SccProjectUniqueName4 = D:\\Engage\u00203.0\\Engage.Services\\Engage.Services.csproj
+		SccProjectName4 = ../../Engage\u00203.0/Engage.Services
+		SccLocalPath4 = D:\\Engage\u00203.0\\Engage.Services
+		SccProjectUniqueName5 = D:\\Engage\u00203.0\\Engage.Framework\\Engage.Framework.csproj
+		SccProjectName5 = ../../Engage\u00203.0/Engage.Framework
+		SccLocalPath5 = D:\\Engage\u00203.0\\Engage.Framework
+		SccProjectUniqueName6 = D:\\Engage\u00203.0\\Engage.DataProvider\\Engage.DataProvider.csproj
+		SccProjectName6 = ../../Engage\u00203.0/Engage.DataProvider
+		SccLocalPath6 = D:\\Engage\u00203.0\\Engage.DataProvider
+		SccProjectUniqueName7 = d:\\Engage\u00203.0\\Engage.Communication\\Engage.Communication.csproj
+		SccProjectName7 = ../../Engage\u00203.0/Engage.Communication
+		SccLocalPath7 = d:\\Engage\u00203.0\\Engage.Communication
+		SccProjectUniqueName8 = d:\\Engage\u00203.0\\Engage.Events\\Engage.Events.csproj
+		SccProjectName8 = ../../Engage\u00203.0/Engage.Events
+		SccLocalPath8 = d:\\Engage\u00203.0\\Engage.Events
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F9BEB83D-4945-45DE-BF7D-11FBD4A15080}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9BEB83D-4945-45DE-BF7D-11FBD4A15080}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9BEB83D-4945-45DE-BF7D-11FBD4A15080}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9BEB83D-4945-45DE-BF7D-11FBD4A15080}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE72C274-F07E-4F4A-9854-DFB1354293E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE72C274-F07E-4F4A-9854-DFB1354293E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE72C274-F07E-4F4A-9854-DFB1354293E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE72C274-F07E-4F4A-9854-DFB1354293E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{319B4FE6-A016-41E0-93CE-748DA517D542}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{319B4FE6-A016-41E0-93CE-748DA517D542}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{319B4FE6-A016-41E0-93CE-748DA517D542}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{319B4FE6-A016-41E0-93CE-748DA517D542}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C446747D-B3DD-43E2-9908-13CC6663E45F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C446747D-B3DD-43E2-9908-13CC6663E45F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C446747D-B3DD-43E2-9908-13CC6663E45F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C446747D-B3DD-43E2-9908-13CC6663E45F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EA52814-FB21-4258-A411-BF2A6B1699F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EA52814-FB21-4258-A411-BF2A6B1699F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EA52814-FB21-4258-A411-BF2A6B1699F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EA52814-FB21-4258-A411-BF2A6B1699F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36A4AB27-530A-4687-8016-7029E967DDE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36A4AB27-530A-4687-8016-7029E967DDE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36A4AB27-530A-4687-8016-7029E967DDE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36A4AB27-530A-4687-8016-7029E967DDE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55CBD824-C0E0-4F1B-AECA-905B84C5A600}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55CBD824-C0E0-4F1B-AECA-905B84C5A600}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55CBD824-C0E0-4F1B-AECA-905B84C5A600}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55CBD824-C0E0-4F1B-AECA-905B84C5A600}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34458836-3711-4D60-B394-B44347A8F0DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34458836-3711-4D60-B394-B44347A8F0DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34458836-3711-4D60-B394-B44347A8F0DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34458836-3711-4D60-B394-B44347A8F0DF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

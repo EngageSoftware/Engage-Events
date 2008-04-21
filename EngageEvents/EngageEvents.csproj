@@ -1,0 +1,490 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F9BEB83D-4945-45DE-BF7D-11FBD4A15080}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Engage.Dnn.Events</RootNamespace>
+    <AssemblyName>EngageEvents</AssemblyName>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DelaySign>true</DelaySign>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>..\..\Bin\</OutputPath>
+    <DocumentationFile>EngagePublish.xml</DocumentationFile>
+    <WarningLevel>1</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRules>-Microsoft.Design#CA1031;-Microsoft.Design#CA1054;-Microsoft.Design#CA1056;-Microsoft.Design#CA1055</CodeAnalysisRules>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=1.0.10920.32880, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <HintPath>..\..\Bin\AjaxControlToolkit.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="aspNetEmail, Version=3.6.0.60, Culture=neutral, PublicKeyToken=bc571e8da1c1f543">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Engage 3.0\Assemblies\aspNetEmail.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetNuke, Version=4.5.1.28, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DotNetNuke.Search.DataStore, Version=3.2.2.40031, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DotNetNuke.WebControls, Version=1.5.3.20116, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DotNetNuke.WebUtility, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Engage.Dnn.Utility, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral">
+      <HintPath>..\..\bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions, Version=1.0.61025.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="DotNetNuke" />
+    <Import Include="DotNetNuke.Common" />
+    <Import Include="DotNetNuke.Common.Utilities" />
+    <Import Include="DotNetNuke.Data" />
+    <Import Include="DotNetNuke.Entities" />
+    <Import Include="DotNetNuke.Entities.Tabs" />
+    <Import Include="DotNetNuke.Framework" />
+    <Import Include="DotNetNuke.Modules" />
+    <Import Include="DotNetNuke.Security" />
+    <Import Include="DotNetNuke.Services" />
+    <Import Include="DotNetNuke.Services.Exceptions" />
+    <Import Include="DotNetNuke.Services.Localization" />
+    <Import Include="DotNetNuke.UI" />
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Collections.Specialized" />
+    <Import Include="System.Configuration" />
+    <Import Include="System.Text" />
+    <Import Include="System.Text.RegularExpressions" />
+    <Import Include="System.Web" />
+    <Import Include="System.Web.Caching" />
+    <Import Include="System.Web.SessionState" />
+    <Import Include="System.Web.Security" />
+    <Import Include="System.Web.Profile" />
+    <Import Include="System.Web.UI" />
+    <Import Include="System.Web.UI.WebControls" />
+    <Import Include="System.Web.UI.WebControls.WebParts" />
+    <Import Include="System.Web.UI.HtmlControls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admin\NotConfigured.ascx.cs">
+      <DependentUpon>NotConfigured.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\NotConfigured.ascx.designer.cs">
+      <DependentUpon>NotConfigured.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Assemblyinfo.cs" />
+    <Compile Include="Components\EmailScheduler.cs" />
+    <Compile Include="Controls\YearlyRecurrence.ascx.cs">
+      <DependentUpon>YearlyRecurrence.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\YearlyRecurrence.ascx.designer.cs">
+      <DependentUpon>YearlyRecurrence.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WeeklyRecurrence.ascx.cs">
+      <DependentUpon>WeeklyRecurrence.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\WeeklyRecurrence.ascx.designer.cs">
+      <DependentUpon>WeeklyRecurrence.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DialyRecurrence.ascx.cs">
+      <DependentUpon>DialyRecurrence.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\DialyRecurrence.ascx.designer.cs">
+      <DependentUpon>DialyRecurrence.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MonthlyRecurrence.ascx.cs">
+      <DependentUpon>MonthlyRecurrence.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\MonthlyRecurrence.ascx.designer.cs">
+      <DependentUpon>MonthlyRecurrence.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RecurrenceEditor.ascx.cs">
+      <DependentUpon>RecurrenceEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\RecurrenceEditor.ascx.designer.cs">
+      <DependentUpon>RecurrenceEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RecurrenceSelector.ascx.cs">
+      <DependentUpon>RecurrenceSelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\RecurrenceSelector.ascx.designer.cs">
+      <DependentUpon>RecurrenceSelector.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EmailAFriend.ascx.cs">
+      <DependentUpon>EmailAFriend.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmailAFriend.ascx.designer.cs">
+      <DependentUpon>EmailAFriend.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Rsvp.ascx.cs">
+      <DependentUpon>Rsvp.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rsvp.ascx.designer.cs">
+      <DependentUpon>Rsvp.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EventListingAdmin.ascx.cs">
+      <DependentUpon>EventListingAdmin.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EventListingAdmin.ascx.designer.cs">
+      <DependentUpon>EventListingAdmin.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EventListing.ascx.cs">
+      <DependentUpon>EventListing.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EventListing.ascx.designer.cs">
+      <DependentUpon>EventListing.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EventListingCustom.ascx.cs">
+      <DependentUpon>EventListingCustom.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EventListingCustom.ascx.designer.cs">
+      <DependentUpon>EventListingCustom.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Setting.cs" />
+    <Compile Include="Util\Approval.ascx.cs">
+      <DependentUpon>Approval.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Util\Approval.ascx.designer.cs">
+      <DependentUpon>Approval.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="RsvpDetail.ascx.cs">
+      <DependentUpon>RsvpDetail.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RsvpDetail.ascx.designer.cs">
+      <DependentUpon>RsvpDetail.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="RsvpSummary.ascx.cs">
+      <DependentUpon>RsvpSummary.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RsvpSummary.ascx.designer.cs">
+      <DependentUpon>RsvpSummary.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EmailEdit.ascx.cs">
+      <DependentUpon>EmailEdit.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmailEdit.ascx.designer.cs">
+      <DependentUpon>EmailEdit.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EventEdit.ascx.cs">
+      <DependentUpon>EventEdit.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EventEdit.ascx.designer.cs">
+      <DependentUpon>EventEdit.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EventListingGridStyle.ascx.cs">
+      <DependentUpon>EventListingGridStyle.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EventListingGridStyle.ascx.designer.cs">
+      <DependentUpon>EventListingGridStyle.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Recurrence\RecurrenceHelper.cs" />
+    <Compile Include="Portability\TransportableXmlValidator.cs" />
+    <Compile Include="Portability\XmlTransporter.cs" />
+    <Compile Include="Portability\XmlDirector.cs" />
+    <Compile Include="Portability\TransportableElement.cs" />
+    <Compile Include="Components\FeaturesController.cs" />
+    <Compile Include="Services\Services.asmx.cs">
+      <DependentUpon>Services.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Data\DataProvider.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="MainContainer.ascx.cs">
+      <DependentUpon>MainContainer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MainContainer.ascx.designer.cs">
+      <DependentUpon>MainContainer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.ascx.cs">
+      <DependentUpon>Settings.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Settings.ascx.designer.cs">
+      <DependentUpon>Settings.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ModuleBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Providers\SqlDataProvider.cs" />
+    <Compile Include="Search\SearchProvider.cs" />
+    <Compile Include="Util\BreadCrumb.cs" />
+    <Compile Include="Util\QueryStringParameters.cs" />
+    <Compile Include="Util\Utility.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content.Events.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="docs\Engage Publish Users Guide.doc" />
+    <None Include="docs\Engage Publish Users Guide.pdf" />
+    <None Include="EngageEvents.dnn" />
+    <None Include="EngageEvents.Build" />
+    <None Include="Providers\DataProviders\SqlDataProvider\01.00.00.SqlDataProvider" />
+    <None Include="Uninstall.SqlDataProvider" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\RsvpListing.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EventDisplay.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EventDisplayOptions.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\ItemPreview.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\PrinterFriendly.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="docs\images\article-general.gif" />
+    <Content Include="docs\images\article-name-desc.gif" />
+    <Content Include="docs\images\category-settings.gif" />
+    <Content Include="docs\images\categoryfeature-settings.gif" />
+    <Content Include="docs\images\categorylist.gif" />
+    <Content Include="docs\images\childdisplaypage.gif" />
+    <Content Include="docs\images\displaypage.gif" />
+    <Content Include="docs\images\itemlisting-settings.gif" />
+    <Content Include="docs\images\logo_ref_bl.jpg" />
+    <Content Include="docs\images\logo_ref_w.jpg" />
+    <Content Include="docs\images\publish_bn.jpg" />
+    <Content Include="docs\images\publish_logo_small.jpg" />
+    <Content Include="docs\images\toolbar.gif" />
+    <Content Include="docs\license.txt" />
+    <Content Include="docs\install.txt" />
+    <Content Include="Images\dn.gif" />
+    <Content Include="Images\lt.gif" />
+    <Content Include="Images\rt.gif" />
+    <Content Include="Images\s.gif" />
+    <Content Include="Images\thumbnail.gif" />
+    <Content Include="Images\up.gif" />
+    <Content Include="MainContainer.ascx" />
+    <Content Include="Settings.ascx" />
+    <Content Include="Module.css" />
+    <Content Include="Rss.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\EmptyStar.png" />
+    <Content Include="Images\FilledStar.png" />
+    <Content Include="Images\SavedStar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\progressbar_green.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Licenses\EULA-Enterprise.txt" />
+    <Content Include="Licenses\EULA-Professional.txt" />
+    <Content Include="Licenses\EULA-Standard.txt" />
+    <Content Include="Util\App_LocalResources\BreadCrumb.cs.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\calendar.png" />
+    <Content Include="Images\trash.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ReadMe.txt" />
+    <Content Include="Services\Services.asmx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\App_LocalResources\AdminMenu.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Admin\NotConfigured.ascx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\App_LocalResources\NotConfigured.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Controls\YearlyRecurrence.ascx" />
+    <Content Include="Controls\WeeklyRecurrence.ascx" />
+    <Content Include="Controls\DialyRecurrence.ascx" />
+    <Content Include="Controls\MonthlyRecurrence.ascx" />
+    <Content Include="Controls\RecurrenceEditor.ascx" />
+    <Content Include="Controls\RecurrenceSelector.ascx" />
+    <Content Include="Util\Approval.ascx" />
+    <Content Include="RsvpSummary.ascx" />
+    <Content Include="EmailEdit.ascx" />
+    <Content Include="EventEdit.ascx" />
+    <Content Include="EventListingGridStyle.ascx" />
+    <Content Include="Samples\AttendingReminder.htm" />
+    <Content Include="Samples\NoResponseReminder.htm" />
+    <Content Include="Samples\NotAttendingReminder.htm" />
+    <Content Include="Services\WebServicesGateway.asmx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="d:\Engage 3.0\Engage.Communication\Engage.Communication.csproj">
+      <Project>{55CBD824-C0E0-4F1B-AECA-905B84C5A600}</Project>
+      <Name>Engage.Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="d:\Engage 3.0\Engage.Events\Engage.Events.csproj">
+      <Project>{34458836-3711-4D60-B394-B44347A8F0DF}</Project>
+      <Name>Engage.Events</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Engage 3.0\Engage.Framework\Engage.Framework.csproj">
+      <Project>{0EA52814-FB21-4258-A411-BF2A6B1699F0}</Project>
+      <Name>Engage.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Engage 3.0\Engage.Routing\Engage.Routing.csproj">
+      <Project>{CE72C274-F07E-4F4A-9854-DFB1354293E7}</Project>
+      <Name>Engage.Routing</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Engage 3.0\Engage.Services\Engage.Services.csproj">
+      <Project>{C446747D-B3DD-43E2-9908-13CC6663E45F}</Project>
+      <Name>Engage.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Engage 3.0\Engage.Utility\Engage.Utility.csproj">
+      <Project>{319B4FE6-A016-41E0-93CE-748DA517D542}</Project>
+      <Name>Engage.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\EventListing.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\UserContainer.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="EventListing.ascx" />
+    <Content Include="EventListingCustom.ascx" />
+    <Content Include="RsvpDetail.ascx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\Settings.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Images\no.gif" />
+    <Content Include="Images\noresponse.gif" />
+    <Content Include="Images\vcalendar.png" />
+    <Content Include="Images\yes.gif" />
+    <Content Include="Rsvp.ascx" />
+    <Content Include="EventListingAdmin.ascx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\EventListingAdmin.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\EventListingCustom.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\Rsvp.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="EmailAFriend.ascx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\EmailAFriend.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v8.0\WebApplications\Microsoft.WebApplication.targets" Condition="'$(Solutions.VSVersion)' == '8.0'" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" Condition="'$(Solutions.VSVersion)' == '9.0'" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>4825</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/DotNetNuke_2/desktopmodules/engagepublish</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost/DotNetNuke_2</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

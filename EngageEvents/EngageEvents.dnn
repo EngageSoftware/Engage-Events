@@ -1,0 +1,78 @@
+<dotnetnuke version="3.0" type="Module">
+  <folders>
+    <folder>
+      <name>Engage: Events</name>
+      <friendlyname>Engage: Events</friendlyname>
+      <foldername>EngageEvents</foldername>
+      <modulename>Engage: Events</modulename>
+      <description>The DotNetNuke Events module by Engage Software (www.engagemodules.com)</description>
+      <version>01.00.00</version>
+      <businesscontrollerclass>Engage.Dnn.Events.Components.FeaturesController</businesscontrollerclass>
+      <dependencies>AjaxControlToolkit.PopupControlExtender; AjaxControlToolkit.ToolkitScriptManager</dependencies>
+      <resourcefile>Resources.zip</resourcefile>
+      <modules>
+        <module>
+          <friendlyname>Engage: Events</friendlyname>
+          <cachetime>0</cachetime>
+          <controls>
+            <control>
+              <src>DesktopModules/EngageEvents/MainContainer.ascx</src>
+              <type>View</type>
+            </control>
+            <control>
+              <key>Settings</key>
+              <title>Event Settings</title>
+              <src>DesktopModules/EngageEvents/Settings.ascx</src>
+              <type>Edit</type>
+            </control>
+            <control>
+              <key>Rsvp</key>
+              <title>Rsvp</title>
+              <src>DesktopModules/EngageEvents/Rsvp.ascx</src>
+              <type>Edit</type>
+            </control>
+          </controls>
+        </module>
+      </modules>
+      <files>
+        <file>
+          <path>Providers\DataProviders\SqlDataProvider</path>
+          <name>01.00.00.SqlDataProvider</name>
+        </file>
+        <file>
+          <name>ReadMe.txt</name>
+        </file>
+        <file>
+          <name>Uninstall.SqlDataProvider</name>
+        </file>
+        <file>
+          <name>EngageEvents.dll</name>
+        </file>
+        <file>
+          <name>Engage.Eventsv3.0.dll</name>
+        </file>
+        <file>
+          <name>Engage.DataProviderv3.0.dll</name>
+        </file>
+        <file>
+          <name>Engage.Routingv3.0.dll</name>
+        </file>
+        <file>
+          <name>Engage.Servicesv3.0.dll</name>
+        </file>
+        <file>
+          <name>Engage.Frameworkv3.0.dll</name>
+        </file>
+        <file>
+          <name>Engage.Utilityv3.0.dll</name>
+        </file>
+        <file>
+          <name>Engage.Communicationv3.0.dll</name>
+        </file>
+        <file>
+          <name>aspNetEmail.dll</name>
+        </file>
+      </files>
+    </folder>
+  </folders>  
+</dotnetnuke> 

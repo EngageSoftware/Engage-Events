@@ -1,0 +1,52 @@
+/*==============================================
+
+		1. Admin Tools
+
+==============================================*/
+
+.AdminTools{}
+
+
+
+/*==============================================
+
+		2. Event Custom Listing Page
+
+==============================================*/
+
+#EventListingCustomCurrent, #EventListingCustomUpcoming{width: 100%;}
+#EventListingCustomUpcoming {padding-top: 1.5em;}
+		.EventHeader{clear: both; width: 100%; overflow: hidden;  border-bottom: 1px #ccc solid;}
+			.EventHeader h4 {text-transform: uppercase; font-weight: bold; margin-bottom: 0.4em; margin-top: 0; font-size: 100%;}
+			.EventHeader .Normal{float:left;width: 15%; margin-right: 3%; text-align: right; color: #666;}
+			.EventHeader .NormalBold{float: left; width: 81%; color: #000;}
+
+		#EventItem{border-bottom: 1px #ccc dotted; overflow: hidden; padding: 1em 0;}
+			#EventItem p{margin-top: 0;margin-bottom: 0;}
+		.EventTitle h2{margin-left: 18%; font-size: 120%; line-height: 1.2; margin-bottom: 0.5em;}
+		.EventDate {clear: both; width: 100%; overflow: hidden;}
+			.EventDate .NormalBold, .EventLocation .NormalBold, .EventDescription .NormalBold
+			{float:left; width: 15%; margin-right: 3%; text-align: right;}
+			.EventDate .Normal, .EventLocation .Normal, .EventDescription .Normal{float: left; width: 81%;}
+
+		.EventButtons{margin-left: 18%;}
+
+		#myEvents{}
+			#myEvents .EventHeader{clear: both; width: 100%; overflow: hidden;}
+				#myEvents .EventHeader .NormalBold{float: left; width: 20%;}
+				#myEvents .EventHeader .eventsSort {float: right; width: 80%;}
+					#myEvents .EventHeader .eventsSort, #myEvents .EventHeader .eventsSort table, #myEvents .EventHeader .eventsSort td {padding: 0; margin: 0;}
+					#myEvents .EventHeader .sortTitle{}
+					#myEvents .EventHeader .sortButtons{}
+	
+	
+
+		.EventStats{font-weight:bold;}	
+		.border	{border: thin groove;}
+
+
+/*==============================================
+
+		3. Event Listing GridView
+
+==============================================*/
