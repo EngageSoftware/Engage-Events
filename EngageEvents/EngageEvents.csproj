@@ -475,7 +475,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>4825</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/DotNetNuke_2/desktopmodules/engagepublish</IISUrl>
+          <IISUrl>http://localhost/DotNetNuke_2/desktopmodules/EngageEvents</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
           <IISAppRootUrl>http://localhost/DotNetNuke_2</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

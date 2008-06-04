@@ -23,7 +23,7 @@
 	<ItemTemplate>
         <asp:Label id = "lblId" Visible="False" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "EventId")  %>'></asp:Label>
 		
-		<h2 class="Head"><%# DataBinder.Eval(Container.DataItem, "Title")%></h2>
+		<h2 class="Head"><%# DataBinder.Eval(Container.DataItem, "Name")%></h2>
 
 		<div class="EventDate">
 		    <div class="SubHead">When</div>

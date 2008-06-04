@@ -120,7 +120,7 @@ namespace Engage.Dnn.Events
             txtEventTime.Text = e.EventStart.ToString("h:mm");
             txtEventLocation.Text = e.Location;
             txtEventDescription.Text = e.Overview;
-            txtEventDate.Text = e.EventStart.ToString("dd/MM/yyyy");
+            txtEventDate.Text = e.EventStart.ToString("MM/dd/yyyy");
             ListItem li = rblEventTime.Items.FindByValue(e.EventStart.ToString("tt"));
             if (li != null) li.Selected = true;
 
