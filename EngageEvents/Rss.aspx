@@ -1,1 +1,0 @@
-<%@ Page Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EPRss" Codebehind="epRss.aspx.cs" %>
