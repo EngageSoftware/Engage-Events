@@ -12,11 +12,13 @@ using System;
 using System.Globalization;
 using System.Text;
 using System.Web;
+using System.Web.UI.WebControls;
 using DotNetNuke.Common.Utilities;
 using DotNetNuke.Entities.Host;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Security;
 using Engage.Dnn.Events.Util;
+using Engage.Events;
 
 namespace Engage.Dnn.Events
 {
@@ -407,7 +409,113 @@ namespace Engage.Dnn.Events
         {
             return (invitationUrl.ToString().Length > 0);
         }
-    
+
+        //So far, we are only using the DataGrid and a Repeater. This method pulls it out accordingly
+        //to prevent the same code in subclasses over and over.hk
+        protected int GetId(object sender)
+        {
+            LinkButton button = (LinkButton)sender;
+
+            RepeaterItem repeater = button.NamingContainer as RepeaterItem;
+            if (repeater != null)
+            {
+                Label l = (Label)repeater.FindControl("lblId");
+                return Convert.ToInt32(l.Text);
+            }
+            else
+            {
+                DataGridItem gridItem = button.NamingContainer as DataGridItem;
+                if (gridItem != null)
+                {
+                    return Convert.ToInt32(gridItem.Cells[0].Text);
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+        }
+
+        #region Global Navigation Event Handlers
+
+        protected void lbSettings_OnClick(object sender, EventArgs e)
+        {
+            string href = EditUrl("ModuleId", ModuleId.ToString(CultureInfo.InvariantCulture), "Module");
+            Response.Redirect(href, true);
+        }
+
+        protected void lbManageEvents_OnClick(object sender, EventArgs e)
+        {
+            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventListingAdmin");
+            Response.Redirect(href, true);
+
+        }
+
+        protected void lbAddAnEvent_OnClick(object sender, EventArgs e)
+        {
+            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit");
+            Response.Redirect(href, true);
+        }
+
+        protected void lbEditEvent_OnClick(object sender, EventArgs e)
+        {
+            int eventId = GetId(sender);
+            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId=" + eventId.ToString());
+
+            Response.Redirect(href, true);
+        }
+
+        protected void lbDeleteEvent_OnClick(object sender, EventArgs e)
+        {
+            int eventId = GetId(sender);
+            Event.Delete(eventId);
+        }
+
+        protected void lbManageRsvp_OnClick(object sender, EventArgs e)
+        {
+            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpSummary");
+            Response.Redirect(href, true);
+        }
+
+        //this can be overridden because a Datagrid is used instead of a Repeater so GetId(..) won't work.
+        protected void lbEditEmail_OnClick(object sender, EventArgs e)
+        {
+            int eventId = GetId(sender);
+            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailEdit&eventid=" + eventId.ToString());
+
+            Response.Redirect(href, true);
+        }
+
+        protected void lbViewRsvp_OnClick(object sender, EventArgs e)
+        {
+            int eventId = GetId(sender);
+            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpDetail&eventid=" + eventId.ToString());
+
+            Response.Redirect(href, true);
+        }
+
+        protected void lbManageEmail_OnClick(object sender, EventArgs e)
+        {
+        }
+
+        protected void lnkAddToCalendar_OnClick(object sender, EventArgs e)
+        {
+            //LinkButton button = (LinkButton)sender;
+            //DataGridItem item = (DataGridItem)button.NamingContainer;
+
+            //int eventId = Convert.ToInt32(item.Cells[0].Text);
+            int eventId = GetId(sender);
+            Event ee = Event.Load(eventId);
+
+            //Stream The vCalendar 
+            HttpContext.Current.Response.ContentEncoding = Encoding.GetEncoding(CultureInfo.CurrentUICulture.TextInfo.ANSICodePage);
+            HttpContext.Current.Response.ContentType = "text/x-iCalendar";
+            HttpContext.Current.Response.AppendHeader("Content-Disposition", "filename=" + HttpUtility.UrlEncode(ee.Title) + ".vcs");
+            HttpContext.Current.Response.Write(ee.ToICal("hkenuam@engagesoftware.com"));
+        }
+
+        #endregion
     }
+
 }
 

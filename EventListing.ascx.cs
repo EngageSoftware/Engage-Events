@@ -96,14 +96,6 @@ namespace Engage.Dnn.Events
 
         #endregion
 
-        private int GetId(object sender)
-        {
-            LinkButton button = (LinkButton)sender;
-            RepeaterItem item = (RepeaterItem)button.NamingContainer;
-            Label l = (Label)item.FindControl("lblId");
-
-            return Convert.ToInt32(l.Text);
-        }
     }
 }
 

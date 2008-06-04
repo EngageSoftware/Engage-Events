@@ -47,26 +47,6 @@ namespace Engage.Dnn.Events
             }    
         }
 
-        protected void lbSettings_OnClick(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void lbMyEvents_OnClick(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void lbAddEvents_OnClick(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void lbManageEmail_OnClick(object sender, EventArgs e)
-        {
-
-        }
-
         #endregion
 
         #region Methods

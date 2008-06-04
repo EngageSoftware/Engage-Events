@@ -57,7 +57,7 @@ namespace Engage.Dnn.Events
             }
         }
 
-        protected void btnSegment_Click(object sender, ImageClickEventArgs e)
+        protected void btnSegment_OnClick(object sender, ImageClickEventArgs e)
         {
 
         }

@@ -87,6 +87,16 @@ namespace Engage.Dnn.Events
             SendICalendarToClient(evnt.ToICal("hkenuam@engagesoftware.com"), evnt.Title);
         }
 
+        protected void Listing_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            LinkButton lbICal = e.Item.FindControl("lbCICal") as LinkButton;
+            if (lbICal != null) lbICal.Visible = IsLoggedIn;
+
+            lbICal = e.Item.FindControl("lbUICal") as LinkButton;
+            if (lbICal != null) lbICal.Visible = IsLoggedIn;
+
+        }
+
         #endregion
 
         #region Methods
@@ -106,29 +116,12 @@ namespace Engage.Dnn.Events
        
         #endregion
 
-        private int GetId(object sender)
-        {
-            LinkButton button = (LinkButton)sender;
-            RepeaterItem item = (RepeaterItem)button.NamingContainer;
-            Label l = (Label)item.FindControl("lblId");
-
-            return Convert.ToInt32(l.Text);
-        }
-
         protected bool HasInviteUrl(object invitationUrl)
         {
             return (invitationUrl.ToString().Length > 0);
         }
 
-        protected void rpUpcomingEventListing_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-            LinkButton lbICal = (LinkButton) e.Item.FindControl("lbCICal");
-            lbICal.Visible = IsLoggedIn;
-
-            lbICal = (LinkButton)e.Item.FindControl("lbUICal");
-            lbICal.Visible = IsLoggedIn;
-
-        }
+     
     }
 }
 

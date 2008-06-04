@@ -11,12 +11,6 @@
 namespace Engage.Dnn.Events {
     
     
-    /// <summary>
-    /// EmailAFriend class.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated class.
-    /// </remarks>
     public partial class EmailAFriend {
         
         /// <summary>

@@ -30,7 +30,7 @@ namespace Engage.Dnn.Events
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Member", Justification = "Controls use lower case prefix")]
-        protected void btnCancel_Click1(object sender, EventArgs e)
+        protected void btnCancel_OnClick(object sender, EventArgs e)
         {
             ClearCommentInput();
             mpeEmailAFriend.Hide();
@@ -38,7 +38,7 @@ namespace Engage.Dnn.Events
 
         
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Member", Justification = "Controls use lower case prefix")]
-        protected void btnSend_Click(object sender, EventArgs e)
+        protected void btnSend_OnClick(object sender, EventArgs e)
         {
             try
             {

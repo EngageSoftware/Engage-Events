@@ -11,12 +11,6 @@
 namespace Engage.Dnn.Events {
     
     
-    /// <summary>
-    /// EventEdit class.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated class.
-    /// </remarks>
     public partial class EventEdit {
         
         /// <summary>
@@ -74,13 +68,13 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.LinkButton lbSettings;
         
         /// <summary>
-        /// lbMyEvents control.
+        /// lbManageEvents control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbMyEvents;
+        protected global::System.Web.UI.WebControls.LinkButton lbManageEvents;
         
         /// <summary>
         /// lbAddAnEvent control.

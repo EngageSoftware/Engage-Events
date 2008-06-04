@@ -56,56 +56,6 @@ namespace Engage.Dnn.Events
             }    
         }
 
-        protected void lbSettings_OnClick(object sender, EventArgs e)
-        {
-            string href = EditUrl("ModuleId", ModuleId.ToString(CultureInfo.InvariantCulture), "Module");
-
-            Response.Redirect(href, true);
-        }
-
-        protected void lbMyEvents_OnClick(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void lbManageEmail_OnClick(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void lbRsvp_OnClick(object sender, EventArgs e)
-        {
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpSummary");
-
-            Response.Redirect(href, true);
-        }
-
-        protected void lbViewRsvp_OnClick(object sender, EventArgs e)
-        {
-            int eventId = GetId(sender);
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpDetail&eventid=" + eventId.ToString());
-
-            Response.Redirect(href, true);
-        }
-
-        //protected void lbViewInvite_OnClick(object sender, EventArgs e)
-        //{
-        //    int eventId = GetId(sender);
-        //    Event ee = Event.Load(eventId);
-
-        //    //navigate to invite url
-        //    Response.Write("<script type='text/javascript'>content=window.open('" + ee.InvitationUrl + "');</script>");
-            
-        //}
-
-        protected void lbEditEmail_OnClick(object sender, EventArgs e)
-        {
-            int eventId = GetId(sender);
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailEdit&eventid=" + eventId.ToString());
-
-            Response.Redirect(href, true);
-        }
-
         protected void lbDelete_OnClick(object sender, EventArgs e)
         {
             int eventId = GetId(sender);
@@ -118,23 +68,18 @@ namespace Engage.Dnn.Events
         protected void lbCancel_OnClick(object sender, EventArgs e)
         {
             int eventId = GetId(sender);
-            //print
-        }
+            Event ev = Event.Load(eventId);
+            ev.Cancelled = true;
+            ev.Save(UserId);
 
-        protected void lbEditEvent_OnClick(object sender, EventArgs e)
-        {
-            int eventId = GetId(sender);
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId=" + eventId.ToString());
-
-            Response.Redirect(href, true);
+            BindData(rbSort.SelectedValue);
         }
 
         protected void rbSort_SelectedIndexChanged(object sender, EventArgs e)
         {
             BindData(rbSort.SelectedValue);
         }
-
-
+        
         #endregion
 
         #region Methods
@@ -147,23 +92,6 @@ namespace Engage.Dnn.Events
         }
 
         #endregion
-
-        private int GetId(object sender)
-        {
-            LinkButton button = (LinkButton)sender;
-
-            RepeaterItem item = button.NamingContainer as RepeaterItem;
-            if (item != null)
-            {
-                Label l = (Label)item.FindControl("lblId");
-
-                return Convert.ToInt32(l.Text);
-            }
-            else
-            {
-                return -1;
-            }
-        }
 
         public override void Dispose()
         {

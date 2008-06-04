@@ -42,7 +42,7 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                if (EventId > 0) BindData();
+                if (EventId > 0 && Page.IsPostBack == false) BindData();
             }
             catch (Exception exc)
             {
@@ -50,15 +50,12 @@ namespace Engage.Dnn.Events
             }
         }
 
-        protected void lbAddAnEvent_Click(object sender, EventArgs e)
+        protected void lbCancel_OnClick(object sender, EventArgs e)
         {
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit");
-
-            Response.Redirect(href, true);
-
+            Response.Redirect(Globals.NavigateURL(), true);
         }
 
-        protected void lbSave_Click(object sender, EventArgs e)
+        protected void lbSave_OnClick(object sender, EventArgs e)
         {
 
             Save();
@@ -66,7 +63,7 @@ namespace Engage.Dnn.Events
             Response.Redirect(Globals.NavigateURL(), true);
         }
 
-        protected void lbSaveAndCreateNew_Click(object sender, EventArgs e)
+        protected void lbSaveAndCreateNew_OnClick(object sender, EventArgs e)
         {
             Save();
 
@@ -126,14 +123,8 @@ namespace Engage.Dnn.Events
 
         }
 
-
-
         #endregion
-
-        protected void lbCancel_Click(object sender, EventArgs e)
-        {
-            Response.Redirect(Globals.NavigateURL(), true);
-        }
+  
     }
 }
 

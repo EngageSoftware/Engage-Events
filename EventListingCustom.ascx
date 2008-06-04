@@ -1,12 +1,20 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EventListingCustom" Codebehind="EventListingCustom.ascx.cs" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
 
+<div class="AdminButtons">
+    <asp:LinkButton ID="LinkButton1" runat="server" onclick="lbSettings_OnClick">Settings</asp:LinkButton>
+    <asp:LinkButton ID="lbAddAnEvent" runat="server" OnClick="lbAddAnEvent_OnClick">Add An Event</asp:LinkButton>
+    <asp:LinkButton ID="LinkButton2" runat="server" Visible="False" OnClick="lbManageEmail_OnClick">Manage E-Mail</asp:LinkButton>
+    <asp:LinkButton ID="lbManageRsvp" runat="server" onclick="lbManageRsvp_OnClick">Rsvp</asp:LinkButton>
+</div>
+<br />
+<br />
 <div id="EventListingCustomCurrent">
         <div class="EventHeader">
                 <h4 class="Normal">This Month</h4>
                 <h4 class="NormalBold">Events</h4>
         </div>
-    <asp:Repeater runat="server" id="rpCurrentEventListing">
+    <asp:Repeater runat="server" id="rpCurrentEventListing" OnItemDataBound="Listing_ItemDataBound">
         <ItemTemplate>
             <asp:Label id = "lblId" Visible="False" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "Id")  %>'></asp:Label>
                     <div id="EventItem">    
@@ -33,9 +41,9 @@
                                 <asp:LinkButton ID="lbCRsvp" runat="server" ResourceKey="lbRsvp" CssClass="CommandButton" OnClick="lbCRsvp_OnClick">RSVP</asp:LinkButton>
                                 <asp:LinkButton ID="lbCICal" runat="server" ResourceKey="lbIcal" CssClass="CommandButton" OnClick="lbCICal_OnClick">iCal</asp:LinkButton>
                                 <asp:HyperLink ID="lbCViewInvite" runat="server" ResourceKey="lbViewInvite" CssClass="CommandButton" Target="_new" NavigateUrl='<%# DataBinder.Eval(Container.DataItem,"InvitationUrl") %>' Visible=<%# HasInviteUrl(DataBinder.Eval(Container.DataItem, "InvitationUrl"))  %>>View Invite</asp:HyperLink>
-                                <asp:LinkButton ID="lbCeMailAFriend" runat="server" ResourceKey="lbEmailAFriend" CssClass="CommandButton" OnClick="lbCeMailAFriend_OnClick">E-mail A Friend</asp:LinkButton>
+<%--                                <asp:LinkButton ID="lbCeMailAFriend" runat="server" ResourceKey="lbEmailAFriend" CssClass="CommandButton" OnClick="lbCeMailAFriend_OnClick">E-mail A Friend</asp:LinkButton>
                                 <asp:LinkButton ID="lbCPrint" runat="server" ResourceKey="lbPrint" CssClass="CommandButton" OnClick="lbCPrint_OnClick">Print</asp:LinkButton>
-                            </div>
+--%>                            </div>
 					</div>
         </ItemTemplate>
     </asp:Repeater>
@@ -48,7 +56,7 @@
             <h4 class="NormalBold">Events</h4>
     </div>	        
     
-    <asp:Repeater runat="server" id="rpUpcomingEventListing" OnItemDataBound="rpUpcomingEventListing_ItemDataBound">
+    <asp:Repeater runat="server" id="rpUpcomingEventListing" OnItemDataBound="Listing_ItemDataBound">
         <ItemTemplate>
             <asp:Label id = "lblId" Visible="False" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "Id")  %>'></asp:Label>
 				<div id="EventItem">

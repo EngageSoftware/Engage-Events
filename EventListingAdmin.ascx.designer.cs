@@ -11,49 +11,43 @@
 namespace Engage.Dnn.Events {
     
     
-    /// <summary>
-    /// EventListingAdmin class.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated class.
-    /// </remarks>
     public partial class EventListingAdmin {
         
         /// <summary>
-        /// lbSettings control.
+        /// LinkButton1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbSettings;
+        protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
         
         /// <summary>
-        /// lbAddEvent control.
+        /// lbAddAnEvent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbAddEvent;
+        protected global::System.Web.UI.WebControls.LinkButton lbAddAnEvent;
         
         /// <summary>
-        /// lbManageEmail control.
+        /// LinkButton2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbManageEmail;
+        protected global::System.Web.UI.WebControls.LinkButton LinkButton2;
         
         /// <summary>
-        /// lbRsvp control.
+        /// lbManageRsvp control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbRsvp;
+        protected global::System.Web.UI.WebControls.LinkButton lbManageRsvp;
         
         /// <summary>
         /// lblSortBy control.

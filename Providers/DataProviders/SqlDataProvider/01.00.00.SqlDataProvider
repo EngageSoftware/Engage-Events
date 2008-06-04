@@ -1260,7 +1260,7 @@ BEGIN
 	(
 		[Id] int not null IDENTITY(1,1),
 		[EventId] [int],
-		[Name] [nvarchar] (100),
+		[Title] [nvarchar] (100),
 		[EventStart] datetime,
 		[Attending] int,
 		[NotAttending] int,
@@ -1275,7 +1275,7 @@ BEGIN
 	select @NotAttending = 'NotAttending'
 	select @NoResponse = 'NoResponse'
 
-	set @sql = 'insert into #results ([EventId], [Name], [EventStart], [Attending], [NotAttending], [NoResponse]) '
+	set @sql = 'insert into #results ([EventId], [Title], [EventStart], [Attending], [NotAttending], [NoResponse]) '
 	set @sql = @sql + 'Select distinct e.EventId, e.Title, e.EventStart, '
 	set @sql = @sql + '(Select Count(*) from [{objectQualifier}Engage_Rsvp] where EventId = e.EventId and Status = ''' + @Attending + ''' ), '
 	set @sql = @sql + '(Select Count(*) from [{objectQualifier}Engage_Rsvp] where EventId = e.EventId and Status = ''' + @NotAttending + '''), '

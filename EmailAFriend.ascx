@@ -23,8 +23,8 @@
 	            <asp:Label ID="lblPrivacy" runat="server" ResourceKey="lblPrivacy"></asp:Label>
 	            <br />
 	            <br />
-	            <asp:LinkButton id="btnSend" ResourceKey="btnSend" Runat="server" ValidationGroup="ValidateGroupSend" OnClick="btnSend_Click"></asp:LinkButton>&nbsp;
-	            <asp:LinkButton id="btnCancel" ResourceKey="btnCancel" Runat="server" OnClick="btnCancel_Click1" CausesValidation="false"></asp:LinkButton>
+	            <asp:LinkButton id="btnSend" ResourceKey="btnSend" Runat="server" ValidationGroup="ValidateGroupSend" OnClick="btnSend_OnClick"></asp:LinkButton>&nbsp;
+	            <asp:LinkButton id="btnCancel" ResourceKey="btnCancel" Runat="server" OnClick="btnCancel_OnClick" CausesValidation="false"></asp:LinkButton>
             </div>
     </asp:Panel>
 

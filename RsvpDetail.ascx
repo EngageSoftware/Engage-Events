@@ -4,9 +4,9 @@
 
 <div class="EventButtons">
     <asp:LinkButton ID="lbSettings" runat="server" CssClass="CommandButton" OnClick="lbSettings_OnClick">Settings</asp:LinkButton>
-    <asp:LinkButton ID="lbMyEvents" runat="server" CssClass="CommandButton" OnClick="lbMyEvents_OnClick">My Events</asp:LinkButton>
-    <asp:LinkButton ID="lbAddEvent" runat="server" CssClass="CommandButton" OnClick="lbAddEvents_OnClick">Add Event</asp:LinkButton>
-    <asp:LinkButton ID="lbManageEmail" runat="server" CssClass="CommandButton" OnClick="lbManageEmail_OnClick">Mangage email</asp:LinkButton>
+    <asp:LinkButton ID="lbManageEvents" runat="server" CssClass="CommandButton" OnClick="lbManageEvents_OnClick">Manage Events</asp:LinkButton>
+    <asp:LinkButton ID="lbAddEvent" runat="server" CssClass="CommandButton" OnClick="lbAddAnEvent_OnClick">Add Event</asp:LinkButton>
+    <asp:LinkButton ID="lbManageEmail" runat="server" CssClass="CommandButton" Visible = "false" OnClick="lbManageEmail_OnClick">Mangage email</asp:LinkButton>
 </div>
 
 <div>

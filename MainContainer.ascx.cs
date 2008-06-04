@@ -101,14 +101,14 @@ namespace Engage.Dnn.Events
             }
             else
             {
-                if (IsAdmin)
-                {
-                    //display the admin version
-                    controlToLoad = "EventListingAdmin.ascx";
+                //if (IsAdmin)
+                //{
+                //    //display the admin version
+                //    controlToLoad = "EventListingAdmin.ascx";
 
-                }
-                else
-                {
+                //}
+                //else
+                //{
                     //display unathenticated version to user based on setting by administrator.
                     object o = Settings["DisplayType"];
                     if (o != null && !String.IsNullOrEmpty(o.ToString()))
@@ -117,9 +117,9 @@ namespace Engage.Dnn.Events
                     }
                     else
                     {
-                        controlToLoad = "EventListingCustom.ascx";
+                        controlToLoad = "EventListingAdmin.ascx";
                     }
-                }
+                //}
             }
 
             //if (!IsSetup)

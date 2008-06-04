@@ -13,11 +13,11 @@
 <div id="AddNewEvent">
 
     <div class="AdminButtons">
-        <asp:LinkButton ID="lbSettings" runat="server">Settings</asp:LinkButton>
-        <asp:LinkButton ID="lbMyEvents" runat="server">My Events</asp:LinkButton>
-        <asp:LinkButton ID="lbAddAnEvent" runat="server" OnClick="lbAddAnEvent_Click">Add An Event</asp:LinkButton>
-        <asp:LinkButton ID="lbManageEmail" runat="server" Visible="False">Manage E-Mail</asp:LinkButton>
-        <asp:LinkButton ID="lbManageRsvp" runat="server">Manage RSVP</asp:LinkButton>
+        <asp:LinkButton ID="lbSettings" runat="server" onclick="lbSettings_OnClick">Settings</asp:LinkButton>
+        <asp:LinkButton ID="lbManageEvents" runat="server" onclick="lbManageEvents_OnClick">Manage Events</asp:LinkButton>
+        <asp:LinkButton ID="lbAddAnEvent" runat="server" OnClick="lbAddAnEvent_OnClick">Add An Event</asp:LinkButton>
+        <asp:LinkButton ID="lbManageEmail" runat="server" Visible="False" OnClick="lbManageEmail_OnClick">Manage E-Mail</asp:LinkButton>
+        <asp:LinkButton ID="lbManageRsvp" runat="server" onclick="lbManageRsvp_OnClick">Rsvp</asp:LinkButton>
     </div>
 
     <h2 class="Head">
@@ -62,9 +62,9 @@
     </div>
     
     <div class="AddEventFooterButtons">
-        <asp:LinkButton ID="lbSave" runat="server" OnClick="lbSave_Click">Save</asp:LinkButton>
-        <asp:LinkButton ID="lbCancel" runat="server" OnClick="lbCancel_Click">Cancel</asp:LinkButton>
-        <asp:LinkButton ID="lbSaveAndCreateNew" runat="server" OnClick="lbSaveAndCreateNew_Click">Save & Create New</asp:LinkButton>
+        <asp:LinkButton ID="lbSave" runat="server" OnClick="lbSave_OnClick">Save</asp:LinkButton>
+        <asp:LinkButton ID="lbCancel" runat="server" OnClick="lbCancel_OnClick">Cancel</asp:LinkButton>
+        <asp:LinkButton ID="lbSaveAndCreateNew" runat="server" OnClick="lbSaveAndCreateNew_OnClick">Save & Create New</asp:LinkButton>
     </div>
 
 </div>

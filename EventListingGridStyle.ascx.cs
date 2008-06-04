@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections;
+using System.Data;
 using System.Globalization;
 using System.Text;
 using System.Web;
@@ -20,6 +21,7 @@ using DotNetNuke.Common;
 using DotNetNuke.Common.Utilities;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Actions;
+using DotNetNuke.UI.Utilities;
 using DotNetNuke.Security;
 using DotNetNuke.Services.Localization;
 using DotNetNuke.Services.Exceptions;
@@ -74,12 +76,16 @@ namespace Engage.Dnn.Events
 
         protected void grdEvents_DeleteCommand(object source, DataGridCommandEventArgs e)
         {
-            Response.Redirect(EditUrl("Edit"), true);
+            LinkButton delete = (LinkButton)Engage.Utility.FindControlRecursive(grdEvents, "lnkDelete");
+            base.lbDeleteEvent_OnClick(delete, e);
+
+            BindData();
         }
 
         protected void grdEvents_EditCommand(object source, DataGridCommandEventArgs e)
         {
-            Response.Redirect(EditUrl("Edit"), true);
+            LinkButton edit = (LinkButton)Engage.Utility.FindControlRecursive(grdEvents, "lnkEdit");
+            base.lbEditEvent_OnClick(edit, e);
         }
 
         #endregion
@@ -122,37 +128,58 @@ namespace Engage.Dnn.Events
 
         #endregion
 
-        protected void grdEvents_SelectedIndexChanged(object sender, EventArgs e)
+        protected void grdEvents_ItemDataBound(object sender, DataGridItemEventArgs e)
         {
+            if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
+            {
+                Event row = e.Item.DataItem as Event;
+                if (row != null)
+                {
+                    LinkButton lnkDelete = e.Item.FindControl("lnkDelete") as LinkButton;
+                    if (lnkDelete != null)
+                    {
+                        ClientAPI.AddButtonConfirm(lnkDelete, Localization.GetString("DeleteEvent", LocalResourceFile));
+                    }
+                }
+            }
 
+            
         }
 
-        protected void lnkEmailEdit_Click(object sender, EventArgs e)
-        {
-            LinkButton button = (LinkButton)sender;
-            DataGridItem item = (DataGridItem)button.NamingContainer;
+        //protected override void lbEditEmail_OnClick(object sender, EventArgs e)
+        //{
+        //    LinkButton button = (LinkButton)sender;
+        //    DataGridItem item = (DataGridItem)button.NamingContainer;
 
-            int eventId = Convert.ToInt32(item.Cells[0].Text);
+        //    int eventId = Convert.ToInt32(item.Cells[0].Text);
 
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailEdit&eventid=" + eventId.ToString());
+        //    string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailEdit&eventid=" + eventId.ToString());
 
-            Response.Redirect(href, true);
-        }
+        //    Response.Redirect(href, true);
+        //}
 
-        protected void lnkAddToCalendar_Click(object sender, EventArgs e)
-        {
-            LinkButton button = (LinkButton)sender;
-            DataGridItem  item = (DataGridItem) button.NamingContainer;
+        //protected override void lbEditEvent_OnClick(object sender, EventArgs e)
+        //{
+        //    int eventId = GetId(sender);
+        //    string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId=" + eventId.ToString());
 
-            int eventId = Convert.ToInt32(item.Cells[0].Text);
-            Event ee = Event.Load(eventId);
+        //    Response.Redirect(href, true);
+        //}
 
-            //Stream The vCalendar 
-            HttpContext.Current.Response.ContentEncoding = Encoding.GetEncoding(CultureInfo.CurrentUICulture.TextInfo.ANSICodePage);
-            HttpContext.Current.Response.ContentType = "text/x-iCalendar";
-            HttpContext.Current.Response.AppendHeader("Content-Disposition", "filename=" + HttpUtility.UrlEncode(ee.Title) + ".vcs");
-            HttpContext.Current.Response.Write(ee.ToICal("hkenuam@engagesoftware.com"));
-        }
+        //protected void lnkAddToCalendar_OnClick(object sender, EventArgs e)
+        //{
+        //    LinkButton button = (LinkButton)sender;
+        //    DataGridItem  item = (DataGridItem) button.NamingContainer;
+
+        //    int eventId = Convert.ToInt32(item.Cells[0].Text);
+        //    Event ee = Event.Load(eventId);
+
+        //    //Stream The vCalendar 
+        //    HttpContext.Current.Response.ContentEncoding = Encoding.GetEncoding(CultureInfo.CurrentUICulture.TextInfo.ANSICodePage);
+        //    HttpContext.Current.Response.ContentType = "text/x-iCalendar";
+        //    HttpContext.Current.Response.AppendHeader("Content-Disposition", "filename=" + HttpUtility.UrlEncode(ee.Title) + ".vcs");
+        //    HttpContext.Current.Response.Write(ee.ToICal("hkenuam@engagesoftware.com"));
+        //}
 
         //#region IActionable Members
 
