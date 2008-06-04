@@ -18,10 +18,10 @@ namespace Engage.Events
 
         }
 
-        private RsvpSummary(int eventId, string name, DateTime eventStart, int attending, int notAttending, int noResponse)
+        private RsvpSummary(int eventId, string title, DateTime eventStart, int attending, int notAttending, int noResponse)
         {
             _eventId = eventId;
-            _name = name;
+            _title = title;
             _eventStart = eventStart;
             _attending = attending;
             _notAttending = notAttending;
@@ -30,9 +30,9 @@ namespace Engage.Events
 
         #region Static Methods
 
-        public static RsvpSummary Create(int eventId, string name, DateTime eventStart, int attending, int notAttending, int noResponse)
+        public static RsvpSummary Create(int eventId, string title, DateTime eventStart, int attending, int notAttending, int noResponse)
         {
-            return new RsvpSummary(eventId, name, eventStart, attending, notAttending, noResponse);
+            return new RsvpSummary(eventId, title, eventStart, attending, notAttending, noResponse);
         }
 
         internal static RsvpSummary Fill(DataRow row)
@@ -40,7 +40,7 @@ namespace Engage.Events
             RsvpSummary r = new RsvpSummary();
 
             r._eventId = (int)row["EventId"];
-            r._name = row["Name"].ToString();
+            r._title = row["Title"].ToString();
             r._eventStart = (DateTime)row["EventStart"];
             r._attending = (int)row["Attending"];
             r._notAttending = (int)row["NotAttending"];
@@ -69,11 +69,11 @@ namespace Engage.Events
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string _name = string.Empty;
-        public string Name
+        private string _title = string.Empty;
+        public string Title
         {
             [DebuggerStepThrough]
-            get { return _name; }
+            get { return _title; }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
