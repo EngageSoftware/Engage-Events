@@ -38,6 +38,12 @@ namespace Engage.Dnn.Events
         {
             try
             {
+                lbSettings.Visible = IsAdmin;
+                lbManageEvents.Visible = IsAdmin;
+                lbAddAnEvent.Visible = IsAdmin;
+                lbManageEmail.Visible = IsAdmin;
+                lbManageRsvp.Visible = IsAdmin;
+
                 if (!Page.IsPostBack)
                 {
                     BindData();

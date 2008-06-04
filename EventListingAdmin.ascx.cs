@@ -44,6 +44,10 @@ namespace Engage.Dnn.Events
             {
                 //adds Validate to the control's constructor.
                 //license = LicenseManager.Validate(typeof(EventListingAdmin), this);
+                lbAddAnEvent.Visible = IsAdmin;
+                lbManageRsvp.Visible = IsAdmin;
+                lbAdminSettings.Visible = IsAdmin;
+                lbAdminEmail.Visible = IsAdmin;
 
                 if (!Page.IsPostBack)
                 {

@@ -14,13 +14,13 @@ namespace Engage.Dnn.Events {
     public partial class EventListingCustom {
         
         /// <summary>
-        /// LinkButton1 control.
+        /// lbAdminSettings control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
+        protected global::System.Web.UI.WebControls.LinkButton lbAdminSettings;
         
         /// <summary>
         /// lbAddAnEvent control.
@@ -32,13 +32,13 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.LinkButton lbAddAnEvent;
         
         /// <summary>
-        /// LinkButton2 control.
+        /// lbAdminEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton2;
+        protected global::System.Web.UI.WebControls.LinkButton lbAdminEmail;
         
         /// <summary>
         /// lbManageRsvp control.

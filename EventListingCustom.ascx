@@ -2,9 +2,9 @@
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
 
 <div class="AdminButtons">
-    <asp:LinkButton ID="LinkButton1" runat="server" onclick="lbSettings_OnClick">Settings</asp:LinkButton>
+    <asp:LinkButton ID="lbAdminSettings" runat="server" onclick="lbSettings_OnClick">Settings</asp:LinkButton>
     <asp:LinkButton ID="lbAddAnEvent" runat="server" OnClick="lbAddAnEvent_OnClick">Add An Event</asp:LinkButton>
-    <asp:LinkButton ID="LinkButton2" runat="server" Visible="False" OnClick="lbManageEmail_OnClick">Manage E-Mail</asp:LinkButton>
+    <asp:LinkButton ID="lbAdminEmail" runat="server" Visible="False" OnClick="lbManageEmail_OnClick">Manage E-Mail</asp:LinkButton>
     <asp:LinkButton ID="lbManageRsvp" runat="server" onclick="lbManageRsvp_OnClick">Rsvp</asp:LinkButton>
 </div>
 <br />
