@@ -165,6 +165,7 @@ namespace Engage.Events
                 Engage.Utility.CreateVarcharParam("@RecapUrl", _recapUrl),
                 Engage.Utility.CreateIntegerParam("@RecurrenceId", _recurrenceId),
                 Engage.Utility.CreateBitParam("@CanRsvp", true),
+                Engage.Utility.CreateBitParam("@Cancelled", _cancelled),
                 Engage.Utility.CreateIntegerParam("@RevisingUser", revisingUser));
             }
             catch (SystemException de)

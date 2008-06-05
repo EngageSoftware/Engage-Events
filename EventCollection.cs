@@ -14,16 +14,18 @@ namespace Engage.Events
     {
         private EventCollection(){}
 
-        public static EventCollection Load(int portalId, string sortColumn, int index, int pageSize)
+        public static EventCollection Load(int portalId, string sortColumn, int index, int pageSize, bool showAll)
         {
             IDataProvider dp = DataProvider.Instance;
             try
             {
                 using (DataSet ds = dp.ExecuteDataset(CommandType.StoredProcedure, dp.NamePrefix + "spGetEvents",
-                 Engage.Utility.CreateIntegerParam("@portalId", portalId),
-                 Engage.Utility.CreateVarcharParam("@sortColumn", sortColumn, 200),
-                 Engage.Utility.CreateIntegerParam("@index", index),
-                 Engage.Utility.CreateIntegerParam("@pageSize", pageSize)))
+                    Engage.Utility.CreateIntegerParam("@portalId", portalId),
+                    Engage.Utility.CreateVarcharParam("@sortColumn", sortColumn, 200),
+                    Engage.Utility.CreateIntegerParam("@index", index),
+                    Engage.Utility.CreateIntegerParam("@pageSize", pageSize),
+                    Engage.Utility.CreateBitParam("@showAll", showAll))
+                )
                 {
                     return FillEvents(ds);
                 }
