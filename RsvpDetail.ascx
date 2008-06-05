@@ -1,16 +1,11 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.RsvpDetail" Codebehind="RsvpDetail.ascx.cs" %>
-
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
-
-<div class="EventButtons">
-    <asp:LinkButton ID="lbSettings" runat="server" CssClass="CommandButton" OnClick="lbSettings_OnClick">Settings</asp:LinkButton>
-    <asp:LinkButton ID="lbManageEvents" runat="server" CssClass="CommandButton" OnClick="lbManageEvents_OnClick">Manage Events</asp:LinkButton>
-    <asp:LinkButton ID="lbAddEvent" runat="server" CssClass="CommandButton" OnClick="lbAddAnEvent_OnClick">Add Event</asp:LinkButton>
-    <asp:LinkButton ID="lbManageEmail" runat="server" CssClass="CommandButton" Visible = "false" OnClick="lbManageEmail_OnClick">Mangage email</asp:LinkButton>
-</div>
-
+<%@ Register src="GlobalNavigation.ascx" tagname="GlobalNavigation" tagprefix="uc1" %>
+<uc1:GlobalNavigation ID="GlobalNavigation1" runat="server" />
+<br />                
+<br />
 <div>
-<asp:Label ID="lblSortBy" runat="server" CssClass="NormalBold" Text="Sort By"></asp:Label>
+    <asp:Label ID="lblSortBy" runat="server" CssClass="NormalBold" Text="Sort By"></asp:Label>
     <asp:RadioButtonList ID="rbSort" runat="server" AutoPostBack="True" CssClass="Normal"
          RepeatDirection="Horizontal" OnSelectedIndexChanged="rbSort_SelectedIndexChanged">
         <asp:ListItem Selected="True" Value="EventStart">Response Date</asp:ListItem>

@@ -54,6 +54,7 @@ namespace Engage.Dnn.Events
             if (Request.IsAuthenticated == true)
             {
                 txtEmail.Text = UserInfo.Email;
+                lbAddToCalendar.Enabled = true;
             }
             else
             {

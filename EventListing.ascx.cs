@@ -36,11 +36,6 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                lbAddAnEvent.Visible = IsAdmin;
-                lbManageRsvp.Visible = IsAdmin;
-                lbAdminSettings.Visible = IsAdmin;
-                lbAdminEmail.Visible = IsAdmin;
-
                 if (!Page.IsPostBack)
                 {
                     BindData();
@@ -52,15 +47,15 @@ namespace Engage.Dnn.Events
             }    
         }
            
-        protected void lbCRsvp_OnClick(object sender, EventArgs e)
-        {
-            int eventId = GetId(sender);
+        //protected void lbCRsvp_OnClick(object sender, EventArgs e)
+        //{
+        //    int eventId = GetId(sender);
 
-            string href = EditUrl("EventId", eventId.ToString(), "Rsvp");
-            //string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailEdit&eventid=" + eventId.ToString());
+        //    string href = EditUrl("EventId", eventId.ToString(), "Rsvp");
+        //    //string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailEdit&eventid=" + eventId.ToString());
 
-            Response.Redirect(href, true);
-        }
+        //    Response.Redirect(href, true);
+        //}
 
         protected void lbCViewInvite_OnClick(object sender, EventArgs e)
         {
@@ -94,7 +89,7 @@ namespace Engage.Dnn.Events
 
         private void BindData()
         {
-            EventCollection events = EventCollection.Load(PortalId, "EventStart asc", 0, 0);
+            EventCollection events = EventCollection.Load(PortalId, "EventStart asc", 0, 0, false);
             rpEventListing.DataSource = events;
             rpEventListing.DataBind();
         }

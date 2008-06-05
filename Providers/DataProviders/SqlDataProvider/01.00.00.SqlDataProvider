@@ -438,7 +438,7 @@ drop procedure {databaseOwner}[{objectQualifier}Engage_spGetEvents]
 GO
 
 CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEvents] 
-(@portalId int, @sortColumn nvarchar(200), @index int, @pageSize int)
+(@portalId int, @sortColumn nvarchar(200), @index int, @pageSize int, @showAll bit)
 AS
 BEGIN
 
@@ -456,10 +456,12 @@ BEGIN
 	set @sql = @sql + 'from '
 	set @sql = @sql + 'Engage_Event '
 	set @sql = @sql + 'where PortalId = ' + STR(@portalId)
-	set @sql = @sql + ' and Cancelled = 0 '
-	set @sql = @sql + ' and EventStart > GETDATE()'
-	set @sql = @sql + ' Order by ' + @sortColumn
-
+	if (@showAll = 0)
+	begin
+		set @sql = @sql + ' and Cancelled = 0 '
+		set @sql = @sql + ' and EventStart > GETDATE() '
+	end
+	
 	--print (@sql)
 	exec (@sql)
 
@@ -470,16 +472,19 @@ BEGIN
 
 	if (@PageSize = 0)
 	 	BEGIN
-	 		select e.*,	r.TotalRecords from #results r
-			join Engage_Event e on (r.EventId = e.EventId)
+			set @sql = 'Select e.*,	r.TotalRecords from #results r '
+			set @sql = @sql + 'join Engage_Event e on (r.EventId = e.EventId) '
+			set @sql = @sql + 'Order by ' + @sortColumn
 	 	END
 	ELSE
 	 	BEGIN
-	 		select e.*,	r.TotalRecords from #results r
-			join Engage_Event e on (r.EventId = e.EventId)
-	 		where (id >= @index * @PageSize + 1) and id < (@index * @PageSize) + @PageSize + 1
+			set @sql = 'select e.*,	r.TotalRecords from #results r '
+			set @sql = @sql + 'join Engage_Event e on (r.EventId = e.EventId) '
+	 		set @sql = @sql + 'where (id >= @index * @PageSize + 1) and id < (@index * @PageSize) + @PageSize + 1 '
+			set @sql = @sql + 'Order by ' + @sortColumn
 	 	END
-	
+
+	exec (@sql)	
 END
 
 GO
@@ -1041,7 +1046,8 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spUpdateEvent]
 @InvitationUrl nvarchar(1000),
 @RecapUrl nvarchar(1000),
 @RecurrenceId int,
-@CanRsvp int,
+@CanRsvp bit,
+@Cancelled bit,
 @RevisingUser int
 )
 AS
@@ -1065,6 +1071,7 @@ BEGIN
 		[RecapUrl] = @RecapUrl, 
 		[RecurrenceId] = @RecurrenceId, 
 		[CanRsvp] = @CanRsvp, 
+		[Cancelled]  = @Cancelled,
 		[RevisingUser] = @RevisingUser, 
 		[RevisionDate] = GETDATE()
 	WHERE EventId = @EventId

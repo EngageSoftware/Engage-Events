@@ -11,12 +11,6 @@
 namespace Engage.Dnn.Events {
     
     
-    /// <summary>
-    /// Rsvp class.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated class.
-    /// </remarks>
     public partial class Rsvp {
         
         /// <summary>

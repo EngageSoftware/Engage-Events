@@ -14,6 +14,15 @@ namespace Engage.Dnn.Events {
     public partial class EventEdit {
         
         /// <summary>
+        /// GlobalNavigation1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Engage.Dnn.Events.GlobalNavigation GlobalNavigation1;
+        
+        /// <summary>
         /// defaultCalendarExtender control.
         /// </summary>
         /// <remarks>
@@ -57,51 +66,6 @@ namespace Engage.Dnn.Events {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::AjaxControlToolkit.TextBoxWatermarkExtender txtWatermarkEventLocation;
-        
-        /// <summary>
-        /// lbSettings control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbSettings;
-        
-        /// <summary>
-        /// lbManageEvents control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbManageEvents;
-        
-        /// <summary>
-        /// lbAddAnEvent control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbAddAnEvent;
-        
-        /// <summary>
-        /// lbManageEmail control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbManageEmail;
-        
-        /// <summary>
-        /// lbManageRsvp control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbManageRsvp;
         
         /// <summary>
         /// lblAddNewEvent control.

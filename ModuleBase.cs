@@ -436,26 +436,8 @@ namespace Engage.Dnn.Events
             }
         }
 
-        #region Global Navigation Event Handlers
+        #region Event Specific Navigation Handlers
 
-        protected void lbSettings_OnClick(object sender, EventArgs e)
-        {
-            string href = EditUrl("ModuleId", ModuleId.ToString(CultureInfo.InvariantCulture), "Module");
-            Response.Redirect(href, true);
-        }
-
-        protected void lbManageEvents_OnClick(object sender, EventArgs e)
-        {
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventListingAdmin");
-            Response.Redirect(href, true);
-
-        }
-
-        protected void lbAddAnEvent_OnClick(object sender, EventArgs e)
-        {
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit");
-            Response.Redirect(href, true);
-        }
 
         protected void lbEditEvent_OnClick(object sender, EventArgs e)
         {
@@ -469,12 +451,6 @@ namespace Engage.Dnn.Events
         {
             int eventId = GetId(sender);
             Event.Delete(eventId);
-        }
-
-        protected void lbManageRsvp_OnClick(object sender, EventArgs e)
-        {
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpSummary");
-            Response.Redirect(href, true);
         }
 
         //this can be overridden because a Datagrid is used instead of a Repeater so GetId(..) won't work.
@@ -494,10 +470,13 @@ namespace Engage.Dnn.Events
             Response.Redirect(href, true);
         }
 
-        protected void lbManageEmail_OnClick(object sender, EventArgs e)
+        protected void lbRsvp_OnClick(object sender, EventArgs e)
         {
-        }
+            int eventId = GetId(sender);
 
+            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid=" + eventId.ToString());
+            Response.Redirect(href, true);
+        }
         protected void lnkAddToCalendar_OnClick(object sender, EventArgs e)
         {
             //LinkButton button = (LinkButton)sender;

@@ -83,6 +83,7 @@ namespace Engage.Dnn.Events
             controlKeys.Add("RsvpDetail", "RsvpDetail.ascx");
             controlKeys.Add("Rsvp", "Rsvp.ascx");
             controlKeys.Add("EmailAFriend", "EmailAFriend.ascx");
+            controlKeys.Add("Register", "Register.ascx");
             
             _controlKeys = controlKeys;
         }

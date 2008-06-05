@@ -44,14 +44,9 @@ namespace Engage.Dnn.Events
             {
                 //adds Validate to the control's constructor.
                 //license = LicenseManager.Validate(typeof(EventListingAdmin), this);
-                lbAddAnEvent.Visible = IsAdmin;
-                lbManageRsvp.Visible = IsAdmin;
-                lbAdminSettings.Visible = IsAdmin;
-                lbAdminEmail.Visible = IsAdmin;
-
                 if (!Page.IsPostBack)
                 {
-                    BindData("EventStart");
+                    BindData("EventStart", rbStatus.SelectedValue);
                 }
             }
             catch (Exception exc)
@@ -66,35 +61,53 @@ namespace Engage.Dnn.Events
             Event.Delete(eventId);
 
             string selectedSort = rbSort.SelectedValue;
-            BindData(selectedSort);
+            BindData(selectedSort, rbStatus.SelectedValue);
         }
 
         protected void lbCancel_OnClick(object sender, EventArgs e)
         {
             int eventId = GetId(sender);
             Event ev = Event.Load(eventId);
-            ev.Cancelled = true;
+            ev.Cancelled = !ev.Cancelled;
             ev.Save(UserId);
 
-            BindData(rbSort.SelectedValue);
+            BindData(rbSort.SelectedValue, rbStatus.SelectedValue);
         }
 
         protected void rbSort_SelectedIndexChanged(object sender, EventArgs e)
         {
-            BindData(rbSort.SelectedValue);
+            BindData(rbSort.SelectedValue, rbStatus.SelectedValue);
+        }
+
+        protected void rbStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BindData(rbSort.SelectedValue, rbStatus.SelectedValue);
         }
         
         #endregion
 
         #region Methods
 
-        private void BindData(string sortColumn)
+        private void BindData(string sortColumn, string status)
         {
-            EventCollection events = EventCollection.Load(PortalId, sortColumn, 0, 0);
+            bool showAll = false;
+            if (status == "All") showAll = true;
+            EventCollection events = EventCollection.Load(PortalId, sortColumn, 0, 0, showAll);
             rpEventListing.DataSource = events;
             rpEventListing.DataBind();
         }
 
+        protected string GetActionText(object cancelled)
+        {
+            bool b = (bool)cancelled;
+            string cancelText = Localization.GetString("Cancel", LocalResourceFile);
+            if (b == true)
+            {
+                cancelText = Localization.GetString("UnCancel", LocalResourceFile);
+            }
+            return cancelText;
+
+        }
         #endregion
 
         public override void Dispose()
@@ -112,8 +125,16 @@ namespace Engage.Dnn.Events
             LinkButton lnkDelete = (LinkButton) e.Item.FindControl("lbDelete");
             lnkDelete.Attributes.Add("onClick", "javascript:return confirm('" + Localization.GetString("ConfirmDelete", LocalResourceFile) + "');");
 
-            LinkButton lnkCancel = (LinkButton) e.Item.FindControl("lbCancel");
-            lnkCancel.Attributes.Add("onClick", "javascript:return confirm('" + Localization.GetString("ConfirmCancel", LocalResourceFile) + "');");
+            LinkButton lnkCancel = (LinkButton)e.Item.FindControl("lbCancel");
+            Event ev = (Event)e.Item.DataItem;
+            if (ev.Cancelled)
+            {
+                lnkCancel.Attributes.Add("onClick", "javascript:return confirm('" + Localization.GetString("ConfirmUnCancel", LocalResourceFile) + "');");
+            }
+            else
+            {
+                lnkCancel.Attributes.Add("onClick", "javascript:return confirm('" + Localization.GetString("ConfirmCancel", LocalResourceFile) + "');");
+            }
         }
       
     }

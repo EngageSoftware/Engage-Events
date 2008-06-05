@@ -95,6 +95,7 @@ namespace Engage.Dnn.Events
             e.EventStart = Convert.ToDateTime(date);
             e.Location = txtEventLocation.Text;
             e.Title = txtEventTitle.Text;
+            e.Overview = txtEventDescription.Text;
             e.Save(UserId);
         }
 

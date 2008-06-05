@@ -31,6 +31,12 @@
               <src>DesktopModules/EngageEvents/Rsvp.ascx</src>
               <type>Edit</type>
             </control>
+            <control>
+              <key>RegisterLogin</key>
+              <title>Register</title>
+              <src>DesktopModules/EngageEvents/Register.ascx</src>
+              <type>View</type>
+            </control>
           </controls>
         </module>
       </modules>

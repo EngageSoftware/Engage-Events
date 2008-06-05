@@ -1,15 +1,9 @@
-<%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EventListingGridStyle"
-    Codebehind="EventListingGridStyle.ascx.cs" %>
+<%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EventListingGridStyle"  Codebehind="EventListingGridStyle.ascx.cs" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
-
-<div class="AdminButtons">
-        <asp:LinkButton ID="lbSettings" runat="server" onclick="lbSettings_OnClick">Settings</asp:LinkButton>
-        <asp:LinkButton ID="lbManageEvents" runat="server" onclick="lbManageEvents_OnClick">Manage Events</asp:LinkButton>
-        <asp:LinkButton ID="lbAddAnEvent" runat="server" OnClick="lbAddAnEvent_OnClick">Add An Event</asp:LinkButton>
-        <asp:LinkButton ID="lbManageEmail" runat="server" Visible="False" OnClick="lbManageEmail_OnClick">Manage E-Mail</asp:LinkButton>
-        <asp:LinkButton ID="lbManageRsvp" runat="server" onclick="lbManageRsvp_OnClick">Rsvp</asp:LinkButton>
-    </div>
-    
+<%@ Register src="GlobalNavigation.ascx" tagname="GlobalNavigation" tagprefix="uc1" %>
+<uc1:GlobalNavigation ID="GlobalNavigation1" runat="server" />
+<br />                
+<br />
 <dnn:PagingControl ID="pager" runat="server"></dnn:PagingControl>
 <asp:DataGrid ID="grdEvents" runat="server" Font-Size="X-Small" Font-Names="Verdana"
     Width="100%" Height="72px" AutoGenerateColumns="False" BorderColor="#999999"

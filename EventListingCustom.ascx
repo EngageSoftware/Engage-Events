@@ -1,13 +1,8 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EventListingCustom" Codebehind="EventListingCustom.ascx.cs" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
-
-<div class="AdminButtons">
-    <asp:LinkButton ID="lbAdminSettings" runat="server" onclick="lbSettings_OnClick">Settings</asp:LinkButton>
-    <asp:LinkButton ID="lbAddAnEvent" runat="server" OnClick="lbAddAnEvent_OnClick">Add An Event</asp:LinkButton>
-    <asp:LinkButton ID="lbAdminEmail" runat="server" Visible="False" OnClick="lbManageEmail_OnClick">Manage E-Mail</asp:LinkButton>
-    <asp:LinkButton ID="lbManageRsvp" runat="server" onclick="lbManageRsvp_OnClick">Rsvp</asp:LinkButton>
-</div>
-<br />
+<%@ Register src="GlobalNavigation.ascx" tagname="GlobalNavigation" tagprefix="uc1" %>
+<uc1:GlobalNavigation ID="GlobalNavigation1" runat="server" />
+<br />                
 <br />
 <div id="EventListingCustomCurrent">
         <div class="EventHeader">
@@ -38,7 +33,8 @@
                             </div>
                     
                             <div class="EventButtons">
-                                <asp:LinkButton ID="lbCRsvp" runat="server" ResourceKey="lbRsvp" CssClass="CommandButton" OnClick="lbCRsvp_OnClick">RSVP</asp:LinkButton>
+                                <asp:LinkButton ID="lbCEditEvent" runat="server" ResourceKey="lbCEditEvent" CssClass="CommandButton" OnClick="lbEditEvent_OnClick" Visible="<%#IsAdmin %>">Edit</asp:LinkButton>
+                                <asp:LinkButton ID="lbCRsvp" runat="server" ResourceKey="lbRsvp" CssClass="CommandButton" OnClick="lbRsvp_OnClick">RSVP</asp:LinkButton>
                                 <asp:LinkButton ID="lbCICal" runat="server" ResourceKey="lbIcal" CssClass="CommandButton" OnClick="lbCICal_OnClick">iCal</asp:LinkButton>
                                 <asp:HyperLink ID="lbCViewInvite" runat="server" ResourceKey="lbViewInvite" CssClass="CommandButton" Target="_new" NavigateUrl='<%# DataBinder.Eval(Container.DataItem,"InvitationUrl") %>' Visible=<%# HasInviteUrl(DataBinder.Eval(Container.DataItem, "InvitationUrl"))  %>>View Invite</asp:HyperLink>
 <%--                                <asp:LinkButton ID="lbCeMailAFriend" runat="server" ResourceKey="lbEmailAFriend" CssClass="CommandButton" OnClick="lbCeMailAFriend_OnClick">E-mail A Friend</asp:LinkButton>
@@ -80,7 +76,8 @@
                         </div>
 
                         <div class="EventButtons">
-                            <asp:LinkButton ID="lbURsvp" runat="server" ResourceKey="lbRsvp" CssClass="CommandButton" OnClick="lbCRsvp_OnClick">RSVP</asp:LinkButton>
+                            <asp:LinkButton ID="lbUEditEvent" runat="server" ResourceKey="lbCEditEvent" CssClass="CommandButton" OnClick="lbEditEvent_OnClick" Visible="<%#IsAdmin %>">Edit</asp:LinkButton>
+                            <asp:LinkButton ID="lbURsvp" runat="server" ResourceKey="lbRsvp" CssClass="CommandButton" OnClick="lbRsvp_OnClick">RSVP</asp:LinkButton>
                             <asp:LinkButton ID="lbUIcal" runat="server" ResourceKey="lbIcal" CssClass="CommandButton" OnClick="lbCICal_OnClick">iCal</asp:LinkButton>
                             <asp:HyperLink ID="lbUViewInvite" runat="server" ResourceKey="lbViewInvite" CssClass="CommandButton" Target="_new" NavigateUrl='<%# DataBinder.Eval(Container.DataItem,"InvitationUrl") %>' Visible=<%# HasInviteUrl(DataBinder.Eval(Container.DataItem, "InvitationUrl"))  %>>View Invite</asp:HyperLink>
                             <asp:LinkButton ID="lbUEmailAFriend" runat="server" ResourceKey="lbEmailAFriend" CssClass="CommandButton" OnClick="lbCeMailAFriend_OnClick">E-mail A Friend</asp:LinkButton>

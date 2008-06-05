@@ -1,15 +1,9 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EventListing" Codebehind="EventListing.ascx.cs" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
-
-<div class="AdminButtons">
-    <asp:LinkButton ID="lbAdminSettings" runat="server" onclick="lbSettings_OnClick">Settings</asp:LinkButton>
-    <asp:LinkButton ID="lbAddAnEvent" runat="server" OnClick="lbAddAnEvent_OnClick">Add An Event</asp:LinkButton>
-    <asp:LinkButton ID="lbAdminEmail" runat="server" Visible="False" OnClick="lbManageEmail_OnClick">Manage E-Mail</asp:LinkButton>
-    <asp:LinkButton ID="lbManageRsvp" runat="server" onclick="lbManageRsvp_OnClick">Rsvp</asp:LinkButton>
-</div>
+<%@ Register src="GlobalNavigation.ascx" tagname="GlobalNavigation" tagprefix="uc1" %>
+<uc1:GlobalNavigation ID="GlobalNavigation1" runat="server" />
 <br />                
 <br />
-                
 <div class="EventHeader">
         <h4 class="NormalBold">Events</h4>
 </div>
@@ -36,7 +30,8 @@
 		</div>
 
 		<div class="EventButtons">
-            <asp:LinkButton ID="lbCRsvp" runat="server" CssClass="CommandButton" OnClick="lbCRsvp_OnClick">RSVP</asp:LinkButton>
+		    <asp:LinkButton ID="lbEditEvent" runat="server" ResourceKey="lbEditEvent" CssClass="CommandButton" OnClick="lbEditEvent_OnClick" Visible="<%#IsAdmin %>">Edit</asp:LinkButton>
+            <asp:LinkButton ID="lbCRsvp" runat="server" CssClass="CommandButton" OnClick="lbRsvp_OnClick">RSVP</asp:LinkButton>
             <asp:LinkButton ID="lbCICal" runat="server" CssClass="CommandButton" OnClick="lbCICal_OnClick">iCal</asp:LinkButton>
             <asp:LinkButton ID="lbCViewInvite" runat="server" CssClass="CommandButton" OnClick="lbCViewInvite_OnClick">View Invite</asp:LinkButton>
 <%--            <asp:LinkButton ID="lbCeMailAFriend" runat="server" CssClass="CommandButton" OnClick="lbCeMailAFriend_OnClick">E-mail A Friend</asp:LinkButton>

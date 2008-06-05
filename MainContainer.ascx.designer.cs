@@ -11,12 +11,6 @@
 namespace Engage.Dnn.Events {
     
     
-    /// <summary>
-    /// MainContainer class.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated class.
-    /// </remarks>
     public partial class MainContainer {
         
         /// <summary>

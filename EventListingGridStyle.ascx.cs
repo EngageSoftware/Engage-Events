@@ -38,12 +38,6 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                lbSettings.Visible = IsAdmin;
-                lbManageEvents.Visible = IsAdmin;
-                lbAddAnEvent.Visible = IsAdmin;
-                lbManageEmail.Visible = IsAdmin;
-                lbManageRsvp.Visible = IsAdmin;
-
                 if (!Page.IsPostBack)
                 {
                     BindData();
@@ -105,7 +99,7 @@ namespace Engage.Dnn.Events
 
         private void BindData(string sortColumn)
         {
-            EventCollection events = EventCollection.Load(PortalId, sortColumn, CurrentPageIndex -1, grdEvents.PageSize);
+            EventCollection events = EventCollection.Load(PortalId, sortColumn, CurrentPageIndex -1, grdEvents.PageSize, false);
             grdEvents.DataSource = events;
             grdEvents.DataBind();
 

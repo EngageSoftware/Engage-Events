@@ -14,40 +14,13 @@ namespace Engage.Dnn.Events {
     public partial class EventListing {
         
         /// <summary>
-        /// lbAdminSettings control.
+        /// GlobalNavigation1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbAdminSettings;
-        
-        /// <summary>
-        /// lbAddAnEvent control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbAddAnEvent;
-        
-        /// <summary>
-        /// lbAdminEmail control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbAdminEmail;
-        
-        /// <summary>
-        /// lbManageRsvp control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbManageRsvp;
+        protected global::Engage.Dnn.Events.GlobalNavigation GlobalNavigation1;
         
         /// <summary>
         /// rpEventListing control.

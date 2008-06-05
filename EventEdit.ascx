@@ -3,6 +3,10 @@
 <%@ Register TagPrefix="dnn" TagName="Label" Src="~/controls/LabelControl.ascx" %>
 <%@ Register TagPrefix="dnn" TagName="TextEditor" Src="~/controls/TextEditor.ascx"%>
 <%@ Register TagPrefix="dnn" TagName="sectionheadcontrol" Src="~/controls/sectionheadcontrol.ascx" %>
+<%@ Register src="GlobalNavigation.ascx" tagname="GlobalNavigation" tagprefix="uc1" %>
+<uc1:GlobalNavigation ID="GlobalNavigation1" runat="server" />
+<br />                
+<br />
 
 <ajaxToolkit:CalendarExtender ID="defaultCalendarExtender" runat="server" TargetControlID="txtEventDate" PopupButtonID="imgCalendarButton" />
 <ajaxToolkit:TextBoxWatermarkExtender ID="txtWatermarkEventTitle" runat="server" TargetControlID="txtEventTitle" WatermarkText="Please enter event title" WatermarkCssClass="watermarked" />
@@ -12,13 +16,13 @@
 
 <div id="AddNewEvent">
 
-    <div class="AdminButtons">
+ <%--   <div class="AdminButtons">
         <asp:LinkButton ID="lbSettings" runat="server" onclick="lbSettings_OnClick">Settings</asp:LinkButton>
         <asp:LinkButton ID="lbManageEvents" runat="server" onclick="lbManageEvents_OnClick">Manage Events</asp:LinkButton>
         <asp:LinkButton ID="lbAddAnEvent" runat="server" OnClick="lbAddAnEvent_OnClick">Add An Event</asp:LinkButton>
         <asp:LinkButton ID="lbManageEmail" runat="server" Visible="False" OnClick="lbManageEmail_OnClick">Manage E-Mail</asp:LinkButton>
         <asp:LinkButton ID="lbManageRsvp" runat="server" onclick="lbManageRsvp_OnClick">Rsvp</asp:LinkButton>
-    </div>
+    </div>--%>
 
     <h2 class="Head">
         <asp:Label ID="lblAddNewEvent" runat="server">Add A New Event</asp:Label>
@@ -58,7 +62,7 @@
     
     <div class="EventEditor">
         <asp:Label ID="lblDescription" runat="server">Description</asp:Label>
-        <dnn:TextEditor ID="txtEventDescription" runat="server"></dnn:TextEditor>
+        <dnn:TextEditor ID="txtEventDescription" runat="server" HtmlEncode="false" ChooseRender="false" TextRenderMode="Text"></dnn:TextEditor>
     </div>
     
     <div class="AddEventFooterButtons">

@@ -36,11 +36,6 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                lbAddAnEvent.Visible = IsAdmin;
-                lbManageRsvp.Visible = IsAdmin;
-                lbAdminSettings.Visible = IsAdmin;
-                lbAdminEmail.Visible = IsAdmin;
-
                 if (!Page.IsPostBack)
                 {
                     BindData();
@@ -52,16 +47,6 @@ namespace Engage.Dnn.Events
             }    
         }
            
-        protected void lbCRsvp_OnClick(object sender, EventArgs e)
-        {
-            int eventId = GetId(sender);
-
-            string href = EditUrl("EventId", eventId.ToString(), "Rsvp");
-            //string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Rsvp&eventid=" + eventId.ToString());
-
-            Response.Redirect(href, true);
-        }
-
         protected void lbCViewInvite_OnClick(object sender, EventArgs e)
         {
             int eventId = GetId(sender);
