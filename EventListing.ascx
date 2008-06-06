@@ -1,6 +1,7 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EventListing" Codebehind="EventListing.ascx.cs" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
 <%@ Register src="GlobalNavigation.ascx" tagname="GlobalNavigation" tagprefix="uc1" %>
+<%@ Register src="EventAdminActions.ascx" tagname="actions" tagprefix="uc2" %>
 <uc1:GlobalNavigation ID="GlobalNavigation1" runat="server" />
 <br />                
 <br />
@@ -8,7 +9,7 @@
         <h4 class="NormalBold">Events</h4>
 </div>
 
-<asp:Repeater runat="server" id="rpEventListing">
+<asp:Repeater runat="server" id="rpEventListing" OnItemDataBound="rpEventListing_ItemDataBound">
 	<ItemTemplate>
         <asp:Label id = "lblId" Visible="False" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "Id")  %>'></asp:Label>
         <div class="EventTitle">
@@ -28,15 +29,7 @@
 		    <div class="SubHead">Description</div>
 		    <div class="Normal"><%# DataBinder.Eval(Container.DataItem, "Overview")  %></div>
 		</div>
-
-		<div class="EventButtons">
-		    <asp:LinkButton ID="lbEditEvent" runat="server" ResourceKey="lbEditEvent" CssClass="CommandButton" OnClick="lbEditEvent_OnClick" Visible="<%#IsAdmin %>">Edit</asp:LinkButton>
-            <asp:LinkButton ID="lbCRsvp" runat="server" CssClass="CommandButton" OnClick="lbRsvp_OnClick">RSVP</asp:LinkButton>
-            <asp:LinkButton ID="lbCICal" runat="server" CssClass="CommandButton" OnClick="lbCICal_OnClick">iCal</asp:LinkButton>
-            <asp:LinkButton ID="lbCViewInvite" runat="server" CssClass="CommandButton" OnClick="lbCViewInvite_OnClick">View Invite</asp:LinkButton>
-<%--            <asp:LinkButton ID="lbCeMailAFriend" runat="server" CssClass="CommandButton" OnClick="lbCeMailAFriend_OnClick">E-mail A Friend</asp:LinkButton>
-            <asp:LinkButton ID="lbCPrint" runat="server" CssClass="CommandButton" OnClick="lbCPrint_OnClick">Print</asp:LinkButton>
---%>		</div>
+        <uc2:actions ID="ccEventActions" runat="server" />
 	</ItemTemplate>
 
 </asp:Repeater>

@@ -74,19 +74,19 @@ namespace Engage.Dnn.Events
             grdEvents.Attributes.Add("SortColumn", e.SortExpression);
         }
 
-        protected void grdEvents_DeleteCommand(object source, DataGridCommandEventArgs e)
-        {
-            LinkButton delete = (LinkButton)Engage.Utility.FindControlRecursive(grdEvents, "lnkDelete");
-            base.lbDeleteEvent_OnClick(delete, e);
+        //protected void grdEvents_DeleteCommand(object source, DataGridCommandEventArgs e)
+        //{
+        //    LinkButton delete = (LinkButton)Engage.Utility.FindControlRecursive(grdEvents, "lnkDelete");
+        //    base.lbDeleteEvent_OnClick(delete, e);
 
-            BindData();
-        }
+        //    BindData();
+        //}
 
-        protected void grdEvents_EditCommand(object source, DataGridCommandEventArgs e)
-        {
-            LinkButton edit = (LinkButton)Engage.Utility.FindControlRecursive(grdEvents, "lnkEdit");
-            base.lbEditEvent_OnClick(edit, e);
-        }
+        //protected void grdEvents_EditCommand(object source, DataGridCommandEventArgs e)
+        //{
+        //    LinkButton edit = (LinkButton)Engage.Utility.FindControlRecursive(grdEvents, "lnkEdit");
+        //    base.lbEditEvent_OnClick(edit, e);
+        //}
 
         #endregion
 

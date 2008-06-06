@@ -36,17 +36,29 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                if (!Page.IsPostBack)
-                {
-                    BindData();
-                }
+                BindData();
             }
             catch (Exception exc)
             {
                 Exceptions.ProcessModuleLoadException(this, exc);
             }    
         }
-           
+
+        protected void rpEventListing_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            EventAdminActions actions = (EventAdminActions)e.Item.FindControl("ccEventActions");
+            actions.DataItem = (Event)e.Item.DataItem;
+            actions.ActionCompleted += new ActionEventHandler(actions_ActionCompleted);
+        }
+
+        private void actions_ActionCompleted(object sender, ActionEventArg e)
+        {
+            if (e.ActionStatus == Action.Success)
+            {
+                BindData();
+            }
+        }
+
         //protected void lbCRsvp_OnClick(object sender, EventArgs e)
         //{
         //    int eventId = GetId(sender);
@@ -57,31 +69,39 @@ namespace Engage.Dnn.Events
         //    Response.Redirect(href, true);
         //}
 
-        protected void lbCViewInvite_OnClick(object sender, EventArgs e)
-        {
-            int eventId = GetId(sender);
-            //navigate to invite url
-        }
+        //protected void lbEditEvent_OnClick(object sender, EventArgs e)
+        //{
+        //    int eventId = GetId(sender);
+        //    string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId=" + eventId.ToString());
 
-        protected void lbCeMailAFriend_OnClick(object sender, EventArgs e)
-        {
-            int eventId = GetId(sender);
-            //show email a friend
-        }
+        //    Response.Redirect(href, true);
+        //}
 
-        protected void lbCPrint_OnClick(object sender, EventArgs e)
-        {
-            int eventId = GetId(sender);
-            //print
-        }
+        //protected void lbCViewInvite_OnClick(object sender, EventArgs e)
+        //{
+        //    int eventId = GetId(sender);
+        //    //navigate to invite url
+        //}
 
-        protected void lbCICal_OnClick(object sender, EventArgs e)
-        {
-            int eventId = GetId(sender);
-            Event evnt = Event.Load(eventId);
+        //protected void lbCeMailAFriend_OnClick(object sender, EventArgs e)
+        //{
+        //    int eventId = GetId(sender);
+        //    //show email a friend
+        //}
 
-            SendICalendarToClient(evnt.ToICal("hkenuam@engagesoftware.com"), evnt.Title);
-        }
+        //protected void lbCPrint_OnClick(object sender, EventArgs e)
+        //{
+        //    int eventId = GetId(sender);
+        //    //print
+        //}
+
+        //protected void lbCICal_OnClick(object sender, EventArgs e)
+        //{
+        //    int eventId = GetId(sender);
+        //    Event evnt = Event.Load(eventId);
+
+        //    SendICalendarToClient(evnt.ToICal("hkenuam@engagesoftware.com"), evnt.Title);
+        //}
 
         #endregion
 
@@ -96,6 +116,7 @@ namespace Engage.Dnn.Events
 
         #endregion
 
+       
     }
 }
 

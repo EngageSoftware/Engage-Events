@@ -66,10 +66,10 @@ namespace Engage.Dnn.Events
                 {
                     ListItem eventListingCustom = new ListItem(Localization.GetString("EventListingCustom", LocalResourceFile), "EventListingCustom");
                     ListItem eventListing = new ListItem(Localization.GetString("EventListing", LocalResourceFile), "EventListing");
-                    ListItem eventListingGridStyle = new ListItem(Localization.GetString("EventListingGridStyle", LocalResourceFile), "EventListingGridStyle");
+                    //ListItem eventListingGridStyle = new ListItem(Localization.GetString("EventListingGridStyle", LocalResourceFile), "EventListingGridStyle");
 
                     ddListingDisplay.Items.Add(eventListingCustom);
-                    ddListingDisplay.Items.Add(eventListingGridStyle);
+                    //ddListingDisplay.Items.Add(eventListingGridStyle);
                     ddListingDisplay.Items.Add(eventListing);
 
                     SetOptions();

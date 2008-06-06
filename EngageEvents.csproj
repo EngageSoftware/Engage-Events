@@ -177,6 +177,14 @@
     <Compile Include="Controls\RecurrenceSelector.ascx.designer.cs">
       <DependentUpon>RecurrenceSelector.ascx</DependentUpon>
     </Compile>
+    <Compile Include="ActionEventArg.cs" />
+    <Compile Include="EventAdminActions.ascx.cs">
+      <DependentUpon>EventAdminActions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EventAdminActions.ascx.designer.cs">
+      <DependentUpon>EventAdminActions.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Register.ascx.cs">
       <DependentUpon>Register.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -501,6 +509,7 @@
     <Content Include="App_LocalResources\GlobalNavigation.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="EventAdminActions.ascx" />
     <Content Include="Images\bt_create_account.gif" />
     <Content Include="Images\bt_login.gif" />
     <Content Include="Register.ascx" />
@@ -526,6 +535,11 @@
     <Content Include="Images\submit.gif" />
     <Content Include="Images\update.gif" />
     <Content Include="Images\updatedisabled.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\EventActions.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v8.0\WebApplications\Microsoft.WebApplication.targets" Condition="'$(Solutions.VSVersion)' == '8.0'" />

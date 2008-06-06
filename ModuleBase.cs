@@ -439,44 +439,44 @@ namespace Engage.Dnn.Events
         #region Event Specific Navigation Handlers
 
 
-        protected void lbEditEvent_OnClick(object sender, EventArgs e)
-        {
-            int eventId = GetId(sender);
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId=" + eventId.ToString());
+        //protected void lbEditEvent_OnClick(object sender, EventArgs e)
+        //{
+        //    int eventId = GetId(sender);
+        //    string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId=" + eventId.ToString());
 
-            Response.Redirect(href, true);
-        }
+        //    Response.Redirect(href, true);
+        //}
 
-        protected void lbDeleteEvent_OnClick(object sender, EventArgs e)
-        {
-            int eventId = GetId(sender);
-            Event.Delete(eventId);
-        }
+        //protected void lbDeleteEvent_OnClick(object sender, EventArgs e)
+        //{
+        //    int eventId = GetId(sender);
+        //    Event.Delete(eventId);
+        //}
 
         //this can be overridden because a Datagrid is used instead of a Repeater so GetId(..) won't work.
-        protected void lbEditEmail_OnClick(object sender, EventArgs e)
-        {
-            int eventId = GetId(sender);
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailEdit&eventid=" + eventId.ToString());
+        //protected void lbEditEmail_OnClick(object sender, EventArgs e)
+        //{
+        //    int eventId = GetId(sender);
+        //    string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailEdit&eventid=" + eventId.ToString());
 
-            Response.Redirect(href, true);
-        }
+        //    Response.Redirect(href, true);
+        //}
 
-        protected void lbViewRsvp_OnClick(object sender, EventArgs e)
-        {
-            int eventId = GetId(sender);
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpDetail&eventid=" + eventId.ToString());
+        //protected void lbViewRsvp_OnClick(object sender, EventArgs e)
+        //{
+        //    int eventId = GetId(sender);
+        //    string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpDetail&eventid=" + eventId.ToString());
 
-            Response.Redirect(href, true);
-        }
+        //    Response.Redirect(href, true);
+        //}
 
-        protected void lbRsvp_OnClick(object sender, EventArgs e)
-        {
-            int eventId = GetId(sender);
+        //protected void lbRsvp_OnClick(object sender, EventArgs e)
+        //{
+        //    int eventId = GetId(sender);
 
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid=" + eventId.ToString());
-            Response.Redirect(href, true);
-        }
+        //    string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid=" + eventId.ToString());
+        //    Response.Redirect(href, true);
+        //}
         protected void lnkAddToCalendar_OnClick(object sender, EventArgs e)
         {
             //LinkButton button = (LinkButton)sender;

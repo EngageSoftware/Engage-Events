@@ -44,10 +44,7 @@ namespace Engage.Dnn.Events
             {
                 //adds Validate to the control's constructor.
                 //license = LicenseManager.Validate(typeof(EventListingAdmin), this);
-                if (!Page.IsPostBack)
-                {
-                    BindData("EventStart", rbStatus.SelectedValue);
-                }
+                 BindData();
             }
             catch (Exception exc)
             {
@@ -55,59 +52,44 @@ namespace Engage.Dnn.Events
             }    
         }
 
-        protected void lbDelete_OnClick(object sender, EventArgs e)
-        {
-            int eventId = GetId(sender);
-            Event.Delete(eventId);
+        //protected void rbSort_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    BindData();
+        //}
 
-            string selectedSort = rbSort.SelectedValue;
-            BindData(selectedSort, rbStatus.SelectedValue);
+        //protected void rbStatus_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    BindData();
+        //}
+
+        private void actions_ActionCompleted(object sender, ActionEventArg e)
+        {
+            if (e.ActionStatus == Action.Success)
+            {
+                BindData();
+            }
         }
 
-        protected void lbCancel_OnClick(object sender, EventArgs e)
+        protected void rpEventListing_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            int eventId = GetId(sender);
-            Event ev = Event.Load(eventId);
-            ev.Cancelled = !ev.Cancelled;
-            ev.Save(UserId);
-
-            BindData(rbSort.SelectedValue, rbStatus.SelectedValue);
+            EventAdminActions actions = (EventAdminActions)e.Item.FindControl("ccEventActions");
+            actions.DataItem = (Event)e.Item.DataItem;
+            actions.ActionCompleted += new ActionEventHandler(actions_ActionCompleted);
         }
 
-        protected void rbSort_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            BindData(rbSort.SelectedValue, rbStatus.SelectedValue);
-        }
-
-        protected void rbStatus_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            BindData(rbSort.SelectedValue, rbStatus.SelectedValue);
-        }
-        
         #endregion
 
         #region Methods
 
-        private void BindData(string sortColumn, string status)
+        private void BindData()
         {
             bool showAll = false;
-            if (status == "All") showAll = true;
-            EventCollection events = EventCollection.Load(PortalId, sortColumn, 0, 0, showAll);
+            if (rbStatus.SelectedValue == "All") showAll = true;
+            EventCollection events = EventCollection.Load(PortalId, rbSort.SelectedValue, 0, 0, showAll);
             rpEventListing.DataSource = events;
             rpEventListing.DataBind();
         }
 
-        protected string GetActionText(object cancelled)
-        {
-            bool b = (bool)cancelled;
-            string cancelText = Localization.GetString("Cancel", LocalResourceFile);
-            if (b == true)
-            {
-                cancelText = Localization.GetString("UnCancel", LocalResourceFile);
-            }
-            return cancelText;
-
-        }
         #endregion
 
         public override void Dispose()
@@ -119,24 +101,6 @@ namespace Engage.Dnn.Events
             }
             base.Dispose();
         }
-
-        protected void rpEventListing_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-            LinkButton lnkDelete = (LinkButton) e.Item.FindControl("lbDelete");
-            lnkDelete.Attributes.Add("onClick", "javascript:return confirm('" + Localization.GetString("ConfirmDelete", LocalResourceFile) + "');");
-
-            LinkButton lnkCancel = (LinkButton)e.Item.FindControl("lbCancel");
-            Event ev = (Event)e.Item.DataItem;
-            if (ev.Cancelled)
-            {
-                lnkCancel.Attributes.Add("onClick", "javascript:return confirm('" + Localization.GetString("ConfirmUnCancel", LocalResourceFile) + "');");
-            }
-            else
-            {
-                lnkCancel.Attributes.Add("onClick", "javascript:return confirm('" + Localization.GetString("ConfirmCancel", LocalResourceFile) + "');");
-            }
-        }
-      
     }
 }
 

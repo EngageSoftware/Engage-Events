@@ -51,16 +51,8 @@ namespace Engage.Dnn.Events
             Event e = Event.Load(EventId);
             lblEventName.Text = "To RSVP for " + e.Title + " please enter your email address below.";
 
-            if (Request.IsAuthenticated == true)
-            {
-                txtEmail.Text = UserInfo.Email;
-                lbAddToCalendar.Enabled = true;
-            }
-            else
-            {
-                //Send them to registration?
-            }
-
+            txtEmail.Text = UserInfo.Email;
+            lbAddToCalendar.Enabled = true;
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)

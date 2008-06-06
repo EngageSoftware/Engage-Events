@@ -1,6 +1,7 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EventListingAdmin" Codebehind="EventListingAdmin.ascx.cs" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
 <%@ Register src="GlobalNavigation.ascx" tagname="GlobalNavigation" tagprefix="uc1" %>
+<%@ Register src="EventAdminActions.ascx" tagname="actions" tagprefix="uc2" %>
 <uc1:GlobalNavigation ID="GlobalNavigation1" runat="server" />
 <br />                
 <br />
@@ -8,14 +9,14 @@
     <h4 class="NormalBold">My Events</h4>
     <asp:Label ID="lblSortBy" runat="server" CssClass="NormalBold" Text="Sort By"></asp:Label>
     <asp:RadioButtonList ID="rbSort" runat="server" AutoPostBack="True" CssClass="Normal"
-         RepeatDirection="Horizontal" OnSelectedIndexChanged="rbSort_SelectedIndexChanged">
+         RepeatDirection="Horizontal">
         <asp:ListItem Selected="True" Value="EventStart">Date</asp:ListItem>
         <asp:ListItem Value="Title">Title</asp:ListItem>
     </asp:RadioButtonList><br />
     <div align="left">
         <asp:Label ID="lblStatus" runat="server" CssClass="NormalBold" Text="Status"></asp:Label>
         <asp:RadioButtonList ID="rbStatus" runat="server" AutoPostBack="True" CssClass="Normal"
-             RepeatDirection="Horizontal" OnSelectedIndexChanged="rbStatus_SelectedIndexChanged">
+             RepeatDirection="Horizontal" >
             <asp:ListItem Selected="True" Value="Active">Active</asp:ListItem>
             <asp:ListItem Value="All">All</asp:ListItem>
         </asp:RadioButtonList>
@@ -42,8 +43,8 @@
 		    <div class="NormalBold">Description</div>
 		    <div class="Normal"><%# DataBinder.Eval(Container.DataItem, "Overview")  %></div>
 		</div>
-
-		<div class="EventButtons">
+        <uc2:actions ID="ccEventActions" runat="server" />
+<%--		<div class="EventButtons">
 		    <asp:LinkButton ID="lbEditEvent" runat="server" CssClass="CommandButton" ResourceKey="lbEditevent" OnClick="lbEditEvent_OnClick">Edit</asp:LinkButton>
             <asp:LinkButton ID="lbViewRsvp" runat="server" CssClass="CommandButton" ResourceKey="lbViewRsvp" OnClick="lbViewRsvp_OnClick">View RSVP</asp:LinkButton>
             <asp:HyperLink ID="lbViewInvite" runat="server" CssClass="CommandButton" ResourceKey="lbViewInvite" Visible = "false" Target="_new" NavigateUrl='<%# DataBinder.Eval(Container.DataItem,"InvitationUrl") %>'>View Invite</asp:HyperLink>
@@ -52,6 +53,6 @@
             <asp:LinkButton ID="lbCancel" runat="server" CssClass="CommandButton" OnClick="lbCancel_OnClick" Text='<%# GetActionText(DataBinder.Eval(Container.DataItem,"Cancelled")) %>'></asp:LinkButton>
             
 		</div>
-	</ItemTemplate>
+--%>	</ItemTemplate>
 
 </asp:Repeater>

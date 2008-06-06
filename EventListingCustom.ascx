@@ -1,6 +1,7 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EventListingCustom" Codebehind="EventListingCustom.ascx.cs" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
 <%@ Register src="GlobalNavigation.ascx" tagname="GlobalNavigation" tagprefix="uc1" %>
+<%@ Register src="EventAdminActions.ascx" tagname="actions" tagprefix="uc2" %>
 <uc1:GlobalNavigation ID="GlobalNavigation1" runat="server" />
 <br />                
 <br />
@@ -31,15 +32,7 @@
                                 <p class="NormalBold">Description</p>
                                 <p class="Normal"><%# DataBinder.Eval(Container.DataItem, "Overview")  %></p>
                             </div>
-                    
-                            <div class="EventButtons">
-                                <asp:LinkButton ID="lbCEditEvent" runat="server" ResourceKey="lbCEditEvent" CssClass="CommandButton" OnClick="lbEditEvent_OnClick" Visible="<%#IsAdmin %>">Edit</asp:LinkButton>
-                                <asp:LinkButton ID="lbCRsvp" runat="server" ResourceKey="lbRsvp" CssClass="CommandButton" OnClick="lbRsvp_OnClick">RSVP</asp:LinkButton>
-                                <asp:LinkButton ID="lbCICal" runat="server" ResourceKey="lbIcal" CssClass="CommandButton" OnClick="lbCICal_OnClick">iCal</asp:LinkButton>
-                                <asp:HyperLink ID="lbCViewInvite" runat="server" ResourceKey="lbViewInvite" CssClass="CommandButton" Target="_new" NavigateUrl='<%# DataBinder.Eval(Container.DataItem,"InvitationUrl") %>' Visible=<%# HasInviteUrl(DataBinder.Eval(Container.DataItem, "InvitationUrl"))  %>>View Invite</asp:HyperLink>
-<%--                                <asp:LinkButton ID="lbCeMailAFriend" runat="server" ResourceKey="lbEmailAFriend" CssClass="CommandButton" OnClick="lbCeMailAFriend_OnClick">E-mail A Friend</asp:LinkButton>
-                                <asp:LinkButton ID="lbCPrint" runat="server" ResourceKey="lbPrint" CssClass="CommandButton" OnClick="lbCPrint_OnClick">Print</asp:LinkButton>
---%>                            </div>
+                            <uc2:actions ID="ccEventActions" runat="server" />
 					</div>
         </ItemTemplate>
     </asp:Repeater>
@@ -74,8 +67,8 @@
                             <p class="NormalBold">Description</p>
                             <p class="Normal"><%# DataBinder.Eval(Container.DataItem, "Overview")  %></p>
                         </div>
-
-                        <div class="EventButtons">
+                        <uc2:actions ID="ccEventActions2" runat="server" />
+<%--                        <div class="EventButtons">
                             <asp:LinkButton ID="lbUEditEvent" runat="server" ResourceKey="lbCEditEvent" CssClass="CommandButton" OnClick="lbEditEvent_OnClick" Visible="<%#IsAdmin %>">Edit</asp:LinkButton>
                             <asp:LinkButton ID="lbURsvp" runat="server" ResourceKey="lbRsvp" CssClass="CommandButton" OnClick="lbRsvp_OnClick">RSVP</asp:LinkButton>
                             <asp:LinkButton ID="lbUIcal" runat="server" ResourceKey="lbIcal" CssClass="CommandButton" OnClick="lbCICal_OnClick">iCal</asp:LinkButton>
@@ -83,7 +76,7 @@
                             <asp:LinkButton ID="lbUEmailAFriend" runat="server" ResourceKey="lbEmailAFriend" CssClass="CommandButton" OnClick="lbCeMailAFriend_OnClick">E-mail A Friend</asp:LinkButton>
                             <asp:LinkButton ID="lbUPrint" runat="server" ResourceKey="lbPrint" CssClass="CommandButton" OnClick="lbCPrint_OnClick">Print</asp:LinkButton>
                         </div>
-				</div>                        
+--%>				</div>                        
         </ItemTemplate>
     </asp:Repeater>
 </div>

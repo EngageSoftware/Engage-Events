@@ -36,10 +36,10 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                if (!Page.IsPostBack)
-                {
+                //if (!Page.IsPostBack)
+                //{
                     BindData();
-                }
+                //}
             }
             catch (Exception exc)
             {
@@ -47,44 +47,66 @@ namespace Engage.Dnn.Events
             }    
         }
            
-        protected void lbCViewInvite_OnClick(object sender, EventArgs e)
-        {
-            int eventId = GetId(sender);
-            //navigate to invite url
-        }
+        //protected void lbCViewInvite_OnClick(object sender, EventArgs e)
+        //{
+        //    int eventId = GetId(sender);
+        //    //navigate to invite url
+        //}
 
-        protected void lbCeMailAFriend_OnClick(object sender, EventArgs e)
-        {
-            int eventId = GetId(sender);
-            //show email a friend
+        //protected void lbCeMailAFriend_OnClick(object sender, EventArgs e)
+        //{
+        //    int eventId = GetId(sender);
+        //    //show email a friend
 
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailAFriend&eventid=" + eventId.ToString());
+        //    string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailAFriend&eventid=" + eventId.ToString());
 
-            Response.Redirect(href, true);
-        }
+        //    Response.Redirect(href, true);
+        //}
 
-        protected void lbCPrint_OnClick(object sender, EventArgs e)
-        {
-            int eventId = GetId(sender);
-            //print
-        }
+        //protected void lbCPrint_OnClick(object sender, EventArgs e)
+        //{
+        //    int eventId = GetId(sender);
+        //    //print
+        //}
 
-        protected void lbCICal_OnClick(object sender, EventArgs e)
-        {
-            int eventId = GetId(sender);
-            Event evnt = Event.Load(eventId);
+        //protected void lbCICal_OnClick(object sender, EventArgs e)
+        //{
+        //    int eventId = GetId(sender);
+        //    Event evnt = Event.Load(eventId);
 
-            SendICalendarToClient(evnt.ToICal("hkenuam@engagesoftware.com"), evnt.Title);
-        }
+        //    SendICalendarToClient(evnt.ToICal("hkenuam@engagesoftware.com"), evnt.Title);
+        //}
 
         protected void Listing_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            LinkButton lbICal = e.Item.FindControl("lbCICal") as LinkButton;
-            if (lbICal != null) lbICal.Visible = IsLoggedIn;
+            EventAdminActions actions = (EventAdminActions)e.Item.FindControl("ccEventActions");
+            if (actions != null)
+            {
+                actions.DataItem = (Event)e.Item.DataItem;
+                actions.ActionCompleted += new ActionEventHandler(actions_ActionCompleted);
+            }
 
-            lbICal = e.Item.FindControl("lbUICal") as LinkButton;
-            if (lbICal != null) lbICal.Visible = IsLoggedIn;
+            actions = (EventAdminActions)e.Item.FindControl("ccEventActions2");
+            if (actions != null)
+            {
+                actions.DataItem = (Event)e.Item.DataItem;
+                actions.ActionCompleted += new ActionEventHandler(actions_ActionCompleted);
+            }
 
+            //LinkButton lbICal = e.Item.FindControl("lbCICal") as LinkButton;
+            //if (lbICal != null) lbICal.Visible = IsLoggedIn;
+
+            //lbICal = e.Item.FindControl("lbUICal") as LinkButton;
+            //if (lbICal != null) lbICal.Visible = IsLoggedIn;
+
+        }
+
+        private void actions_ActionCompleted(object sender, ActionEventArg e)
+        {
+            if (e.ActionStatus == Action.Success)
+            {
+                BindData();
+            }
         }
 
         #endregion
@@ -106,10 +128,10 @@ namespace Engage.Dnn.Events
        
         #endregion
 
-        protected bool HasInviteUrl(object invitationUrl)
-        {
-            return (invitationUrl.ToString().Length > 0);
-        }
+        //protected bool HasInviteUrl(object invitationUrl)
+        //{
+        //    return (invitationUrl.ToString().Length > 0);
+        //}
 
      
     }
