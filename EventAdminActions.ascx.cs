@@ -61,12 +61,12 @@ namespace Engage.Dnn.Events
         {
             lbAddToCalendar.Visible = IsLoggedIn;
 
-            lbEditEmail.Visible = IsAdmin;
             lbCancel.Visible = IsAdmin;
             lbDelete.Visible = IsAdmin;
             lbEditEvent.Visible = IsAdmin;
             lbResponses.Visible = IsAdmin;
-            lbViewInvite.Visible = false;
+            lbViewInvite.Visible = false; //for now. hk
+            lbEditEmail.Visible = false; //for now. hk
 
             string cancelText = Localization.GetString("Cancel", LocalResourceFile);
             if (_event.Cancelled == true)

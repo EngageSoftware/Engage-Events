@@ -59,7 +59,9 @@ namespace Engage.Dnn.Events
                 }
                 else
                 {
-                    return PortalSecurity.IsInRole(HostSettings.GetHostSetting(Engage.Dnn.Events.Util.Utility.AdminRole + PortalId));
+                    return IsEditable;
+                    //Later we can add checks to control access by custom roles. hk
+                    //return PortalSecurity.IsInRole(HostSettings.GetHostSetting(Engage.Dnn.Events.Util.Utility.AdminRole + PortalId));
                 }
             }
         }
