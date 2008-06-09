@@ -30,6 +30,9 @@ using Engage.Dnn.Events.Util;
 
 namespace Engage.Dnn.Events
 {
+    /// <summary>
+    /// THIS CLASS IS CURRENTLY NO LONGER USED BUT KEPT FOR CODE USED FOR PAGING SORTING AS AN EXAMPLE hk
+    /// </summary>
     public partial class EventListingGridStyle : ModuleBase
     {
         #region Event Handlers
@@ -145,55 +148,6 @@ namespace Engage.Dnn.Events
 
             
         }
-
-        //protected override void lbEditEmail_OnClick(object sender, EventArgs e)
-        //{
-        //    LinkButton button = (LinkButton)sender;
-        //    DataGridItem item = (DataGridItem)button.NamingContainer;
-
-        //    int eventId = Convert.ToInt32(item.Cells[0].Text);
-
-        //    string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailEdit&eventid=" + eventId.ToString());
-
-        //    Response.Redirect(href, true);
-        //}
-
-        //protected override void lbEditEvent_OnClick(object sender, EventArgs e)
-        //{
-        //    int eventId = GetId(sender);
-        //    string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId=" + eventId.ToString());
-
-        //    Response.Redirect(href, true);
-        //}
-
-        //protected void lnkAddToCalendar_OnClick(object sender, EventArgs e)
-        //{
-        //    LinkButton button = (LinkButton)sender;
-        //    DataGridItem  item = (DataGridItem) button.NamingContainer;
-
-        //    int eventId = Convert.ToInt32(item.Cells[0].Text);
-        //    Event ee = Event.Load(eventId);
-
-        //    //Stream The vCalendar 
-        //    HttpContext.Current.Response.ContentEncoding = Encoding.GetEncoding(CultureInfo.CurrentUICulture.TextInfo.ANSICodePage);
-        //    HttpContext.Current.Response.ContentType = "text/x-iCalendar";
-        //    HttpContext.Current.Response.AppendHeader("Content-Disposition", "filename=" + HttpUtility.UrlEncode(ee.Title) + ".vcs");
-        //    HttpContext.Current.Response.Write(ee.ToICal("hkenuam@engagesoftware.com"));
-        //}
-
-        //#region IActionable Members
-
-        //public ModuleActionCollection ModuleActions
-        //{
-        //    get
-        //    {
-        //        ModuleActionCollection Actions = new ModuleActionCollection();
-        //        Actions.Add(GetNextActionID(), Localization.GetString("Title", this.LocalResourceFile), "", "", "", EditUrl(Utility.RsvpListingContainer), false, SecurityAccessLevel.Edit, true, false);
-        //        return Actions;
-        //    }
-        //}
-
-        //#endregion
 
     }
 }

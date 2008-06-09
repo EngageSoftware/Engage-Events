@@ -489,30 +489,20 @@ END
 
 GO
 
-
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview] ,[EventStart],[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'DotNetNuke Training Seminar', 'This seminar will cover basic...', 
-'2008-02-15 17:00:00',
-'1 Microsoft Place', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Henry Kenuam', 'hkenuam@engagesoftware.com')
-GO
-
 INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
 ([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
  ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'DotNetNuke Skinning by Dang', 'This event will cover skinning concepts...', 
-'2008-02-15 17:30:00',
-'2 Microsoft Place', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Henry Kenuam', 'hkenuam@engagesoftware.com')
+VALUES (0, 0, 'DotNetNuke Skinning', 'This event will cover skinning concepts...', 
+GETDATE() + 5,
+'2 Microsoft Place', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training.aspx',
+'http://engagesoftware.com/training', 1, 1, 1, 'Coung Dang', 'cdang@engagesoftware.com')
 GO
 
 INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
 ([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
  ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
 VALUES (0, 0, 'Object Oriented Programming Talk', 'Discuss Object Oriented programming concepts and why use them.', 
-'2008-02-15 15:30:00',
+GETDATE() + 3,
 '3 Microsoft Place', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
 'http://engagesoftware.com/training', 1, 1, 1, 'Ian Robinson', 'irobinson@engagesoftware.com')
 GO
@@ -520,159 +510,10 @@ GO
 INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
 ([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
  ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'DotNuke Module Development by christoc', 'Come learn about module development techniques', 
-'2008-02-15 16:30:00',
+VALUES (0, 0, 'DotNuke Module Development', 'Come learn about module development techniques', 
+GETDATE() + 35,
 '4 Microsoft Place', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Henry Kenuam', 'hkenuam@engagesoftware.com')
-GO
-
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'Time Management - Make the most of it', 'Meet with Rich to discuss the Steven Covey principles of Time Management.', 
-'2008-02-19 15:30:00',
-'6 Microsoft Place', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Coung Dang', 'cdang@engagesoftware.com')
-GO
-
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'River City Professionals', 'Preview Party is 2/23 & the Main Event is 3/22.',
-'2008-02-22 15:00:00',
-'Skybox - 800 N. 3rd St.', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Henry Kenuam', 'hkenuam@engagesoftware.com')
-GO
-
-
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'Feed St. Louis', 'Join Loudmouth and the Bluebird for a special musical benefit for Live Feed, featuring four bands...', 
-'2008-04-22 16:00:00',
-'The Bluebird - 2706 Olive St.', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Coung Dang', 'cdang@engagesoftware.com')
-GO
-
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'Kemp Auto Museum Trivia Night', 'Sharpen your pencils and put on your thinking cap!', 
-'2008-03-11 16:00:00',
-'Kemp Auto Museum - Chesterfield Valley', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Henry Kenuam', 'hkenuam@engagesoftware.com')
-GO
-
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'American Marketing Association Under 35 Networking Event', 'Join the Under 35 Networking Organization for it''s second event of the year. ', 
-'2008-03-12 16:00:00',
-'Dolce Bistro/Ultra Lounge - 200 N. Broadway', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Ian Robinson', 'irobinson@engagesoftware.com')
-GO
-
-
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'Back to the Cause Preview Party', 'Join us as we gear up for Back to the Cause 2008 to benefit Shriners Hospitals for Children!', 
-'2008-04-15 16:00:00',
-'Mike Shannon''s Steaks & Seafood - 620 Market Street', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Henry Kenuam', 'hkenuam@engagesoftware.com')
-GO
-
-
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'Missouri Botanical Garden’s Young Friends Coffee Evening', 'Join the Missouri Botanical Garden’s Young Friends for an evening of coffee tasting, a cupping demonstration.', 
-'2008-03-15 16:00:00',
-'Missouri Botanical Garden - Ridgway Center', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Ian Robinson', 'irobinson@engagesoftware.com')
-GO
-
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'Third Friday Open House', 'Third Fridays at Third Degree Glass Factory are HOT!', 
-'2008-03-15 16:00:00',
-'3rd Degree Glass Factory - 5200 Delmar', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Henry Kenuam', 'hkenuam@engagesoftware.com')
-GO
-
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'Stress Free Fridays', 'Weekly, Networking Happy Hour', 
-'2008-05-1 16:00:00',
-'TBA', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Henry Kenuam', 'hkenuam@engagesoftware.com')
-GO
-
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'Downtown Gallery Walk', 'Head east every first Friday of the month and stroll between over 20 galleries and shops featuring the best in St. Louis contemporary art!', 
-'2008-05-3 16:00:00',
-'Downtown (Washington to Olive & 16th to Broadway)', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Henry Kenuam', 'hkenuam@engagesoftware.com')
-GO
-
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'Tenacious Trivia', 'Calling all lovers for trivia and beer! Come down to rBar every Thursday for Tenacious Trivia featuring the salty banter of Captain Vic.', 
-'2008-05-3 16:00:00',
-'rBar – 4401 Manchester', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Henry Kenuam', 'hkenuam@engagesoftware.com')
-GO
-
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'Dada Ball After Party', 'You won''t want to miss this one...', 
-'2008-03-3 15:00:00',
-'Contemporary Art Museum St. Louis- 3750 Washington Blvd.', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Henry Kenuam', 'hkenuam@engagesoftware.com')
-GO
-
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'Saint Louis University Executive Master of International Business Program Information Session', 'The EMIB program is geared to experienced professionals who already possess a core skill set and wish to add a global business expertise to their portfolio.', 
-'2008-03-15 17:00:00',
-'The John Cook School of Business - Saint Louis University', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Henry Kenuam', 'hkenuam@engagesoftware.com')
-GO
-
-
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'Oscar Night® America', 'Join Cinema St. Louis for Oscar Night® America, a glamorous night of stargazing that celebrates the 80th Academy Awards.', 
-'2008-02-26 17:00:00',
-'The Pageant - 6161 Delmar Blvd.', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Henry Kenuam', 'hkenuam@engagesoftware.com')
-GO
-
-
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'Breakfast with the Deans', 'What''s behind the momentum at Mizzou''s Trulaske College of Business, where the school is headed, and what it means to St. Louis.', 
-'2008-02-26 17:00:00',
-'Edward Jones Office 12555 Manchester', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Henry Kenuam', 'hkenuam@engagesoftware.com')
-GO
-
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'Youth In Need''s Celebration of Youth', 'Black tie dinner, gala and auction. Event marks the agency''s 21st anniversary. Brenda and Maurice Newberry of The Newberry Group will be honored.', 
-'2008-02-22 16:30:00',
-'Ameristar Conference Center ', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Henry Kenuam', 'hkenuam@engagesoftware.com')
+'http://engagesoftware.com/training', 1, 1, 1, 'Chris Hammond', 'chammond@engagesoftware.com')
 GO
 
 

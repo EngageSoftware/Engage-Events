@@ -438,65 +438,23 @@ namespace Engage.Dnn.Events
             }
         }
 
-        #region Event Specific Navigation Handlers
-
-
-        //protected void lbEditEvent_OnClick(object sender, EventArgs e)
-        //{
-        //    int eventId = GetId(sender);
-        //    string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId=" + eventId.ToString());
-
-        //    Response.Redirect(href, true);
-        //}
-
-        //protected void lbDeleteEvent_OnClick(object sender, EventArgs e)
-        //{
-        //    int eventId = GetId(sender);
-        //    Event.Delete(eventId);
-        //}
-
-        //this can be overridden because a Datagrid is used instead of a Repeater so GetId(..) won't work.
-        //protected void lbEditEmail_OnClick(object sender, EventArgs e)
-        //{
-        //    int eventId = GetId(sender);
-        //    string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailEdit&eventid=" + eventId.ToString());
-
-        //    Response.Redirect(href, true);
-        //}
-
-        //protected void lbViewRsvp_OnClick(object sender, EventArgs e)
-        //{
-        //    int eventId = GetId(sender);
-        //    string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpDetail&eventid=" + eventId.ToString());
-
-        //    Response.Redirect(href, true);
-        //}
-
-        //protected void lbRsvp_OnClick(object sender, EventArgs e)
-        //{
-        //    int eventId = GetId(sender);
-
-        //    string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid=" + eventId.ToString());
-        //    Response.Redirect(href, true);
-        //}
-        protected void lnkAddToCalendar_OnClick(object sender, EventArgs e)
+        protected string RsvpUrl
         {
-            //LinkButton button = (LinkButton)sender;
-            //DataGridItem item = (DataGridItem)button.NamingContainer;
-
-            //int eventId = Convert.ToInt32(item.Cells[0].Text);
-            int eventId = GetId(sender);
-            Event ee = Event.Load(eventId);
-
-            //Stream The vCalendar 
-            HttpContext.Current.Response.ContentEncoding = Encoding.GetEncoding(CultureInfo.CurrentUICulture.TextInfo.ANSICodePage);
-            HttpContext.Current.Response.ContentType = "text/x-iCalendar";
-            HttpContext.Current.Response.AppendHeader("Content-Disposition", "filename=" + HttpUtility.UrlEncode(ee.Title) + ".vcs");
-            HttpContext.Current.Response.Write(ee.ToICal("hkenuam@engagesoftware.com"));
+            get
+            {
+                string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Rsvp&eventid=" + EventId.ToString());
+                return href;
+            }
         }
 
-        #endregion
+        protected string RegisterUrl
+        {
+            get
+            {
+                string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid=" + EventId.ToString());
+                return href;
+            }
+        }
     }
-
 }
 

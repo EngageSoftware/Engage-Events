@@ -29,7 +29,7 @@
 		    <div class="SubHead">Description</div>
 		    <div class="Normal"><%# DataBinder.Eval(Container.DataItem, "Overview")  %></div>
 		</div>
-        <uc2:actions ID="ccEventActions" runat="server" />
+        <uc2:actions ID="ccEventActions" runat="server" UseCache="true" />
 	</ItemTemplate>
 
 </asp:Repeater>

@@ -33,6 +33,10 @@ using Engage.Events;
 
 namespace Engage.Dnn.Events
 {
+    /// <summary>
+    /// This control's behavior changed from using LinkButtons to standard buttons. Something to do with a postback
+    /// not occurring on the container form. Not sure why? Anyhow, it stores the EventID in viewstate and uses it if needed.hk
+    /// </summary>
     public partial class EventAdminActions : ModuleBase
     {
         public event ActionEventHandler ActionCompleted;
@@ -49,10 +53,21 @@ namespace Engage.Dnn.Events
         private Engage.Events.Event _event;
         internal Engage.Events.Event DataItem
         {
-            get { return _event; }
+            get 
+            {
+                if (_event != null)
+                {
+                    return _event;
+                }
+                else
+                {
+                    return Event.Load(CurrentEventId);
+                }
+            }
             set 
             { 
                 _event = value;
+                CurrentEventId = _event.Id;
                 BindData();
             }
         }
@@ -69,18 +84,17 @@ namespace Engage.Dnn.Events
             lbEditEmail.Visible = false; //for now. hk
 
             string cancelText = Localization.GetString("Cancel", LocalResourceFile);
-            if (_event.Cancelled == true)
+            if (DataItem.Cancelled == true)
             {
                 cancelText = Localization.GetString("UnCancel", LocalResourceFile);
             }
             lbCancel.Text = cancelText;
 
-            lbViewInvite.NavigateUrl = _event.InvitationUrl;
-            lbViewInvite.Visible = _event.InvitationUrl.Length > 0;
+            //lbViewInvite.Visible = Engage.Util.Utility.IsValidEmail(DataItem.InvitationUrl);
 
             lbDelete.Attributes.Add("onClick", "javascript:return confirm('" + Localization.GetString("ConfirmDelete", LocalResourceFile) + "');");
 
-            if (_event.Cancelled)
+            if (DataItem.Cancelled)
             {
                 lbCancel.Attributes.Add("onClick", "javascript:return confirm('" + Localization.GetString("ConfirmUnCancel", LocalResourceFile) + "');");
             }
@@ -95,54 +109,75 @@ namespace Engage.Dnn.Events
 
         protected void lbEditEvent_OnClick(object sender, EventArgs e)
         {
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId=" + _event.Id.ToString());
+            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId=" + DataItem.Id.ToString());
             Response.Redirect(href, true);
         }
 
         protected void lbRegister_OnClick(object sender, EventArgs e)
         {
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid=" + _event.Id.ToString());
+            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid=" + DataItem.Id.ToString());
             Response.Redirect(href, true);        
         }
 
         protected void lbResponses_OnClick(object sender, EventArgs e)
         {
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpDetail&eventid=" + _event.Id.ToString());
+            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpDetail&eventid=" + DataItem.Id.ToString());
             Response.Redirect(href, true);
         }
 
         protected void lbDeleteEvent_OnClick(object sender, EventArgs e)
         {
-            Event.Delete(_event.Id);
-            if (ActionCompleted != null)
-            {
-                ActionCompleted(this, new ActionEventArg(Action.Success));
-            }
+            Event.Delete(DataItem.Id);
+            //if (ActionCompleted != null)
+            //{
+            //    ActionCompleted(this, new ActionEventArg(Action.Success));
+            //}
+
+            //Not the best way but I need to refresh the page this control is on. hk
+            Response.Redirect(Request.Url.ToString());
         }
 
         protected void lbCancel_OnClick(object sender, EventArgs e)
         {
-            _event.Cancelled = !_event.Cancelled;
-            _event.Save(UserId);
+            Event thisEvent = DataItem;
+            thisEvent.Cancelled = !DataItem.Cancelled;
+            thisEvent.Save(UserId);
 
-            if (ActionCompleted != null)
-            {
-                ActionCompleted(this, new ActionEventArg(Action.Success));
-            }
+            //if (ActionCompleted != null)
+            //{
+            //    ActionCompleted(this, new ActionEventArg(Action.Success));
+            //}
+
+            //Not the best way but I need to refresh the page this control is on. hk
+            Response.Redirect(Request.Url.ToString());
         }
 
         protected void lbEditEmail_OnClick(object sender, EventArgs e)
         {
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailEdit&eventid=" + _event.Id.ToString());
+            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailEdit&eventid=" + DataItem.Id.ToString());
             Response.Redirect(href, true);
         }
 
         protected void lbAddToCalendar_OnClick(object sender, EventArgs e)
         {
-            SendICalendarToClient(_event.ToICal(base.UserInfo.Email), _event.Title);
+            SendICalendarToClient(DataItem.ToICal(base.UserInfo.Email), DataItem.Title);
+        }
+
+        protected void lbViewInvite_OnClick(object sender, EventArgs e)
+        {
+            Response.Redirect(DataItem.InvitationUrl, true); 
         }
 
         #endregion
+
+        private int CurrentEventId
+        {
+            get 
+            {
+                return Convert.ToInt32(ViewState["id"]);
+            }
+            set { ViewState["id"] = value.ToString(); }
+        }
     }
 }
 

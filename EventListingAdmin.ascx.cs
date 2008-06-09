@@ -62,19 +62,19 @@ namespace Engage.Dnn.Events
         //    BindData();
         //}
 
-        private void actions_ActionCompleted(object sender, ActionEventArg e)
-        {
-            if (e.ActionStatus == Action.Success)
-            {
-                BindData();
-            }
-        }
+        //private void actions_ActionCompleted(object sender, ActionEventArg e)
+        //{
+        //    if (e.ActionStatus == Action.Success)
+        //    {
+        //        BindData();
+        //    }
+        //}
 
         protected void rpEventListing_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             EventAdminActions actions = (EventAdminActions)e.Item.FindControl("ccEventActions");
             actions.DataItem = (Event)e.Item.DataItem;
-            actions.ActionCompleted += new ActionEventHandler(actions_ActionCompleted);
+            //actions.ActionCompleted += new ActionEventHandler(actions_ActionCompleted);
         }
 
         #endregion

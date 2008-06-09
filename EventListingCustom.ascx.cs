@@ -83,14 +83,14 @@ namespace Engage.Dnn.Events
             if (actions != null)
             {
                 actions.DataItem = (Event)e.Item.DataItem;
-                actions.ActionCompleted += new ActionEventHandler(actions_ActionCompleted);
+                //actions.ActionCompleted += new ActionEventHandler(actions_ActionCompleted);
             }
 
             actions = (EventAdminActions)e.Item.FindControl("ccEventActions2");
             if (actions != null)
             {
                 actions.DataItem = (Event)e.Item.DataItem;
-                actions.ActionCompleted += new ActionEventHandler(actions_ActionCompleted);
+                //actions.ActionCompleted += new ActionEventHandler(actions_ActionCompleted);
             }
 
             //LinkButton lbICal = e.Item.FindControl("lbCICal") as LinkButton;
@@ -101,13 +101,13 @@ namespace Engage.Dnn.Events
 
         }
 
-        private void actions_ActionCompleted(object sender, ActionEventArg e)
-        {
-            if (e.ActionStatus == Action.Success)
-            {
-                BindData();
-            }
-        }
+        //private void actions_ActionCompleted(object sender, ActionEventArg e)
+        //{
+        //    if (e.ActionStatus == Action.Success)
+        //    {
+        //        BindData();
+        //    }
+        //}
 
         #endregion
 

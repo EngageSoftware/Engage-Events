@@ -38,6 +38,8 @@ namespace Engage.Dnn.Events
         {
             try
             {
+                if (UserInfo.UserID < 0) Response.Redirect(RegisterUrl, true);
+
                 BindData();
             }
             catch (Exception exc)

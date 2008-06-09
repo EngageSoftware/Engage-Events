@@ -81,15 +81,6 @@ namespace Engage.Dnn.Events
             }
         }
 
-        private string RsvpUrl
-        {
-            get
-            {
-                string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Rsvp&eventid=" + EventId.ToString());
-                return href;
-            }
-        }
-
         protected void cmdLogin_Click(object sender, ImageClickEventArgs e)
         {
             if ((UseCaptcha && ctlCaptcha.IsValid) || (!UseCaptcha))
@@ -111,7 +102,7 @@ namespace Engage.Dnn.Events
                         Response.Redirect(RsvpUrl);
                         break;
                     default:
-                        Response.Redirect(RsvpUrl);
+                        //Response.Redirect(RsvpUrl);
                         break;
                 }
             }

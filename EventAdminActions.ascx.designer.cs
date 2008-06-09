@@ -20,7 +20,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbEditEvent;
+        protected global::System.Web.UI.WebControls.Button lbEditEvent;
         
         /// <summary>
         /// lbResponses control.
@@ -29,7 +29,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbResponses;
+        protected global::System.Web.UI.WebControls.Button lbResponses;
         
         /// <summary>
         /// lbRegister control.
@@ -38,7 +38,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbRegister;
+        protected global::System.Web.UI.WebControls.Button lbRegister;
         
         /// <summary>
         /// lbAddToCalendar control.
@@ -47,7 +47,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbAddToCalendar;
+        protected global::System.Web.UI.WebControls.Button lbAddToCalendar;
         
         /// <summary>
         /// lbDelete control.
@@ -56,7 +56,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbDelete;
+        protected global::System.Web.UI.WebControls.Button lbDelete;
         
         /// <summary>
         /// lbCancel control.
@@ -65,7 +65,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbCancel;
+        protected global::System.Web.UI.WebControls.Button lbCancel;
         
         /// <summary>
         /// lbViewInvite control.
@@ -74,7 +74,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lbViewInvite;
+        protected global::System.Web.UI.WebControls.Button lbViewInvite;
         
         /// <summary>
         /// lbEditEmail control.
@@ -83,6 +83,6 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbEditEmail;
+        protected global::System.Web.UI.WebControls.Button lbEditEmail;
     }
 }

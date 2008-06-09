@@ -12,7 +12,7 @@
         <asp:ListItem Selected = "true" Text="Yes, I will be able to Attend" Value="Attending"></asp:ListItem>
         <asp:ListItem Text="No, unfortunately I will not be able to attend." Value="NotAttending"></asp:ListItem>
     </asp:RadioButtonList>
-    <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" />
+    <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" CssClass="CommandButton" />
     <asp:Button ID="lbAddToCalendar" runat="server" ResourceKey="lbAddToCalendar" Enabled="false" CssClass="CommandButton" OnClick="lbAddToCalendar_OnClick"></asp:Button>
     
 </div>
