@@ -454,7 +454,7 @@ BEGIN
 	set @sql = 'insert into #results ([EventId]) '
 	set @sql = @sql + 'Select [EventId] '
 	set @sql = @sql + 'from '
-	set @sql = @sql + 'Engage_Event '
+	set @sql = @sql + '{databaseOwner}[{objectQualifier}Engage_Event] '
 	set @sql = @sql + 'where PortalId = ' + STR(@portalId)
 	if (@showAll = 0)
 	begin
@@ -473,13 +473,13 @@ BEGIN
 	if (@PageSize = 0)
 	 	BEGIN
 			set @sql = 'Select e.*,	r.TotalRecords from #results r '
-			set @sql = @sql + 'join Engage_Event e on (r.EventId = e.EventId) '
+			set @sql = @sql + 'join {databaseOwner}[{objectQualifier}Engage_Event] e on (r.EventId = e.EventId) '
 			set @sql = @sql + 'Order by ' + @sortColumn
 	 	END
 	ELSE
 	 	BEGIN
 			set @sql = 'select e.*,	r.TotalRecords from #results r '
-			set @sql = @sql + 'join Engage_Event e on (r.EventId = e.EventId) '
+			set @sql = @sql + 'join {databaseOwner}[{objectQualifier}Engage_Event] e on (r.EventId = e.EventId) '
 	 		set @sql = @sql + 'where (id >= @index * @PageSize + 1) and id < (@index * @PageSize) + @PageSize + 1 '
 			set @sql = @sql + 'Order by ' + @sortColumn
 	 	END
@@ -588,10 +588,10 @@ BEGIN
 	set @sql = 'SELECT Top '
 	set @sql = @sql + convert(varchar(20), @MaxPerCycle)
 	set @sql = @sql + ' * '
-	set @sql = @sql + 'FROM [{objectQualifier}Engage_RoutingTransaction] rt '
-	set @sql = @sql + 'JOIN [{objectQualifier}Engage_RoutingEvent] re on (re.RoutingEventId = rt.RoutingEventId) '
-	set @sql = @sql + 'JOIN [{objectQualifier}Engage_lkpRoutingEventType] ret on (ret.RoutingEventTypeId = re.RoutingEventTypeId) '
-	set @sql = @sql + 'JOIN [{objectQualifier}Engage_lkpClass] c on (c.ClassId = ret.ClassId) '
+	set @sql = @sql + 'FROM {databaseOwner}[{objectQualifier}Engage_RoutingTransaction] rt '
+	set @sql = @sql + 'JOIN {databaseOwner}[{objectQualifier}Engage_RoutingEvent] re on (re.RoutingEventId = rt.RoutingEventId) '
+	set @sql = @sql + 'JOIN {databaseOwner}[{objectQualifier}Engage_lkpRoutingEventType] ret on (ret.RoutingEventTypeId = re.RoutingEventTypeId) '
+	set @sql = @sql + 'JOIN {databaseOwner}[{objectQualifier}Engage_lkpClass] c on (c.ClassId = ret.ClassId) '
 	set @sql = @sql + 'WHERE ActionRequired = 1 '
 	set @sql = @sql + 'AND CompletionDate Is Null '
 	if (@RoutingEventTypeId > 0)
@@ -605,92 +605,82 @@ BEGIN
 	exec (@sql)
 
 END
-go
-
+GO
 
 insert into {databaseOwner}[{objectQualifier}Engage_lkpClassType] values ('Routing Event', 'Routing Event', 0, GETDATE(), 0, GETDATE())
-go
+GO
 
 insert into {databaseOwner}[{objectQualifier}Engage_lkpClass] (ClassTypeId, ClassName, AssemblyName, Description, CreatedBy, RevisingUser)
 Select ClassTypeId, 'Engage.Communication.Email.EmailTransaction', 'Engage.Communication', 'Email Transaction Class', 1,1
 from {databaseOwner}[{objectQualifier}Engage_lkpClassType] where ShortDescription = 'Routing Event'
-go
+GO
 
 insert into {databaseOwner}[{objectQualifier}Engage_lkpClass] (ClassTypeId, ClassName, AssemblyName, Description, CreatedBy, RevisingUser)
 Select ClassTypeId, 'Engage.Communication.Email.ReminderEmailTransaction', 'Engage.Communication', 'Reminder Email Transaction Class', 1,1
 from {databaseOwner}[{objectQualifier}Engage_lkpClassType] where ShortDescription = 'Routing Event'
-go
+GO
 
 Insert into {databaseOwner}[{objectQualifier}Engage_lkpRoutingeventType] (ClassId, ShortDescription, LongDescription, ServiceEvent,
 ScheduledEvent, CreatedBy, revisingUser)
 Select ClassId, 'Invitation', 'Invitation Email', 1, 1, 0, 0
-from Engage_lkpClass where ClassName = 'Engage.Communication.Email.EmailTransaction'
-go
+from {databaseOwner}[{objectQualifier}Engage_lkpClass] where ClassName = 'Engage.Communication.Email.EmailTransaction'
+GO
 
 Insert into {databaseOwner}[{objectQualifier}Engage_lkpRoutingeventType] (ClassId, ShortDescription, LongDescription, ServiceEvent,
 ScheduledEvent, CreatedBy, revisingUser)
 Select ClassId, 'Reminder', 'Reminder Email', 1, 1, 0, 0
-from Engage_lkpClass where ClassName = 'Engage.Communication.Email.ReminderEmailTransaction'
-go
+from {databaseOwner}[{objectQualifier}Engage_lkpClass] where ClassName = 'Engage.Communication.Email.ReminderEmailTransaction'
+GO
 
 Insert into {databaseOwner}[{objectQualifier}Engage_lkpRoutingeventType] (ClassId, ShortDescription, LongDescription, ServiceEvent,
 ScheduledEvent, CreatedBy, revisingUser)
 Select ClassId, 'Recap', 'Recap Email', 1, 1, 0, 0
-from Engage_lkpClass where ClassName = 'Engage.Communication.Email.EmailTransaction'
-go
-
+from {databaseOwner}[{objectQualifier}Engage_lkpClass] where ClassName = 'Engage.Communication.Email.EmailTransaction'
+GO
 
 if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertRoutingTransaction]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
 drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertRoutingTransaction]
 GO
 
 CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertRoutingTransaction] 
-(
-@RoutingEventId int,
+(@RoutingEventId int,
 @FirstName nvarchar(20),
 @LastName nvarchar(50),
 @Email nvarchar(100),
 @MergeData ntext,
-@CreatedBy int
-)
+@CreatedBy int)
 AS
-BEGIN
-	
 INSERT INTO {databaseOwner}[{objectQualifier}Engage_RoutingTransaction]
-           ([RoutingEventId]
-           ,[FirstName]
-           ,[LastName]
-           ,[Email]
-           ,[Undeliverable]
-           ,[MergeData]
-           ,[Processed]
-           ,[ActionRequired]
-           ,[CompletionDate]
-           ,[CreatedBy]
-           ,[CreationDate]
-           ,[RevisingUser]
-           ,[RevisionDate])
-     VALUES
-           (@RoutingEventId,
-            @FirstName,
-            @LastName, 
-            @Email,
-			0,
-            @MergeData,
-            0, 
-            1,
-			null,
-            @CreatedBy,
-            GETDATE(),
-            @CreatedBy,
-            GETDATE())
+	   ([RoutingEventId]
+	   ,[FirstName]
+	   ,[LastName]
+	   ,[Email]
+	   ,[Undeliverable]
+	   ,[MergeData]
+	   ,[Processed]
+	   ,[ActionRequired]
+	   ,[CompletionDate]
+	   ,[CreatedBy]
+	   ,[CreationDate]
+	   ,[RevisingUser]
+	   ,[RevisionDate])
+ VALUES
+	   (@RoutingEventId,
+		@FirstName,
+		@LastName, 
+		@Email,
+		0,
+		@MergeData,
+		0, 
+		1,
+		null,
+		@CreatedBy,
+		GETDATE(),
+		@CreatedBy,
+		GETDATE())
 
-	SELECT @@Identity
-
-END
-
-
-go
+SELECT @@Identity
+GO
 
 if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetUndeliverable]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
 drop procedure {databaseOwner}[{objectQualifier}Engage_spGetUndeliverable]
@@ -700,13 +690,13 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetUndeliverable] (@E
 AS
 BEGIN
 
-	SELECT COUNT(*) FROM [{objectQualifier}Engage_RoutingTransaction]
+	SELECT COUNT(*) FROM {databaseOwner}[{objectQualifier}Engage_RoutingTransaction]
 	WHERE Undeliverable = 1 
 	AND Email = @email
 
 END
 
-go
+GO
 
 if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetEmailEvent]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
 drop procedure {databaseOwner}[{objectQualifier}Engage_spGetEmailEvent]
@@ -735,7 +725,7 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spCompleteTransaction]
 )
 AS
 
-UPDATE [{objectQualifier}Engage_RoutingTransaction]
+UPDATE {databaseOwner}[{objectQualifier}Engage_RoutingTransaction]
 SET CompletionDate = GETDATE(), Processed = 1, ActionRequired = 1, RevisingUser = @RevisingUser
 WHERE RoutingTransactionId = @RoutingTransactionId
 
@@ -754,7 +744,7 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertTransactionDeta
 )
 AS
 
-INSERT INTO [{objectQualifier}Engage_RoutingTransactionDetail] 
+INSERT INTO {databaseOwner}[{objectQualifier}Engage_RoutingTransactionDetail] 
 (RoutingTransactionId, Description, Successful, Createdby, RevisingUser)
 VALUES
 (@RoutingTransactionId, @Description, @Successful, @RevisingUser, @RevisingUser)
@@ -771,7 +761,7 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spDeleteTransactionDeta
 )
 AS
 
-DELETE FROM [{objectQualifier}Engage_RoutingTransactionDetail] 
+DELETE FROM {databaseOwner}[{objectQualifier}Engage_RoutingTransactionDetail] 
 WHERE RoutingTransactionId = @RoutingTransactionId
 
 GO
@@ -802,8 +792,8 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetApprovals]
 AS
 
 SELECT Approved, Email, ApprovalId 
-FROM [{objectQualifier}Engage_RoutingEvent] re
-join [{objectQualifier}Engage_Approval] a on (a.RoutingEventId = re.RoutingEventId)
+FROM {databaseOwner}[{objectQualifier}Engage_RoutingEvent] re
+join {databaseOwner}[{objectQualifier}Engage_Approval] a on (a.RoutingEventId = re.RoutingEventId)
 where a.RoutingEventId = @RoutingEventId
 
 GO
@@ -817,7 +807,7 @@ AS
 BEGIN
 
 	SELECT * 
-	FROM [{objectQualifier}Engage_Event]
+	FROM {databaseOwner}[{objectQualifier}Engage_Event]
 	WHERE EventId = @EventId
 END
 GO
@@ -852,7 +842,7 @@ BEGIN
 		set @RecurrenceId = null
 	end
 	
-	Insert into [{objectQualifier}Engage_Event] 
+	Insert into {databaseOwner}[{objectQualifier}Engage_Event] 
 	(
 		[PortalId], [ModuleId], [Title], [Overview], [EventStart], [EventEnd], [Organizer], [OrganizerEmail],
 		[Location], [LocationUrl], [InvitationUrl], [RecapUrl], [RecurrenceId], [CanRsvp], [CreatedBy], [RevisingUser]
@@ -899,7 +889,7 @@ BEGIN
 		set @RecurrenceId = null
 	end
 
-	UPDATE [{objectQualifier}Engage_Event] 
+	UPDATE {databaseOwner}[{objectQualifier}Engage_Event] 
 	SET [Title] = @Title, 
 		[Overview] = @Overview, 
 		[EventStart] = @EventStart, 
@@ -936,7 +926,7 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertRsvp]
 AS
 BEGIN
 	
-	INSERT INTO [{objectQualifier}Engage_Rsvp] ([EventId], [FirstName], [LastName], [Email], [Status], [Createdby], [RevisingUser])
+	INSERT INTO {databaseOwner}[{objectQualifier}Engage_Rsvp] ([EventId], [FirstName], [LastName], [Email], [Status], [Createdby], [RevisingUser])
 	VALUES (@EventId, @FirstName, @LastName, @Email, @Status, @RevisingUser, @RevisingUser)
 END
 
@@ -960,7 +950,7 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spUpdateRsvp]
 AS
 BEGIN
 	
-	UPDATE [{objectQualifier}Engage_Rsvp] 
+	UPDATE {databaseOwner}[{objectQualifier}Engage_Rsvp] 
 		SET [FirstName] = @FirstName, 
 		[LastName] =@LastName, 
 		[Email] = @Email, 
@@ -1004,7 +994,7 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spWriteMessageId]
 AS
 BEGIN
 
-	INSERT INTO [{objectQualifier}Engage_EventMessage] ([EventId], [MessageId], [RevisingUser], [CreatedBy])
+	INSERT INTO {databaseOwner}[{objectQualifier}Engage_EventMessage] ([EventId], [MessageId], [RevisingUser], [CreatedBy])
 	VALUES (@EventId, @MessageId, @CreatedBy, @CreatedBy)	
 	
 END
@@ -1024,7 +1014,7 @@ AS
 BEGIN
 
 	SELECT * 
-	FROM [{objectQualifier}Engage_Rsvp]
+	FROM {databaseOwner}[{objectQualifier}Engage_Rsvp]
 	WHERE EventId = @EventId
 	AND Email = @Email
 	
@@ -1059,7 +1049,7 @@ BEGIN
 	set @sql = 'insert into #results ([RsvpId]) '
 	set @sql = @sql + 'Select [RsvpId] '
 	set @sql = @sql + 'from '
-	set @sql = @sql + 'Engage_Rsvp '
+	set @sql = @sql + '{databaseOwner}[{objectQualifier}Engage_Rsvp '
 	set @sql = @sql + 'Where EventId = ' + STR(@EventId)
 	if (@Status != '')
 	begin
@@ -1078,12 +1068,12 @@ BEGIN
 	if (@PageSize = 0)
 	 	BEGIN
 	 		select e.*,	r.TotalRecords from #results r
-			join [{objectQualifier}Engage_Rsvp] e on (r.RsvpId = e.RsvpId)
+			join {databaseOwner}[{objectQualifier}Engage_Rsvp] e on (r.RsvpId = e.RsvpId)
 	 	END
 	ELSE
 	 	BEGIN
 	 		select e.*,	r.TotalRecords from #results r
-			join [{objectQualifier}Engage_Rsvp] e on (r.RsvpId = e.RsvpId)
+			join {databaseOwner}[{objectQualifier}Engage_Rsvp] e on (r.RsvpId = e.RsvpId)
 	 		where (id >= @index * @PageSize + 1) and id < (@index * @PageSize) + @PageSize + 1
 	 	END
 	
@@ -1128,8 +1118,8 @@ BEGIN
 	set @sql = @sql + '(Select Count(*) from [{objectQualifier}Engage_Rsvp] where EventId = e.EventId and Status = ''' + @Attending + ''' ), '
 	set @sql = @sql + '(Select Count(*) from [{objectQualifier}Engage_Rsvp] where EventId = e.EventId and Status = ''' + @NotAttending + '''), '
 	set @sql = @sql + '(Select Count(*) from [{objectQualifier}Engage_Rsvp] where EventId = e.EventId and Status = ''' + @NoResponse + ''') '
-	set @sql = @sql + ' FROM [{objectQualifier}Engage_Event] e '
-	set @sql = @sql + ' JOIN [{objectQualifier}Engage_Rsvp] r ON (r.EventID = e.EventId) '
+	set @sql = @sql + ' FROM {databaseOwner}[{objectQualifier}Engage_Event] e '
+	set @sql = @sql + ' JOIN {databaseOwner}[{objectQualifier}Engage_Rsvp] r ON (r.EventID = e.EventId) '
 	set @sql = @sql + ' WHERE e.PortalId = ' + str(@PortalId)
 	set @sql = @sql + ' Order by ' + @sortColumn
 
@@ -1185,7 +1175,7 @@ BEGIN
 	set @sql = 'insert into #results ([EventId]) '
 	set @sql = @sql + 'Select [EventId] '
 	set @sql = @sql + 'from '
-	set @sql = @sql + 'Engage_Event '
+	set @sql = @sql + '{databaseOwner}[{objectQualifier}Engage_Event '
 	set @sql = @sql + 'where PortalId = ' + STR(@portalId)
 	if (@currentMonth = 1)
 	begin
@@ -1211,12 +1201,12 @@ BEGIN
 	if (@PageSize = 0)
 	 	BEGIN
 	 		select e.*,	r.TotalRecords from #results r
-			join Engage_Event e on (r.EventId = e.EventId)
+			join {databaseOwner}[{objectQualifier}Engage_Event] e on (r.EventId = e.EventId)
 	 	END
 	ELSE
 	 	BEGIN
 	 		select e.*,	r.TotalRecords from #results r
-			join Engage_Event e on (r.EventId = e.EventId)
+			join {databaseOwner}[{objectQualifier}Engage_Event] e on (r.EventId = e.EventId)
 	 		where (id >= @index * @PageSize + 1) and id < (@index * @PageSize) + @PageSize + 1
 	 	END
 	
@@ -1225,7 +1215,7 @@ END
 GO
 
 INSERT INTO {databaseOwner}[{objectQualifier}Schedule] VALUES ('Engage.Dnn.Events.Components.EmailScheduler', 5, 'm',	60,	's', 25, '', 0,	1, '', NULL)
-go
+GO
 
 if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertApproval]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
 drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertApproval]
@@ -1256,15 +1246,16 @@ AS
 
 begin transaction
 
-DELETE [{objectQualifier}Engage_EventMessage] 
+DELETE {databaseOwner}[{objectQualifier}Engage_EventMessage] 
 WHERE EventID = @EventId
 
-DELETE [{objectQualifier}Engage_Rsvp] 
+DELETE {databaseOwner}[{objectQualifier}Engage_Rsvp] 
 WHERE EventID = @EventId
 
-DELETE [{objectQualifier}Engage_Event] 
+DELETE {databaseOwner}[{objectQualifier}Engage_Event] 
 WHERE EventID = @EventId
 
 commit transaction
 
 GO
+

@@ -12,7 +12,7 @@ GO
 
 if exists (select * from dbo.sysobjects where id = object_id(N'[{objectQualifier}FK_Engage_lkpClass_Engage_lkpRoutingEventType]'))
 ALTER TABLE {databaseOwner}[{objectQualifier}Engage_lkpRoutingEventType] DROP CONSTRAINT [{objectQualifier}FK_Engage_lkpClass_Engage_lkpRoutingEventType] 
-go
+GO
 
 if exists (select * from dbo.sysobjects where id = object_id(N'[{objectQualifier}FK_Engage_RoutingEvent_Engage_EmailEvent]') and OBJECTPROPERTY(id, N'IsForeignKey') = 1)
 ALTER TABLE {databaseOwner}[{objectQualifier}Engage_RoutingEvent] DROP CONSTRAINT [{objectQualifier}FK_Engage_RoutingEvent_Engage_EmailEvent]
