@@ -117,22 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DeleteEvent.Text" xml:space="preserve">
-    <value>Are you sure you want to delete this event?</value>
-  </data>
-  <data name="lbEmailAFriend.Text" xml:space="preserve">
-    <value>Email a Friend</value>
-  </data>
-  <data name="lbIcal.Text" xml:space="preserve">
-    <value>Add To Calendar</value>
-  </data>
-  <data name="lbPrint.Text" xml:space="preserve">
-    <value>Print</value>
-  </data>
-  <data name="lbRsvp.Text" xml:space="preserve">
-    <value>Rsvp for Event</value>
-  </data>
-  <data name="lbViewInvite.Text" xml:space="preserve">
-    <value>View Invite</value>
-  </data>
 </root>

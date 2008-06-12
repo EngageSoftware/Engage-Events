@@ -75,10 +75,10 @@ namespace Engage.Dnn.Events
 
             controlKeys.Add("EmailEdit", "EmailEdit.ascx");
             controlKeys.Add("EventEdit", "EventEdit.ascx");
-            controlKeys.Add("EventListing", "EventListing.ascx");
-            controlKeys.Add("EventListingCustom", "EventListingCustom.ascx");
-            controlKeys.Add("EventListingGridStyle", "EventListingGridStyle.ascx");
-            controlKeys.Add("EventListingAdmin", "EventListingAdmin.ascx");
+            controlKeys.Add("EventListing", "Display/EventListing.ascx");
+            controlKeys.Add("EventListingCustom", "Display/EventListingCustom.ascx");
+            controlKeys.Add("EventListingGridStyle", "Display/EventListingGridStyle.ascx");
+            controlKeys.Add("EventListingAdmin", "Display/EventListingAdmin.ascx");
             controlKeys.Add("RsvpSummary", "RsvpSummary.ascx");
             controlKeys.Add("RsvpDetail", "RsvpDetail.ascx");
             controlKeys.Add("Rsvp", "Rsvp.ascx");
@@ -118,7 +118,7 @@ namespace Engage.Dnn.Events
                     }
                     else
                     {
-                        controlToLoad = "EventListingAdmin.ascx";
+                        controlToLoad = "Display/EventListingAdmin.ascx";
                     }
                 //}
             }

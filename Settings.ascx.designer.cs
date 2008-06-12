@@ -11,13 +11,16 @@
 namespace Engage.Dnn.Events {
     
     
-    /// <summary>
-    /// Settings class.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated class.
-    /// </remarks>
     public partial class Settings {
+        
+        /// <summary>
+        /// upnlSettings control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upnlSettings;
         
         /// <summary>
         /// lblChooseDisplayType control.
@@ -29,66 +32,30 @@ namespace Engage.Dnn.Events {
         protected global::DotNetNuke.UI.UserControls.LabelControl lblChooseDisplayType;
         
         /// <summary>
-        /// ddListingDisplay control.
+        /// ddlChooseDisplayType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddListingDisplay;
+        protected global::System.Web.UI.WebControls.DropDownList ddlChooseDisplayType;
         
         /// <summary>
-        /// lblUnsubscribeUrl control.
+        /// dvDisplay control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.LabelControl lblUnsubscribeUrl;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvDisplay;
         
         /// <summary>
-        /// txtUnsubscribeUrl control.
+        /// phControls control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUnsubscribeUrl;
-        
-        /// <summary>
-        /// lblPrivacyPolicyUrl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.LabelControl lblPrivacyPolicyUrl;
-        
-        /// <summary>
-        /// txtPrivacyPolicyUrl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPrivacyPolicyUrl;
-        
-        /// <summary>
-        /// lblOpenLinkUrl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.LabelControl lblOpenLinkUrl;
-        
-        /// <summary>
-        /// txtOpenLinkUrl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtOpenLinkUrl;
+        protected global::System.Web.UI.WebControls.PlaceHolder phControls;
     }
 }

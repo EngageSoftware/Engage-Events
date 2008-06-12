@@ -193,6 +193,7 @@
         <include name="../../bin/Engage.DataProviderv3.0.dll" />
         <include name="../../bin/Engage.Utilityv3.0.dll" />
         <include name="../../bin/Engage.Communicationv3.0.dll" />
+        <include name="../../bin/Telerik.Web.UI.dll" />
         <include name="../../bin/aspNetEmail.dll" />
         <include name="**/*.sqldataprovider" />
         <include name="**/SearchRedirector.ascx" />
@@ -226,6 +227,7 @@
         <include name="../../bin/Engage.DataProviderv3.0.dll" />
         <include name="../../bin/Engage.Utilityv3.0.dll" />
         <include name="../../bin/Engage.Communicationv3.0.dll" />
+        <include name="../../bin/Telerik.Web.UI.dll" />
         <include name="../../bin/aspNetEmail.dll" />
         <include name="**/*.sqldataprovider" />
         <include name="**/SearchRedirector.ascx" />
@@ -259,6 +261,7 @@
         <include name="../../bin/Engage.DataProviderv3.0.dll" />
         <include name="../../bin/Engage.Utilityv3.0.dll" />
         <include name="../../bin/Engage.Communicationv3.0.dll" />
+        <include name="../../bin/Telerik.Web.UI.dll" />
         <include name="../../bin/aspNetEmail.dll" />
         <include name="**/*.sqldataprovider" />
         <include name="**/ReadMe.txt" />
@@ -293,6 +296,7 @@
         <include name="../../bin/Engage.DataProviderv3.0.dll" />
         <include name="../../bin/Engage.Utilityv3.0.dll" />
         <include name="../../bin/Engage.Communicationv3.0.dll" />
+        <include name="../../bin/Telerik.Web.UI.dll" />
         <include name="../../bin/aspNetEmail.dll" />
         <include name="**/*.sqldataprovider" />
         <include name="**/ReadMe.txt" />

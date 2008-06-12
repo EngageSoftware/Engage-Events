@@ -18,6 +18,7 @@ namespace Engage.Dnn.Events
         public static readonly Setting OpenLinkUrl = new Setting("openLinkUrl", "Specify the URL for your Open Link to track opens.");
         public static readonly Setting DisplayType = new Setting("DisplayType", "The display that is used for unauthenticated users.");
         public static readonly Setting ReplacementMessage = new Setting("replacementMessage", "You can include an entire section of replaceable text in your message using this setting.");
+        public static readonly Setting SkinSelection = new Setting("SkinSelection",  "The skin used for Calendar Display.");
        
         private Setting( string propertyName, string description)
         {

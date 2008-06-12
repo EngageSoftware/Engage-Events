@@ -85,6 +85,10 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Mobile" />
+    <Reference Include="Telerik.Web.UI, Version=2008.1.515.20, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="DotNetNuke" />
@@ -178,11 +182,25 @@
       <DependentUpon>RecurrenceSelector.ascx</DependentUpon>
     </Compile>
     <Compile Include="ActionEventArg.cs" />
-    <Compile Include="EventAdminActions.ascx.cs">
+    <Compile Include="Display\CalendarDisplayOptions.ascx.cs">
+      <DependentUpon>CalendarDisplayOptions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Display\CalendarDisplayOptions.ascx.designer.cs">
+      <DependentUpon>CalendarDisplayOptions.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Display\EventCalendar.ascx.cs">
+      <DependentUpon>EventCalendar.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Display\EventCalendar.ascx.designer.cs">
+      <DependentUpon>EventCalendar.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Navigation\EventAdminActions.ascx.cs">
       <DependentUpon>EventAdminActions.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="EventAdminActions.ascx.designer.cs">
+    <Compile Include="Navigation\EventAdminActions.ascx.designer.cs">
       <DependentUpon>EventAdminActions.ascx</DependentUpon>
     </Compile>
     <Compile Include="Register.ascx.cs">
@@ -192,11 +210,11 @@
     <Compile Include="Register.ascx.designer.cs">
       <DependentUpon>Register.ascx</DependentUpon>
     </Compile>
-    <Compile Include="GlobalNavigation.ascx.cs">
+    <Compile Include="Navigation\GlobalNavigation.ascx.cs">
       <DependentUpon>GlobalNavigation.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="GlobalNavigation.ascx.designer.cs">
+    <Compile Include="Navigation\GlobalNavigation.ascx.designer.cs">
       <DependentUpon>GlobalNavigation.ascx</DependentUpon>
     </Compile>
     <Compile Include="EmailAFriend.ascx.cs">
@@ -213,25 +231,25 @@
     <Compile Include="Rsvp.ascx.designer.cs">
       <DependentUpon>Rsvp.ascx</DependentUpon>
     </Compile>
-    <Compile Include="EventListingAdmin.ascx.cs">
+    <Compile Include="Display\EventListingAdmin.ascx.cs">
       <DependentUpon>EventListingAdmin.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="EventListingAdmin.ascx.designer.cs">
+    <Compile Include="Display\EventListingAdmin.ascx.designer.cs">
       <DependentUpon>EventListingAdmin.ascx</DependentUpon>
     </Compile>
-    <Compile Include="EventListing.ascx.cs">
+    <Compile Include="Display\EventListing.ascx.cs">
       <DependentUpon>EventListing.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="EventListing.ascx.designer.cs">
+    <Compile Include="Display\EventListing.ascx.designer.cs">
       <DependentUpon>EventListing.ascx</DependentUpon>
     </Compile>
-    <Compile Include="EventListingCustom.ascx.cs">
+    <Compile Include="Display\EventListingCustom.ascx.cs">
       <DependentUpon>EventListingCustom.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="EventListingCustom.ascx.designer.cs">
+    <Compile Include="Display\EventListingCustom.ascx.designer.cs">
       <DependentUpon>EventListingCustom.ascx</DependentUpon>
     </Compile>
     <Compile Include="Setting.cs" />
@@ -270,11 +288,11 @@
     <Compile Include="EventEdit.ascx.designer.cs">
       <DependentUpon>EventEdit.ascx</DependentUpon>
     </Compile>
-    <Compile Include="EventListingGridStyle.ascx.cs">
+    <Compile Include="Display\EventListingGridStyle.ascx.cs">
       <DependentUpon>EventListingGridStyle.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="EventListingGridStyle.ascx.designer.cs">
+    <Compile Include="Display\EventListingGridStyle.ascx.designer.cs">
       <DependentUpon>EventListingGridStyle.ascx</DependentUpon>
     </Compile>
     <Compile Include="Recurrence\RecurrenceHelper.cs" />
@@ -415,7 +433,7 @@
     <Content Include="RsvpSummary.ascx" />
     <Content Include="EmailEdit.ascx" />
     <Content Include="EventEdit.ascx" />
-    <Content Include="EventListingGridStyle.ascx" />
+    <Content Include="Display\EventListingGridStyle.ascx" />
     <Content Include="Samples\AttendingReminder.htm" />
     <Content Include="Samples\NoResponseReminder.htm" />
     <Content Include="Samples\NotAttendingReminder.htm" />
@@ -456,8 +474,8 @@
     <Content Include="App_LocalResources\UserContainer.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="EventListing.ascx" />
-    <Content Include="EventListingCustom.ascx" />
+    <Content Include="Display\EventListing.ascx" />
+    <Content Include="Display\EventListingCustom.ascx" />
     <Content Include="RsvpDetail.ascx" />
   </ItemGroup>
   <ItemGroup>
@@ -469,7 +487,7 @@
     <Content Include="Images\vcalendar.png" />
     <Content Include="Images\yes.gif" />
     <Content Include="Rsvp.ascx" />
-    <Content Include="EventListingAdmin.ascx" />
+    <Content Include="Display\EventListingAdmin.ascx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_LocalResources\EventListingAdmin.ascx.resx">
@@ -493,7 +511,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_LocalResources\EventListingGridStyle.ascx.resx">
+    <Content Include="App_LocalResources\EventCalendar.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
@@ -503,13 +521,13 @@
       <LastGenOutput>GlobalResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="GlobalNavigation.ascx" />
+    <Content Include="Navigation\GlobalNavigation.ascx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_LocalResources\GlobalNavigation.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="EventAdminActions.ascx" />
+    <Content Include="Navigation\EventAdminActions.ascx" />
     <Content Include="Images\bt_create_account.gif" />
     <Content Include="Images\bt_login.gif" />
     <Content Include="Register.ascx" />
@@ -540,6 +558,8 @@
     <Content Include="App_LocalResources\EventActions.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Display\CalendarDisplayOptions.ascx" />
+    <Content Include="Display\EventCalendar.ascx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v8.0\WebApplications\Microsoft.WebApplication.targets" Condition="'$(Solutions.VSVersion)' == '8.0'" />

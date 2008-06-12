@@ -25,18 +25,6 @@
               <src>DesktopModules/EngageEvents/Settings.ascx</src>
               <type>Edit</type>
             </control>
-            <control>
-              <key>Rsvp</key>
-              <title>Rsvp</title>
-              <src>DesktopModules/EngageEvents/Rsvp.ascx</src>
-              <type>Edit</type>
-            </control>
-            <control>
-              <key>RegisterLogin</key>
-              <title>Register</title>
-              <src>DesktopModules/EngageEvents/Register.ascx</src>
-              <type>View</type>
-            </control>
           </controls>
         </module>
       </modules>
@@ -74,6 +62,9 @@
         </file>
         <file>
           <name>Engage.Communicationv3.0.dll</name>
+        </file>
+        <file>
+          <name>Telerik.Web.UI.dll</name>
         </file>
         <file>
           <name>aspNetEmail.dll</name>

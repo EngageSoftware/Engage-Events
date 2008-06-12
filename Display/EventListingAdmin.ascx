@@ -1,7 +1,8 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EventListingAdmin" Codebehind="EventListingAdmin.ascx.cs" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
-<%@ Register src="GlobalNavigation.ascx" tagname="GlobalNavigation" tagprefix="uc1" %>
-<%@ Register src="EventAdminActions.ascx" tagname="actions" tagprefix="uc2" %>
+<%@ Register src="../Navigation/GlobalNavigation.ascx" tagname="GlobalNavigation" tagprefix="uc1" %>
+<%@ Register src="../Navigation/EventAdminActions.ascx" tagname="actions" tagprefix="uc2" %>
+
 <uc1:GlobalNavigation ID="GlobalNavigation1" runat="server" />
 <br />                
 <br />
