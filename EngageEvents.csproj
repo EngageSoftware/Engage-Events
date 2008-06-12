@@ -440,27 +440,27 @@
     <Content Include="Services\WebServicesGateway.asmx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="d:\Engage 3.0\Engage.Communication\Engage.Communication.csproj">
+    <ProjectReference Include="..\..\..\..\..\..\code\Engage 3.0\Engage.Communication\Engage.Communication.csproj">
       <Project>{55CBD824-C0E0-4F1B-AECA-905B84C5A600}</Project>
       <Name>Engage.Communication</Name>
     </ProjectReference>
-    <ProjectReference Include="d:\Engage 3.0\Engage.Events\Engage.Events.csproj">
+    <ProjectReference Include="..\..\..\..\..\..\code\Engage 3.0\Engage.Events\Engage.Events.csproj">
       <Project>{34458836-3711-4D60-B394-B44347A8F0DF}</Project>
       <Name>Engage.Events</Name>
     </ProjectReference>
-    <ProjectReference Include="D:\Engage 3.0\Engage.Framework\Engage.Framework.csproj">
+    <ProjectReference Include="..\..\..\..\..\..\code\Engage 3.0\Engage.Framework\Engage.Framework.csproj">
       <Project>{0EA52814-FB21-4258-A411-BF2A6B1699F0}</Project>
       <Name>Engage.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="D:\Engage 3.0\Engage.Routing\Engage.Routing.csproj">
+    <ProjectReference Include="..\..\..\..\..\..\code\Engage 3.0\Engage.Routing\Engage.Routing.csproj">
       <Project>{CE72C274-F07E-4F4A-9854-DFB1354293E7}</Project>
       <Name>Engage.Routing</Name>
     </ProjectReference>
-    <ProjectReference Include="D:\Engage 3.0\Engage.Services\Engage.Services.csproj">
+    <ProjectReference Include="..\..\..\..\..\..\code\Engage 3.0\Engage.Services\Engage.Services.csproj">
       <Project>{C446747D-B3DD-43E2-9908-13CC6663E45F}</Project>
       <Name>Engage.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="D:\Engage 3.0\Engage.Utility\Engage.Utility.csproj">
+    <ProjectReference Include="..\..\..\..\..\..\code\Engage 3.0\Engage.Utility\Engage.Utility.csproj">
       <Project>{319B4FE6-A016-41E0-93CE-748DA517D542}</Project>
       <Name>Engage.Utility</Name>
     </ProjectReference>

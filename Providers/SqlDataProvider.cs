@@ -9,21 +9,8 @@
 //DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Globalization;
-using System.Text;
-using System.Web;
-using Microsoft.ApplicationBlocks.Data;
 using DotNetNuke.Common.Utilities;
-using DotNetNuke.Entities.Users;
 using DotNetNuke.Framework.Providers;
-using DotNetNuke.Security.Roles;
-using Engage.Dnn.Events.Util;
-using System.IO;
-using System.Xml;
 
 namespace Engage.Dnn.Events.Data
 {
