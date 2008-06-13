@@ -55,7 +55,7 @@ namespace Engage.Events
             }
             catch (Exception se)
             {
-                throw new DbException("spGetEvents", se);
+                throw new DBException("spGetEvents", se);
             }
 
             return r;
@@ -85,7 +85,7 @@ namespace Engage.Events
             }
             catch (Exception se)
             {
-                throw new DbException("spGetRsvpByEmail", se);
+                throw new DBException("spGetRsvpByEmail", se);
             }
 
             return status;
@@ -146,7 +146,7 @@ namespace Engage.Events
             }
             catch (SystemException de)
             {
-                throw new DbException("spInsertEvent", de);
+                throw new DBException("spInsertEvent", de);
             }
         }
 
@@ -166,7 +166,7 @@ namespace Engage.Events
             }
             catch (SystemException de)
             {
-                throw new DbException("spUpdateEvent", de);
+                throw new DBException("spUpdateEvent", de);
             }
 
         }

@@ -31,7 +31,7 @@ namespace Engage.Events
             }
             catch (Exception se)
             {
-                throw new DbException("spGetRsvps", se);
+                throw new DBException("spGetRsvps", se);
             }
         }
 

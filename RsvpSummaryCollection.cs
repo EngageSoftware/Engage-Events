@@ -30,7 +30,7 @@ namespace Engage.Events
             }
             catch (Exception se)
             {
-                throw new DbException("spGetRsvpSummary", se);
+                throw new DBException("spGetRsvpSummary", se);
             }
         }
 

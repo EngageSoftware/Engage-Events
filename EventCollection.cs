@@ -32,7 +32,7 @@ namespace Engage.Events
             }
             catch (Exception se)
             {
-                throw new DbException("spGetEvents", se);
+                throw new DBException("spGetEvents", se);
             }
         }
 
@@ -52,7 +52,7 @@ namespace Engage.Events
             }
             catch (Exception se)
             {
-                throw new DbException("spGetEvents", se);
+                throw new DBException("spGetEvents", se);
             }
         }
 
