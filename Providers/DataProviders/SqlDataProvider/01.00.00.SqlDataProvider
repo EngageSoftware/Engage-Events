@@ -1049,7 +1049,7 @@ BEGIN
 	set @sql = 'insert into #results ([RsvpId]) '
 	set @sql = @sql + 'Select [RsvpId] '
 	set @sql = @sql + 'from '
-	set @sql = @sql + '{databaseOwner}[{objectQualifier}Engage_Rsvp '
+	set @sql = @sql + '{databaseOwner}[{objectQualifier}Engage_Rsvp] '
 	set @sql = @sql + 'Where EventId = ' + STR(@EventId)
 	if (@Status != '')
 	begin
