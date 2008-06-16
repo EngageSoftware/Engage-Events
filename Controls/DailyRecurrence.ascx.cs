@@ -1,4 +1,4 @@
-// <copyright file="WeeklyRecurrence.ascx.cs" company="Engage Software">
+// <copyright file="DailyRecurrence.ascx.cs" company="Engage Software">
 // Engage: Events - http://www.engagemodules.com
 // Copyright (c) 2004-2008
 // by Engage Software ( http://www.engagesoftware.com )
@@ -14,7 +14,7 @@ namespace Engage.Dnn.Events.Controls
 {
     using System;
 
-    public partial class WeeklyRecurrence : System.Web.UI.UserControl
+    public partial class DailyRecurrence : System.Web.UI.UserControl
     {
         private RecurrenceEditor editor;
         public RecurrenceEditor Editor

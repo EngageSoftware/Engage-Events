@@ -11,12 +11,6 @@
 namespace Engage.Dnn.Events.Controls {
     
     
-    /// <summary>
-    /// DailyRecurrence class.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated class.
-    /// </remarks>
     public partial class DailyRecurrence {
         
         /// <summary>

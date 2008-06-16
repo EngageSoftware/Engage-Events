@@ -45,8 +45,34 @@
 		.border	{border: thin groove;}
 
 
-/*==============================================
+/*========================================================
 
-		3. Event Listing GridView
+3. Validation
 
-==============================================*/
+========================================================*/
+
+.ModuleMessage{width:100%; padding-top: 1em;}
+.mmBody{height: 100%; padding: 0.675em 0.675em 1.563em;  margin:0 auto; overflow: hidden; border-bottom: solid 1px #000;}
+.mmBody .mmIcon{float:left; width: 10%; height:32px; text-indent:-9999px;}
+.mmBody .Normal{float: right; text-align: left; width: 88%;}
+/*========================= Error On Page ===============================*/
+
+/*.errorTop{background:transparent url(images/redTop.gif) no-repeat scroll left bottom; height: 5px; line-height: 0;}*/
+/*.RedErrorBody {background-color:#FDE0E0; border: solid 2px #FF0000;}*/
+/*.RedErrorBody .RedErrorIcon{background:url(images/errorSmallIcon.png) no-repeat;}*/
+.RedErrorBody .RedErrorIcon{background:url(../../images/red-error.gif) no-repeat;}
+/*.errorBt{background:transparent url(images/redBt.gif) no-repeat scroll left top; height: 5px;}*/
+
+/*========================= Success ===============================*/
+
+/*.successTop{background:transparent url(images/greenTop.gif) no-repeat scroll left bottom; height: 5px; line-height: 0;}*/
+.GreenSuccessBody {background-color:#F2FFF3; border: solid 2px #5CD800; }
+.GreenSuccessBody .GreenSuccessIcon{background:url(images/successSmallIcon.png) no-repeat;}
+/*.successBt{background:transparent url(images/greenBt.gif) no-repeat scroll left top; height: 5px;}*/
+
+/*========================= Notification ===============================*/
+
+/*.notificationTop{background:transparent url(images/blueTop.gif) no-repeat scroll left bottom; height: 5px; line-height: 0;}*/
+.YellowWarningBody {background-color:#F2FFF3; border: solid 2px #5CD800; }
+.YellowWarningBody .YellowWarningIcon{background:url(images/successSmallIcon.png) no-repeat;}
+/*.notificationBt{background:transparent url(images/blueBt.gif) no-repeat scroll left top; height: 5px;}*/

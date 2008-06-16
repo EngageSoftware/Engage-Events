@@ -1,4 +1,4 @@
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DialyRecurrence.ascx.cs" Inherits="Engage.Dnn.Events.Controls.DailyRecurrence" %>
+<%@ Control Language="C#" AutoEventWireup="false" CodeBehind="DailyRecurrence.ascx.cs" Inherits="Engage.Dnn.Events.Controls.DailyRecurrence" %>
 &nbsp;
 <asp:Panel ID="dailyPanel" runat="server" Height="129px"
     Style="left: 8px;" Width="424px">

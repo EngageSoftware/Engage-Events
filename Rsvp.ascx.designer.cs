@@ -14,66 +14,75 @@ namespace Engage.Dnn.Events {
     public partial class Rsvp {
         
         /// <summary>
-        /// lblTitle control.
+        /// RsvpMultiView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTitle;
+        protected global::System.Web.UI.WebControls.MultiView RsvpMultiView;
         
         /// <summary>
-        /// lblEventName control.
+        /// EventNameLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEventName;
+        protected global::System.Web.UI.WebControls.Label EventNameLabel;
         
         /// <summary>
-        /// lblEmail control.
+        /// EmailAddressTextbox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEmail;
+        protected global::System.Web.UI.WebControls.TextBox EmailAddressTextbox;
         
         /// <summary>
-        /// txtEmail control.
+        /// RsvpStatusRadioButtons control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEmail;
+        protected global::System.Web.UI.WebControls.RadioButtonList RsvpStatusRadioButtons;
         
         /// <summary>
-        /// rbRsvp control.
+        /// SubmitButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rbRsvp;
+        protected global::System.Web.UI.WebControls.Button SubmitButton;
         
         /// <summary>
-        /// btnSubmit control.
+        /// AddToCalendarButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSubmit;
+        protected global::System.Web.UI.WebControls.Button AddToCalendarButton;
         
         /// <summary>
-        /// lbAddToCalendar control.
+        /// EmailAddressValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button lbAddToCalendar;
+        protected global::System.Web.UI.WebControls.CustomValidator EmailAddressValidator;
+        
+        /// <summary>
+        /// ThankYouMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Engage.Dnn.Events.Controls.ModuleMessage ThankYouMessage;
     }
 }

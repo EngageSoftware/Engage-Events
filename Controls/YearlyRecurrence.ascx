@@ -1,4 +1,4 @@
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="YearlyRecurrence.ascx.cs" Inherits="Engage.Dnn.Events.Controls.YearlyRecurrence" %>
+<%@ Control Language="C#" AutoEventWireup="false" CodeBehind="YearlyRecurrence.ascx.cs" Inherits="Engage.Dnn.Events.Controls.YearlyRecurrence" %>
 &nbsp;
 <asp:Panel ID="yearlyPanel" runat="server" Style="left: 8px; top: 2px" Width="425px">
     <asp:Label ID="Label12" runat="server" Font-Names="Verdana" Font-Size="X-Small" Style="

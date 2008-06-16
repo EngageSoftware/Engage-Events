@@ -133,13 +133,15 @@
     <Compile Include="Admin\NotConfigured.ascx.designer.cs">
       <DependentUpon>NotConfigured.ascx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\GlobalResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GlobalResources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Assemblyinfo.cs" />
     <Compile Include="Components\EmailScheduler.cs" />
+    <Compile Include="Controls\ModuleMessage.ascx.cs">
+      <DependentUpon>ModuleMessage.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\ModuleMessage.ascx.designer.cs">
+      <DependentUpon>ModuleMessage.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Controls\YearlyRecurrence.ascx.cs">
       <DependentUpon>YearlyRecurrence.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -154,12 +156,12 @@
     <Compile Include="Controls\WeeklyRecurrence.ascx.designer.cs">
       <DependentUpon>WeeklyRecurrence.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DialyRecurrence.ascx.cs">
-      <DependentUpon>DialyRecurrence.ascx</DependentUpon>
+    <Compile Include="Controls\DailyRecurrence.ascx.cs">
+      <DependentUpon>DailyRecurrence.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controls\DialyRecurrence.ascx.designer.cs">
-      <DependentUpon>DialyRecurrence.ascx</DependentUpon>
+    <Compile Include="Controls\DailyRecurrence.ascx.designer.cs">
+      <DependentUpon>DailyRecurrence.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\MonthlyRecurrence.ascx.cs">
       <DependentUpon>MonthlyRecurrence.ascx</DependentUpon>
@@ -307,7 +309,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Data\DataProvider.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MainContainer.ascx.cs">
       <DependentUpon>MainContainer.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -325,7 +326,6 @@
     <Compile Include="ModuleBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Providers\SqlDataProvider.cs" />
     <Compile Include="Search\SearchProvider.cs" />
     <Compile Include="Util\BreadCrumb.cs" />
     <Compile Include="Util\QueryStringParameters.cs" />
@@ -426,7 +426,7 @@
     </Content>
     <Content Include="Controls\YearlyRecurrence.ascx" />
     <Content Include="Controls\WeeklyRecurrence.ascx" />
-    <Content Include="Controls\DialyRecurrence.ascx" />
+    <Content Include="Controls\DailyRecurrence.ascx" />
     <Content Include="Controls\MonthlyRecurrence.ascx" />
     <Content Include="Controls\RecurrenceEditor.ascx" />
     <Content Include="Controls\RecurrenceSelector.ascx" />
@@ -517,11 +517,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_GlobalResources\GlobalResources.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>GlobalResources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Navigation\GlobalNavigation.ascx" />
   </ItemGroup>
   <ItemGroup>
@@ -559,8 +554,17 @@
     <Content Include="App_LocalResources\EventActions.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Controls\ModuleMessage.ascx" />
     <Content Include="Display\CalendarDisplayOptions.ascx" />
     <Content Include="Display\EventCalendar.ascx" />
+    <Content Include="Images\errorSmallIcon.png" />
+    <Content Include="Images\greenBody.gif" />
+    <Content Include="Images\greenBt.gif" />
+    <Content Include="Images\greenTop.gif" />
+    <Content Include="Images\redBody.gif" />
+    <Content Include="Images\redBt.gif" />
+    <Content Include="Images\redTop.gif" />
+    <Content Include="Images\successSmallIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v8.0\WebApplications\Microsoft.WebApplication.targets" Condition="'$(Solutions.VSVersion)' == '8.0'" />

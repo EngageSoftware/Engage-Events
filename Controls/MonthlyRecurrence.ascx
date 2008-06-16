@@ -1,4 +1,4 @@
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MonthlyRecurrence.ascx.cs" Inherits="Engage.Dnn.Events.Controls.MonthlyRecurrence" %>
+<%@ Control Language="C#" AutoEventWireup="false" CodeBehind="MonthlyRecurrence.ascx.cs" Inherits="Engage.Dnn.Events.Controls.MonthlyRecurrence" %>
 &nbsp;
 <asp:Panel ID="monthlyPanel" runat="server" Height="152px"
     Style="left: 8px; top: 8px" Width="424px">

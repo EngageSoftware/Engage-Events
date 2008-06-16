@@ -11,15 +11,24 @@
 namespace Engage.Dnn.Events.Controls {
     
     
-    public partial class RecurrenceSelector {
+    public partial class ModuleMessage {
         
         /// <summary>
-        /// RecurrenceRadio control.
+        /// titleLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList RecurrenceRadio;
+        protected global::System.Web.UI.WebControls.Label titleLabel;
+        
+        /// <summary>
+        /// messageLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label messageLabel;
     }
 }

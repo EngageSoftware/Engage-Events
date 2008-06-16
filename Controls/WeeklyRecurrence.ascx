@@ -1,4 +1,4 @@
-<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="WeeklyRecurrence.ascx.cs" Inherits="Engage.Dnn.Events.Controls.WeeklyRecurrence" %>
+<%@ Control Language="C#" AutoEventWireup="false" CodeBehind="WeeklyRecurrence.ascx.cs" Inherits="Engage.Dnn.Events.Controls.WeeklyRecurrence" %>
 &nbsp;
 <asp:Panel ID="weeklyPanel" runat="server" Height="129px" Style="left: 8px; top: 8px" Width="424px">
     <asp:TextBox ID="weeklyEveryNthWeekEdit" runat="server" Font-Names="Verdana" Font-Size="X-Small"

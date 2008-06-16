@@ -1,18 +1,21 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.Rsvp" Codebehind="Rsvp.ascx.cs" %>
-<div class="Normal" id="Description" align="left">
-    <asp:Label id="lblTitle" Text="Event Rsvp" ResourceKey="lblTitle" CssClass = "NormalBold" runat="server"></asp:Label>
-    <br />
-    <br />
-    <asp:Label id="lblEventName" Text="To RSVP for ... please enter your email address below." CssClass = "NormalBold" runat="server"></asp:Label>
-    <br />
-    <asp:Label ID="lblEmail" ResourceKey="lblEmail" Text="Email:" runat="server"></asp:Label><asp:TextBox ID="txtEmail" runat="server" OnTextChanged="txtEmail_TextChanged"></asp:TextBox>
-</div>
-<div class="Normal" id="rbOptions" align="left">
-    <asp:RadioButtonList ID="rbRsvp" runat="server" CssClass="Normal">
-        <asp:ListItem Selected = "true" Text="Yes, I will be able to Attend" Value="Attending"></asp:ListItem>
-        <asp:ListItem Text="No, unfortunately I will not be able to attend." Value="NotAttending"></asp:ListItem>
-    </asp:RadioButtonList>
-    <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" CssClass="CommandButton" />
-    <asp:Button ID="lbAddToCalendar" runat="server" ResourceKey="lbAddToCalendar" Enabled="false" CssClass="CommandButton" OnClick="lbAddToCalendar_OnClick"></asp:Button>
-    
-</div>
+<%@ Register TagPrefix="engage" TagName="ModuleMessage" Src="Controls/ModuleMessage.ascx" %>
+<asp:MultiView ID="RsvpMultiView" ActiveViewIndex="0" runat="server">
+    <asp:View runat="server">
+        <div class="Normal" id="Description" align="left">
+            <p><asp:Label ResourceKey="titleLabel" CssClass="SubHead" runat="server"/></p>
+            <asp:Label id="EventNameLabel" CssClass="SubSubHead" runat="server"/><br />
+            <asp:Label ResourceKey="emailAddressLabel" runat="server"/><asp:TextBox ID="EmailAddressTextbox" runat="server"/>
+        </div>
+        <div class="Normal" id="rbOptions" align="left">
+            <asp:RadioButtonList ID="RsvpStatusRadioButtons" runat="server" CssClass="Normal"/>
+            <asp:Button ID="SubmitButton" runat="server" Text="Submit" CssClass="CommandButton" />
+            <asp:Button ID="AddToCalendarButton" runat="server" ResourceKey="addToCalendarButton" Enabled="false" CssClass="CommandButton" ValidationGroup="addToCalendar"/>
+            <asp:RequiredFieldValidator runat="server" CssClass="NormalRed" ControlToValidate="EmailAddressTextbox" ValidationGroup="addToCalendar" ResourceKey="emailAddressRequired" Display="Dynamic" />
+            <asp:CustomValidator ID="EmailAddressValidator" runat="server" CssClass="NormalRed" ControlToValidate="EmailAddressTextbox" ValidationGroup="addToCalendar" ResourceKey="invalidEmailAddress" Display="Dynamic" />
+        </div>
+    </asp:View>
+    <asp:View runat="server">
+        <engage:ModuleMessage ID="ThankYouMessage" runat="server" TextResourceKey="ThankYou" MessageType="GreenSuccess" />
+    </asp:View>
+</asp:MultiView>

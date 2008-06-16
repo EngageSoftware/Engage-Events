@@ -11,12 +11,6 @@
 namespace Engage.Dnn.Events.Controls {
     
     
-    /// <summary>
-    /// MonthlyRecurrence class.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated class.
-    /// </remarks>
     public partial class MonthlyRecurrence {
         
         /// <summary>
