@@ -566,6 +566,16 @@
     <Content Include="Images\redTop.gif" />
     <Content Include="Images\successSmallIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\EventEdit.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Images\cancel_disabled.gif" />
+    <Content Include="Images\save.gif" />
+    <Content Include="Images\save_create_new.gif" />
+    <Content Include="Images\save_create_new_disabled.gif" />
+    <Content Include="Images\save_disabled.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v8.0\WebApplications\Microsoft.WebApplication.targets" Condition="'$(Solutions.VSVersion)' == '8.0'" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" Condition="'$(Solutions.VSVersion)' == '9.0'" />
