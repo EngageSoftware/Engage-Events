@@ -5,7 +5,7 @@
     <asp:Button ID="RegisterButton" runat="server" CssClass="CommandButton" ResourceKey="RegisterButton"/>
     <asp:Button ID="AddToCalendarButton" runat="server" CssClass="CommandButton" resourceKey="AddToCalendarButton"/>
     <asp:Button ID="DeleteEventButton" runat="server" CssClass="CommandButton" ResourceKey="DeleteEventButton"/>
-    <asp:Button ID="CancelButton" runat="server" CssClass="CommandButton" ResourceKey="CancelButton"/>
+    <asp:Button ID="CancelButton" runat="server" CssClass="CommandButton"/>
     <asp:Button ID="ViewInviteButton" runat="server" CssClass="CommandButton" ResourceKey="ViewInviteButton" Visible="false"/>
     <asp:Button ID="EditEmailButton" runat="server" CssClass="CommandButton" ResourceKey="EditEmailButton" Visible="false"/>
 </div>

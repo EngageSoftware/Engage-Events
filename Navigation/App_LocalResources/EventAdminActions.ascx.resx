@@ -147,9 +147,6 @@
   <data name="UnCancel.Text" xml:space="preserve">
     <value>Revive</value>
   </data>
-  <data name="CancelButton.Text" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
   <data name="EditEmailButton.Text" xml:space="preserve">
     <value>Edit Email</value>
   </data>
