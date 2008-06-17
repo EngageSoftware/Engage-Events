@@ -126,7 +126,7 @@
   <data name="emailAddressLabel.Text" xml:space="preserve">
     <value>Email:</value>
   </data>
-  <data name="eventNameLabel.Text" xml:space="preserve">
+  <data name="EventNameLabel.Text" xml:space="preserve">
     <value>To RSVP for {0} please enter your email address below.</value>
   </data>
   <data name="NotAttending.Text" xml:space="preserve">

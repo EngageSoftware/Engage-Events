@@ -129,22 +129,31 @@
   <data name="ConfirmUnCancel.Text" xml:space="preserve">
     <value>Are you sure you want to revive this Event?</value>
   </data>
-  <data name="lbAddToCalendar.Text" xml:space="preserve">
+  <data name="AddToCalendarButton.Text" xml:space="preserve">
     <value>Add to Calendar</value>
   </data>
-  <data name="lbDelete.Text" xml:space="preserve">
+  <data name="DeleteEventButton.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="lbEditEvent.Text" xml:space="preserve">
+  <data name="EditEventButton.Text" xml:space="preserve">
     <value>Edit Event</value>
   </data>
-  <data name="lbRegister.Text" xml:space="preserve">
+  <data name="RegisterButton.Text" xml:space="preserve">
     <value>Register</value>
   </data>
-  <data name="lbResponses.Text" xml:space="preserve">
+  <data name="ResponsesButton.Text" xml:space="preserve">
     <value>View Responses</value>
   </data>
   <data name="UnCancel.Text" xml:space="preserve">
     <value>Revive</value>
+  </data>
+  <data name="CancelButton.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="EditEmailButton.Text" xml:space="preserve">
+    <value>Edit Email</value>
+  </data>
+  <data name="ViewInviteButton.Text" xml:space="preserve">
+    <value>View Invite</value>
   </data>
 </root>

@@ -14,10 +14,12 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Globalization;
+    using System.Web;
     using System.Web.UI.WebControls;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
     using Engage.Events;
+    using Util;
 
     /// <summary>
     /// Code-behind for a control (Rsvp.ascx) that allows users to register their attendance for an event.
@@ -84,12 +86,12 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void AddToCalendarButton_Click(object sender, EventArgs e)
         {
-            if (IsValidEmailAddress(this.EmailAddressTextbox.Text))
+            if (Utility.IsValidEmailAddress(this.EmailAddressTextbox.Text))
             {
                 Event evnt = Event.Load(this.EventId);
                 string email = this.EmailAddressTextbox.Text;
 
-                this.SendICalendarToClient(evnt.ToICal(email), evnt.Title);
+                SendICalendarToClient(HttpContext.Current.Response, evnt.ToICal(email), evnt.Title);
             }
         }
 
@@ -100,20 +102,7 @@ namespace Engage.Dnn.Events
         /// <param name="args">The <see cref="System.Web.UI.WebControls.ServerValidateEventArgs"/> instance containing the event data.</param>
         private void EmailAddressValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            args.IsValid = IsValidEmailAddress(this.EmailAddressTextbox.Text);
-        }
-
-        /// <summary>
-        /// Determines whether the specified email address is valid.
-        /// </summary>
-        /// <param name="emailAddress">The email address.</param>
-        /// <returns>
-        /// 	<c>true</c> if the specified email address is valid; otherwise, <c>false</c>.
-        /// </returns>
-        private static bool IsValidEmailAddress(string emailAddress)
-        {
-            aspNetEmail.EmailMessage message = new aspNetEmail.EmailMessage();
-            return message.IsValidEmail(emailAddress);
+            args.IsValid = Utility.IsValidEmailAddress(this.EmailAddressTextbox.Text);
         }
 
         /// <summary>

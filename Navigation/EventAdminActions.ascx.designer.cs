@@ -14,75 +14,75 @@ namespace Engage.Dnn.Events {
     public partial class EventAdminActions {
         
         /// <summary>
-        /// lbEditEvent control.
+        /// EditEventButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button lbEditEvent;
+        protected global::System.Web.UI.WebControls.Button EditEventButton;
         
         /// <summary>
-        /// lbResponses control.
+        /// ResponsesButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button lbResponses;
+        protected global::System.Web.UI.WebControls.Button ResponsesButton;
         
         /// <summary>
-        /// lbRegister control.
+        /// RegisterButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button lbRegister;
+        protected global::System.Web.UI.WebControls.Button RegisterButton;
         
         /// <summary>
-        /// lbAddToCalendar control.
+        /// AddToCalendarButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button lbAddToCalendar;
+        protected global::System.Web.UI.WebControls.Button AddToCalendarButton;
         
         /// <summary>
-        /// lbDelete control.
+        /// DeleteEventButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button lbDelete;
+        protected global::System.Web.UI.WebControls.Button DeleteEventButton;
         
         /// <summary>
-        /// lbCancel control.
+        /// CancelButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button lbCancel;
+        protected global::System.Web.UI.WebControls.Button CancelButton;
         
         /// <summary>
-        /// lbViewInvite control.
+        /// ViewInviteButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button lbViewInvite;
+        protected global::System.Web.UI.WebControls.Button ViewInviteButton;
         
         /// <summary>
-        /// lbEditEmail control.
+        /// EditEmailButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button lbEditEmail;
+        protected global::System.Web.UI.WebControls.Button EditEmailButton;
     }
 }

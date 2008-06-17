@@ -24,7 +24,7 @@
     </div>
 </div>	                        
 
-<asp:Repeater runat="server" id="rpEventListing" OnItemDataBound="rpEventListing_ItemDataBound">
+<asp:Repeater runat="server" id="rpEventListing" OnItemDataBound="RpEventListing_ItemDataBound">
 	<ItemTemplate>
         <asp:Label id = "lblId" Visible="False" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "Id")  %>'></asp:Label>
 		<div class="EventTitle">

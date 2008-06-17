@@ -1,54 +1,61 @@
-//Engage: Events - http://www.engagemodules.com
-//Copyright (c) 2004-2008
-//by Engage Software ( http://www.engagesoftware.com )
-
-//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
-//TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
-//THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
-//CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
-//DEALINGS IN THE SOFTWARE.
-
-using System;
-using System.Globalization;
-using System.Text;
-using System.Web;
-using System.Web.UI.WebControls;
-using DotNetNuke.Common.Utilities;
-using DotNetNuke.Entities.Host;
-using DotNetNuke.Entities.Modules;
-using DotNetNuke.Security;
-using Engage.Dnn.Events.Util;
-using Engage.Events;
+// <copyright file="ModuleBase.cs" company="Engage Software">
+// Engage: Events - http://www.engagemodules.com
+// Copyright (c) 2004-2008
+// by Engage Software ( http://www.engagesoftware.com )
+// </copyright>
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
+// TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
+// CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// DEALINGS IN THE SOFTWARE.
 
 namespace Engage.Dnn.Events
 {
+    using System;
+    using System.Globalization;
+    using System.Text;
+    using System.Web;
+    using DotNetNuke.Entities.Modules;
+    using Util;
+
     /// <summary>
-    /// Summary description for ModuleBase.
+    /// The base class for all controls in the Engage: Events module.
     /// </summary>
     public class ModuleBase : PortalModuleBase
     {
-        private bool allowTitleUpdate = true;
-        private bool logBreadCrumb = true;
-        private bool useCache = true;
+        /////// <summary>
+        /////// The backing field for <see cref="UseCache"/>.
+        /////// </summary>
+        ////private bool useCache = true;
 
-        protected override void OnInit(EventArgs e)
+        /// <summary>
+        /// Gets the application URL.
+        /// </summary>
+        /// <value>The application URL.</value>
+        public static string ApplicationUrl
         {
-            base.OnInit(e);
-            if (DotNetNuke.Framework.AJAX.IsInstalled())
+            get 
             {
-                DotNetNuke.Framework.AJAX.RegisterScriptManager();
-            }            
-        }
-
-        public bool IsSetup
-        {
-            get
-            {
-                string s = HostSettings.GetHostSetting(Engage.Dnn.Events.Util.Utility.ModuleConfigured + PortalId);
-                return !String.IsNullOrEmpty(s);
+                return HttpContext.Current.Request.ApplicationPath != "/" ? HttpContext.Current.Request.ApplicationPath : string.Empty;
             }
         }
 
+        /// <summary>
+        /// Gets the name of the desktop module folder for this module.
+        /// </summary>
+        /// <value>The name of the desktop module folder for this module.</value>
+        public static string DesktopModuleFolderName
+        {
+            get
+            {
+                return Utility.DesktopModuleFolderName;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the current user has edit rights to this module.
+        /// </summary>
+        /// <value><c>true</c> if the current user can edit the module; otherwise, <c>false</c>.</value>
         public bool IsAdmin
         {
             get
@@ -60,35 +67,36 @@ namespace Engage.Dnn.Events
                 else
                 {
                     return IsEditable;
-                    //Later we can add checks to control access by custom roles. hk
-                    //return PortalSecurity.IsInRole(HostSettings.GetHostSetting(Engage.Dnn.Events.Util.Utility.AdminRole + PortalId));
+
+                    // Later we can add checks to control access by custom roles. hk
+                    ////return PortalSecurity.IsInRole(HostSettings.GetHostSetting(Engage.Dnn.Events.Util.Utility.AdminRole + PortalId));
                 }
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the current user is logged in.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if the current user is logged in; otherwise, <c>false</c>.
+        /// </value>
         public bool IsLoggedIn
         {
             get
             {
-                return (Request.IsAuthenticated == true);
+                return this.Request.IsAuthenticated;
             }
         }
 
-        public bool IsHostMailConfigured
-        {
-            get
-            {
-                string s = HostSettings.GetHostSetting("SMTPServer");
-                return Engage.Utility.HasValue(s);
-            }
-        }
-
+        /// <summary>
+        /// Gets the event id.
+        /// </summary>
+        /// <value>The event id.</value>
         protected int EventId
         {
             get
             {
                 int id = -1;
-                //Get the currentpage index from the url parameter
                 if (Request.QueryString["eventId"] != null)
                 {
                     id = Convert.ToInt32(Request.QueryString["eventId"]);
@@ -98,362 +106,77 @@ namespace Engage.Dnn.Events
             }
         }
 
-        //public bool IsCommentsEnabled
-        //{
-        //    get
-        //    {
-        //        return IsCommentsEnabledForPortal(PortalId);
-        //    }
-        //}
-
-        //public static bool IsCommentsEnabledForPortal(int portalId)
-        //{
-        //    string s = HostSettings.GetHostSetting(Utility.PublishComment + portalId.ToString(CultureInfo.InvariantCulture));
-        //    if (Utility.HasValue(s))
-        //    {
-        //        return Convert.ToBoolean(s, CultureInfo.InvariantCulture);
-        //    }
-        //    return false;
-        //}
-
-
-        //public bool AreCommentsModerated
-        //{
-        //    get
-        //    {
-        //        return AreCommentsModeratedForPortal(PortalId);
-        //    }
-        //}
-
-        //public static bool AreCommentsModeratedForPortal(int portalId)
-        //{
-        //    string s = HostSettings.GetHostSetting(Utility.PublishCommentApproval + portalId.ToString(CultureInfo.InvariantCulture));
-        //    if (Utility.HasValue(s))
-        //    {
-        //        return Convert.ToBoolean(s, CultureInfo.InvariantCulture);
-        //    }
-        //    return true;
-        //}
-
-        //public bool AutoApproveComments
-        //{
-        //    get
-        //    {
-        //        return AutoApproveCommentsForPortal(PortalId);
-        //    }
-        //}
-
-        //public static bool AutoApproveCommentsForPortal(int portalId)
-        //{
-        //    string s = HostSettings.GetHostSetting(Utility.PublishCommentAutoApprove + portalId.ToString(CultureInfo.InvariantCulture));
-        //    if (Utility.HasValue(s))
-        //    {
-        //        return Convert.ToBoolean(s, CultureInfo.InvariantCulture);
-        //    }
-        //    return false;
-        //}
-
-        //public bool AreRatingsEnabled
-        //{
-        //    get
-        //    {
-        //        return AreRatingsEnabledForPortal(PortalId);
-        //    }
-        //}
-
-        //public static bool AreRatingsEnabledForPortal(int portalId)
-        //{
-        //    string s = HostSettings.GetHostSetting(Utility.PublishRating + portalId.ToString(CultureInfo.InvariantCulture));
-        //    if (Utility.HasValue(s))
-        //    {
-        //        return Convert.ToBoolean(s, CultureInfo.InvariantCulture);
-        //    }
-        //    return false;
-        //}
-
-        //public bool AllowAnonymousRatings
-        //{
-        //    get
-        //    {
-        //        return AllowAnonymousRatingsForPortal(PortalId);
-        //    }
-        //}
-
-        //public static bool AllowAnonymousRatingsForPortal(int portalId)
-        //{
-        //    string s = HostSettings.GetHostSetting(Utility.PublishRatingAnonymous + portalId.ToString(CultureInfo.InvariantCulture));
-        //    if (Utility.HasValue(s))
-        //    {
-        //        return Convert.ToBoolean(s, CultureInfo.InvariantCulture);
-        //    }
-        //    return false;
-        //}
-
-     
-        //public bool EnablePublishFriendlyUrls
-        //{
-        //    get
-        //    {
-        //        return EnablePublishFriendlyUrlsForPortal(PortalId);
-        //    }
-        //}
-
-        //public static bool EnablePublishFriendlyUrlsForPortal(int portalId)
-        //{
-        //    string s = HostSettings.GetHostSetting(Utility.PublishEnablePublishFriendlyUrls + portalId.ToString(CultureInfo.InvariantCulture));
-        //    if (Utility.HasValue(s))
-        //    {
-        //        return Convert.ToBoolean(s, CultureInfo.InvariantCulture);
-        //    }
-        //    return true;
-        //}
-
-        //public bool IsAdmin
-        //{
-        //    get
-        //    {
-        //        if (Request.IsAuthenticated == false)
-        //        {
-        //            return false;
-        //        }
-        //        else
-        //        {
-        //            return PortalSecurity.IsInRole(HostSettings.GetHostSetting(Utility.PublishAdminRole + PortalId));
-        //        }
-        //    }
-        //}
-
-        //public bool IsConfigured
-        //{
-        //    get
-        //    {
-        //        return this.Settings.Contains("DisplayType");
-        //    }
-        //}
-
-        //public static bool IsUserAdmin(int portalId)
-        //{
-        //    if (HttpContext.Current.Request.IsAuthenticated == false)
-        //    {
-        //        return false;
-        //    }
-        //    else
-        //    {
-        //        return PortalSecurity.IsInRole(HostSettings.GetHostSetting(Utility.PublishAdminRole + portalId));
-        //    }
-        //}
-
-        //public bool IsAuthor
-        //{
-        //    get
-        //    {
-        //        if (Request.IsAuthenticated == false)
-        //        {
-        //            return false;
-        //        }
-        //        else
-        //        {
-        //            return PortalSecurity.IsInRole(HostSettings.GetHostSetting(Utility.PublishAuthorRole + PortalId));
-        //        }
-        //    }
-        //}
-
-        //protected void AddBreadCrumb(string pageName)
-        //{
-        //    BreadCrumb.Add(pageName, GetItemLinkUrl(ItemId));
-        //}
-
-        public bool UseCache
-        {
-            get {
-                return this.useCache && CacheTime > 0;
-            }
-            set { this.useCache = value; }
-        }
-
-        public bool AllowTitleUpdate
-        {
-            get
-            {
-                object o = Settings["AllowTitleUpdate"];
-                if (o == null || !bool.TryParse(o.ToString(), out this.allowTitleUpdate))
-                {
-                    this.allowTitleUpdate = true;
-                }
-                return this.allowTitleUpdate;
-            }
-            set
-            {
-                this.allowTitleUpdate = value;
-            }
-        }
-
-        //This is the cachetime used by Publish modules
-        public int CacheTime
-        {
-            get
-            {
-                object o = Settings["CacheTime"];
-                if (o != null)
-                {
-                    return Convert.ToInt32(o.ToString());
-                }
-                else if (GetDefaultCacheSetting(PortalId) > 0)
-                {
-                    return GetDefaultCacheSetting(PortalId);
-                }
-                return 0;
-            }
-        }
-
-
-        public static int GetDefaultCacheSetting(int portalId)
-        {
-            string s = HostSettings.GetHostSetting(Engage.Dnn.Events.Util.Utility.CacheTime + portalId);
-            if (Engage.Utility.HasValue(s))
-            {
-                return Convert.ToInt32(s);
-            }
-            else
-            {
-                return 0;
-            }
-        }
-
-        protected void SendICalendarToClient(string content, string name)
-        {
-            HttpContext.Current.Response.ClearContent();
-
-            //Stream The ICalendar 
-            HttpContext.Current.Response.ContentEncoding = Encoding.GetEncoding(CultureInfo.CurrentUICulture.TextInfo.ANSICodePage);
-            HttpContext.Current.Response.BufferOutput = true;
-            HttpContext.Current.Response.ContentType = "text/calendar";
-            HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            HttpContext.Current.Response.AppendHeader("Content-Class", "urn:content-classes:calendarmessage");
-            HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(name) + ".ics");
-            
-            //Engage.Logging.FileNotifier fn = new Engage.Logging.FileNotifier();
-            //fn.Notify("Ical", "", content);
-                        
-            HttpContext.Current.Response.Write(content);
-
-            HttpContext.Current.Response.Flush();
-
-
-        }
-
-        
-        public static string ApplicationUrl
-        {
-            get
-            {
-                if (HttpContext.Current.Request.ApplicationPath == "/")
-                {
-                    return "";
-                }
-                else
-                {
-                    return HttpContext.Current.Request.ApplicationPath;
-                }
-            }
-        }
-
-        public bool LogBreadCrumb
-        {
-            get { return this.logBreadCrumb; }
-            set { this.logBreadCrumb = value; }
-        }
-
-        public string BuildLinkUrl(string qsParameters)
-        {
-            return DotNetNuke.Common.Globals.NavigateURL(TabId, "", qsParameters);
-        }
-
-        public static string DesktopModuleFolderName
-        {
-            get
-            {
-                return Engage.Dnn.Events.Util.Utility.DesktopModuleFolderName;
-            }
-        }
-
-        //public static string GetRssLinkUrl(object itemId, int maxDisplayItems, int itemTypeId, int portalId, string displayType)
-        //{
-        //    StringBuilder url = new StringBuilder(128);
-
-        //    url.Append(ApplicationUrl);
-        //    url.Append(DesktopModuleFolderName);
-        //    url.Append("eprss.aspx?itemId=");
-        //    url.Append(itemId);
-        //    url.Append("&numberOfItems=");
-        //    url.Append(maxDisplayItems);
-        //    url.Append("&itemtypeid=");
-        //    url.Append(itemTypeId);
-        //    url.Append("&portalid=");
-        //    url.Append(portalId);
-        //    url.Append("&DisplayType=");
-        //    url.Append(displayType);
-
-        //    return url.ToString();
-        //}
-
-        //public static string GetPrintFriendlyLinkUrl(object itemId, int portalId)
-        //{
-        //    return ApplicationUrl + DesktopModuleFolderName + "printerfriendly.aspx?itemId=" + itemId + "&PortalId=" + portalId.ToString(CultureInfo.InvariantCulture);
-        //}
-
-        protected string GetEditUrl(string eventId)
-        {
-            return EditUrl("eventId", eventId, "Edit");
-        }
-
-        protected bool HasInviteUrl(object invitationUrl)
-        {
-            return (invitationUrl.ToString().Length > 0);
-        }
-
-        //So far, we are only using the DataGrid and a Repeater. This method pulls it out accordingly
-        //to prevent the same code in subclasses over and over.hk
-        protected int GetId(object sender)
-        {
-            LinkButton button = (LinkButton)sender;
-
-            RepeaterItem repeater = button.NamingContainer as RepeaterItem;
-            if (repeater != null)
-            {
-                Label l = (Label)repeater.FindControl("lblId");
-                return Convert.ToInt32(l.Text);
-            }
-            else
-            {
-                DataGridItem gridItem = button.NamingContainer as DataGridItem;
-                if (gridItem != null)
-                {
-                    return Convert.ToInt32(gridItem.Cells[0].Text);
-                }
-                else
-                {
-                    return -1;
-                }
-            }
-        }
-
-        protected string RsvpUrl
-        {
-            get
-            {
-                string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Rsvp&eventid=" + EventId.ToString());
-                return href;
-            }
-        }
-
+        /// <summary>
+        /// Gets the register URL.
+        /// </summary>
+        /// <value>The register URL.</value>
         protected string RegisterUrl
         {
             get
             {
-                string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid=" + EventId.ToString());
-                return href;
+                return this.BuildLinkUrl("&mid=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid=" + this.EventId.ToString());
             }
+        }
+
+        /// <summary>
+        /// Gets the RSVP URL.
+        /// </summary>
+        /// <value>The RSVP URL.</value>
+        protected string RsvpUrl
+        {
+            get
+            {
+                return this.BuildLinkUrl("&mid=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Rsvp&eventid=" + this.EventId.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Builds a URL for this TabId, using the given querystring parameters.
+        /// </summary>
+        /// <param name="querystringParameters">The qs parameters.</param>
+        /// <returns>A URL to the current TabId, with the given querystring parameters</returns>
+        public string BuildLinkUrl(string querystringParameters)
+        {
+            return DotNetNuke.Common.Globals.NavigateURL(this.TabId, "", querystringParameters);
+        }
+
+        /// <summary>
+        /// Sends an iCalendar to the client to download.
+        /// </summary>
+        /// <param name="response">The response to use to send the iCalendar.</param>
+        /// <param name="content">The content of the iCalendar.</param>
+        /// <param name="name">The name of the file.</param>
+        protected static void SendICalendarToClient(HttpResponse response, string content, string name)
+        {
+            response.ClearContent();
+
+            // Stream The ICalendar 
+            response.ContentEncoding = Encoding.GetEncoding(CultureInfo.CurrentUICulture.TextInfo.ANSICodePage);
+            response.BufferOutput = true;
+            response.ContentType = "text/calendar";
+            response.Cache.SetCacheability(HttpCacheability.NoCache);
+            response.AppendHeader("Content-Class", "urn:content-classes:calendarmessage");
+            response.AppendHeader("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(name) + ".ics");
+            
+            ////Engage.Logging.FileNotifier fn = new Engage.Logging.FileNotifier();
+            ////fn.Notify("Ical", "", content);
+                        
+            response.Write(content);
+
+            response.Flush();
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+            if (DotNetNuke.Framework.AJAX.IsInstalled())
+            {
+                DotNetNuke.Framework.AJAX.RegisterScriptManager();
+            }            
         }
     }
 }

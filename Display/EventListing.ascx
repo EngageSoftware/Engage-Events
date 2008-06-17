@@ -10,7 +10,7 @@
         <h4 class="NormalBold">Events</h4>
 </div>
 
-<asp:Repeater runat="server" id="rpEventListing" OnItemDataBound="rpEventListing_ItemDataBound">
+<asp:Repeater runat="server" id="rpEventListing" OnItemDataBound="RpEventListing_ItemDataBound">
 	<ItemTemplate>
         <asp:Label id = "lblId" Visible="False" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "Id")  %>'></asp:Label>
         <div class="EventTitle">
@@ -30,7 +30,7 @@
 		    <div class="SubHead">Description</div>
 		    <div class="Normal"><%# DataBinder.Eval(Container.DataItem, "Overview")  %></div>
 		</div>
-        <uc2:actions ID="ccEventActions" runat="server" UseCache="true" />
+        <uc2:actions ID="ccEventActions" runat="server" />
 	</ItemTemplate>
 
 </asp:Repeater>

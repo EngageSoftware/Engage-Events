@@ -54,13 +54,19 @@ namespace Engage.Dnn.Events.Controls
         /// The backing field for <see cref="TextResourceKey"/>.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string textResourceKey;
+        private string textResourceKey = string.Empty;
 
         /// <summary>
         /// The backing field for <see cref="TitleResourceKey"/>.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string titleResourceKey;
+        private string titleResourceKey = string.Empty;
+
+        /// <summary>
+        /// The backing field for <see cref="CssClass"/>.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private string cssClass = string.Empty;
 
         /// <summary>
         /// The backing field for <see cref="MessageType"/>.
@@ -113,6 +119,18 @@ namespace Engage.Dnn.Events.Controls
         }
 
         /// <summary>
+        /// Gets or sets the Cascading Style Sheet (CSS) class rendered by the Web server control on the client.
+        /// </summary>
+        /// <value>The CSS class rendered by the Web server control on the client. The default is <see cref="string.Empty"/>.</value>
+        public string CssClass
+        {
+            [DebuggerStepThrough]
+            get { return this.cssClass; }
+            [DebuggerStepThrough]
+            set { this.cssClass = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the type of the message.
         /// </summary>
         /// <value>The type of the message.</value>
@@ -131,6 +149,30 @@ namespace Engage.Dnn.Events.Controls
                 {
                     this.Visible = false;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a server control is rendered as UI on the page.
+        /// </summary>
+        /// <value></value>
+        /// <returns><c>true</c> if the control is visible on the page; otherwise <c>false</c>.</returns>
+        public override bool Visible
+        {
+            [DebuggerStepThrough]
+            get
+            {
+                return base.Visible;
+            }
+
+            set
+            {
+                if (this.messageType != ModuleMessageType.None)
+                {
+                    base.Visible = value;
+                }
+
+                Debug.Assert(base.Visible == false, "Visibility should be set permanently to false when MessageType is None");
             }
         }
 

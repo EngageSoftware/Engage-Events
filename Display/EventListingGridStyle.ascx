@@ -9,9 +9,9 @@
 <asp:DataGrid ID="grdEvents" runat="server" Font-Size="X-Small" Font-Names="Verdana"
     Width="100%" Height="72px" AutoGenerateColumns="False" BorderColor="#999999"
     BorderStyle="None" BorderWidth="1px" BackColor="White" CellPadding="3" GridLines="Vertical"
-    AllowSorting="True" OnSortCommand="grdEvents_SortCommand" PageSize="10" OnDeleteCommand="grdEvents_DeleteCommand"
+    AllowSorting="True" OnSortCommand="GrdEvents_SortCommand" PageSize="10" OnDeleteCommand="grdEvents_DeleteCommand"
     OnEditCommand="grdEvents_EditCommand" DataKeyField="Id" 
-    OnItemDataBound="grdEvents_ItemDataBound">
+    OnItemDataBound="GrdEvents_ItemDataBound">
     <FooterStyle ForeColor="Black" BackColor="#CCCCCC"></FooterStyle>
     <SelectedItemStyle Font-Bold="True" ForeColor="White" BackColor="#008A8C"></SelectedItemStyle>
     <PagerStyle HorizontalAlign="Center" ForeColor="Black" BackColor="#999999" Mode="NumericPages"
