@@ -1,16 +1,6 @@
 /*==============================================
 
-		1. Admin Tools
-
-==============================================*/
-
-.AdminTools{}
-
-
-
-/*==============================================
-
-		2. Event Custom Listing Page
+		1. Event Custom Listing Page
 
 ==============================================*/
 
@@ -39,15 +29,40 @@
 					#myEvents .EventHeader .sortTitle{}
 					#myEvents .EventHeader .sortButtons{}
 	
-	
-
 		.EventStats{font-weight:bold;}	
 		.border	{border: thin groove;}
+
+/* event calendar display page */
+
+.EventCalendar li { list-style-type: none; }
+
+/* event edit page */
+
+.AdminButtons, .AddEventFooterButtons{ text-align: left; padding-left: 5%;}
+	.AddEventFooterButtons { padding-top: 3%; }
+	.AddEventSuccessMessage { padding-left: 10%; }
+
+	.AddNewEvent .Head { text-align: left; border-bottom: dashed 1px black; text-transform: uppercase; margin-bottom: 5%; padding-bottom: 1%;}
+
+.EventTitle, .EventStartDate, .EventEndDate, .EventLocationAdd, .EventEditor { text-align: left; padding: 1%; }
+	.EventTitle .NormalBold { font-size: medium; }
+	.EventTitle .NormalTextBox { width: 40%; }
+	.EventLocationAdd .NormalTextBox { width: 60%; }
+	.EventStartDate .NormalBold { text-align: right; }
+	
+	.EventStartDate {clear: both; overflow: hidden;}
+			.EventEditor .NormalBold, .EventTitle .NormalBold, .EventStartDate .NormalBold, .EventLocationAdd .NormalBold, .EventEndDate .NormalBold
+			{float:left; width: 20%; margin-right: 3%; text-align: right;}
+			.EventEditor .Normal, .EventTitle .Normal, .EventStartDate .Normal, .EventLocationAdd .Normal, .EventEndDate .Normal{float: left; width: 81%;}
+			
+
+				
+	
 
 
 /*========================================================
 
-3. Validation
+		2. Validation
 
 ========================================================*/
 
@@ -57,6 +72,7 @@
 .mmBody .mmIcon{float:left; width: 30px; height:32px; text-indent:-9999px; background-color:transparent; background-repeat: no-repeat; background-attachment:scroll; background-position:left bottom;}
 .mmBody p, .mmBody h3{float: right; text-align: left; width: 275px; margin-left: 25px;}
 .mmBt{height: 5px; background-color:transparent; background-repeat: no-repeat; background-attachment:scroll; background-position:left top;}
+
 /*========================= Error On Page ===============================*/
 
 .ErrorTop{background-image:url(images/redTop.gif);}

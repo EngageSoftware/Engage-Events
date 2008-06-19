@@ -185,6 +185,13 @@
       <DependentUpon>RecurrenceSelector.ascx</DependentUpon>
     </Compile>
     <Compile Include="ActionEventArg.cs" />
+    <Compile Include="Display\EventToolTip.ascx.cs">
+      <DependentUpon>EventToolTip.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Display\EventToolTip.ascx.designer.cs">
+      <DependentUpon>EventToolTip.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Display\CalendarDisplayOptions.ascx.cs">
       <DependentUpon>CalendarDisplayOptions.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -441,33 +448,33 @@
     <Content Include="Services\WebServicesGateway.asmx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="d:\Engage 3.0\Engage.Communication\Engage.Communication.csproj">
+    <ProjectReference Include="..\..\..\..\..\..\code\Engage 3.0\Engage.Communication\Engage.Communication.csproj">
       <Project>{55CBD824-C0E0-4F1B-AECA-905B84C5A600}</Project>
       <Name>Engage.Communication</Name>
     </ProjectReference>
-    <ProjectReference Include="d:\Engage 3.0\Engage.Events\Engage.Events.csproj">
+    <ProjectReference Include="..\..\..\..\..\..\code\Engage 3.0\Engage.Events\Engage.Events.csproj">
       <Project>{34458836-3711-4D60-B394-B44347A8F0DF}</Project>
       <Name>Engage.Events</Name>
     </ProjectReference>
-    <ProjectReference Include="D:\Engage 3.0\Engage.Framework\Engage.Framework.csproj">
+    <ProjectReference Include="..\..\..\..\..\..\code\Engage 3.0\Engage.Framework\Engage.Framework.csproj">
       <Project>{0EA52814-FB21-4258-A411-BF2A6B1699F0}</Project>
       <Name>Engage.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="D:\Engage 3.0\Engage.Routing\Engage.Routing.csproj">
+    <ProjectReference Include="..\..\..\..\..\..\code\Engage 3.0\Engage.Routing\Engage.Routing.csproj">
       <Project>{CE72C274-F07E-4F4A-9854-DFB1354293E7}</Project>
       <Name>Engage.Routing</Name>
     </ProjectReference>
-    <ProjectReference Include="D:\Engage 3.0\Engage.Services\Engage.Services.csproj">
+    <ProjectReference Include="..\..\..\..\..\..\code\Engage 3.0\Engage.Services\Engage.Services.csproj">
       <Project>{C446747D-B3DD-43E2-9908-13CC6663E45F}</Project>
       <Name>Engage.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="D:\Engage 3.0\Engage.Utility\Engage.Utility.csproj">
+    <ProjectReference Include="..\..\..\..\..\..\code\Engage 3.0\Engage.Utility\Engage.Utility.csproj">
       <Project>{319B4FE6-A016-41E0-93CE-748DA517D542}</Project>
       <Name>Engage.Utility</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_LocalResources\EventListing.ascx.resx">
+    <Content Include="Display\App_LocalResources\EventListing.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
@@ -491,12 +498,12 @@
     <Content Include="Display\EventListingAdmin.ascx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_LocalResources\EventListingAdmin.ascx.resx">
+    <Content Include="Display\App_LocalResources\EventListingAdmin.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_LocalResources\EventListingCustom.ascx.resx">
+    <Content Include="Display\App_LocalResources\EventListingCustom.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
@@ -512,7 +519,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_LocalResources\EventCalendar.ascx.resx">
+    <Content Include="Display\App_LocalResources\EventCalendar.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
@@ -570,7 +577,10 @@
     <Content Include="App_LocalResources\EventEdit.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Display\EventToolTip.ascx" />
     <Content Include="Images\cancel_disabled.gif" />
+    <Content Include="Images\manage_RSVPs.gif" />
+    <Content Include="Images\manage_RSVPs_disabled.gif" />
     <Content Include="Images\save.gif" />
     <Content Include="Images\save_create_new.gif" />
     <Content Include="Images\save_create_new_disabled.gif" />

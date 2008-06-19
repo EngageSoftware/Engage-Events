@@ -14,201 +14,147 @@ namespace Engage.Dnn.Events {
     public partial class EventEdit {
         
         /// <summary>
-        /// GlobalNavigation1 control.
+        /// GlobalNavigation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Engage.Dnn.Events.GlobalNavigation GlobalNavigation1;
+        protected global::Engage.Dnn.Events.GlobalNavigation GlobalNavigation;
         
         /// <summary>
-        /// defaultCalendarExtender control.
+        /// SuccessModuleMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender defaultCalendarExtender;
+        protected global::Engage.Dnn.Events.Controls.ModuleMessage SuccessModuleMessage;
         
         /// <summary>
-        /// txtWatermarkEventTitle control.
+        /// AddNewEvent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.TextBoxWatermarkExtender txtWatermarkEventTitle;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AddNewEvent;
         
         /// <summary>
-        /// txtWatermarkEventDate control.
+        /// AddEditEventLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.TextBoxWatermarkExtender txtWatermarkEventDate;
+        protected global::System.Web.UI.WebControls.Label AddEditEventLabel;
         
         /// <summary>
-        /// txtWatermarkEventTime control.
+        /// EventTitleTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.TextBoxWatermarkExtender txtWatermarkEventTime;
+        protected global::System.Web.UI.WebControls.TextBox EventTitleTextBox;
         
         /// <summary>
-        /// txtWatermarkEventLocation control.
+        /// StartDateTimePicker control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.TextBoxWatermarkExtender txtWatermarkEventLocation;
+        protected global::Telerik.Web.UI.RadDateTimePicker StartDateTimePicker;
         
         /// <summary>
-        /// lblAddNewEvent control.
+        /// EndDateTimePicker control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAddNewEvent;
+        protected global::Telerik.Web.UI.RadDateTimePicker EndDateTimePicker;
         
         /// <summary>
-        /// lblEventTitle control.
+        /// EventLocationTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEventTitle;
+        protected global::System.Web.UI.WebControls.TextBox EventLocationTextBox;
         
         /// <summary>
-        /// txtEventTitle control.
+        /// EventDescriptionTextEditor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEventTitle;
+        protected global::DotNetNuke.UI.UserControls.TextEditor EventDescriptionTextEditor;
         
         /// <summary>
-        /// lblEventDate control.
+        /// AddEventFooterButtons control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEventDate;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AddEventFooterButtons;
         
         /// <summary>
-        /// txtEventDate control.
+        /// SaveEventButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEventDate;
+        protected global::System.Web.UI.WebControls.ImageButton SaveEventButton;
         
         /// <summary>
-        /// imgCalendarButton control.
+        /// CancelEventButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imgCalendarButton;
+        protected global::System.Web.UI.WebControls.ImageButton CancelEventButton;
         
         /// <summary>
-        /// lblEventTime control.
+        /// SaveAndCreateNewEventButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEventTime;
+        protected global::System.Web.UI.WebControls.ImageButton SaveAndCreateNewEventButton;
         
         /// <summary>
-        /// txtEventTime control.
+        /// FinalButtons control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEventTime;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FinalButtons;
         
         /// <summary>
-        /// rblEventTime control.
+        /// CreateAnotherEventButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rblEventTime;
+        protected global::System.Web.UI.WebControls.LinkButton CreateAnotherEventButton;
         
         /// <summary>
-        /// lblEventLocation control.
+        /// ExitButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEventLocation;
-        
-        /// <summary>
-        /// txtEventLocation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEventLocation;
-        
-        /// <summary>
-        /// lblDescription control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDescription;
-        
-        /// <summary>
-        /// txtEventDescription control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.TextEditor txtEventDescription;
-        
-        /// <summary>
-        /// lbSave control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbSave;
-        
-        /// <summary>
-        /// lbCancel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbCancel;
-        
-        /// <summary>
-        /// lbSaveAndCreateNew control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbSaveAndCreateNew;
+        protected global::System.Web.UI.WebControls.LinkButton ExitButton;
     }
 }

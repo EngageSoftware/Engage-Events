@@ -117,4 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ActiveListItem.Text" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="AllListItem.Text" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="DateListItem.Text" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Description.Text" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="MyEventsLabel.Text" xml:space="preserve">
+    <value>My Events</value>
+  </data>
+  <data name="SortByLabel.Text" xml:space="preserve">
+    <value>Sort By</value>
+  </data>
+  <data name="StatusLabel.Text" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="TitleListItem.Text" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="When.Text" xml:space="preserve">
+    <value>When</value>
+  </data>
+  <data name="Where.Text" xml:space="preserve">
+    <value>Where</value>
+  </data>
 </root>

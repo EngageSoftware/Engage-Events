@@ -12,18 +12,44 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.ComponentModel;
     using System.Web.UI.WebControls;
     using DotNetNuke.Services.Exceptions;
     using Engage.Events;
 
+    // using Engage.Licensing;
+
+    // [System.Runtime.InteropServices.GuidAttribute("2de915e1-df71-3443-9f4d-32259c92ced2")]
+    // [LicenseProvider(typeof(EngageLicenseProvider))]
+
     /// <summary>
-    /// The administrative listing of events.
+    /// The Event Listing Admin class allows for the management of events.
     /// </summary>
-    ////[System.Runtime.InteropServices.GuidAttribute("2de915e1-df71-3443-9f4d-32259c92ced2")]
-    ////[LicenseProvider(typeof(EngageLicenseProvider))]
     public partial class EventListingAdmin : ModuleBase
     {
-        ////private License license;
+        #region Licensing
+
+        /// <summary>
+        /// Create a license
+        /// </summary>
+        private License license;
+
+        /// <summary>
+        /// Enables a server control to perform final clean up before it is released from memory.
+        /// </summary>
+        public override void Dispose()
+        {
+            if (this.license != null)
+            {
+                this.license.Dispose();
+                this.license = null;
+            }
+
+            base.Dispose();
+        }
+        #endregion
+
+        #region Event Handlers
 
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
@@ -34,8 +60,11 @@ namespace Engage.Dnn.Events
             try
             {
                 // adds Validate to the control's constructor.
-                ////license = LicenseManager.Validate(typeof(EventListingAdmin), this);
-                this.BindData();
+                // license = LicenseManager.Validate(typeof(EventListingAdmin), this);
+                if (!Page.IsPostBack)
+                {
+                    this.BindData();
+                }
             }
             catch (Exception exc)
             {
@@ -43,54 +72,59 @@ namespace Engage.Dnn.Events
             }    
         }
 
-        ////protected void rbSort_SelectedIndexChanged(object sender, EventArgs e)
-        ////{
-        ////    BindData();
-        ////}
-
-        ////protected void rbStatus_SelectedIndexChanged(object sender, EventArgs e)
-        ////{
-        ////    BindData();
-        ////}
-
-        ////private void actions_ActionCompleted(object sender, ActionEventArg e)
-        ////{
-        ////    if (e.ActionStatus == Action.Success)
-        ////    {
-        ////        BindData();
-        ////    }
-        ////}
-
         /// <summary>
-        /// Handles the ItemDataBound event of the rpEventListing control.
+        /// Handles the ItemDataBound event of the EventListingRepeater control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
-        protected void RpEventListing_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        protected void EventListingRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            EventAdminActions actions = (EventAdminActions)e.Item.FindControl("ccEventActions");
+            EventAdminActions actions = (EventAdminActions)e.Item.FindControl("EventActions");
             actions.CurrentEvent = (Event)e.Item.DataItem;
-            ////actions.ActionCompleted += new ActionEventHandler(actions_ActionCompleted);
         }
+
+        /// <summary>
+        /// Handles the SelectedIndexChanged event of the StatusRadioButtonList control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void StatusRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.BindData();
+        }
+
+        /// <summary>
+        /// Handles the SelectedIndexChanged event of the SortRadioButtonList control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void SortRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.BindData();
+        }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Binds the data.
         /// </summary>
         private void BindData()
         {
-            this.rpEventListing.DataSource = EventCollection.Load(this.PortalId, this.rbSort.SelectedValue, 0, 0, this.rbStatus.SelectedValue == "All");
-            this.rpEventListing.DataBind();
+            bool showAll = false;
+
+            if (StatusRadioButtonList.SelectedValue == "All")
+            {
+                showAll = true;
+            }
+
+            EventCollection events = EventCollection.Load(PortalId, SortRadioButtonList.SelectedValue, 0, 0, showAll);
+            EventListingRepeater.DataSource = events;
+            EventListingRepeater.DataBind();
         }
 
-        ////public override void Dispose()
-        ////{
-        ////    if (license != null)
-        ////    {
-        ////        license.Dispose();
-        ////        license = null;
-        ////    }
-        ////    base.Dispose();
-        ////}
+        #endregion
     }
 }
 
