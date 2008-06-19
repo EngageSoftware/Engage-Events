@@ -78,9 +78,6 @@
     <delete dir="${resourcezip.dir}" if="${directory::exists(resourcezip.dir)}" />
   </target>
 
-
-
-
   <!-- Begin area for creating resourcezip for installable PA zips (should depend on target that clears where this will build zip file to)-->
   <target name="CreateResourceZip" depends="CleanResourceZip">
     <!-- create a flat directory to zip for install -->
@@ -90,7 +87,7 @@
       <fileset>
         <!-- Tell nant what files to grab -->
         <!-- everything included here ends up in resource.zip, this should be excluded in the CreateBinZip -->
-        <include name="**/images/*" />     
+        <include name="**/images/*" />
         <include name="**/Docs/*.pdf" />
         <include name="**/${localresource.dir}/*.resx" />
         <include name="**/${globalresource.dir}/*.resx" />
@@ -175,10 +172,6 @@
   </target>
   <!-- End area for resourceSourcezip creation -->
 
-
-
-
-
   <!-- Begin area for creating installable PA (should depend on target that clears where this will build zip file to AND resourcezip as this is part of installable PA)-->
   <target name="CreateStdBinZip" depends="CleanPackageBin CreateResourceZip">
     <!-- DO flatten this as we want to retain folder structure in this and ONLY this zip -->
@@ -193,6 +186,7 @@
         <include name="../../bin/Engage.DataProviderv3.0.dll" />
         <include name="../../bin/Engage.Utilityv3.0.dll" />
         <include name="../../bin/Engage.Communicationv3.0.dll" />
+        <include name="../../bin/Engage.Dnn.Utility.dll" />
         <include name="../../bin/Telerik.Web.UI.dll" />
         <include name="../../bin/aspNetEmail.dll" />
         <include name="**/*.sqldataprovider" />
@@ -227,6 +221,7 @@
         <include name="../../bin/Engage.DataProviderv3.0.dll" />
         <include name="../../bin/Engage.Utilityv3.0.dll" />
         <include name="../../bin/Engage.Communicationv3.0.dll" />
+        <include name="../../bin/Engage.Dnn.Utility.dll" />
         <include name="../../bin/Telerik.Web.UI.dll" />
         <include name="../../bin/aspNetEmail.dll" />
         <include name="**/*.sqldataprovider" />
@@ -261,6 +256,7 @@
         <include name="../../bin/Engage.DataProviderv3.0.dll" />
         <include name="../../bin/Engage.Utilityv3.0.dll" />
         <include name="../../bin/Engage.Communicationv3.0.dll" />
+        <include name="../../bin/Engage.Dnn.Utility.dll" />
         <include name="../../bin/Telerik.Web.UI.dll" />
         <include name="../../bin/aspNetEmail.dll" />
         <include name="**/*.sqldataprovider" />
@@ -296,6 +292,7 @@
         <include name="../../bin/Engage.DataProviderv3.0.dll" />
         <include name="../../bin/Engage.Utilityv3.0.dll" />
         <include name="../../bin/Engage.Communicationv3.0.dll" />
+        <include name="../../bin/Engage.Dnn.Utility.dll" />
         <include name="../../bin/Telerik.Web.UI.dll" />
         <include name="../../bin/aspNetEmail.dll" />
         <include name="**/*.sqldataprovider" />
@@ -340,13 +337,10 @@
   <!-- End area for Enterprise zip -->
 
   <!--  SYNTHETIC TASKS  -->
-  <target name="build" depends="Compile" description="This target compiles the application.
-	" />
-
+  <target name="build" depends="Compile" description="This target compiles the application." />
   <target name="BuildAndZip" depends="build CreateEntBinZip CreateStdBinZip CreateProBinZip CreateEntSrcZip CreateEntZip" description="This target compiles the application and then creates two-three zip files: 
 	              - one that only contains the compiled code and runtime files 
 		      - one is the resourceszip for installable pa's
 	              - the other with compiled code and source code.
 	" />
-
 </project>
