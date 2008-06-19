@@ -1,14 +1,9 @@
-using System;
-using System.Data;
-using System.Web;
-using System.Collections;
-using System.Web.Services;
-using System.Web.Services.Protocols;
-using System.ComponentModel;
-using System.Web.Script.Services;
-
+//TODO: Do we need this class?
 namespace Engage.Dnn.Events.Services
 {
+    using System.Web.Script.Services;
+    using System.Web.Services;
+
     /// <summary>
     /// Summary description for PublishServices
     /// </summary>

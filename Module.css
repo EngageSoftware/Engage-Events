@@ -66,7 +66,7 @@
 
 ========================================================*/
 
-.ModuleMessage{width:350px; padding-top: 1em;}
+.ModuleMessage{width:350px; padding-top: 1em; text-align:left;}
 .mmTop{height: 5px; line-height: 0; background-color:transparent; background-repeat: no-repeat; background-attachment:scroll; background-position:left bottom;}
 .mmBody{height: 100%; padding: 10px 10px 25px;  margin:0 auto; overflow: hidden; background-color:transparent; background-repeat: repeat-y; background-attachment:scroll; background-position:left bottom;}
 .mmBody .mmIcon{float:left; width: 30px; height:32px; text-indent:-9999px; background-color:transparent; background-repeat: no-repeat; background-attachment:scroll; background-position:left bottom;}

@@ -12,45 +12,15 @@
 namespace Engage.Dnn.Events
 {
     using System;
-    using System.ComponentModel;
     using System.Web.UI.WebControls;
     using DotNetNuke.Services.Exceptions;
     using Engage.Events;
-
-    // using Engage.Licensing;
-
-    // [System.Runtime.InteropServices.GuidAttribute("2de915e1-df71-3443-9f4d-32259c92ced2")]
-    // [LicenseProvider(typeof(EngageLicenseProvider))]
 
     /// <summary>
     /// The Event Listing Admin class allows for the management of events.
     /// </summary>
     public partial class EventListingAdmin : ModuleBase
     {
-        #region Licensing
-
-        /// <summary>
-        /// Create a license
-        /// </summary>
-        private License license;
-
-        /// <summary>
-        /// Enables a server control to perform final clean up before it is released from memory.
-        /// </summary>
-        public override void Dispose()
-        {
-            if (this.license != null)
-            {
-                this.license.Dispose();
-                this.license = null;
-            }
-
-            base.Dispose();
-        }
-        #endregion
-
-        #region Event Handlers
-
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
         /// </summary>
@@ -59,8 +29,6 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                // adds Validate to the control's constructor.
-                // license = LicenseManager.Validate(typeof(EventListingAdmin), this);
                 if (!Page.IsPostBack)
                 {
                     this.BindData();
@@ -103,28 +71,15 @@ namespace Engage.Dnn.Events
             this.BindData();
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>
         /// Binds the data.
         /// </summary>
         private void BindData()
         {
-            bool showAll = false;
-
-            if (StatusRadioButtonList.SelectedValue == "All")
-            {
-                showAll = true;
-            }
-
-            EventCollection events = EventCollection.Load(PortalId, SortRadioButtonList.SelectedValue, 0, 0, showAll);
+            EventCollection events = EventCollection.Load(PortalId, SortRadioButtonList.SelectedValue, 0, 0, StatusRadioButtonList.SelectedValue == "All");
             EventListingRepeater.DataSource = events;
             EventListingRepeater.DataBind();
         }
-
-        #endregion
     }
 }
 

@@ -21,25 +21,25 @@ namespace Engage.Dnn.Events.Display
     public partial class EventToolTip : UserControl
     {
         /// <summary>
-        /// The backing field for EventStartDate.
+        /// The backing field for <see cref="EventStartDate"/>.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string eventStartDate;
 
         /// <summary>
-        /// The backing field for EventStartDate.
+        /// The backing field for <see cref="EventEndDate"/>.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string eventEndDate;
 
         /// <summary>
-        /// The backing field for Overview.
+        /// The backing field for <see cref="Overview"/>.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string overview;
 
         /// <summary>
-        /// The backing field for Overview.
+        /// The backing field for <see cref="Title"/>.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string title;

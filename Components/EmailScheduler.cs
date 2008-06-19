@@ -1,26 +1,36 @@
-using System;
-using System.Collections;
-using System.Collections.ObjectModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
-using DotNetNuke.Common.Lists;
-using DotNetNuke.Common.Utilities;
-using DotNetNuke.Entities.Modules;
-using DotNetNuke.Services.FileSystem;
-using Engage.Routing;
+// <copyright file="EmailScheduler.cs" company="Engage Software">
+// Engage: Events - http://www.engagemodules.com
+// Copyright (c) 2004-2008
+// by Engage Software ( http://www.engagesoftware.com )
+// </copyright>
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
+// TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
+// CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// DEALINGS IN THE SOFTWARE.
 
 namespace Engage.Dnn.Events
 {
-    public class EmailScheduler : DotNetNuke.Services.Scheduling.SchedulerClient
+    using DotNetNuke.Services.Scheduling;
+    using Routing;
+
+    /// <summary>
+    /// A scheduler client for running scheduled email tasks.
+    /// </summary>
+    public class EmailScheduler : SchedulerClient
     {
-        public EmailScheduler(DotNetNuke.Services.Scheduling.ScheduleHistoryItem objScheduleHistoryItem)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EmailScheduler"/> class.
+        /// </summary>
+        /// <param name="objScheduleHistoryItem">The obj schedule history item.</param>
+        public EmailScheduler(ScheduleHistoryItem objScheduleHistoryItem)
         {
             ScheduleHistoryItem = objScheduleHistoryItem;
         }
 
+        /// <summary>
+        /// Does the work.
+        /// </summary>
         public override void DoWork()
         {
             RoutingManager rm = RoutingManager.Instance;
@@ -28,7 +38,6 @@ namespace Engage.Dnn.Events
 
             ScheduleHistoryItem.Succeeded = true;
             ScheduleHistoryItem.AddLogNote("Email Scheduler completed successfully.<br>");
-
         }
     }
 }

@@ -489,32 +489,22 @@ END
 
 GO
 
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'DotNetNuke Skinning', 'This event will cover skinning concepts...', 
-GETDATE() + 5,
-'2 Microsoft Place', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training.aspx',
-'http://engagesoftware.com/training', 1, 1, 1, 'Coung Dang', 'cdang@engagesoftware.com')
-GO
-
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'Object Oriented Programming Talk', 'Discuss Object Oriented programming concepts and why use them.', 
-GETDATE() + 3,
-'3 Microsoft Place', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Ian Robinson', 'irobinson@engagesoftware.com')
-GO
-
-INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
-([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
-VALUES (0, 0, 'DotNuke Module Development', 'Come learn about module development techniques', 
-GETDATE() + 35,
-'4 Microsoft Place', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
-'http://engagesoftware.com/training', 1, 1, 1, 'Chris Hammond', 'chammond@engagesoftware.com')
-GO
+--INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
+--([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
+-- ,[InvitationUrl] ,[CanRsvp] ,[CreatedBy] ,[RevisingUser] , [Organizer], [OrganizerEmail])
+--VALUES (0, 0, 'DotNetNuke Skinning', 'This event will cover skinning concepts...', 
+--GETDATE() + 5,
+--'2 Microsoft Place', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training.aspx',
+--'http://engagesoftware.com/training', 1, 1, 1, 'Coung Dang', 'cdang@engagesoftware.com')
+--VALUES (0, 0, 'Object Oriented Programming Talk', 'Discuss Object Oriented programming concepts and why use them.', 
+--GETDATE() + 3,
+--'3 Microsoft Place', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
+--'http://engagesoftware.com/training', 1, 1, 1, 'Ian Robinson', 'irobinson@engagesoftware.com')
+--VALUES (0, 0, 'DotNuke Module Development', 'Come learn about module development techniques', 
+--GETDATE() + 35,
+--'4 Microsoft Place', 'http://engagesoftware.com/training', 'http://engagesoftware.com/training',
+--'http://engagesoftware.com/training', 1, 1, 1, 'Chris Hammond', 'chammond@engagesoftware.com')
+--GO
 
 
 --stored procedures
@@ -1179,13 +1169,13 @@ BEGIN
 	set @sql = @sql + 'where PortalId = ' + STR(@portalId)
 	if (@currentMonth = 1)
 	begin
-		set @sql = @sql + ' and (Month(EventStart) = Month(GETDATE()) and EventStart > GetDate())'
+		set @sql = @sql + ' and Month(EventStart) = Month(GETDATE())'
 	end
 	else
 	begin
 		set @sql = @sql + ' and Month(EventStart) != Month(GETDATE())'
-		set @sql = @sql + ' and Month(EventStart) > Month(GETDATE())'
 	end
+	set @sql = @sql + ' and EventStart > GETDATE()'
 	set @sql = @sql + ' and Cancelled = 0 '
 	set @sql = @sql + ' Order by EventStart ASC '
 	

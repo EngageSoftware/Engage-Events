@@ -19,7 +19,7 @@
     function beginRequestHandler(sender, args)
     {
         var prm = Sys.WebForms.PageRequestManager.getInstance();
-        if (args.get_postBackElement().id.indexOf('RadScheduler1') != -1) 
+        if (args.get_postBackElement().id.indexOf('EventsCalendarDisplay') != -1) 
         { 
             hideActiveToolTip(); 
         } 
@@ -27,45 +27,30 @@
 //]]>
 </script>
 
-<span class="GlobalNavigation"><engage:GlobalNavigation ID="GlobalNavigation" runat="server" /></span>
-
+<span class="GlobalNavigation">
+    <engage:GlobalNavigation ID="GlobalNavigation" runat="server" />
+</span>
 <div class="EventHeader">
-    <h2 class="NormalBold"><asp:Label runat="server" ResourceKey="EventsTitle"></asp:Label></h4>
+    <h2 class="NormalBold">
+        <asp:Label runat="server" ResourceKey="EventsTitle" />
+    </h2>
 </div>
-
 <div class="EventCalendar">
     <asp:UpdatePanel runat="server" ID="UpdatePanel1" UpdateMode="Conditional">
         <ContentTemplate>
-        
-            <telerik:RadScheduler ID="RadScheduler1"
-                runat="server"
-                SelectedView="MonthView"
-                Width="750px"
-                EnableEmbeddedSkins="True"
-                DayStartTime="08:00:00"
-                DayEndTime="18:00:00"
-                TimeZoneOffset="03:00:00"
-                DataKeyField="Id"
-                DataSubjectField="Title"
-                DataStartField="EventStart"
-                DataEndField="EventEnd"
-                AllowDelete="False"
-                AllowEdit="False"
-                AllowInsert="False"
-                onappointmentdelete="RadScheduler1_AppointmentDelete"
-                onappointmentinsert="RadScheduler1_AppointmentInsert"
-                onappointmentupdate="RadScheduler1_AppointmentUpdate" 
-                onappointmentcreated="RadScheduler1_AppointmentCreated" 
-                OverflowBehavior="Expand" 
-                onappointmentdatabound="RadScheduler1_AppointmentDataBound" 
-                CustomAttributeNames="Overview">
+            <telerik:radscheduler id="EventsCalendarDisplay" runat="server" selectedview="MonthView"
+                width="750px" enableembeddedskins="True" daystarttime="08:00:00" dayendtime="18:00:00"
+                timezoneoffset="03:00:00" datakeyfield="Id" datasubjectfield="Title" datastartfield="EventStart"
+                dataendfield="EventEnd" allowdelete="False" allowedit="False" allowinsert="False"
+                onappointmentdelete="EventsCalendarDisplay_AppointmentDelete" onappointmentinsert="EventsCalendarDisplay_AppointmentInsert"
+                onappointmentupdate="EventsCalendarDisplay_AppointmentUpdate" onappointmentcreated="EventsCalendarDisplay_AppointmentCreated"
+                overflowbehavior="Expand" onappointmentdatabound="EventsCalendarDisplay_AppointmentDataBound"
+                customattributenames="Overview">
                 <timelineview userselectable="False" />
-            </telerik:RadScheduler>
-            
-            <telerik:RadToolTipManager runat="server" ID="RadToolTipManager1" Width="300" Height="150"
-            Skin="WebBlue" Animation="None" Position="BottomRight" Sticky="true" Text="Loading..."
-            OnAjaxUpdate="RadToolTipManager1_AjaxUpdate"  />
-            
+            </telerik:radscheduler>
+            <telerik:radtooltipmanager runat="server" id="EventsCalendarToolTipManager" width="300" height="150"
+                skin="WebBlue" animation="None" position="BottomRight" sticky="true" text="Loading..."
+                onajaxupdate="EventsCalendarToolTipManager_AjaxUpdate" />
         </ContentTemplate>
     </asp:UpdatePanel>
 </div>

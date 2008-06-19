@@ -18,6 +18,7 @@
             <control>
               <src>DesktopModules/EngageEvents/MainContainer.ascx</src>
               <type>View</type>
+              <supportspartialrendering>true</supportspartialrendering>
             </control>
             <control>
               <key>Settings</key>

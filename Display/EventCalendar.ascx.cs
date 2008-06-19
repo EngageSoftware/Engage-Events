@@ -9,14 +9,13 @@
 // CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 // DEALINGS IN THE SOFTWARE.
 
-using DotNetNuke.Services.Localization;
-
 namespace Engage.Dnn.Events
 {
     using System;
     using System.Globalization;
     using System.Web.UI;
     using Display;
+    using DotNetNuke.Framework;
     using DotNetNuke.Services.Exceptions;
     using Engage.Events;
     using Telerik.Web.UI;
@@ -26,8 +25,6 @@ namespace Engage.Dnn.Events
     /// </summary>
     public partial class EventCalendar : ModuleBase
     {
-        #region Event Handlers
-
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
         /// </summary>
@@ -36,9 +33,9 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                if (DotNetNuke.Framework.AJAX.IsInstalled())
+                if (AJAX.IsInstalled())
                 {
-                    DotNetNuke.Framework.AJAX.RegisterScriptManager();
+                    AJAX.RegisterScriptManager();
                 }
 
                 this.BindData();
@@ -50,64 +47,60 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Handles the AppointmentInsert event of the RadScheduler1 control.
+        /// Handles the AppointmentInsert event of the EventsCalendarDisplay control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="Telerik.Web.UI.SchedulerCancelEventArgs"/> instance containing the event data.</param>
-        protected void RadScheduler1_AppointmentInsert(object sender, SchedulerCancelEventArgs e)
+        protected void EventsCalendarDisplay_AppointmentInsert(object sender, SchedulerCancelEventArgs e)
         {
-            Event ev = Event.Create(PortalId, ModuleId, UserInfo.Email, e.Appointment.Subject, "", e.Appointment.Start);
+            Event ev = Event.Create(this.PortalId, this.ModuleId, this.UserInfo.Email, e.Appointment.Subject, "", e.Appointment.Start);
             ev.EventEnd = e.Appointment.Start.Add(e.Appointment.Duration);
-            ev.Save(UserId);
+            ev.Save(this.UserId);
         }
 
         /// <summary>
-        /// Handles the AppointmentDelete event of the RadScheduler1 control.
+        /// Handles the AppointmentDelete event of the EventsCalendarDisplay control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="Telerik.Web.UI.SchedulerCancelEventArgs"/> instance containing the event data.</param>
-        protected void RadScheduler1_AppointmentDelete(object sender, SchedulerCancelEventArgs e)
+        protected void EventsCalendarDisplay_AppointmentDelete(object sender, SchedulerCancelEventArgs e)
         {
             Event.Delete(Convert.ToInt32(e.Appointment.ID));
         }
 
         /// <summary>
-        /// Handles the AppointmentUpdate event of the RadScheduler1 control.
+        /// Handles the AppointmentUpdate event of the EventsCalendarDisplay control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="Telerik.Web.UI.AppointmentUpdateEventArgs"/> instance containing the event data.</param>
-        protected void RadScheduler1_AppointmentUpdate(object sender, AppointmentUpdateEventArgs e)
+        protected void EventsCalendarDisplay_AppointmentUpdate(object sender, AppointmentUpdateEventArgs e)
         {
             Event ev = Event.Load(Convert.ToInt32(e.Appointment.ID));
             ev.EventStart = e.Appointment.Start;
             ev.EventEnd = e.Appointment.Start.Add(e.Appointment.Duration);
             ev.Title = e.Appointment.Subject;
-            ev.Save(UserId);
+            ev.Save(this.UserId);
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>
-        /// Handles the AppointmentCreated event of the RadScheduler1 control.
+        /// Handles the AppointmentCreated event of the EventsCalendarDisplay control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="Telerik.Web.UI.AppointmentCreatedEventArgs"/> instance containing the event data.</param>
-        protected void RadScheduler1_AppointmentCreated(object sender, AppointmentCreatedEventArgs e)
+        protected void EventsCalendarDisplay_AppointmentCreated(object sender, AppointmentCreatedEventArgs e)
         {
             if (e.Appointment.Visible && !this.IsAppointmentRegisteredForTooltip(e.Appointment))
             {
-                RadToolTipManager1.TargetControls.Add(e.Appointment.ClientID, true);
+                this.EventsCalendarToolTipManager.TargetControls.Add(e.Appointment.ClientID, true);
             }
         }
 
         /// <summary>
-        /// Handles the AppointmentDataBound event of the RadScheduler1 control.
+        /// Handles the AppointmentDataBound event of the EventsCalendarDisplay control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="Telerik.Web.UI.SchedulerEventArgs"/> instance containing the event data.</param>
-        protected void RadScheduler1_AppointmentDataBound(object sender, SchedulerEventArgs e)
+        protected void EventsCalendarDisplay_AppointmentDataBound(object sender, SchedulerEventArgs e)
         {
             Event ev = Event.Load(Convert.ToInt32(e.Appointment.ID, CultureInfo.InvariantCulture));
             e.Appointment.Attributes["EventTitle"] = ev.Title;
@@ -119,21 +112,21 @@ namespace Engage.Dnn.Events
                 e.Appointment.Attributes["EventEnd"] = ev.EventEnd.ToString();
             }
 
-            RadToolTipManager1.TargetControls.Clear();
+            this.EventsCalendarToolTipManager.TargetControls.Clear();
             ScriptManager.RegisterStartupScript(this, typeof(EventCalendar), "HideToolTip", "hideActiveToolTip();", true);
         }
 
         /// <summary>
-        /// Handles the AjaxUpdate event of the RadToolTipManager1 control.
+        /// Handles the AjaxUpdate event of the EventsCalendarToolTipManager control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="Telerik.Web.UI.ToolTipUpdateEventArgs"/> instance containing the event data.</param>
-        protected void RadToolTipManager1_AjaxUpdate(object sender, ToolTipUpdateEventArgs e)
+        protected void EventsCalendarToolTipManager_AjaxUpdate(object sender, ToolTipUpdateEventArgs e)
         {
-            int aptId = int.Parse(e.TargetControlID.Split(Convert.ToChar("_"))[5]);
-            Appointment apt = RadScheduler1.Appointments[aptId];
-            EventToolTip toolTip = ((EventToolTip)(LoadControl("EventToolTip.ascx")));
-            
+            int aptId = int.Parse(e.TargetControlID.Split('_')[5]);
+            Appointment apt = this.EventsCalendarDisplay.Appointments[aptId];
+            EventToolTip toolTip = (EventToolTip)this.LoadControl("EventToolTip.ascx");
+
             toolTip.EventStartDate = apt.Attributes["EventStart"];
             toolTip.Overview = apt.Attributes["Overview"];
             toolTip.Title = apt.Attributes["EventTitle"];
@@ -150,9 +143,9 @@ namespace Engage.Dnn.Events
         /// </returns>
         private bool IsAppointmentRegisteredForTooltip(Appointment apt)
         {
-            foreach (ToolTipTargetControl targetControl in RadToolTipManager1.TargetControls)
+            foreach (ToolTipTargetControl targetControl in this.EventsCalendarToolTipManager.TargetControls)
             {
-                if ((targetControl.TargetControlID == apt.ClientID))
+                if (targetControl.TargetControlID == apt.ClientID)
                 {
                     return true;
                 }
@@ -166,17 +159,13 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void BindData()
         {
-            EventCollection events = EventCollection.Load(PortalId, "EventStart", 0, 0, true);
-            RadScheduler1.DataSource = events;
-            RadScheduler1.DataBind();
+            this.EventsCalendarDisplay.DataSource = EventCollection.Load(this.PortalId, "EventStart", 0, 0, true);
+            this.EventsCalendarDisplay.DataBind();
 
-            if (Settings[Setting.SkinSelection.PropertyName] != null)
+            if (Utility.GetStringSetting(this.Settings, Setting.SkinSelection.PropertyName) != null)
             {
-                string SelectedSkin = Settings[Setting.SkinSelection.PropertyName].ToString();
-                RadScheduler1.Skin = RadToolTipManager1.Skin = SelectedSkin;
+                this.EventsCalendarDisplay.Skin = this.EventsCalendarToolTipManager.Skin = Utility.GetStringSetting(this.Settings, Setting.SkinSelection.PropertyName);
             }
         }
-
-        #endregion
     }
 }

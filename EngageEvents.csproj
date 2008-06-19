@@ -306,11 +306,6 @@
       <DependentUpon>EventListingGridStyle.ascx</DependentUpon>
     </Compile>
     <Compile Include="Recurrence\RecurrenceHelper.cs" />
-    <Compile Include="Portability\TransportableXmlValidator.cs" />
-    <Compile Include="Portability\XmlTransporter.cs" />
-    <Compile Include="Portability\XmlDirector.cs" />
-    <Compile Include="Portability\TransportableElement.cs" />
-    <Compile Include="Components\FeaturesController.cs" />
     <Compile Include="Services\Services.asmx.cs">
       <DependentUpon>Services.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -333,8 +328,6 @@
     <Compile Include="ModuleBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Search\SearchProvider.cs" />
-    <Compile Include="Util\BreadCrumb.cs" />
     <Compile Include="Util\QueryStringParameters.cs" />
     <Compile Include="Util\Utility.cs" />
   </ItemGroup>

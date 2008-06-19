@@ -171,8 +171,10 @@ namespace Engage.Dnn.Events.Controls
                 {
                     base.Visible = value;
                 }
-
-                Debug.Assert(base.Visible == false, "Visibility should be set permanently to false when MessageType is None");
+                else
+                {
+                    Debug.Assert(base.Visible == false, "Visibility should be set permanently to false when MessageType is None");
+                }
             }
         }
 

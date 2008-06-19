@@ -6,7 +6,7 @@
 </div>--%>
 
 <div class="EventToolTip">
-    <div class="EventTitleToolTip"><asp:Label runat="server" ID="EventTitle"></asp:Label></div>
-    <div class="EventStartToolTip"><asp:Label runat="server" ID="EventDate"></asp:Label></div>
-    <asp:TextBox runat="server" ID="EventOverview" class="NormalTextBox" TextMode="MultiLine" Width="100%" Rows="7"></asp:TextBox>
+    <div class="EventTitleToolTip"><asp:Label runat="server" ID="EventTitle"/></div>
+    <div class="EventStartToolTip"><asp:Label runat="server" ID="EventDate"/></div>
+    <asp:TextBox runat="server" ID="EventOverview" class="NormalTextBox" TextMode="MultiLine" Width="100%" Rows="7"/>
 </div>

@@ -12,6 +12,7 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.Web.UI.WebControls;
     using DotNetNuke.Common;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
@@ -22,8 +23,6 @@ namespace Engage.Dnn.Events
     /// </summary>
     public partial class EventEdit : ModuleBase
     {
-        #region Event Handlers
-
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
         /// </summary>
@@ -34,7 +33,7 @@ namespace Engage.Dnn.Events
             {
                 if (!Page.IsPostBack && EventId > 0)
                 {
-                        this.BindData();
+                    this.BindData();
                 }
 
                 this.LocalizeControl();
@@ -129,9 +128,15 @@ namespace Engage.Dnn.Events
             Response.Redirect(Globals.NavigateURL(), true);
         }
 
-        #endregion
-
-        #region Methods
+        /// <summary>
+        /// Handles the ServerValidate event of the EventDescriptionTextEditorValidator control.
+        /// </summary>
+        /// <param name="source">The source of the event.</param>
+        /// <param name="args">The <see cref="System.Web.UI.WebControls.ServerValidateEventArgs"/> instance containing the event data.</param>
+        protected void EventDescriptionTextEditorValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = Engage.Utility.HasValue(EventDescriptionTextEditor.Text);
+        }
 
         /// <summary>
         /// Displays the success with clean form so that user may enter another event.
@@ -181,7 +186,7 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// This method will either update or create an event based on the current context of EventId>
+        /// This method will either update or create an event based on the current context of EventId
         /// </summary>
         private void Save()
         {
@@ -201,7 +206,7 @@ namespace Engage.Dnn.Events
         private void Update()
         {
             Event e = Event.Load(EventId);
-            e.EventStart = Convert.ToDateTime(StartDateTimePicker.SelectedDate);
+            e.EventStart = StartDateTimePicker.SelectedDate.Value;
             e.EventEnd = EndDateTimePicker.SelectedDate;
             e.Location = EventLocationTextBox.Text;
             e.Title = EventTitleTextBox.Text;
@@ -214,7 +219,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void Insert()
         {
-            Event e = Event.Create(PortalId, ModuleId, UserInfo.Email, EventTitleTextBox.Text, EventDescriptionTextEditor.Text, Convert.ToDateTime(StartDateTimePicker.SelectedDate));
+            Event e = Event.Create(PortalId, ModuleId, UserInfo.Email, EventTitleTextBox.Text, EventDescriptionTextEditor.Text, StartDateTimePicker.SelectedDate.Value);
             e.Location = EventLocationTextBox.Text;
             e.EventEnd = EndDateTimePicker.SelectedDate;
             e.Save(UserId);
@@ -229,10 +234,8 @@ namespace Engage.Dnn.Events
             EventTitleTextBox.Text = e.Title;
             EventLocationTextBox.Text = e.Location;
             EventDescriptionTextEditor.Text = e.Overview;
-            StartDateTimePicker.DbSelectedDate = e.EventStart;
-            EndDateTimePicker.DbSelectedDate = e.EventEnd;
+            StartDateTimePicker.SelectedDate = e.EventStart;
+            EndDateTimePicker.SelectedDate = e.EventEnd;
         }
-
-        #endregion
     }
 }

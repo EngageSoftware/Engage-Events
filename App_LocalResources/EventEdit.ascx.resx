@@ -130,16 +130,13 @@
     <value>Edit an Event</value>
   </data>
   <data name="EndDateCompareValidator.Text" xml:space="preserve">
-    <value>Event end date must be after start date</value>
-  </data>
-  <data name="EndDateTimePickerRangeValidator" xml:space="preserve">
-    <value>End date validator</value>
+    <value>Your event cannot end before it begins</value>
   </data>
   <data name="EventDescriptionLabel.Text" xml:space="preserve">
     <value>Description</value>
   </data>
   <data name="EventDescriptionTextEditorRequired.Text" xml:space="preserve">
-    <value>event description is required</value>
+    <value>You must supply a description of your event</value>
   </data>
   <data name="EventEndDateLabel.Text" xml:space="preserve">
     <value>Ends</value>
@@ -147,11 +144,8 @@
   <data name="EventLocationLabel.Text" xml:space="preserve">
     <value>Where</value>
   </data>
-  <data name="EventLocationTextBoxRequired" xml:space="preserve">
-    <value>event location is required</value>
-  </data>
   <data name="EventLocationTextBoxRequired.Text" xml:space="preserve">
-    <value>event location is required</value>
+    <value>You must supply where your event is taking place</value>
   </data>
   <data name="EventLocationWaterMark.Text" xml:space="preserve">
     <value>Please enter the event location</value>
@@ -166,15 +160,12 @@
     <value>Max length for title is 250 characters</value>
   </data>
   <data name="EventTitleTextBoxRequired.Text" xml:space="preserve">
-    <value>event title is required</value>
+    <value>You must supply a title for your event</value>
   </data>
   <data name="EventTitleWaterMark.Text" xml:space="preserve">
     <value>Please enter the event title</value>
   </data>
-  <data name="StartDateTimePickerRangeValidator" xml:space="preserve">
-    <value>start date validator</value>
-  </data>
   <data name="StartDateTimePickerRequired.Text" xml:space="preserve">
-    <value>start date is required</value>
+    <value>You must specify when your event begins</value>
   </data>
 </root>
