@@ -1165,7 +1165,7 @@ BEGIN
 	set @sql = 'insert into #results ([EventId]) '
 	set @sql = @sql + 'Select [EventId] '
 	set @sql = @sql + 'from '
-	set @sql = @sql + '{databaseOwner}[{objectQualifier}Engage_Event '
+	set @sql = @sql + '{databaseOwner}[{objectQualifier}Engage_Event] '
 	set @sql = @sql + 'where PortalId = ' + STR(@portalId)
 	if (@currentMonth = 1)
 	begin
