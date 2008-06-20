@@ -298,13 +298,6 @@
     <Compile Include="EventEdit.ascx.designer.cs">
       <DependentUpon>EventEdit.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Display\EventListingGridStyle.ascx.cs">
-      <DependentUpon>EventListingGridStyle.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Display\EventListingGridStyle.ascx.designer.cs">
-      <DependentUpon>EventListingGridStyle.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Recurrence\RecurrenceHelper.cs" />
     <Compile Include="Services\Services.asmx.cs">
       <DependentUpon>Services.asmx</DependentUpon>
@@ -434,7 +427,6 @@
     <Content Include="RsvpSummary.ascx" />
     <Content Include="EmailEdit.ascx" />
     <Content Include="EventEdit.ascx" />
-    <Content Include="Display\EventListingGridStyle.ascx" />
     <Content Include="Samples\AttendingReminder.htm" />
     <Content Include="Samples\NoResponseReminder.htm" />
     <Content Include="Samples\NotAttendingReminder.htm" />

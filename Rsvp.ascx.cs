@@ -16,6 +16,7 @@ namespace Engage.Dnn.Events
     using System.Globalization;
     using System.Web;
     using System.Web.UI.WebControls;
+    using DotNetNuke.Framework;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
     using Engage.Events;
@@ -37,6 +38,8 @@ namespace Engage.Dnn.Events
             this.SubmitButton.Click += this.SubmitButton_Click;
             this.AddToCalendarButton.Click += this.AddToCalendarButton_Click;
             this.EmailAddressValidator.ServerValidate += this.EmailAddressValidator_ServerValidate;
+
+            AJAX.RegisterPostBackControl(this.AddToCalendarButton);
         }
 
         /// <summary>

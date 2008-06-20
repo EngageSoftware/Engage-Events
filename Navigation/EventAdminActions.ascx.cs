@@ -14,6 +14,7 @@ namespace Engage.Dnn.Events
     using System;
     using System.Globalization;
     using DotNetNuke.Entities.Modules;
+    using DotNetNuke.Framework;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.Utilities;
     using Engage.Events;
@@ -89,6 +90,8 @@ namespace Engage.Dnn.Events
             this.CancelButton.Click += this.CancelButton_Click;
             this.ViewInviteButton.Click += this.ViewInviteButton_Click;
             this.EditEmailButton.Click += this.EditEmailButton_Click;
+
+            AJAX.RegisterPostBackControl(this.AddToCalendarButton);
         }
 
         /// <summary>
