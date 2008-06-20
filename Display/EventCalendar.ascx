@@ -39,7 +39,7 @@
     <asp:UpdatePanel runat="server" ID="UpdatePanel1" UpdateMode="Conditional">
         <ContentTemplate>
             <telerik:radscheduler id="EventsCalendarDisplay" runat="server" selectedview="MonthView"
-                width="100%" enableembeddedskins="True" daystarttime="08:00:00" dayendtime="18:00:00"
+                enableembeddedskins="True" daystarttime="08:00:00" dayendtime="18:00:00"
                 timezoneoffset="03:00:00" datakeyfield="Id" datasubjectfield="Title" datastartfield="EventStart"
                 dataendfield="EventEnd" allowdelete="False" allowedit="False" allowinsert="False"
                 onappointmentdelete="EventsCalendarDisplay_AppointmentDelete" onappointmentinsert="EventsCalendarDisplay_AppointmentInsert"

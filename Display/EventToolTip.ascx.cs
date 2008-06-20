@@ -121,13 +121,14 @@ namespace Engage.Dnn.Events.Display
             this.AddToCalendarButton.Click += this.AddToCalendarButton_Click;
 
             AJAX.RegisterPostBackControl(this.AddToCalendarButton);
+            this.LocalResourceFile = "~" + DesktopModuleFolderName + "Display/App_LocalResources/EventToolTip";
         }
 
         /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.PreRender"/> event.
+        /// Handles the PreRender event of the Page control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Page_PreRender(object sender, EventArgs e)
         {            
             string date = this.EventStartDate;
