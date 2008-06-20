@@ -106,6 +106,7 @@ namespace Engage.Dnn.Events
             e.Appointment.Attributes["EventTitle"] = ev.Title;
             e.Appointment.Attributes["EventStart"] = ev.EventStart.ToString();
             e.Appointment.Attributes["Overview"] = ev.Overview;
+            e.Appointment.Attributes["EventId"] = ev.Id.ToString(CultureInfo.InvariantCulture);
 
             if (ev.EventEnd != null)
             {
@@ -127,10 +128,12 @@ namespace Engage.Dnn.Events
             Appointment apt = this.EventsCalendarDisplay.Appointments[aptId];
             EventToolTip toolTip = (EventToolTip)this.LoadControl("EventToolTip.ascx");
 
+            toolTip.ModuleConfiguration = this.ModuleConfiguration;
             toolTip.EventStartDate = apt.Attributes["EventStart"];
             toolTip.Overview = apt.Attributes["Overview"];
             toolTip.Title = apt.Attributes["EventTitle"];
             toolTip.EventEndDate = apt.Attributes["EventEnd"];
+            toolTip.SetEventId(Convert.ToInt32(apt.Attributes["EventId"], CultureInfo.InvariantCulture));
             e.UpdatePanel.ContentTemplateContainer.Controls.Add(toolTip);
         }
 

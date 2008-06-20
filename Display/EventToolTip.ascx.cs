@@ -13,13 +13,21 @@ namespace Engage.Dnn.Events.Display
 {
     using System;
     using System.Diagnostics;
-    using System.Web.UI;
+    using System.Globalization;
+    using DotNetNuke.Framework;
+    using Engage.Events;
 
     /// <summary>
     /// Used to display a "tool tip" for an appointment.
     /// </summary>
-    public partial class EventToolTip : UserControl
+    public partial class EventToolTip : ModuleBase
     {
+        /// <summary>
+        /// The backing field for <see cref="SetEventId"/>.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private int currentEventId;
+
         /// <summary>
         /// The backing field for <see cref="EventStartDate"/>.
         /// </summary>
@@ -47,7 +55,7 @@ namespace Engage.Dnn.Events.Display
         /// <summary>
         /// Gets or sets the event start date to be displayed in the event tooltip.
         /// </summary>
-        /// <value>The text resource key.</value>
+        /// <value>The event start date to be displayed in the event tooltip.</value>
         public string EventStartDate
         {
             [DebuggerStepThrough]
@@ -57,9 +65,9 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Gets or sets the event start date to be displayed in the event tooltip.
+        /// Gets or sets the event end date to be displayed in the event tooltip.
         /// </summary>
-        /// <value>The text resource key.</value>
+        /// <value>The event end date to be displayed in the event tooltip.</value>
         public string EventEndDate
         {
             [DebuggerStepThrough]
@@ -71,7 +79,7 @@ namespace Engage.Dnn.Events.Display
         /// <summary>
         /// Gets or sets the overview to be displayed in the event tooltip.
         /// </summary>
-        /// <value>The text resource key.</value>
+        /// <value>The overview to be displayed in the event tooltip.</value>
         public string Overview
         {
             [DebuggerStepThrough]
@@ -83,7 +91,7 @@ namespace Engage.Dnn.Events.Display
         /// <summary>
         /// Gets or sets the title to be displayed in the event tooltip.
         /// </summary>
-        /// <value>The text resource key.</value>
+        /// <value>The title to be displayed in the event tooltip.</value>
         public string Title
         {
             [DebuggerStepThrough]
@@ -93,22 +101,71 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.PreRender"/> event.
+        /// Sets the ID of the event to be displayed in the event tooltip.
+        /// </summary>
+        /// <param name="eventId">The event id.</param>
+        public void SetEventId(int eventId)
+        {
+            this.currentEventId = eventId;
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
-        protected override void OnPreRender(EventArgs e)
+        protected override void OnInit(EventArgs e)
         {
-            base.OnPreRender(e);
-            
+            base.OnInit(e);
+            this.PreRender += this.Page_PreRender;
+            this.RegisterButton.Click += this.RegisterButton_Click;
+            this.AddToCalendarButton.Click += this.AddToCalendarButton_Click;
+
+            AJAX.RegisterPostBackControl(this.AddToCalendarButton);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:System.Web.UI.Control.PreRender"/> event.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        private void Page_PreRender(object sender, EventArgs e)
+        {            
             string date = this.EventStartDate;
             if (this.EventEndDate != null)
             {
                 date += " - " + this.EventEndDate;
             }
 
-            EventDate.Text = date;
-            EventOverview.Text = this.Overview;
-            EventTitle.Text = this.Title;
+            this.EventDate.Text = date;
+            this.EventOverview.Text = this.Overview;
+            this.EventTitle.Text = this.Title;
+
+            this.AddToCalendarButton.Visible = Engage.Utility.IsLoggedIn;
+        }
+
+        /// <summary>
+        /// Handles the Click event of the RegisterButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void RegisterButton_Click(object sender, EventArgs e)
+        {
+            this.Response.Redirect(
+                this.BuildLinkUrl(
+                    this.ModuleId,
+                    "Register",
+                    "eventid=" + this.currentEventId.ToString(CultureInfo.InvariantCulture)));
+        }
+
+        /// <summary>
+        /// Handles the Click event of the AddToCalendarButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void AddToCalendarButton_Click(object sender, EventArgs e)
+        {
+            Event currentEvent = Event.Load(this.currentEventId);
+            SendICalendarToClient(this.Response, currentEvent.ToICal(this.UserInfo.Email), currentEvent.Title);
         }
     }
 }

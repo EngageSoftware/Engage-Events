@@ -22,10 +22,24 @@ namespace Engage.Dnn.Events
     public partial class EventListingAdmin : ModuleBase
     {
         /// <summary>
+        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+            this.Load += this.Page_Load;
+            this.SortRadioButtonList.SelectedIndexChanged += this.SortRadioButtonList_SelectedIndexChanged;
+            this.StatusRadioButtonList.SelectedIndexChanged += this.StatusRadioButtonList_SelectedIndexChanged;
+            this.EventListingRepeater.ItemDataBound += this.EventListingRepeater_ItemDataBound;
+        }
+
+        /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
         /// </summary>
+        /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="T:System.EventArgs"/> object that contains the event data.</param>
-        protected override void OnLoad(EventArgs e)
+        private void Page_Load(object sender, EventArgs e)
         {
             try
             {
@@ -41,22 +55,11 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Handles the ItemDataBound event of the EventListingRepeater control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
-        protected void EventListingRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-            EventAdminActions actions = (EventAdminActions)e.Item.FindControl("EventActions");
-            actions.CurrentEvent = (Event)e.Item.DataItem;
-        }
-
-        /// <summary>
         /// Handles the SelectedIndexChanged event of the StatusRadioButtonList control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void StatusRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+        private void StatusRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.BindData();
         }
@@ -66,7 +69,40 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void SortRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+        private void SortRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.BindData();
+        }
+
+        /// <summary>
+        /// Handles the ItemDataBound event of the EventListingRepeater control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
+        private void EventListingRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            EventAdminActions eventActions = (EventAdminActions)e.Item.FindControl("EventActions");
+            eventActions.CurrentEvent = (Event)e.Item.DataItem;
+            eventActions.Delete += this.EventActions_Delete;
+            eventActions.Cancel += this.EventActions_Cancel;
+        }
+
+        /// <summary>
+        /// Handles the Cancel event of the EventActions control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void EventActions_Cancel(object sender, EventArgs e)
+        {
+            this.BindData();
+        }
+
+        /// <summary>
+        /// Handles the Delete event of the EventActions control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void EventActions_Delete(object sender, EventArgs e)
         {
             this.BindData();
         }

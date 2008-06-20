@@ -133,9 +133,39 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// Builds a URL for this TabId, using the given querystring parameters.
         /// </summary>
+        /// <param name="moduleId">The module id of the module for which the control key is being used.</param>
+        /// <param name="controlKey">The control key to determine which control to load.</param>
+        /// <returns>
+        /// A URL to the current TabId, with the given querystring parameters
+        /// </returns>
+        public string BuildLinkUrl(int moduleId, string controlKey)
+        {
+            return this.BuildLinkUrl("modId=" + moduleId.ToString(CultureInfo.InvariantCulture), "key=" + controlKey);
+        }
+
+        /// <summary>
+        /// Builds a URL for this TabId, using the given querystring parameters.
+        /// </summary>
+        /// <param name="moduleId">The module id of the module for which the control key is being used.</param>
+        /// <param name="controlKey">The control key to determine which control to load.</param>
+        /// <param name="querystringParameters">Any other querystring parameters.</param>
+        /// <returns>
+        /// A URL to the current TabId, with the given querystring parameters
+        /// </returns>
+        public string BuildLinkUrl(int moduleId, string controlKey, params string[] querystringParameters)
+        {
+            Array.Resize(ref querystringParameters, querystringParameters.Length + 2);
+            querystringParameters[querystringParameters.Length - 1] = "modId=" + moduleId.ToString(CultureInfo.InvariantCulture);
+            querystringParameters[querystringParameters.Length - 2] = "key=" + controlKey;
+            return this.BuildLinkUrl(querystringParameters);
+        }
+
+        /// <summary>
+        /// Builds a URL for this TabId, using the given querystring parameters.
+        /// </summary>
         /// <param name="querystringParameters">The qs parameters.</param>
         /// <returns>A URL to the current TabId, with the given querystring parameters</returns>
-        public string BuildLinkUrl(string querystringParameters)
+        public string BuildLinkUrl(params string[] querystringParameters)
         {
             return DotNetNuke.Common.Globals.NavigateURL(this.TabId, "", querystringParameters);
         }

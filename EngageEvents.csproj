@@ -135,6 +135,7 @@
     </Compile>
     <Compile Include="Assemblyinfo.cs" />
     <Compile Include="Components\EmailScheduler.cs" />
+    <Compile Include="Components\FeaturesController.cs" />
     <Compile Include="Controls\ModuleMessage.ascx.cs">
       <DependentUpon>ModuleMessage.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -573,6 +574,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_LocalResources\RsvpSummary.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Images\create_another_event.gif" />
+    <Content Include="Images\exit.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Display\App_LocalResources\EventToolTip.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
