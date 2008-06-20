@@ -107,6 +107,14 @@ if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{
 drop procedure {databaseOwner}[{objectQualifier}Engage_spGetEventsSpecific]
 GO
 
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetEventsFuture]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spGetEventsFuture]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetEventsCurrent]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spGetEventsCurrent]
+GO
+
 if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertEmailEvent]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
 drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertEmailEvent]
 GO

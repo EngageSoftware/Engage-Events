@@ -433,61 +433,126 @@ ALTER TABLE {databaseOwner}[{objectQualifier}Engage_EmailEvent] ADD CONSTRAINT
 	) 
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetEvents]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-drop procedure {databaseOwner}[{objectQualifier}Engage_spGetEvents]
+IF EXISTS (SELECT * FROM   dbo.sysobjects WHERE  id = Object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetEventsCurrent]') AND Objectproperty(id,N'IsProcedure') = 1)
+  DROP PROC {databaseOwner}[{objectQualifier}Engage_spGetEventsCurrent] 
 GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEventsCurrent](
+	@portalId int, 
+	@index int, 
+	@pageSize int) 
+AS 
+BEGIN	
+	CREATE TABLE #results (
+		[Id]			INT	NOT NULL	IDENTITY(1,1),
+		[EventId]		INT)
 
-CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEvents] 
-(@portalId int, @sortColumn nvarchar(200), @index int, @pageSize int, @showAll bit)
-AS
-BEGIN
+INSERT INTO #results ([EventId])
+SELECT [EventId] FROM {databaseOwner}[{objectQualifier}Engage_Event]
+WHERE PortalId = @portalId
+ AND EventStart >= GETDATE()
+ AND EventStart < DATEADD(mm, DATEDIFF(mm, 0, GETDATE()) + 1, 0) --first day of the next month
+ AND Cancelled = 0
+ORDER BY EventStart, EventEnd, Title, EventId
 
-	Create table #results 
-	(
-		[Id] int not null IDENTITY(1,1),
-		[EventId] [int],
-		[TotalRecords] int
-	)
+SELECT @@ROWCOUNT AS TotalRecords
+
+if (@PageSize = 0)
+ 	BEGIN
+ 		select e.* from #results r
+		join {databaseOwner}[{objectQualifier}Engage_Event] e on (r.EventId = e.EventId)
+ 	END
+ELSE
+ 	BEGIN
+ 		select e.* from #results r
+		join {databaseOwner}[{objectQualifier}Engage_Event] e on (r.EventId = e.EventId)
+ 		where (id >= @index * @PageSize + 1) and id < (@index * @PageSize) + @PageSize + 1
+ 	END
 	
-	declare @sql varchar(8000)
-
-	set @sql = 'insert into #results ([EventId]) '
-	set @sql = @sql + 'Select [EventId] '
-	set @sql = @sql + 'from '
-	set @sql = @sql + '{databaseOwner}[{objectQualifier}Engage_Event] '
-	set @sql = @sql + 'where PortalId = ' + STR(@portalId)
-	if (@showAll = 0)
-	begin
-		set @sql = @sql + ' and Cancelled = 0 '
-		set @sql = @sql + ' and EventStart > GETDATE() '
-	end
-	
-	--print (@sql)
-	exec (@sql)
-
-	DECLARE @rows int
-	set @rows = @@RowCount
-
-	update #results set TotalRecords = @rows
-
-	if (@PageSize = 0)
-	 	BEGIN
-			set @sql = 'Select e.*,	r.TotalRecords from #results r '
-			set @sql = @sql + 'join {databaseOwner}[{objectQualifier}Engage_Event] e on (r.EventId = e.EventId) '
-			set @sql = @sql + 'Order by ' + @sortColumn
-	 	END
-	ELSE
-	 	BEGIN
-			set @sql = 'select e.*,	r.TotalRecords from #results r '
-			set @sql = @sql + 'join {databaseOwner}[{objectQualifier}Engage_Event] e on (r.EventId = e.EventId) '
-	 		set @sql = @sql + 'where (id >= @index * @PageSize + 1) and id < (@index * @PageSize) + @PageSize + 1 '
-			set @sql = @sql + 'Order by ' + @sortColumn
-	 	END
-
-	exec (@sql)	
 END
 
 GO
+
+IF EXISTS (SELECT * FROM   dbo.sysobjects WHERE  id = Object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetEventsFuture]') AND Objectproperty(id,N'IsProcedure') = 1)
+  DROP PROC {databaseOwner}[{objectQualifier}Engage_spGetEventsFuture] 
+GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEventsFuture](
+	@portalId int, 
+	@index int, 
+	@pageSize int) 
+AS 
+BEGIN	
+	CREATE TABLE #results (
+		[Id]			INT	NOT NULL	IDENTITY(1,1),
+		[EventId]		INT)
+
+INSERT INTO #results ([EventId])
+SELECT [EventId] FROM {databaseOwner}[{objectQualifier}Engage_Event]
+WHERE PortalId = @portalId
+ AND EventStart >= DATEADD(mm, DATEDIFF(mm, 0, GETDATE()) + 1, 0) --first day of the next month
+ AND Cancelled = 0
+ORDER BY EventStart, EventEnd, Title, EventId
+
+SELECT @@ROWCOUNT AS TotalRecords
+
+if (@PageSize = 0)
+ 	BEGIN
+ 		select e.* from #results r
+		join {databaseOwner}[{objectQualifier}Engage_Event] e on (r.EventId = e.EventId)
+ 	END
+ELSE
+ 	BEGIN
+ 		select e.* from #results r
+		join {databaseOwner}[{objectQualifier}Engage_Event] e on (r.EventId = e.EventId)
+ 		where (id >= @index * @PageSize + 1) and id < (@index * @PageSize) + @PageSize + 1
+ 	END
+
+END
+
+GO
+
+IF EXISTS (SELECT * FROM   dbo.sysobjects WHERE  id = Object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetEvents]') AND Objectproperty(id,N'IsProcedure') = 1)
+  DROP PROC {databaseOwner}[{objectQualifier}Engage_spGetEvents] 
+GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEvents](
+	@portalId int, 
+	@sortColumn nvarchar(200), 
+	@index int, 
+	@pageSize int, 
+	@showAll bit)
+AS
+BEGIN
+
+	CREATE TABLE #results 
+	(
+		[Id] INT NOT NULL IDENTITY(1,1),
+		[EventId] INT
+	)
+
+	INSERT INTO #results
+			   ([EventId])
+	SELECT [EventId]
+	FROM   {databaseOwner}[{objectQualifier}Engage_Event]
+	WHERE  PortalId = @portalId
+		   AND (@showAll = 1
+				 OR (Cancelled = 0
+					 AND EventStart >= GETDATE()))
+
+	SELECT @@ROWCOUNT AS TotalRecords
+
+	DECLARE @sql VARCHAR(8000)
+	SET @sql = 'SELECT e.* FROM #results r '
+	SET @sql = @sql + 'JOIN {databaseOwner}[{objectQualifier}Engage_Event] e ON (r.EventId = e.EventId) '
+	IF (@PageSize != 0)
+	 	BEGIN
+	 		SET @sql = @sql + 'WHERE (id >= @index * @PageSize + 1) AND id < (@index * @PageSize) + @PageSize + 1 '
+	 	END
+	SET @sql = @sql + 'ORDER BY ' + @sortColumn
+	
+	EXEC (@sql)	
+END
+
+GO
+
 
 --INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event]
 --([PortalId] ,[ModuleId] ,[Title] ,[Overview]  ,[EventStart]  ,[Location] ,[LocationUrl],[RecapUrl]
@@ -1141,67 +1206,6 @@ ALTER TABLE {databaseOwner}[{objectQualifier}Engage_EventMessage] ADD
 	) REFERENCES {databaseOwner}[{objectQualifier}Engage_Event] (
 		[EventId]
 	)
-GO
-
-
-if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetEventsSpecific]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-drop procedure {databaseOwner}[{objectQualifier}Engage_spGetEventsSpecific]
-GO
-
-CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEventsSpecific] 
-(@portalId int, @currentMonth bit, @index int, @pageSize int)
-AS
-BEGIN
-
-	Create table #results 
-	(
-		[Id] int not null IDENTITY(1,1),
-		[EventId] [int],
-		[TotalRecords] int
-	)
-	
-	declare @sql varchar(8000)
-
-	set @sql = 'insert into #results ([EventId]) '
-	set @sql = @sql + 'Select [EventId] '
-	set @sql = @sql + 'from '
-	set @sql = @sql + '{databaseOwner}[{objectQualifier}Engage_Event] '
-	set @sql = @sql + 'where PortalId = ' + STR(@portalId)
-	if (@currentMonth = 1)
-	begin
-		set @sql = @sql + ' and Month(EventStart) = Month(GETDATE())'
-	end
-	else
-	begin
-		set @sql = @sql + ' and Month(EventStart) != Month(GETDATE())'
-	end
-	set @sql = @sql + ' and EventStart > GETDATE()'
-	set @sql = @sql + ' and Cancelled = 0 '
-	set @sql = @sql + ' Order by EventStart ASC '
-	
-
-	--print (@sql)
-	exec (@sql)
-
-	DECLARE @rows int
-	set @rows = @@RowCount
-
-	update #results set TotalRecords = @rows
-
-	if (@PageSize = 0)
-	 	BEGIN
-	 		select e.*,	r.TotalRecords from #results r
-			join {databaseOwner}[{objectQualifier}Engage_Event] e on (r.EventId = e.EventId)
-	 	END
-	ELSE
-	 	BEGIN
-	 		select e.*,	r.TotalRecords from #results r
-			join {databaseOwner}[{objectQualifier}Engage_Event] e on (r.EventId = e.EventId)
-	 		where (id >= @index * @PageSize + 1) and id < (@index * @PageSize) + @PageSize + 1
-	 	END
-	
-END
-
 GO
 
 INSERT INTO {databaseOwner}[{objectQualifier}Schedule] VALUES ('Engage.Dnn.Events.Components.EmailScheduler', 5, 'm',	60,	's', 25, '', 0,	1, '', NULL)
