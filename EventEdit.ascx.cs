@@ -17,6 +17,7 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
     using Engage.Events;
+    using Utility = Engage.Utility;
 
     /// <summary>
     /// This class contains a collection of methods for adding or editing an Event.
@@ -24,26 +25,13 @@ namespace Engage.Dnn.Events
     public partial class EventEdit : ModuleBase
     {
         /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
+        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="T:System.EventArgs"/> object that contains the event data.</param>
-        protected override void OnLoad(EventArgs e)
+        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        protected override void OnInit(EventArgs e)
         {
-            try
-            {
-                if (!Page.IsPostBack && EventId > 0)
-                {
-                    this.BindData();
-                }
-
-                this.LocalizeControl();
-                SuccessModuleMessage.Visible = false;
-                FinalButtons.Visible = false;
-            }
-            catch (Exception exc)
-            {
-                Exceptions.ProcessModuleLoadException(this, exc);
-            }
+            base.OnInit(e);
+            this.Load += this.Page_Load;
         }
 
         /// <summary>
@@ -55,7 +43,7 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                Response.Redirect(Globals.NavigateURL(), true);
+                this.Response.Redirect(Globals.NavigateURL(), true);
             }
             catch (Exception exc)
             {
@@ -72,7 +60,7 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                if (Page.IsValid)
+                if (this.Page.IsValid)
                 {
                     this.Save();
                     this.DisplayFinalSuccess();
@@ -93,7 +81,7 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                if (Page.IsValid)
+                if (this.Page.IsValid)
                 {
                     this.Save();
                     this.DisplaySuccessWithCleanForm();
@@ -113,9 +101,9 @@ namespace Engage.Dnn.Events
         protected void CreateAnotherEventButton_Click(object sender, EventArgs e)
         {
             this.CleanForm();
-            SuccessModuleMessage.Visible = false;
-            AddNewEvent.Visible = true;
-            AddEventFooterButtons.Visible = true;
+            this.SuccessModuleMessage.Visible = false;
+            this.AddNewEvent.Visible = true;
+            this.AddEventFooterButtons.Visible = true;
         }
 
         /// <summary>
@@ -125,7 +113,7 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void ExitButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect(Globals.NavigateURL(), true);
+            this.Response.Redirect(Globals.NavigateURL(), true);
         }
 
         /// <summary>
@@ -135,7 +123,31 @@ namespace Engage.Dnn.Events
         /// <param name="args">The <see cref="System.Web.UI.WebControls.ServerValidateEventArgs"/> instance containing the event data.</param>
         protected void EventDescriptionTextEditorValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            args.IsValid = Engage.Utility.HasValue(EventDescriptionTextEditor.Text);
+            args.IsValid = Utility.HasValue(this.EventDescriptionTextEditor.Text);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        private void Page_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!this.Page.IsPostBack && this.EventId > 0)
+                {
+                    this.BindData();
+                }
+
+                this.LocalizeControl();
+                this.SuccessModuleMessage.Visible = false;
+                this.FinalButtons.Visible = false;
+            }
+            catch (Exception exc)
+            {
+                Exceptions.ProcessModuleLoadException(this, exc);
+            }
         }
 
         /// <summary>
@@ -143,7 +155,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void DisplaySuccessWithCleanForm()
         {
-            SuccessModuleMessage.Visible = true;
+            this.SuccessModuleMessage.Visible = true;
             this.CleanForm();
         }
 
@@ -152,11 +164,11 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void CleanForm()
         {
-            StartDateTimePicker.SelectedDate = null;
-            EndDateTimePicker.SelectedDate = null;
-            EventLocationTextBox.Text = String.Empty;
-            EventTitleTextBox.Text = String.Empty;
-            EventDescriptionTextEditor.Text = null;
+            this.StartDateTimePicker.SelectedDate = null;
+            this.EndDateTimePicker.SelectedDate = null;
+            this.EventLocationTextBox.Text = String.Empty;
+            this.EventTitleTextBox.Text = String.Empty;
+            this.EventDescriptionTextEditor.Text = null;
         }
 
         /// <summary>
@@ -164,10 +176,10 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void DisplayFinalSuccess()
         {
-            SuccessModuleMessage.Visible = true;
-            AddNewEvent.Visible = false;
-            AddEventFooterButtons.Visible = false;
-            FinalButtons.Visible = true;
+            this.SuccessModuleMessage.Visible = true;
+            this.AddNewEvent.Visible = false;
+            this.AddEventFooterButtons.Visible = false;
+            this.FinalButtons.Visible = true;
         }
 
         /// <summary>
@@ -175,13 +187,13 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void LocalizeControl()
         {
-            if (EventId > 0)
+            if (this.EventId > 0)
             {
-                AddEditEventLabel.Text = Localization.GetString("EditEvent.Text", LocalResourceFile);
+                this.AddEditEventLabel.Text = Localization.GetString("EditEvent.Text", this.LocalResourceFile);
             }
             else
             {
-                AddEditEventLabel.Text = Localization.GetString("AddNewEvent.Text", LocalResourceFile);
+                this.AddEditEventLabel.Text = Localization.GetString("AddNewEvent.Text", this.LocalResourceFile);
             }
         }
 
@@ -190,7 +202,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void Save()
         {
-            if (EventId > 0)
+            if (this.EventId > 0)
             {
                 this.Update();
             }
@@ -205,13 +217,13 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void Update()
         {
-            Event e = Event.Load(EventId);
-            e.EventStart = StartDateTimePicker.SelectedDate.Value;
-            e.EventEnd = EndDateTimePicker.SelectedDate;
-            e.Location = EventLocationTextBox.Text;
-            e.Title = EventTitleTextBox.Text;
-            e.Overview = EventDescriptionTextEditor.Text;
-            e.Save(UserId);
+            Event e = Event.Load(this.EventId);
+            e.EventStart = this.StartDateTimePicker.SelectedDate.Value;
+            e.EventEnd = this.EndDateTimePicker.SelectedDate;
+            e.Location = this.EventLocationTextBox.Text;
+            e.Title = this.EventTitleTextBox.Text;
+            e.Overview = this.EventDescriptionTextEditor.Text;
+            e.Save(this.UserId);
         }
 
         /// <summary>
@@ -219,10 +231,16 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void Insert()
         {
-            Event e = Event.Create(PortalId, ModuleId, UserInfo.Email, EventTitleTextBox.Text, EventDescriptionTextEditor.Text, StartDateTimePicker.SelectedDate.Value);
-            e.Location = EventLocationTextBox.Text;
-            e.EventEnd = EndDateTimePicker.SelectedDate;
-            e.Save(UserId);
+            Event e = Event.Create(
+                this.PortalId,
+                this.ModuleId,
+                this.UserInfo.Email,
+                this.EventTitleTextBox.Text,
+                this.EventDescriptionTextEditor.Text,
+                this.StartDateTimePicker.SelectedDate.Value);
+            e.Location = this.EventLocationTextBox.Text;
+            e.EventEnd = this.EndDateTimePicker.SelectedDate;
+            e.Save(this.UserId);
         }
 
         /// <summary>
@@ -230,12 +248,12 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void BindData()
         {
-            Event e = Event.Load(EventId);
-            EventTitleTextBox.Text = e.Title;
-            EventLocationTextBox.Text = e.Location;
-            EventDescriptionTextEditor.Text = e.Overview;
-            StartDateTimePicker.SelectedDate = e.EventStart;
-            EndDateTimePicker.SelectedDate = e.EventEnd;
+            Event e = Event.Load(this.EventId);
+            this.EventTitleTextBox.Text = e.Title;
+            this.EventLocationTextBox.Text = e.Location;
+            this.EventDescriptionTextEditor.Text = e.Overview;
+            this.StartDateTimePicker.SelectedDate = e.EventStart;
+            this.EndDateTimePicker.SelectedDate = e.EventEnd;
         }
     }
 }
