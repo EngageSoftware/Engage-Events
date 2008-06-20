@@ -14,6 +14,7 @@ namespace Engage.Events
     using System;
     using System.ComponentModel;
     using System.Data;
+    using System.Data.SqlClient;
     using System.Diagnostics;
     using Data;
 
@@ -34,8 +35,10 @@ namespace Engage.Events
         /// <summary>
         /// Initializes a new instance of the <see cref="EventCollection"/> class.
         /// </summary>
-        private EventCollection()
+        /// <param name="totalRecords">The total number of records in this collection.  Fills <see cref="TotalRecords"/>.</param>
+        private EventCollection(int totalRecords)
         {
+            this.totalRecords = totalRecords;
         }
 
         /// <summary>
@@ -62,7 +65,7 @@ namespace Engage.Events
             IDataProvider dp = DataProvider.Instance;
             try
             {
-                using (DataSet ds = dp.ExecuteDataset(
+                using (IDataReader reader = dp.ExecuteReader(
                     CommandType.StoredProcedure, 
                     dp.NamePrefix + "spGetEvents", 
                     Utility.CreateIntegerParam("@portalId", portalId),
@@ -71,12 +74,12 @@ namespace Engage.Events
                     Utility.CreateIntegerParam("@pageSize", pageSize), 
                     Utility.CreateBitParam("@showAll", showAll)))
                 {
-                    return FillEvents(ds.Tables[0]);
+                    return FillEvents(reader);
                 }
             }
-            catch (Exception se)
+            catch (Exception exc)
             {
-                throw new DBException("spGetEvents", se);
+                throw new DBException("spGetEvents", exc);
             }
         }
 
@@ -91,44 +94,51 @@ namespace Engage.Events
         public static EventCollection Load(int portalId, bool currentMonth, int index, int pageSize)
         {
             IDataProvider dp = DataProvider.Instance;
+            string storedProcName = currentMonth ? "spGetEventsCurrent" : "spGetEventsFuture";
             try
             {
-                using (DataSet ds = dp.ExecuteDataset(
-                    CommandType.StoredProcedure, 
-                    dp.NamePrefix + "spGetEventsSpecific",
+                using (IDataReader reader = dp.ExecuteReader(
+                    CommandType.StoredProcedure,
+                    dp.NamePrefix + storedProcName,
                     Utility.CreateIntegerParam("@portalId", portalId), 
-                    Utility.CreateBitParam("@currentMonth", currentMonth),
                     Utility.CreateIntegerParam("@index", index), 
                     Utility.CreateIntegerParam("@pageSize", pageSize)))
                 {
-                    return FillEvents(ds.Tables[0]);
+                    return FillEvents(reader);
                 }
             }
-            catch (Exception se)
+            catch (Exception exc)
             {
-                throw new DBException("spGetEvents", se);
+                throw new DBException(storedProcName, exc);
             }
         }
 
         /// <summary>
         /// Fills a collection of events from a <see cref="DataSet"/>.
         /// </summary>
-        /// <param name="eventTable">The event table.</param>
-        /// <returns>A collection of instantiated <see cref="Event"/> object, as represented in <paramref name="eventTable"/></returns>
-        private static EventCollection FillEvents(DataTable eventTable)
+        /// <param name="reader">
+        /// An un-initialized data reader with two records.  
+        /// The first should be a single integer, representing the total number of events (non-paged) for the requested query.
+        /// The second should be a collection of records representing the events requested.
+        /// </param>
+        /// <returns>A collection of instantiated <see cref="Event"/> object, as represented in <paramref name="reader"/>.</returns>
+        private static EventCollection FillEvents(IDataReader reader)
         {
-            EventCollection events = new EventCollection();
-            foreach (DataRow row in eventTable.Rows)
+            if (reader.Read())
             {
-                if (events.totalRecords == 0)
+                int totalRecords = (int)reader["TotalRecords"];
+                EventCollection events = new EventCollection(totalRecords);
+
+                if (reader.NextResult())
                 {
-                    events.totalRecords = (int)row["TotalRecords"];
+                    while (reader.Read())
+                    {
+                        events.Add(Event.Fill(reader));
+                    }
+                    return events;
                 }
-
-                events.Add(Event.Fill(row));
             }
-
-            return events;
+            throw new DBException("Data reader did not have the expected structure.  An error must have occurred in the query.");
         }
     }
 }

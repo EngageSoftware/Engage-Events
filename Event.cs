@@ -383,13 +383,19 @@ namespace Engage.Events
         public static Event Load(int id)
         {
             IDataProvider dp = DataProvider.Instance;
-            Event e;
+            Event e = null;
 
             try
             {
-                using (DataSet ds = dp.ExecuteDataset(CommandType.StoredProcedure, dp.NamePrefix + "spGetEvent", Utility.CreateIntegerParam("@EventId", id)))
+                using (IDataReader reader = dp.ExecuteReader(
+                    CommandType.StoredProcedure, 
+                    dp.NamePrefix + "spGetEvent", 
+                    Utility.CreateIntegerParam("@EventId", id)))
                 {
-                    e = Fill(ds.Tables[0].Rows[0]);
+                    if (reader.Read())
+                    {
+                        e = Fill(reader);
+                    }
                 }
             }
             catch (Exception se)
@@ -497,31 +503,31 @@ namespace Engage.Events
         #endregion
 
         /// <summary>
-        /// Fills an Event with the data in the specified <paramref name="row"/>.
+        /// Fills an Event with the data in the specified <paramref name="eventRecord"/>.
         /// </summary>
-        /// <param name="row">A data row for an event.</param>
+        /// <param name="eventRecord">A pre-initialized data record that represents an Event instance.</param>
         /// <returns>An instantiated Event object.</returns>
-        internal static Event Fill(DataRow row)
+        internal static Event Fill(IDataRecord eventRecord)
         {
             Event e = new Event();
 
-            e.id = (int)row["EventId"];
-            e.moduleId = (int)row["ModuleId"];
-            e.title = row["Title"].ToString();
-            e.overview = row["OverView"].ToString();
-            e.eventStart = (DateTime)row["EventStart"];
-            if (!(row["EventEnd"] is DBNull))
+            e.id = (int)eventRecord["EventId"];
+            e.moduleId = (int)eventRecord["ModuleId"];
+            e.title = eventRecord["Title"].ToString();
+            e.overview = eventRecord["OverView"].ToString();
+            e.eventStart = (DateTime)eventRecord["EventStart"];
+            if (!(eventRecord["EventEnd"] is DBNull))
             {
-                e.eventEnd = (DateTime)row["EventEnd"];
+                e.eventEnd = (DateTime)eventRecord["EventEnd"];
             }
 
-            e.createdBy = (int)row["CreatedBy"];
-            e.cancelled = (bool)row["Cancelled"];
-            e.organizer = row["Organizer"].ToString();
-            e.organizerEmail = row["OrganizerEmail"].ToString();
-            e.location = row["Location"].ToString();
-            e.invitationUrl = row["InvitationUrl"].ToString();
-            e.recapUrl = row["RecapUrl"].ToString();
+            e.createdBy = (int)eventRecord["CreatedBy"];
+            e.cancelled = (bool)eventRecord["Cancelled"];
+            e.organizer = eventRecord["Organizer"].ToString();
+            e.organizerEmail = eventRecord["OrganizerEmail"].ToString();
+            e.location = eventRecord["Location"].ToString();
+            e.invitationUrl = eventRecord["InvitationUrl"].ToString();
+            e.recapUrl = eventRecord["RecapUrl"].ToString();
 
             return e;
         }
