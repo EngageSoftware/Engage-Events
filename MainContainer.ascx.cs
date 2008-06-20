@@ -13,6 +13,7 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using DotNetNuke.Services.Exceptions;
     using Utility = Engage.Utility;
@@ -68,14 +69,26 @@ namespace Engage.Dnn.Events
         /// <returns>A relative path to the control that should be loaded into this container</returns>
         private string GetControlToLoad()
         {
-            string keyParam = this.Request.QueryString["key"];
+            string keyParam = string.Empty;
+            string[] modIdParams = this.Request.QueryString["modId"] == null ? new string[] { } : this.Request.QueryString["modId"].Split(';');
+            string[] keyParams = this.Request.QueryString["key"] == null ? new string[] { } : this.Request.QueryString["key"].Split(';');
+
+            for (int i = 0; i < modIdParams.Length && i < keyParams.Length; i++)
+            {
+                int modId;
+                if (int.TryParse(modIdParams[i], NumberStyles.Integer, CultureInfo.InvariantCulture, out modId) && modId == this.ModuleId)
+                {
+                    keyParam = keyParams[i];
+                    break;
+                }
+            }
 
             if (Utility.HasValue(keyParam))
             {
                 return ControlKeys[keyParam];
             }
             else
-            {              
+            {
                 return Dnn.Utility.GetStringSetting(this.Settings, "DisplayType", "Display/EventListingAdmin") + ".ascx";
             }
 

@@ -14,39 +14,39 @@ namespace Engage.Dnn.Events {
     public partial class GlobalNavigation {
         
         /// <summary>
-        /// lbSettings control.
+        /// SettingsLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton lbSettings;
+        protected global::System.Web.UI.WebControls.HyperLink SettingsLink;
         
         /// <summary>
-        /// lbManageEvents control.
+        /// ManageEventsLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton lbManageEvents;
+        protected global::System.Web.UI.WebControls.HyperLink ManageEventsLink;
         
         /// <summary>
-        /// lbAddAnEvent control.
+        /// AddAnEventLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton lbAddAnEvent;
+        protected global::System.Web.UI.WebControls.HyperLink AddAnEventLink;
         
         /// <summary>
-        /// lbResponses control.
+        /// ResponsesLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton lbResponses;
+        protected global::System.Web.UI.WebControls.HyperLink ResponsesLink;
     }
 }

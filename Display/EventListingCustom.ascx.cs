@@ -51,7 +51,7 @@ namespace Engage.Dnn.Events
         ////    int eventId = GetId(sender);
         ////    //show email a friend
 
-        ////    string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailAFriend&eventid=" + eventId.ToString());
+        ////    string href = BuildLinkUrl("&modId=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailAFriend&eventid=" + eventId.ToString());
 
         ////    Response.Redirect(href, true);
         ////}

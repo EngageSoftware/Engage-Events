@@ -1,114 +1,105 @@
-//Engage: Events - http://www.engagemodules.com
-//Copyright (c) 2004-2008
-//by Engage Software ( http://www.engagesoftware.com )
-
-//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
-//TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
-//THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
-//CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
-//DEALINGS IN THE SOFTWARE.
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Xml;
-using DotNetNuke;
-using DotNetNuke.Common;
-using DotNetNuke.Common.Utilities;
-using DotNetNuke.Entities.Modules;
-using DotNetNuke.Entities.Modules.Actions;
-using DotNetNuke.Security;
-using DotNetNuke.Services.Localization;
-using DotNetNuke.Services.Exceptions;
-using Engage.Dnn.Events.Data;
-using Engage.Dnn.Events.Util;
-using Engage.Routing;
-using Engage.Communication.Email;
-using Engage.Services.Client;
-using Engage.Events;
+// <copyright file="GlobalNavigation.ascx.cs" company="Engage Software">
+// Engage: Events - http://www.engagemodules.com
+// Copyright (c) 2004-2008
+// by Engage Software ( http://www.engagesoftware.com )
+// </copyright>
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
+// TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
+// CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// DEALINGS IN THE SOFTWARE.
 
 namespace Engage.Dnn.Events
 {
+    using System;
+    using System.Globalization;
+    using DotNetNuke.Entities.Modules;
+    using DotNetNuke.Services.Exceptions;
+
+    /// <summary>
+    /// A navigation control that is always displayed at the top of the module.  Currently only for admins.
+    /// </summary>
     public partial class GlobalNavigation : ModuleBase
     {
+        /// <summary>
+        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
-            //since the global navigation control is not loaded using DNN mechanisms we need to set it here so that calls to 
-            //module related information will appear the same as the actual control this navigation is sitting on.hk
+
+            // since the global navigation control is not loaded using DNN mechanisms we need to set it here so that calls to 
+            // module related information will appear the same as the actual control this navigation is sitting on.hk
             this.ModuleConfiguration = ((PortalModuleBase)base.Parent).ModuleConfiguration;
             this.LocalResourceFile = "~" + DesktopModuleFolderName + "App_LocalResources/GlobalNavigation";
+
+            this.Load += this.Page_Load;
         }
 
-        protected override void OnLoad(EventArgs e)
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
-                lbSettings.Visible = IsAdmin;
-                lbAddAnEvent.Visible = IsAdmin;
-                lbResponses.Visible = IsAdmin;
-                lbManageEvents.Visible = IsAdmin;
-                
-                //TODO: change to swap out css based on parent control, eventedit, admin, whatever.hk
+                this.SetupLinks();
+                this.SetVisibility();
+                this.SetDisabledImages();
 
-                switch (Parent.ID)
-                {
-                    case "EventEdit":
-                        lbAddAnEvent.ImageUrl = "~/desktopmodules/EngageEvents/Images/add_event_disabled.gif";
-                        break;
-                    case "EventListingAdmin":
-                        lbManageEvents.ImageUrl = "~/desktopmodules/EngageEvents/Images/manage_events_disabled.gif";
-                        break;
-                    case "RsvpSummary":
-                        lbResponses.ImageUrl = "~/desktopmodules/EngageEvents/Images/responses_disabled.gif";
-                        break;
-                    default:
-                        break;
-                }
-                //foreach (Control c in this.Controls)
-                //{
-                //    if (c is LinkButton)
-                //    {
-                //        ImageButton img = (ImageButton)c;
-                //        if (img.ImageUrl = 
-                //    }
-                //}
+                // TODO: change to swap out css based on parent control, eventedit, admin, whatever.hk
             }
             catch (Exception exc)
             {
                 Exceptions.ProcessModuleLoadException(this, exc);
             }
-
         }
 
-        protected void lbResponses_OnClick(object sender, ImageClickEventArgs e)
+        /// <summary>
+        /// Sets up the URLs for each of the links.
+        /// </summary>
+        private void SetupLinks()
         {
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpSummary");
-            Response.Redirect(href, true);
+            this.SettingsLink.NavigateUrl = this.EditUrl("ModuleId", this.ModuleId.ToString(CultureInfo.InvariantCulture), "Module");
+            this.AddAnEventLink.NavigateUrl = this.BuildLinkUrl("&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit");
+            this.ResponsesLink.NavigateUrl = this.BuildLinkUrl("&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpSummary");
+            this.ManageEventsLink.NavigateUrl = this.BuildLinkUrl("&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventListingAdmin");
         }
 
-        protected void lbAddAnEvent_OnClick(object sender, ImageClickEventArgs e)
+        /// <summary>
+        /// Sets the visibility.
+        /// </summary>
+        private void SetVisibility()
         {
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit");
-            Response.Redirect(href, true);
+            this.Visible = this.IsAdmin;
+            ////this.SettingsLink.Visible = this.IsAdmin;
+            ////this.AddAnEventLink.Visible = this.IsAdmin;
+            ////this.ResponsesLink.Visible = this.IsAdmin;
+            ////this.ManageEventsLink.Visible = this.IsAdmin;
         }
 
-        protected void lbSettings_OnClick(object sender, ImageClickEventArgs e)
+        /// <summary>
+        /// Sets the image for the current page to a disabled image, if appropriate.
+        /// </summary>
+        private void SetDisabledImages()
         {
-            string href = EditUrl("ModuleId", ModuleId.ToString(CultureInfo.InvariantCulture), "Module");
-            Response.Redirect(href, true);
+            switch (this.Parent.ID)
+            {
+                case "EventEdit":
+                    this.AddAnEventLink.ImageUrl = "~/desktopmodules/EngageEvents/Images/add_event_disabled.gif";
+                    break;
+                case "EventListingAdmin":
+                    this.ManageEventsLink.ImageUrl = "~/desktopmodules/EngageEvents/Images/manage_events_disabled.gif";
+                    break;
+                case "RsvpSummary":
+                    this.ResponsesLink.ImageUrl = "~/desktopmodules/EngageEvents/Images/responses_disabled.gif";
+                    break;
+                default:
+                    break;
+            }
         }
-
-        protected void lbManageEvents_OnClick(object sender, ImageClickEventArgs e)
-        {
-            string href = BuildLinkUrl("&mid=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventListingAdmin");
-            Response.Redirect(href, true);
-        }
-
     }
 }
-

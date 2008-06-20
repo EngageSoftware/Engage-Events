@@ -66,7 +66,7 @@ namespace Engage.Dnn.Events
             pager.PageSize = grdRsvpDetail.PageSize;
             pager.CurrentPage = CurrentPageIndex;
             pager.TabID = TabId;
-            pager.QuerystringParams = "&mid=" + ModuleId.ToString() + "&key=rsvpDetail&status=" + Status + "&eventid=" + EventId;
+            pager.QuerystringParams = "&modId=" + ModuleId.ToString() + "&key=rsvpDetail&status=" + Status + "&eventid=" + EventId;
             grdRsvpDetail.Attributes.Add("SortColumn", sortColumn);
 
             Event e = Event.Load(EventId);
