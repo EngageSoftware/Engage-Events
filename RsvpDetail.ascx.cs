@@ -53,7 +53,7 @@ namespace Engage.Dnn.Events
 
         private void BindData()
         {
-            BindData("FirstName");
+            BindData("CreationDate");
         }
 
         private void BindData(string sortColumn)

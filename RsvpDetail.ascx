@@ -8,7 +8,7 @@
     <asp:Label ID="lblSortBy" runat="server" CssClass="NormalBold" Text="Sort By"></asp:Label>
     <asp:RadioButtonList ID="rbSort" runat="server" AutoPostBack="True" CssClass="Normal"
          RepeatDirection="Horizontal" OnSelectedIndexChanged="rbSort_SelectedIndexChanged">
-        <asp:ListItem Selected="True" Value="EventStart">Response Date</asp:ListItem>
+        <asp:ListItem Selected="True" Value="CreationDate">Response Date</asp:ListItem>
         <asp:ListItem Value="FirstName">First Name</asp:ListItem>
         <asp:ListItem Value="LastName">Last Name</asp:ListItem>
     </asp:RadioButtonList><br />
