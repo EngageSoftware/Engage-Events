@@ -5,7 +5,6 @@
         <div class="<%=MessageStyle %>Body mmBody">
             <span class="<%=MessageStyle %>Icon mmIcon"><%=GetLocalizedText(MessageStyle, this)%></span>
             <div class="mmText">
-                <h3 class="SubHead"><asp:Label ID="titleLabel" runat="server" /></h3>
                 <p class="Normal"><asp:Label ID="messageLabel" runat="server" /></p>
             </div>
         </div>
