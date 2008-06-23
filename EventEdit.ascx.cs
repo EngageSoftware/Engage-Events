@@ -35,23 +35,6 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Handles the OnClick event of the CancelEventButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void CancelEventButton_OnClick(object sender, EventArgs e)
-        {
-            try
-            {
-                this.Response.Redirect(Globals.NavigateURL(), true);
-            }
-            catch (Exception exc)
-            {
-                Exceptions.ProcessModuleLoadException(this, exc);
-            }
-        }
-
-        /// <summary>
         /// Handles the OnClick event of the SaveEventButton control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -107,16 +90,6 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Handles the Click event of the ExitButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void ExitButton_Click(object sender, EventArgs e)
-        {
-            this.Response.Redirect(Globals.NavigateURL(), true);
-        }
-
-        /// <summary>
         /// Handles the ServerValidate event of the EventDescriptionTextEditorValidator control.
         /// </summary>
         /// <param name="source">The source of the event.</param>
@@ -140,6 +113,7 @@ namespace Engage.Dnn.Events
                     this.BindData();
                 }
 
+                this.SetButtonLinks();
                 this.LocalizeControl();
                 this.SuccessModuleMessage.Visible = false;
                 this.FinalButtons.Visible = false;
@@ -183,6 +157,14 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Sets the <c>NavigateUrl</c> property for the button links.
+        /// </summary>
+        private void SetButtonLinks()
+        {
+            this.ExitLink.NavigateUrl = this.CancelEventLink.NavigateUrl = Globals.NavigateURL();
+        }
+
+        /// <summary>
         /// This method will update the form with any localized values that cannot be localized by using the DotNetNuke ResourceKey attribute in the control's markup.
         /// </summary>
         private void LocalizeControl()
@@ -195,6 +177,11 @@ namespace Engage.Dnn.Events
             {
                 this.AddEditEventLabel.Text = Localization.GetString("AddNewEvent.Text", this.LocalResourceFile);
             }
+            this.CreateAnotherEventButton.AlternateText = Localization.GetString("CreateAnother.Alt", LocalResourceFile);
+            this.SaveAndCreateNewEventButton.AlternateText = Localization.GetString("SaveAndCreateNew.Alt", LocalResourceFile);
+            this.SaveEventButton.AlternateText = Localization.GetString("Save.Alt", LocalResourceFile);
+            this.ExitLink.Text = Localization.GetString("Exit.Alt", LocalResourceFile);
+            this.CancelEventLink.Text = Localization.GetString("Cancel.Alt", LocalResourceFile);
         }
 
         /// <summary>

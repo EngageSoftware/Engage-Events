@@ -13,7 +13,9 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Globalization;
+    using DotNetNuke.Common;
     using DotNetNuke.Services.Exceptions;
+    using DotNetNuke.Services.Localization;
     using Engage.Events;
 
     /// <summary>
@@ -49,6 +51,7 @@ namespace Engage.Dnn.Events
             {
                 if (!this.Page.IsPostBack)
                 {
+                    this.SetupControl();
                     this.BindData();
                 }
             }
@@ -83,6 +86,15 @@ namespace Engage.Dnn.Events
             return count > 0 ? this.BuildLinkUrl(
                                    "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpDetail&eventid="
                                    + eventId.ToString(CultureInfo.InvariantCulture) + "&status=" + status) : string.Empty;
+        }
+
+        /// <summary>
+        /// Sets up this control.  Sets localization and sets the <c>NavigateUrl</c> for the exit button.
+        /// </summary>
+        private void SetupControl()
+        {
+            this.ExitLink.Text = Localization.GetString("Exit.Alt", LocalResourceFile);
+            this.ExitLink.NavigateUrl = Globals.NavigateURL();
         }
 
         /// <summary>

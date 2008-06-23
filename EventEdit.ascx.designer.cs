@@ -113,13 +113,13 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.ImageButton SaveEventButton;
         
         /// <summary>
-        /// CancelEventButton control.
+        /// CancelEventLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton CancelEventButton;
+        protected global::System.Web.UI.WebControls.HyperLink CancelEventLink;
         
         /// <summary>
         /// SaveAndCreateNewEventButton control.
@@ -146,15 +146,15 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton CreateAnotherEventButton;
+        protected global::System.Web.UI.WebControls.ImageButton CreateAnotherEventButton;
         
         /// <summary>
-        /// ExitButton control.
+        /// ExitLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ExitButton;
+        protected global::System.Web.UI.WebControls.HyperLink ExitLink;
     }
 }

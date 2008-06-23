@@ -3,6 +3,7 @@
 <%@ Register TagPrefix="dnn" TagName="TextEditor" Src="~/controls/TextEditor.ascx"%>
 <%@ Register tagprefix="engage" tagname="GlobalNavigation" src="Navigation/GlobalNavigation.ascx" %>
 <%@ Register TagPrefix="engage" TagName="ModuleMessage" Src="Controls/ModuleMessage.ascx" %>
+<%@ Import Namespace="DotNetNuke.Services.Localization"%>
 <%@ Register TagPrefix="engage" Namespace="Engage.Controls" Assembly="Engage.Utilityv3.0" %>
 
 <span class="GlobalNavigation">
@@ -69,12 +70,12 @@
 
 <div class="AddEventFooterButtons" runat="server" id="AddEventFooterButtons">
     <asp:ImageButton ID="SaveEventButton" runat="server" OnClick="SaveEventButton_OnClick" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/save.gif" />
-    <asp:ImageButton ID="CancelEventButton" runat="server" OnClick="CancelEventButton_OnClick" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/cancel.gif" CausesValidation="false"/>
-    <asp:ImageButton ID="SaveAndCreateNewEventButton" runat="server" OnClick="SaveAndCreateNewEventButton_OnClick" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/save_create_new.gif" />
+    <asp:HyperLink ID="CancelEventLink" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/cancel.gif" />
+    <asp:ImageButton ID="SaveAndCreateNewEventButton" runat="server" OnClick="SaveAndCreateNewEventButton_OnClick" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/save_create_new.gif"/>
 </div>
 
 <div class="FinalButtons" runat="server" id="FinalButtons">
-    <asp:LinkButton ID="CreateAnotherEventButton" runat="server" onclick="CreateAnotherEventButton_Click">Create Another Event</asp:LinkButton>
+    <asp:ImageButton ID="CreateAnotherEventButton" runat="server" onclick="CreateAnotherEventButton_Click" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/create_another_event.gif" />
     <%--<asp:LinkButton ID="CreateEventEmailButton" runat="server">Create E-Mail For This Event</asp:LinkButton>--%>
-    <asp:LinkButton ID="ExitButton" runat="server" onclick="ExitButton_Click">Exit</asp:LinkButton>
+    <asp:HyperLink ID="ExitLink" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/exit.gif" />
 </div>

@@ -1,5 +1,6 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.RsvpSummary"
     CodeBehind="RsvpSummary.ascx.cs" %>
+<%@ Import Namespace="DotNetNuke.Services.Localization"%>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
 <%@ Register Src="Navigation/GlobalNavigation.ascx" TagName="GlobalNavigation" TagPrefix="uc1" %>
 <uc1:GlobalNavigation ID="GlobalNavigation1" runat="server" />
@@ -41,3 +42,4 @@
     </ItemTemplate>
 </asp:Repeater>
 <dnn:PagingControl ID="SummaryPager" runat="server"></dnn:PagingControl>
+<asp:HyperLink ID="ExitLink" runat="server" ImageUrl="~/DesktopModules/EngageEvents/Images/exit.gif"/>

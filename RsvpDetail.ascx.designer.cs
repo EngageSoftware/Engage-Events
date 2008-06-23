@@ -75,5 +75,14 @@ namespace Engage.Dnn.Events {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DataGrid grdRsvpDetail;
+        
+        /// <summary>
+        /// ExitLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink ExitLink;
     }
 }

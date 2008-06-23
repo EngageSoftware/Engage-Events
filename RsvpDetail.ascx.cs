@@ -1,44 +1,50 @@
-//Engage: Events - http://www.engagemodules.com
-//Copyright (c) 2004-2008
-//by Engage Software ( http://www.engagesoftware.com )
-
-//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
-//TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
-//THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
-//CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
-//DEALINGS IN THE SOFTWARE.
-
-using System;
-using System.Collections;
-using System.Globalization;
-using System.Text;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using DotNetNuke;
-using DotNetNuke.Common;
-using DotNetNuke.Common.Utilities;
-using DotNetNuke.Entities.Modules;
-using DotNetNuke.Entities.Modules.Actions;
-using DotNetNuke.Security;
-using DotNetNuke.Services.Localization;
-using DotNetNuke.Services.Exceptions;
-using Engage.Events;
-using Engage.Dnn.Events.Util;
+// <copyright file="RsvpDetail.ascx.cs" company="Engage Software">
+// Engage: Events - http://www.engagemodules.com
+// Copyright (c) 2004-2008
+// by Engage Software ( http://www.engagesoftware.com )
+// </copyright>
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
+// TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
+// CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// DEALINGS IN THE SOFTWARE.
 
 namespace Engage.Dnn.Events
 {
+    using System;
+    using DotNetNuke.Common;
+    using DotNetNuke.Services.Exceptions;
+    using DotNetNuke.Services.Localization;
+    using Engage.Events;
+
+    ///<summary>
+    ///
+    ///</summary>
     public partial class RsvpDetail : ModuleBase
     {
-        #region Event Handlers
-
-        protected override void OnLoad(EventArgs e)
+        /// <summary>
+        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+            this.Load += this.Page_Load;
+        }
+        
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
                 if (!Page.IsPostBack)
                 {
-                    BindData();
+                    this.SetupControl();
+                    this.BindData();
                 }
             }
             catch (Exception exc)
@@ -47,9 +53,14 @@ namespace Engage.Dnn.Events
             }    
         }
 
-        #endregion
-
-        #region Methods
+        /// <summary>
+        /// Sets up this control.  Sets localization and sets the <c>NavigateUrl</c> for the exit button.
+        /// </summary>
+        private void SetupControl()
+        {
+            this.ExitLink.Text = Localization.GetString("Exit.Alt", LocalResourceFile);
+            this.ExitLink.NavigateUrl = Globals.NavigateURL();
+        }
 
         private void BindData()
         {
@@ -74,7 +85,7 @@ namespace Engage.Dnn.Events
             lblName.Text= e.Title;
         }
 
-        protected string GetStatusIcon(object o)
+        protected static string GetStatusIcon(object o)
         {
 
             string url = string.Empty;
@@ -112,7 +123,7 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                string status = "";
+                string status = string.Empty;
                 //Get the currentpage index from the url parameter
                 if (Request.QueryString["status"] != null)
                 {
@@ -124,15 +135,14 @@ namespace Engage.Dnn.Events
 
         }
 
-
-        #endregion
-
-        protected void rbSort_SelectedIndexChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Handles the SelectedIndexChanged event of the RbSort control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void RbSort_SelectedIndexChanged(object sender, EventArgs e)
         {
             BindData(rbSort.SelectedValue);
         }
-
     }
 }
-
-;

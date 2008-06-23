@@ -138,4 +138,7 @@
   <data name="When.Text" xml:space="preserve">
     <value>When</value>
   </data>
+  <data name="Exit.Alt" xml:space="preserve">
+    <value>Exit</value>
+  </data>
 </root>
