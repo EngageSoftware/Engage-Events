@@ -44,7 +44,25 @@ namespace Engage.Events
 
         public static Rsvp Load(int eventId, string email)
         {
-            return new Rsvp();
+            IDataProvider dp = DataProvider.Instance;
+            Rsvp r;
+
+            try
+            {
+                using (DataSet ds = dp.ExecuteDataset(CommandType.StoredProcedure, dp.NamePrefix + "spGetRsvpByEmail",
+                 Utility.CreateIntegerParam("@EventId", eventId),
+                 Utility.CreateVarcharParam("@Email", email, 100)))
+                {
+                    r = Fill(ds.Tables[0].Rows[0]);
+                }
+            }
+            catch (Exception se)
+            {
+                throw new DBException("spGetRsvpByEmail", se);
+            }
+
+            return r;
+
         }
 
         public static Rsvp Load(int id)
