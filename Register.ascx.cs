@@ -1,111 +1,58 @@
-using System;
-using System.Collections;
-using System.Globalization;
-using System.IO;
-using System.Net;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using DotNetNuke.Common.Utilities;
-using DotNetNuke.Entities.Modules;
-using DotNetNuke.Services.Exceptions;
-using DotNetNuke.Security;
-using DotNetNuke.Services.Localization;
-using DotNetNuke.Security.Membership;
-using DotNetNuke.Entities.Users;
+// <copyright file="Register.ascx.cs" company="Engage Software">
+// Engage: Events - http://www.engagemodules.com
+// Copyright (c) 2004-2008
+// by Engage Software ( http://www.engagesoftware.com )
+// </copyright>
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
+// TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
+// CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// DEALINGS IN THE SOFTWARE.
 
 namespace Engage.Dnn.Events
 {
+    using System;
+    using System.Web;
+    using DotNetNuke.Common;
+    using Utility = Engage.Utility;
+
     /// <summary>
-    /// Summary description for Register.
+    /// The code-behind for the <c>Register.ascx</c> control, which allows the user to specify whether they are or are not attending an event.
     /// </summary>
     public partial class Register : ModuleBase
     {
-        private string parentTitle;
-
-        #region Web Form Designer generated code
-        override protected void OnInit(EventArgs e)
+        /// <summary>
+        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        protected override void OnInit(EventArgs e)
         {
-            //
-            // CODEGEN: This call is required by the ASP.NET Web Form Designer.
-            //
-            InitializeComponent();
             base.OnInit(e);
+            this.Load += this.Page_Load;
         }
 
         /// <summary>
-        ///		Required method for Designer support - do not modify
-        ///		the contents of this method with the code editor.
+        /// Handles the Load event of the Page control.
         /// </summary>
-        private void InitializeComponent()
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void Page_Load(object sender, EventArgs e)
         {
-
-        }
-        #endregion
-
-        #region Events
-
-        protected void Page_Load(object sender, System.EventArgs e)
-        {
-            if (UserInfo.UserID > 0) Response.Redirect(RsvpUrl, true);
-
-            //Localize the linkbuttons
-            //btnCart.Text = Localization.GetString("btnCart");
-            //btnProfile.Text = Localization.GetString("btnProfile");
-            //btnOrders.Text = Localization.GetString("btnOrders");
-
-            try
+            if (Utility.IsLoggedIn)
             {
+                this.Response.Redirect(this.RsvpUrl, true);
             }
-            catch (Exception ex)
-            {
-                string ErrorSettings = Localization.GetString("ErrorSettings", this.LocalResourceFile);
-                Exceptions.ProcessModuleLoadException(ErrorSettings, this, ex, true);
-            }
+
+            this.SetupLinks();
         }
 
-        #endregion
-
-        protected void btnCreate_Click(object sender, ImageClickEventArgs e)
+        /// <summary>
+        /// Sets up the login and register links destinations.
+        /// </summary>
+        private void SetupLinks()
         {
-            string href = DotNetNuke.Common.Globals.NavigateURL("", "ctl=register&returnurl=" + Server.UrlEncode(Request.Url.PathAndQuery));
-            //returnurl = here, if we are then logged in we will be redirected to checkout wizard
-            Response.Redirect(href, true);
-        }
-
-        protected bool UseCaptcha
-        {
-            get
-            {
-                object setting = UserModuleBase.GetSetting(PortalId, "Security_CaptchaLogin");
-                return Convert.ToBoolean(setting);
-            }
-        }
-
-        protected void cmdLogin_Click(object sender, ImageClickEventArgs e)
-        {
-            if ((UseCaptcha && ctlCaptcha.IsValid) || (!UseCaptcha))
-            {
-                UserLoginStatus status = UserLoginStatus.LOGIN_FAILURE;
-                UserInfo user = UserController.ValidateUser(PortalId, txtUsername.Text, txtPassword.Text, "", PortalSettings.PortalName, Request.UserHostAddress, ref status);
-
-                //'Check if the User has valid Password/Profile
-                switch (status)
-                {
-                    case UserLoginStatus.LOGIN_SUCCESS:
-                        //Complete Login
-                        UserController.UserLogin(PortalId, user, PortalSettings.PortalName, Request.UserHostAddress, false);
-                        Response.Redirect(RsvpUrl);
-                        break;
-                    case UserLoginStatus.LOGIN_SUPERUSER:
-                        //Complete Login
-                        UserController.UserLogin(PortalId, user, PortalSettings.PortalName, Request.UserHostAddress, false);
-                        Response.Redirect(RsvpUrl);
-                        break;
-                    default:
-                        //Response.Redirect(RsvpUrl);
-                        break;
-                }
-            }
+            this.RegisterLink.NavigateUrl = Globals.NavigateURL("Register", "returnUrl=" + HttpUtility.UrlEncode(this.Request.RawUrl));
+            this.LoginLink.NavigateUrl = Dnn.Utility.GetLoginUrl(this.PortalSettings, this.Request);
         }
     }
 }
