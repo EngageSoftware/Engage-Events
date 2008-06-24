@@ -138,6 +138,9 @@
   <data name="EndDateCompareValidator.Text" xml:space="preserve">
     <value>Your event cannot end before it begins</value>
   </data>
+  <data name="EndDateTimePickerRequired.Text" xml:space="preserve">
+    <value>You must specify when your event ends</value>
+  </data>
   <data name="EventDescriptionLabel.Text" xml:space="preserve">
     <value>Description</value>
   </data>
