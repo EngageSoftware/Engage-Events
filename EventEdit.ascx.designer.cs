@@ -92,7 +92,16 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.TextEditor EventDescriptionTextEditor;
+        protected global::Telerik.Web.UI.RadEditor EventDescriptionTextEditor;
+        
+        /// <summary>
+        /// EventDescriptionTextEditorValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator EventDescriptionTextEditorValidator;
         
         /// <summary>
         /// AddEventFooterButtons control.

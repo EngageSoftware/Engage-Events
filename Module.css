@@ -38,8 +38,8 @@
 
 /* event edit page */
 
-.AdminButtons, .AddEventFooterButtons{ text-align: left; padding-left: 5%;}
-	.AddEventFooterButtons { padding-top: 3%; }
+.AdminButtons{ text-align: left; padding-left: 5%;}
+	.FooterButtons { padding-top: 3%; }
 	.AddEventSuccessMessage { padding-left: 10%; }
 
 	.AddNewEvent .Head { text-align: left; border-bottom: dashed 1px black; text-transform: uppercase; margin-bottom: 5%; padding-bottom: 1%;}
@@ -55,7 +55,7 @@
 			{float:left; width: 20%; margin-right: 3%; text-align: right;}
 			.EventEditor .Normal, .EventTitle .Normal, .EventStartDate .Normal, .EventLocationAdd .Normal, .EventEndDate .Normal{float: left; width: 81%;}
 			
-
+ .EventEditor li { list-style-type: none; }
 				
 	
 

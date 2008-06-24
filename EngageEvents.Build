@@ -98,6 +98,7 @@
         <include name="**/*.aspx" />
         <include name="**/*.asmx" />
         <include name="**/*.xsd" />
+        <include name="**/*.tdf" />
         <exclude name="**/DNNDebug.aspx" />
         <exclude name="**/Resources.zip" />
         <exclude name="**/Install/**/*" />
@@ -141,6 +142,7 @@
         <include name="**/*.aspx" />
         <include name="**/*.asmx" />
         <include name="**/*.xsd" />
+        <include name="**/*.tdf" />
         <include name="**/*.css" />
         <include name="**/*.cs" />
         <include name="**/*.sln" />

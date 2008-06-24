@@ -17,13 +17,17 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
     using Engage.Events;
-    using Utility = Engage.Utility;
 
     /// <summary>
     /// This class contains a collection of methods for adding or editing an Event.
     /// </summary>
     public partial class EventEdit : ModuleBase
     {
+        /////// <summary>
+        /////// Text editor control for the Event's description.
+        /////// </summary>
+        ////private TextEditor eventDescriptionTextEditor;
+
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
         /// </summary>
@@ -32,6 +36,37 @@ namespace Engage.Dnn.Events
         {
             base.OnInit(e);
             this.Load += this.Page_Load;
+            this.EventDescriptionTextEditorValidator.ServerValidate += this.EventDescriptionTextEditorValidator_ServerValidate;
+            this.SaveEventButton.Click += this.SaveEventButton_OnClick;
+            this.SaveAndCreateNewEventButton.Click += this.SaveAndCreateNewEventButton_OnClick;
+            this.CreateAnotherEventButton.Click += this.CreateAnotherEventButton_Click;
+
+            ////this.eventDescriptionTextEditor = Utility.SetupTextEditor(EventDescriptionTextEditorPlaceHolder);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        private void Page_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!this.IsPostBack && this.EventId > 0)
+                {
+                    this.BindData();
+                }
+
+                this.SetButtonLinks();
+                this.LocalizeControl();
+                this.SuccessModuleMessage.Visible = false;
+                this.FinalButtons.Visible = false;
+            }
+            catch (Exception exc)
+            {
+                Exceptions.ProcessModuleLoadException(this, exc);
+            }
         }
 
         /// <summary>
@@ -39,7 +74,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void SaveEventButton_OnClick(object sender, EventArgs e)
+        private void SaveEventButton_OnClick(object sender, EventArgs e)
         {
             try
             {
@@ -60,7 +95,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void SaveAndCreateNewEventButton_OnClick(object sender, EventArgs e)
+        private void SaveAndCreateNewEventButton_OnClick(object sender, EventArgs e)
         {
             try
             {
@@ -81,7 +116,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void CreateAnotherEventButton_Click(object sender, EventArgs e)
+        private void CreateAnotherEventButton_Click(object sender, EventArgs e)
         {
             this.CleanForm();
             this.SuccessModuleMessage.Visible = false;
@@ -94,34 +129,9 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <param name="source">The source of the event.</param>
         /// <param name="args">The <see cref="System.Web.UI.WebControls.ServerValidateEventArgs"/> instance containing the event data.</param>
-        protected void EventDescriptionTextEditorValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        private void EventDescriptionTextEditorValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            args.IsValid = Utility.HasValue(this.EventDescriptionTextEditor.Text);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="T:System.EventArgs"/> object that contains the event data.</param>
-        private void Page_Load(object sender, EventArgs e)
-        {
-            try
-            {
-                if (!this.Page.IsPostBack && this.EventId > 0)
-                {
-                    this.BindData();
-                }
-
-                this.SetButtonLinks();
-                this.LocalizeControl();
-                this.SuccessModuleMessage.Visible = false;
-                this.FinalButtons.Visible = false;
-            }
-            catch (Exception exc)
-            {
-                Exceptions.ProcessModuleLoadException(this, exc);
-            }
+            args.IsValid = Engage.Utility.HasValue(this.EventDescriptionTextEditor.Text);
         }
 
         /// <summary>
@@ -142,7 +152,7 @@ namespace Engage.Dnn.Events
             this.EndDateTimePicker.SelectedDate = null;
             this.EventLocationTextBox.Text = String.Empty;
             this.EventTitleTextBox.Text = String.Empty;
-            this.EventDescriptionTextEditor.Text = null;
+            this.EventDescriptionTextEditor.Content = null;
         }
 
         /// <summary>
@@ -177,6 +187,7 @@ namespace Engage.Dnn.Events
             {
                 this.AddEditEventLabel.Text = Localization.GetString("AddNewEvent.Text", this.LocalResourceFile);
             }
+
             this.CreateAnotherEventButton.AlternateText = Localization.GetString("CreateAnother.Alt", LocalResourceFile);
             this.SaveAndCreateNewEventButton.AlternateText = Localization.GetString("SaveAndCreateNew.Alt", LocalResourceFile);
             this.SaveEventButton.AlternateText = Localization.GetString("Save.Alt", LocalResourceFile);
@@ -209,7 +220,7 @@ namespace Engage.Dnn.Events
             e.EventEnd = this.EndDateTimePicker.SelectedDate;
             e.Location = this.EventLocationTextBox.Text;
             e.Title = this.EventTitleTextBox.Text;
-            e.Overview = this.EventDescriptionTextEditor.Text;
+            e.Overview = this.EventDescriptionTextEditor.Content;
             e.Save(this.UserId);
         }
 
@@ -223,7 +234,7 @@ namespace Engage.Dnn.Events
                 this.ModuleId,
                 this.UserInfo.Email,
                 this.EventTitleTextBox.Text,
-                this.EventDescriptionTextEditor.Text,
+                this.EventDescriptionTextEditor.Content,
                 this.StartDateTimePicker.SelectedDate.Value);
             e.Location = this.EventLocationTextBox.Text;
             e.EventEnd = this.EndDateTimePicker.SelectedDate;
@@ -238,7 +249,7 @@ namespace Engage.Dnn.Events
             Event e = Event.Load(this.EventId);
             this.EventTitleTextBox.Text = e.Title;
             this.EventLocationTextBox.Text = e.Location;
-            this.EventDescriptionTextEditor.Text = e.Overview;
+            this.EventDescriptionTextEditor.Content = e.Overview;
             this.StartDateTimePicker.SelectedDate = e.EventStart;
             this.EndDateTimePicker.SelectedDate = e.EventEnd;
         }

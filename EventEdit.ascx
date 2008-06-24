@@ -1,10 +1,9 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EventEdit" Codebehind="EventEdit.ascx.cs" %>
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
-<%@ Register TagPrefix="dnn" TagName="TextEditor" Src="~/controls/TextEditor.ascx"%>
 <%@ Register tagprefix="engage" tagname="GlobalNavigation" src="Navigation/GlobalNavigation.ascx" %>
 <%@ Register TagPrefix="engage" TagName="ModuleMessage" Src="Controls/ModuleMessage.ascx" %>
-<%@ Import Namespace="DotNetNuke.Services.Localization"%>
 <%@ Register TagPrefix="engage" Namespace="Engage.Controls" Assembly="Engage.Utilityv3.0" %>
+<%@ Import Namespace="DotNetNuke.Services.Localization"%>
 
 <span class="GlobalNavigation">
     <engage:GlobalNavigation ID="GlobalNavigation" runat="server" />
@@ -60,22 +59,24 @@
     
     <div class="EventEditor">
         <asp:Label runat="server" ResourceKey="EventDescriptionLabel" CssClass="NormalBold"/>
-        <dnn:TextEditor ID="EventDescriptionTextEditor" runat="server" Width="550" TextRenderMode="Raw" HtmlEncode="False" defaultmode="Rich" height="350" choosemode="True" chooserender="False" />
-        <asp:CustomValidator runat="server" OnServerValidate="EventDescriptionTextEditorValidator_ServerValidate" ResourceKey="EventDescriptionTextEditorRequired" Display="None"/>
+        <telerik:radeditor ID="EventDescriptionTextEditor" runat="server" ToolsFile="~/DesktopModules/EngageEvents/RadEditor/BasicTools.xml"/>
+        <%--<dnn:TextEditor ID="EventDescriptionTextEditor" runat="server" Width="550" TextRenderMode="Raw" HtmlEncode="False" defaultmode="Rich" height="350" choosemode="True" chooserender="False" />
+        <asp:PlaceHolder ID="EventDescriptionTextEditorPlaceHolder" runat="server" />--%>
+        <asp:CustomValidator ID="EventDescriptionTextEditorValidator" runat="server" ResourceKey="EventDescriptionTextEditorRequired" Display="None"/>
     </div>
     
 </div>
 
 <engage:ValidationSummary runat="server" />
 
-<div class="AddEventFooterButtons" runat="server" id="AddEventFooterButtons">
-    <asp:ImageButton ID="SaveEventButton" runat="server" OnClick="SaveEventButton_OnClick" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/save.gif" />
+<div class="AddEventFooterButtons" runat="server" id="AddEventFooterButtons AdminButtons FooterButtons">
+    <asp:ImageButton ID="SaveEventButton" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/save.gif" />
     <asp:HyperLink ID="CancelEventLink" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/cancel.gif" />
-    <asp:ImageButton ID="SaveAndCreateNewEventButton" runat="server" OnClick="SaveAndCreateNewEventButton_OnClick" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/save_create_new.gif"/>
+    <asp:ImageButton ID="SaveAndCreateNewEventButton" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/save_create_new.gif"/>
 </div>
 
-<div class="FinalButtons" runat="server" id="FinalButtons">
-    <asp:ImageButton ID="CreateAnotherEventButton" runat="server" onclick="CreateAnotherEventButton_Click" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/create_another_event.gif" />
+<div class="FinalButtons" runat="server" id="FinalButtons AdminButtons FooterButtons">
+    <asp:ImageButton ID="CreateAnotherEventButton" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/create_another_event.gif" />
     <%--<asp:LinkButton ID="CreateEventEmailButton" runat="server">Create E-Mail For This Event</asp:LinkButton>--%>
     <asp:HyperLink ID="ExitLink" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/exit.gif" />
 </div>
