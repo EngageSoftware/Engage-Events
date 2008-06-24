@@ -1,10 +1,20 @@
-﻿using System;
-using System.Data;
-using System.Diagnostics;
+﻿// <copyright file="RsvpSummary.cs" company="Engage Software">
+// Engage: Events - http://www.engagemodules.com
+// Copyright (c) 2004-2008
+// by Engage Software ( http://www.engagesoftware.com )
+// </copyright>
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
+// TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
+// CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// DEALINGS IN THE SOFTWARE.
 
 namespace Engage.Events
 {
- 
+    using System;
+    using System.Data;
+    using System.Diagnostics;
+
     public class RsvpSummary
     {
         private RsvpSummary()
@@ -31,15 +41,13 @@ namespace Engage.Events
 
         internal static RsvpSummary Fill(DataRow row)
         {
-            RsvpSummary r = new RsvpSummary
-                                {
-                                    _eventId = ((int) row["EventId"]),
-                                    _title = row["Title"].ToString(),
-                                    _eventStart = ((DateTime) row["EventStart"]),
-                                    _attending = ((int) row["Attending"]),
-                                    _notAttending = ((int) row["NotAttending"]),
-                                    _noResponse = ((int) row["NoResponse"])
-                                };
+            RsvpSummary r = new RsvpSummary();
+            r._eventId = ((int)row["EventId"]);
+            r._title = row["Title"].ToString();
+            r._eventStart = ((DateTime)row["EventStart"]);
+            r._attending = ((int)row["Attending"]);
+            r._notAttending = ((int)row["NotAttending"]);
+            r._noResponse = ((int)row["NoResponse"]);
 
             //when constructing a collection of events the stored procedure for paging includes a TotalRecords
             //field. When loading a single Event this does not exist.hk
