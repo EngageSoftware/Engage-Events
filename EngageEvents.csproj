@@ -43,9 +43,8 @@
     </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AjaxControlToolkit, Version=1.0.10920.32880, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
-      <HintPath>..\..\Bin\AjaxControlToolkit.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="AjaxControlToolkit, Version=1.0.20229.20821, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="aspNetEmail, Version=3.6.0.60, Culture=neutral, PublicKeyToken=bc571e8da1c1f543">
       <SpecificVersion>False</SpecificVersion>
