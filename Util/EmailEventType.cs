@@ -1,8 +1,4 @@
 using System;
-using System.Data;
-using System.Text;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Engage.Events.Util
 {
@@ -10,7 +6,7 @@ namespace Engage.Events.Util
     /// Summary description for RoutingEventType.
     /// </summary>
     [Serializable]
-    public class EmailEventType: Engage.Routing.RoutingEventType
+    public class EmailEventType: Routing.RoutingEventType
     {
 
         public static EmailEventType Invitation = new EmailEventType("Invitation");

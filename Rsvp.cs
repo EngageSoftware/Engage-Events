@@ -1,15 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-using aspNetEmail.Calendaring;
-using Engage.Data;
+﻿// <copyright file="Rsvp.cs" company="Engage Software">
+// Engage: Events - http://www.engagemodules.com
+// Copyright (c) 2004-2008
+// by Engage Software ( http://www.engagesoftware.com )
+// </copyright>
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
+// TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
+// CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// DEALINGS IN THE SOFTWARE.
 
 namespace Engage.Events
 {
+    using System;
+    using System.ComponentModel;
+    using System.Data;
+    using System.Diagnostics;
+    using Data;
+
     public enum RsvpStatus
     {
         NoResponse = 0,
@@ -43,12 +50,12 @@ namespace Engage.Events
         public static Rsvp Load(int id)
         {
             IDataProvider dp = DataProvider.Instance;
-            Rsvp r = null;
+            Rsvp r;
 
             try
             {
                 using (DataSet ds = dp.ExecuteDataset(CommandType.StoredProcedure, dp.NamePrefix + "spGetRsvp",
-                 Engage.Utility.CreateIntegerParam("@EventId", id)))
+                 Utility.CreateIntegerParam("@EventId", id)))
                 {
                     r = Fill(ds.Tables[0].Rows[0]);
                 }
@@ -74,8 +81,8 @@ namespace Engage.Events
             try
             {
                 using (IDataReader dr = dp.ExecuteReader(CommandType.StoredProcedure, dp.NamePrefix + "spGetRsvpByEmail",
-                 Engage.Utility.CreateIntegerParam("@EventId", eventId),
-                 Engage.Utility.CreateVarcharParam("@Email", email)))
+                 Utility.CreateIntegerParam("@EventId", eventId),
+                 Utility.CreateVarcharParam("@Email", email)))
                 {
                     if (dr.Read())
                     {
@@ -94,24 +101,26 @@ namespace Engage.Events
 
         internal static Rsvp Fill(DataRow row)
         {
-            Rsvp r = new Rsvp();
+            Rsvp rsvp = 
+                new Rsvp{
+                            _id = ((int) row["RsvpId"]),
+                            _eventId = ((int) row["EventId"]),
+                            _lastName = row["LastName"].ToString(),
+                            _firstName = row["FirstName"].ToString(),
+                            _email = row["Email"].ToString(),
+                            _status = ((RsvpStatus) Enum.Parse(typeof (RsvpStatus), row["Status"].ToString())),
+                            _createdBy = ((int) row["CreatedBy"]),
+                            _creationDate = ((DateTime) row["CreationDate"])
+                        };
 
-            r._id = (int)row["RsvpId"];
-            r._eventId = (int)row["EventId"];
-            r._lastName = row["LastName"].ToString();
-            r._firstName = row["FirstName"].ToString();
-            r._email = row["Email"].ToString();
-            r._status = (RsvpStatus) Enum.Parse(typeof(RsvpStatus),  row["Status"].ToString());
-            r._createdBy = (int)row["CreatedBy"];
-            r._creationDate = (DateTime)row["CreationDate"];
             //when constructing a collection of events the stored procedure for paging includes a TotalRecords
             //field. When loading a single Event this does not exist.hk
             if (row.Table.Columns.Contains("TotalRecords"))
             {
-                r._totalRecords = (int)row["TotalRecords"];
+                rsvp._totalRecords = (int)row["TotalRecords"];
             }
 
-            return r;
+            return rsvp;
         }
         
         #endregion
@@ -137,12 +146,12 @@ namespace Engage.Events
             try
             {
                 _id = dp.ExecuteNonQuery(CommandType.StoredProcedure, dp.NamePrefix + "spInsertRsvp",
-                Engage.Utility.CreateIntegerParam("@EventId", _eventId),
-                Engage.Utility.CreateVarcharParam("@FirstName", _firstName),
-                Engage.Utility.CreateVarcharParam("@LastName", _lastName),
-                Engage.Utility.CreateVarcharParam("@Email", _email),
-                Engage.Utility.CreateVarcharParam("@Status", _status.ToString()),
-                Engage.Utility.CreateIntegerParam("@RevisingUser", revisingUser));
+                Utility.CreateIntegerParam("@EventId", _eventId),
+                Utility.CreateVarcharParam("@FirstName", _firstName),
+                Utility.CreateVarcharParam("@LastName", _lastName),
+                Utility.CreateVarcharParam("@Email", _email),
+                Utility.CreateVarcharParam("@Status", _status.ToString()),
+                Utility.CreateIntegerParam("@RevisingUser", revisingUser));
             }
             catch (SystemException de)
             {
@@ -157,12 +166,12 @@ namespace Engage.Events
             try
             {
                 dp.ExecuteNonQuery(CommandType.StoredProcedure, dp.NamePrefix + "spUpdateRsvp",
-                    Engage.Utility.CreateIntegerParam("@RsvpId", _id),
-                    Engage.Utility.CreateVarcharParam("@FirstName", _firstName),
-                    Engage.Utility.CreateVarcharParam("@LastName", _lastName),
-                    Engage.Utility.CreateVarcharParam("@Email", _email),
-                    Engage.Utility.CreateVarcharParam("@Status", _status.ToString()),
-                    Engage.Utility.CreateIntegerParam("@RevisingUser", revisingUser));
+                    Utility.CreateIntegerParam("@RsvpId", _id),
+                    Utility.CreateVarcharParam("@FirstName", _firstName),
+                    Utility.CreateVarcharParam("@LastName", _lastName),
+                    Utility.CreateVarcharParam("@Email", _email),
+                    Utility.CreateVarcharParam("@Status", _status.ToString()),
+                    Utility.CreateIntegerParam("@RevisingUser", revisingUser));
             }
             catch (SystemException de)
             {
@@ -265,7 +274,7 @@ namespace Engage.Events
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int _totalRecords = 0;
+        private int _totalRecords;
         public int TotalRecords
         {
             [DebuggerStepThrough]

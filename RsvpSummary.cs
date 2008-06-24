@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.IO;
-using System.Text;
-using aspNetEmail.Calendaring;
-using Engage.Data;
 
 namespace Engage.Events
 {
@@ -37,14 +31,16 @@ namespace Engage.Events
 
         internal static RsvpSummary Fill(DataRow row)
         {
-            RsvpSummary r = new RsvpSummary();
+            RsvpSummary r = new RsvpSummary
+                                {
+                                    _eventId = ((int) row["EventId"]),
+                                    _title = row["Title"].ToString(),
+                                    _eventStart = ((DateTime) row["EventStart"]),
+                                    _attending = ((int) row["Attending"]),
+                                    _notAttending = ((int) row["NotAttending"]),
+                                    _noResponse = ((int) row["NoResponse"])
+                                };
 
-            r._eventId = (int)row["EventId"];
-            r._title = row["Title"].ToString();
-            r._eventStart = (DateTime)row["EventStart"];
-            r._attending = (int)row["Attending"];
-            r._notAttending = (int)row["NotAttending"];
-            r._noResponse = (int)row["NoResponse"];
             //when constructing a collection of events the stored procedure for paging includes a TotalRecords
             //field. When loading a single Event this does not exist.hk
             if (row.Table.Columns.Contains("TotalRecords"))
@@ -115,7 +111,7 @@ namespace Engage.Events
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int _totalRecords = 0;
+        private int _totalRecords;
         public int TotalRecords
         {
             [DebuggerStepThrough]

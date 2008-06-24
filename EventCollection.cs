@@ -14,7 +14,6 @@ namespace Engage.Events
     using System;
     using System.ComponentModel;
     using System.Data;
-    using System.Data.SqlClient;
     using System.Diagnostics;
     using Data;
 
@@ -48,7 +47,7 @@ namespace Engage.Events
         public int TotalRecords
         {
             [DebuggerStepThrough]
-            get { return this.totalRecords; }
+            get { return totalRecords; }
         }
 
         /// <summary>

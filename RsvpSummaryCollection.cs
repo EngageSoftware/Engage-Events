@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
-using System.Text;
 using Engage.Data;
 
 namespace Engage.Events
@@ -20,10 +18,10 @@ namespace Engage.Events
             try
             {
                 using (DataSet ds = dp.ExecuteDataset(CommandType.StoredProcedure, dp.NamePrefix + "spGetRsvpSummary",
-                 Engage.Utility.CreateIntegerParam("@portalId", portalId),
-                 Engage.Utility.CreateVarcharParam("@sortColumn", sortColumn, 200),
-                 Engage.Utility.CreateIntegerParam("@index", index),
-                 Engage.Utility.CreateIntegerParam("@pageSize", pageSize)))
+                 Utility.CreateIntegerParam("@portalId", portalId),
+                 Utility.CreateVarcharParam("@sortColumn", sortColumn, 200),
+                 Utility.CreateIntegerParam("@index", index),
+                 Utility.CreateIntegerParam("@pageSize", pageSize)))
                 {
                     return FillRsvpSummary(ds);
                 }
@@ -52,7 +50,7 @@ namespace Engage.Events
         #region Properties
         
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int _totalRecords = 0;
+        private int _totalRecords;
         public int TotalRecords
         {
             [DebuggerStepThrough]
