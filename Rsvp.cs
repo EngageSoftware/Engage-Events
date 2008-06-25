@@ -45,7 +45,7 @@ namespace Engage.Events
         public static Rsvp Load(int eventId, string email)
         {
             IDataProvider dp = DataProvider.Instance;
-            Rsvp r;
+            Rsvp r = null;
 
             try
             {
@@ -53,7 +53,10 @@ namespace Engage.Events
                  Utility.CreateIntegerParam("@EventId", eventId),
                  Utility.CreateVarcharParam("@Email", email, 100)))
                 {
-                    r = Fill(ds.Tables[0].Rows[0]);
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        r = Fill(ds.Tables[0].Rows[0]);
+                    }
                 }
             }
             catch (Exception se)
