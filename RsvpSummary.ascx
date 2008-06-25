@@ -1,11 +1,7 @@
-<%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.RsvpSummary"
-    CodeBehind="RsvpSummary.ascx.cs" %>
-<%@ Import Namespace="DotNetNuke.Services.Localization"%>
+<%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.RsvpSummary" CodeBehind="RsvpSummary.ascx.cs" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
-<%@ Register Src="Navigation/GlobalNavigation.ascx" TagName="GlobalNavigation" TagPrefix="uc1" %>
-<uc1:GlobalNavigation ID="GlobalNavigation1" runat="server" />
-<br />
-<br />
+<%@ Import Namespace="DotNetNuke.Services.Localization"%>
+
 <div class="EventHeader">
     <asp:Label ID="SortByLabel" runat="server" CssClass="NormalBold" Resourcekey="SortByLabel" />
     <asp:RadioButtonList ID="SortRadioButtonList" runat="server" AutoPostBack="True"

@@ -1,10 +1,7 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EventListingAdmin" CodeBehind="EventListingAdmin.ascx.cs" EnableViewState="true" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
-<%@ Register Src="../Navigation/GlobalNavigation.ascx" TagName="GlobalNavigation" TagPrefix="engage" %>
 <%@ Register Src="../Navigation/EventAdminActions.ascx" TagName="actions" TagPrefix="engage" %>
-<span class="GlobalNavigation">
-    <engage:GlobalNavigation ID="GlobalNavigation" runat="server" />
-</span>
+
 <div class="EventHeader">
     <h4 class="NormalBold">
         <asp:Label runat="server" ResourceKey="MyEventsLabel" /></h4>

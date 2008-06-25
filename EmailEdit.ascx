@@ -1,11 +1,8 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EmailEdit" Codebehind="EmailEdit.ascx.cs" %>
 <%@ Register Assembly="AjaxControlToolkit" TagPrefix="ajaxToolkit" Namespace="AjaxControlToolkit" %>
-<%@ Register src="Navigation/GlobalNavigation.ascx" tagname="GlobalNavigation" tagprefix="uc1" %>
-<uc1:GlobalNavigation ID="GlobalNavigation1" runat="server" />
-<br />                
-<br />
 
 <ajaxToolkit:CalendarExtender ID="defaultCalendarExtender" runat="server" TargetControlID="txtDate" PopupButtonID="imgCalendarButton" />
+
 <%--<ajaxToolkit:TextBoxWatermarkExtender ID="txtWatermarkEventTitle" runat="server" TargetControlID="txtEventTitle" WatermarkText="Please enter event title" WatermarkCssClass="watermarked" />
 <ajaxToolkit:TextBoxWatermarkExtender ID="txtWatermarkEventDate" runat="server" TargetControlID="txtEventDate" WatermarkText="Pick a date" WatermarkCssClass="watermarked" />
 <ajaxToolkit:TextBoxWatermarkExtender ID="txtWatermarkEventTime" runat="server" TargetControlID="txtEventTime" WatermarkText="Pick a time" WatermarkCssClass="watermarked" />

@@ -1,9 +1,6 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.RsvpDetail" Codebehind="RsvpDetail.ascx.cs" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
-<%@ Register src="Navigation/GlobalNavigation.ascx" tagname="GlobalNavigation" tagprefix="uc1" %>
-<uc1:GlobalNavigation ID="GlobalNavigation1" runat="server" />
-<br />                
-<br />
+
 <div>
     <asp:Label ID="lblSortBy" runat="server" CssClass="NormalBold" Text="Sort By"></asp:Label>
     <asp:RadioButtonList ID="rbSort" runat="server" AutoPostBack="True" CssClass="Normal"

@@ -1,15 +1,10 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EmailAFriend" Codebehind="EmailAFriend.ascx.cs" %>
 <%@ Register Assembly="AjaxControlToolkit" TagPrefix="ajaxToolkit" Namespace="AjaxControlToolkit" %>
-<%@ Register src="Navigation/GlobalNavigation.ascx" tagname="GlobalNavigation" tagprefix="uc1" %>
-<uc1:GlobalNavigation ID="GlobalNavigation1" runat="server" />
-<br />                
-<br />
 
 <div id="divEmailAFriend">
 	<asp:LinkButton ID="btnEmailAFriend" Runat="server" ResourceKey="btnEmailAFriend" cssclass="btnEmailAFriend" CausesValidation="false"></asp:LinkButton>	
 </div>
-<br />
-<br />
+
     <ajaxToolkit:ModalPopupExtender ID="mpeEmailAFriend" runat="server" BackgroundCssClass="commentBackground" PopupControlID="pnlEmailAFriend" TargetControlID="btnEmailAFriend" />
         <asp:Panel ID="pnlEmailAFriend" runat="server" CssClass="commentPopup" style="display:none;">
             <div id="divEmailAFriendForm" class="divEmailAFriendForm" runat="server">

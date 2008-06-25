@@ -1,6 +1,5 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EventCalendar" CodeBehind="EventCalendar.ascx.cs" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
-<%@ Register Src="../Navigation/GlobalNavigation.ascx" TagName="GlobalNavigation" TagPrefix="engage" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 <script type="text/javascript">
@@ -27,9 +26,6 @@
 //]]>
 </script>
 
-<span class="GlobalNavigation">
-    <engage:GlobalNavigation ID="GlobalNavigation" runat="server" />
-</span>
 <div class="EventHeader">
     <h2 class="NormalBold">
         <asp:Label runat="server" ResourceKey="EventsTitle" />

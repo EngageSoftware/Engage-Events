@@ -38,32 +38,23 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Handles the ItemDataBound event of the rpEventListing control.
+        /// Handles the ItemDataBound event of the EventListingRepeater control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
-        protected void RpEventListing_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        protected void EventListingRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            EventAdminActions actions = (EventAdminActions)e.Item.FindControl("ccEventActions");
+            var actions = (EventAdminActions)e.Item.FindControl("EventActions");
             actions.CurrentEvent = (Event)e.Item.DataItem;
-            ////actions.ActionCompleted += new ActionEventHandler(actions_ActionCompleted);
         }
-
-        ////private void actions_ActionCompleted(object sender, ActionEventArg e)
-        ////{
-        ////    if (e.ActionStatus == Action.Success)
-        ////    {
-        ////        BindData();
-        ////    }
-        ////}
 
         /// <summary>
         /// Binds the data.
         /// </summary>
         private void BindData()
         {
-            this.rpEventListing.DataSource = EventCollection.Load(this.PortalId, "EventStart asc", 0, 0, false);
-            this.rpEventListing.DataBind();
+            this.EventListingRepeater.DataSource = EventCollection.Load(this.PortalId, "EventStart asc", 0, 0, false);
+            this.EventListingRepeater.DataBind();
         }       
     }
 }

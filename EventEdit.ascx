@@ -1,13 +1,8 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EventEdit" Codebehind="EventEdit.ascx.cs" %>
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
-<%@ Register tagprefix="engage" tagname="GlobalNavigation" src="Navigation/GlobalNavigation.ascx" %>
 <%@ Register TagPrefix="engage" TagName="ModuleMessage" Src="Controls/ModuleMessage.ascx" %>
 <%@ Register TagPrefix="engage" Namespace="Engage.Controls" Assembly="Engage.Utilityv3.0" %>
 <%@ Import Namespace="DotNetNuke.Services.Localization"%>
-
-<span class="GlobalNavigation">
-    <engage:GlobalNavigation ID="GlobalNavigation" runat="server" />
-</span>
 
 <engage:ModuleMessage runat="server" ID="SuccessModuleMessage" MessageType="Success" TextResourceKey="AddEventSuccess" CssClass="AddEventSuccessMessage"/>
 
