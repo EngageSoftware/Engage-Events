@@ -122,17 +122,15 @@ namespace Engage.Events
 
         internal static Rsvp Fill(DataRow row)
         {
-            Rsvp rsvp = 
-                new Rsvp{
-                            _id = ((int) row["RsvpId"]),
-                            _eventId = ((int) row["EventId"]),
-                            _lastName = row["LastName"].ToString(),
-                            _firstName = row["FirstName"].ToString(),
-                            _email = row["Email"].ToString(),
-                            _status = ((RsvpStatus) Enum.Parse(typeof (RsvpStatus), row["Status"].ToString())),
-                            _createdBy = ((int) row["CreatedBy"]),
-                            _creationDate = ((DateTime) row["CreationDate"])
-                        };
+            Rsvp rsvp = new Rsvp();
+            rsvp._id = ((int)row["RsvpId"]);
+            rsvp._eventId = ((int)row["EventId"]);
+            rsvp._lastName = row["LastName"].ToString();
+            rsvp._firstName = row["FirstName"].ToString();
+            rsvp._email = row["Email"].ToString();
+            rsvp._status = ((RsvpStatus)Enum.Parse(typeof(RsvpStatus), row["Status"].ToString()));
+            rsvp._createdBy = ((int)row["CreatedBy"]);
+            rsvp._creationDate = ((DateTime)row["CreationDate"]);
 
             //when constructing a collection of events the stored procedure for paging includes a TotalRecords
             //field. When loading a single Event this does not exist.hk
