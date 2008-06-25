@@ -13,6 +13,7 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Globalization;
+    using DotNetNuke.Common;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Services.Exceptions;
 
@@ -49,8 +50,6 @@ namespace Engage.Dnn.Events
                 this.SetupLinks();
                 this.SetVisibility();
                 this.SetDisabledImages();
-
-                // TODO: change to swap out css based on parent control, eventedit, admin, whatever.hk
             }
             catch (Exception exc)
             {
@@ -63,6 +62,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetupLinks()
         {
+            this.HomeLink.NavigateUrl = Globals.NavigateURL();
             this.SettingsLink.NavigateUrl = this.EditUrl("ModuleId", this.ModuleId.ToString(CultureInfo.InvariantCulture), "Module");
             this.AddAnEventLink.NavigateUrl = this.BuildLinkUrl("&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit");
             this.ResponsesLink.NavigateUrl = this.BuildLinkUrl("&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpSummary");
@@ -75,10 +75,6 @@ namespace Engage.Dnn.Events
         private void SetVisibility()
         {
             this.Visible = this.IsAdmin;
-            ////this.SettingsLink.Visible = this.IsAdmin;
-            ////this.AddAnEventLink.Visible = this.IsAdmin;
-            ////this.ResponsesLink.Visible = this.IsAdmin;
-            ////this.ManageEventsLink.Visible = this.IsAdmin;
         }
 
         /// <summary>
@@ -89,13 +85,13 @@ namespace Engage.Dnn.Events
             switch (this.Parent.ID)
             {
                 case "EventEdit":
-                    this.AddAnEventLink.ImageUrl = "~/desktopmodules/EngageEvents/Images/add_event_disabled.gif";
+                    this.AddAnEventLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/add_event_disabled.gif";
                     break;
                 case "EventListingAdmin":
-                    this.ManageEventsLink.ImageUrl = "~/desktopmodules/EngageEvents/Images/manage_events_disabled.gif";
+                    this.ManageEventsLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/manage_events_disabled.gif";
                     break;
                 case "RsvpSummary":
-                    this.ResponsesLink.ImageUrl = "~/desktopmodules/EngageEvents/Images/responses_disabled.gif";
+                    this.ResponsesLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/responses_disabled.gif";
                     break;
                 default:
                     break;
