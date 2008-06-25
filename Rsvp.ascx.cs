@@ -20,7 +20,6 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
     using Engage.Events;
-    using Util;
 
     /// <summary>
     /// Code-behind for a control (Rsvp.ascx) that allows users to register their attendance for an event.
@@ -37,7 +36,6 @@ namespace Engage.Dnn.Events
             this.Load += this.Page_Load;
             this.SubmitButton.Click += this.SubmitButton_Click;
             this.AddToCalendarButton.Click += this.AddToCalendarButton_Click;
-            this.EmailAddressValidator.ServerValidate += this.EmailAddressValidator_ServerValidate;
 
             AJAX.RegisterPostBackControl(this.AddToCalendarButton);
         }
@@ -74,18 +72,23 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void SubmitButton_Click(object sender, EventArgs e)
         {
-            //first try and find an rsvp for this email and eventid.
-            Engage.Events.Rsvp rsvp = Engage.Events.Rsvp.Load(EventId, UserInfo.Email);
-            if (rsvp == null)
+            try
             {
-                //create a new one if one is not found.
-                rsvp = Engage.Events.Rsvp.Create(EventId, UserInfo.FirstName, UserInfo.LastName, UserInfo.Email);
-            }
-            rsvp.Status = (RsvpStatus)Enum.Parse(typeof(RsvpStatus), this.RsvpStatusRadioButtons.SelectedValue);
-            rsvp.Save(UserId);
+                Engage.Events.Rsvp rsvp = Engage.Events.Rsvp.Load(EventId, UserInfo.Email);
+                if (rsvp == null)
+                {
+                    rsvp = Engage.Events.Rsvp.Create(EventId, UserInfo.FirstName, UserInfo.LastName, UserInfo.Email);
+                }
 
-            ////Response.Redirect(Globals.NavigateURL(), true);
-            this.RsvpMultiView.ActiveViewIndex = 1;
+                rsvp.Status = (RsvpStatus)Enum.Parse(typeof(RsvpStatus), this.RsvpStatusRadioButtons.SelectedValue);
+                rsvp.Save(UserId);
+
+                this.RsvpMultiView.ActiveViewIndex = 1;
+            }
+            catch (Exception exc)
+            {
+                Exceptions.ProcessModuleLoadException(this, exc);
+            }
         }
 
         /// <summary>
@@ -95,23 +98,8 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void AddToCalendarButton_Click(object sender, EventArgs e)
         {
-            if (Utility.IsValidEmailAddress(this.EmailAddressTextbox.Text))
-            {
                 Event evnt = Event.Load(this.EventId);
-                string email = this.EmailAddressTextbox.Text;
-
-                SendICalendarToClient(HttpContext.Current.Response, evnt.ToICal(email), evnt.Title);
-            }
-        }
-
-        /// <summary>
-        /// Handles the ServerValidate event of the EmailAddressValidator control.
-        /// </summary>
-        /// <param name="source">The source of the event.</param>
-        /// <param name="args">The <see cref="System.Web.UI.WebControls.ServerValidateEventArgs"/> instance containing the event data.</param>
-        private void EmailAddressValidator_ServerValidate(object source, ServerValidateEventArgs args)
-        {
-            args.IsValid = Utility.IsValidEmailAddress(this.EmailAddressTextbox.Text);
+                SendICalendarToClient(HttpContext.Current.Response, evnt.ToICal(UserInfo.Email), evnt.Title);
         }
 
         /// <summary>
@@ -122,7 +110,6 @@ namespace Engage.Dnn.Events
             Event e = Event.Load(EventId);
 
             this.EventNameLabel.Text = string.Format(CultureInfo.CurrentCulture, Localization.GetString("EventNameLabel.Text", LocalResourceFile), e.Title);
-            this.EmailAddressTextbox.Text = UserInfo.Email;
             this.AddToCalendarButton.Enabled = true;
 
             this.RsvpStatusRadioButtons.Items.Clear();

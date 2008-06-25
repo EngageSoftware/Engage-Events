@@ -123,28 +123,19 @@
   <data name="Attending.Text" xml:space="preserve">
     <value>Yes, I will be able to attend.</value>
   </data>
-  <data name="emailAddressLabel.Text" xml:space="preserve">
-    <value>Email:</value>
-  </data>
   <data name="EventNameLabel.Text" xml:space="preserve">
-    <value>To RSVP for {0} please enter your email address below.</value>
+    <value>{0}</value>
   </data>
   <data name="NotAttending.Text" xml:space="preserve">
     <value>No, unfortunately I will not be able to attend.</value>
   </data>
   <data name="titleLabel.Text" xml:space="preserve">
-    <value>Event RSVP</value>
+    <value>Event Registration</value>
   </data>
   <data name="GreenSuccess.Text" xml:space="preserve">
     <value>Success Icon</value>
   </data>
   <data name="ThankYou.Text" xml:space="preserve">
     <value>Thank you for registering for this event.  We hope to see you there!</value>
-  </data>
-  <data name="emailAddressRequired.Text" xml:space="preserve">
-    <value>An email address is required to create an iCal invitation.</value>
-  </data>
-  <data name="invalidEmailAddress.Text" xml:space="preserve">
-    <value>A valid email address is required to create an iCal invitation.</value>
   </data>
 </root>
