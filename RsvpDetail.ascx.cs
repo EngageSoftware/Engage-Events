@@ -17,11 +17,84 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Services.Localization;
     using Engage.Events;
 
-    ///<summary>
-    ///
-    ///</summary>
+    /// <summary>
+    /// Lists details for user event registrations
+    /// </summary>
     public partial class RsvpDetail : ModuleBase
     {
+        #region Properties
+        
+        /// <summary>
+        /// Gets the index of the current page.
+        /// </summary>
+        /// <value>The index of the current page.</value>
+        private int CurrentPageIndex
+        {
+            get
+            {
+                int index = 1;
+
+                // Get the currentpage index from the url parameter
+                if (Request.QueryString["currentpage"] != null)
+                {
+                    index = Convert.ToInt32(Request.QueryString["currentpage"]);
+                }
+
+                return index;
+            }
+        }
+
+        /// <summary>
+        /// Gets the status.
+        /// </summary>
+        /// <value>The status.</value>
+        private string Status
+        {
+            get
+            {
+                string status = string.Empty;
+
+                // Get the currentpage index from the url parameter
+                if (Request.QueryString["status"] != null)
+                {
+                    status = Request.QueryString["status"].ToString();
+                }
+
+                return status;
+            }
+        }
+
+        #endregion
+
+        #region Static Methods
+
+        /// <summary>
+        /// Gets the status icon.
+        /// </summary>
+        /// <param name="o">An object representing the registration status</param>
+        /// <returns>the url to the icon for the corresponding registration status</returns>
+        protected static string GetStatusIcon(object o)
+        {
+            string url = string.Empty;
+            RsvpStatus status = (RsvpStatus)Enum.Parse(typeof(RsvpStatus), o.ToString());
+
+            switch (status)
+            {
+                case RsvpStatus.Attending:
+                    return "~/DesktopModules/EngageEvents/Images/yes.gif";
+                case RsvpStatus.NotAttending:
+                    return "~/DesktopModules/EngageEvents/Images/no.gif";
+                case RsvpStatus.NoResponse:
+                    return "~/DesktopModules/EngageEvents/Images/noresponse.gif";
+            }
+
+            return url;
+        }
+
+        #endregion
+
+        #region Event Handlers
+
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
         /// </summary>
@@ -54,95 +127,58 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Sets up this control.  Sets localization and sets the <c>NavigateUrl</c> for the exit button.
-        /// </summary>
-        private void SetupControl()
-        {
-            this.ExitLink.Text = Localization.GetString("Exit.Alt", LocalResourceFile);
-            this.ExitLink.NavigateUrl = Globals.NavigateURL();
-        }
-
-        private void BindData()
-        {
-            BindData("CreationDate");
-        }
-
-        private void BindData(string sortColumn)
-        {
-            RsvpCollection rsvps = RsvpCollection.Load(EventId, Status, sortColumn, CurrentPageIndex - 1, grdRsvpDetail.PageSize);
-            grdRsvpDetail.DataSource = rsvps;
-            grdRsvpDetail.DataBind();
-
-            pager.TotalRecords = rsvps.TotalRecords;
-            pager.PageSize = grdRsvpDetail.PageSize;
-            pager.CurrentPage = CurrentPageIndex;
-            pager.TabID = TabId;
-            pager.QuerystringParams = "&modId=" + ModuleId.ToString() + "&key=rsvpDetail&status=" + Status + "&eventid=" + EventId;
-            grdRsvpDetail.Attributes.Add("SortColumn", sortColumn);
-
-            Event e = Event.Load(EventId);
-            lblDate.Text= e.EventStartLongFormatted;
-            lblName.Text= e.Title;
-        }
-
-        protected static string GetStatusIcon(object o)
-        {
-
-            string url = string.Empty;
-            RsvpStatus status = (RsvpStatus)Enum.Parse(typeof(RsvpStatus), o.ToString());
-
-            switch (status)
-            {
-                case RsvpStatus.Attending:
-                    return "~/desktopmodules/engageevents/Images/yes.gif";
-                case RsvpStatus.NotAttending:
-                    return "~/desktopmodules/engageevents/Images/no.gif";
-                case RsvpStatus.NoResponse:
-                    return "~/desktopmodules/engageevents/Images/noresponse.gif";
-            }
-
-            return url;
-        }
-
-        private int CurrentPageIndex
-        {
-            get
-            {
-                int index = 1;
-                //Get the currentpage index from the url parameter
-                if (Request.QueryString["currentpage"] != null)
-                {
-                    index = Convert.ToInt32(Request.QueryString["currentpage"]);
-                }
-
-                return index;
-            }
-        }
-
-        private string Status
-        {
-            get
-            {
-                string status = string.Empty;
-                //Get the currentpage index from the url parameter
-                if (Request.QueryString["status"] != null)
-                {
-                    status = Request.QueryString["status"].ToString();
-                }
-
-                return status;
-            }
-
-        }
-
-        /// <summary>
         /// Handles the SelectedIndexChanged event of the RbSort control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void RbSort_SelectedIndexChanged(object sender, EventArgs e)
         {
-            BindData(rbSort.SelectedValue);
+            this.BindData(rbSort.SelectedValue);
         }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Sets up this control.  Sets localization and sets the NavigateUrl for the Cancel and Go Home button.
+        /// </summary>
+        private void SetupControl()
+        {
+            this.CancelGoHomeLink.Text = Localization.GetString("CancelGoHomeLink.Alt", LocalResourceFile);
+            this.CancelGoHomeLink.NavigateUrl = Globals.NavigateURL();
+        }
+
+        /// <summary>
+        /// Binds the data.
+        /// </summary>
+        private void BindData()
+        {
+            this.BindData("CreationDate");
+        }
+
+        /// <summary>
+        /// Binds the data.
+        /// </summary>
+        /// <param name="sortColumn">The sort column.</param>
+        private void BindData(string sortColumn)
+        {
+            RsvpCollection rsvps = RsvpCollection.Load(EventId, this.Status, sortColumn, this.CurrentPageIndex - 1, grdRsvpDetail.PageSize);
+            grdRsvpDetail.DataSource = rsvps;
+            grdRsvpDetail.DataBind();
+
+            pager.TotalRecords = rsvps.TotalRecords;
+            pager.PageSize = grdRsvpDetail.PageSize;
+            pager.CurrentPage = this.CurrentPageIndex;
+            pager.TabID = TabId;
+            pager.QuerystringParams = "&modId=" + ModuleId.ToString() + "&key=rsvpDetail&status=" + this.Status + "&eventid=" + EventId;
+            grdRsvpDetail.Attributes.Add("SortColumn", sortColumn);
+
+            Event e = Event.Load(EventId);
+            lblDate.Text = e.EventStartLongFormatted;
+            lblName.Text = e.Title;
+        }
+
+        #endregion
     }
 }

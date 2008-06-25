@@ -89,12 +89,12 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Sets up this control.  Sets localization and sets the <c>NavigateUrl</c> for the exit button.
+        /// Sets up this control.  Sets localization and sets the <c>NavigateUrl</c> for the cancel and go home button.
         /// </summary>
         private void SetupControl()
         {
-            this.ExitLink.Text = Localization.GetString("Exit.Alt", LocalResourceFile);
-            this.ExitLink.NavigateUrl = Globals.NavigateURL();
+            this.CancelGoHomeLink.Text = Localization.GetString("CancelGoHomeLink.Alt", LocalResourceFile);
+            this.CancelGoHomeLink.NavigateUrl = Globals.NavigateURL();
         }
 
         /// <summary>

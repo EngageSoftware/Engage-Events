@@ -16,6 +16,7 @@ namespace Engage.Dnn.Events
     using System.Globalization;
     using System.Web;
     using System.Web.UI.WebControls;
+    using DotNetNuke.Common;
     using DotNetNuke.Framework;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
@@ -38,6 +39,16 @@ namespace Engage.Dnn.Events
             this.AddToCalendarButton.Click += this.AddToCalendarButton_Click;
 
             AJAX.RegisterPostBackControl(this.AddToCalendarButton);
+        }
+
+        /// <summary>
+        /// Handles the Click event of the BackToEventsButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void BackToEventsButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(Globals.NavigateURL());
         }
 
         /// <summary>

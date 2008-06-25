@@ -21,7 +21,8 @@
     <asp:View runat="server">
     
         <engage:ModuleMessage ID="ThankYouMessage" runat="server" MessageType="Success" TextResourceKey="ThankYou" />
-        <asp:Button ID="AddToCalendarButton" runat="server" ResourceKey="addToCalendarButton" Enabled="false" CssClass="CommandButton" ValidationGroup="addToCalendar"/>
+        <asp:Button ID="AddToCalendarButton" runat="server" ResourceKey="addToCalendarButton" Enabled="false" CssClass="CommandButton" />
+        <asp:Button ID="BackToEventsButton" runat="server" OnClick="BackToEventsButton_Click" ResourceKey="backToEventsButton" CssClass="CommandButton" />
         
     </asp:View>
         

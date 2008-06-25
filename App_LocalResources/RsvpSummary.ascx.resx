@@ -138,7 +138,7 @@
   <data name="When.Text" xml:space="preserve">
     <value>When</value>
   </data>
-  <data name="Exit.Alt" xml:space="preserve">
-    <value>Exit</value>
+  <data name="CancelGoHomeLink.Alt" xml:space="preserve">
+    <value>Cancel &amp; Go Home</value>
   </data>
 </root>

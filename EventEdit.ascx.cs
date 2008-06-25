@@ -171,7 +171,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetButtonLinks()
         {
-            this.ExitLink.NavigateUrl = this.CancelEventLink.NavigateUrl = Globals.NavigateURL();
+            this.CancelGoHomeLink.NavigateUrl = this.CancelEventLink.NavigateUrl = Globals.NavigateURL();
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Engage.Dnn.Events
             this.CreateAnotherEventButton.AlternateText = Localization.GetString("CreateAnother.Alt", LocalResourceFile);
             this.SaveAndCreateNewEventButton.AlternateText = Localization.GetString("SaveAndCreateNew.Alt", LocalResourceFile);
             this.SaveEventButton.AlternateText = Localization.GetString("Save.Alt", LocalResourceFile);
-            this.ExitLink.Text = Localization.GetString("Exit.Alt", LocalResourceFile);
+            this.CancelGoHomeLink.Text = Localization.GetString("CancelGoHome.Alt", LocalResourceFile);
             this.CancelEventLink.Text = Localization.GetString("Cancel.Alt", LocalResourceFile);
         }
 

@@ -60,4 +60,4 @@
     </Columns>
     <HeaderStyle Font-Bold="True" ForeColor="White" BackColor="#E0E0E0"></HeaderStyle>
 </asp:DataGrid>
-<asp:HyperLink ID="ExitLink" runat="server" ImageUrl="~/DesktopModules/EngageEvents/Images/exit.gif"/>
+<asp:HyperLink ID="CancelGoHomeLink" runat="server" ImageUrl="~/DesktopModules/EngageEvents/Images/cancel_go_home.gif"/>

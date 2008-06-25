@@ -597,6 +597,7 @@
     <Content Include="App_LocalResources\Register.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Images\cancel_go_home.gif" />
     <Content Include="Images\home.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

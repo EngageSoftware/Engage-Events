@@ -38,4 +38,4 @@
     </ItemTemplate>
 </asp:Repeater>
 <dnn:PagingControl ID="SummaryPager" runat="server"></dnn:PagingControl>
-<asp:HyperLink ID="ExitLink" runat="server" ImageUrl="~/DesktopModules/EngageEvents/Images/exit.gif"/>
+<asp:HyperLink ID="CancelGoHomeLink" runat="server" ImageUrl="~/DesktopModules/EngageEvents/Images/cancel_go_home.gif"/>

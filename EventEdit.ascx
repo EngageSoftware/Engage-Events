@@ -66,12 +66,12 @@
 
 <div class="AddEventFooterButtons AdminButtons FooterButtons" runat="server" id="AddEventFooterButtons">
     <asp:ImageButton ID="SaveEventButton" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/save.gif" />
-    <asp:HyperLink ID="CancelEventLink" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/cancel.gif" />
+    <asp:HyperLink ID="CancelEventLink" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/cancel_go_home.gif" />
     <asp:ImageButton ID="SaveAndCreateNewEventButton" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/save_create_new.gif"/>
 </div>
 
 <div class="FinalButtons AdminButtons FooterButtons" runat="server" id="FinalButtons">
     <asp:ImageButton ID="CreateAnotherEventButton" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/create_another_event.gif" />
     <%--<asp:LinkButton ID="CreateEventEmailButton" runat="server">Create E-Mail For This Event</asp:LinkButton>--%>
-    <asp:HyperLink ID="ExitLink" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/exit.gif" />
+    <asp:HyperLink ID="CancelGoHomeLink" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/home.gif" />
 </div>
