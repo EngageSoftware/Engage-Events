@@ -136,6 +136,6 @@
     <value>Success Icon</value>
   </data>
   <data name="ThankYou.Text" xml:space="preserve">
-    <value>Thank you for registering for this event.  We hope to see you there!</value>
+    <value>Thank you for taking the time to respond to this event.</value>
   </data>
 </root>
