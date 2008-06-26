@@ -42,7 +42,8 @@
 	.FooterButtons { padding-top: 3%; }
 	.AddEventSuccessMessage { padding-left: 10%; }
 
-	.AddNewEvent .Head { text-align: left; border-bottom: dashed 1px black; text-transform: uppercase; margin-bottom: 5%; padding-bottom: 1%;}
+	.AddNewEvent { padding-top: 2%; width: 100%; height: 100%;}
+	.AddNewEvent .Head { text-align: left; border-bottom: dashed 1px black; text-transform: uppercase; margin-bottom: 5%; padding-bottom: 1%; }
 
 .EventTitle, .EventStartDate, .EventEndDate, .EventLocationAdd, .EventEditor { text-align: left; padding: 1%; }
 	.EventTitle .NormalBold { font-size: medium; }
@@ -54,11 +55,8 @@
 			.EventEditor .NormalBold, .EventTitle .NormalBold, .EventStartDate .NormalBold, .EventLocationAdd .NormalBold, .EventEndDate .NormalBold
 			{float:left; width: 20%; margin-right: 3%; text-align: right;}
 			.EventEditor .Normal, .EventTitle .Normal, .EventStartDate .Normal, .EventLocationAdd .Normal, .EventEndDate .Normal{float: left; width: 81%;}
-			
- .EventEditor li { list-style-type: none; }
-				
-	
 
+.EventEditor li { list-style-type: none; }
 
 /*========================================================
 

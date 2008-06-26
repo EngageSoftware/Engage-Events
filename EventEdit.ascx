@@ -54,7 +54,7 @@
     
     <div class="EventEditor">
         <asp:Label runat="server" ResourceKey="EventDescriptionLabel" CssClass="NormalBold"/>
-        <telerik:radeditor ID="EventDescriptionTextEditor" runat="server" ToolsFile="~/DesktopModules/EngageEvents/RadEditor/BasicTools.xml"/>
+        <telerik:radeditor ID="EventDescriptionTextEditor" runat="server" ToolsFile="~/DesktopModules/EngageEvents/RadEditor/BasicTools.xml" width="75%"/>
         <%--<dnn:TextEditor ID="EventDescriptionTextEditor" runat="server" Width="550" TextRenderMode="Raw" HtmlEncode="False" defaultmode="Rich" height="350" choosemode="True" chooserender="False" />
         <asp:PlaceHolder ID="EventDescriptionTextEditorPlaceHolder" runat="server" />--%>
         <asp:CustomValidator ID="EventDescriptionTextEditorValidator" runat="server" ResourceKey="EventDescriptionTextEditorRequired" Display="None"/>
