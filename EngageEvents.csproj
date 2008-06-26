@@ -580,6 +580,10 @@
       <Project>{0EA52814-FB21-4258-A411-BF2A6B1699F0}</Project>
       <Name>Engage.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\..\Code\Engage 3.0\Engage.Licensing\Engage.Licensing.csproj">
+      <Project>{11D57DA1-F585-4814-9E5E-5CDF6C9017C4}</Project>
+      <Name>Engage.Licensing</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\..\Code\Engage 3.0\Engage.Routing\Engage.Routing.csproj">
       <Project>{CE72C274-F07E-4F4A-9854-DFB1354293E7}</Project>
       <Name>Engage.Routing</Name>

@@ -9,7 +9,7 @@
 // CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 // DEALINGS IN THE SOFTWARE.
 
-namespace Engage.Dnn.Events
+namespace Engage.Dnn.Events.Components
 {
     /// <summary>
     /// Controls which DNN features are available for this module.

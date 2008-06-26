@@ -15,14 +15,20 @@ namespace Engage.Dnn.Events
     using System.Globalization;
     using System.Text;
     using System.Web;
-    using DotNetNuke.Entities.Modules;
+    using Licensing;
     using Util;
 
     /// <summary>
-    /// The base class for all controls in the Engage: Events module.
+    /// The base class for all controls in the Engage: Events module. Since this module is licensed it 
+    /// inherits from LicenseModuleBase and requires a unique GUID be defined. DO NOT CHANGE THIS!
     /// </summary>
-    public class ModuleBase : PortalModuleBase
+    public class ModuleBase : LicenseModuleBase
     {
+        public override Guid LicenseKey
+        {
+            get { return new Guid("2de915e1-df71-3443-9f4d-32259c92ced2"); }
+        }
+
         /////// <summary>
         /////// The backing field for <see cref="UseCache"/>.
         /////// </summary>
@@ -60,16 +66,12 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                if (Request.IsAuthenticated == false)
+                switch (this.Request.IsAuthenticated)
                 {
-                    return false;
-                }
-                else
-                {
-                    return IsEditable;
-
-                    // Later we can add checks to control access by custom roles. hk
-                    ////return PortalSecurity.IsInRole(HostSettings.GetHostSetting(Engage.Dnn.Events.Util.Utility.AdminRole + PortalId));
+                    case false:
+                        return false;
+                    default:
+                        return this.IsEditable;
                 }
             }
         }
@@ -85,6 +87,24 @@ namespace Engage.Dnn.Events
             get
             {
                 return this.Request.IsAuthenticated;
+            }
+        }
+
+        /// <summary>
+        /// This method looks at the query string and the currently logged in user (if any) and checks for
+        /// an existing RSVP(registration) for the user.
+        /// </summary>
+        protected bool IsRegistered
+        {
+            get
+            {
+                bool registered = false;
+                if (EventId > 0 && IsLoggedIn)
+                {
+                    Engage.Events.Rsvp rsvp = Engage.Events.Rsvp.Load(EventId, UserInfo.Email);
+                    registered = (rsvp != null);
+                }
+                return registered;
             }
         }
 

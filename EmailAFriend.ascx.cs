@@ -17,7 +17,7 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Services.Localization;
     using DotNetNuke.Services.Mail;
 
-    public partial class EmailAFriend :  ModuleBase
+    public partial class EmailAFriend : ModuleBase
 	{
         protected override void OnInit(EventArgs e)
         {

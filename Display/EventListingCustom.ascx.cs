@@ -9,7 +9,7 @@
 // CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 // DEALINGS IN THE SOFTWARE.
 
-namespace Engage.Dnn.Events
+namespace Engage.Dnn.Events.Display
 {
     using System;
     using System.Web.UI.WebControls;
@@ -29,10 +29,7 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                ////if (!Page.IsPostBack)
-                ////{
                 this.BindData();
-                ////}
             }
             catch (Exception exc)
             {
@@ -40,36 +37,6 @@ namespace Engage.Dnn.Events
             }    
         }
            
-        ////protected void lbCViewInvite_OnClick(object sender, EventArgs e)
-        ////{
-        ////    int eventId = GetId(sender);
-        ////    //navigate to invite url
-        ////}
-
-        ////protected void lbCeMailAFriend_OnClick(object sender, EventArgs e)
-        ////{
-        ////    int eventId = GetId(sender);
-        ////    //show email a friend
-
-        ////    string href = BuildLinkUrl("&modId=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailAFriend&eventid=" + eventId.ToString());
-
-        ////    Response.Redirect(href, true);
-        ////}
-
-        ////protected void lbCPrint_OnClick(object sender, EventArgs e)
-        ////{
-        ////    int eventId = GetId(sender);
-        ////    //print
-        ////}
-
-        ////protected void lbCICal_OnClick(object sender, EventArgs e)
-        ////{
-        ////    int eventId = GetId(sender);
-        ////    Event evnt = Event.Load(eventId);
-
-        ////    SendICalendarToClient(evnt.ToICal("hkenuam@engagesoftware.com"), evnt.Title);
-        ////}
-
         /// <summary>
         /// Handles the ItemDataBound event of the Listing control.
         /// </summary>
@@ -91,11 +58,11 @@ namespace Engage.Dnn.Events
                 ////actions.ActionCompleted += new ActionEventHandler(actions_ActionCompleted);
             }
 
-            ////LinkButton lbICal = e.Item.FindControl("lbCICal") as LinkButton;
-            ////if (lbICal != null) lbICal.Visible = IsLoggedIn;
+            //LinkButton lbICal = e.Item.FindControl("lbCICal") as LinkButton;
+            //if (lbICal != null) lbICal.Enabled = (IsRegistered == false);
 
-            ////lbICal = e.Item.FindControl("lbUICal") as LinkButton;
-            ////if (lbICal != null) lbICal.Visible = IsLoggedIn;
+            //lbICal = e.Item.FindControl("lbUICal") as LinkButton;
+            //if (lbICal != null) lbICal.Enabled = (IsRegistered == false);
         }
 
         ////private void actions_ActionCompleted(object sender, ActionEventArg e)
@@ -119,11 +86,6 @@ namespace Engage.Dnn.Events
             rpUpcomingEventListing.DataSource = events;
             rpUpcomingEventListing.DataBind();
         }
-
-        ////protected bool HasInviteUrl(object invitationUrl)
-        ////{
-        ////    return (invitationUrl.ToString().Length > 0);
-        ////}
     }
 }
 

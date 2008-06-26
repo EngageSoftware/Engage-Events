@@ -3,7 +3,7 @@ from engagemodules.com.
 
 For installation instructions and requirements please 
 be sure to check out our Engage: Events Wiki which can be found at 
-http://www.engagemodules.com/Modules/EngagePublish/PublishWiki/tabid/66/Default.aspx
+http://www.engagemodules.com/Modules/EngageEvents/EventsWiki/tabid/66/Default.aspx
 
 If you purchased the module from EngageModules.com your 
 user account is already setup with the proper permissions for 
@@ -23,7 +23,7 @@ and DotNetNuke in general via http://www.engagemodules.com/Default.aspx?tabid=59
 Thanks again for purchasing Engage: Events, we hope it proves 
 to be as useful for you as it is for us!
 
-Chris Hammond
+Henry Kenuam
 Lead Developer - Engage: Events 
-DotNetNuke Core Team Member
+Wiki Team Member
 engageModules.com

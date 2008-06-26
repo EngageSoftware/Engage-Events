@@ -1,4 +1,4 @@
-<%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EventListingCustom" Codebehind="EventListingCustom.ascx.cs" %>
+<%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.Display.EventListingCustom" Codebehind="EventListingCustom.ascx.cs" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
 <%@ Register src="../Navigation/EventAdminActions.ascx" tagname="actions" tagprefix="uc2" %>
 
@@ -65,15 +65,7 @@
                             <p class="Normal"><%# DataBinder.Eval(Container.DataItem, "Overview")  %></p>
                         </div>
                         <uc2:actions ID="ccEventActions2" runat="server" />
-<%--                        <div class="EventButtons">
-                            <asp:LinkButton ID="lbUEditEvent" runat="server" ResourceKey="lbCEditEvent" CssClass="CommandButton" OnClick="lbEditEvent_OnClick" Visible="<%#IsAdmin %>">Edit</asp:LinkButton>
-                            <asp:LinkButton ID="lbURsvp" runat="server" ResourceKey="lbRsvp" CssClass="CommandButton" OnClick="lbRsvp_OnClick">RSVP</asp:LinkButton>
-                            <asp:LinkButton ID="lbUIcal" runat="server" ResourceKey="lbIcal" CssClass="CommandButton" OnClick="lbCICal_OnClick">iCal</asp:LinkButton>
-                            <asp:HyperLink ID="lbUViewInvite" runat="server" ResourceKey="lbViewInvite" CssClass="CommandButton" Target="_new" NavigateUrl='<%# DataBinder.Eval(Container.DataItem,"InvitationUrl") %>' Visible=<%# HasInviteUrl(DataBinder.Eval(Container.DataItem, "InvitationUrl"))  %>>View Invite</asp:HyperLink>
-                            <asp:LinkButton ID="lbUEmailAFriend" runat="server" ResourceKey="lbEmailAFriend" CssClass="CommandButton" OnClick="lbCeMailAFriend_OnClick">E-mail A Friend</asp:LinkButton>
-                            <asp:LinkButton ID="lbUPrint" runat="server" ResourceKey="lbPrint" CssClass="CommandButton" OnClick="lbCPrint_OnClick">Print</asp:LinkButton>
-                        </div>
---%>				</div>                        
+				</div>                        
         </ItemTemplate>
     </asp:Repeater>
 </div>

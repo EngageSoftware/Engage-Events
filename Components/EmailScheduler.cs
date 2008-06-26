@@ -9,8 +9,9 @@
 // CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 // DEALINGS IN THE SOFTWARE.
 
-namespace Engage.Dnn.Events
+namespace Engage.Dnn.Events.Components
 {
+    using System;
     using DotNetNuke.Services.Scheduling;
     using Routing;
 
@@ -34,10 +35,17 @@ namespace Engage.Dnn.Events
         public override void DoWork()
         {
             RoutingManager rm = RoutingManager.Instance;
-            rm.RunServiceEvents(0);
-
-            ScheduleHistoryItem.Succeeded = true;
-            ScheduleHistoryItem.AddLogNote("Email Scheduler completed successfully.<br>");
+            try
+            {
+                rm.RunServiceEvents(0);
+                ScheduleHistoryItem.Succeeded = true;
+                ScheduleHistoryItem.AddLogNote("Email Scheduler completed successfully.<br />");
+            }
+            catch (Exception e)
+            {
+                ScheduleHistoryItem.Succeeded = false;
+                ScheduleHistoryItem.AddLogNote(e.Message + "<br />");
+            }
         }
     }
 }
