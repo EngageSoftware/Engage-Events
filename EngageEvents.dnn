@@ -65,6 +65,9 @@
           <name>Engage.Communicationv3.0.dll</name>
         </file>
         <file>
+          <name>Engage.Licensing.dll</name>
+        </file>
+        <file>
           <name>Engage.Dnn.Utility.dll</name>
         </file>
         <file>
