@@ -44,7 +44,7 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
         protected void EventListingRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            var actions = (EventAdminActions)e.Item.FindControl("EventActions");
+            EventAdminActions actions = (EventAdminActions)e.Item.FindControl("EventActions");
             actions.CurrentEvent = (Event)e.Item.DataItem;
         }
 
