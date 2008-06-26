@@ -36,6 +36,8 @@
 
 .EventCalendar li { list-style-type: none; }
 
+.RadScheduler .rsApt { height: auto !important;}
+
 /* event edit page */
 
 .AdminButtons{ text-align: left; padding-left: 5%;}
