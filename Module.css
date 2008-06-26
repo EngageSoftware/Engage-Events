@@ -19,7 +19,7 @@
 			{float:left; width: 15%; margin-right: 3%; text-align: right;}
 			.EventDate .Normal, .EventLocation .Normal, .EventDescription .Normal{float: left; width: 81%;}
 
-		.EventButtons{margin-left: 18%;}
+		.EventButtons{margin-left: 18%; margin-top: 6%;}
 
 		#myEvents{}
 			#myEvents .EventHeader{clear: both; width: 100%; overflow: hidden;}
