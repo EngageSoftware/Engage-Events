@@ -1,0 +1,53 @@
+<dotnetnuke version="3.0" type="Module">
+  <folders>
+    <folder>
+      <name>Engage: Tell A Friend</name>
+      <friendlyname>Engage: Tell A Friend</friendlyname>
+      <foldername>EngageTellAFriend</foldername>
+      <modulename>Engage.TellAFriend</modulename>
+      <description>A simple and flexible tell a friend module brought to you by Engage Software.</description>
+      <version>01.02.00</version>
+      <resourcefile>Resources.zip</resourcefile>
+      <businesscontrollerclass></businesscontrollerclass>
+      <modules>
+        <module>
+          <friendlyname>TellAFriend</friendlyname>
+          <cachetime>0</cachetime>
+          <controls>
+            <control>
+              <src>DesktopModules/EngageTellAFriend/ViewTellAFriend.ascx</src>
+              <type>View</type>
+              <helpurl></helpurl>
+              <supportspartialrendering>true</supportspartialrendering>
+            </control>
+            <control>
+              <key>Edit</key>
+              <title>Edit Content</title>
+              <src>DesktopModules/EngageTellAFriend/EditTellAFriend.ascx</src>
+              <type>Edit</type>
+              <helpurl></helpurl>
+            </control>
+            <control>
+              <key>Settings</key>
+              <title>TellAFriend Settings</title>
+              <src>DesktopModules/EngageTellAFriend/Settings.ascx</src>
+              <type>Edit</type>
+              <helpurl></helpurl>
+            </control>
+          </controls>
+        </module>
+      </modules>
+      <files>
+        <file>
+	        <name>EngageTellAFriend.dll</name>
+      	</file>
+        <file>
+          <name>01.00.00.SqlDataProvider</name>
+        </file>
+        <file>
+          <name>Uninstall.SqlDataProvider</name>
+        </file>
+      </files>
+    </folder>
+  </folders>
+</dotnetnuke>
