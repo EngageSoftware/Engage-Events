@@ -299,10 +299,6 @@
       <DependentUpon>EventEdit.ascx</DependentUpon>
     </Compile>
     <Compile Include="Recurrence\RecurrenceHelper.cs" />
-    <Compile Include="Services\Services.asmx.cs">
-      <DependentUpon>Services.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Data\DataProvider.cs" />
     <Compile Include="MainContainer.ascx.cs">
       <DependentUpon>MainContainer.ascx</DependentUpon>
@@ -333,7 +329,7 @@
     <None Include="docs\Engage Publish Users Guide.pdf" />
     <None Include="EngageEvents.dnn" />
     <None Include="EngageEvents.Build" />
-    <None Include="Providers\DataProviders\SqlDataProvider\01.00.00.SqlDataProvider" />
+    <None Include="Providers\DataProviders\SqlDataProvider\00.00.01.SqlDataProvider" />
     <None Include="Uninstall.SqlDataProvider" />
   </ItemGroup>
   <ItemGroup>
@@ -405,7 +401,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ReadMe.txt" />
-    <Content Include="Services\Services.asmx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin\App_LocalResources\AdminMenu.ascx.resx">

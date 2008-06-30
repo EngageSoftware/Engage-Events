@@ -16,8 +16,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Engage: Events")]
-[assembly: AssemblyDescription("Engage Software's DotNetnuke Events System.")]
+[assembly: AssemblyTitle("Engage: Events Beta")]
+[assembly: AssemblyDescription("Engage Software's DotNetnuke Events System (Beta).")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Engage Software, Inc.")]
 [assembly: AssemblyProduct("")]
@@ -34,7 +34,7 @@ using System.Runtime.InteropServices;
 //      Revision
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("01.00.00.*")]
+[assembly: AssemblyVersion("0.00.01.*")]
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]
