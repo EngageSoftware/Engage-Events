@@ -124,9 +124,6 @@
     <value>Calendar Display</value>
   </data>
   <data name="EventListing.Text" xml:space="preserve">
-    <value>All Events</value>
-  </data>
-  <data name="EventListingCustom.Text" xml:space="preserve">
     <value>Current and Upcoming Events</value>
   </data>
   <data name="EventListingGridStyle.Text" xml:space="preserve">

@@ -1,4 +1,4 @@
-// <copyright file="EventListingCustom.ascx.cs" company="Engage Software">
+// <copyright file="EventListing.ascx.cs" company="Engage Software">
 // Engage: Events - http://www.engagemodules.com
 // Copyright (c) 2004-2008
 // by Engage Software ( http://www.engagesoftware.com )
@@ -19,7 +19,7 @@ namespace Engage.Dnn.Events.Display
     /// <summary>
     /// Custom event listing
     /// </summary>
-    public partial class EventListingCustom : ModuleBase
+    public partial class EventListing : ModuleBase
     {
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.

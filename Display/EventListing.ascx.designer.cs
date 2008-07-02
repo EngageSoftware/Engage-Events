@@ -11,7 +11,7 @@
 namespace Engage.Dnn.Events.Display {
     
     
-    public partial class EventListingCustom {
+    public partial class EventListing {
         
         /// <summary>
         /// rpCurrentEventListing control.

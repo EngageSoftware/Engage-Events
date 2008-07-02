@@ -62,13 +62,11 @@ namespace Engage.Dnn.Events
             {
                 if (Page.IsPostBack == false)
                 {
-                    ListItem eventListingCustom = new ListItem(Localization.GetString("EventListingCustom", LocalResourceFile), "Display/EventListingCustom");
-                    //ListItem eventListing = new ListItem(Localization.GetString("EventListing", LocalResourceFile), "Display/EventListing");
+                    ListItem eventListing = new ListItem(Localization.GetString("EventListing", LocalResourceFile), "Display/EventListing");
                     ListItem eventCalendar = new ListItem(Localization.GetString("EventCalendar", LocalResourceFile), "Display/EventCalendar");
 
-                    DropDownChooseDisplay.Items.Add(eventListingCustom);
+                    DropDownChooseDisplay.Items.Add(eventListing);
                     DropDownChooseDisplay.Items.Add(eventCalendar);
-                    //ddlChooseDisplayType.Items.Add(eventListing);
 
                     SetOptions();
 

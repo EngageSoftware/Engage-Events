@@ -51,8 +51,6 @@ namespace Engage.Dnn.Events
             keyDictionary.Add("EmailEdit", "EmailEdit.ascx");
             keyDictionary.Add("EventEdit", "EventEdit.ascx");
             keyDictionary.Add("EventListing", "Display/EventListing.ascx");
-            keyDictionary.Add("EventListingCustom", "Display/EventListingCustom.ascx");
-            keyDictionary.Add("EventListingGridStyle", "Display/EventListingGridStyle.ascx");
             keyDictionary.Add("EventListingAdmin", "Display/EventListingAdmin.ascx");
             keyDictionary.Add("RsvpSummary", "RsvpSummary.ascx");
             keyDictionary.Add("RsvpDetail", "RsvpDetail.ascx");

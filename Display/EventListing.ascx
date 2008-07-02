@@ -1,8 +1,8 @@
-<%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.Display.EventListingCustom" Codebehind="EventListingCustom.ascx.cs" %>
+<%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.Display.EventListing" Codebehind="EventListing.ascx.cs" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
 <%@ Register src="../Navigation/EventAdminActions.ascx" tagname="actions" tagprefix="uc2" %>
 
-<div id="EventListingCustomCurrent">
+<div id="EventListingCurrent">
         <div class="EventHeader">
                 <h4 class="Normal">This Month</h4>
                 <h4 class="NormalBold">Events</h4>
@@ -36,7 +36,7 @@
 </div>    
     
 
-<div id="EventListingCustomUpcoming">
+<div id="EventListingUpcoming">
     <div class="EventHeader">
             <h4 class="Normal">Upcoming</h4>
             <h4 class="NormalBold">Events</h4>

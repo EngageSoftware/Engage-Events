@@ -255,12 +255,12 @@
     <Compile Include="Display\EventListingAdmin.ascx.designer.cs">
       <DependentUpon>EventListingAdmin.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Display\EventListingCustom.ascx.cs">
-      <DependentUpon>EventListingCustom.ascx</DependentUpon>
+    <Compile Include="Display\EventListing.ascx.cs">
+      <DependentUpon>EventListing.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Display\EventListingCustom.ascx.designer.cs">
-      <DependentUpon>EventListingCustom.ascx</DependentUpon>
+    <Compile Include="Display\EventListing.ascx.designer.cs">
+      <DependentUpon>EventListing.ascx</DependentUpon>
     </Compile>
     <Compile Include="Setting.cs" />
     <Compile Include="Util\Approval.ascx.cs">
@@ -431,7 +431,7 @@
     <Content Include="App_LocalResources\UserContainer.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Display\EventListingCustom.ascx" />
+    <Content Include="Display\EventListing.ascx" />
     <Content Include="RsvpDetail.ascx" />
   </ItemGroup>
   <ItemGroup>
@@ -451,7 +451,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Display\App_LocalResources\EventListingCustom.ascx.resx">
+    <Content Include="Display\App_LocalResources\EventListing.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
