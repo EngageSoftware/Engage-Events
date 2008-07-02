@@ -82,7 +82,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetDisabledImages()
         {
-            switch (this.Parent.ID)
+            switch (CurrentControlKey)
             {
                 case "EventEdit":
                     this.AddAnEventLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/add_event_disabled.gif";
@@ -94,7 +94,17 @@ namespace Engage.Dnn.Events
                     this.ResponsesLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/responses_disabled.gif";
                     break;
                 default:
+                    this.HomeLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/home_disabled.gif";
                     break;
+            }
+        }
+
+        private string CurrentControlKey
+        {
+            get
+            {
+                object o = Request.QueryString["key"];
+                return (o == null ? string.Empty : o.ToString());
             }
         }
     }
