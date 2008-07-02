@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engage.Events", "C:\code\En
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engage.Licensing", "..\..\..\..\..\..\Code\Engage 3.0\Engage.Licensing\Engage.Licensing.csproj", "{11D57DA1-F585-4814-9E5E-5CDF6C9017C4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{E580EBF3-EDE0-4C26-B813-7CC9C00FFBBA}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 10

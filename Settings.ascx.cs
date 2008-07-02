@@ -9,29 +9,19 @@
 //DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Host;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Services.Localization;
-using DotNetNuke.UI.UserControls;
 using System.Globalization;
-using Engage.Dnn.Events.Util;
 
 namespace Engage.Dnn.Events
 {
     public partial class Settings : ModuleSettingsBase
     {
         private ModuleSettingsBase currentSettingsBase;
-        protected override void OnInit(EventArgs e)
-        {
-            base.OnInit(e);
-
-        }
 
         protected override void OnLoad(EventArgs e)
         {
@@ -47,10 +37,10 @@ namespace Engage.Dnn.Events
                 try
                 {
                     HostSettingsController controller = new HostSettingsController();
-                    controller.UpdateHostSetting(Engage.Dnn.Events.Util.Utility.ModuleConfigured + PortalId.ToString(CultureInfo.InvariantCulture), "true");
+                    controller.UpdateHostSetting(Dnn.Events.Util.Utility.ModuleConfigured + PortalId.ToString(CultureInfo.InvariantCulture), "true");
 
                     ModuleController modules = new ModuleController();
-                    modules.UpdateTabModuleSetting(this.TabModuleId, Setting.DisplayType.PropertyName, ddlChooseDisplayType.SelectedValue.ToString());
+                    modules.UpdateTabModuleSetting(this.TabModuleId, Setting.DisplayType.PropertyName, DropDownChooseDisplay.SelectedValue);
                     //modules.UpdateTabModuleSetting(this.TabModuleId, Setting.UnsubscribeUrl.PropertyName, txtUnsubscribeUrl.Text);
                     //modules.UpdateTabModuleSetting(this.TabModuleId, Setting.PrivacyPolicyUrl.PropertyName, txtPrivacyPolicyUrl.Text);
                     //modules.UpdateTabModuleSetting(this.TabModuleId, Setting.OpenLinkUrl.PropertyName, txtOpenLinkUrl.Text);
@@ -73,12 +63,12 @@ namespace Engage.Dnn.Events
                 if (Page.IsPostBack == false)
                 {
                     ListItem eventListingCustom = new ListItem(Localization.GetString("EventListingCustom", LocalResourceFile), "Display/EventListingCustom");
-                    ListItem eventListing = new ListItem(Localization.GetString("EventListing", LocalResourceFile), "Display/EventListing");
+                    //ListItem eventListing = new ListItem(Localization.GetString("EventListing", LocalResourceFile), "Display/EventListing");
                     ListItem eventCalendar = new ListItem(Localization.GetString("EventCalendar", LocalResourceFile), "Display/EventCalendar");
 
-                    ddlChooseDisplayType.Items.Add(eventListingCustom);
-                    ddlChooseDisplayType.Items.Add(eventCalendar);
-                    ddlChooseDisplayType.Items.Add(eventListing);
+                    DropDownChooseDisplay.Items.Add(eventListingCustom);
+                    DropDownChooseDisplay.Items.Add(eventCalendar);
+                    //ddlChooseDisplayType.Items.Add(eventListing);
 
                     SetOptions();
 
@@ -95,7 +85,7 @@ namespace Engage.Dnn.Events
             object o = Settings["DisplayType"];
             if (o != null && !String.IsNullOrEmpty(o.ToString()))
             {
-                ListItem li = ddlChooseDisplayType.Items.FindByValue(Settings["DisplayType"].ToString());
+                ListItem li = DropDownChooseDisplay.Items.FindByValue(Settings["DisplayType"].ToString());
                 if (li != null)
                 {
                     li.Selected = true;
@@ -121,7 +111,7 @@ namespace Engage.Dnn.Events
             //}
         }
 
-        protected void ddlChooseDisplayType_SelectedIndexChanged(object sender, EventArgs e)
+        protected void DropDownChooseDisplay_SelectedIndexChanged(object sender, EventArgs e)
         {
             DisplaySettingsControl();
         }
@@ -129,7 +119,7 @@ namespace Engage.Dnn.Events
         private void DisplaySettingsControl()
         {
 
-            string selectedDisplayType = ddlChooseDisplayType.SelectedItem.ToString();
+            string selectedDisplayType = DropDownChooseDisplay.SelectedItem.ToString();
             switch (selectedDisplayType)
             {
                 case "Calendar Display":

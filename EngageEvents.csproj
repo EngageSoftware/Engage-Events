@@ -255,13 +255,6 @@
     <Compile Include="Display\EventListingAdmin.ascx.designer.cs">
       <DependentUpon>EventListingAdmin.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Display\EventListing.ascx.cs">
-      <DependentUpon>EventListing.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Display\EventListing.ascx.designer.cs">
-      <DependentUpon>EventListing.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Display\EventListingCustom.ascx.cs">
       <DependentUpon>EventListingCustom.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -435,15 +428,9 @@
     <Content Include="Services\WebServicesGateway.asmx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Display\App_LocalResources\EventListing.ascx.resx">
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="App_LocalResources\UserContainer.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Display\EventListing.ascx" />
     <Content Include="Display\EventListingCustom.ascx" />
     <Content Include="RsvpDetail.ascx" />
   </ItemGroup>

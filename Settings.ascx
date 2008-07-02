@@ -13,10 +13,10 @@
 <asp:UpdatePanel ID="upnlSettings" runat="server" UpdateMode="Conditional">
     <ContentTemplate>
         <div style="text-align: left" class="SettingsTable">
-            <dnn:label ID="lblChooseDisplayType" ResourceKey="lblChooseDisplayType" runat="server"
+            <dnn:label ID="LabelChooseDisplayType" ResourceKey="LabelChooseDisplayType" runat="server"
                 CssClass="Normal" />
-            <asp:DropDownList ID="ddlChooseDisplayType" CssClass="NormalTextBox" runat="server"
-                AutoPostBack="True" OnSelectedIndexChanged="ddlChooseDisplayType_SelectedIndexChanged">
+            <asp:DropDownList ID="DropDownChooseDisplay" CssClass="NormalTextBox" runat="server"
+                AutoPostBack="True" OnSelectedIndexChanged="DropDownChooseDisplay_SelectedIndexChanged">
             </asp:DropDownList>
             <div id="dvDisplay" runat="server">
                 <br />

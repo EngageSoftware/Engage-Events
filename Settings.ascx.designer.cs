@@ -23,22 +23,22 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.UpdatePanel upnlSettings;
         
         /// <summary>
-        /// lblChooseDisplayType control.
+        /// LabelChooseDisplayType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.LabelControl lblChooseDisplayType;
+        protected global::DotNetNuke.UI.UserControls.LabelControl LabelChooseDisplayType;
         
         /// <summary>
-        /// ddlChooseDisplayType control.
+        /// DropDownChooseDisplay control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlChooseDisplayType;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownChooseDisplay;
         
         /// <summary>
         /// dvDisplay control.

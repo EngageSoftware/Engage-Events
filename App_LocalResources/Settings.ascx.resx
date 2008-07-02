@@ -132,10 +132,10 @@
   <data name="EventListingGridStyle.Text" xml:space="preserve">
     <value>Grid Style (Paging and Sorting)</value>
   </data>
-  <data name="lblChooseDisplayType.Help" xml:space="preserve">
+  <data name="LabelChooseDisplayType.Help" xml:space="preserve">
     <value>Pick from the dropdown the default display for events.</value>
   </data>
-  <data name="lblChooseDisplayType.Text" xml:space="preserve">
+  <data name="LabelChooseDisplayType.Text" xml:space="preserve">
     <value>Select a display for events</value>
   </data>
   <data name="lblOpenLinkUrl.Help" xml:space="preserve">
