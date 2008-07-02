@@ -119,6 +119,7 @@ namespace Engage.Dnn.Events.Display
             this.PreRender += this.Page_PreRender;
             this.RegisterButton.Click += this.RegisterButton_Click;
             this.AddToCalendarButton.Click += this.AddToCalendarButton_Click;
+            this.EditButton.Click += this.EditButton_Click;
 
             AJAX.RegisterPostBackControl(this.AddToCalendarButton);
             this.LocalResourceFile = "~" + DesktopModuleFolderName + "Display/App_LocalResources/EventToolTip";
@@ -142,6 +143,7 @@ namespace Engage.Dnn.Events.Display
             this.EventTitle.Text = this.Title;
 
             this.AddToCalendarButton.Visible = Engage.Utility.IsLoggedIn;
+            this.EditButton.Visible = IsAdmin;
         }
 
         /// <summary>
@@ -167,6 +169,16 @@ namespace Engage.Dnn.Events.Display
         {
             Event currentEvent = Event.Load(this.currentEventId);
             SendICalendarToClient(this.Response, currentEvent.ToICal(this.UserInfo.Email), currentEvent.Title);
+        }
+
+        private void EditButton_Click(object sender, EventArgs e)
+        {
+            string href =
+               this.BuildLinkUrl(
+                   "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId="
+                   + this.currentEventId.ToString(CultureInfo.InvariantCulture));
+            this.Response.Redirect(href, true);
+
         }
     }
 }

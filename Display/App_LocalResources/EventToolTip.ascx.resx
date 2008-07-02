@@ -120,6 +120,9 @@
   <data name="AddToCalendarButton.Text" xml:space="preserve">
     <value>Add To Calendar</value>
   </data>
+  <data name="EditButton.Text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
   <data name="RegisterButton.Text" xml:space="preserve">
     <value>Register</value>
   </data>

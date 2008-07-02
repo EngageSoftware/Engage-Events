@@ -9,6 +9,7 @@
     <div class="EventTitleToolTip"><asp:Label runat="server" ID="EventTitle"/></div>
     <div class="EventStartToolTip"><asp:Label runat="server" ID="EventDate"/></div>
     <asp:TextBox runat="server" ID="EventOverview" class="NormalTextBox" TextMode="MultiLine" Width="100%" Rows="7" ReadOnly="true"/>
+    <asp:Button ID="EditButton" runat="server" CssClass="CommandButton" ResourceKey="EditButton"/>
     <asp:Button ID="RegisterButton" runat="server" CssClass="CommandButton" ResourceKey="RegisterButton"/>
     <asp:Button ID="AddToCalendarButton" runat="server" CssClass="CommandButton" resourceKey="AddToCalendarButton"/>
 </div>
