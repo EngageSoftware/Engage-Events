@@ -87,7 +87,7 @@ namespace Engage.Dnn.Events
             }
             else
             {
-                return Dnn.Utility.GetStringSetting(this.Settings, "DisplayType", "Display/EventListingAdmin") + ".ascx";
+                return Dnn.Utility.GetStringSetting(this.Settings, Setting.DisplayType.PropertyName, "Display/EventListingAdmin") + ".ascx";
             }
 
             ////if (!IsSetup)

@@ -62,7 +62,8 @@
         CssClass="NormalBold" />
     <br />
     <div class="EmailSendDate">
-        <asp:Label ID="Label1" runat="server" ResourceKey="EmailSendDateLabel" CssClass="NormalBold" />
+        <asp:Label ID="EmailSendLabel" runat="server" ResourceKey="EmailSendDateLabel" 
+            CssClass="NormalBold" />
         <telerik:RadDateTimePicker runat="server" ID="EmailSendTimePicker" Skin="WebBlue">
             <TimeView Skin="WebBlue" />
             <Calendar Skin="WebBlue" />
@@ -73,8 +74,7 @@
     </div>
 </div>
 <div class="EventButtons">
-    <asp:LinkButton ID="lbPreview" runat="server" CssClass="CommandButton">PREVIEW E-MAIIL</asp:LinkButton>
-    <asp:LinkButton ID="lbSendNow" runat="server" CssClass="CommandButton">SEND NOW</asp:LinkButton>
-    <asp:ImageButton ID="SaveEmailButton" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/save.gif" />
-    <asp:HyperLink ID="CancelEmailLink" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/cancel_go_home.gif" />
+    <asp:ImageButton ID="SaveAndCreateNewEmailButton" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/save_create_new.gif"/>
+    &nbsp;<asp:ImageButton ID="SaveEmailButton" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/save.gif" />
+    &nbsp;<asp:HyperLink ID="CancelEmailLink" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/cancel_go_home.gif" />
 </div>

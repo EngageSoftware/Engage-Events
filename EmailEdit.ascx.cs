@@ -183,6 +183,11 @@ namespace Engage.Dnn.Events
 
         }
 
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
         
       
     }

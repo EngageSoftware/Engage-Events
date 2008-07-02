@@ -293,13 +293,13 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.CheckBox ShowRichEditorCheckBox;
         
         /// <summary>
-        /// Label1 control.
+        /// EmailSendLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label EmailSendLabel;
         
         /// <summary>
         /// EmailSendTimePicker control.
@@ -320,22 +320,13 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator EmailSendTimePickerRequired;
         
         /// <summary>
-        /// lbPreview control.
+        /// SaveAndCreateNewEmailButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbPreview;
-        
-        /// <summary>
-        /// lbSendNow control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbSendNow;
+        protected global::System.Web.UI.WebControls.ImageButton SaveAndCreateNewEmailButton;
         
         /// <summary>
         /// SaveEmailButton control.
