@@ -1,5 +1,6 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EventEdit" Codebehind="EventEdit.ascx.cs" %>
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
+<%@ Register TagPrefix="dnn" TagName="TextEditor" Src="~/controls/TextEditor.ascx" %>
 <%@ Register TagPrefix="engage" TagName="ModuleMessage" Src="Controls/ModuleMessage.ascx" %>
 <%@ Register TagPrefix="engage" Namespace="Engage.Controls" Assembly="Engage.Utilityv3.0" %>
 <%@ Import Namespace="DotNetNuke.Services.Localization"%>
@@ -54,12 +55,7 @@
     
     <div class="EventEditor">
         <asp:Label runat="server" ResourceKey="EventDescriptionLabel" CssClass="NormalBold"/>
-        <telerik:radeditor ID="EventDescriptionTextEditor" runat="server" ToolsFile="~/DesktopModules/EngageEvents/RadEditor/BasicTools.xml" width="75%" NewLineBr="False" >
-            <Content>
-</Content>
-        </telerik:RadEditor>
-        <%--<dnn:TextEditor ID="EventDescriptionTextEditor" runat="server" Width="550" TextRenderMode="Raw" HtmlEncode="False" defaultmode="Rich" height="350" choosemode="True" chooserender="False" />
-        <asp:PlaceHolder ID="EventDescriptionTextEditorPlaceHolder" runat="server" />--%>
+        <dnn:TextEditor ID="EventDescriptionTextEditor" runat="server" Width="550" TextRenderMode="Raw" HtmlEncode="False" DefaultMode="Rich" Height="350" ChooseMode="True" ChooseRender="False" />
         <asp:CustomValidator ID="EventDescriptionTextEditorValidator" runat="server" ResourceKey="EventDescriptionTextEditorRequired" Display="None"/>
     </div>
     

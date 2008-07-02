@@ -13,6 +13,7 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Web.UI.WebControls;
+    using DotNetNuke.Framework;
     using DotNetNuke.Common;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
@@ -35,6 +36,9 @@ namespace Engage.Dnn.Events
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
+            AJAX.RegisterPostBackControl(this.SaveAndCreateNewEventButton);
+            AJAX.RegisterPostBackControl(this.SaveEventButton);
+
             this.Load += this.Page_Load;
             this.EventDescriptionTextEditorValidator.ServerValidate += this.EventDescriptionTextEditorValidator_ServerValidate;
             this.SaveEventButton.Click += this.SaveEventButton_OnClick;
@@ -152,7 +156,7 @@ namespace Engage.Dnn.Events
             this.EndDateTimePicker.SelectedDate = null;
             this.EventLocationTextBox.Text = String.Empty;
             this.EventTitleTextBox.Text = String.Empty;
-            this.EventDescriptionTextEditor.Content = null;
+            this.EventDescriptionTextEditor.Text = string.Empty;
         }
 
         /// <summary>
@@ -220,7 +224,8 @@ namespace Engage.Dnn.Events
             e.EventEnd = this.EndDateTimePicker.SelectedDate.Value;
             e.Location = this.EventLocationTextBox.Text;
             e.Title = this.EventTitleTextBox.Text;
-            e.Overview = this.EventDescriptionTextEditor.Content;
+            //e.Overview = this.EventDescriptionTextEditor.Content;
+            e.Overview = this.EventDescriptionTextEditor.Text;
             e.Save(this.UserId);
         }
 
@@ -234,7 +239,8 @@ namespace Engage.Dnn.Events
                 this.ModuleId,
                 this.UserInfo.Email,
                 this.EventTitleTextBox.Text,
-                this.EventDescriptionTextEditor.Content,
+                //this.EventDescriptionTextEditor.Content,
+                this.EventDescriptionTextEditor.Text,
                 this.StartDateTimePicker.SelectedDate.Value);
             e.Location = this.EventLocationTextBox.Text;
             e.EventEnd = this.EndDateTimePicker.SelectedDate.Value;
@@ -249,7 +255,8 @@ namespace Engage.Dnn.Events
             Event e = Event.Load(this.EventId);
             this.EventTitleTextBox.Text = e.Title;
             this.EventLocationTextBox.Text = e.Location;
-            this.EventDescriptionTextEditor.Content = e.Overview;
+            //this.EventDescriptionTextEditor.Content = e.Overview;
+            this.EventDescriptionTextEditor.Text = e.Overview;
             this.StartDateTimePicker.SelectedDate = e.EventStart;
             this.EndDateTimePicker.SelectedDate = e.EventEnd;
         }

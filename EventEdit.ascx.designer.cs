@@ -83,7 +83,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadEditor EventDescriptionTextEditor;
+        protected global::DotNetNuke.UI.UserControls.TextEditor EventDescriptionTextEditor;
         
         /// <summary>
         /// EventDescriptionTextEditorValidator control.

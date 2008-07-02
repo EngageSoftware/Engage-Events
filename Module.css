@@ -4,8 +4,8 @@
 
 ==============================================*/
 
-#EventListingCustomCurrent, #EventListingCustomUpcoming{width: 100%;}
-#EventListingCustomUpcoming {padding-top: 1.5em;}
+#EventListingCurrent, #EventListingUpcoming{width: 100%;}
+#EventListingUpcoming {padding-top: 1.5em;}
 		.EventHeader, .ResponseHeader, .ResponseRow{clear: both; width: 100%; overflow: hidden;  border-bottom: dotted 1px #ccc;}
 			.EventHeader h4, .ResponseHeader h4 {text-transform: uppercase; font-weight: bold; margin-bottom: 0.4em; margin-top: 0; font-size: 100%;}
 			.EventHeader .Normal{float:left;width: 15%; margin-right: 3%; text-align: right; color: #666;}
