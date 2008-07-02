@@ -11,51 +11,42 @@
 namespace Engage.Dnn.Events {
     
     
-    public partial class RsvpSummary {
+    public partial class RsvpDisplay {
         
         /// <summary>
-        /// SortRadioButtonList control.
+        /// TitleLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList SortRadioButtonList;
+        protected global::System.Web.UI.WebControls.Label TitleLabel;
         
         /// <summary>
-        /// NoRsvpsMessageLabel control.
+        /// AttendingLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label NoRsvpsMessageLabel;
+        protected global::System.Web.UI.WebControls.HyperLink AttendingLink;
         
         /// <summary>
-        /// SummaryRepeater control.
+        /// NotAttendingLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater SummaryRepeater;
+        protected global::System.Web.UI.WebControls.HyperLink NotAttendingLink;
         
         /// <summary>
-        /// SummaryPager control.
+        /// DateLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetNuke.UI.WebControls.PagingControl SummaryPager;
-        
-        /// <summary>
-        /// CancelGoHomeLink control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink CancelGoHomeLink;
+        protected global::System.Web.UI.WebControls.Label DateLabel;
     }
 }

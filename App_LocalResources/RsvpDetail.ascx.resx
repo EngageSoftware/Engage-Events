@@ -117,7 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Attending.Text" xml:space="preserve">
+    <value>Attending</value>
+  </data>
   <data name="CancelGoHomeLink.Alt" xml:space="preserve">
     <value>Cancel &amp; Go Home</value>
+  </data>
+  <data name="Events.Text" xml:space="preserve">
+    <value>Events</value>
+  </data>
+  <data name="FirstName.Text" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="LastName.Text" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="NotAttending.Text" xml:space="preserve">
+    <value>Not Attending</value>
+  </data>
+  <data name="ResponseDate.Text" xml:space="preserve">
+    <value>Response Date</value>
+  </data>
+  <data name="SortByLabel.Text" xml:space="preserve">
+    <value>Sort By</value>
+  </data>
+  <data name="Status.Text" xml:space="preserve">
+    <value>Status</value>
   </data>
 </root>

@@ -13,6 +13,7 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Globalization;
+    using System.Web.UI.WebControls;
     using DotNetNuke.Common;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
@@ -42,10 +43,23 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
+        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="T:System.EventArgs"/> object that contains the event data.</param>
-        protected override void OnLoad(EventArgs e)
+        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+            this.Load += this.Page_Load;
+            this.SortRadioButtonList.SelectedIndexChanged += this.SortRadioButtonList_SelectedIndexChanged;
+            this.SummaryRepeater.ItemDataBound += this.SummaryRepeater_ItemDataBound;
+        }
+
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void Page_Load(object sender, EventArgs e)
         {
             try
             {
@@ -61,31 +75,24 @@ namespace Engage.Dnn.Events
             }
         }
 
+        private void SummaryRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                RsvpDisplay rsvpDisplay = (RsvpDisplay)e.Item.FindControl("RsvpDisplay");
+                rsvpDisplay.SetRsvpSummary(Engage.Events.RsvpSummary.Load(((Engage.Events.RsvpSummary)e.Item.DataItem).EventId));
+                rsvpDisplay.ModuleConfiguration = this.ModuleConfiguration;
+            }
+        }
+
         /// <summary>
         /// Handles the SelectedIndexChanged event of the SortRadioButtonList control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void SortRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+        private void SortRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.BindData(this.SortRadioButtonList.SelectedValue);
-        }
-
-        /// <summary>
-        /// Gets the URL for the RSVP detail page of a given RSVP instance.
-        /// </summary>
-        /// <param name="o">The eventId.</param>
-        /// <param name="status">The status.</param>
-        /// <param name="c">The number of RSVP's for this event.</param>
-        /// <returns>A URL for the RSVP detail page of a given RSVP instance</returns>
-        protected string GetDetailUrl(object o, string status, object c)
-        {
-            int eventId = Convert.ToInt32(o);
-            int count = Convert.ToInt32(c);
-
-            return count > 0 ? this.BuildLinkUrl(
-                                   "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpDetail&eventid="
-                                   + eventId.ToString(CultureInfo.InvariantCulture) + "&status=" + status) : string.Empty;
         }
 
         /// <summary>
@@ -122,6 +129,17 @@ namespace Engage.Dnn.Events
             this.SummaryPager.PageSize = 10;
             this.SummaryPager.CurrentPage = this.CurrentPageIndex;
             this.SummaryPager.TabID = this.TabId;
+        }
+
+        /// <summary>
+        /// Gets the formatted date string for this event.
+        /// </summary>
+        /// <param name="startDate">The event's start date.</param>
+        /// <param name="endDate">The event's end date.</param>
+        /// <returns>A formatted string representing the timespan over which this event occurs.</returns>
+        protected string GetDateString(object startDate, object endDate)
+        {
+            return string.Format(CultureInfo.CurrentCulture, Localization.GetString("Timespan.Text", LocalResourceFile), startDate, endDate);
         }
     }
 }

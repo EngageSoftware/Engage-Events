@@ -217,7 +217,7 @@ namespace Engage.Dnn.Events
         {
             Event e = Event.Load(this.EventId);
             e.EventStart = this.StartDateTimePicker.SelectedDate.Value;
-            e.EventEnd = this.EndDateTimePicker.SelectedDate;
+            e.EventEnd = this.EndDateTimePicker.SelectedDate.Value;
             e.Location = this.EventLocationTextBox.Text;
             e.Title = this.EventTitleTextBox.Text;
             e.Overview = this.EventDescriptionTextEditor.Content;
@@ -237,7 +237,7 @@ namespace Engage.Dnn.Events
                 this.EventDescriptionTextEditor.Content,
                 this.StartDateTimePicker.SelectedDate.Value);
             e.Location = this.EventLocationTextBox.Text;
-            e.EventEnd = this.EndDateTimePicker.SelectedDate;
+            e.EventEnd = this.EndDateTimePicker.SelectedDate.Value;
             e.Save(this.UserId);
         }
 

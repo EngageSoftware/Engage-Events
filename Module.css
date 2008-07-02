@@ -6,10 +6,19 @@
 
 #EventListingCustomCurrent, #EventListingCustomUpcoming{width: 100%;}
 #EventListingCustomUpcoming {padding-top: 1.5em;}
-		.EventHeader{clear: both; width: 100%; overflow: hidden;  border-bottom: 1px #ccc solid;}
-			.EventHeader h4 {text-transform: uppercase; font-weight: bold; margin-bottom: 0.4em; margin-top: 0; font-size: 100%;}
+		.EventHeader, .ResponseHeader, .ResponseRow{clear: both; width: 100%; overflow: hidden;  border-bottom: dotted 1px #ccc;}
+			.EventHeader h4, .ResponseHeader h4 {text-transform: uppercase; font-weight: bold; margin-bottom: 0.4em; margin-top: 0; font-size: 100%;}
 			.EventHeader .Normal{float:left;width: 15%; margin-right: 3%; text-align: right; color: #666;}
 			.EventHeader .NormalBold{float: left; width: 81%; color: #000;}
+			.ResponseHeader h4, .ResponseHeader h3, .ResponseRow h3 {display:inline;}
+			.ResponseHeader .SortByHeader{width: 40%; float:left;}
+			.ResponseHeader .StatusHeader{width: 40%; float:right; text-align:right;}
+			.ResponseHeader .StatusTypeHeaders{width: 40%; float:right; text-align:right;}
+			.ResponseHeader .StatusTypeHeaders > span{padding-right: 10%;}
+			.ResponseRow .EventStats{float:right; width:30%;}
+			.ResponseRow .EventStats > a {padding-right: 50%;}
+.ResponsesSummary {padding: 25px 0;}
+.PagingTable { margin: 10px 0; }
 
 		#EventItem{border-bottom: 1px #ccc dotted; overflow: hidden; padding: 1em 0;}
 			#EventItem p{margin-top: 0;margin-bottom: 0;}
@@ -19,16 +28,7 @@
 			{float:left; width: 15%; margin-right: 3%; text-align: right;}
 			.EventDate .Normal, .EventLocation .Normal, .EventDescription .Normal{float: left; width: 81%;}
 
-		.EventButtons{margin-left: 18%; margin-top: 6%;}
-
-		#myEvents{}
-			#myEvents .EventHeader{clear: both; width: 100%; overflow: hidden;}
-				#myEvents .EventHeader .NormalBold{float: left; width: 20%;}
-				#myEvents .EventHeader .eventsSort {float: right; width: 80%;}
-					#myEvents .EventHeader .eventsSort, #myEvents .EventHeader .eventsSort table, #myEvents .EventHeader .eventsSort td {padding: 0; margin: 0;}
-					#myEvents .EventHeader .sortTitle{}
-					#myEvents .EventHeader .sortButtons{}
-	
+		.EventButtons{margin-left: 18%; margin-top: 6%;}	
 		.EventStats{font-weight:bold;}	
 		.border	{border: thin groove;}
 

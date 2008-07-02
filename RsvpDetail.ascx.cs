@@ -103,6 +103,7 @@ namespace Engage.Dnn.Events
         {
             base.OnInit(e);
             this.Load += this.Page_Load;
+            this.SortRadioButtonList.SelectedIndexChanged += this.SortRadioButtonList_SelectedIndexChanged;
         }
         
         /// <summary>
@@ -110,7 +111,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void Page_Load(object sender, EventArgs e)
+        private void Page_Load(object sender, EventArgs e)
         {
             try
             {
@@ -131,9 +132,9 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void RbSort_SelectedIndexChanged(object sender, EventArgs e)
+        private void SortRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.BindData(rbSort.SelectedValue);
+            this.BindData(this.SortRadioButtonList.SelectedValue);
         }
 
         #endregion
@@ -174,9 +175,8 @@ namespace Engage.Dnn.Events
             pager.QuerystringParams = "&modId=" + ModuleId.ToString() + "&key=rsvpDetail&status=" + this.Status + "&eventid=" + EventId;
             grdRsvpDetail.Attributes.Add("SortColumn", sortColumn);
 
-            Event e = Event.Load(EventId);
-            lblDate.Text = e.EventStartLongFormatted;
-            lblName.Text = e.Title;
+            this.RsvpDisplay.SetRsvpSummary(Engage.Events.RsvpSummary.Load(EventId));
+            this.RsvpDisplay.ModuleConfiguration = this.ModuleConfiguration;
         }
 
         #endregion
