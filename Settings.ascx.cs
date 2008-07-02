@@ -80,33 +80,13 @@ namespace Engage.Dnn.Events
 
         private void SetOptions()
         {
-            object o = Settings["DisplayType"];
-            if (o != null && !String.IsNullOrEmpty(o.ToString()))
+            string displayType = Utility.GetStringSetting(Settings, Setting.DisplayType.PropertyName);
+
+            ListItem li = DropDownChooseDisplay.Items.FindByValue(displayType);
+            if (li != null)
             {
-                ListItem li = DropDownChooseDisplay.Items.FindByValue(Settings["DisplayType"].ToString());
-                if (li != null)
-                {
-                    li.Selected = true;
-                }
+                li.Selected = true;
             }
-
-            //o = Settings[Setting.UnsubscribeUrl.PropertyName];
-            //if (o != null && !String.IsNullOrEmpty(o.ToString()))
-            //{
-            //    txtUnsubscribeUrl.Text = o.ToString();
-            //}
-
-            //o = Settings[Setting.PrivacyPolicyUrl.PropertyName];
-            //if (o != null && !String.IsNullOrEmpty(o.ToString()))
-            //{
-            //    txtPrivacyPolicyUrl.Text = o.ToString();    
-            //}
-
-            //o = Settings[Setting.OpenLinkUrl.PropertyName];
-            //if (o != null && !String.IsNullOrEmpty(o.ToString()))
-            //{
-            //     txtOpenLinkUrl.Text = o.ToString();
-            //}
         }
 
         protected void DropDownChooseDisplay_SelectedIndexChanged(object sender, EventArgs e)

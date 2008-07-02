@@ -10,15 +10,18 @@ namespace Engage.Dnn.Events
 {
     public class Setting
     {
-        
+
+
+        public static readonly Setting DisplayType = new Setting("DisplayType", "The display that is used for unauthenticated users.");
+        public static readonly Setting SkinSelection = new Setting("SkinSelection", "The skin used for Calendar Display.");
+
         public static readonly Setting PrinterFriendly = new Setting("pnlPrinterFriendly",  "Hide/Show the printer friendly link on the module");
         public static readonly Setting EmailAFriend = new Setting("pnlEmailAFriend", "Hide/Show the Email a Friend link on the module");
         public static readonly Setting PrivacyPolicyUrl = new Setting("upnlRating", "Specify the URL for your Privacy Policy.");
         public static readonly Setting UnsubscribeUrl = new Setting("unsubscribeUrl","Specify the URL for unsubscribing.");
         public static readonly Setting OpenLinkUrl = new Setting("openLinkUrl", "Specify the URL for your Open Link to track opens.");
-        public static readonly Setting DisplayType = new Setting("DisplayType", "The display that is used for unauthenticated users.");
         public static readonly Setting ReplacementMessage = new Setting("replacementMessage", "You can include an entire section of replaceable text in your message using this setting.");
-        public static readonly Setting SkinSelection = new Setting("SkinSelection",  "The skin used for Calendar Display.");
+        
        
         private Setting( string propertyName, string description)
         {

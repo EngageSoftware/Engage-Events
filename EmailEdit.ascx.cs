@@ -10,22 +10,10 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Xml;
-using DotNetNuke;
 using DotNetNuke.Common;
-using DotNetNuke.Common.Utilities;
-using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Users;
-using DotNetNuke.Security;
 using DotNetNuke.Security.Roles;
-using DotNetNuke.Services.Localization;
 using DotNetNuke.Services.Exceptions;
-using Engage.Dnn.Events.Data;
-using Engage.Dnn.Events.Util;
 using Engage.Events;
 using Engage.Events.Util;
 using Engage.Communication.Email;
@@ -37,6 +25,15 @@ namespace Engage.Dnn.Events
     {
 
         #region Event Handlers
+
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+
+            this.EmailTypeRadioButtons.SelectedIndexChanged += this.EmailTypeRadioButtons_SelectedIndexChanged;
+            this.SaveEmailButton.Click += this.SaveEmailButton_Click;
+            this.CancelEmailLink.NavigateUrl = Globals.NavigateURL();
+        }
 
         protected override void OnLoad(EventArgs e)
         {
@@ -57,40 +54,25 @@ namespace Engage.Dnn.Events
             }
         }
 
-        protected void btnSegment_OnClick(object sender, ImageClickEventArgs e)
+        private void SaveEmailButton_Click(object sender, EventArgs e)
         {
 
-        }
+            EmailEvent emailEvent;
 
-        protected void lbPreview_OnClick(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void lbSendNow_OnClick(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void lbSave_OnClick(object sender, EventArgs e)
-        {
-
-            EmailEvent emailEvent = null;
-
-            if (rblEmailType.SelectedValue == EmailEventType.Reminder.Description)
+            if (EmailTypeRadioButtons.SelectedValue == EmailEventType.Reminder.Description)
             {
                 //reminder emails have three different messages depending on whether or not the person has RSVP'd.
-                emailEvent = new EmailEvent(EmailEventType.Reminder, "Name Here", "Purpose Here", txtSubject.Text, txtFrom.Text, txtFromEmail.Text, UserId);
-                emailEvent.HtmlBodyLocation1 = txtLocation.Text;
-                emailEvent.HtmlBodyLocation2 = txtLocation2.Text;
-                emailEvent.HtmlBodyLocation3 = txtLocation3.Text;
+                emailEvent = new EmailEvent(EmailEventType.Reminder, "Name Here", "Purpose Here", SubjectTextBox.Text, FromTextBox.Text, FromEmailTextBox.Text, UserId);
+                emailEvent.HtmlBodyLocation1 = EmailLocationTextBox1.Text;
+                emailEvent.HtmlBodyLocation2 = EmailLocationTextBox2.Text;
+                emailEvent.HtmlBodyLocation3 = EmailLocationTextBox3.Text;
             }
             else
             {
-                EmailEventType type = (EmailEventType)Enum.Parse(typeof(EmailEventType), rblEmailType.SelectedValue);
+                EmailEventType type = (EmailEventType)Enum.Parse(typeof(EmailEventType), EmailTypeRadioButtons.SelectedValue);
 
-                emailEvent = new EmailEvent(type, "Name Here", "Purpose Here", txtSubject.Text, txtFrom.Text, txtFromEmail.Text, UserId);
-                emailEvent.HtmlBodyLocation1 = txtLocation.Text;
+                emailEvent = new EmailEvent(type, "Name Here", "Purpose Here", SubjectTextBox.Text, FromTextBox.Text, FromEmailTextBox.Text, UserId);
+                emailEvent.HtmlBodyLocation1 = EmailLocationTextBox1.Text;
 
             }
 
@@ -103,18 +85,18 @@ namespace Engage.Dnn.Events
 
             CreateEmailCommand cmd = new CreateEmailCommand(emailEvent);
             //pass to server (locally or remotely based on config file of Engage.Services.
-            cmd = DataServices.Execute<CreateEmailCommand>(cmd);
+            cmd = DataServices.Execute(cmd);
             cmd.WriteLocalData(EventId, UserId);
 
 
             Event ee = Event.Load(EventId);
 
-            if (rblEmailType.SelectedItem.Text == EmailEventType.Invitation.Description)
+            if (EmailTypeRadioButtons.SelectedItem.Text == EmailEventType.Invitation.Description)
             {
                     ee.InvitationUrl = emailEvent.HtmlBodyLocation1;
             }
 
-            if (rblEmailType.SelectedItem.Text == EmailEventType.Recap.Description)
+            if (EmailTypeRadioButtons.SelectedItem.Text == EmailEventType.Recap.Description)
             {
                     ee.RecapUrl = emailEvent.HtmlBodyLocation1;
             }
@@ -123,16 +105,16 @@ namespace Engage.Dnn.Events
 
         }
 
-        protected void lbCancel_OnClick(object sender, EventArgs e)
+        private void EmailTypeRadioButtons_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Response.Redirect(Globals.NavigateURL(), true);
+            dvReminderOnly.Visible = (EmailTypeRadioButtons.SelectedValue == EmailEventType.Reminder.Description);
         }
 
         #endregion
 
         private void FillApprovals(EmailEvent emailEvent)
         {
-            string[] recipients = txtApprovers.Text.Split(';');
+            string[] recipients = ApproversTextBox.Text.Split(';');
 
             foreach (string recipient in recipients)
             {
@@ -143,7 +125,7 @@ namespace Engage.Dnn.Events
         private void AddRecipients(EmailEvent emailEvent)
         {
             RoleController rc = new RoleController();
-            ArrayList users = rc.GetUsersByRoleName(PortalId, ddlRoles.SelectedItem.Text);
+            ArrayList users = rc.GetUsersByRoleName(PortalId, RolesDropDown.SelectedItem.Text);
 
             //get setting information about URL's
             string unsubscribeUrl = UnsubscribeUrl;
@@ -153,7 +135,7 @@ namespace Engage.Dnn.Events
 
             foreach (UserInfo user in users)
             {
-                emailEvent.AddRecipient(user.FirstName, user.LastName, user.Email, "Company Name Here", txtLocation.Text, DateTime.Now, unsubscribeUrl, privacyPolicyUrl, openLinkUrl, replacementMessage);
+                emailEvent.AddRecipient(user.FirstName, user.LastName, user.Email, "Company Name Here", EmailLocationTextBox1.Text, DateTime.Now, unsubscribeUrl, privacyPolicyUrl, openLinkUrl, replacementMessage);
             }
         }
 
@@ -161,12 +143,7 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                object o = Settings[Setting.UnsubscribeUrl.Description];
-                if (o != null && !String.IsNullOrEmpty(o.ToString()))
-                {
-                    return o.ToString();
-                }
-                return string.Empty;
+                return Utility.GetStringSetting(Settings, Setting.UnsubscribeUrl.PropertyName);
             }
         }
 
@@ -174,12 +151,7 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                object o = Settings[Setting.PrivacyPolicyUrl.Description];
-                if (o != null && !String.IsNullOrEmpty(o.ToString()))
-                {
-                    return o.ToString();
-                }
-                return string.Empty;
+                return Utility.GetStringSetting(Settings, Setting.PrivacyPolicyUrl.PropertyName);
             }
         }
 
@@ -187,38 +159,32 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                object o = Settings[Setting.OpenLinkUrl.Description];
-                if (o != null && !String.IsNullOrEmpty(o.ToString()))
-                {
-                    return o.ToString();
-                }
-                return string.Empty;
+                return Utility.GetStringSetting(Settings, Setting.OpenLinkUrl.PropertyName);
             }
         }
+
         private void FillDropDowns()
         {
             RoleController rc = new RoleController();
 
-            ddlRoles.DataTextField = "RoleName";
-            ddlRoles.DataValueField = "RoleID";
-            ddlRoles.DataSource = rc.GetPortalRoles(PortalId);
-            ddlRoles.DataBind();
+            RolesDropDown.DataTextField = "RoleName";
+            RolesDropDown.DataValueField = "RoleID";
+            RolesDropDown.DataSource = rc.GetPortalRoles(PortalId);
+            RolesDropDown.DataBind();
         }
 
         private void BindData()
         {
             Event e = Event.Load(EventId);
 
-            lblEvent.Text = e.Title;
+            EventNameLabel.Text = e.Title;
 
             //now load the email details. using?
 
         }
 
-        protected void rblEmailType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            dvReminderOnly.Visible = (rblEmailType.SelectedValue == EmailEventType.Reminder.Description);
-        }
+        
+      
     }
 }
 
