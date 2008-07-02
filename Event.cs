@@ -42,7 +42,7 @@ namespace Engage.Events
         /// Backing field for <see cref="EventEnd"/>.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DateTime? eventEnd;
+        private DateTime eventEnd;
 
         /// <summary>
         /// Backing field for <see cref="EventStart"/>.
@@ -311,7 +311,7 @@ namespace Engage.Events
         /// Gets or sets when this event ends.
         /// </summary>
         /// <value>The event's end date and time.</value>
-        public DateTime? EventEnd
+        public DateTime EventEnd
         {
             [DebuggerStepThrough]
             get { return this.eventEnd; }

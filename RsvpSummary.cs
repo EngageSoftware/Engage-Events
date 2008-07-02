@@ -14,119 +14,240 @@ namespace Engage.Events
     using System;
     using System.Data;
     using System.Diagnostics;
+    using Data;
 
+    /// <summary>
+    /// A representation of all of the responses received for a particular event.
+    /// </summary>
     public class RsvpSummary
     {
+        /// <summary>
+        /// Backing field for <see cref="Attending"/>.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private int attending;
+
+        /// <summary>
+        /// Backing field for <see cref="EventId"/>.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private int eventId = -1;
+
+        /// <summary>
+        /// Backing field for <see cref="Event"/>.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Event @event;
+
+        /// <summary>
+        /// Backing field for <see cref="EventStart"/>.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DateTime eventStart;
+
+        /// <summary>
+        /// Backing field for <see cref="NoResponse"/>.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private int noResponse;
+
+        /// <summary>
+        /// Backing field for <see cref="NotAttending"/>.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private int notAttending;
+
+        /// <summary>
+        /// Backing field for <see cref="Title"/>.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private string title = string.Empty;
+
+        /// <summary>
+        /// Backing field for <see cref="TotalRecords"/>.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private int totalRecords;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RsvpSummary"/> class.
+        /// </summary>
         private RsvpSummary()
         {
-
         }
 
-        private RsvpSummary(int eventId, string title, DateTime eventStart, int attending, int notAttending, int noResponse)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RsvpSummary"/> class.
+        /// </summary>
+        /// <param name="eventId">The event id.</param>
+        /// <param name="title">The title of the event.</param>
+        /// <param name="attending">The number of folks attending.</param>
+        /// <param name="notAttending">The number of folks not attending.</param>
+        /// <param name="noResponse">The number of folks who haven't responded.</param>
+        private RsvpSummary(int eventId, string title, int attending, int notAttending, int noResponse)
         {
-            _eventId = eventId;
-            _title = title;
-            _eventStart = eventStart;
-            _attending = attending;
-            _notAttending = notAttending;
-            _noResponse = noResponse;
+            this.eventId = eventId;
+            this.title = title;
+            this.attending = attending;
+            this.notAttending = notAttending;
+            this.noResponse = noResponse;
         }
 
-        #region Static Methods
-
-        public static RsvpSummary Create(int eventId, string title, DateTime eventStart, int attending, int notAttending, int noResponse)
-        {
-            return new RsvpSummary(eventId, title, eventStart, attending, notAttending, noResponse);
-        }
-
-        internal static RsvpSummary Fill(DataRow row)
-        {
-            RsvpSummary r = new RsvpSummary();
-            r._eventId = ((int)row["EventId"]);
-            r._title = row["Title"].ToString();
-            r._eventStart = ((DateTime)row["EventStart"]);
-            r._attending = ((int)row["Attending"]);
-            r._notAttending = ((int)row["NotAttending"]);
-            r._noResponse = ((int)row["NoResponse"]);
-
-            //when constructing a collection of events the stored procedure for paging includes a TotalRecords
-            //field. When loading a single Event this does not exist.hk
-            if (row.Table.Columns.Contains("TotalRecords"))
-            {
-                r._totalRecords = (int)row["TotalRecords"];
-            }
-
-            return r;
-        }
-        
-        #endregion
-
-        
-        #region Properties
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int _eventId = -1;
+        /// <summary>
+        /// Gets the event id.
+        /// </summary>
+        /// <value>The event id.</value>
         public int EventId
         {
             [DebuggerStepThrough]
-            get { return _eventId; }
+            get { return this.eventId; }
         }
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string _title = string.Empty;
+        /// <summary>
+        /// Gets the event.
+        /// </summary>
+        /// <value>The event.</value>
+        public Event Event
+        {
+            get
+            {
+                if (this.@event == null)
+                {
+                    this.@event = Event.Load(this.eventId);
+                }
+
+                return this.@event;
+            }
+        }
+
+        /// <summary>
+        /// Gets the title of the event.
+        /// </summary>
+        /// <value>The title of the event.</value>
         public string Title
         {
             [DebuggerStepThrough]
-            get { return _title; }
+            get { return this.Event.Title; }
         }
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DateTime _eventStart;
+        /// <summary>
+        /// Gets the date the event starts.
+        /// </summary>
+        /// <value>The date the event starts.</value>
         public DateTime EventStart
         {
             [DebuggerStepThrough]
-            get { return _eventStart; }
+            get { return this.Event.EventStart; }
         }
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public string EventStartFormatted
+        /// <summary>
+        /// Gets the date the event starts.
+        /// </summary>
+        /// <value>The date the event starts.</value>
+        public DateTime EventEnd
         {
             [DebuggerStepThrough]
-            get { return _eventStart.ToString("dddd, MMMM d, yyyy, h:mm tt"); }
+            get { return this.Event.EventEnd; }
         }
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int _attending;
+        /// <summary>
+        /// Gets the number of folks attending.
+        /// </summary>
+        /// <value>The number of folks attending.</value>
         public int Attending
         {
             [DebuggerStepThrough]
-            get { return _attending; }
+            get { return this.attending; }
         }
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int _notAttending;
+        /// <summary>
+        /// Gets the number of folks not attending.
+        /// </summary>
+        /// <value>The number of folks not attending.</value>
         public int NotAttending
         {
             [DebuggerStepThrough]
-            get { return _notAttending; }
+            get { return this.notAttending; }
         }
 
-        private int _noResponse;
+        /// <summary>
+        /// Gets the number of folks who haven't responded.
+        /// </summary>
+        /// <value>The number of folks who haven't responded.</value>
         public int NoResponse
         {
             [DebuggerStepThrough]
-            get { return _noResponse; }
+            get { return this.noResponse; }
         }
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int _totalRecords;
+        /// <summary>
+        /// Gets the total number of records.
+        /// </summary>
+        /// <value>The total records.</value>
         public int TotalRecords
         {
             [DebuggerStepThrough]
-            get { return _totalRecords; }
+            get { return this.totalRecords; }
         }
 
-        #endregion
-  
+        /// <summary>
+        /// Creates a new <see cref="RsvpSummary"/>.
+        /// </summary>
+        /// <param name="eventId">The event id.</param>
+        /// <param name="title">The title of the event.</param>
+        /// <param name="attending">The number of folks attending.</param>
+        /// <param name="notAttending">The number of folks not attending.</param>
+        /// <param name="noResponse">The number of folks who haven't responded.</param>
+        /// <returns>A new <see cref="RsvpSummary"/> instance</returns>
+        public static RsvpSummary Create(int eventId, string title, int attending, int notAttending, int noResponse)
+        {
+            return new RsvpSummary(eventId, title, attending, notAttending, noResponse);
+        }
+
+        /// <summary>
+        /// Loads the <see cref="RsvpSummary"/> for the specified event.
+        /// </summary>
+        /// <param name="eventId">The event id.</param>
+        /// <returns>The <see cref="RsvpSummary"/> for the specified event</returns>
+        /// <exception cref="DBException">If an error occurs when retrieving the <see cref="RsvpSummary"/> from the database</exception>
+        public static RsvpSummary Load(int eventId)
+        {
+            IDataProvider dp = DataProvider.Instance;
+            try
+            {
+                using (IDataReader dataReader = dp.ExecuteReader(
+                    CommandType.StoredProcedure, 
+                    dp.NamePrefix + "spGetRsvpSummary",
+                    Utility.CreateIntegerParam("@EventId", eventId)))
+                {
+                    if (dataReader.Read())
+                    {
+                        return Fill(dataReader);
+                    }
+                }
+            }
+            catch (Exception se)
+            {
+                throw new DBException("spGetRsvps", se);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Instantiates a new <see cref="RsvpSummary"/> based on the provided <see cref="DataRow"/>.
+        /// </summary>
+        /// <param name="dataRecord">The data record containing a representation of an <see cref="RsvpSummary"/>.</param>
+        /// <returns>The instantiated <see cref="RsvpSummary"/></returns>
+        internal static RsvpSummary Fill(IDataRecord dataRecord)
+        {
+            RsvpSummary r = new RsvpSummary();
+            r.eventId = (int)dataRecord["EventId"];
+            r.attending = (int)dataRecord["Attending"];
+            r.notAttending = (int)dataRecord["NotAttending"];
+            r.noResponse = (int)dataRecord["NoResponse"];
+
+            return r;
+        }
     }
 }

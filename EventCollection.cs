@@ -125,8 +125,7 @@ namespace Engage.Events
         {
             if (reader.Read())
             {
-                int totalRecords = (int)reader["TotalRecords"];
-                EventCollection events = new EventCollection(totalRecords);
+                EventCollection events = new EventCollection((int)reader["TotalRecords"]);
 
                 if (reader.NextResult())
                 {
