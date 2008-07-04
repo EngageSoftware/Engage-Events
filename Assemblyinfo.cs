@@ -16,8 +16,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Engage: Events Beta")]
-[assembly: AssemblyDescription("Engage Software's DotNetnuke Events System (Beta).")]
+[assembly: AssemblyTitle("Engage: Events (Alpha)")]
+[assembly: AssemblyDescription("Engage Software's DotNetnuke Events System (Alpha).")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Engage Software, Inc.")]
 [assembly: AssemblyProduct("")]
