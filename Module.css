@@ -21,14 +21,16 @@
 .PagingTable { margin: 10px 0; }
 
 		#EventItem{border-bottom: 1px #ccc dotted; overflow: hidden; padding: 1em 0;}
-			#EventItem p{margin-top: 0;margin-bottom: 0;}
-		.EventTitle h2{margin-left: 18%; font-size: 120%; line-height: 1.2; margin-bottom: 0.5em;}
+			#EventItem p{margin-top: 0;margin-bottom: 0.875em;}
+		.EventTitle h2{font-size: 120%; line-height: 1.2; margin: 0 0 0.5em 18%; }
 		.EventDate {clear: both; width: 100%; overflow: hidden;}
 			.EventDate .NormalBold, .EventLocation .NormalBold, .EventDescription .NormalBold
 			{float:left; width: 15%; margin-right: 3%; text-align: right;}
 			.EventDate .Normal, .EventLocation .Normal, .EventDescription .Normal{float: left; width: 81%;}
 
-		.EventButtons{margin-left: 18%; margin-top: 6%;}	
+		.EventDescription{overflow: hidden; clear: both;}
+		
+		.EventButtons{margin-left: 18%; margin-top: 0.675em;}	
 		.EventStats{font-weight:bold;}	
 		.border	{border: thin groove;}
 
@@ -40,14 +42,14 @@
 
 /* event edit page */
 
-.AdminButtons{ text-align: left; padding-left: 5%;}
+.AdminButtons{text-align: left; padding: 1em 0;}
 	.FooterButtons { padding-top: 3%; }
 	.AddEventSuccessMessage { padding-left: 10%; }
 
 	.AddNewEvent { padding-top: 2%; width: 100%; height: 100%;}
 	.AddNewEvent .Head { text-align: left; border-bottom: dashed 1px black; text-transform: uppercase; margin-bottom: 5%; padding-bottom: 1%; }
 
-.EventTitle, .EventStartDate, .EventEndDate, .EventLocationAdd, .EventEditor { text-align: left; padding: 1%; }
+.EventTitle, .EventStartDate, .EventEndDate, .EventLocationAdd, .EventEditor {text-align: left;}
 	.EventTitle .NormalBold { font-size: medium; }
 	.EventTitle .NormalTextBox { width: 40%; }
 	.EventLocationAdd .NormalTextBox { width: 60%; }
@@ -59,6 +61,9 @@
 			.EventEditor .Normal, .EventTitle .Normal, .EventStartDate .Normal, .EventLocationAdd .Normal, .EventEndDate .Normal{float: left; width: 81%;}
 
 .EventEditor li { list-style-type: none; }
+
+
+.registerSubmitBt, .registerMessage{margin-top: 0.675em;}
 
 /*========================================================
 
