@@ -11,28 +11,27 @@
 			.EventHeader .Normal{float:left;width: 15%; margin-right: 3%; text-align: right; color: #666;}
 			.EventHeader .NormalBold{float: left; width: 81%; color: #000;}
 			.ResponseHeader h4, .ResponseHeader h3, .ResponseRow h3 {display:inline;}
-			.ResponseHeader .SortByHeader{width: 40%; float:left;}
-			.ResponseHeader .StatusHeader{width: 40%; float:right; text-align:right;}
-			.ResponseHeader .StatusTypeHeaders{width: 40%; float:right; text-align:right;}
+			.ResponseHeader .SortByHeader{width: 50%; float:left;}
+			.ResponseHeader .StatusHeader{width: 50%; float:right; text-align: center;}
+			/*.ResponseHeader .StatusTypeHeaders{width: 40%; float:right; text-align:right;} */
 			.ResponseHeader .StatusTypeHeaders > span{padding-right: 10%;}
 			.ResponseRow .EventStats{float:right; width:30%;}
 			.ResponseRow .EventStats > a {padding-right: 50%;}
 .ResponsesSummary {padding: 25px 0;}
 .PagingTable { margin: 10px 0; }
 
-		#EventItem{border-bottom: 1px #ccc dotted; overflow: hidden; padding: 1em 0;}
+		#EventItem{border-bottom: 1px #ccc dotted; overflow: hidden; padding: 1em 0; width: 100%;}
 			#EventItem p{margin-top: 0;margin-bottom: 0.875em;}
 		.EventTitle h2{font-size: 120%; line-height: 1.2; margin: 0 0 0.5em 18%; }
 		.EventDate {clear: both; width: 100%; overflow: hidden;}
 			.EventDate .NormalBold, .EventLocation .NormalBold, .EventDescription .NormalBold
-			{float:left; width: 15%; margin-right: 3%; text-align: right;}
-			.EventDate .Normal, .EventLocation .Normal, .EventDescription .Normal{float: left; width: 81%;}
+			{float:left; width: 15%; text-align: right;}
+			.EventDate .Normal, .EventLocation .Normal, .EventDescription .Normal{float: left; padding-left: 3%; width: 82%;}
 
 		.EventDescription{overflow: hidden; clear: both;}
 		
-		.EventButtons{margin-left: 18%; margin-top: 0.675em;}	
+		.EventButtons{margin-top: 0.675em; overflow:hidden; padding-left: 18%; clear: both; }
 		.EventStats{font-weight:bold;}	
-		.border	{border: thin groove;}
 
 /* event calendar display page */
 
@@ -43,10 +42,10 @@
 /* event edit page */
 
 .AdminButtons{text-align: left; padding: 1em 0;}
-	.FooterButtons { padding-top: 3%; }
+	.FooterButtons {padding-top: 3%; }
 	.AddEventSuccessMessage { padding-left: 10%; }
 
-	.AddNewEvent { padding-top: 2%; width: 100%; height: 100%;}
+	.AddNewEvent {padding-top: 2%; width: 100%; height: 100%;}
 	.AddNewEvent .Head { text-align: left; border-bottom: dashed 1px black; text-transform: uppercase; margin-bottom: 5%; padding-bottom: 1%; }
 
 .EventTitle, .EventStartDate, .EventEndDate, .EventLocationAdd, .EventEditor {text-align: left;}
@@ -61,9 +60,43 @@
 			.EventEditor .Normal, .EventTitle .Normal, .EventStartDate .Normal, .EventLocationAdd .Normal, .EventEndDate .Normal{float: left; width: 81%;}
 
 .EventEditor li { list-style-type: none; }
-
-
 .registerSubmitBt, .registerMessage{margin-top: 0.675em;}
+
+
+.ResponseHeader{padding: 0.375em 0;}
+	.ResponseHeader > p{float: left; width: 49%; margin: 0; font-weight: bold;}
+	.StatusTypeHeaders{float: right; width: 49%; text-align: center;}
+		.StatusTypeHeaders .Normal{}
+		.StatusTypeHeaders p{margin: 0;}
+
+	.rsvpAtt{float: left; width: 50%;}
+	.rsvpNotAtt{float: right; width: 50%;}
+
+.rsvpDetailHeader td{background: #fff; color: #000; font-weight: bold; border-top: 1px #555 solid; border-bottom: 1px #333 solid;
+	padding: 10px 0 6px; font-size: 120%;}
+.rsvpDetailItem{border-bottom: 1px #ccc dotted; border-top: 1px #ccc dotted; }
+.rsvpDetailItem td, .rsvpDetailAltItem td {padding: 8px 0;}
+.rsvpDetailItem:hover, .rsvpDetailAltItem:hover{}
+
+.rsvpDetailAltItem{background: #f2f9fc;}
+.rsvpDetailItemSelect{}
+
+.ResponseHeader .SortByHeader p, .ResponseHeader .StatusHeader p{display:inline; text-transform: uppercase; font-weight: bold; font-size: 90%;}
+
+.ResponsesSummary .PagingTable{border: none; border-bottom: 1px #000 solid; border-top: 1px #999 solid; padding: 12px 0 6px;}
+.rsvpMemberName{font-weight: bold;}
+.rsvpDisplay{padding: 8px 0;}
+	.rsvpEventDisplay{float: left; width: 49%;}
+		.rsvpEventDisplay h3 {font-weight: bold; color: #046380; margin: 0; font-size: 110%;}
+		.rsvpEventDisplay p{margin: 0; color: #555; font-size: 95%;}
+	.rsvpEventStats{float: right; width: 49%; text-align: center;}
+		.rsvpEventStats p{margin: 0;}
+
+
+.ResponsesSummary ol{margin: 0 0 0 1.675em; padding:0;}
+	.ResponsesSummary ol li .rsvpDisplay {padding: 0; margin: 12px 0 8px;}
+	.ResponsesSummary ol li {}
+
 
 /*========================================================
 
