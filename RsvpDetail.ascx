@@ -2,13 +2,13 @@
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
 <%@ Register TagPrefix="engage" TagName="RsvpDisplay" Src="Display/RsvpDisplay.ascx" %>
 
-<div class="Normal ResponsesSummary">
+<div class="ResponsesSummary">
     <div class="ResponseHeader">
         <div class="SortByHeader Normal">
             <p>
                 <asp:Label ID="Label1" runat="server" ResourceKey="SortByLabel"/>
             </p>
-            <asp:RadioButtonList ID="SortRadioButtonList" runat="server" AutoPostBack="True" CssClass="Normal" RepeatDirection="Horizontal" RepeatLayout="Flow">
+            <asp:RadioButtonList ID="SortRadioButtonList" runat="server" AutoPostBack="True" RepeatDirection="Horizontal" RepeatLayout="Flow">
                 <asp:ListItem Selected="True" Value="CreationDate" ResourceKey="ResponseDate"/>
                 <asp:ListItem Value="FirstName" ResourceKey="FirstName"/>
                 <asp:ListItem Value="LastName" ResourceKey="LastName"/>
@@ -29,7 +29,7 @@
         </div>
     </div>
     <engage:RsvpDisplay ID="RsvpDisplay" runat="server" />
-    <asp:DataGrid ID="grdRsvpDetail" runat="server" AutoGenerateColumns="False" Width="100%" AllowSorting="False" PageSize="10" BorderWidth="0" GridLines="None" HeaderStyle-CssClass="rsvpDetailHeader">
+    <asp:DataGrid ID="grdRsvpDetail" runat="server" AutoGenerateColumns="False" Width="100%" AllowSorting="False" PageSize="10" BorderWidth="0" GridLines="None" HeaderStyle-CssClass="rsvpDetailHeader" CssClass="Normal">
         <SelectedItemStyle CssClass="rsvpDetailItemSelect"></SelectedItemStyle>
         <PagerStyle HorizontalAlign="Center" Mode="NumericPages" PageButtonCount="15"></PagerStyle>
         <AlternatingItemStyle CssClass="rsvpDetailAltItem"></AlternatingItemStyle>
