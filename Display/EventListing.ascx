@@ -27,7 +27,9 @@
                             
                             <div class="EventDescription">
                                 <p class="NormalBold">Description</p>
-                                <p class="Normal"><%# DataBinder.Eval(Container.DataItem, "Overview")  %></p>
+                                <div class="Normal">
+                                	<%# DataBinder.Eval(Container.DataItem, "Overview")  %>
+                                </div>
                             </div>
                             <uc2:actions ID="ccEventActions" runat="server" />
 					</div>
