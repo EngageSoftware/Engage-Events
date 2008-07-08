@@ -8,9 +8,9 @@
             <h2 class="Head"><asp:Label ID="Label1" ResourceKey="titleLabel" runat="server"/></p>
             <h3 class="SubHead"><asp:Label id="EventNameLabel" runat="server"/></p>
         </div>
-        <div class="Normal" id="rbOptions">
-            <asp:RadioButtonList ID="RsvpStatusRadioButtons" runat="server" />
-            <asp:Button ID="SubmitButton" runat="server" CssClass="registerSubmitBt" Text="Submit" />
+        <div id="rbOptions">
+            <asp:RadioButtonList ID="RsvpStatusRadioButtons" CssClass="Normal" runat="server" />
+            <asp:Button ID="SubmitButton" runat="server" CssClass="registerSubmitBt Normal" Text="Submit" />
         </div>
     </asp:View>
     <asp:View ID="View2" runat="server">
