@@ -4,40 +4,38 @@
 
 <div class="Normal ResponsesSummary">
     <div class="ResponseHeader">
-        <div class="SortByHeader">
-            <h4 class="NormalBold">
-                <asp:Label runat="server" CssClass="NormalBold" ResourceKey="SortByLabel"/>
-            </h4>
+        <div class="SortByHeader Normal">
+            <p>
+                <asp:Label ID="Label1" runat="server" ResourceKey="SortByLabel"/>
+            </p>
             <asp:RadioButtonList ID="SortRadioButtonList" runat="server" AutoPostBack="True" CssClass="Normal" RepeatDirection="Horizontal" RepeatLayout="Flow">
                 <asp:ListItem Selected="True" Value="CreationDate" ResourceKey="ResponseDate"/>
                 <asp:ListItem Value="FirstName" ResourceKey="FirstName"/>
                 <asp:ListItem Value="LastName" ResourceKey="LastName"/>
             </asp:RadioButtonList>
         </div>
-        <div class="StatusHeader">
-            <h4 class="NormalBold">
-                <asp:Label runat="server" CssClass="NormalBold" resourcekey="Status" />
-            </h4>
+        <div class="StatusHeader Normal">
+            <p>
+                <asp:Label ID="Label2" runat="server" resourcekey="Status" />
+            </p>
         </div>
     </div>
     <div class="ResponseHeader">
-        <h3><asp:Label runat="server" resourcekey="Events" /></h3>
-        <div class="StatusTypeHeaders">
-            <asp:Label runat="server" resourcekey="Attending" />
-            <asp:Label runat="server" resourcekey="NotAttending" />
+        <p class="Normal"><asp:Label ID="Label3" runat="server" resourcekey="Events" /></p>
+        <div class="StatusTypeHeaders Normal">
+            <p class="rsvpAtt"><asp:Label ID="Label4" runat="server" resourcekey="Attending" /></p>
+            <p class="rsvpNotAtt"><asp:Label ID="Label5" runat="server" resourcekey="NotAttending" /></p>
             <%--<asp:Label runat="server" resourcekey="NoResponse" />--%>
         </div>
     </div>
     <engage:RsvpDisplay ID="RsvpDisplay" runat="server" />
-
-    <asp:DataGrid ID="grdRsvpDetail" runat="server" Font-Size="X-Small" Font-Names="Verdana" Width="100%" Height="72px" AutoGenerateColumns="False" BorderColor="#999999" BorderStyle="None" BorderWidth="1px" BackColor="White" CellPadding="3" GridLines="Vertical" AllowSorting="False" PageSize="10">
-        <FooterStyle ForeColor="Black" BackColor="#CCCCCC"></FooterStyle>
-        <SelectedItemStyle Font-Bold="True" ForeColor="White" BackColor="#008A8C"></SelectedItemStyle>
-        <PagerStyle HorizontalAlign="Center" ForeColor="Black" BackColor="#999999" Mode="NumericPages" PageButtonCount="15"></PagerStyle>
-        <AlternatingItemStyle BackColor="Gainsboro"></AlternatingItemStyle>
-        <ItemStyle ForeColor="Black" BackColor="#EEEEEE"></ItemStyle>
+    <asp:DataGrid ID="grdRsvpDetail" runat="server" AutoGenerateColumns="False" Width="100%" AllowSorting="False" PageSize="10" BorderWidth="0" GridLines="None" HeaderStyle-CssClass="rsvpDetailHeader">
+        <SelectedItemStyle CssClass="rsvpDetailItemSelect"></SelectedItemStyle>
+        <PagerStyle HorizontalAlign="Center" Mode="NumericPages" PageButtonCount="15"></PagerStyle>
+        <AlternatingItemStyle CssClass="rsvpDetailAltItem"></AlternatingItemStyle>
+        <ItemStyle CssClass="rsvpDetailItem"></ItemStyle>
         <Columns>
-            <asp:BoundColumn DataField="Name" HeaderText="Name" SortExpression="Name">
+            <asp:BoundColumn DataField="Name" HeaderText="Name" SortExpression="Name" ItemStyle-CssClass="rsvpMemberName">
                 <HeaderStyle Wrap="False"></HeaderStyle>
                 <ItemStyle Wrap="True"></ItemStyle>
                 <FooterStyle Wrap="False"></FooterStyle>
