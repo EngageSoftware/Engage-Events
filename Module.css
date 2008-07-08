@@ -11,8 +11,8 @@
 			.EventHeader .Normal{float:left;width: 15%; margin-right: 3%; text-align: right; color: #666;}
 			.EventHeader .NormalBold{float: left; width: 81%; color: #000;}
 			.ResponseHeader h4, .ResponseHeader h3, .ResponseRow h3 {display:inline;}
-			.ResponseHeader .SortByHeader{width: 50%; float:left;}
-			.ResponseHeader .StatusHeader{width: 50%; float:right; text-align: center;}
+			.ResponseHeader .SortByHeader{width: 49%; float:left;}
+			.ResponseHeader .StatusHeader{width: 49%; float:right; text-align: center;}
 			/*.ResponseHeader .StatusTypeHeaders{width: 40%; float:right; text-align:right;} */
 			.ResponseHeader .StatusTypeHeaders > span{padding-right: 10%;}
 			.ResponseRow .EventStats{float:right; width:30%;}
@@ -69,8 +69,8 @@
 		.StatusTypeHeaders .Normal{}
 		.StatusTypeHeaders p{margin: 0;}
 
-	.rsvpAtt{float: left; width: 50%;}
-	.rsvpNotAtt{float: right; width: 50%;}
+	.rsvpAtt{float: left; width: 49%;}
+	.rsvpNotAtt{float: right; width: 49%;}
 
 .rsvpDetailHeader td{background: #fff; color: #000; font-weight: bold; border-top: 1px #555 solid; border-bottom: 1px #333 solid;
 	padding: 10px 0 6px; font-size: 120%;}
