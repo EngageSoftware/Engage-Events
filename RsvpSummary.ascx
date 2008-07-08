@@ -6,26 +6,26 @@
 <div class="Normal ResponsesSummary">
     <div class="ResponseHeader">
         <div class="SortByHeader">
-            <h4 class="NormalBold">
-                <asp:Label runat="server" CssClass="NormalBold" Resourcekey="SortByLabel" />
-            </h4>
+            <p class="Normal">
+                <asp:Label ID="Label1" runat="server" Resourcekey="SortByLabel" />
+            </p>
             <asp:RadioButtonList ID="SortRadioButtonList" runat="server" AutoPostBack="True" CssClass="Normal" RepeatDirection="Horizontal" RepeatLayout="Flow">
                 <asp:ListItem Selected="True" Value="EventStart" resourcekey="EventStart" />
                 <asp:ListItem Value="Title" resourcekey="Title" />
             </asp:RadioButtonList>
         </div>
         <div class="StatusHeader">
-            <h4 class="NormalBold">
-                <asp:Label runat="server" CssClass="NormalBold" resourcekey="Status" />
-            </h4>
+            <p class="Normal">
+                <asp:Label ID="Label2" runat="server" CssClass="NormalBold" resourcekey="Status" />
+            </p>
         </div>
     </div>
     
     <div class="ResponseHeader">
-        <h3><asp:Label runat="server" resourcekey="Events" /></h3>
-        <div class="StatusTypeHeaders">
-            <asp:Label runat="server" resourcekey="Attending" />
-            <asp:Label runat="server" resourcekey="NotAttending" />
+        <p><asp:Label ID="Label3" runat="server" resourcekey="Events" /></p>
+        <div class="StatusTypeHeaders Normal">
+            <p class="rsvpAtt"><asp:Label ID="Label4" runat="server" resourcekey="Attending" /></p>
+            <p class="rsvpNotAtt"><asp:Label ID="Label5" runat="server" resourcekey="NotAttending" /></p>
             <%--<asp:Label runat="server" resourcekey="NoResponse" />--%>
         </div>
     </div>
