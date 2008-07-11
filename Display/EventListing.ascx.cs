@@ -22,10 +22,54 @@ namespace Engage.Dnn.Events.Display
     public partial class EventListing : ModuleBase
     {
         /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
+        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="T:System.EventArgs"/> object that contains the event data.</param>
-        protected override void OnLoad(EventArgs e)
+        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+            this.Load += this.Page_Load;
+            this.CurrentEventListing.ItemDataBound += EventListing_ItemDataBound;
+            this.UpcomingEventListing.ItemDataBound += EventListing_ItemDataBound;
+        }
+
+        /// <summary>
+        /// Handles the Cancel event of the EventActions control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void EventActions_Cancel(object sender, EventArgs e)
+        {
+            this.BindData();
+        }
+
+        /// <summary>
+        /// Handles the Delete event of the EventActions control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void EventActions_Delete(object sender, EventArgs e)
+        {
+            this.BindData();
+        }
+
+        /// <summary>
+        /// Handles the ItemDataBound event of the CurrentEventListing and UpcomingEventListing controls.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
+        private static void EventListing_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            EventAdminActions actions = (EventAdminActions)e.Item.FindControl("EventActions");
+            actions.CurrentEvent = (Event)e.Item.DataItem;
+        }
+
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void Page_Load(object sender, EventArgs e)
         {
             try
             {
@@ -36,42 +80,6 @@ namespace Engage.Dnn.Events.Display
                 Exceptions.ProcessModuleLoadException(this, exc);
             }    
         }
-           
-        /// <summary>
-        /// Handles the ItemDataBound event of the Listing control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
-        protected void Listing_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-            EventAdminActions actions = (EventAdminActions)e.Item.FindControl("ccEventActions");
-            if (actions != null)
-            {
-                actions.CurrentEvent = (Event)e.Item.DataItem;
-                ////actions.ActionCompleted += new ActionEventHandler(actions_ActionCompleted);
-            }
-
-            actions = (EventAdminActions)e.Item.FindControl("ccEventActions2");
-            if (actions != null)
-            {
-                actions.CurrentEvent = (Event)e.Item.DataItem;
-                ////actions.ActionCompleted += new ActionEventHandler(actions_ActionCompleted);
-            }
-
-            //LinkButton lbICal = e.Item.FindControl("lbCICal") as LinkButton;
-            //if (lbICal != null) lbICal.Enabled = (IsRegistered == false);
-
-            //lbICal = e.Item.FindControl("lbUICal") as LinkButton;
-            //if (lbICal != null) lbICal.Enabled = (IsRegistered == false);
-        }
-
-        ////private void actions_ActionCompleted(object sender, ActionEventArg e)
-        ////{
-        ////    if (e.ActionStatus == Action.Success)
-        ////    {
-        ////        BindData();
-        ////    }
-        ////}
 
         /// <summary>
         /// Binds the data.
@@ -79,12 +87,12 @@ namespace Engage.Dnn.Events.Display
         private void BindData()
         {
             EventCollection events = EventCollection.Load(PortalId, true, 0, 0);
-            rpCurrentEventListing.DataSource = events;
-            rpCurrentEventListing.DataBind();
+            this.CurrentEventListing.DataSource = events;
+            this.CurrentEventListing.DataBind();
 
             events = EventCollection.Load(PortalId, false, 0, 0);
-            rpUpcomingEventListing.DataSource = events;
-            rpUpcomingEventListing.DataBind();
+            this.UpcomingEventListing.DataSource = events;
+            this.UpcomingEventListing.DataBind();
         }
     }
 }

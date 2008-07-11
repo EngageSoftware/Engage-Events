@@ -55,6 +55,19 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Handles the ItemDataBound event of the EventListingRepeater control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
+        private static void EventListingRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            EventAdminActions eventActions = (EventAdminActions)e.Item.FindControl("EventActions");
+            eventActions.CurrentEvent = (Event)e.Item.DataItem;
+            ////eventActions.Delete += this.EventActions_Delete;
+            ////eventActions.Cancel += this.EventActions_Cancel;
+        }
+
+        /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -89,19 +102,6 @@ namespace Engage.Dnn.Events
         private void SortRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.BindData();
-        }
-
-        /// <summary>
-        /// Handles the ItemDataBound event of the EventListingRepeater control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
-        private static void EventListingRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-            EventAdminActions eventActions = (EventAdminActions)e.Item.FindControl("EventActions");
-            eventActions.CurrentEvent = (Event)e.Item.DataItem;
-            ////eventActions.Delete += this.EventActions_Delete;
-            ////eventActions.Cancel += this.EventActions_Cancel;
         }
 
         /// <summary>

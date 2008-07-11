@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DescriptionHeader.Text" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="EventsHeader.Text" xml:space="preserve">
+    <value>Events</value>
+  </data>
   <data name="lbEmailAFriend.Text" xml:space="preserve">
     <value>Email a Friend</value>
   </data>
@@ -131,5 +137,17 @@
   </data>
   <data name="lbViewInvite.Text" xml:space="preserve">
     <value>View Invite</value>
+  </data>
+  <data name="ThisMonth.Text" xml:space="preserve">
+    <value>This Month</value>
+  </data>
+  <data name="Upcoming.Text" xml:space="preserve">
+    <value>Upcoming</value>
+  </data>
+  <data name="WhenHeader.Text" xml:space="preserve">
+    <value>When</value>
+  </data>
+  <data name="WhereHeader.Text" xml:space="preserve">
+    <value>Where</value>
   </data>
 </root>

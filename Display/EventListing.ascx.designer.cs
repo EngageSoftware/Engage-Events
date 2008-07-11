@@ -14,21 +14,21 @@ namespace Engage.Dnn.Events.Display {
     public partial class EventListing {
         
         /// <summary>
-        /// rpCurrentEventListing control.
+        /// CurrentEventListing control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpCurrentEventListing;
+        protected global::System.Web.UI.WebControls.Repeater CurrentEventListing;
         
         /// <summary>
-        /// rpUpcomingEventListing control.
+        /// UpcomingEventListing control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rpUpcomingEventListing;
+        protected global::System.Web.UI.WebControls.Repeater UpcomingEventListing;
     }
 }
