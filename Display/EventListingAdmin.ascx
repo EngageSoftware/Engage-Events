@@ -49,6 +49,6 @@
                 <%# DataBinder.Eval(Container.DataItem, "Overview")  %>
             </div>
         </div>
-        <engage:actions ID="EventActions" runat="server" />
+        <engage:actions ID="EventActions" runat="server" OnCancel="EventActions_Cancel" OnDelete="EventActions_Delete" />
     </ItemTemplate>
 </asp:Repeater>

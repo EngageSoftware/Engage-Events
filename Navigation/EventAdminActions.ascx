@@ -7,5 +7,5 @@
     <asp:Button ID="DeleteEventButton" runat="server" ResourceKey="DeleteEventButton"/>
     <asp:Button ID="CancelButton" runat="server" />
     <asp:Button ID="ViewInviteButton" runat="server" ResourceKey="ViewInviteButton" Visible="false"/>
-    <asp:Button ID="EditEmailButton" runat="server" ResourceKey="EditEmailButton"/>
+    <asp:Button ID="EditEmailButton" runat="server" ResourceKey="EditEmailButton" Visible="false"/>
 </div>

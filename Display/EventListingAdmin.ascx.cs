@@ -31,7 +31,27 @@ namespace Engage.Dnn.Events
             this.Load += this.Page_Load;
             this.SortRadioButtonList.SelectedIndexChanged += this.SortRadioButtonList_SelectedIndexChanged;
             this.StatusRadioButtonList.SelectedIndexChanged += this.StatusRadioButtonList_SelectedIndexChanged;
-            this.EventListingRepeater.ItemDataBound += this.EventListingRepeater_ItemDataBound;
+            this.EventListingRepeater.ItemDataBound += EventListingRepeater_ItemDataBound;
+        }
+
+        /// <summary>
+        /// Handles the Cancel event of the EventActions control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void EventActions_Cancel(object sender, EventArgs e)
+        {
+            this.BindData();
+        }
+
+        /// <summary>
+        /// Handles the Delete event of the EventActions control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void EventActions_Delete(object sender, EventArgs e)
+        {
+            this.BindData();
         }
 
         /// <summary>
@@ -43,10 +63,7 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                if (!Page.IsPostBack)
-                {
-                    this.BindData();
-                }
+                this.BindData();
             }
             catch (Exception exc)
             {
@@ -79,32 +96,12 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
-        private void EventListingRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        private static void EventListingRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             EventAdminActions eventActions = (EventAdminActions)e.Item.FindControl("EventActions");
             eventActions.CurrentEvent = (Event)e.Item.DataItem;
-            eventActions.Delete += this.EventActions_Delete;
-            eventActions.Cancel += this.EventActions_Cancel;
-        }
-
-        /// <summary>
-        /// Handles the Cancel event of the EventActions control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void EventActions_Cancel(object sender, EventArgs e)
-        {
-            this.BindData();
-        }
-
-        /// <summary>
-        /// Handles the Delete event of the EventActions control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void EventActions_Delete(object sender, EventArgs e)
-        {
-            this.BindData();
+            ////eventActions.Delete += this.EventActions_Delete;
+            ////eventActions.Cancel += this.EventActions_Cancel;
         }
 
         /// <summary>

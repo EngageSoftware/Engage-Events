@@ -51,7 +51,12 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                return this.currentEvent ?? Event.Load(this.CurrentEventId);
+                if (this.currentEvent == null)
+                {
+                    this.currentEvent = Event.Load(this.CurrentEventId);
+                }
+
+                return this.currentEvent;
             }
 
             set
