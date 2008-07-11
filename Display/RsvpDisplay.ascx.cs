@@ -45,19 +45,19 @@ namespace Engage.Dnn.Events
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
-            this.Load += this.Page_Load;
+            this.PreRender += this.Page_PreRender;
         }
 
         /// <summary>
-        /// Handles the Load event of the Page control.
+        /// Handles the PreRender event of the Page control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void Page_Load(object sender, EventArgs e)
+        private void Page_PreRender(object sender, EventArgs e)
         {
             try
             {
-                if (!this.IsPostBack)
+                if (this.rsvpSummary != null)
                 {
                     this.TitleLabel.Text = this.rsvpSummary.Title;
                     this.NotAttendingLink.NavigateUrl = this.GetDetailUrl(this.rsvpSummary.EventId, RsvpStatus.NotAttending, this.rsvpSummary.NotAttending);
