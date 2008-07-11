@@ -1095,8 +1095,7 @@ BEGIN
 	Create table #results 
 	(
 		[Id] int not null IDENTITY(1,1),
-		[RsvpId] [int],
-		[TotalRecords] int
+		[RsvpId] [int]
 	)
 	
 	declare @sql varchar(8000)
@@ -1115,19 +1114,16 @@ BEGIN
 	--print (@sql)
 	exec (@sql)
 
-	DECLARE @rows int
-	set @rows = @@RowCount
-
-	update #results set TotalRecords = @rows
+	select @@RowCount as TotalRecords
 
 	if (@PageSize = 0)
 	 	BEGIN
-	 		select e.*,	r.TotalRecords from #results r
+	 		select e.* from #results r
 			join {databaseOwner}[{objectQualifier}Engage_Rsvp] e on (r.RsvpId = e.RsvpId)
 	 	END
 	ELSE
 	 	BEGIN
-	 		select e.*,	r.TotalRecords from #results r
+	 		select e.* from #results r
 			join {databaseOwner}[{objectQualifier}Engage_Rsvp] e on (r.RsvpId = e.RsvpId)
 	 		where (id >= @index * @PageSize + 1) and id < (@index * @PageSize) + @PageSize + 1
 	 	END
