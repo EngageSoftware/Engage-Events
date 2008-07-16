@@ -66,6 +66,8 @@ namespace Engage.Dnn.Events
         {
             get
             {
+                // TODO: should this be replaced with a call to IsEditable?
+                // TODO: should this be a call to PortalSecurity.HasEditPermission?
                 switch (this.Request.IsAuthenticated)
                 {
                     case false:
