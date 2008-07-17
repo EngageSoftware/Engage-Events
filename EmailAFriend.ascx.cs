@@ -19,56 +19,56 @@ namespace Engage.Dnn.Events
 
     public partial class EmailAFriend : ModuleBase
 	{
-        protected override void OnInit(EventArgs e)
-        {
-            this.Load += Page_Load;
-            base.OnInit(e);
-        }
+        //protected override void OnInit(EventArgs e)
+        //{
+        //    this.Load += Page_Load;
+        //    base.OnInit(e);
+        //}
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Member", Justification = "Controls use lower case prefix")]
-        protected void btnCancel_OnClick(object sender, EventArgs e)
-        {
-            ClearCommentInput();
-            mpeEmailAFriend.Hide();
-        }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Member", Justification = "Controls use lower case prefix")]
+        //protected void btnCancel_OnClick(object sender, EventArgs e)
+        //{
+        //    ClearCommentInput();
+        //    mpeEmailAFriend.Hide();
+        //}
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Member", Justification = "Controls use lower case prefix")]
-        protected void btnSend_OnClick(object sender, EventArgs e)
-        {
-            try
-            {
-                string message = Localization.GetString("EmailAFriend", LocalResourceFile);
-                message = message.Replace("[Engage:Recipient]", txtTo.Text.Trim());
-                message = message.Replace("[Engage:Url]", GetEventLinkUrl());
-                message = message.Replace("[Engage:From]", txtFrom.Text.Trim());
-                message = message.Replace("[Engage:Message]", txtMessage.Text.Trim());
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Member", Justification = "Controls use lower case prefix")]
+        //protected void btnSend_OnClick(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        string message = Localization.GetString("EmailAFriend", LocalResourceFile);
+        //        message = message.Replace("[Engage:Recipient]", txtTo.Text.Trim());
+        //        message = message.Replace("[Engage:Url]", GetEventLinkUrl());
+        //        message = message.Replace("[Engage:From]", txtFrom.Text.Trim());
+        //        message = message.Replace("[Engage:Message]", txtMessage.Text.Trim());
 
-                string subject = Localization.GetString("EmailAFriendSubject", LocalResourceFile);
-                subject = subject.Replace("[Engage:Portal]", PortalSettings.PortalName);
+        //        string subject = Localization.GetString("EmailAFriendSubject", LocalResourceFile);
+        //        subject = subject.Replace("[Engage:Portal]", PortalSettings.PortalName);
 
-                Mail.SendMail(PortalSettings.Email.ToString(), txtTo.Text.Trim(), "", subject, message, "", "HTML", "", "", "", "");
-                ClearCommentInput();
-                mpeEmailAFriend.Hide();
+        //        Mail.SendMail(PortalSettings.Email.ToString(), txtTo.Text.Trim(), "", subject, message, "", "HTML", "", "", "", "");
+        //        ClearCommentInput();
+        //        mpeEmailAFriend.Hide();
                 
-            }
-            catch (Exception ex)
-            {
-                //the email or emails entered are invalid or mail services are not configured
-                Exceptions.LogException(ex);
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //the email or emails entered are invalid or mail services are not configured
+        //        Exceptions.LogException(ex);
+        //    }
+        //}
 
-        private void Page_Load(object sender, EventArgs e)
-        {
-            this.txtFrom.Text = this.UserInfo != null ? this.UserInfo.Email : string.Empty;
-        }
+        //private void Page_Load(object sender, EventArgs e)
+        //{
+        //    this.txtFrom.Text = this.UserInfo != null ? this.UserInfo.Email : string.Empty;
+        //}
 
-        private void ClearCommentInput()
-        {
-            txtFrom.Text = string.Empty;
-            txtMessage.Text = string.Empty;
-            txtTo.Text = string.Empty;
-        }
+        //private void ClearCommentInput()
+        //{
+        //    txtFrom.Text = string.Empty;
+        //    txtMessage.Text = string.Empty;
+        //    txtTo.Text = string.Empty;
+        //}
 
         private string GetEventLinkUrl()
         {

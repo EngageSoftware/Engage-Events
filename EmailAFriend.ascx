@@ -1,7 +1,7 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EmailAFriend" Codebehind="EmailAFriend.ascx.cs" %>
-<%@ Register Assembly="AjaxControlToolkit" TagPrefix="ajaxToolkit" Namespace="AjaxControlToolkit" %>
+<%-- Register Assembly="AjaxControlToolkit" TagPrefix="ajaxToolkit" Namespace="AjaxControlToolkit" --%>
 
-<div id="divEmailAFriend">
+<%--<div id="divEmailAFriend">
 	<asp:LinkButton ID="btnEmailAFriend" Runat="server" ResourceKey="btnEmailAFriend" cssclass="btnEmailAFriend" CausesValidation="false"></asp:LinkButton>	
 </div>
 
@@ -27,4 +27,4 @@
             </div>
     </asp:Panel>
 
-
+--%>

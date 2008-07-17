@@ -6,9 +6,8 @@
       <foldername>EngageEvents</foldername>
       <modulename>Engage: Events</modulename>
       <description>The DotNetNuke Events (Alpha) module by Engage Software (www.engagemodules.com)</description>
-      <version>00.00.01</version>
+      <version>00.00.02</version>
       <businesscontrollerclass>Engage.Dnn.Events.Components.FeaturesController</businesscontrollerclass>
-      <dependencies>AjaxControlToolkit.PopupControlExtender; AjaxControlToolkit.ToolkitScriptManager</dependencies>
       <resourcefile>Resources.zip</resourcefile>
       <modules>
         <module>
