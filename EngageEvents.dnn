@@ -5,8 +5,8 @@
       <friendlyname>Engage: Events</friendlyname>
       <foldername>EngageEvents</foldername>
       <modulename>Engage: Events</modulename>
-      <description>The DotNetNuke Events (Alpha) module by Engage Software (www.engagemodules.com)</description>
-      <version>00.00.02</version>
+      <description>The DotNetNuke Events (Beta) module by Engage Software (www.engagemodules.com)</description>
+      <version>00.01.00</version>
       <businesscontrollerclass>Engage.Dnn.Events.Components.FeaturesController</businesscontrollerclass>
       <resourcefile>Resources.zip</resourcefile>
       <modules>
@@ -32,6 +32,10 @@
         <file>
           <path>Providers\DataProviders\SqlDataProvider</path>
           <name>00.00.01.SqlDataProvider</name>
+        </file>
+        <file>
+          <path>Providers\DataProviders\SqlDataProvider</path>
+          <name>00.01.00.SqlDataProvider</name>
         </file>
         <file>
           <name>ReadMe.txt</name>
@@ -68,6 +72,9 @@
         </file>
         <file>
           <name>Engage.Dnn.Utility.dll</name>
+        </file>
+        <file>
+          <name>Engage.Templating.dll</name>
         </file>
         <file>
           <name>Telerik.Web.UI.dll</name>

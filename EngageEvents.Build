@@ -100,6 +100,7 @@
         <include name="**/*.asmx" />
         <include name="**/*.xsd" />
         <include name="**/*.tdf" />
+        <include name="**/Templates/*" />
         <exclude name="**/DNNDebug.aspx" />
         <exclude name="**/Resources.zip" />
         <exclude name="**/Install/**/*" />
@@ -148,6 +149,7 @@
         <include name="**/*.cs" />
         <include name="**/*.sln" />
         <include name="**/*.js" />
+        <include name="**/Templates/*" />
         <include name="**/*.csproj" />
         <include name="**/*.build" />
         <exclude name="**/DNNDebug.aspx" />
@@ -190,6 +192,7 @@
         <include name="../../bin/Engage.Utilityv3.0.dll" />
         <include name="../../bin/Engage.Communicationv3.0.dll" />
         <include name="../../bin/Engage.Dnn.Utility.dll" />
+        <include name="../../bin/Engage.Templating.dll" />
         <include name="../../bin/Engage.Licensing.dll" />
         <include name="C:\code\Engage 3.0\Engage.Licensing\bin\Release\Engage.Licensing.dll.config" />
         <include name="../../bin/Telerik.Web.UI.dll" />
@@ -227,6 +230,7 @@
         <include name="../../bin/Engage.Utilityv3.0.dll" />
         <include name="../../bin/Engage.Communicationv3.0.dll" />
         <include name="../../bin/Engage.Dnn.Utility.dll" />
+        <include name="../../bin/Engage.Templating.dll" />
         <include name="../../bin/Engage.Licensing.dll" />
         <include name="C:\code\Engage 3.0\Engage.Licensing\bin\Release\Engage.Licensing.dll.config" />
         <include name="../../bin/Telerik.Web.UI.dll" />
@@ -264,6 +268,7 @@
         <include name="../../bin/Engage.Utilityv3.0.dll" />
         <include name="../../bin/Engage.Communicationv3.0.dll" />
         <include name="../../bin/Engage.Dnn.Utility.dll" />
+        <include name="../../bin/Engage.Templating.dll" />
         <include name="../../bin/Engage.Licensing.dll" />
         <include name="C:\code\Engage 3.0\Engage.Licensing\bin\Release\Engage.Licensing.dll.config" />
         <include name="../../bin/Telerik.Web.UI.dll" />
@@ -303,6 +308,7 @@
         <include name="../../bin/Engage.Communicationv3.0.dll" />
         <include name="../../bin/Engage.Dnn.Utility.dll" />
         <include name="../../bin/Engage.Licensing.dll" />
+        <include name="../../bin/Engage.Templating.dll" />
         <include name="../../bin/Telerik.Web.UI.dll" />
         <include name="../../bin/aspNetEmail.dll" />
         <include name="C:\code\Engage 3.0\Engage.Licensing\bin\Release\Engage.Licensing.dll.config" />

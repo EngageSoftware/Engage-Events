@@ -174,7 +174,7 @@
     <Compile Include="Admin\NotConfigured.ascx.designer.cs">
       <DependentUpon>NotConfigured.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Assemblyinfo.cs" />
+    <Compile Include="Properties\Assemblyinfo.cs" />
     <Compile Include="Components\EmailScheduler.cs" />
     <Compile Include="Components\FeaturesController.cs" />
     <Compile Include="Controls\ModuleMessage.ascx.cs">
@@ -386,7 +386,7 @@
     <None Include="EngageEvents.dnn" />
     <None Include="EngageEvents.Build" />
     <None Include="Providers\DataProviders\SqlDataProvider\00.00.01.SqlDataProvider" />
-    <None Include="Providers\DataProviders\SqlDataProvider\00.00.02.SqlDataProvider" />
+    <None Include="Providers\DataProviders\SqlDataProvider\00.01.00.SqlDataProvider" />
     <None Include="Uninstall.SqlDataProvider" />
   </ItemGroup>
   <ItemGroup>
@@ -686,7 +686,6 @@
     <Content Include="Templates\ListingHeader.html" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Properties\" />
     <Folder Include="Templates\Display\" />
     <Folder Include="Templates\Email\" />
   </ItemGroup>

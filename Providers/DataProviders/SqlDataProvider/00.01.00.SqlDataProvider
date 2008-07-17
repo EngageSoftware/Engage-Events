@@ -1,6 +1,7 @@
 ﻿IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = Object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetEventsCurrent]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
   DROP PROC {databaseOwner}[{objectQualifier}Engage_spGetEventsCurrent] 
 GO
+
 CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEventsCurrent](
 	@portalId int, 
 	@sortColumn nvarchar(200),
@@ -100,6 +101,7 @@ GO
 IF EXISTS (SELECT * FROM   dbo.sysobjects WHERE  id = Object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetEvents]') AND Objectproperty(id,N'IsProcedure') = 1)
   DROP PROC {databaseOwner}[{objectQualifier}Engage_spGetEvents] 
 GO
+
 CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEvents](
 	@portalId int, 
 	@sortColumn nvarchar(200), 
