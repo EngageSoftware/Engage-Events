@@ -8,19 +8,25 @@
 //CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 //DEALINGS IN THE SOFTWARE.
 
-using System;
-using System.Collections;
-using DotNetNuke.Common;
-using DotNetNuke.Entities.Users;
-using DotNetNuke.Security.Roles;
-using DotNetNuke.Services.Exceptions;
-using Engage.Events;
-using Engage.Events.Util;
-using Engage.Communication.Email;
-using Engage.Services.Client;
 
 namespace Engage.Dnn.Events
 {
+    using System;
+    using System.Collections;
+    using DotNetNuke.Common;
+    using DotNetNuke.Entities.Users;
+    using DotNetNuke.Security.Roles;
+    using DotNetNuke.Services.Exceptions;
+    using Engage.Events;
+    using Engage.Events.Util;
+    using Communication.Email;
+    using Engage.Util;
+    using Services.Client;
+    using Utility=Engage.Dnn.Utility;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class EmailEdit : ModuleBase
     {
 
@@ -69,7 +75,7 @@ namespace Engage.Dnn.Events
             }
             else
             {
-                EmailEventType type = (EmailEventType)Enum.Parse(typeof(EmailEventType), EmailTypeRadioButtons.SelectedValue);
+                EmailEventType type = (EmailEventType) EngageType.GetFromShortDescription(this.EmailTypeRadioButtons.SelectedValue, typeof(EmailEventType));
 
                 emailEvent = new EmailEvent(type, "Name Here", "Purpose Here", SubjectTextBox.Text, FromTextBox.Text, FromEmailTextBox.Text, UserId);
                 emailEvent.HtmlBodyLocation1 = EmailLocationTextBox1.Text;

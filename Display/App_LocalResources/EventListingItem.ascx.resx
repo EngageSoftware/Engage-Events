@@ -117,19 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lbAddAnEvent.Text" xml:space="preserve">
-    <value>Add Event</value>
+  <data name="ActiveListItem.Text" xml:space="preserve">
+    <value>Active</value>
   </data>
-  <data name="lbManageEmail.Text" xml:space="preserve">
-    <value>Manage Email</value>
+  <data name="AllListItem.Text" xml:space="preserve">
+    <value>All</value>
   </data>
-  <data name="lbManageEvents.Text" xml:space="preserve">
-    <value>Manage Events</value>
+  <data name="DateListItem.Text" xml:space="preserve">
+    <value>Date</value>
   </data>
-  <data name="lbManageRsvp.Text" xml:space="preserve">
-    <value>Manage Rsvp</value>
+  <data name="Description.Text" xml:space="preserve">
+    <value>Description</value>
   </data>
-  <data name="lbSettings.Text" xml:space="preserve">
-    <value>Settings</value>
+  <data name="LabelOf.Text" xml:space="preserve">
+    <value>Of</value>
+  </data>
+  <data name="MyEventsLabel.Text" xml:space="preserve">
+    <value>My Events</value>
+  </data>
+  <data name="NextButton.Text" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="NextTip.Text" xml:space="preserve">
+    <value>Click here to go to the Next page.</value>
+  </data>
+  <data name="Page.Text" xml:space="preserve">
+    <value>Page</value>
+  </data>
+  <data name="PreviousButton.Text" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="PreviousTip.Text" xml:space="preserve">
+    <value>Click here to go to the Previous page.</value>
+  </data>
+  <data name="SortByLabel.Text" xml:space="preserve">
+    <value>Sort By</value>
+  </data>
+  <data name="StatusLabel.Text" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="TitleListItem.Text" xml:space="preserve">
+    <value>Title</value>
   </data>
 </root>

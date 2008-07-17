@@ -122,6 +122,51 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\ButtonAction.ascx.cs">
+      <DependentUpon>ButtonAction.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Actions\ButtonAction.ascx.designer.cs">
+      <DependentUpon>ButtonAction.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Actions\AddToCalendarAction.ascx.cs">
+      <DependentUpon>AddToCalendarAction.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Actions\AddToCalendarAction.ascx.designer.cs">
+      <DependentUpon>AddToCalendarAction.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Actions\ActionControlBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Actions\SortStatusAction.ascx.cs">
+      <DependentUpon>SortStatusAction.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Actions\SortStatusAction.ascx.designer.cs">
+      <DependentUpon>SortStatusAction.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Actions\SortAction.ascx.cs">
+      <DependentUpon>SortAction.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Actions\SortAction.ascx.designer.cs">
+      <DependentUpon>SortAction.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Actions\DeleteAction.ascx.cs">
+      <DependentUpon>DeleteAction.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Actions\DeleteAction.ascx.designer.cs">
+      <DependentUpon>DeleteAction.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Actions\CancelAction.ascx.cs">
+      <DependentUpon>CancelAction.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Actions\CancelAction.ascx.designer.cs">
+      <DependentUpon>CancelAction.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\NotConfigured.ascx.cs">
       <DependentUpon>NotConfigured.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -182,6 +227,20 @@
       <DependentUpon>RecurrenceSelector.ascx</DependentUpon>
     </Compile>
     <Compile Include="ActionEventArg.cs" />
+    <Compile Include="Display\EventListingTemplate.ascx.cs">
+      <DependentUpon>EventListingTemplate.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Display\EventListingTemplate.ascx.designer.cs">
+      <DependentUpon>EventListingTemplate.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Display\EventListingItem.ascx.cs">
+      <DependentUpon>EventListingItem.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Display\EventListingItem.ascx.designer.cs">
+      <DependentUpon>EventListingItem.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Display\RsvpDisplay.ascx.cs">
       <DependentUpon>RsvpDisplay.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -327,6 +386,7 @@
     <None Include="EngageEvents.dnn" />
     <None Include="EngageEvents.Build" />
     <None Include="Providers\DataProviders\SqlDataProvider\00.00.01.SqlDataProvider" />
+    <None Include="Providers\DataProviders\SqlDataProvider\00.00.02.SqlDataProvider" />
     <None Include="Uninstall.SqlDataProvider" />
   </ItemGroup>
   <ItemGroup>
@@ -472,7 +532,7 @@
     <Content Include="Navigation\GlobalNavigation.ascx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_LocalResources\GlobalNavigation.ascx.resx">
+    <Content Include="Navigation\App_LocalResources\GlobalNavigation.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Navigation\EventAdminActions.ascx" />
@@ -577,6 +637,10 @@
       <Project>{C446747D-B3DD-43E2-9908-13CC6663E45F}</Project>
       <Name>Engage.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\..\Code\Engage 3.0\Engage.Templating\Engage.Templating.csproj">
+      <Project>{791E6642-6BE2-413B-AC8A-7677600E07BF}</Project>
+      <Name>Engage.Templating</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\..\Code\Engage 3.0\Engage.Utility\Engage.Utility.csproj">
       <Project>{319B4FE6-A016-41E0-93CE-748DA517D542}</Project>
       <Name>Engage.Utility</Name>
@@ -597,9 +661,34 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Actions\ButtonAction.ascx" />
+    <Content Include="Actions\AddToCalendarAction.ascx" />
+    <Content Include="Actions\DeleteAction.ascx" />
+    <Content Include="Actions\CancelAction.ascx" />
     <Content Include="App_LocalResources\EmailEdit.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Display\EventListingTemplate.ascx" />
+    <Content Include="Display\EventListingItem.ascx" />
+    <Content Include="Templates\Listing.html" />
+    <Content Include="Templates\ListingCurrentHeader.html" />
+    <Content Include="Templates\ListingItem.html" />
+    <Content Include="Templates\ListingUpcomingHeader.html" />
+    <Content Include="Templates\Template.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Actions\SortStatusAction.ascx" />
+    <Content Include="Actions\SortAction.ascx" />
+    <Content Include="Display\App_LocalResources\EventListingItem.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Templates\ListingFooter.html" />
+    <Content Include="Templates\ListingHeader.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+    <Folder Include="Templates\Display\" />
+    <Folder Include="Templates\Email\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v8.0\WebApplications\Microsoft.WebApplication.targets" Condition="'$(Solutions.VSVersion)' == '8.0'" />

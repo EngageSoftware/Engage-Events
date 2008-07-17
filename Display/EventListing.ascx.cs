@@ -86,13 +86,13 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         private void BindData()
         {
-            EventCollection events = EventCollection.Load(PortalId, true, 0, 0);
-            this.CurrentEventListing.DataSource = events;
-            this.CurrentEventListing.DataBind();
+            EventCollection events = EventCollection.Load(PortalId, ListingMode.CurrentMonth, "EventStart", 0, 0, false);
+            rpCurrentEventListing.DataSource = events;
+            rpCurrentEventListing.DataBind();
 
-            events = EventCollection.Load(PortalId, false, 0, 0);
-            this.UpcomingEventListing.DataSource = events;
-            this.UpcomingEventListing.DataBind();
+            events = EventCollection.Load(PortalId, ListingMode.Future, "EventStart", 0, 0, false);
+            rpUpcomingEventListing.DataSource = events;
+            rpUpcomingEventListing.DataBind();
         }
     }
 }

@@ -243,8 +243,12 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            this.CurrentEvent.Cancelled = !this.CurrentEvent.Cancelled;
-            this.CurrentEvent.Save(this.UserId);
+            //since we are reloading the object each time (no caching yet) you can't do the following
+            //this.CurrentEvent.Cancelled = !this.CurrentEvent.Cancelled;  hk
+
+            Event ev = this.CurrentEvent;
+            ev.Cancelled = !this.CurrentEvent.Cancelled;
+            ev.Save(this.UserId);
             this.OnCancel(e);
         }
 

@@ -2,8 +2,8 @@
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <%-- Register Assembly="AjaxControlToolkit" TagPrefix="ajaxToolkit" Namespace="AjaxControlToolkit" --%>
 
-<%--<ajaxToolkit:CalendarExtender ID="defaultCalendarExtender" runat="server" TargetControlID="txtDate"  PopupButtonID="imgCalendarButton" />
---%>
+<%--<ajaxToolkit:CalendarExtender ID="defaultCalendarExtender" runat="server" TargetControlID="EmailSendTimePicker"  PopupButtonID="imgCalendarButton" />--%>
+
 <h2 class="Head">
     Event:
     <asp:Label ID="EventNameLabel" runat="server"></asp:Label></h2>
