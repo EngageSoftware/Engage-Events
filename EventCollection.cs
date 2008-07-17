@@ -17,6 +17,13 @@ namespace Engage.Events
     using System.Diagnostics;
     using Data;
 
+    public enum ListingMode
+    {
+        CurrentMonth = 0,
+        Future = 1,
+        All = 2
+    }
+
     /// <summary>
     /// A strongly-typed collection of <see cref="Event"/> objects.
     /// </summary>
@@ -86,22 +93,40 @@ namespace Engage.Events
         /// Loads a page of events either for the current month, or all future months.
         /// </summary>
         /// <param name="portalId">The ID of the portal that the events are for.</param>
-        /// <param name="currentMonth">if set to <c>true</c> gets events that start in this month, otherwise gets events that start in any month after this month.</param>
+        /// <param name="status">if set to <c>true</c> gets events that start in this month, otherwise gets events that start in any month after this month.</param>
+        /// <param name="sortColumn">The sort column.</param>
         /// <param name="index">The index.</param>
         /// <param name="pageSize">Size of the page.</param>
-        /// <returns>A page of events for either this month, or all future months.</returns>
-        public static EventCollection Load(int portalId, bool currentMonth, int index, int pageSize)
+        /// <param name="showAll">if set to <c>true</c> [show all].</param>
+        /// <returns>
+        /// A page of events for either this month, or all future months.
+        /// </returns>
+        public static EventCollection Load(int portalId, ListingMode mode, string sortColumn, int index, int pageSize, bool showAll)
         {
+            string storedProcName = "spGetEvents";
+            switch (mode)
+            {
+                case ListingMode.CurrentMonth:
+                    storedProcName = "spGetEventsCurrent";
+                    break;
+                case ListingMode.Future:
+                    storedProcName = "spGetEventsFuture";
+                    break;
+                default:
+                    break; //All records.
+            }
+
             IDataProvider dp = DataProvider.Instance;
-            string storedProcName = currentMonth ? "spGetEventsCurrent" : "spGetEventsFuture";
             try
             {
                 using (IDataReader reader = dp.ExecuteReader(
                     CommandType.StoredProcedure,
                     dp.NamePrefix + storedProcName,
-                    Utility.CreateIntegerParam("@portalId", portalId), 
-                    Utility.CreateIntegerParam("@index", index), 
-                    Utility.CreateIntegerParam("@pageSize", pageSize)))
+                    Utility.CreateIntegerParam("@portalId", portalId),
+                    Utility.CreateVarcharParam("@sortColumn", sortColumn, 200),
+                    Utility.CreateIntegerParam("@index", index),
+                    Utility.CreateIntegerParam("@pageSize", pageSize),
+                    Utility.CreateBitParam("@showAll", showAll)))
                 {
                     return FillEvents(reader);
                 }
@@ -125,13 +150,15 @@ namespace Engage.Events
         {
             if (reader.Read())
             {
-                EventCollection events = new EventCollection((int)reader["TotalRecords"]);
+                //there are cases in the UI where we need to know what the total number of records are.
+                int totalRecords = (int)reader["TotalRecords"];
+                EventCollection events = new EventCollection(totalRecords);
 
                 if (reader.NextResult())
                 {
                     while (reader.Read())
                     {
-                        events.Add(Event.Fill(reader));
+                        events.Add(Event.Fill(reader, totalRecords));
                     }
                     return events;
                 }

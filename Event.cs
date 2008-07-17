@@ -122,6 +122,9 @@ namespace Engage.Events
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string title = string.Empty;
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private int totalRecords;
+
         /// <summary>
         /// Indicates whether the license for this assembly has yet been loaded.
         /// </summary>
@@ -376,6 +379,16 @@ namespace Engage.Events
         }
 
         /// <summary>
+        /// Gets the total records associated with this Event.
+        /// </summary>
+        /// <value>The total records.</value>
+        public int TotalRecords
+        {
+            [DebuggerStepThrough]
+            get { return this.totalRecords; }
+        }
+
+        /// <summary>
         /// Loads the specified event.
         /// </summary>
         /// <param name="id">The id of an event to load.</param>
@@ -394,7 +407,7 @@ namespace Engage.Events
                 {
                     if (reader.Read())
                     {
-                        e = Fill(reader);
+                        e = Fill(reader, 0);
                     }
                 }
             }
@@ -507,7 +520,7 @@ namespace Engage.Events
         /// </summary>
         /// <param name="eventRecord">A pre-initialized data record that represents an Event instance.</param>
         /// <returns>An instantiated Event object.</returns>
-        internal static Event Fill(IDataRecord eventRecord)
+        internal static Event Fill(IDataRecord eventRecord, int totalRecords)
         {
             Event e = new Event();
 
@@ -528,6 +541,7 @@ namespace Engage.Events
             e.location = eventRecord["Location"].ToString();
             e.invitationUrl = eventRecord["InvitationUrl"].ToString();
             e.recapUrl = eventRecord["RecapUrl"].ToString();
+            e.totalRecords = totalRecords;
 
             return e;
         }
