@@ -40,7 +40,7 @@ namespace Engage.Dnn.Events
                     controller.UpdateHostSetting(Dnn.Events.Util.Utility.ModuleConfigured + PortalId.ToString(CultureInfo.InvariantCulture), "true");
 
                     ModuleController modules = new ModuleController();
-                    modules.UpdateTabModuleSetting(this.TabModuleId, Setting.DisplayType.PropertyName, DropDownChooseDisplay.SelectedValue);
+                    modules.UpdateTabModuleSetting(this.TabModuleId, Setting.DisplayTemplate.PropertyName, DropDownChooseDisplay.SelectedValue);
                     //modules.UpdateTabModuleSetting(this.TabModuleId, Setting.UnsubscribeUrl.PropertyName, txtUnsubscribeUrl.Text);
                     //modules.UpdateTabModuleSetting(this.TabModuleId, Setting.PrivacyPolicyUrl.PropertyName, txtPrivacyPolicyUrl.Text);
                     //modules.UpdateTabModuleSetting(this.TabModuleId, Setting.OpenLinkUrl.PropertyName, txtOpenLinkUrl.Text);
@@ -63,11 +63,9 @@ namespace Engage.Dnn.Events
                 if (Page.IsPostBack == false)
                 {
                     ListItem listItemTemplated = new ListItem(Localization.GetString("EventListingTemplate", LocalResourceFile), "Display/EventListingTemplate");
-                    ListItem listItemListing = new ListItem(Localization.GetString("EventListing", LocalResourceFile), "Display/EventListing");
                     ListItem listItemCalendar = new ListItem(Localization.GetString("EventCalendar", LocalResourceFile), "Display/EventCalendar");
 
                     DropDownChooseDisplay.Items.Add(listItemTemplated);
-                    DropDownChooseDisplay.Items.Add(listItemListing);
                     DropDownChooseDisplay.Items.Add(listItemCalendar);
 
                     SetOptions();
@@ -82,7 +80,7 @@ namespace Engage.Dnn.Events
 
         private void SetOptions()
         {
-            string displayType = Utility.GetStringSetting(Settings, Setting.DisplayType.PropertyName);
+            string displayType = Utility.GetStringSetting(Settings, Setting.DisplayTemplate.PropertyName);
 
             ListItem li = DropDownChooseDisplay.Items.FindByValue(displayType);
             if (li != null)
@@ -99,11 +97,14 @@ namespace Engage.Dnn.Events
         private void DisplaySettingsControl()
         {
 
-            string selectedDisplayType = DropDownChooseDisplay.SelectedItem.ToString();
+            string selectedDisplayType = DropDownChooseDisplay.SelectedValue;
             switch (selectedDisplayType)
             {
-                case "Calendar Display":
-                    LoadSettingsControl("Display/CalendarDisplayOptions.ascx"/*, "Calendar Display"*/);
+                case "Display/EventListingTemplate":
+                    LoadSettingsControl("Display/TemplateDisplayOptions.ascx");
+                    break;
+                case "Display/EventCalendar":
+                    LoadSettingsControl("Display/CalendarDisplayOptions.ascx");
                     break;
                 default:
                     break;

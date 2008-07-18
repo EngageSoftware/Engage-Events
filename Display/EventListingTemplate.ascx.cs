@@ -20,16 +20,15 @@ namespace Engage.Dnn.Events.Display
     /// </summary>
     public partial class EventListingTemplate : ModuleBase
     {
-        private TemplateEngine controller;
         private Template template;
 
         protected override void OnInit(System.EventArgs e)
         {
             base.OnInit(e);
 
-            controller = new TemplateEngine(TabModuleId);
             //set the default template. The Listing.html file could be modified for multiple listingitem displays.hk
-            template = TemplateEngine.GetTemplate(Server.MapPath("~/DesktopModules/EngageEvents/Templates/"), "Listing.html");
+            string displayTemplate = Utility.GetStringSetting(Settings, Setting.DisplayTemplate.PropertyName);
+            template = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, "Display.Listing.html"); //will come from setting later.
             TemplateEngine.ProcessTags(this, template.ChildTags, this.ProcessTag);
         }
 
@@ -48,18 +47,27 @@ namespace Engage.Dnn.Events.Display
                     //need to default to all and set if attribute is defined.
                     if (tag.HasAttribute("ListingMode"))
                     {
-                        listingCurrent.Mode = (ListingMode)System.Enum.Parse(typeof(ListingMode), tag.GetAttributeValue("ListingMode"));
-                    }
-                    else
-                    {
-                        listingCurrent.Mode = ListingMode.All; //default to all
+                        listingCurrent.Mode = tag.GetAttributeValue("ListingMode");
                     }
                     if (tag.HasAttribute("HeaderTemplate"))
                     {
                         listingCurrent.HeaderTemplateName = tag.GetAttributeValue("HeaderTemplate");
                     }
+                    if (tag.HasAttribute("ItemTemplate"))
+                    {
+                        listingCurrent.ItememplateName = tag.GetAttributeValue("ItemTemplate");
+                    }
+                    if (tag.HasAttribute("FooterTemplate"))
+                    {
+                        listingCurrent.FooterTemplateName = tag.GetAttributeValue("FooterTemplate");
+                    }
+
                     listingCurrent.ModuleConfiguration = ModuleConfiguration;
                     container.Controls.Add(listingCurrent);
+                    break;
+                case "Calendar":
+                    EventCalendar calendar = (EventCalendar)LoadControl("~" + DesktopModuleFolderName + "Display/EventCalendar.ascx");
+                    container.Controls.Add(calendar);
                     break;
                 default:
                     break;

@@ -25,10 +25,10 @@ namespace Engage.Dnn.Events.Display
     /// </summary>
     public partial class EventListingItem : ModuleBase
     {
-        private TemplateEngine engine;
         private Event currentEvent;
         private string headerTemplateName = string.Empty;
-        private int pageSize = 1; //get from settings later
+        private string itemTemplateName = string.Empty;
+        private string footerTemplateName = string.Empty;
 
         //There are certain controls that wee need to maintain a reference to so that we can hide/show based on certain conditions i.e. ConfigurePager()
         private SortStatusAction sortStatusAction;
@@ -39,15 +39,19 @@ namespace Engage.Dnn.Events.Display
         private Label CurrentPageLabel;
         private Label PageLabel;
         private Label OfLabel;
-        
+
+        private ListingMode listingMode;
         
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
 
-            engine = new TemplateEngine(TabModuleId);
             RepeaterEvents.ItemDataBound += this.RepeaterEvents_ItemDataBound;
             this.LocalResourceFile = "~" + DesktopModuleFolderName + "Display/App_LocalResources/EventListingItem.ascx.resx";
+
+            string setting = this.mode.Length == 0 ? Utility.GetStringSetting(Settings, Setting.DisplayModeOption.PropertyName) : this.mode;
+            this.listingMode = (ListingMode)Enum.Parse(typeof(ListingMode), setting);
+            
             //this must be done here so all header/footer controls exist and viewstate restored i.e. sorting radio buttons, paging
             ProcessHeader();
             ProcessFooter();
@@ -82,11 +86,10 @@ namespace Engage.Dnn.Events.Display
 
                 if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
                 {
-                    Label labelId = (Label)e.Item.FindControl("LabelId");
-                    if (labelId != null) labelId.Text = this.currentEvent.Id.ToString();
-                    Template itemTemplate = TemplateEngine.GetTemplate(Server.MapPath("~/DesktopModules/EngageEvents/Templates/"), "ListingItem.html");
                     e.Item.Controls.Clear();
-                   TemplateEngine.ProcessTags(e.Item, itemTemplate.ChildTags, ProcessTag);
+                    string template = this.itemTemplateName.Length == 0 ? Utility.GetStringSetting(Settings, Setting.ItemTemplate.PropertyName) : this.itemTemplateName;
+                    Template itemTemplate = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, template);
+                    TemplateEngine.ProcessTags(e.Item, itemTemplate.ChildTags, this.ProcessTag);
                 }
             }
             catch (Exception exc)
@@ -101,7 +104,9 @@ namespace Engage.Dnn.Events.Display
         private void ProcessHeader()
         {
             PlaceHolderHeader.Controls.Clear();
-            Template headerTemplate = this.headerTemplateName.Length == 0 ? TemplateEngine.GetTemplate(Server.MapPath("~/DesktopModules/EngageEvents/Templates/"), "ListingHeader.html") : TemplateEngine.GetTemplate(Server.MapPath("~/DesktopModules/EngageEvents/Templates/"), this.headerTemplateName);
+
+            string template = this.headerTemplateName.Length == 0 ? Utility.GetStringSetting(Settings, Setting.HeaderTemplate.PropertyName) : this.headerTemplateName;
+            Template headerTemplate = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, template);
             TemplateEngine.ProcessTags(PlaceHolderHeader, headerTemplate.ChildTags, this.ProcessTag);
         }
 
@@ -111,8 +116,10 @@ namespace Engage.Dnn.Events.Display
         private void ProcessFooter()
         {
             PlaceHolderFooter.Controls.Clear();
-            Template footerTemplate = TemplateEngine.GetTemplate(Server.MapPath("~/DesktopModules/EngageEvents/Templates/"), "ListingFooter.html");
-            TemplateEngine.ProcessTags(PlaceHolderFooter,footerTemplate.ChildTags, this.ProcessTag);
+
+            string template = this.footerTemplateName.Length == 0 ? Utility.GetStringSetting(Settings, Setting.FooterTemplate.PropertyName) : this.footerTemplateName;
+            Template footerTemplate = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, template);
+            TemplateEngine.ProcessTags(PlaceHolderFooter, footerTemplate.ChildTags, this.ProcessTag);
         }
 
         /// <summary>
@@ -132,11 +139,19 @@ namespace Engage.Dnn.Events.Display
                 statusSort = this.sortStatusAction.SelectedValue;
             }
 
+            int pageSize;
             //need to make sure that paging got rendered. if not, get all records
-            if (this.PageCountLabel == null || this.CurrentPageLabel == null)
-                this.pageSize = 0;
+            if (this.PreviousButton == null || this.NextButton == null)
+            {
+                pageSize = 0;
+            }
+            else
+            {
+                pageSize = RecordsPerPage;
+            }
 
-            EventCollection events = EventCollection.Load(PortalId, this.mode, sort, this.CurrentPageIndex , this.pageSize, statusSort == "All");
+
+            EventCollection events = EventCollection.Load(PortalId, this.listingMode, sort, this.CurrentPageIndex, pageSize, statusSort == "All");
             RepeaterEvents.DataSource = events;
             RepeaterEvents.DataBind();
 
@@ -144,12 +159,11 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Configures the pager.
+        /// Configures the pager. Because of viestate, we must check for null first and always turn on/off based on data.
         /// </summary>
         private void ConfigurePager()
         {
             if (PageCountLabel != null) PageCountLabel.Text = PageCount.ToString();
-            //Note: Because of viestate, we must check for null first and always turn on/off based on data.
             if (TotalRecords == 0)
             {
                 if (PreviousButton != null) PreviousButton.Visible = false;
@@ -168,23 +182,25 @@ namespace Engage.Dnn.Events.Display
                 if (PageLabel != null) PageLabel.Visible = true;
                 if (OfLabel != null) OfLabel.Visible = true;
             }
-            if (TotalRecords == 1)
+    
+            if (PreviousButton != null) PreviousButton.Visible = (this.CurrentPageIndex != 0);
+            if (NextButton != null) NextButton.Visible = (this.CurrentPageIndex + 1 < TotalRecords);
+            if (CurrentPageLabel != null) CurrentPageLabel.Text = (CurrentPageIndex + 1).ToString();
+
+            //Lastly, turn off paging altogether if there's nothing to page.
+            if (TotalRecords == 1 || PageCount == 1)
             {
                 if (PreviousButton != null) PreviousButton.Visible = false;
                 if (NextButton != null) NextButton.Visible = false;
             }
-
-            if (PreviousButton != null) PreviousButton.Visible = (this.CurrentPageIndex != 0);
-            if (NextButton != null) NextButton.Visible = (this.CurrentPageIndex + 1 < TotalRecords);
-            if (CurrentPageLabel != null) CurrentPageLabel.Text = (CurrentPageIndex + 1).ToString();            
         }
 
-        private ListingMode mode;
+        private string mode = string.Empty;
         /// <summary>
         /// Gets or sets the mode.
         /// </summary>
         /// <value>The mode.</value>
-        public ListingMode Mode
+        public string Mode
         {
             get { return this.mode; }
             set { this.mode = value; }
@@ -195,67 +211,74 @@ namespace Engage.Dnn.Events.Display
         /// Method used to process a token. This method is invoked from the TemplateEngine class. Since this control knows
         /// best on how to contruct the page. ListingHeader, ListingItem and Listing Footer templates are processed here.
         /// </summary>
+        /// <param name="container">The container.</param>
         /// <param name="tag">The tag.</param>
-        /// <returns></returns>
         private void ProcessTag(Control container, Tag tag)
         {
-            EventCollection events = (EventCollection)RepeaterEvents.DataSource;
             string href;
             string resourceKey;
 
-            switch (tag.LocalName.ToUpper())
+            //event detail can process basic elements of an Event.
+            EventDetail.ProcessEventTag(container, tag, this.currentEvent);
+
+            switch (tag.LocalName.ToUpperInvariant())
             {
-                case "EVENTTITLE":
-                    Literal literalTitle = new Literal();
-                    literalTitle.Text = this.currentEvent.Title;
-                    container.Controls.Add(literalTitle);
-                    break;
-                case "EVENTDATE":
-                    Literal literalWhen = new Literal();
-                    string format = tag.Attributes[0].Value;
-                    literalWhen.Text = this.currentEvent.EventStart.ToString(format);
-                    container.Controls.Add(literalWhen);
-                    break;
-                case "EVENTMONTHSHORT":
-                    Literal literalMonth = new Literal();
-                    literalMonth.Text = this.currentEvent.EventStart.ToString("MMM");
-                    container.Controls.Add(literalMonth);
-                    break;
-                case "EVENTMONTHLONG":
-                    Literal literalMonthLong = new Literal();
-                    literalMonthLong.Text = this.currentEvent.EventStart.ToString("MMMM");
-                    container.Controls.Add(literalMonthLong);
-                    break;
-                case "EVENTDAYSHORT":
-                    Literal literalDay = new Literal();
-                    literalDay.Text = this.currentEvent.EventStart.ToString("%d");
-                    container.Controls.Add(literalDay);
-                    break;
-                case "EVENTDAYLONG":
-                    Literal literalDayLong = new Literal();
-                    literalDayLong.Text = this.currentEvent.EventStart.ToString("dddd");
-                    container.Controls.Add(literalDayLong);
-                    break;
-                case "EVENTYEARSHORT":
-                    Literal literalYear = new Literal();
-                    literalYear.Text = this.currentEvent.EventStart.ToString("yy");
-                    container.Controls.Add(literalYear);
-                    break;
-                case "EVENTYEARLONG":
-                    Literal literalYearLong = new Literal();
-                    literalYearLong.Text = this.currentEvent.EventStart.ToString("yyyy");
-                    container.Controls.Add(literalYearLong);
-                    break;
-                case "EVENTLOCATION":
-                    Literal literalLocation = new Literal();
-                    literalLocation.Text = this.currentEvent.Location;
-                    container.Controls.Add(literalLocation);
-                    break;
-                case "EVENTDESCRIPTION":
-                    Literal literalLocationDescription = new Literal();
-                    literalLocationDescription.Text = this.currentEvent.Overview;
-                    container.Controls.Add(literalLocationDescription);
-                    break;
+                //case "EVENTTITLE":
+                //    Literal literalTitle = new Literal();
+                //    literalTitle.Text = this.currentEvent.Title;
+                //    container.Controls.Add(literalTitle);
+                //    break;
+                //case "EVENTDATE":
+                //    Literal literalWhen = new Literal();
+                //    string format = tag.GetAttributeValue("Format");
+                //    literalWhen.Text = this.currentEvent.EventStart.ToString(format);
+                //    container.Controls.Add(literalWhen);
+                //    break;
+                //case "EVENTMONTHSHORT":
+                //    Literal literalMonth = new Literal();
+                //    literalMonth.Text = this.currentEvent.EventStart.ToString("MMM");
+                //    container.Controls.Add(literalMonth);
+                //    break;
+                //case "EVENTMONTHLONG":
+                //    Literal literalMonthLong = new Literal();
+                //    literalMonthLong.Text = this.currentEvent.EventStart.ToString("MMMM");
+                //    container.Controls.Add(literalMonthLong);
+                //    break;
+                //case "EVENTDAYSHORT":
+                //    Literal literalDay = new Literal();
+                //    literalDay.Text = this.currentEvent.EventStart.ToString("%d");
+                //    container.Controls.Add(literalDay);
+                //    break;
+                //case "EVENTDAYLONG":
+                //    Literal literalDayLong = new Literal();
+                //    literalDayLong.Text = this.currentEvent.EventStart.ToString("dddd");
+                //    container.Controls.Add(literalDayLong);
+                //    break;
+                //case "EVENTYEARSHORT":
+                //    Literal literalYear = new Literal();
+                //    literalYear.Text = this.currentEvent.EventStart.ToString("yy");
+                //    container.Controls.Add(literalYear);
+                //    break;
+                //case "EVENTYEARLONG":
+                //    Literal literalYearLong = new Literal();
+                //    literalYearLong.Text = this.currentEvent.EventStart.ToString("yyyy");
+                //    container.Controls.Add(literalYearLong);
+                //    break;
+                //case "EVENTLOCATION":
+                //    Literal literalLocation = new Literal();
+                //    literalLocation.Text = this.currentEvent.Location;
+                //    container.Controls.Add(literalLocation);
+                //    break;
+                //case "EVENTOVERVIEW":
+                //    Literal literalLocationOverview = new Literal();
+                //    literalLocationOverview.Text = this.currentEvent.Overview;
+                //    container.Controls.Add(literalLocationOverview);
+                //    break;
+                //case "EVENTDESCRIPTION":
+                //    Literal literalLocationDescription = new Literal();
+                //    literalLocationDescription.Text = this.currentEvent.Description;
+                //    container.Controls.Add(literalLocationDescription);
+                //    break;
                 case "EDITEVENTBUTTON":
                     ButtonAction editEventAction = (ButtonAction)LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
                     editEventAction.CurrentEvent = this.currentEvent;
@@ -331,12 +354,6 @@ namespace Engage.Dnn.Events.Display
                     this.PreviousButton.CommandName = "PreviousPage";
                     this.PreviousButton.EnableViewState = true;
                     this.PreviousButton.ToolTip = Localization.GetString(tag.GetAttributeValue("ToolTipResourceKey"), LocalResourceFile);
-
-                    //if (CurrentPageIndex == 0)
-                    //{
-                    //    PreviousButton.Enabled = false;
-                    //}
-
                     this.PreviousButton.Click += PreviousButton_Click;
                     container.Controls.Add(this.PreviousButton);
                     break;
@@ -395,6 +412,16 @@ namespace Engage.Dnn.Events.Display
                     OfLabel.CssClass = tag.GetAttributeValue("CssClass");
                     container.Controls.Add(OfLabel);
                     break;
+                case "READMORE":
+                    HyperLink DetailLink = new HyperLink();
+                    resourceKey = tag.GetAttributeValue("ResourceKey");
+                    DetailLink.Text = Localization.GetString(resourceKey, LocalResourceFile);
+                    if (DetailLink.Text.Length == 0)
+                        DetailLink.Text = "Read More...";
+                    href = BuildLinkUrl("&modId=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventDetail&eventid=" + this.currentEvent.Id.ToString(CultureInfo.InvariantCulture));
+                    DetailLink.NavigateUrl = href;
+                    container.Controls.Add(DetailLink);
+                    break;
                 case "LABEL":
                     Label l = new Label();
                     resourceKey = tag.GetAttributeValue("ResourceKey");
@@ -432,21 +459,20 @@ namespace Engage.Dnn.Events.Display
         {
             get
             {
-                int count;
-                if (TotalRecords > pageSize)
+                if (RecordsPerPage == 0)
+                    return 1;
+
+                if (TotalRecords > RecordsPerPage)
                 {
-                    count = (TotalRecords / pageSize);
+                    return Convert.ToInt32(Decimal.Round(Convert.ToDecimal(TotalRecords) / Convert.ToDecimal(RecordsPerPage)));
                 }
-                else
-                {
-                    count = 1;
-                }
-                return count;
+                
+                return 1;
             }
         }
 
         /// <summary>
-        /// Gets the total records in the request to the database. NOTE: not events.count
+        /// Gets the total records in the request to the database. This is not events.count
         /// </summary>
         /// <value>The total records.</value>
         private int TotalRecords
@@ -470,7 +496,7 @@ namespace Engage.Dnn.Events.Display
             {
                 pageNumber = CurrentPageIndex + 1;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 pageNumber = CurrentPageIndex;
             }
@@ -479,7 +505,7 @@ namespace Engage.Dnn.Events.Display
                 pageNumber = PageCount - 1;
             }
             CurrentPageIndex = pageNumber;
-            CurrentPageLabel.Text = CurrentPageIndex.ToString();
+            if (CurrentPageLabel != null) CurrentPageLabel.Text = CurrentPageIndex.ToString();
             BindData();
         }
 
@@ -495,7 +521,7 @@ namespace Engage.Dnn.Events.Display
             {
                 pageNumber = CurrentPageIndex - 1;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 pageNumber = CurrentPageIndex;
             }
@@ -508,12 +534,44 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Sets the name of the header template. Can be specified in the Listing.html as an attribute: HeaderTemplate="..."
+        /// Sets the name of the header template. Can be specified in the Display.Listing.html as an attribute: HeaderTemplate="..."
         /// </summary>
         /// <value>The name of the header template.</value>
         internal string HeaderTemplateName
         {
             set { this.headerTemplateName = value; }   
+        }
+
+        /// <summary>
+        /// Sets the name of the item template. Can be specified in the Display.Listing.html as an attribute: ItemTemplate="..."
+        /// </summary>
+        /// <value>The name of the header template.</value>
+        internal string ItememplateName
+        {
+            set { this.itemTemplateName = value; }
+        }
+
+        /// <summary>
+        /// Sets the name of the footer template. Can be specified in the Dispay.Listing.html as an attribute: FooterTemplate="..."
+        /// </summary>
+        /// <value>The name of the header template.</value>
+        internal string FooterTemplateName
+        {
+            set { this.footerTemplateName = value; }
+        }
+
+        private int RecordsPerPage
+        {
+            get
+            {
+                int recordsPer = 0;
+                object o = Utility.GetStringSetting(Settings, Setting.RecordsPerPage.PropertyName);
+                if (o != null)
+                {
+                    recordsPer = int.Parse(o.ToString());
+                }
+                return recordsPer;
+            }
         }
     }
 }

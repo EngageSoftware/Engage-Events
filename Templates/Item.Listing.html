@@ -10,11 +10,11 @@
         <p class="NormalBold">When</p>
         <p class="Normal"><Engage:EventDate Format="MMMM"/></p>
     </div>
-    <div class="EventDescription">
-        <p class="NormalBold">Description</p>
+    <div class="EventOverview">
+        <p class="NormalBold">Overview</p>
         <div class="Normal">
-            <p><Engage:EventDescription /></p>
-            <p><Engage:ReadMore /></p>
+            <p><Engage:EventOverview /></p>
+            <p><Engage:ReadMore ResourceKey="ReadMore" /></p>
             <!--Comment here-->
         </div>
     </div>
@@ -23,3 +23,9 @@
         <asp
     </div>
 </div>
+
+
+<!-- Documentation 
+Entity - EventDate contains a property called Format, valid values are any DateTime format string i.e. MM/dd/yyyy or MM.dd.yy
+Entity - ReadMore can be used to create a readmore link. Attributes are ResourceKey and is defined in the EventListingItem.ascx.resx
+-->
