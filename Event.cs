@@ -99,6 +99,12 @@ namespace Engage.Events
         private string overview = string.Empty;
 
         /// <summary>
+        /// Backing field for <see cref="Overview"/>.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private string description = string.Empty;
+
+        /// <summary>
         /// Backing field for <see cref="PortalId"/>.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -276,6 +282,18 @@ namespace Engage.Events
             get { return this.overview; }
             [DebuggerStepThrough]
             set { this.overview = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the Description.
+        /// </summary>
+        /// <value>The Description.</value>
+        public string Description
+        {
+            [DebuggerStepThrough]
+            get { return this.description; }
+            [DebuggerStepThrough]
+            set { this.description = value; }
         }
 
         /// <summary>
@@ -519,6 +537,7 @@ namespace Engage.Events
         /// Fills an Event with the data in the specified <paramref name="eventRecord"/>.
         /// </summary>
         /// <param name="eventRecord">A pre-initialized data record that represents an Event instance.</param>
+        /// <param name="totalRecords">The total records.</param>
         /// <returns>An instantiated Event object.</returns>
         internal static Event Fill(IDataRecord eventRecord, int totalRecords)
         {
@@ -528,6 +547,7 @@ namespace Engage.Events
             e.moduleId = (int)eventRecord["ModuleId"];
             e.title = eventRecord["Title"].ToString();
             e.overview = eventRecord["OverView"].ToString();
+            e.description = eventRecord["Description"].ToString();
             e.eventStart = (DateTime)eventRecord["EventStart"];
             if (!(eventRecord["EventEnd"] is DBNull))
             {
@@ -587,6 +607,7 @@ namespace Engage.Events
                     Utility.CreateIntegerParam("@ModuleId", this.moduleId),
                     Utility.CreateVarcharParam("@Title", this.title),
                     Utility.CreateTextParam("@Overview", this.overview),
+                    Utility.CreateTextParam("@Description", this.description),
                     Utility.CreateDateTimeParam("@EventStart", this.eventStart),
                     Utility.CreateDateTimeParam("@EventEnd", this.eventEnd),
                     Utility.CreateVarcharParam("@Organizer", this.organizer),
@@ -621,6 +642,7 @@ namespace Engage.Events
                     Utility.CreateIntegerParam("@EventId", this.id),
                     Utility.CreateVarcharParam("@Title", this.title),
                     Utility.CreateTextParam("@Overview", this.overview),
+                    Utility.CreateTextParam("@Description", this.description),
                     Utility.CreateDateTimeParam("@EventStart", this.eventStart),
                     Utility.CreateDateTimeParam("@EventEnd", this.eventEnd),
                     Utility.CreateVarcharParam("@Organizer", this.organizer),
