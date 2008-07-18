@@ -419,6 +419,7 @@ namespace Engage.Dnn.Events.Display
                     if (DetailLink.Text.Length == 0)
                         DetailLink.Text = "Read More...";
                     href = BuildLinkUrl("&modId=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventDetail&eventid=" + this.currentEvent.Id.ToString(CultureInfo.InvariantCulture));
+                    DetailLink.CssClass = tag.GetAttributeValue("CssClass");
                     DetailLink.NavigateUrl = href;
                     container.Controls.Add(DetailLink);
                     break;

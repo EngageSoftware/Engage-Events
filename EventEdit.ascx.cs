@@ -38,6 +38,8 @@ namespace Engage.Dnn.Events
             base.OnInit(e);
             AJAX.RegisterPostBackControl(this.SaveAndCreateNewEventButton);
             AJAX.RegisterPostBackControl(this.SaveEventButton);
+            AJAX.RegisterPostBackControl(this.EventOverviewTextEditor);
+            AJAX.RegisterPostBackControl(this.EventDescriptionTextEditor);
 
             this.Load += this.Page_Load;
             this.EventDescriptionTextEditorValidator.ServerValidate += this.EventDescriptionTextEditorValidator_ServerValidate;
