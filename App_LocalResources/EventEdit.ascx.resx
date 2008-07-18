@@ -162,6 +162,9 @@
   <data name="EventLocationWaterMark.Text" xml:space="preserve">
     <value>Please enter the event location</value>
   </data>
+  <data name="EventOverviewLabel.Text" xml:space="preserve">
+    <value>Overview</value>
+  </data>
   <data name="EventStartDateLabel.Text" xml:space="preserve">
     <value>Begins</value>
   </data>

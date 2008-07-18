@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text;
@@ -12,8 +10,15 @@ namespace Engage.Dnn.Events
     {
 
 
-        public static readonly Setting DisplayType = new Setting("DisplayType", "The display that is used for unauthenticated users.");
+        public static readonly Setting DisplayTemplate = new Setting("DisplayType", "The display template that the module is configured to display.");
         public static readonly Setting SkinSelection = new Setting("SkinSelection", "The skin used for Calendar Display.");
+        public static readonly Setting DisplayModeOption = new Setting("DisplayModeOption", "The type of data displayed in the Template view.");
+        public static readonly Setting HeaderTemplate = new Setting("HeaderTemplate", "Header Template.");
+        public static readonly Setting ItemTemplate = new Setting("ItemTemplate", "Item Template.");
+        public static readonly Setting FooterTemplate = new Setting("FooterTemplate", "Footer Template.");
+        public static readonly Setting DetailTemplate = new Setting("DetailTemplate", "Detail Template.");
+        public static readonly Setting RecordsPerPage = new Setting("RecordsPerPage", "The number of records per page.");
+       
 
         public static readonly Setting PrinterFriendly = new Setting("pnlPrinterFriendly",  "Hide/Show the printer friendly link on the module");
         public static readonly Setting EmailAFriend = new Setting("pnlEmailAFriend", "Hide/Show the Email a Friend link on the module");

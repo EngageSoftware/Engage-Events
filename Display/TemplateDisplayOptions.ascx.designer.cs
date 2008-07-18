@@ -11,159 +11,132 @@
 namespace Engage.Dnn.Events {
     
     
-    public partial class EventEdit {
+    public partial class TemplateDisplayOptions {
         
         /// <summary>
-        /// SuccessModuleMessage control.
+        /// DisplayModeLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Engage.Dnn.Events.Controls.ModuleMessage SuccessModuleMessage;
+        protected global::DotNetNuke.UI.UserControls.LabelControl DisplayModeLabel;
         
         /// <summary>
-        /// AddNewEvent control.
+        /// DisplayModeDropDown control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AddNewEvent;
+        protected global::System.Web.UI.WebControls.DropDownList DisplayModeDropDown;
         
         /// <summary>
-        /// AddEditEventLabel control.
+        /// TemplateSettingsSectionHead control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label AddEditEventLabel;
+        protected global::DotNetNuke.UI.UserControls.SectionHeadControl TemplateSettingsSectionHead;
         
         /// <summary>
-        /// EventTitleTextBox control.
+        /// TemplateTable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EventTitleTextBox;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TemplateTable;
         
         /// <summary>
-        /// StartDateTimePicker control.
+        /// HeaderLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDateTimePicker StartDateTimePicker;
+        protected global::DotNetNuke.UI.UserControls.LabelControl HeaderLabel;
         
         /// <summary>
-        /// EndDateTimePicker control.
+        /// HeaderDropdownlist control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDateTimePicker EndDateTimePicker;
+        protected global::System.Web.UI.WebControls.DropDownList HeaderDropdownlist;
         
         /// <summary>
-        /// EventLocationTextBox control.
+        /// ItemLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EventLocationTextBox;
+        protected global::DotNetNuke.UI.UserControls.LabelControl ItemLabel;
         
         /// <summary>
-        /// EventOverviewTextEditor control.
+        /// ItemDropdownlist control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.TextEditor EventOverviewTextEditor;
+        protected global::System.Web.UI.WebControls.DropDownList ItemDropdownlist;
         
         /// <summary>
-        /// EventDescriptionTextEditor control.
+        /// FooterLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.TextEditor EventDescriptionTextEditor;
+        protected global::DotNetNuke.UI.UserControls.LabelControl FooterLabel;
         
         /// <summary>
-        /// EventDescriptionTextEditorValidator control.
+        /// FooterDropdownlist control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator EventDescriptionTextEditorValidator;
+        protected global::System.Web.UI.WebControls.DropDownList FooterDropdownlist;
         
         /// <summary>
-        /// AddEventFooterButtons control.
+        /// DetailLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AddEventFooterButtons;
+        protected global::DotNetNuke.UI.UserControls.LabelControl DetailLabel;
         
         /// <summary>
-        /// SaveEventButton control.
+        /// DetailDropdownlist control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton SaveEventButton;
+        protected global::System.Web.UI.WebControls.DropDownList DetailDropdownlist;
         
         /// <summary>
-        /// CancelEventLink control.
+        /// PagingLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink CancelEventLink;
+        protected global::DotNetNuke.UI.UserControls.LabelControl PagingLabel;
         
         /// <summary>
-        /// SaveAndCreateNewEventButton control.
+        /// RadNumericRecordsPerPage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton SaveAndCreateNewEventButton;
-        
-        /// <summary>
-        /// FinalButtons control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FinalButtons;
-        
-        /// <summary>
-        /// CreateAnotherEventButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton CreateAnotherEventButton;
-        
-        /// <summary>
-        /// CancelGoHomeLink control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink CancelGoHomeLink;
+        protected global::Telerik.Web.UI.RadNumericTextBox RadNumericRecordsPerPage;
     }
 }

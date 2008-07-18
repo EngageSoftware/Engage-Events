@@ -57,7 +57,7 @@ namespace Engage.Dnn.Events
             keyDictionary.Add("Rsvp", "Rsvp.ascx");
             keyDictionary.Add("EmailAFriend", "EmailAFriend.ascx");
             keyDictionary.Add("Register", "Register.ascx");
-
+            keyDictionary.Add("EventDetail", "Display/EventDetail.ascx");
             return keyDictionary;
         }
 
@@ -87,13 +87,13 @@ namespace Engage.Dnn.Events
             }
             else
             {
-                return Dnn.Utility.GetStringSetting(this.Settings, Setting.DisplayType.PropertyName, "Display/EventListingAdmin") + ".ascx";
+                return Dnn.Utility.GetStringSetting(this.Settings, Setting.DisplayTemplate.PropertyName, "Display/EventListingAdmin") + ".ascx";
             }
 
-            ////if (!IsSetup)
-            ////{
-            ////    controlToLoad = "Admin/AdminSettings.ascx";
-            ////}
+            //if (!IsConfigured)
+            //{
+            //    controlToLoad = "Admin/AdminSettings.ascx";
+            //}
         }
 
         /// <summary>

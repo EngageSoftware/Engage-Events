@@ -1,0 +1,64 @@
+<div id="EventItem">
+  <div class="EventTitle">
+        <h2 class="Head"><Engage:EventTitle /></h2>
+    </div>
+    <div class="EventLocation">
+        <p class="NormalBold">Where</p>
+        <p class="Normal"><Engage:EventLocation></Engage:EventLocation></p>
+    </div>
+    <div class="EventDate">
+        <p class="NormalBold">When</p>
+        <p class="Normal"><Engage:EventDate Format="MM.dd.yyyy"/></p>
+    </div>
+    <div class="EventTime">
+        <p class="NormalBold">Time</p>
+        <p class="Normal"><Engage:EventDate Format="%h:mm tt "/></p>
+    </div>
+    <div class="EventOverView">
+        <p class="NormalBold">Overview</p>
+        <div class="Normal">
+            <p><Engage:EventOverview /></p>
+        </div>
+    </div>
+    <div class="EventOverDescription">
+        <p class="NormalBold">Description</p>
+        <div class="Normal">
+            <p><Engage:EventDescription /></p>
+        </div>
+    </div>
+</div>
+
+
+<!-- Documentation 
+Entity - EventDate contains a property called Format, valid values are any DateTime format string i.e. MM/dd/yyyy or MM.dd.yy
+Format Examples:
+	MM/dd/yyyy	07/18/2008
+1	dddd, dd MMMM yyyy	Friday, 18 July 2008
+2	dddd, dd MMMM yyyy HH:mm	Friday, 18 July 2008 15:57
+3	dddd, dd MMMM yyyy hh:mm tt	Friday, 18 July 2008 03:57 PM
+4	dddd, dd MMMM yyyy H:mm	Friday, 18 July 2008 15:57
+5	dddd, dd MMMM yyyy h:mm tt	Friday, 18 July 2008 3:57 PM
+6	dddd, dd MMMM yyyy HH:mm:ss	Friday, 18 July 2008 15:57:46
+7	MM/dd/yyyy HH:mm	07/18/2008 15:57
+8	MM/dd/yyyy hh:mm tt	07/18/2008 03:57 PM
+9	MM/dd/yyyy H:mm	07/18/2008 15:57
+10	MM/dd/yyyy h:mm tt	07/18/2008 3:57 PM
+11	MM/dd/yyyy HH:mm:ss	07/18/2008 15:57:46
+12	MMMM dd	July 18
+13	MMMM dd	July 18
+14	yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK	2008-07-18T15:57:46.8594833-04:00
+15	yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK	2008-07-18T15:57:46.8594833-04:00
+16	ddd, dd MMM yyyy HH':'mm':'ss 'GMT'	Fri, 18 Jul 2008 15:57:46 GMT
+17	ddd, dd MMM yyyy HH':'mm':'ss 'GMT'	Fri, 18 Jul 2008 15:57:46 GMT
+18	yyyy'-'MM'-'dd'T'HH':'mm':'ss	2008-07-18T15:57:46
+19	HH:mm	15:57
+20	hh:mm tt	03:57 PM
+21	H:mm	15:57
+22	h:mm tt	3:57 PM
+23	HH:mm:ss	15:57:46
+24	yyyy'-'MM'-'dd HH':'mm':'ss'Z'	2008-07-18 15:57:46Z
+25	dddd, dd MMMM yyyy HH:mm:ss	Friday, 18 July 2008 15:57:46
+26	yyyy MMMM	2008 July
+27	yyyy MMMM	2008 July
+
+-->

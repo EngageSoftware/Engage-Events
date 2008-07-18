@@ -49,6 +49,22 @@ namespace Engage.Dnn.Events.Util
             }
         }
 
+        public static string TemplatesFolderName
+        {
+            get
+            {
+                return DesktopModuleFolderName + "Templates/";
+            }
+        }
+
+        public static string PhysicialTemplatesFolderName
+        {
+            get
+            {
+                return System.Web.HttpContext.Current.Request.MapPath("~" + TemplatesFolderName);
+            }
+        }
+
         /// <summary>
         /// Determines whether the specified email address is valid.
         /// </summary>

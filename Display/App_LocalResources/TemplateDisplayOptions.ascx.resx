@@ -117,49 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ActiveListItem.Text" xml:space="preserve">
-    <value>Active</value>
+  <data name="DetailLabel.Help" xml:space="preserve">
+    <value>The Detail template will be used when you have included the ReadMore entity. This will redirect to a new page using this template for fields to display.</value>
   </data>
-  <data name="AllListItem.Text" xml:space="preserve">
-    <value>All</value>
+  <data name="DetailLabel.Text" xml:space="preserve">
+    <value>Select a Detail Template</value>
   </data>
-  <data name="DateListItem.Text" xml:space="preserve">
-    <value>Date</value>
+  <data name="DisplayModeLabel.Help" xml:space="preserve">
+    <value>Select what data you want to be displayed. </value>
   </data>
-  <data name="Description.Text" xml:space="preserve">
-    <value>Description</value>
+  <data name="DisplayModeLabel.Text" xml:space="preserve">
+    <value>Select a Display Mode</value>
   </data>
-  <data name="LabelOf.Text" xml:space="preserve">
-    <value>Of</value>
+  <data name="FooterLabel.Help" xml:space="preserve">
+    <value>The Footer template can display paging information. The pager entities can also appear in the Header template or seperated on your display.</value>
   </data>
-  <data name="MyEventsLabel.Text" xml:space="preserve">
-    <value>My Events</value>
+  <data name="FooterLabel.Text" xml:space="preserve">
+    <value>Select a Footer Template</value>
   </data>
-  <data name="NextButton.Text" xml:space="preserve">
-    <value>Next</value>
+  <data name="HeaderLabel.Help" xml:space="preserve">
+    <value>The Header template contains information like a Title, Sorting and Status Sorting</value>
   </data>
-  <data name="NextTip.Text" xml:space="preserve">
-    <value>Click here to go to the Next page.</value>
+  <data name="HeaderLabel.Text" xml:space="preserve">
+    <value>Select a Header Template:</value>
   </data>
-  <data name="Page.Text" xml:space="preserve">
-    <value>Page</value>
+  <data name="ItemLabel.Help" xml:space="preserve">
+    <value>The Item template represents a single event and any information displayed. This is repeated for all Events listed.</value>
   </data>
-  <data name="PreviousButton.Text" xml:space="preserve">
-    <value>Previous</value>
+  <data name="ItemLabel.Text" xml:space="preserve">
+    <value>Select a Item Template</value>
   </data>
-  <data name="PreviousTip.Text" xml:space="preserve">
-    <value>Click here to go to the Previous page.</value>
+  <data name="PagingLabel.Help" xml:space="preserve">
+    <value>Specify how many records you want to display per page. A value of zero indicates to display all records.</value>
   </data>
-  <data name="ReadMore.Text" xml:space="preserve">
-    <value>Read More Here!</value>
-  </data>
-  <data name="SortByLabel.Text" xml:space="preserve">
-    <value>Sort By</value>
-  </data>
-  <data name="StatusLabel.Text" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="TitleListItem.Text" xml:space="preserve">
-    <value>Title</value>
+  <data name="PagingLabel.Text" xml:space="preserve">
+    <value>Enter the number of records to display per page.</value>
   </data>
 </root>

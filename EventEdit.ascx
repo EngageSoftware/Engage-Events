@@ -52,6 +52,11 @@
         <asp:TextBox ID="EventLocationTextBox" runat="server" CssClass="NormalTextBox"/>
         <asp:RequiredFieldValidator runat="server" ControlToValidate="EventLocationTextBox" ResourceKey="EventLocationTextBoxRequired" Display="None" EnableClientScript="false"/>
     </div>
+
+    <div class="EventEditor">
+        <asp:Label runat="server" ResourceKey="EventOverviewLabel" CssClass="NormalBold"/>
+        <dnn:TextEditor ID="EventOverviewTextEditor" runat="server" Width="550" TextRenderMode="Raw" HtmlEncode="False" DefaultMode="Rich" Height="350" ChooseMode="True" ChooseRender="False" />
+    </div>
     
     <div class="EventEditor">
         <asp:Label runat="server" ResourceKey="EventDescriptionLabel" CssClass="NormalBold"/>

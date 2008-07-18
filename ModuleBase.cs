@@ -58,6 +58,22 @@ namespace Engage.Dnn.Events
             }
         }
 
+        public static string TemplatesFolderName
+        {
+            get
+            {
+                return Utility.TemplatesFolderName;
+            }
+        }
+
+        public static string PhysicialTemplatesFolderName
+        {
+         get
+         {
+             return Utility.PhysicialTemplatesFolderName;
+         }
+        }
+
         /// <summary>
         /// Gets a value indicating whether the current user has edit rights to this module.
         /// </summary>

@@ -224,8 +224,8 @@ namespace Engage.Dnn.Events
             e.EventEnd = this.EndDateTimePicker.SelectedDate.Value;
             e.Location = this.EventLocationTextBox.Text;
             e.Title = this.EventTitleTextBox.Text;
-            //e.Overview = this.EventDescriptionTextEditor.Content;
-            e.Overview = this.EventDescriptionTextEditor.Text;
+            e.Overview = this.EventOverviewTextEditor.Text;
+            e.Description = this.EventDescriptionTextEditor.Text;
             e.Save(this.UserId);
         }
 
@@ -239,11 +239,11 @@ namespace Engage.Dnn.Events
                 this.ModuleId,
                 this.UserInfo.Email,
                 this.EventTitleTextBox.Text,
-                //this.EventDescriptionTextEditor.Content,
-                this.EventDescriptionTextEditor.Text,
+                this.EventOverviewTextEditor.Text,
                 this.StartDateTimePicker.SelectedDate.Value);
             e.Location = this.EventLocationTextBox.Text;
             e.EventEnd = this.EndDateTimePicker.SelectedDate.Value;
+            e.Description = this.EventDescriptionTextEditor.Text;
             e.Save(this.UserId);
         }
 
@@ -255,8 +255,8 @@ namespace Engage.Dnn.Events
             Event e = Event.Load(this.EventId);
             this.EventTitleTextBox.Text = e.Title;
             this.EventLocationTextBox.Text = e.Location;
-            //this.EventDescriptionTextEditor.Content = e.Overview;
-            this.EventDescriptionTextEditor.Text = e.Overview;
+            this.EventOverviewTextEditor.Text = e.Overview;
+            this.EventDescriptionTextEditor.Text = e.Description;
             this.StartDateTimePicker.SelectedDate = e.EventStart;
             this.EndDateTimePicker.SelectedDate = e.EventEnd;
         }
