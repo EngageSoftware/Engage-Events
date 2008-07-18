@@ -19,9 +19,10 @@ namespace Engage.Events
 
     public enum ListingMode
     {
-        CurrentMonth = 0,
-        Future = 1,
-        All = 2
+        All,
+        CurrentMonth,
+        Future,
+        Past
     }
 
     /// <summary>
@@ -111,6 +112,9 @@ namespace Engage.Events
                     break;
                 case ListingMode.Future:
                     storedProcName = "spGetEventsFuture";
+                    break;
+                case ListingMode.Past:
+                    storedProcName = "spGetEventsPast";
                     break;
                 default:
                     break; //All records.
