@@ -124,59 +124,50 @@
   <ItemGroup>
     <Compile Include="Actions\ButtonAction.ascx.cs">
       <DependentUpon>ButtonAction.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Actions\ButtonAction.ascx.designer.cs">
       <DependentUpon>ButtonAction.ascx</DependentUpon>
     </Compile>
     <Compile Include="Actions\AddToCalendarAction.ascx.cs">
       <DependentUpon>AddToCalendarAction.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Actions\AddToCalendarAction.ascx.designer.cs">
       <DependentUpon>AddToCalendarAction.ascx</DependentUpon>
     </Compile>
     <Compile Include="Actions\ActionControlBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Actions\SortStatusAction.ascx.cs">
       <DependentUpon>SortStatusAction.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Actions\SortStatusAction.ascx.designer.cs">
       <DependentUpon>SortStatusAction.ascx</DependentUpon>
     </Compile>
     <Compile Include="Actions\SortAction.ascx.cs">
       <DependentUpon>SortAction.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Actions\SortAction.ascx.designer.cs">
       <DependentUpon>SortAction.ascx</DependentUpon>
     </Compile>
     <Compile Include="Actions\DeleteAction.ascx.cs">
       <DependentUpon>DeleteAction.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Actions\DeleteAction.ascx.designer.cs">
       <DependentUpon>DeleteAction.ascx</DependentUpon>
     </Compile>
     <Compile Include="Actions\CancelAction.ascx.cs">
       <DependentUpon>CancelAction.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Actions\CancelAction.ascx.designer.cs">
       <DependentUpon>CancelAction.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\NotConfigured.ascx.cs">
       <DependentUpon>NotConfigured.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Admin\NotConfigured.ascx.designer.cs">
       <DependentUpon>NotConfigured.ascx</DependentUpon>
     </Compile>
     <Compile Include="Display\EventDetail.ascx.cs">
       <DependentUpon>EventDetail.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Display\EventDetail.ascx.designer.cs">
       <DependentUpon>EventDetail.ascx</DependentUpon>
@@ -189,7 +180,6 @@
       <DependentUpon>TemplateDisplayOptions.ascx</DependentUpon>
     </Compile>
     <Compile Include="ModuleBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Properties\Assemblyinfo.cs" />
     <Compile Include="Components\EmailScheduler.cs" />
@@ -231,7 +221,6 @@
     </Compile>
     <Compile Include="Controls\RecurrenceEditor.ascx.cs">
       <DependentUpon>RecurrenceEditor.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controls\RecurrenceEditor.ascx.designer.cs">
       <DependentUpon>RecurrenceEditor.ascx</DependentUpon>
@@ -245,28 +234,24 @@
     </Compile>
     <Compile Include="Display\EventListingTemplate.ascx.cs">
       <DependentUpon>EventListingTemplate.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Display\EventListingTemplate.ascx.designer.cs">
       <DependentUpon>EventListingTemplate.ascx</DependentUpon>
     </Compile>
     <Compile Include="Display\EventListingItem.ascx.cs">
       <DependentUpon>EventListingItem.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Display\EventListingItem.ascx.designer.cs">
       <DependentUpon>EventListingItem.ascx</DependentUpon>
     </Compile>
     <Compile Include="Display\RsvpDisplay.ascx.cs">
       <DependentUpon>RsvpDisplay.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Display\RsvpDisplay.ascx.designer.cs">
       <DependentUpon>RsvpDisplay.ascx</DependentUpon>
     </Compile>
     <Compile Include="Display\EventToolTip.ascx.cs">
       <DependentUpon>EventToolTip.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Display\EventToolTip.ascx.designer.cs">
       <DependentUpon>EventToolTip.ascx</DependentUpon>
@@ -280,49 +265,42 @@
     </Compile>
     <Compile Include="Display\EventCalendar.ascx.cs">
       <DependentUpon>EventCalendar.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Display\EventCalendar.ascx.designer.cs">
       <DependentUpon>EventCalendar.ascx</DependentUpon>
     </Compile>
     <Compile Include="Navigation\EventAdminActions.ascx.cs">
       <DependentUpon>EventAdminActions.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Navigation\EventAdminActions.ascx.designer.cs">
       <DependentUpon>EventAdminActions.ascx</DependentUpon>
     </Compile>
     <Compile Include="Register.ascx.cs">
       <DependentUpon>Register.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Register.ascx.designer.cs">
       <DependentUpon>Register.ascx</DependentUpon>
     </Compile>
     <Compile Include="Navigation\GlobalNavigation.ascx.cs">
       <DependentUpon>GlobalNavigation.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Navigation\GlobalNavigation.ascx.designer.cs">
       <DependentUpon>GlobalNavigation.ascx</DependentUpon>
     </Compile>
     <Compile Include="EmailAFriend.ascx.cs">
       <DependentUpon>EmailAFriend.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EmailAFriend.ascx.designer.cs">
       <DependentUpon>EmailAFriend.ascx</DependentUpon>
     </Compile>
     <Compile Include="Rsvp.ascx.cs">
       <DependentUpon>Rsvp.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Rsvp.ascx.designer.cs">
       <DependentUpon>Rsvp.ascx</DependentUpon>
     </Compile>
     <Compile Include="Display\EventListingAdmin.ascx.cs">
       <DependentUpon>EventListingAdmin.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Display\EventListingAdmin.ascx.designer.cs">
       <DependentUpon>EventListingAdmin.ascx</DependentUpon>
@@ -330,35 +308,30 @@
     <Compile Include="Setting.cs" />
     <Compile Include="Util\Approval.ascx.cs">
       <DependentUpon>Approval.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Util\Approval.ascx.designer.cs">
       <DependentUpon>Approval.ascx</DependentUpon>
     </Compile>
     <Compile Include="RsvpDetail.ascx.cs">
       <DependentUpon>RsvpDetail.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="RsvpDetail.ascx.designer.cs">
       <DependentUpon>RsvpDetail.ascx</DependentUpon>
     </Compile>
     <Compile Include="RsvpSummary.ascx.cs">
       <DependentUpon>RsvpSummary.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="RsvpSummary.ascx.designer.cs">
       <DependentUpon>RsvpSummary.ascx</DependentUpon>
     </Compile>
     <Compile Include="EmailEdit.ascx.cs">
       <DependentUpon>EmailEdit.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EmailEdit.ascx.designer.cs">
       <DependentUpon>EmailEdit.ascx</DependentUpon>
     </Compile>
     <Compile Include="EventEdit.ascx.cs">
       <DependentUpon>EventEdit.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EventEdit.ascx.designer.cs">
       <DependentUpon>EventEdit.ascx</DependentUpon>
@@ -367,7 +340,6 @@
     <Compile Include="Data\DataProvider.cs" />
     <Compile Include="MainContainer.ascx.cs">
       <DependentUpon>MainContainer.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="MainContainer.ascx.designer.cs">
       <DependentUpon>MainContainer.ascx</DependentUpon>
@@ -648,7 +620,7 @@
       <Project>{319B4FE6-A016-41E0-93CE-748DA517D542}</Project>
       <Name>Engage.Utility</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Engage.Dnn.Templating\Engage.Dnn.Framework.csproj">
+    <ProjectReference Include="..\Engage.Dnn.Framework\Engage.Dnn.Framework.csproj">
       <Project>{A58A0922-35E3-49BD-BD18-55A6BA45EC7A}</Project>
       <Name>Engage.Dnn.Framework</Name>
     </ProjectReference>

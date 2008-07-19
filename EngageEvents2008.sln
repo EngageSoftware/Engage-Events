@@ -21,11 +21,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engage.Licensing", "..\..\.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engage.Templating", "..\..\..\..\..\..\Code\Engage 3.0\Engage.Templating\Engage.Templating.csproj", "{791E6642-6BE2-413B-AC8A-7677600E07BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engage.Dnn.Framework", "..\Engage.Dnn.Templating\Engage.Dnn.Framework.csproj", "{A58A0922-35E3-49BD-BD18-55A6BA45EC7A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engage.Dnn.Framework", "..\Engage.Dnn.Framework\Engage.Dnn.Framework.csproj", "{A58A0922-35E3-49BD-BD18-55A6BA45EC7A}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 11
+		SccNumberOfProjects = 12
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://tfs2008.etg-inc.net:8080/
 		SccLocalPath0 = .
@@ -58,6 +58,9 @@ Global
 		SccProjectUniqueName10 = ..\\..\\..\\..\\..\\..\\Code\\Engage\u00203.0\\Engage.Templating\\Engage.Templating.csproj
 		SccProjectName10 = ../Engage\u00203.0/Engage.Templating
 		SccLocalPath10 = ..\\..\\..\\..\\..\\..\\Code\\Engage\u00203.0\\Engage.Templating
+		SccProjectUniqueName11 = ..\\Engage.Dnn.Framework\\Engage.Dnn.Framework.csproj
+		SccProjectName11 = ../Engage\u00203.0/Engage.Dnn.Framework
+		SccLocalPath11 = ..\\Engage.Dnn.Framework
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
