@@ -180,6 +180,7 @@
       <DependentUpon>TemplateDisplayOptions.ascx</DependentUpon>
     </Compile>
     <Compile Include="ModuleBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Properties\Assemblyinfo.cs" />
     <Compile Include="Components\EmailScheduler.cs" />
@@ -352,6 +353,7 @@
       <DependentUpon>Settings.ascx</DependentUpon>
     </Compile>
     <Compile Include="Util\QueryStringParameters.cs" />
+    <Compile Include="Util\Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content.Events.xsd">
