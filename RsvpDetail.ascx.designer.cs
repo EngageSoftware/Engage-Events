@@ -9,8 +9,8 @@
 //------------------------------------------------------------------------------
 
 namespace Engage.Dnn.Events {
-    
-    
+    using RsvpDisplay=Engage.Dnn.Events.Display.RsvpDisplay;
+
     public partial class RsvpDetail {
         
         /// <summary>
@@ -29,7 +29,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Engage.Dnn.Events.RsvpDisplay RsvpDisplay;
+        protected RsvpDisplay RsvpDisplay;
         
         /// <summary>
         /// grdRsvpDetail control.

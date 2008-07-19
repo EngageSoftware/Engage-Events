@@ -13,6 +13,7 @@
 namespace Engage.Dnn.Events.Controls
 {
     using System;
+    using ModuleBase=Engage.Dnn.Events.ModuleBase;
 
     public partial class RecurrenceEditor : ModuleBase
     {

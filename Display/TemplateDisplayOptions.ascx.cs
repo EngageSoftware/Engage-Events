@@ -14,64 +14,68 @@ using System.Web.UI.WebControls;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Services.Exceptions;
 
-namespace Engage.Dnn.Events
+namespace Engage.Dnn.Events.Display
 {
     using System.Collections.Generic;
+    using Framework.Templating;
     using Engage.Events;
+    using Framework;
     using Templating;
-    
+    using Setting=Engage.Dnn.Events.Setting;
+    using Utility=Utility;
+
     public partial class TemplateDisplayOptions : ModuleSettingsBase
     {
         public override void LoadSettings()
         {
             try
             {
-                DisplayModeDropDown.Items.Add(new ListItem(ListingMode.All.ToString(), ListingMode.All.ToString()));
-                DisplayModeDropDown.Items.Add(new ListItem(ListingMode.Past.ToString(), ListingMode.Past.ToString()));
-                DisplayModeDropDown.Items.Add(new ListItem(ListingMode.CurrentMonth.ToString(), ListingMode.CurrentMonth.ToString()));
-                DisplayModeDropDown.Items.Add(new ListItem(ListingMode.Future.ToString(), ListingMode.Future.ToString()));
+                this.DisplayModeDropDown.Items.Add(new ListItem(ListingMode.All.ToString(), ListingMode.All.ToString()));
+                this.DisplayModeDropDown.Items.Add(new ListItem(ListingMode.Past.ToString(), ListingMode.Past.ToString()));
+                this.DisplayModeDropDown.Items.Add(new ListItem(ListingMode.CurrentMonth.ToString(), ListingMode.CurrentMonth.ToString()));
+                this.DisplayModeDropDown.Items.Add(new ListItem(ListingMode.Future.ToString(), ListingMode.Future.ToString()));
 
-                ListItem li = DisplayModeDropDown.Items.FindByValue(DisplayModeOption);
+                ListItem li = this.DisplayModeDropDown.Items.FindByValue(this.DisplayModeOption);
                 if (li != null) li.Selected = true;
 
                 List<Template> templates = TemplateEngine.GetHeaderTemplates(ModuleBase.PhysicialTemplatesFolderName);
-                HeaderDropdownlist.DataTextField = "DocumentName";
-                HeaderDropdownlist.DataValueField = "DocumentName";
-                HeaderDropdownlist.DataSource = templates;
-                HeaderDropdownlist.DataBind();
+                this.HeaderDropdownlist.DataTextField = "DocumentName";
+                this.HeaderDropdownlist.DataValueField = "DocumentName";
+                this.HeaderDropdownlist.DataSource = templates;
+                this.HeaderDropdownlist.DataBind();
 
-                li = HeaderDropdownlist.Items.FindByValue(HeaderTemplate);
+                li = this.HeaderDropdownlist.Items.FindByValue(this.HeaderTemplate);
                 if (li != null) li.Selected = true;
 
                 templates = TemplateEngine.GetItemTemplates(ModuleBase.PhysicialTemplatesFolderName);
-                ItemDropdownlist.DataTextField = "DocumentName";
-                ItemDropdownlist.DataValueField = "DocumentName";
-                ItemDropdownlist.DataSource = templates;
-                ItemDropdownlist.DataBind();
+                this.ItemDropdownlist.DataTextField = "DocumentName";
+                this.ItemDropdownlist.DataValueField = "DocumentName";
+                this.ItemDropdownlist.DataSource = templates;
+                this.ItemDropdownlist.DataBind();
 
-                li = ItemDropdownlist.Items.FindByValue(ItemTemplate);
+                li = this.ItemDropdownlist.Items.FindByValue(this.ItemTemplate);
                 if (li != null) li.Selected = true;
 
                 templates = TemplateEngine.GetFooterTemplates(ModuleBase.PhysicialTemplatesFolderName);
-                FooterDropdownlist.DataTextField = "DocumentName";
-                FooterDropdownlist.DataValueField = "DocumentName";
-                FooterDropdownlist.DataSource = templates;
-                FooterDropdownlist.DataBind();
+                this.FooterDropdownlist.DataTextField = "DocumentName";
+                this.FooterDropdownlist.DataValueField = "DocumentName";
+                this.FooterDropdownlist.DataSource = templates;
+                this.FooterDropdownlist.DataBind();
 
-                li = FooterDropdownlist.Items.FindByValue(FooterTemplate);
+                li = this.FooterDropdownlist.Items.FindByValue(this.FooterTemplate);
                 if (li != null) li.Selected = true;
 
                 templates = TemplateEngine.GetDetailTemplates(ModuleBase.PhysicialTemplatesFolderName);
-                DetailDropdownlist.DataTextField = "DocumentName";
-                DetailDropdownlist.DataValueField = "DocumentName";
-                DetailDropdownlist.DataSource = templates;
-                DetailDropdownlist.DataBind();
+                this.DetailDropdownlist.DataTextField = "DocumentName";
+                this.DetailDropdownlist.DataValueField = "DocumentName";
+                this.DetailDropdownlist.DataSource = templates;
+                this.DetailDropdownlist.DataBind();
 
-                li = DetailDropdownlist.Items.FindByValue(DetailTemplate);
+                li = this.DetailDropdownlist.Items.FindByValue(this.DetailTemplate);
                 if (li != null) li.Selected = true;
                 
-                string recordPerPage = Utility.GetStringSetting(Settings, Setting.RecordsPerPage.PropertyName);
-                if (recordPerPage != null) RadNumericRecordsPerPage.Value = Convert.ToDouble(RecordsPerPage);
+                string recordPerPage = Utility.GetStringSetting(this.Settings, Setting.RecordsPerPage.PropertyName);
+                if (recordPerPage != null) this.RadNumericRecordsPerPage.Value = Convert.ToDouble(this.RecordsPerPage);
 
 
             }
@@ -85,14 +89,14 @@ namespace Engage.Dnn.Events
         {
             base.UpdateSettings();
 
-            if (Page.IsValid)
+            if (this.Page.IsValid)
             {
-                DisplayModeOption = DisplayModeDropDown.SelectedValue;
-                HeaderTemplate = HeaderDropdownlist.SelectedValue;
-                ItemTemplate = ItemDropdownlist.SelectedValue;
-                FooterTemplate = FooterDropdownlist.SelectedValue;
-                DetailTemplate = DetailDropdownlist.SelectedValue;
-                RecordsPerPage = Convert.ToInt32(RadNumericRecordsPerPage.Value);
+                this.DisplayModeOption = this.DisplayModeDropDown.SelectedValue;
+                this.HeaderTemplate = this.HeaderDropdownlist.SelectedValue;
+                this.ItemTemplate = this.ItemDropdownlist.SelectedValue;
+                this.FooterTemplate = this.FooterDropdownlist.SelectedValue;
+                this.DetailTemplate = this.DetailDropdownlist.SelectedValue;
+                this.RecordsPerPage = Convert.ToInt32(this.RadNumericRecordsPerPage.Value);
             }
         }
 
@@ -101,12 +105,12 @@ namespace Engage.Dnn.Events
             set
             {
                 ModuleController modules = new ModuleController();
-                modules.UpdateTabModuleSetting(TabModuleId, Setting.DisplayModeOption.PropertyName, value.ToString(CultureInfo.InvariantCulture));
+                modules.UpdateTabModuleSetting(this.TabModuleId, Setting.DisplayModeOption.PropertyName, value.ToString(CultureInfo.InvariantCulture));
                 
             }
             get
             {
-                object o = Settings[Setting.DisplayModeOption.PropertyName];
+                object o = this.Settings[Setting.DisplayModeOption.PropertyName];
                 return (o == null ? string.Empty : o.ToString());
             }
         }
@@ -116,12 +120,12 @@ namespace Engage.Dnn.Events
             set
             {
                 ModuleController modules = new ModuleController();
-                modules.UpdateTabModuleSetting(TabModuleId, Setting.HeaderTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
+                modules.UpdateTabModuleSetting(this.TabModuleId, Setting.HeaderTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
 
             }
             get
             {
-                object o = Settings[Setting.HeaderTemplate.PropertyName];
+                object o = this.Settings[Setting.HeaderTemplate.PropertyName];
                 return (o == null ? string.Empty : o.ToString());
             }
         }
@@ -131,12 +135,12 @@ namespace Engage.Dnn.Events
             set
             {
                 ModuleController modules = new ModuleController();
-                modules.UpdateTabModuleSetting(TabModuleId, Setting.ItemTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
+                modules.UpdateTabModuleSetting(this.TabModuleId, Setting.ItemTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
 
             }
             get
             {
-                object o = Settings[Setting.ItemTemplate.PropertyName];
+                object o = this.Settings[Setting.ItemTemplate.PropertyName];
                 return (o == null ? string.Empty : o.ToString());
             }
         }
@@ -146,12 +150,12 @@ namespace Engage.Dnn.Events
             set
             {
                 ModuleController modules = new ModuleController();
-                modules.UpdateTabModuleSetting(TabModuleId, Setting.FooterTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
+                modules.UpdateTabModuleSetting(this.TabModuleId, Setting.FooterTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
 
             }
             get
             {
-                object o = Settings[Setting.FooterTemplate.PropertyName];
+                object o = this.Settings[Setting.FooterTemplate.PropertyName];
                 return (o == null ? string.Empty : o.ToString());
             }
         }
@@ -161,12 +165,12 @@ namespace Engage.Dnn.Events
             set
             {
                 ModuleController modules = new ModuleController();
-                modules.UpdateTabModuleSetting(TabModuleId, Setting.DetailTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
+                modules.UpdateTabModuleSetting(this.TabModuleId, Setting.DetailTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
 
             }
             get
             {
-                object o = Settings[Setting.DetailTemplate.PropertyName];
+                object o = this.Settings[Setting.DetailTemplate.PropertyName];
                 return (o == null ? string.Empty : o.ToString());
             }
         }
@@ -176,15 +180,14 @@ namespace Engage.Dnn.Events
             set
             {
                 ModuleController modules = new ModuleController();
-                modules.UpdateTabModuleSetting(TabModuleId, Setting.RecordsPerPage.PropertyName, value.ToString(CultureInfo.InvariantCulture));
+                modules.UpdateTabModuleSetting(this.TabModuleId, Setting.RecordsPerPage.PropertyName, value.ToString(CultureInfo.InvariantCulture));
 
             }
             get
             {
-                object o = Settings[Setting.RecordsPerPage.PropertyName];
+                object o = this.Settings[Setting.RecordsPerPage.PropertyName];
                 return (o == null ? 0: int.Parse(o.ToString()));
             }
         }
     }
 }
-

@@ -2,7 +2,7 @@
 <%@ Register TagPrefix="dnn" TagName="label" Src="~/controls/labelControl.ascx" %>
 
 <style type="text/css">
-    @import url(<%=Engage.Dnn.Events.ModuleBase.ApplicationUrl %><%=Engage.Dnn.Events.ModuleBase.DesktopModuleFolderName %>Module.css);
+    @import url(<%=Engage.Dnn.Framework.ModuleBase.ApplicationUrl %><%=Engage.Dnn.Framework.ModuleBase.DesktopModuleFolderName %>Module.css);
 </style>
 
 <table cellspacing="0" cellpadding="0" border="0" class="SettingsTable">

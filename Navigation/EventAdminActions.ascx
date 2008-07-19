@@ -1,4 +1,4 @@
-<%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.EventAdminActions" CodeBehind="EventAdminActions.ascx.cs" %>
+<%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.Navigation.EventAdminActions" CodeBehind="EventAdminActions.ascx.cs" %>
 <div class="EventButtons Normal">
     <asp:Button ID="EditEventButton" runat="server" ResourceKey="EditEventButton"/>
     <asp:Button ID="ResponsesButton" runat="server" ResourceKey="ResponsesButton"/>

@@ -1,4 +1,4 @@
-<%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.GlobalNavigation" Codebehind="GlobalNavigation.ascx.cs" %>
+<%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.Navigation.GlobalNavigation" Codebehind="GlobalNavigation.ascx.cs" %>
 
 <div id="divAdminButtons" class="AdminButtons CommandButton">
     <asp:HyperLink ID="HomeLink" runat="server" CausesValidation="false" ImageUrl="~/DesktopModules/EngageEvents/Images/home.gif"/>

@@ -15,6 +15,7 @@ namespace Engage.Dnn.Events
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
+    using DotNetNuke.Entities.Modules;
     using DotNetNuke.Services.Exceptions;
     using Utility = Engage.Utility;
 
@@ -58,6 +59,7 @@ namespace Engage.Dnn.Events
             keyDictionary.Add("EmailAFriend", "EmailAFriend.ascx");
             keyDictionary.Add("Register", "Register.ascx");
             keyDictionary.Add("EventDetail", "Display/EventDetail.ascx");
+
             return keyDictionary;
         }
 
@@ -67,6 +69,12 @@ namespace Engage.Dnn.Events
         /// <returns>A relative path to the control that should be loaded into this container</returns>
         private string GetControlToLoad()
         {
+
+            if (!IsConfigured)
+            {
+                return  "Admin/NotConfigured.ascx";
+            }
+
             string keyParam = string.Empty;
             string[] modIdParams = this.Request.QueryString["modId"] == null ? new string[] { } : this.Request.QueryString["modId"].Split(';');
             string[] keyParams = this.Request.QueryString["key"] == null ? new string[] { } : this.Request.QueryString["key"].Split(';');
@@ -81,19 +89,9 @@ namespace Engage.Dnn.Events
                 }
             }
 
-            if (Utility.HasValue(keyParam))
-            {
-                return ControlKeys[keyParam];
-            }
-            else
-            {
-                return Dnn.Utility.GetStringSetting(this.Settings, Setting.DisplayTemplate.PropertyName, "Display/EventListingAdmin") + ".ascx";
-            }
+            return Utility.HasValue(keyParam) ? ControlKeys[keyParam] : "Display/EventListingTemplate.ascx";
 
-            //if (!IsConfigured)
-            //{
-            //    controlToLoad = "Admin/AdminSettings.ascx";
-            //}
+            
         }
 
         /// <summary>
@@ -109,7 +107,7 @@ namespace Engage.Dnn.Events
                     return;
                 }
 
-                ModuleBase mb = (ModuleBase)this.LoadControl(controlToLoad);
+                PortalModuleBase mb = (PortalModuleBase)this.LoadControl(controlToLoad);
                 mb.ModuleConfiguration = this.ModuleConfiguration;
                 mb.ID = Path.GetFileNameWithoutExtension(controlToLoad);
                 this.phControls.Controls.Add(mb);

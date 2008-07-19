@@ -8,9 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Engage.Dnn.Events {
-    
-    
+namespace Engage.Dnn.Events.Navigation
+{
     public partial class EventAdminActions {
         
         /// <summary>

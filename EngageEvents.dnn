@@ -77,6 +77,9 @@
           <name>Engage.Templating.dll</name>
         </file>
         <file>
+          <name>Engage.Dnn.Framework.dll</name>
+        </file>
+        <file>
           <name>Telerik.Web.UI.dll</name>
         </file>
         <file>

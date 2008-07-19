@@ -12,7 +12,6 @@ using System;
 using System.Globalization;
 using System.Web.UI.WebControls;
 using DotNetNuke.Entities.Modules;
-using DotNetNuke.Services.Localization;
 using DotNetNuke.Services.Exceptions;
 
 namespace Engage.Dnn.Events

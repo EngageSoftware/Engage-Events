@@ -9,7 +9,7 @@
 // CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 // DEALINGS IN THE SOFTWARE.
 
-namespace Engage.Dnn.Events
+namespace Engage.Dnn.Events.Display
 {
     using System;
     using System.Diagnostics;
@@ -24,16 +24,16 @@ namespace Engage.Dnn.Events
     public partial class RsvpDisplay : ModuleBase
     {
         /// <summary>
-        /// Backing field for <see cref="RsvpSummary"/>.
+        /// Backing field for <see cref="Events.RsvpSummary"/>.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Engage.Events.RsvpSummary rsvpSummary;
+        private RsvpSummary rsvpSummary;
 
         /// <summary>
         /// Sets the RSVP summary to display.
         /// </summary>
         /// <param name="value">The RSVP summary to display.</param>
-        public void SetRsvpSummary(Engage.Events.RsvpSummary value)
+        public void SetRsvpSummary(RsvpSummary value)
         {
             this.rsvpSummary = value;
         }
@@ -81,7 +81,7 @@ namespace Engage.Dnn.Events
         /// <returns>A formatted string representing the timespan over which this event occurs.</returns>
         private string GetFormattedEventDate(DateTime startDate, DateTime endDate)
         {
-            return string.Format(CultureInfo.CurrentCulture, Localization.GetString("Timespan.Text", LocalResourceFile), startDate, endDate);
+            return string.Format(CultureInfo.CurrentCulture, Localization.GetString("Timespan.Text", this.LocalResourceFile), startDate, endDate);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Engage.Dnn.Events
                              "modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture),
                              "key=RsvpDetail",
                              "eventid=" + eventId.ToString(CultureInfo.InvariantCulture),
-                             "status=" + status.ToString())
+                             "status=" + status)
                        : string.Empty;
         }
     }

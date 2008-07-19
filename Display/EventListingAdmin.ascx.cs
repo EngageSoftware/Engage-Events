@@ -9,12 +9,13 @@
 // CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 // DEALINGS IN THE SOFTWARE.
 
-namespace Engage.Dnn.Events
+namespace Engage.Dnn.Events.Display
 {
     using System;
     using System.Web.UI.WebControls;
     using DotNetNuke.Services.Exceptions;
     using Engage.Events;
+    using Navigation;
 
     /// <summary>
     /// The Event Listing Admin class allows for the management of events.
@@ -109,10 +110,9 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void BindData()
         {
-            EventCollection events = EventCollection.Load(PortalId, SortRadioButtonList.SelectedValue, 0, 0, StatusRadioButtonList.SelectedValue == "All");
-            EventListingRepeater.DataSource = events;
-            EventListingRepeater.DataBind();
+            EventCollection events = EventCollection.Load(this.PortalId, this.SortRadioButtonList.SelectedValue, 0, 0, this.StatusRadioButtonList.SelectedValue == "All");
+            this.EventListingRepeater.DataSource = events;
+            this.EventListingRepeater.DataBind();
         }
     }
 }
-

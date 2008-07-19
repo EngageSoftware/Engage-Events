@@ -9,7 +9,7 @@
 // CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 // DEALINGS IN THE SOFTWARE.
 
-namespace Engage.Dnn.Events
+namespace Engage.Dnn.Events.Navigation
 {
     using System;
     using System.Globalization;
@@ -82,7 +82,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetDisabledImages()
         {
-            switch (CurrentControlKey)
+            switch (this.CurrentControlKey)
             {
                 case "EventEdit":
                     this.AddAnEventLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/add_event_disabled.gif";
@@ -103,7 +103,7 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                object o = Request.QueryString["key"];
+                object o = this.Request.QueryString["key"];
                 return (o == null ? string.Empty : o.ToString());
             }
         }

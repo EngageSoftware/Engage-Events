@@ -37,7 +37,7 @@ namespace Engage.Dnn.Events
                 try
                 {
                     HostSettingsController controller = new HostSettingsController();
-                    controller.UpdateHostSetting(Dnn.Events.Util.Utility.ModuleConfigured + PortalId.ToString(CultureInfo.InvariantCulture), "true");
+                    controller.UpdateHostSetting(Engage.Dnn.Framework.Utility.ModuleConfigured + PortalId.ToString(CultureInfo.InvariantCulture), "true");
 
                     ModuleController modules = new ModuleController();
                     modules.UpdateTabModuleSetting(this.TabModuleId, Setting.DisplayTemplate.PropertyName, DropDownChooseDisplay.SelectedValue);
@@ -62,8 +62,8 @@ namespace Engage.Dnn.Events
             {
                 if (Page.IsPostBack == false)
                 {
-                    ListItem listItemTemplated = new ListItem(Localization.GetString("EventListingTemplate", LocalResourceFile), "Display/EventListingTemplate");
-                    ListItem listItemCalendar = new ListItem(Localization.GetString("EventCalendar", LocalResourceFile), "Display/EventCalendar");
+                    ListItem listItemTemplated = new ListItem(Localization.GetString("EventListingTemplate", LocalResourceFile), "Display.Listing.html");
+                    ListItem listItemCalendar = new ListItem(Localization.GetString("EventCalendar", LocalResourceFile), "Display.Calendar.html");
 
                     DropDownChooseDisplay.Items.Add(listItemTemplated);
                     DropDownChooseDisplay.Items.Add(listItemCalendar);
@@ -80,7 +80,7 @@ namespace Engage.Dnn.Events
 
         private void SetOptions()
         {
-            string displayType = Utility.GetStringSetting(Settings, Setting.DisplayTemplate.PropertyName);
+            string displayType = Engage.Dnn.Utility.GetStringSetting(Settings, Setting.DisplayTemplate.PropertyName);
 
             ListItem li = DropDownChooseDisplay.Items.FindByValue(displayType);
             if (li != null)
@@ -100,10 +100,10 @@ namespace Engage.Dnn.Events
             string selectedDisplayType = DropDownChooseDisplay.SelectedValue;
             switch (selectedDisplayType)
             {
-                case "Display/EventListingTemplate":
+                case "Display.Listing.html":
                     LoadSettingsControl("Display/TemplateDisplayOptions.ascx");
                     break;
-                case "Display/EventCalendar":
+                case "Display.Calendar.html":
                     LoadSettingsControl("Display/CalendarDisplayOptions.ascx");
                     break;
                 default:

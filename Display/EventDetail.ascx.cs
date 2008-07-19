@@ -13,25 +13,23 @@ namespace Engage.Dnn.Events.Display
 {
     using System;
     using System.Web.UI;
-    using System.Web.UI.WebControls;
     using DotNetNuke.Common;
     using DotNetNuke.Services.Exceptions;
+    using Framework.Templating;
     using Engage.Events;
-    using Engage.Events.Templating;
     using Templating;
+    using Setting=Engage.Dnn.Events.Setting;
 
     /// <summary>
     /// Event Detail view.
     /// </summary>
-    public partial class EventDetail : ModuleBase
+    public partial class EventDetail : Events.ModuleBase
     {
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
             this.LocalResourceFile = "~" + DesktopModuleFolderName + "Display/App_LocalResources/EventDetail.ascx.resx";
         }
-
-        private string t = string.Empty;
 
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
@@ -55,87 +53,20 @@ namespace Engage.Dnn.Events.Display
         internal void BindData()
         {
             Event ev = Event.Load(EventId);
-            string templateName = Utility.GetStringSetting(Settings, Setting.DetailTemplate.PropertyName);
+            string templateName = Dnn.Utility.GetStringSetting(Settings, Setting.DetailTemplate.PropertyName);
             if (templateName == null) templateName = "Detail.Item.html";
 
-            Template template = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
-            EventTemplateEngine.ProcessEventTags(this.DetailPlaceHolder, template.ChildTags, ev, ProcessEventTag);
+            Engage.Templating.Template template = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
+            TemplateEngine.ProcessTags(this.DetailPlaceHolder, template.ChildTags, ProcessTag, ev, LocalResourceFile);
 
             BackHyperLink.NavigateUrl = Globals.NavigateURL();
         }
 
-        internal static void ProcessEventTag(Control container, Tag tag, Event ev)
+        internal static void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)
         {
-            switch (tag.LocalName.ToUpperInvariant())
-            {
-                case "EVENTTITLE":
-                    Literal literalTitle = new Literal();
-                    literalTitle.Text = ev.Title;
-                    container.Controls.Add(literalTitle);
-                    break;
-                case "EVENTDATE":
-                    Literal literalWhen = new Literal();
-                    string format = tag.GetAttributeValue("Format");
-                    literalWhen.Text = ev.EventStart.ToString(format);
-                    container.Controls.Add(literalWhen);
-                    break;
-                case "EVENTMONTHSHORT":
-                    Literal literalMonth = new Literal();
-                    literalMonth.Text = ev.EventStart.ToString("MMM");
-                    container.Controls.Add(literalMonth);
-                    break;
-                case "EVENTMONTHLONG":
-                    Literal literalMonthLong = new Literal();
-                    literalMonthLong.Text = ev.EventStart.ToString("MMMM");
-                    container.Controls.Add(literalMonthLong);
-                    break;
-                case "EVENTDAYSHORT":
-                    Literal literalDay = new Literal();
-                    literalDay.Text = ev.EventStart.ToString("%d");
-                    container.Controls.Add(literalDay);
-                    break;
-                case "EVENTDAYLONG":
-                    Literal literalDayLong = new Literal();
-                    literalDayLong.Text = ev.EventStart.ToString("dddd");
-                    container.Controls.Add(literalDayLong);
-                    break;
-                case "EVENTYEARSHORT":
-                    Literal literalYear = new Literal();
-                    literalYear.Text = ev.EventStart.ToString("yy");
-                    container.Controls.Add(literalYear);
-                    break;
-                case "EVENTYEARLONG":
-                    Literal literalYearLong = new Literal();
-                    literalYearLong.Text = ev.EventStart.ToString("yyyy");
-                    container.Controls.Add(literalYearLong);
-                    break;
-                case "EVENTLOCATION":
-                    Literal literalLocation = new Literal();
-                    literalLocation.Text = ev.Location;
-                    container.Controls.Add(literalLocation);
-                    break;
-                case "EVENTOVERVIEW":
-                    Literal literalLocationOverview = new Literal();
-                    literalLocationOverview.Text = ev.Overview;
-                    container.Controls.Add(literalLocationOverview);
-                    break;
-                case "EVENTDESCRIPTION":
-                    Literal literalLocationDescription = new Literal();
-                    literalLocationDescription.Text = ev.Description;
-                    container.Controls.Add(literalLocationDescription);
-                    break;
-            }
+            //do nothing here, handled up in TemplateEngine - for now.
         }
 
-        /// <summary>
-        /// Sets the name of the detail template. 
-        /// </summary>
-        /// <value>The name of the header template.</value>
-        internal string T
-        {
-            set { this.t = value; }
-        }
-       
     }
 }
 

@@ -22,6 +22,7 @@ namespace Engage.Dnn.Events
     using Communication.Email;
     using Engage.Util;
     using Services.Client;
+    using Templating;
     using Utility=Engage.Dnn.Utility;
 
     /// <summary>

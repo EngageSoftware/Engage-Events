@@ -12,33 +12,21 @@
 namespace Engage.Dnn.Events.Display
 {
     using System.Web.UI;
-    using Engage.Events;
+    using Framework.Templating;
     using Templating;
 
     /// <summary>
     /// Custom event listing
     /// </summary>
-    public partial class EventListingTemplate : ModuleBase
+    public partial class EventListingTemplate : TemplateModuleBase
     {
-        private Template template;
-
-        protected override void OnInit(System.EventArgs e)
-        {
-            base.OnInit(e);
-
-            //set the default template. The Listing.html file could be modified for multiple listingitem displays.hk
-            string displayTemplate = Utility.GetStringSetting(Settings, Setting.DisplayTemplate.PropertyName);
-            template = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, "Display.Listing.html"); //will come from setting later.
-            TemplateEngine.ProcessTags(this, template.ChildTags, this.ProcessTag);
-        }
-
         /// <summary>
         /// Method used to process a tag. This method is invoked from the TemplateEngine class. Since this control knows
         /// best on how to contruct the control. ListingItem templates are used here.
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="tag">The tag.</param>
-        private void ProcessTag(Control container, Tag tag)
+        protected override void ProcessTag(Control container, Tag tag, object engageObject, string localResourceFile)
         {
             switch (tag.LocalName.ToUpper())
             {

@@ -14,6 +14,7 @@ namespace Engage.Dnn.Events
     using System;
     using System.Globalization;
     using System.Web.UI.WebControls;
+    using Display;
     using DotNetNuke.Common;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;

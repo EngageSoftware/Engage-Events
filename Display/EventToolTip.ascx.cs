@@ -16,6 +16,7 @@ namespace Engage.Dnn.Events.Display
     using System.Globalization;
     using DotNetNuke.Framework;
     using Engage.Events;
+    using ModuleBase=ModuleBase;
 
     /// <summary>
     /// Used to display a "tool tip" for an appointment.

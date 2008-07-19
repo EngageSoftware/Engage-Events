@@ -15,98 +15,12 @@ namespace Engage.Dnn.Events
     using System.Globalization;
     using System.Text;
     using System.Web;
-    using Licensing;
-    using Util;
 
     /// <summary>
-    /// The base class for all controls in the Engage: Events module. Since this module is licensed it 
-    /// inherits from LicenseModuleBase and requires a unique GUID be defined. DO NOT CHANGE THIS!
+    /// This class extends the framework version in order for developers to add on any specific methods/behavior.
     /// </summary>
-    public class ModuleBase : LicenseModuleBase
+    public class ModuleBase : Framework.ModuleBase
     {
-        public override Guid LicenseKey
-        {
-            get { return new Guid("2de915e1-df71-3443-9f4d-32259c92ced2"); }
-        }
-
-        /////// <summary>
-        /////// The backing field for <see cref="UseCache"/>.
-        /////// </summary>
-        ////private bool useCache = true;
-
-        /// <summary>
-        /// Gets the application URL.
-        /// </summary>
-        /// <value>The application URL.</value>
-        public static string ApplicationUrl
-        {
-            get 
-            {
-                return HttpContext.Current.Request.ApplicationPath != "/" ? HttpContext.Current.Request.ApplicationPath : string.Empty;
-            }
-        }
-
-        /// <summary>
-        /// Gets the name of the desktop module folder for this module.
-        /// </summary>
-        /// <value>The name of the desktop module folder for this module.</value>
-        public static string DesktopModuleFolderName
-        {
-            get
-            {
-                return Utility.DesktopModuleFolderName;
-            }
-        }
-
-        public static string TemplatesFolderName
-        {
-            get
-            {
-                return Utility.TemplatesFolderName;
-            }
-        }
-
-        public static string PhysicialTemplatesFolderName
-        {
-         get
-         {
-             return Utility.PhysicialTemplatesFolderName;
-         }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the current user has edit rights to this module.
-        /// </summary>
-        /// <value><c>true</c> if the current user can edit the module; otherwise, <c>false</c>.</value>
-        public bool IsAdmin
-        {
-            get
-            {
-                // TODO: should this be replaced with a call to IsEditable?
-                // TODO: should this be a call to PortalSecurity.HasEditPermission?
-                switch (this.Request.IsAuthenticated)
-                {
-                    case false:
-                        return false;
-                    default:
-                        return this.IsEditable;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the current user is logged in.
-        /// </summary>
-        /// <value>
-        /// 	<c>true</c> if the current user is logged in; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsLoggedIn
-        {
-            get
-            {
-                return this.Request.IsAuthenticated;
-            }
-        }
 
         /// <summary>
         /// This method looks at the query string and the currently logged in user (if any) and checks for
@@ -117,30 +31,12 @@ namespace Engage.Dnn.Events
             get
             {
                 bool registered = false;
-                if (EventId > 0 && IsLoggedIn)
+                if (this.EventId > 0 && this.IsLoggedIn)
                 {
-                    Engage.Events.Rsvp rsvp = Engage.Events.Rsvp.Load(EventId, UserInfo.Email);
+                    Engage.Events.Rsvp rsvp = Engage.Events.Rsvp.Load(this.EventId, this.UserInfo.Email);
                     registered = (rsvp != null);
                 }
                 return registered;
-            }
-        }
-
-        /// <summary>
-        /// Gets the event id.
-        /// </summary>
-        /// <value>The event id.</value>
-        protected int EventId
-        {
-            get
-            {
-                int id = -1;
-                if (Request.QueryString["eventId"] != null)
-                {
-                    id = Convert.ToInt32(Request.QueryString["eventId"]);
-                }
-
-                return id;
             }
         }
 
@@ -166,46 +62,6 @@ namespace Engage.Dnn.Events
             {
                 return this.BuildLinkUrl("&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Rsvp&eventid=" + this.EventId.ToString(CultureInfo.InvariantCulture));
             }
-        }
-
-        /// <summary>
-        /// Builds a URL for this TabId, using the given querystring parameters.
-        /// </summary>
-        /// <param name="moduleId">The module id of the module for which the control key is being used.</param>
-        /// <param name="controlKey">The control key to determine which control to load.</param>
-        /// <returns>
-        /// A URL to the current TabId, with the given querystring parameters
-        /// </returns>
-        public string BuildLinkUrl(int moduleId, string controlKey)
-        {
-            return this.BuildLinkUrl("modId=" + moduleId.ToString(CultureInfo.InvariantCulture), "key=" + controlKey);
-        }
-
-        /// <summary>
-        /// Builds a URL for this TabId, using the given querystring parameters.
-        /// </summary>
-        /// <param name="moduleId">The module id of the module for which the control key is being used.</param>
-        /// <param name="controlKey">The control key to determine which control to load.</param>
-        /// <param name="querystringParameters">Any other querystring parameters.</param>
-        /// <returns>
-        /// A URL to the current TabId, with the given querystring parameters
-        /// </returns>
-        public string BuildLinkUrl(int moduleId, string controlKey, params string[] querystringParameters)
-        {
-            Array.Resize(ref querystringParameters, querystringParameters.Length + 2);
-            querystringParameters[querystringParameters.Length - 1] = "modId=" + moduleId.ToString(CultureInfo.InvariantCulture);
-            querystringParameters[querystringParameters.Length - 2] = "key=" + controlKey;
-            return this.BuildLinkUrl(querystringParameters);
-        }
-
-        /// <summary>
-        /// Builds a URL for this TabId, using the given querystring parameters.
-        /// </summary>
-        /// <param name="querystringParameters">The qs parameters.</param>
-        /// <returns>A URL to the current TabId, with the given querystring parameters</returns>
-        public string BuildLinkUrl(params string[] querystringParameters)
-        {
-            return DotNetNuke.Common.Globals.NavigateURL(this.TabId, "", querystringParameters);
         }
 
         /// <summary>
@@ -235,17 +91,31 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
+        /// Gets the event id.
         /// </summary>
-        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
-        protected override void OnInit(EventArgs e)
+        /// <value>The event id.</value>
+        protected int EventId
         {
-            base.OnInit(e);
-            if (DotNetNuke.Framework.AJAX.IsInstalled())
+            get
             {
-                DotNetNuke.Framework.AJAX.RegisterScriptManager();
-            }            
+                int id = -1;
+                if (this.Request.QueryString["eventId"] != null)
+                {
+                    id = Convert.ToInt32(this.Request.QueryString["eventId"]);
+                }
+
+                return id;
+            }
+        }
+
+        protected override bool IsConfigured
+        {
+            get
+            {
+                string setting = Dnn.Utility.GetStringSetting(Settings, Setting.DisplayTemplate.PropertyName);
+
+                return (setting.Length > 0);
+            }
         }
     }
 }
-

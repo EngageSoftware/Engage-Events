@@ -1,2 +1,19 @@
 #eventListingItem{}
 	.eventNav{}
+	
+	
+	.EventOverview .NormalBold{float:left; width: 15%; text-align: right;}
+	.EventOverview .Normal {float: left; padding-left: 3%; width: 82%;}
+	.EventDescription .NormalBold{float:left; width: 15%; text-align: right;}
+	.EventDescription .Normal {float: left; padding-left: 3%; width: 82%;}
+	.EventTime .NormalBold{float:left; width: 15%; text-align: right;}
+	.EventTime .Normal {float: left; padding-left: 3%; width: 82%;}
+	
+#eventItem{}
+
+	.EventOverview .NormalBold{float:left; width: 15%; text-align: right;}
+	.EventOverview .Normal {float: left; padding-left: 3%; width: 82%;}
+	.EventDescription .NormalBold{float:left; width: 15%; text-align: right;}
+	.EventDescription .Normal {float: left; padding-left: 3%; width: 82%;}
+	.EventTime .NormalBold{float:left; width: 15%; text-align: right;}
+	.EventTime .Normal {float: left; padding-left: 3%; width: 82%;}

@@ -9,21 +9,20 @@
 // CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 // DEALINGS IN THE SOFTWARE.
 
-namespace Engage.Dnn.Events
+namespace Engage.Dnn.Events.Display
 {
     using System;
     using System.Globalization;
     using System.Web.UI;
-    using Display;
-    using DotNetNuke.Framework;
     using DotNetNuke.Services.Exceptions;
     using Engage.Events;
     using Telerik.Web.UI;
+    using Setting=Engage.Dnn.Events.Setting;
 
     /// <summary>
     /// Control to display the events calendar view
     /// </summary>
-    public partial class EventCalendar : ModuleBase
+    public partial class EventCalendar : Events.ModuleBase
     {
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
@@ -33,11 +32,6 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                if (AJAX.IsInstalled())
-                {
-                    AJAX.RegisterScriptManager();
-                }
-
                 this.BindData();
             }
             catch (Exception exc)
@@ -165,9 +159,9 @@ namespace Engage.Dnn.Events
             this.EventsCalendarDisplay.DataSource = EventCollection.Load(this.PortalId, "EventStart", 0, 0, true);
             this.EventsCalendarDisplay.DataBind();
 
-            if (Utility.GetStringSetting(this.Settings, Setting.SkinSelection.PropertyName) != null)
+            if (Dnn.Utility.GetStringSetting(this.Settings, Setting.SkinSelection.PropertyName) != null)
             {
-                this.EventsCalendarDisplay.Skin = this.EventsCalendarToolTipManager.Skin = Utility.GetStringSetting(this.Settings, Setting.SkinSelection.PropertyName);
+                this.EventsCalendarDisplay.Skin = this.EventsCalendarToolTipManager.Skin = Dnn.Utility.GetStringSetting(this.Settings, Setting.SkinSelection.PropertyName);
             }
         }
     }
