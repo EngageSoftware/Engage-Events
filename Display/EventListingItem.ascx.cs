@@ -15,121 +15,73 @@ namespace Engage.Dnn.Events.Display
     using System.Globalization;
     using System.Web.UI;
     using System.Web.UI.WebControls;
-    using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
     using Framework.Templating;
     using Engage.Events;
     using Templating;
-    using Setting=Engage.Dnn.Events.Setting;
+    using Setting=Setting;
 
     /// <summary>
     /// Custom event listing item
     /// </summary>
-    public partial class EventListingItem : TemplateListingBase
+    public partial class EventListingItem : RepeaterItemListing
     {
-        private Event currentEvent;
-        private string headerTemplateName = string.Empty;
-        private string itemTemplateName = string.Empty;
-        private string footerTemplateName = string.Empty;
-
-        //There are certain controls that wee need to maintain a reference to so that we can hide/show based on certain conditions i.e. ConfigurePager()
-        private SortStatusAction sortStatusAction;
-        private SortAction sortAction;
-        private LinkButton NextButton;
-        private LinkButton PreviousButton;
-        private Label PageCountLabel;
-        private Label CurrentPageLabel;
-        private Label PageLabel;
-        private Label OfLabel;
-
         private ListingMode listingMode;
-        
+        private EventCollection events; //keep a reference around of the data that you have loaded
+        protected SortStatusAction sortStatusAction;
+        protected SortAction sortAction;
+
+        /// <summary>
+        /// Raises the <see cref="EventArgs"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected override void OnInit(EventArgs e)
         {
             //we must set the local resource file first since process will occur before we define the LocalResourceFile
             this.LocalResourceFile = "~" + DesktopModuleFolderName + "Display/App_LocalResources/EventListingItem.ascx.resx";
             base.OnInit(e);
 
-            RepeaterEvents.ItemDataBound += this.RepeaterEvents_ItemDataBound;
-
-            string setting = this.mode.Length == 0 ? Dnn.Utility.GetStringSetting(Settings, Setting.DisplayModeOption.PropertyName) : this.mode;
+            string setting = this.mode.Length == 0 ? Utility.GetStringSetting(Settings, Setting.DisplayModeOption.PropertyName) : this.mode;
             this.listingMode = (ListingMode)Enum.Parse(typeof(ListingMode), setting);
 
-         
-            ////this must be done here so all header/footer controls exist and viewstate restored i.e. sorting radio buttons, paging
-            //ProcessHeader();
-            //ProcessFooter();
         }
 
         /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
+        /// Gets the item template.
         /// </summary>
-        /// <param name="e">The <see cref="T:System.EventArgs"/> object that contains the event data.</param>
-        protected override void OnLoad(EventArgs e)
+        /// <returns></returns>
+        protected override Template GetItemTemplate()
         {
-            try
-            {
-                this.BindData();
-            }
-            catch (Exception exc)
-            {
-                Exceptions.ProcessModuleLoadException(this, exc);
-            }
-        }
-
-        /// <summary>
-        /// Handles the ItemDataBound event of the Listing control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
-        protected void RepeaterEvents_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-            try
-            {
-                this.currentEvent = (Event)e.Item.DataItem;
-
-                if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-                {
-                    e.Item.Controls.Clear();
-                    string templateName = this.itemTemplateName.Length == 0 ? Dnn.Utility.GetStringSetting(Settings, Setting.ItemTemplate.PropertyName) : this.itemTemplateName;
-                    Template itemTemplate = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
-                    TemplateEngine.ProcessTags(e.Item, itemTemplate.ChildTags, this.ProcessTag, this.currentEvent, LocalResourceFile);
-                }
-            }
-            catch (Exception exc)
-            {
-                Exceptions.ProcessModuleLoadException(this, exc);
-            }
+            string templateName = this.itemTemplateName.Length == 0 ? Utility.GetStringSetting(Settings, Framework.Setting.ItemTemplate.PropertyName) : this.itemTemplateName;
+            Template itemTemplate = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
+            return itemTemplate;
         }
 
         /// <summary>
         /// Processes the header.
         /// </summary>
-        protected override void ProcessHeader()
+        /// <returns></returns>
+        protected override Template GetHeaderTemplate()
         {
-            PlaceHolderHeader.Controls.Clear();
-
-            string templateName = this.headerTemplateName.Length == 0 ? Dnn.Utility.GetStringSetting(Settings, Setting.HeaderTemplate.PropertyName) : this.headerTemplateName;
+            string templateName = this.headerTemplateName.Length == 0 ? Utility.GetStringSetting(Settings, Framework.Setting.HeaderTemplate.PropertyName) : this.headerTemplateName;
             Template headerTemplate = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
-            TemplateEngine.ProcessTags(PlaceHolderHeader, headerTemplate.ChildTags, this.ProcessTag, null, LocalResourceFile);
+            return headerTemplate;
         }
 
         /// <summary>
         /// Processes the footer.
         /// </summary>
-        protected override void ProcessFooter()
+        protected override Template GetFooterTemplate()
         {
-            PlaceHolderFooter.Controls.Clear();
-
-            string templateName = this.footerTemplateName.Length == 0 ? Dnn.Utility.GetStringSetting(Settings, Setting.FooterTemplate.PropertyName) : this.footerTemplateName;
+            string templateName = this.footerTemplateName.Length == 0 ? Utility.GetStringSetting(Settings, Framework.Setting.FooterTemplate.PropertyName) : this.footerTemplateName;
             Template footerTemplate = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
-            TemplateEngine.ProcessTags(PlaceHolderFooter, footerTemplate.ChildTags, this.ProcessTag, null, LocalResourceFile);
+            return footerTemplate;
         }
 
         /// <summary>
         /// Binds the data.
         /// </summary>
-        internal void BindData()
+        public override  void BindData()
         {
             string sort = "EventStart";
             if (this.sortAction != null)
@@ -155,47 +107,20 @@ namespace Engage.Dnn.Events.Display
             }
 
 
-            EventCollection events = EventCollection.Load(PortalId, this.listingMode, sort, this.CurrentPageIndex, pageSize, statusSort == "All");
+            this.events = EventCollection.Load(PortalId, this.listingMode, sort, this.CurrentPageIndex, pageSize, statusSort == "All");
             RepeaterEvents.DataSource = events;
             RepeaterEvents.DataBind();
-
-            ConfigurePager();
         }
 
         /// <summary>
-        /// Configures the pager. Because of viestate, we must check for null first and always turn on/off based on data.
+        /// Gets the total records. 
         /// </summary>
-        private void ConfigurePager()
+        /// <value>The total records.</value>
+        protected override int TotalRecords
         {
-            if (PageCountLabel != null) PageCountLabel.Text = PageCount.ToString();
-            if (TotalRecords == 0)
+            get
             {
-                if (PreviousButton != null) PreviousButton.Visible = false;
-                if (NextButton != null) NextButton.Visible = false;
-                if (PageCountLabel != null) PageCountLabel.Visible = false;
-                if (CurrentPageLabel != null) CurrentPageLabel.Visible = false;
-                if (PageLabel != null) PageLabel.Visible = false;
-                if (OfLabel != null) OfLabel.Visible = false;
-            }
-            else
-            {
-                if (PreviousButton != null) PreviousButton.Visible = true;
-                if (NextButton != null) NextButton.Visible = true;
-                if (PageCountLabel != null) PageCountLabel.Visible = true;
-                if (CurrentPageLabel != null) CurrentPageLabel.Visible = true;
-                if (PageLabel != null) PageLabel.Visible = true;
-                if (OfLabel != null) OfLabel.Visible = true;
-            }
-    
-            if (PreviousButton != null) PreviousButton.Visible = (this.CurrentPageIndex != 0);
-            if (NextButton != null) NextButton.Visible = (this.CurrentPageIndex + 1 < TotalRecords);
-            if (CurrentPageLabel != null) CurrentPageLabel.Text = (CurrentPageIndex + 1).ToString();
-
-            //Lastly, turn off paging altogether if there's nothing to page.
-            if (TotalRecords == 1 || PageCount == 1)
-            {
-                if (PreviousButton != null) PreviousButton.Visible = false;
-                if (NextButton != null) NextButton.Visible = false;
+                return this.events.TotalRecords;
             }
         }
 
@@ -211,68 +136,71 @@ namespace Engage.Dnn.Events.Display
 
         }
 
+
         /// <summary>
         /// Method used to process a token. This method is invoked from the TemplateEngine class. Since this control knows
         /// best on how to contruct the page. ListingHeader, ListingItem and Listing Footer templates are processed here.
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="tag">The tag.</param>
-        private void ProcessTag(Control container, Tag tag, object engageObject, string localResourceFile)
+        protected override void ProcessTag(Control container, Tag tag, object engageObject, string localResourceFile)
         {
+            Event ev = (Event)engageObject;
+
             string href;
 
             switch (tag.LocalName.ToUpperInvariant())
             {
                 case "EDITEVENTBUTTON":
                     ButtonAction editEventAction = (ButtonAction)LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
-                    editEventAction.CurrentEvent = this.currentEvent;
+                    editEventAction.CurrentEvent = ev;
                     editEventAction.ModuleConfiguration = ModuleConfiguration;
-                    href = BuildLinkUrl("&modId=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId=" + this.currentEvent.Id.ToString(CultureInfo.InvariantCulture));
+                    href = BuildLinkUrl("&modId=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId=" + ev.Id.ToString(CultureInfo.InvariantCulture));
                     editEventAction.Href = href;
                     editEventAction.Text = Localization.GetString("EditEventButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(editEventAction);
                     break;
                 case "VIEWRESPONSESBUTTON":
                     ButtonAction responsesEventAction = (ButtonAction)LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
-                    responsesEventAction.CurrentEvent = this.currentEvent;
+                    responsesEventAction.CurrentEvent = ev;
                     responsesEventAction.ModuleConfiguration = ModuleConfiguration;
-                    href = BuildLinkUrl("&modId=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpDetail&eventid=" + this.currentEvent.Id.ToString(CultureInfo.InvariantCulture));
+                    href = BuildLinkUrl("&modId=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpDetail&eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
                     responsesEventAction.Href = href;
                     responsesEventAction.Text = Localization.GetString("ResponsesButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(responsesEventAction);
                     break;
                 case "REGISTERBUTTON":
                     ButtonAction registerEventAction = (ButtonAction)LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
-                    registerEventAction.CurrentEvent = this.currentEvent;
+                    registerEventAction.CurrentEvent = ev;
                     registerEventAction.ModuleConfiguration = ModuleConfiguration;
-                    href = BuildLinkUrl("&modId=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid=" + this.currentEvent.Id.ToString(CultureInfo.InvariantCulture));
+                    href = BuildLinkUrl("&modId=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
                     registerEventAction.Href = href;
                     registerEventAction.Text = Localization.GetString("RegisterButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(registerEventAction);
                     break;
                 case "ADDTOCALENDARBUTTON":
                     AddToCalendarAction addToCalendarAction = (AddToCalendarAction)LoadControl("~" + DesktopModuleFolderName + "Actions/AddToCalendarAction.ascx");
-                    addToCalendarAction.CurrentEvent = this.currentEvent;
+                    addToCalendarAction.CurrentEvent = ev;
                     addToCalendarAction.ModuleConfiguration = ModuleConfiguration;
                     container.Controls.Add(addToCalendarAction);
                     break;
                 case "DELETEBUTTON":
                     DeleteAction deleteAction = (DeleteAction)LoadControl("~" + DesktopModuleFolderName + "Actions/DeleteAction.ascx");
-                    deleteAction.CurrentEvent = this.currentEvent;
+                    deleteAction.CurrentEvent = ev;
                     deleteAction.ModuleConfiguration = ModuleConfiguration;
                     container.Controls.Add(deleteAction);
                     break;
                 case "CANCELBUTTON":
                     CancelAction cancelAction = (CancelAction)LoadControl("~" + DesktopModuleFolderName + "Actions/CancelAction.ascx");
-                    cancelAction.CurrentEvent = this.currentEvent;
+                    cancelAction.CurrentEvent = ev;
                     cancelAction.ModuleConfiguration = ModuleConfiguration;
                     container.Controls.Add(cancelAction);
                     break;
                 case "EDITEMAILBUTTON":
                     ButtonAction editEmailAction = (ButtonAction)LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
-                    editEmailAction.CurrentEvent = this.currentEvent;
+                    editEmailAction.CurrentEvent = ev;
                     editEmailAction.ModuleConfiguration = ModuleConfiguration;
-                    href = BuildLinkUrl("&modId=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailEdit&eventid=" + this.currentEvent.Id.ToString(CultureInfo.InvariantCulture));
+                    href = BuildLinkUrl("&modId=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailEdit&eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
                     editEmailAction.Href = href;
                     editEmailAction.Text = Localization.GetString("EditEmailButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(editEmailAction);
@@ -280,16 +208,14 @@ namespace Engage.Dnn.Events.Display
                 case "SORTEVENTBYDATE":
                     this.sortAction = (SortAction)LoadControl("~" + DesktopModuleFolderName + "Actions/SortAction.ascx");
                     sortAction.ModuleConfiguration = ModuleConfiguration;
-                    sortAction.SortChanged += this.sortStatusAction_SortChanged;
+                    sortAction.SortChanged += SortStatusAction_SortChanged;
                     container.Controls.Add(sortAction);
-                    this.sortAction = sortAction;
-                    break;
+                   break;
                 case "SORTEVENTBYSTATUS":
                     this.sortStatusAction = (SortStatusAction)LoadControl("~" + DesktopModuleFolderName + "Actions/SortStatusAction.ascx");
                     sortStatusAction.ModuleConfiguration = ModuleConfiguration;
-                    sortStatusAction.SortChanged += this.sortStatusAction_SortChanged;
+                    sortStatusAction.SortChanged += SortStatusAction_SortChanged;
                     container.Controls.Add(sortStatusAction);
-                    this.sortStatusAction = sortStatusAction;
                     break;
                 case "PREVIOUSPAGE":
                     this.PreviousButton = new LinkButton();
@@ -348,7 +274,7 @@ namespace Engage.Dnn.Events.Display
                     DetailLink.Text = Localization.GetString(resourceKey, LocalResourceFile);
                     if (DetailLink.Text.Length == 0)
                         DetailLink.Text = "Read More...";
-                    href = BuildLinkUrl("&modId=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventDetail&eventid=" + this.currentEvent.Id.ToString(CultureInfo.InvariantCulture));
+                    href = BuildLinkUrl("&modId=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventDetail&eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
                     DetailLink.CssClass = tag.GetAttributeValue("CssClass");
                     DetailLink.NavigateUrl = href;
                     container.Controls.Add(DetailLink);
@@ -359,144 +285,16 @@ namespace Engage.Dnn.Events.Display
 
         }
 
-        private void sortStatusAction_SortChanged(object sender, EventArgs e)
+        protected override PlaceHolder HeaderContainer
         {
-            CurrentPageIndex = 0;
-            ConfigurePager();
+            get { return this.PlaceHolderHeader; }
         }
 
-        /// <summary>
-        /// Gets or sets the index of the current page. Zero based index.
-        /// </summary>
-        /// <value>The index of the current page.</value>
-        private int CurrentPageIndex
+        protected override PlaceHolder FooterContainer
         {
-            get { return Convert.ToInt32(ViewState["CurrentPageIndex"]);}
-            set {ViewState["CurrentPageIndex"] = value;}
+            get { return this.PlaceHolderFooter; }
         }
 
-        /// <summary>
-        /// Calculates the number of pages.
-        /// </summary>
-        /// <value>The page count.</value>
-        private int PageCount
-        {
-            get
-            {
-                if (RecordsPerPage == 0)
-                    return 1;
-
-                if (TotalRecords > RecordsPerPage)
-                {
-                    return Convert.ToInt32(Decimal.Round(Convert.ToDecimal(TotalRecords) / Convert.ToDecimal(RecordsPerPage)));
-                }
-                
-                return 1;
-            }
-        }
-
-        /// <summary>
-        /// Gets the total records in the request to the database. This is not events.count
-        /// </summary>
-        /// <value>The total records.</value>
-        private int TotalRecords
-        {
-            get
-            {
-                EventCollection events = (EventCollection) RepeaterEvents.DataSource;
-                return events.TotalRecords;
-            }
-        }
-
-        /// <summary>
-        /// Handles the Click event of the NextButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void NextButton_Click(object sender, EventArgs e)
-        {
-            int pageNumber;
-            try
-            {
-                pageNumber = CurrentPageIndex + 1;
-            }
-            catch (Exception)
-            {
-                pageNumber = CurrentPageIndex;
-            }
-            if (pageNumber > PageCount - 1)
-            {
-                pageNumber = PageCount - 1;
-            }
-            CurrentPageIndex = pageNumber;
-            if (CurrentPageLabel != null) CurrentPageLabel.Text = CurrentPageIndex.ToString();
-            BindData();
-        }
-
-        /// <summary>
-        /// Handles the Click event of the PreviousButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void PreviousButton_Click(object sender, EventArgs e)
-        {
-            int pageNumber;
-            try
-            {
-                pageNumber = CurrentPageIndex - 1;
-            }
-            catch (Exception)
-            {
-                pageNumber = CurrentPageIndex;
-            }
-            if (pageNumber < 0)
-            {
-                pageNumber = 0;
-            }
-            CurrentPageIndex = pageNumber;
-            BindData();
-        }
-
-        /// <summary>
-        /// Sets the name of the header template. Can be specified in the Display.Listing.html as an attribute: HeaderTemplate="..."
-        /// </summary>
-        /// <value>The name of the header template.</value>
-        internal string HeaderTemplateName
-        {
-            set { this.headerTemplateName = value; }   
-        }
-
-        /// <summary>
-        /// Sets the name of the item template. Can be specified in the Display.Listing.html as an attribute: ItemTemplate="..."
-        /// </summary>
-        /// <value>The name of the header template.</value>
-        internal string ItememplateName
-        {
-            set { this.itemTemplateName = value; }
-        }
-
-        /// <summary>
-        /// Sets the name of the footer template. Can be specified in the Dispay.Listing.html as an attribute: FooterTemplate="..."
-        /// </summary>
-        /// <value>The name of the header template.</value>
-        internal string FooterTemplateName
-        {
-            set { this.footerTemplateName = value; }
-        }
-
-        private int RecordsPerPage
-        {
-            get
-            {
-                int recordsPer = 0;
-                object o = Dnn.Utility.GetStringSetting(Settings, Setting.RecordsPerPage.PropertyName);
-                if (o != null)
-                {
-                    recordsPer = int.Parse(o.ToString());
-                }
-                return recordsPer;
-            }
-        }
     }
 }
 

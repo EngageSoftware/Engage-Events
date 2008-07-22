@@ -122,12 +122,8 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions\ButtonAction.ascx.cs">
-      <DependentUpon>ButtonAction.ascx</DependentUpon>
+    <Compile Include="Actions\ActionControlBase.cs">
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Actions\ButtonAction.ascx.designer.cs">
-      <DependentUpon>ButtonAction.ascx</DependentUpon>
     </Compile>
     <Compile Include="Actions\AddToCalendarAction.ascx.cs">
       <DependentUpon>AddToCalendarAction.ascx</DependentUpon>
@@ -136,22 +132,19 @@
     <Compile Include="Actions\AddToCalendarAction.ascx.designer.cs">
       <DependentUpon>AddToCalendarAction.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Actions\ActionControlBase.cs">
+    <Compile Include="Actions\ButtonAction.ascx.cs">
+      <DependentUpon>ButtonAction.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Actions\SortStatusAction.ascx.cs">
-      <DependentUpon>SortStatusAction.ascx</DependentUpon>
+    <Compile Include="Actions\ButtonAction.ascx.designer.cs">
+      <DependentUpon>ButtonAction.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Actions\CancelAction.ascx.cs">
+      <DependentUpon>CancelAction.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Actions\SortStatusAction.ascx.designer.cs">
-      <DependentUpon>SortStatusAction.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Actions\SortAction.ascx.cs">
-      <DependentUpon>SortAction.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Actions\SortAction.ascx.designer.cs">
-      <DependentUpon>SortAction.ascx</DependentUpon>
+    <Compile Include="Actions\CancelAction.ascx.designer.cs">
+      <DependentUpon>CancelAction.ascx</DependentUpon>
     </Compile>
     <Compile Include="Actions\DeleteAction.ascx.cs">
       <DependentUpon>DeleteAction.ascx</DependentUpon>
@@ -160,12 +153,19 @@
     <Compile Include="Actions\DeleteAction.ascx.designer.cs">
       <DependentUpon>DeleteAction.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Actions\CancelAction.ascx.cs">
-      <DependentUpon>CancelAction.ascx</DependentUpon>
+    <Compile Include="Actions\SortAction.ascx.cs">
+      <DependentUpon>SortAction.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Actions\CancelAction.ascx.designer.cs">
-      <DependentUpon>CancelAction.ascx</DependentUpon>
+    <Compile Include="Actions\SortAction.ascx.designer.cs">
+      <DependentUpon>SortAction.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Actions\SortStatusAction.ascx.cs">
+      <DependentUpon>SortStatusAction.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Actions\SortStatusAction.ascx.designer.cs">
+      <DependentUpon>SortStatusAction.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\NotConfigured.ascx.cs">
       <DependentUpon>NotConfigured.ascx</DependentUpon>
@@ -649,7 +649,7 @@
       <Project>{319B4FE6-A016-41E0-93CE-748DA517D542}</Project>
       <Name>Engage.Utility</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\code\Engage 3.0\Engage.Dnn.Framework\Engage.Dnn.Framework.csproj">
+    <ProjectReference Include="..\Engage.Dnn.Framework\Engage.Dnn.Framework.csproj">
       <Project>{A58A0922-35E3-49BD-BD18-55A6BA45EC7A}</Project>
       <Name>Engage.Dnn.Framework</Name>
     </ProjectReference>
@@ -669,10 +669,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Actions\ButtonAction.ascx" />
-    <Content Include="Actions\AddToCalendarAction.ascx" />
-    <Content Include="Actions\DeleteAction.ascx" />
-    <Content Include="Actions\CancelAction.ascx" />
     <Content Include="App_LocalResources\EmailEdit.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
@@ -684,8 +680,6 @@
     <Content Include="Templates\Template.css" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Actions\SortStatusAction.ascx" />
-    <Content Include="Actions\SortAction.ascx" />
     <Content Include="Display\App_LocalResources\EventListingItem.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
@@ -698,6 +692,12 @@
     <Content Include="Templates\Template Documentation.htm" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Actions\AddToCalendarAction.ascx" />
+    <Content Include="Actions\ButtonAction.ascx" />
+    <Content Include="Actions\CancelAction.ascx" />
+    <Content Include="Actions\DeleteAction.ascx" />
+    <Content Include="Actions\SortAction.ascx" />
+    <Content Include="Actions\SortStatusAction.ascx" />
     <Content Include="Display\App_LocalResources\TemplateDisplayOptions.ascx.resx">
       <SubType>Designer</SubType>
     </Content>

@@ -13,11 +13,7 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Globalization;
-    using System.Text;
-    using System.Web;
     using Engage.Events;
-    using Licensing;
-    using Util;
 
     /// <summary>
     /// The base class for all controls in the Engage: Events module. Since this module is licensed it 
