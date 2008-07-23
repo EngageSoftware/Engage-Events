@@ -8,24 +8,29 @@
 //CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 //DEALINGS IN THE SOFTWARE.
 
-using System;
-using System.Globalization;
-using System.Web.UI.WebControls;
-using DotNetNuke.Entities.Modules;
-using DotNetNuke.Services.Exceptions;
-
 namespace Engage.Dnn.Events.Display
 {
+    using System;
     using System.Collections.Generic;
+    using System.Globalization;
+    using System.Web.UI.WebControls;
+    using DotNetNuke.Entities.Modules;
+    using DotNetNuke.Services.Exceptions;
     using Framework.Templating;
     using Engage.Events;
     using Framework;
     using Templating;
-    using Setting=Engage.Dnn.Events.Setting;
+    using Setting=Setting;
     using Utility=Utility;
 
+    /// <summary>
+    /// The settings for a template
+    /// </summary>
     public partial class TemplateDisplayOptions : ModuleSettingsBase
     {
+        /// <summary>
+        /// Loads the possible settings, and selects the current values.
+        /// </summary>
         public override void LoadSettings()
         {
             try
@@ -74,7 +79,7 @@ namespace Engage.Dnn.Events.Display
                 li = this.DetailDropdownlist.Items.FindByValue(this.DetailTemplate);
                 if (li != null) li.Selected = true;
                 
-                string recordPerPage = Utility.GetStringSetting(this.Settings, Setting.RecordsPerPage.PropertyName);
+                string recordPerPage = Utility.GetStringSetting(this.Settings, Framework.Setting.RecordsPerPage.PropertyName);
                 if (recordPerPage != null) this.RadNumericRecordsPerPage.Value = Convert.ToDouble(this.RecordsPerPage);
 
 
@@ -85,6 +90,9 @@ namespace Engage.Dnn.Events.Display
             }
         }
 
+        /// <summary>
+        /// Updates the settings for this module.
+        /// </summary>
         public override void UpdateSettings()
         {
             base.UpdateSettings();
@@ -120,12 +128,12 @@ namespace Engage.Dnn.Events.Display
             set
             {
                 ModuleController modules = new ModuleController();
-                modules.UpdateTabModuleSetting(this.TabModuleId, Setting.HeaderTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
+                modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.HeaderTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
 
             }
             get
             {
-                object o = this.Settings[Setting.HeaderTemplate.PropertyName];
+                object o = this.Settings[Framework.Setting.HeaderTemplate.PropertyName];
                 return (o == null ? string.Empty : o.ToString());
             }
         }
@@ -135,12 +143,12 @@ namespace Engage.Dnn.Events.Display
             set
             {
                 ModuleController modules = new ModuleController();
-                modules.UpdateTabModuleSetting(this.TabModuleId, Setting.ItemTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
+                modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.ItemTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
 
             }
             get
             {
-                object o = this.Settings[Setting.ItemTemplate.PropertyName];
+                object o = this.Settings[Framework.Setting.ItemTemplate.PropertyName];
                 return (o == null ? string.Empty : o.ToString());
             }
         }
@@ -150,12 +158,12 @@ namespace Engage.Dnn.Events.Display
             set
             {
                 ModuleController modules = new ModuleController();
-                modules.UpdateTabModuleSetting(this.TabModuleId, Setting.FooterTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
+                modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.FooterTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
 
             }
             get
             {
-                object o = this.Settings[Setting.FooterTemplate.PropertyName];
+                object o = this.Settings[Framework.Setting.FooterTemplate.PropertyName];
                 return (o == null ? string.Empty : o.ToString());
             }
         }
@@ -165,12 +173,12 @@ namespace Engage.Dnn.Events.Display
             set
             {
                 ModuleController modules = new ModuleController();
-                modules.UpdateTabModuleSetting(this.TabModuleId, Setting.DetailTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
+                modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.DetailTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
 
             }
             get
             {
-                object o = this.Settings[Setting.DetailTemplate.PropertyName];
+                object o = this.Settings[Framework.Setting.DetailTemplate.PropertyName];
                 return (o == null ? string.Empty : o.ToString());
             }
         }
@@ -180,12 +188,12 @@ namespace Engage.Dnn.Events.Display
             set
             {
                 ModuleController modules = new ModuleController();
-                modules.UpdateTabModuleSetting(this.TabModuleId, Setting.RecordsPerPage.PropertyName, value.ToString(CultureInfo.InvariantCulture));
+                modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.RecordsPerPage.PropertyName, value.ToString(CultureInfo.InvariantCulture));
 
             }
             get
             {
-                object o = this.Settings[Setting.RecordsPerPage.PropertyName];
+                object o = this.Settings[Framework.Setting.RecordsPerPage.PropertyName];
                 return (o == null ? 0: int.Parse(o.ToString()));
             }
         }

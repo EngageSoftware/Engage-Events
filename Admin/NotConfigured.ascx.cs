@@ -8,34 +8,52 @@
 //CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 //DEALINGS IN THE SOFTWARE.
 
-using System;
-using System.Globalization;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using DotNetNuke;
-using DotNetNuke.Common;
-using DotNetNuke.Common.Utilities;
-using DotNetNuke.Services.Localization;
-
 namespace Engage.Dnn.Events
 {
+    using System;
+    using System.Globalization;
+    using DotNetNuke.Common;
+    using DotNetNuke.Entities.Host;
+    using DotNetNuke.Entities.Modules;
+    using Engage.Events;
+    using Framework.Templating;
+
+    /// <summary>
+    /// Displayed when the module has not yet been configured.  Sets up a default configuration.
+    /// </summary>
     public partial class NotConfigured : ModuleBase
     {
-        
-        #region Web Form Designer generated code
+        /// <summary>
+        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
         override protected void OnInit(EventArgs e)
         {
-          
             base.OnInit(e);
 
-            lnkConfigure.Text = Localization.GetString("UnableToFindAction", LocalResourceFile);
-            lnkConfigure.NavigateUrl = EditUrl("ModuleId", ModuleId.ToString(CultureInfo.InvariantCulture), "Module");
-            lnkConfigure.Visible = true;
+            ////lnkConfigure.Text = Localization.GetString("UnableToFindAction", LocalResourceFile);
+            ////lnkConfigure.NavigateUrl = EditUrl("ModuleId", ModuleId.ToString(CultureInfo.InvariantCulture), "Module");
+            ////lnkConfigure.Visible = true;
 
+            this.SetupDefaultSettings();
+            this.Response.Redirect(Globals.NavigateURL());
         }
 
-        #endregion
+        private void SetupDefaultSettings()
+        {
+            HostSettingsController controller = new HostSettingsController();
+            controller.UpdateHostSetting(Framework.Utility.ModuleConfigured + PortalId.ToString(CultureInfo.InvariantCulture), "true");
+
+            ModuleController modules = new ModuleController();
+            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.DisplayTemplate.PropertyName, "Display.Listing.html");
+            modules.UpdateTabModuleSetting(this.TabModuleId, Setting.DisplayModeOption.PropertyName, ListingMode.All.ToString());
+
+            // TODO: add error handling if a folder doesn't have any documents of a particular type
+            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.HeaderTemplate.PropertyName, TemplateEngine.GetHeaderTemplates(PhysicialTemplatesFolderName)[0].DocumentName);
+            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.ItemTemplate.PropertyName, TemplateEngine.GetItemTemplates(PhysicialTemplatesFolderName)[0].DocumentName);
+            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.FooterTemplate.PropertyName, TemplateEngine.GetFooterTemplates(PhysicialTemplatesFolderName)[0].DocumentName);
+            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.DetailTemplate.PropertyName, TemplateEngine.GetDetailTemplates(PhysicialTemplatesFolderName)[0].DocumentName);
+            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.RecordsPerPage.PropertyName, 0.ToString(CultureInfo.InvariantCulture));
+        }
     }
 }
-
