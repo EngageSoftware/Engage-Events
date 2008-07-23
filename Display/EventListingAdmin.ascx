@@ -2,53 +2,45 @@
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
 <%@ Register Src="../Navigation/EventAdminActions.ascx" TagName="actions" TagPrefix="engage" %>
 
-<div class="EventHeader">
-    <h4 class="NormalBold">
-        <asp:Label runat="server" ResourceKey="MyEventsLabel" /></h4>
-    <asp:Label ID="SortByLabel" runat="server" CssClass="NormalBold" ResourceKey="SortByLabel" />
-    <asp:RadioButtonList ID="SortRadioButtonList" runat="server" AutoPostBack="True" CssClass="Normal" RepeatDirection="Horizontal">
-        <asp:ListItem Selected="True" Value="EventStart" ResourceKey="DateListItem" />
-        <asp:ListItem Value="Title" ResourceKey="TitleListItem" />
-    </asp:RadioButtonList>
-    <div>
-        <asp:Label ID="StatusLabel" runat="server" CssClass="NormalBold" ResourceKey="StatusLabel" />
-        <asp:RadioButtonList ID="StatusRadioButtonList" runat="server" AutoPostBack="True" CssClass="Normal" RepeatDirection="Horizontal">
-            <asp:ListItem Selected="True" Value="Active" ResourceKey="ActiveListItem"/>
-            <asp:ListItem Value="All" ResourceKey="AllListItem"/>
-        </asp:RadioButtonList>
-    </div>
+<div class="MEEventHeader">
+    <h2 class="MEvents NormalBold"><asp:Label ID="Label1" runat="server" ResourceKey="MyEventsLabel" /></h2>
+	<div class="METop">
+        <div class="MESorting">
+            <asp:Label ID="SortByLabel" runat="server" CssClass="NormalBold" ResourceKey="SortByLabel" />
+            <asp:RadioButtonList ID="SortRadioButtonList" runat="server" AutoPostBack="True" CssClass="Normal" RepeatDirection="Horizontal">
+                <asp:ListItem Selected="True" Value="EventStart" ResourceKey="DateListItem" />
+                <asp:ListItem Value="Title" ResourceKey="TitleListItem" />
+            </asp:RadioButtonList>
+        </div>        
+        <div class="MEStatus">
+            <asp:Label ID="StatusLabel" runat="server" CssClass="NormalBold" ResourceKey="StatusLabel" />
+            <asp:RadioButtonList ID="StatusRadioButtonList" runat="server" AutoPostBack="True" CssClass="Normal" RepeatDirection="Horizontal">
+                <asp:ListItem Selected="True" Value="Active" ResourceKey="ActiveListItem"/>
+                <asp:ListItem Value="All" ResourceKey="AllListItem"/>
+            </asp:RadioButtonList>
+        </div>
+	</div>
 </div>
 <asp:Repeater runat="server" ID="EventListingRepeater" >
     <ItemTemplate>
         <asp:Label ID="IdLabel" Visible="False" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "Id")  %>'/>
-        <div class="EventTitle">
-            <h2 class="Head">
-                <%# DataBinder.Eval(Container.DataItem, "Title")  %>
-            </h2>
-        </div>
-        <div class="EventDate">
-            <div class="NormalBold">
-                <asp:Label runat="server" ResourceKey="When"/></div>
-            <div class="Normal">
-                <%# DataBinder.Eval(Container.DataItem, "EventStartFormatted")%>
+		<div id="EventItem">
+            <div class="EventTitle">
+                <h2 class="Head"><%# DataBinder.Eval(Container.DataItem, "Title")  %></h2>
             </div>
-        </div>
-        <div class="EventLocation">
-            <div class="NormalBold">
-                <asp:Label runat="server" ResourceKey="Where"/>
+            <div class="EventDate">
+                <p class="NormalBold"><asp:Label ID="Label2" runat="server" ResourceKey="When"/></p>
+                <p class="Normal"><%# DataBinder.Eval(Container.DataItem, "EventStartFormatted")%></p>
             </div>
-            <div class="Normal">
-                <%# DataBinder.Eval(Container.DataItem, "Location")  %>
+            <div class="EventLocation">
+                <p class="NormalBold"><asp:Label ID="Label3" runat="server" ResourceKey="Where"/></p>
+                <p class="Normal"><%# DataBinder.Eval(Container.DataItem, "Location")  %></p>
             </div>
-        </div>
-        <div class="EventDescription">
-            <div class="NormalBold">
-                <asp:Label runat="server" ResourceKey="Description"/>
+            <div class="EventDescription">
+                <p class="NormalBold"><asp:Label ID="Label4" runat="server" ResourceKey="Description"/></p>
+                <div class="Normal"><%# DataBinder.Eval(Container.DataItem, "Overview")  %></div>
             </div>
-            <div class="Normal">
-                <%# DataBinder.Eval(Container.DataItem, "Overview")  %>
-            </div>
-        </div>
-        <engage:actions ID="EventActions" runat="server" OnCancel="EventActions_Cancel" OnDelete="EventActions_Delete" />
+            <div class="EventButtons"><engage:actions ID="EventActions" runat="server" OnCancel="EventActions_Cancel" OnDelete="EventActions_Delete" /></div>
+		</div>
     </ItemTemplate>
 </asp:Repeater>
