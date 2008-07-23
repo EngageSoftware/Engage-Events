@@ -9,17 +9,17 @@
 
 <div id="AddNewEvent" runat="server" class="AddNewEvent">
 
-    <h2 class="Head">
+    <h2 class="SubHead">
         <asp:Label ID="AddEditEventLabel" runat="server"/>
     </h2>
     
-    <div class="EventTitle">
+    <div class="AEEventTitle">
         <asp:Label runat="server" ResourceKey="EventTitleLabel" CssClass="NormalBold"/>
         <asp:TextBox ID="EventTitleTextBox" runat="server" CssClass="NormalTextBox" MaxLength="250"/>
         <asp:RequiredFieldValidator runat="server" ControlToValidate="EventTitleTextBox" ResourceKey="EventTitleTextBoxRequired" Display="None" EnableClientScript="false"/>
     </div>
     
-    <div class="EventStartDate">
+    <div class="AEEventStartDate">
         <asp:Label runat="server" ResourceKey="EventStartDateLabel" CssClass="NormalBold"/>
         <telerik:raddatetimepicker runat="server" id="StartDateTimePicker" skin="WebBlue">
             <timeview skin="WebBlue"/>
@@ -30,7 +30,7 @@
         <asp:RequiredFieldValidator runat="server" ControlToValidate="StartDateTimePicker" ResourceKey="StartDateTimePickerRequired" Display="None" EnableClientScript="false"/>
     </div>
     
-    <div class="EventEndDate">
+    <div class="AEEventEndDate">
         <asp:Label runat="server" ResourceKey="EventEndDateLabel" CssClass="NormalBold"/>
         <telerik:raddatetimepicker runat="server" id="EndDateTimePicker" skin="WebBlue">
             <timeview skin="WebBlue"/>
@@ -47,20 +47,20 @@
         <asp:RequiredFieldValidator runat="server" ControlToValidate="EndDateTimePicker" ResourceKey="EndDateTimePickerRequired" Display="None" EnableClientScript="false"/>
     </div>
     
-    <div class="EventLocationAdd">
+    <div class="AEEventLocationAdd">
         <asp:Label runat="server" ResourceKey="EventLocationLabel" CssClass="NormalBold"/>
         <asp:TextBox ID="EventLocationTextBox" runat="server" CssClass="NormalTextBox"/>
         <asp:RequiredFieldValidator runat="server" ControlToValidate="EventLocationTextBox" ResourceKey="EventLocationTextBoxRequired" Display="None" EnableClientScript="false"/>
     </div>
 
-    <div class="EventEditor">
+    <div class="AEEventEditor">
         <asp:Label runat="server" ResourceKey="EventOverviewLabel" CssClass="NormalBold"/>
-        <dnn:TextEditor ID="EventOverviewTextEditor" runat="server" Width="550" TextRenderMode="Raw" HtmlEncode="False" DefaultMode="Rich" Height="350" ChooseMode="True" ChooseRender="False" />
+        <dnn:TextEditor ID="EventOverviewTextEditor" runat="server" Width="400" TextRenderMode="Raw" HtmlEncode="False" DefaultMode="Rich" Height="350" ChooseMode="True" ChooseRender="False" />
     </div>
     
-    <div class="EventEditor">
+    <div class="AEEventEditor">
         <asp:Label runat="server" ResourceKey="EventDescriptionLabel" CssClass="NormalBold"/>
-        <dnn:TextEditor ID="EventDescriptionTextEditor" runat="server" Width="550" TextRenderMode="Raw" HtmlEncode="False" DefaultMode="Rich" Height="350" ChooseMode="True" ChooseRender="False" />
+        <dnn:TextEditor ID="EventDescriptionTextEditor" runat="server" Width="400" TextRenderMode="Raw" HtmlEncode="False" DefaultMode="Rich" Height="350" ChooseMode="True" ChooseRender="False" />
         <asp:CustomValidator ID="EventDescriptionTextEditorValidator" runat="server" ResourceKey="EventDescriptionTextEditorRequired" Display="None"/>
     </div>
     

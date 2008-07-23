@@ -23,14 +23,8 @@
 .PagingTable { margin: 10px 0; }
 
 		#EventItem{border-bottom: 1px #ccc dotted; overflow: hidden; padding: 1em 0; width: 100%;}
-			#EventItem p{margin-top: 0;margin-bottom: 0.875em;}
-		.EventTitle h2{font-size: 120%; line-height: 1.2; margin: 0 0 0.5em 18%; }
-		.EventDate {clear: both; width: 100%; overflow: hidden;}
-			.EventDate .NormalBold, .EventLocation .NormalBold, .EventDescription .NormalBold
-			{float:left; width: 15%; text-align: right;}
-			.EventDate .Normal, .EventLocation .Normal, .EventDescription .Normal{float: left; padding-left: 3%; width: 82%;}
+			#EventItem p{margin-top: 0; margin-bottom: 0.875em;}
 
-		.EventDescription{overflow: hidden; clear: both;}
 		
 		.EventButtons{margin-top: 0.675em; overflow:hidden; padding-left: 18%; clear: both; }
 		.EventStats{font-weight:bold;}	
@@ -38,7 +32,6 @@
 /* event calendar display page */
 
 .EventCalendar li { list-style-type: none; }
-
 .RadScheduler .rsApt { height: auto !important;}
 
 /* event edit page */
@@ -46,22 +39,36 @@
 .AdminButtons{text-align: left; padding: 1em 0;}
 	.FooterButtons {padding-top: 3%; }
 	.AddEventSuccessMessage { padding-left: 10%; }
-
 	.AddNewEvent {padding-top: 2%; width: 100%; height: 100%;}
-	.AddNewEvent .Head { text-align: left; border-bottom: dashed 1px black; text-transform: uppercase; margin-bottom: 5%; padding-bottom: 1%; }
+	.AddNewEvent h2.SubHead {text-align: left; border-bottom: dashed 1px black; margin-bottom: 1em; padding-bottom: 0.375em; font-size: 125%;}
 
-.EventTitle, .EventStartDate, .EventEndDate, .EventLocationAdd, .EventEditor {text-align: left;}
-	.EventTitle .NormalBold { font-size: medium; }
-	.EventTitle .NormalTextBox { width: 40%; }
-	.EventLocationAdd .NormalTextBox { width: 60%; }
-	.EventStartDate .NormalBold { text-align: right; }
-	
-	.EventStartDate {clear: both; overflow: hidden;}
-			.EventEditor .NormalBold, .EventTitle .NormalBold, .EventStartDate .NormalBold, .EventLocationAdd .NormalBold, .EventEndDate .NormalBold
-			{float:left; width: 20%; margin-right: 3%; text-align: right;}
-			.EventEditor .Normal, .EventTitle .Normal, .EventStartDate .Normal, .EventLocationAdd .Normal, .EventEndDate .Normal{float: left; width: 81%;}
 
-.EventEditor li { list-style-type: none; }
+/* ============================ manage events page ============================ */
+
+.MEEventsHeader{}
+h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-bottom: 1px #ccc solid; padding-bottom: 0.375em; color: #333; 
+	font-family: inherit;}
+.METop{clear: both; overflow: hidden; width: 100%; border-bottom: 1px #ccc solid;}
+	.MESorting{overflow: hidden; width: 40%; float: left; padding-right: 2%;}
+		.MESorting .NormalBold {display: block; float: left; padding-top: 4px;}
+		.MESorting table{ display: inline;}
+	.MEStatus{overflow: hidden; width: 40%; float: left;}
+		.MEStatus .NormalBold {display: block; float: left; padding-top: 4px;}
+		.MEStatus table{ display: inline;}
+
+/* ============================ end manage events page ============================ */
+
+
+	.AEEventTitle, .AEEventStartDate, .AEEventEndDate, .AEEventLocationAdd, .AEEventEditor {clear: both; overflow: hidden; padding-bottom: 0.675em;}
+		.AEEventEditor .NormalBold, .AEEventTitle .NormalBold, .AEEventStartDate .NormalBold, .AEEventLocationAdd .NormalBold, .AEEventEndDate .NormalBold
+		{float:left; width: 20%; margin-right: 3%; text-align: right;}
+		.AEEventEditor .Normal, .AEEventTitle .Normal, .AEEventStartDate .Normal, .AEEventLocationAdd .Normal, .AEEventEndDate .Normal{float: left; width: 81%;}
+
+		
+
+
+
+.AEEventEditor li { list-style-type: none; }
 .registerSubmitBt, .registerMessage{margin-top: 0.675em;}
 
 
@@ -74,8 +81,7 @@
 	.rsvpAtt{float: left; width: 49%;}
 	.rsvpNotAtt{float: right; width: 49%;}
 
-.rsvpDetailHeader td{background: #fff; color: #000; font-weight: bold; border-top: 1px #555 solid; border-bottom: 1px #333 solid;
-	padding: 10px 0 6px; font-size: 120%;}
+.rsvpDetailHeader td{background: #fff; color: #000; font-weight: bold; border-top: 1px #555 solid; border-bottom: 1px #333 solid; padding: 10px 0 6px; font-size: 120%;}
 .rsvpDetailItem{border-bottom: 1px #ccc dotted; border-top: 1px #ccc dotted; }
 .rsvpDetailItem td, .rsvpDetailAltItem td {padding: 8px 0;}
 .rsvpDetailItem:hover, .rsvpDetailAltItem:hover{}
@@ -84,7 +90,6 @@
 .rsvpDetailItemSelect{}
 
 .ResponseHeader .SortByHeader p, .ResponseHeader .StatusHeader p{display:inline; text-transform: uppercase; font-weight: bold; font-size: 90%;}
-
 .ResponsesSummary .PagingTable{border: none; border-bottom: 1px #000 solid; border-top: 1px #999 solid; padding: 12px 0 6px;}
 .rsvpMemberName{font-weight: bold;}
 .rsvpDisplay{padding: 8px 0;}
@@ -93,7 +98,6 @@
 		.rsvpEventDisplay p{margin: 0; color: #555; font-size: 95%;}
 	.rsvpEventStats{float: right; width: 49%; text-align: center;}
 		.rsvpEventStats p{margin: 0;}
-
 
 .ResponsesSummary ol{margin: 0 0 0 1.675em; padding:0;}
 	.ResponsesSummary ol li .rsvpDisplay {padding: 0; margin: 12px 0 8px;}
