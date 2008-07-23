@@ -55,11 +55,23 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engage.Licensing", "..\..\.
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engage.Templating", "..\..\..\..\..\..\Code\Engage 3.0\Engage.Templating\Engage.Templating.csproj", "{791E6642-6BE2-413B-AC8A-7677600E07BF}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engage.Dnn.Framework", "..\Engage.Dnn.Framework\Engage.Dnn.Framework.csproj", "{A58A0922-35E3-49BD-BD18-55A6BA45EC7A}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 10
+		SccNumberOfProjects = 12
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://tfs2008.etg-inc.net:8080/
+		SccTeamFoundationServer = http://etg40:8080/
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = EngageEvents.csproj
 		SccLocalPath1 = .
@@ -87,6 +99,12 @@ Global
 		SccProjectUniqueName9 = ..\\..\\..\\..\\..\\..\\Code\\Engage\u00203.0\\Engage.Licensing\\Engage.Licensing.csproj
 		SccProjectName9 = ../Engage\u00203.0/Engage.Licensing
 		SccLocalPath9 = ..\\..\\..\\..\\..\\..\\Code\\Engage\u00203.0\\Engage.Licensing
+		SccProjectUniqueName10 = ..\\..\\..\\..\\..\\..\\Code\\Engage\u00203.0\\Engage.Templating\\Engage.Templating.csproj
+		SccProjectName10 = ../Engage\u00203.0/Engage.Templating
+		SccLocalPath10 = ..\\..\\..\\..\\..\\..\\Code\\Engage\u00203.0\\Engage.Templating
+		SccProjectUniqueName11 = ..\\Engage.Dnn.Framework\\Engage.Dnn.Framework.csproj
+		SccProjectName11 = ../Engage\u00203.0/Engage.Dnn.Framework
+		SccLocalPath11 = ..\\Engage.Dnn.Framework
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +147,14 @@ Global
 		{11D57DA1-F585-4814-9E5E-5CDF6C9017C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11D57DA1-F585-4814-9E5E-5CDF6C9017C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11D57DA1-F585-4814-9E5E-5CDF6C9017C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{791E6642-6BE2-413B-AC8A-7677600E07BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{791E6642-6BE2-413B-AC8A-7677600E07BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{791E6642-6BE2-413B-AC8A-7677600E07BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{791E6642-6BE2-413B-AC8A-7677600E07BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A58A0922-35E3-49BD-BD18-55A6BA45EC7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A58A0922-35E3-49BD-BD18-55A6BA45EC7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A58A0922-35E3-49BD-BD18-55A6BA45EC7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A58A0922-35E3-49BD-BD18-55A6BA45EC7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
