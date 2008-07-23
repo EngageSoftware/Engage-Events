@@ -112,9 +112,7 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                string setting = Dnn.Utility.GetStringSetting(Settings, Setting.DisplayTemplate.PropertyName);
-
-                return (setting.Length > 0);
+                return Engage.Utility.HasValue(Utility.GetStringSetting(this.Settings, Framework.Setting.DisplayTemplate.PropertyName));
             }
         }
     }

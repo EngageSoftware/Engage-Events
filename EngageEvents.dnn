@@ -18,6 +18,7 @@
               <src>DesktopModules/EngageEvents/MainContainer.ascx</src>
               <type>View</type>
               <supportspartialrendering>true</supportspartialrendering>
+              <HelpUrl>http://www.engagemodules.com/Support.aspx</HelpUrl>
             </control>
             <control>
               <key>Settings</key>

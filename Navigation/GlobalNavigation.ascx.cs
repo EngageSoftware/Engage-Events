@@ -15,6 +15,7 @@ namespace Engage.Dnn.Events.Navigation
     using System.Globalization;
     using DotNetNuke.Common;
     using DotNetNuke.Entities.Modules;
+    using DotNetNuke.Security.Permissions;
     using DotNetNuke.Services.Exceptions;
 
     /// <summary>
@@ -75,6 +76,7 @@ namespace Engage.Dnn.Events.Navigation
         private void SetVisibility()
         {
             this.Visible = this.IsAdmin;
+            this.SettingsLink.Visible = TabPermissionController.HasTabPermission("EDIT");
         }
 
         /// <summary>
