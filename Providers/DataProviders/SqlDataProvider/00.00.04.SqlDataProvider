@@ -1,4 +1,9 @@
-﻿IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = Object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetEventsCurrent]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+﻿
+IF NOT EXISTS (SELECT * FROM dbo.syscolumns where id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Event]') and name = 'Description')
+ALTER TABLE  {databaseOwner}[{objectQualifier}Engage_Event] ADD Description nText null
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = Object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetEventsCurrent]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
   DROP PROC {databaseOwner}[{objectQualifier}Engage_spGetEventsCurrent] 
 GO
 
@@ -306,10 +311,7 @@ GO
 
 --since EventListing is no longer support - update tabmodules settings to display the new Templated View.
 
-Update TabModuleSettings 
+Update {databaseOwner}[{objectQualifier}TabModuleSettings]
 set SettingValue = 'Display/EventListingTemplate'
 Where SettingName = 'DisplayType' And SettingValue = 'Display/EventListing'
 GO
-
-ALTER TABLE  {databaseOwner}[{objectQualifier}Engage_Event] ADD Description nText null
-
