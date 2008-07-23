@@ -3,7 +3,7 @@
 <%@ Register Src="../Navigation/EventAdminActions.ascx" TagName="actions" TagPrefix="engage" %>
 
 <div class="MEEventHeader">
-    <h2 class="MEvents NormalBold"><asp:Label ID="Label1" runat="server" ResourceKey="MyEventsLabel" /></h2>
+    <h2 class="MEvents SuhHead"><asp:Label ID="Label1" runat="server" ResourceKey="MyEventsLabel" /></h2>
 	<div class="METop">
         <div class="MESorting">
             <asp:Label ID="SortByLabel" runat="server" CssClass="NormalBold" ResourceKey="SortByLabel" />
