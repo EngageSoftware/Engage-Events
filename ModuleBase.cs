@@ -15,13 +15,19 @@ namespace Engage.Dnn.Events
     using System.Globalization;
     using System.Text;
     using System.Web;
+    using DotNetNuke.Common;
+    using DotNetNuke.Entities.Host;
+    using DotNetNuke.Entities.Modules;
+    using DotNetNuke.Entities.Modules.Actions;
+    using DotNetNuke.Security;
+    using DotNetNuke.Services.Localization;
+    using Utility=Engage.Utility;
 
     /// <summary>
     /// This class extends the framework version in order for developers to add on any specific methods/behavior.
     /// </summary>
-    public class ModuleBase : Framework.ModuleBase
+    public class ModuleBase : Framework.ModuleBase, IActionable
     {
-
         /// <summary>
         /// This method looks at the query string and the currently logged in user (if any) and checks for
         /// an existing RSVP(registration) for the user.
@@ -48,7 +54,10 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                return this.BuildLinkUrl("&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid=" + this.EventId.ToString(CultureInfo.InvariantCulture));
+                return
+                    this.BuildLinkUrl(
+                        "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid="
+                        + this.EventId.ToString(CultureInfo.InvariantCulture));
             }
         }
 
@@ -60,34 +69,11 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                return this.BuildLinkUrl("&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Rsvp&eventid=" + this.EventId.ToString(CultureInfo.InvariantCulture));
+                return
+                    this.BuildLinkUrl(
+                        "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Rsvp&eventid="
+                        + this.EventId.ToString(CultureInfo.InvariantCulture));
             }
-        }
-
-        /// <summary>
-        /// Sends an iCalendar to the client to download.
-        /// </summary>
-        /// <param name="response">The response to use to send the iCalendar.</param>
-        /// <param name="content">The content of the iCalendar.</param>
-        /// <param name="name">The name of the file.</param>
-        protected static void SendICalendarToClient(HttpResponse response, string content, string name)
-        {
-            response.ClearContent();
-
-            // Stream The ICalendar 
-            response.ContentEncoding = Encoding.GetEncoding(CultureInfo.CurrentUICulture.TextInfo.ANSICodePage);
-            response.BufferOutput = true;
-            response.ContentType = "text/calendar";
-            response.Cache.SetCacheability(HttpCacheability.NoCache);
-            response.AppendHeader("Content-Class", "urn:content-classes:calendarmessage");
-            response.AppendHeader("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(name) + ".ics");
-            
-            ////Engage.Logging.FileNotifier fn = new Engage.Logging.FileNotifier();
-            ////fn.Notify("Ical", "", content);
-                        
-            response.Write(content);
-
-            response.Flush();
         }
 
         /// <summary>
@@ -110,10 +96,68 @@ namespace Engage.Dnn.Events
 
         protected override bool IsConfigured
         {
+            get { return Utility.HasValue(Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.DisplayTemplate.PropertyName)); }
+        }
+
+        #region IActionable Members
+
+        public ModuleActionCollection ModuleActions
+        {
             get
             {
-                return Engage.Utility.HasValue(Utility.GetStringSetting(this.Settings, Framework.Setting.DisplayTemplate.PropertyName));
+                ModuleActionCollection actions = new ModuleActionCollection();
+
+                //Add OnLine Help Action
+                string helpUrl = this.GetOnLineHelp(this.ModuleConfiguration.HelpUrl, this.ModuleConfiguration);
+                if (helpUrl != null)
+                {
+                    ModuleAction helpAction = new ModuleAction(this.GetNextActionID());
+                    helpAction.Title = Localization.GetString(ModuleActionType.OnlineHelp, Localization.GlobalResourceFile);
+                    helpAction.CommandName = ModuleActionType.OnlineHelp;
+                    helpAction.CommandArgument = string.Empty;
+                    helpAction.Icon = "action_help.gif";
+                    helpAction.Url = Globals.FormatHelpUrl(helpUrl, this.PortalSettings, this.ModuleConfiguration.FriendlyName);
+                    helpAction.Secure = SecurityAccessLevel.Edit;
+                    helpAction.UseActionEvent = true;
+                    helpAction.Visible = true;
+                    helpAction.NewWindow = true;
+                    actions.Add(helpAction);
+                }
+                return actions;
             }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Sends an iCalendar to the client to download.
+        /// </summary>
+        /// <param name="response">The response to use to send the iCalendar.</param>
+        /// <param name="content">The content of the iCalendar.</param>
+        /// <param name="name">The name of the file.</param>
+        protected static void SendICalendarToClient(HttpResponse response, string content, string name)
+        {
+            response.ClearContent();
+
+            // Stream The ICalendar 
+            response.ContentEncoding = Encoding.GetEncoding(CultureInfo.CurrentUICulture.TextInfo.ANSICodePage);
+            response.BufferOutput = true;
+            response.ContentType = "text/calendar";
+            response.Cache.SetCacheability(HttpCacheability.NoCache);
+            response.AppendHeader("Content-Class", "urn:content-classes:calendarmessage");
+            response.AppendHeader("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(name) + ".ics");
+
+            ////Engage.Logging.FileNotifier fn = new Engage.Logging.FileNotifier();
+            ////fn.Notify("Ical", "", content);
+
+            response.Write(content);
+
+            response.Flush();
+        }
+
+        public string GetOnLineHelp(string helpUrl, ModuleInfo moduleConfig)
+        {
+            return (HostSettings.GetHostSetting("EnableModuleOnLineHelp") != "Y") ? string.Empty : helpUrl;
         }
     }
 }

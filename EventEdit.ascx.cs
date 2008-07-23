@@ -159,6 +159,7 @@ namespace Engage.Dnn.Events
             this.EventLocationTextBox.Text = String.Empty;
             this.EventTitleTextBox.Text = String.Empty;
             this.EventDescriptionTextEditor.Text = string.Empty;
+            this.EventOverviewTextEditor.Text = string.Empty;
         }
 
         /// <summary>

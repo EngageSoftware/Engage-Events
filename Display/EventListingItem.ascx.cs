@@ -152,89 +152,89 @@ namespace Engage.Dnn.Events.Display
             switch (tag.LocalName.ToUpperInvariant())
             {
                 case "EDITEVENTBUTTON":
-                    ButtonAction editEventAction = (ButtonAction)LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
+                    ButtonAction editEventAction = (ButtonAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
                     editEventAction.CurrentEvent = ev;
-                    editEventAction.ModuleConfiguration = ModuleConfiguration;
-                    href = BuildLinkUrl("&modId=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId=" + ev.Id.ToString(CultureInfo.InvariantCulture));
+                    editEventAction.ModuleConfiguration = this.ModuleConfiguration;
+                    href = this.BuildLinkUrl("&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId=" + ev.Id.ToString(CultureInfo.InvariantCulture));
                     editEventAction.Href = href;
                     editEventAction.Text = Localization.GetString("EditEventButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(editEventAction);
                     break;
                 case "VIEWRESPONSESBUTTON":
-                    ButtonAction responsesEventAction = (ButtonAction)LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
+                    ButtonAction responsesEventAction = (ButtonAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
                     responsesEventAction.CurrentEvent = ev;
-                    responsesEventAction.ModuleConfiguration = ModuleConfiguration;
-                    href = BuildLinkUrl("&modId=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpDetail&eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
+                    responsesEventAction.ModuleConfiguration = this.ModuleConfiguration;
+                    href = this.BuildLinkUrl("&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpDetail&eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
                     responsesEventAction.Href = href;
                     responsesEventAction.Text = Localization.GetString("ResponsesButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(responsesEventAction);
                     break;
                 case "REGISTERBUTTON":
-                    ButtonAction registerEventAction = (ButtonAction)LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
+                    ButtonAction registerEventAction = (ButtonAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
                     registerEventAction.CurrentEvent = ev;
-                    registerEventAction.ModuleConfiguration = ModuleConfiguration;
-                    href = BuildLinkUrl("&modId=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
+                    registerEventAction.ModuleConfiguration = this.ModuleConfiguration;
+                    href = this.BuildLinkUrl("&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
                     registerEventAction.Href = href;
                     registerEventAction.Text = Localization.GetString("RegisterButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(registerEventAction);
                     break;
                 case "ADDTOCALENDARBUTTON":
-                    AddToCalendarAction addToCalendarAction = (AddToCalendarAction)LoadControl("~" + DesktopModuleFolderName + "Actions/AddToCalendarAction.ascx");
+                    AddToCalendarAction addToCalendarAction = (AddToCalendarAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/AddToCalendarAction.ascx");
                     addToCalendarAction.CurrentEvent = ev;
-                    addToCalendarAction.ModuleConfiguration = ModuleConfiguration;
+                    addToCalendarAction.ModuleConfiguration = this.ModuleConfiguration;
                     container.Controls.Add(addToCalendarAction);
                     break;
                 case "DELETEBUTTON":
-                    DeleteAction deleteAction = (DeleteAction)LoadControl("~" + DesktopModuleFolderName + "Actions/DeleteAction.ascx");
+                    DeleteAction deleteAction = (DeleteAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/DeleteAction.ascx");
                     deleteAction.CurrentEvent = ev;
-                    deleteAction.ModuleConfiguration = ModuleConfiguration;
+                    deleteAction.ModuleConfiguration = this.ModuleConfiguration;
                     container.Controls.Add(deleteAction);
                     break;
                 case "CANCELBUTTON":
-                    CancelAction cancelAction = (CancelAction)LoadControl("~" + DesktopModuleFolderName + "Actions/CancelAction.ascx");
+                    CancelAction cancelAction = (CancelAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/CancelAction.ascx");
                     cancelAction.CurrentEvent = ev;
-                    cancelAction.ModuleConfiguration = ModuleConfiguration;
+                    cancelAction.ModuleConfiguration = this.ModuleConfiguration;
                     container.Controls.Add(cancelAction);
                     break;
                 case "EDITEMAILBUTTON":
-                    ButtonAction editEmailAction = (ButtonAction)LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
+                    ButtonAction editEmailAction = (ButtonAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
                     editEmailAction.CurrentEvent = ev;
-                    editEmailAction.ModuleConfiguration = ModuleConfiguration;
-                    href = BuildLinkUrl("&modId=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailEdit&eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
+                    editEmailAction.ModuleConfiguration = this.ModuleConfiguration;
+                    href = this.BuildLinkUrl("&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailEdit&eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
                     editEmailAction.Href = href;
                     editEmailAction.Text = Localization.GetString("EditEmailButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(editEmailAction);
                     break;
                 case "SORTEVENTBYDATE":
-                    this.sortAction = (SortAction)LoadControl("~" + DesktopModuleFolderName + "Actions/SortAction.ascx");
-                    sortAction.ModuleConfiguration = ModuleConfiguration;
-                    sortAction.SortChanged += SortStatusAction_SortChanged;
-                    container.Controls.Add(sortAction);
+                    this.sortAction = (SortAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/SortAction.ascx");
+                    this.sortAction.ModuleConfiguration = this.ModuleConfiguration;
+                    this.sortAction.SortChanged += this.SortStatusAction_SortChanged;
+                    container.Controls.Add(this.sortAction);
                    break;
                 case "SORTEVENTBYSTATUS":
-                    this.sortStatusAction = (SortStatusAction)LoadControl("~" + DesktopModuleFolderName + "Actions/SortStatusAction.ascx");
-                    sortStatusAction.ModuleConfiguration = ModuleConfiguration;
-                    sortStatusAction.SortChanged += SortStatusAction_SortChanged;
-                    container.Controls.Add(sortStatusAction);
+                    this.sortStatusAction = (SortStatusAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/SortStatusAction.ascx");
+                    this.sortStatusAction.ModuleConfiguration = this.ModuleConfiguration;
+                    this.sortStatusAction.SortChanged += this.SortStatusAction_SortChanged;
+                    container.Controls.Add(this.sortStatusAction);
                     break;
                 case "PREVIOUSPAGE":
                     this.PreviousButton = new LinkButton();
-                    this.PreviousButton.Text = Localization.GetString("PreviousButton", LocalResourceFile);
+                    this.PreviousButton.Text = Localization.GetString("PreviousButton", this.LocalResourceFile);
                     this.PreviousButton.CssClass = tag.GetAttributeValue("CssClass");
                     this.PreviousButton.CommandName = "PreviousPage";
                     this.PreviousButton.EnableViewState = true;
-                    this.PreviousButton.ToolTip = Localization.GetString(tag.GetAttributeValue("ToolTipResourceKey"), LocalResourceFile);
-                    this.PreviousButton.Click += PreviousButton_Click;
+                    this.PreviousButton.ToolTip = Localization.GetString(tag.GetAttributeValue("ToolTipResourceKey"), this.LocalResourceFile);
+                    this.PreviousButton.Click += this.PreviousButton_Click;
                     container.Controls.Add(this.PreviousButton);
                     break;
                 case "NEXTPAGE":
                     this.NextButton = new LinkButton();
-                    this.NextButton.Text = Localization.GetString("NextButton", LocalResourceFile);
+                    this.NextButton.Text = Localization.GetString("NextButton", this.LocalResourceFile);
                     this.NextButton.CssClass = tag.GetAttributeValue("CssClass");
                     this.NextButton.CommandName = "NextPage";
                     this.NextButton.EnableViewState = true;
-                    this.NextButton.ToolTip = Localization.GetString(tag.GetAttributeValue("ToolTipResourceKey"), LocalResourceFile);
-                    this.NextButton.Click += NextButton_Click;
+                    this.NextButton.ToolTip = Localization.GetString(tag.GetAttributeValue("ToolTipResourceKey"), this.LocalResourceFile);
+                    this.NextButton.Click += this.NextButton_Click;
                     container.Controls.Add(this.NextButton);
                     break;
                 case "PAGER":
@@ -258,10 +258,10 @@ namespace Engage.Dnn.Events.Display
                     break;
                 case "CURRENTPAGE":
                     this.CurrentPageLabel = new Label();
-                    CurrentPageLabel.Text = (CurrentPageIndex + 1).ToString();
-                    CurrentPageLabel.CssClass = tag.GetAttributeValue("CssClass");
-                    CurrentPageLabel.ToolTip = Localization.GetString("CurrentPageToolTip", LocalResourceFile);
-                    container.Controls.Add(CurrentPageLabel);
+                    this.CurrentPageLabel.Text = (this.CurrentPageIndex + 1).ToString();
+                    this.CurrentPageLabel.CssClass = tag.GetAttributeValue("CssClass");
+                    this.CurrentPageLabel.ToolTip = Localization.GetString("CurrentPageToolTip", this.LocalResourceFile);
+                    container.Controls.Add(this.CurrentPageLabel);
                     break;
                 case "PAGECOUNT":
                     this.PageCountLabel = new Label();
@@ -269,15 +269,19 @@ namespace Engage.Dnn.Events.Display
                     container.Controls.Add(this.PageCountLabel);
                     break;
                 case "READMORE":
-                    HyperLink DetailLink = new HyperLink();
-                    string resourceKey = tag.GetAttributeValue("ResourceKey");
-                    DetailLink.Text = Localization.GetString(resourceKey, LocalResourceFile);
-                    if (DetailLink.Text.Length == 0)
-                        DetailLink.Text = "Read More...";
-                    href = BuildLinkUrl("&modId=" + ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventDetail&eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
-                    DetailLink.CssClass = tag.GetAttributeValue("CssClass");
-                    DetailLink.NavigateUrl = href;
-                    container.Controls.Add(DetailLink);
+                    if (Engage.Utility.HasValue(ev.Description))
+                    {
+                        HyperLink detailLink = new HyperLink();
+                        detailLink.Text = Localization.GetString(tag.GetAttributeValue("ResourceKey"), this.LocalResourceFile);
+                        if (detailLink.Text.Length == 0)
+                        {
+                            detailLink.Text = "Read More...";
+                        }
+                        detailLink.CssClass = tag.GetAttributeValue("CssClass");
+                        detailLink.NavigateUrl = this.BuildLinkUrl(this.ModuleId, "EventDetail", "eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
+
+                        container.Controls.Add(detailLink);
+                    }
                     break;
                 default:
                     break;

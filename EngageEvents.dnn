@@ -18,13 +18,14 @@
               <src>DesktopModules/EngageEvents/MainContainer.ascx</src>
               <type>View</type>
               <supportspartialrendering>true</supportspartialrendering>
-              <HelpUrl>http://www.engagemodules.com/Support.aspx</HelpUrl>
+              <helpurl>http://www.engagemodules.com/Support.aspx</helpurl>
             </control>
             <control>
               <key>Settings</key>
               <title>Event Settings</title>
               <src>DesktopModules/EngageEvents/Settings.ascx</src>
               <type>Edit</type>
+              <helpurl>http://www.engagemodules.com/Support.aspx</helpurl>
             </control>
           </controls>
         </module>
