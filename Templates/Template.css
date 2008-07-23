@@ -1,19 +1,46 @@
 #eventListingItem{}
 	.eventNav{}
-	
-	
-	.EventOverview .NormalBold{float:left; width: 15%; text-align: right;}
-	.EventOverview .Normal {float: left; padding-left: 3%; width: 82%;}
-	.EventDescription .NormalBold{float:left; width: 15%; text-align: right;}
-	.EventDescription .Normal {float: left; padding-left: 3%; width: 82%;}
-	.EventTime .NormalBold{float:left; width: 15%; text-align: right;}
-	.EventTime .Normal {float: left; padding-left: 3%; width: 82%;}
-	
-#eventItem{}
 
-	.EventOverview .NormalBold{float:left; width: 15%; text-align: right;}
-	.EventOverview .Normal {float: left; padding-left: 3%; width: 82%;}
-	.EventDescription .NormalBold{float:left; width: 15%; text-align: right;}
-	.EventDescription .Normal {float: left; padding-left: 3%; width: 82%;}
-	.EventTime .NormalBold{float:left; width: 15%; text-align: right;}
-	.EventTime .Normal {float: left; padding-left: 3%; width: 82%;}
+/*==================== Header.ListingAll ==================== */
+
+	.ItemListingHeader{}
+		.ItemListingHeader p{margin: 0; padding: 0;}
+	.ItemListingHeader h2.SubHead{clear: both; overflow: hidden; width: 100%; font-size: 120%; border-bottom: 1px #ccc solid; padding-bottom: 0.375em;}
+	.ItemListingHeaderTop{clear: both; overflow: hidden; width: 100%; border-bottom: 1px #ccc solid;}
+		.ItemListingHeaderSorting{overflow: hidden; width: 40%; float: left; padding-right: 2%;}
+			.ItemListingHeaderSorting .NormalBold {display: block; float: left; padding-top: 4px;}
+			.ItemListingHeaderSorting table{ display: inline;}
+		.ItemListingHeaderStatus{overflow: hidden; width: 40%; float: left;}
+			.ItemListingHeaderStatus .NormalBold {display: block; float: left; padding-top: 4px;}
+			.ItemListingHeaderStatus table{ display: inline;}
+
+
+/*==================== Item.Listing ==================== */
+
+	.EventTitle{overflow: hidden;}
+		.EventTitle h2{font-size: 120%; margin: 0 0 0.5em 18%;}
+	
+	.EventLocation{overflow: hidden;}
+		.EventLocation .NormalBold {float:left; width: 15%; text-align: right;}
+		.EventLocation .Normal{float:right; width: 82%; text-align: left;}
+
+	
+	.EventDate{overflow: hidden;}
+		.EventDate .NormalBold {float:left; width: 15%; text-align: right;}
+		.EventDate .Normal{float:right; width: 82%; text-align: left;}
+		
+	.EventOverview{overflow: hidden;}
+		.EventOverview .NormalBold {float:left; width: 15%; text-align: right;}
+		.EventOverview .Normal{float:right; width: 82%; text-align: left;}
+
+
+	.EventDescription{overflow: hidden; clear: both;}
+		.EventDescription .NormalBold {float:left; width: 15%; text-align: right;}
+		.EventDescription .Normal{float:right; width: 82%; text-align: left;}
+			.EventDescription .Normal > p {margin-top: 0;}
+
+
+	
+	.eventButtons{padding-left: 18%;}
+		.eventButtons input {margin-bottom: 0.675em;}
+		
