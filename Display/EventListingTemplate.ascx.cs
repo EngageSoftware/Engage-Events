@@ -28,7 +28,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="tag">The tag.</param>
         protected override void ProcessTag(Control container, Tag tag, object engageObject, string localResourceFile)
         {
-            switch (tag.LocalName.ToUpper())
+            switch (tag.LocalName.ToUpperInvariant())
             {
                 case "EVENTLISTING":
                     EventListingItem listingCurrent = (EventListingItem)LoadControl("~" + DesktopModuleFolderName + "Display/EventListingItem.ascx");
@@ -53,7 +53,7 @@ namespace Engage.Dnn.Events.Display
                     listingCurrent.ModuleConfiguration = ModuleConfiguration;
                     container.Controls.Add(listingCurrent);
                     break;
-                case "Calendar":
+                case "CALENDAR":
                     EventCalendar calendar = (EventCalendar)LoadControl("~" + DesktopModuleFolderName + "Display/EventCalendar.ascx");
                     container.Controls.Add(calendar);
                     break;
