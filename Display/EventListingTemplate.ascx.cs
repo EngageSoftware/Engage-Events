@@ -43,7 +43,7 @@ namespace Engage.Dnn.Events.Display
                     }
                     if (tag.HasAttribute("ItemTemplate"))
                     {
-                        listingCurrent.ItememplateName = tag.GetAttributeValue("ItemTemplate");
+                        listingCurrent.ItemTemplateName = tag.GetAttributeValue("ItemTemplate");
                     }
                     if (tag.HasAttribute("FooterTemplate"))
                     {
@@ -55,6 +55,7 @@ namespace Engage.Dnn.Events.Display
                     break;
                 case "CALENDAR":
                     EventCalendar calendar = (EventCalendar)LoadControl("~" + DesktopModuleFolderName + "Display/EventCalendar.ascx");
+                    calendar.ModuleConfiguration = ModuleConfiguration;
                     container.Controls.Add(calendar);
                     break;
                 default:
