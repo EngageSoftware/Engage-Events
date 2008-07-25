@@ -143,7 +143,9 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="tag">The tag.</param>
-        protected override void ProcessTag(Control container, Tag tag, object engageObject, string localResourceFile)
+        /// <param name="engageObject">The engage object.</param>
+        /// <param name="resourceFile">The resource file name.</param>
+        protected override void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)
         {
             Event ev = (Event)engageObject;
 
