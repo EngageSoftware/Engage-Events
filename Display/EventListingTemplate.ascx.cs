@@ -26,6 +26,7 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="tag">The tag.</param>
+        /// <param name="engageObject"></param>
         protected override void ProcessTag(Control container, Tag tag, object engageObject, string localResourceFile)
         {
             switch (tag.LocalName.ToUpperInvariant())

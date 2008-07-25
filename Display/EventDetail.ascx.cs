@@ -18,12 +18,11 @@ namespace Engage.Dnn.Events.Display
     using Framework.Templating;
     using Engage.Events;
     using Templating;
-    using Setting=Engage.Dnn.Events.Setting;
 
     /// <summary>
     /// Event Detail view.
     /// </summary>
-    public partial class EventDetail : Events.ModuleBase
+    public partial class EventDetail : ModuleBase
     {
         protected override void OnInit(EventArgs e)
         {
@@ -53,11 +52,11 @@ namespace Engage.Dnn.Events.Display
         internal void BindData()
         {
             Event ev = Event.Load(EventId);
-            string templateName = Dnn.Utility.GetStringSetting(Settings, Setting.DetailTemplate.PropertyName);
+            string templateName = Utility.GetStringSetting(Settings, Framework.Setting.DetailTemplate.PropertyName);
             if (templateName == null) templateName = "Detail.Item.html";
 
             Engage.Templating.Template template = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
-            TemplateEngine.ProcessTags(this.DetailPlaceHolder, template.ChildTags, ProcessTag, ev, LocalResourceFile);
+            TemplateEngine.ProcessTags(this.DetailPlaceHolder, template.ChildTags, ev, LocalResourceFile, ProcessTag);
 
             BackHyperLink.NavigateUrl = Globals.NavigateURL();
         }
