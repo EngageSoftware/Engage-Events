@@ -64,6 +64,11 @@
         <asp:CustomValidator ID="EventDescriptionTextEditorValidator" runat="server" ResourceKey="EventDescriptionTextEditorRequired" Display="None"/>
     </div>
     
+    <div class="AEEventEditor">
+        <asp:Label ID="FeaturedEventLabel" runat="server" ResourceKey="FeaturedEventLabel" CssClass="NormalBold"/>
+        <asp:CheckBox ID="FeaturedCheckbox" runat="server" />        
+    </div>
+    
 </div>
 
 <engage:ValidationSummary runat="server" />

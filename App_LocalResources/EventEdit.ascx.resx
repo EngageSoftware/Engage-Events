@@ -180,6 +180,9 @@
   <data name="EventTitleWaterMark.Text" xml:space="preserve">
     <value>Please enter the event title</value>
   </data>
+  <data name="FeaturedEventLabel.Text" xml:space="preserve">
+    <value>Featured Event</value>
+  </data>
   <data name="Save.Alt" xml:space="preserve">
     <value>Save</value>
   </data>

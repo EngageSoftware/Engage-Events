@@ -17,13 +17,16 @@ namespace Engage.Dnn.Events.Display
     using DotNetNuke.Services.Exceptions;
     using Engage.Events;
     using Telerik.Web.UI;
-    using Setting=Engage.Dnn.Events.Setting;
+    using Setting=Setting;
 
     /// <summary>
     /// Control to display the events calendar view
     /// </summary>
-    public partial class EventCalendar : Events.ModuleBase
+    public partial class EventCalendar : ModuleBase
     {
+
+        private bool isFeatured;
+
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
         /// </summary>
@@ -156,13 +159,19 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         private void BindData()
         {
-            this.EventsCalendarDisplay.DataSource = EventCollection.Load(this.PortalId, "EventStart", 0, 0, true);
+            this.EventsCalendarDisplay.DataSource = EventCollection.Load(this.PortalId, ListingMode.All, "EventStart", 0, 0, true, this.isFeatured);
             this.EventsCalendarDisplay.DataBind();
 
-            if (Dnn.Utility.GetStringSetting(this.Settings, Setting.SkinSelection.PropertyName) != null)
+            if (Utility.GetStringSetting(this.Settings, Setting.SkinSelection.PropertyName) != null)
             {
-                this.EventsCalendarDisplay.Skin = this.EventsCalendarToolTipManager.Skin = Dnn.Utility.GetStringSetting(this.Settings, Setting.SkinSelection.PropertyName);
+                this.EventsCalendarDisplay.Skin = this.EventsCalendarToolTipManager.Skin = Utility.GetStringSetting(this.Settings, Setting.SkinSelection.PropertyName);
             }
+        }
+
+        public bool IsFeatured
+        {
+            set { this.isFeatured = value; }
+            protected get { return this.isFeatured; }
         }
     }
 }

@@ -1,7 +1,7 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.Settings" CodeBehind="Settings.ascx.cs" %>
 <%@ Register TagPrefix="dnn" TagName="label" Src="~/controls/labelControl.ascx" %>
 <style type="text/css">
-    @import url(<%=Engage.Dnn.Events.ModuleBase.ApplicationUrl %><%=Engage.Dnn.Events.ModuleBase.DesktopModuleFolderName %>Module.css);
+    @import url(<%=Engage.Dnn.Framework.ModuleBase.ApplicationUrl %><%=Engage.Dnn.Framework.ModuleBase.DesktopModuleFolderName %>Module.css);
     .dvUpdateBtns
     {
         display: none;
@@ -22,34 +22,16 @@
                 <asp:PlaceHolder ID="phControls" runat="server"></asp:PlaceHolder>
             </div>
             <br />
-          <%--  <div visible="false">
-                <table id="tblEmailSettings" cellspacing="0" cellpadding="0" border="0" class="SettingsTable">
-                    <tr>
-                        <td class="Normal">
-                            <dnn:label ID="lblUnsubscribeUrl" ResourceKey="lblUnsubscribeUrl" runat="server" />
-                        </td>
-                        <td class="NormalTextBox">
-                            <asp:TextBox ID="txtUnsubscribeUrl" runat="server"></asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="Normal">
-                            <dnn:label ID="lblPrivacyPolicyUrl" ResourceKey="lblPrivacyPolicyUrl" runat="server" />
-                        </td>
-                        <td class="NormalTextBox">
-                            <asp:TextBox ID="txtPrivacyPolicyUrl" runat="server"></asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="Normal">
-                            <dnn:label ID="lblOpenLinkUrl" ResourceKey="lblOpenLinkUrl" runat="server" />
-                        </td>
-                        <td class="NormalTextBox">
-                            <asp:TextBox ID="txtOpenLinkUrl" runat="server"></asp:TextBox>
-                        </td>
-                    </tr>
-                </table>
-            </div>--%>
+            <table id="tblEmailSettings" cellspacing="0" cellpadding="0" border="0" class="SettingsTable">
+                <tr>
+                    <td class="Normal">
+                        <dnn:label ID="FeaturedEventLabel" ResourceKey="FeaturedEventLabel" runat="server" CssClass="SubHead" />
+                    </td>
+                    <td class="Normal">
+                        <asp:CheckBox ID="FeaturedCheckbox" runat="server" />   
+                    </td>
+                </tr>
+            </table>
         </div>
     </ContentTemplate>
 </asp:UpdatePanel>

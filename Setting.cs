@@ -8,6 +8,7 @@ namespace Engage.Dnn.Events
     {
         public static readonly Setting DisplayModeOption = new Setting("DisplayModeOption", "What data to display.");
         public static readonly Setting SkinSelection = new Setting("SkinSelection", "The skin used for Calendar Display.");
+        public static readonly Setting FeaturedOnly = new Setting("FeaturedOnly", "Whether or not to display Featured Events.");
 
        
         public static readonly Setting PrinterFriendly = new Setting("pnlPrinterFriendly",  "Hide/Show the printer friendly link on the module");

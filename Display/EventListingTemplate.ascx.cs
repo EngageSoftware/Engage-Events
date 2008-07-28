@@ -11,6 +11,7 @@
 
 namespace Engage.Dnn.Events.Display
 {
+    using System;
     using System.Web.UI;
     using Framework.Templating;
     using Templating;
@@ -26,8 +27,9 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="tag">The tag.</param>
-        /// <param name="engageObject"></param>
-        protected override void ProcessTag(Control container, Tag tag, object engageObject, string localResourceFile)
+        /// <param name="engageObject">The engage object.</param>
+        /// <param name="resourceFile">The resource file.</param>
+        protected override void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)
         {
             switch (tag.LocalName.ToUpperInvariant())
             {
@@ -50,13 +52,22 @@ namespace Engage.Dnn.Events.Display
                     {
                         listingCurrent.FooterTemplateName = tag.GetAttributeValue("FooterTemplate");
                     }
-
+                    string featured = Utility.GetStringSetting(Settings, Setting.FeaturedOnly.PropertyName);
+                    if (!string.IsNullOrEmpty(featured))
+                    {
+                        listingCurrent.IsFeatured  = Convert.ToBoolean(featured);
+                    }
                     listingCurrent.ModuleConfiguration = ModuleConfiguration;
                     container.Controls.Add(listingCurrent);
                     break;
                 case "CALENDAR":
                     EventCalendar calendar = (EventCalendar)LoadControl("~" + DesktopModuleFolderName + "Display/EventCalendar.ascx");
                     calendar.ModuleConfiguration = ModuleConfiguration;
+                    string calendarFeatured = Utility.GetStringSetting(Settings, Setting.FeaturedOnly.PropertyName);
+                    if (!string.IsNullOrEmpty(calendarFeatured))
+                    {
+                        calendar.IsFeatured = Convert.ToBoolean(calendarFeatured);
+                    }
                     container.Controls.Add(calendar);
                     break;
                 default:

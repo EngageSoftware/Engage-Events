@@ -41,6 +41,8 @@ namespace Engage.Dnn.Events
 
                     ModuleController modules = new ModuleController();
                     modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.DisplayTemplate.PropertyName, DropDownChooseDisplay.SelectedValue);
+
+                    modules.UpdateTabModuleSetting(this.TabModuleId, Setting.FeaturedOnly.PropertyName, FeaturedCheckbox.Checked.ToString());
                     //modules.UpdateTabModuleSetting(this.TabModuleId, Setting.UnsubscribeUrl.PropertyName, txtUnsubscribeUrl.Text);
                     //modules.UpdateTabModuleSetting(this.TabModuleId, Setting.PrivacyPolicyUrl.PropertyName, txtPrivacyPolicyUrl.Text);
                     //modules.UpdateTabModuleSetting(this.TabModuleId, Setting.OpenLinkUrl.PropertyName, txtOpenLinkUrl.Text);
@@ -62,11 +64,11 @@ namespace Engage.Dnn.Events
             {
                 if (Page.IsPostBack == false)
                 {
-                    ListItem listItemTemplated = new ListItem(Localization.GetString("EventListingTemplate", LocalResourceFile), "Display.Listing.html");
-                    ListItem listItemCalendar = new ListItem(Localization.GetString("EventCalendar", LocalResourceFile), "Display.Calendar.html");
+                    ListItem TemplatedListItem = new ListItem(Localization.GetString("EventListingTemplate", LocalResourceFile), "Display.Listing.html");
+                    ListItem CalendarListItem = new ListItem(Localization.GetString("EventCalendar", LocalResourceFile), "Display.Calendar.html");
 
-                    DropDownChooseDisplay.Items.Add(listItemTemplated);
-                    DropDownChooseDisplay.Items.Add(listItemCalendar);
+                    DropDownChooseDisplay.Items.Add(TemplatedListItem);
+                    DropDownChooseDisplay.Items.Add(CalendarListItem);
 
                     SetOptions();
 
@@ -80,13 +82,21 @@ namespace Engage.Dnn.Events
 
         private void SetOptions()
         {
-            string displayType = Engage.Dnn.Utility.GetStringSetting(Settings, Setting.DisplayTemplate.PropertyName);
+            string displayType = Utility.GetStringSetting(Settings, Framework.Setting.DisplayTemplate.PropertyName);
 
             ListItem li = DropDownChooseDisplay.Items.FindByValue(displayType);
             if (li != null)
             {
                 li.Selected = true;
             }
+
+            string featured = Utility.GetStringSetting(Settings, Setting.FeaturedOnly.PropertyName);
+            if (!string.IsNullOrEmpty(featured))
+            {
+                FeaturedCheckbox.Checked = Convert.ToBoolean(featured);
+            }
+
+
         }
 
         protected void DropDownChooseDisplay_SelectedIndexChanged(object sender, EventArgs e)

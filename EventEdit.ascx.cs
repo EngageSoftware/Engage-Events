@@ -229,6 +229,7 @@ namespace Engage.Dnn.Events
             e.Title = this.EventTitleTextBox.Text;
             e.Overview = this.EventOverviewTextEditor.Text;
             e.Description = this.EventDescriptionTextEditor.Text;
+            e.IsFeatured = this.FeaturedCheckbox.Checked;
             e.Save(this.UserId);
         }
 
@@ -247,6 +248,7 @@ namespace Engage.Dnn.Events
             e.Location = this.EventLocationTextBox.Text;
             e.EventEnd = this.EndDateTimePicker.SelectedDate.Value;
             e.Description = this.EventDescriptionTextEditor.Text;
+            e.IsFeatured = this.FeaturedCheckbox.Checked;
             e.Save(this.UserId);
         }
 
@@ -262,6 +264,7 @@ namespace Engage.Dnn.Events
             this.EventDescriptionTextEditor.Text = e.Description;
             this.StartDateTimePicker.SelectedDate = e.EventStart;
             this.EndDateTimePicker.SelectedDate = e.EventEnd;
+            this.FeaturedCheckbox.Checked = e.IsFeatured;
         }
     }
 }

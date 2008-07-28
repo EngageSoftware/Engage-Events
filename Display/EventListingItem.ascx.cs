@@ -105,9 +105,8 @@ namespace Engage.Dnn.Events.Display
             {
                 pageSize = RecordsPerPage;
             }
-
-
-            this.events = EventCollection.Load(PortalId, this.listingMode, sort, this.CurrentPageIndex, pageSize, statusSort == "All");
+            
+            this.events = EventCollection.Load(PortalId, this.listingMode, sort, this.CurrentPageIndex, pageSize, statusSort == "All", this.IsFeatured);
             RepeaterEvents.DataSource = events;
             RepeaterEvents.DataBind();
         }

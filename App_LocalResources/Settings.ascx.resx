@@ -132,11 +132,20 @@
   <data name="EventListing.Text" xml:space="preserve">
     <value>Current and Upcoming Events</value>
   </data>
+  <data name="EventListingFeaturedTemplate.Text" xml:space="preserve">
+    <value>Featured Display</value>
+  </data>
   <data name="EventListingGridStyle.Text" xml:space="preserve">
     <value>Grid Style (Paging and Sorting)</value>
   </data>
   <data name="EventListingTemplate.Text" xml:space="preserve">
     <value>Listing</value>
+  </data>
+  <data name="FeaturedEventLabel.Help" xml:space="preserve">
+    <value>Choose whether to display Featured Events only.</value>
+  </data>
+  <data name="FeaturedEventLabel.Text" xml:space="preserve">
+    <value>Display Featured Events Only.</value>
   </data>
   <data name="LabelChooseDisplayType.Help" xml:space="preserve">
     <value>Pick from the dropdown the default display for events.</value>

@@ -153,7 +153,7 @@
     <Compile Include="Actions\DeleteAction.ascx.designer.cs">
       <DependentUpon>DeleteAction.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Actions\SortAction.ascx.cs">
+    <Compile Include="Actions\SortAction.cs">
       <DependentUpon>SortAction.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -393,6 +393,7 @@
     <None Include="EngageEvents.Build" />
     <None Include="Providers\DataProviders\SqlDataProvider\00.00.01.SqlDataProvider" />
     <None Include="Providers\DataProviders\SqlDataProvider\00.00.04.SqlDataProvider" />
+    <None Include="Providers\DataProviders\SqlDataProvider\00.00.06.SqlDataProvider" />
     <None Include="Uninstall.SqlDataProvider" />
   </ItemGroup>
   <ItemGroup>

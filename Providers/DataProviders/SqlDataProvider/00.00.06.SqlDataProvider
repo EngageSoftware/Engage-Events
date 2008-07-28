@@ -1,0 +1,214 @@
+﻿
+IF NOT EXISTS (SELECT * FROM dbo.syscolumns where id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Event]') and name = 'IsFeatured')
+ALTER TABLE  {databaseOwner}[{objectQualifier}Engage_Event] ADD IsFeatured bit Default 0
+GO
+
+UPDATE {databaseOwner}[{objectQualifier}Engage_Event] Set IsFeatured = 0 WHERE IsFeatured is null
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = Object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetEventsCurrent]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+  DROP PROC {databaseOwner}[{objectQualifier}Engage_spGetEventsCurrent] 
+GO
+
+IF EXISTS (SELECT * FROM   dbo.sysobjects WHERE  id = Object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetEventsFuture]') AND Objectproperty(id,N'IsProcedure') = 1)
+  DROP PROC {databaseOwner}[{objectQualifier}Engage_spGetEventsFuture] 
+GO
+
+IF EXISTS (SELECT * FROM   dbo.sysobjects WHERE  id = Object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetEventsPast]') AND Objectproperty(id,N'IsProcedure') = 1)
+  DROP PROC {databaseOwner}[{objectQualifier}Engage_spGetEventsPast] 
+GO
+
+IF EXISTS (SELECT * FROM   dbo.sysobjects WHERE  id = Object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetEvents]') AND Objectproperty(id,N'IsProcedure') = 1)
+  DROP PROC {databaseOwner}[{objectQualifier}Engage_spGetEvents] 
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEvents](
+	@portalId int, 
+	@sortColumn nvarchar(200), 
+	@index int, 
+	@pageSize int, 
+	@showAll bit,
+	@featured bit,
+	@listingMode nvarchar(20)
+)
+AS
+BEGIN
+	DECLARE @startDate datetime, @endDate datetime
+
+	if (@listingMode = 'all')
+	begin
+		set @startDate = GETDATE()
+		set @endDate = '12/1/9999'
+	end
+
+	if (@listingMode = 'currentMonth')
+	begin
+		set @startDate = GETDATE()
+		set @endDate = DATEADD(mm, DATEDIFF(mm, 0, GETDATE()) + 1, 0) --first day of the next month
+	end
+
+	if (@listingMode = 'past')
+	begin
+		set @startDate = '01/01/01'
+		set @endDate = GETDATE()
+	end
+
+	if (@listingMode = 'future')
+	begin
+		set @startDate = DATEADD(mm, DATEDIFF(mm, 0, GETDATE()) + 1, 0) --first day of the next month
+		set @endDate = '12/1/9999'
+	end
+
+	--show all means show evertying no matter the mode.
+	if (@showAll= 1)
+	begin
+		set @startDate = '01/01/01'
+		set @endDate = '12/1/9999'
+	end
+
+	CREATE TABLE #results 
+	(
+		[Id] INT NOT NULL IDENTITY(1,1),
+		[EventId] INT
+	)
+	
+	DECLARE @sql VARCHAR(8000)
+	SET @sql = 'INSERT INTO #results ([EventId]) '
+	SET @sql = @sql + 'SELECT [EventId] '
+	SET @sql = @sql + 'FROM   {databaseOwner}[{objectQualifier}Engage_Event] '
+	SET @sql = @sql + 'WHERE  PortalId = ' + str(@portalId)
+	SET @sql = @sql + ' AND EventStart > ''' + Convert(varchar(25),@startDate, 101) + ''''
+	SET @sql = @sql + ' AND EventEnd < ''' + Convert(varchar(25), @endDate, 101) + ''''
+	if (@featured = 1)
+	begin
+		SET @sql = @sql + ' AND IsFeatured = 1'
+	end
+	if (@showAll = 0)
+	begin
+		--include cancelled when show all - the dates are already changed above to all
+		SET @sql = @sql + ' AND Cancelled = 0 '
+	end
+	print @sql
+	EXEC (@sql)
+
+	SELECT @@ROWCOUNT AS TotalRecords
+
+	set @sql = ''
+	SET @sql = 'SELECT e.* FROM #results r '
+	SET @sql = @sql + 'JOIN {databaseOwner}[{objectQualifier}Engage_Event] e ON (r.EventId = e.EventId) '
+	IF (@PageSize != 0)
+ 		BEGIN
+ 			SET @sql = @sql + 'WHERE (id >= ' + str(@index) + ' * ' + str(@PageSize) + ' + 1) AND id < (' + str(@index) + ' * ' + str(@PageSize) + ') + ' + str(@PageSize) + ' + 1 '
+ 		END
+	SET @sql = @sql + 'ORDER BY ' + @sortColumn
+
+	--print @sql
+	exec (@sql)
+
+END
+
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertEvent]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertEvent]
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertEvent] 
+(
+@PortalId int,
+@ModuleId int,
+@Title nvarchar(500),
+@Overview ntext,
+@Description nText,
+@EventStart DateTime,
+@EventEnd DateTime,
+@Organizer nvarchar(100),
+@OrganizerEmail nvarchar(100),
+@Location nvarchar(1000),
+@LocationUrl nvarchar(1000),
+@InvitationUrl nvarchar(1000),
+@RecapUrl nvarchar(1000),
+@RecurrenceId int,
+@CanRsvp int,
+@IsFeatured bit,
+@CreatedBy int
+)
+AS
+BEGIN
+	
+	if (@RecurrenceId < 0)
+	begin
+		set @RecurrenceId = null
+	end
+	
+	Insert into {databaseOwner}[{objectQualifier}Engage_Event] 
+	(
+		[PortalId], [ModuleId], [Title], [Overview], [Description], [EventStart], [EventEnd], [Organizer], [OrganizerEmail],
+		[Location], [LocationUrl], [InvitationUrl], [RecapUrl], [RecurrenceId], [CanRsvp], [IsFeatured], [CreatedBy], [RevisingUser]
+	)
+	Values
+	(
+		@PortalId, @ModuleId, @Title, @Overview, @Description, @EventStart, @EventEnd, @Organizer, @OrganizerEmail,
+		@Location, @LocationUrl, @InvitationUrl,  @RecapUrl, @RecurrenceId, @CanRsvp, @IsFeatured, @CreatedBy, @CreatedBy
+	)
+
+	SELECT @@Identity
+
+END
+GO
+
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spUpdateEvent]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spUpdateEvent]
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spUpdateEvent] 
+(
+@EventId int,
+@Title nvarchar(500),
+@Overview ntext,
+@EventStart DateTime,
+@EventEnd DateTime,
+@Organizer nvarchar(100),
+@Description nText,
+@OrganizerEmail nvarchar(100),
+@Location nvarchar(1000),
+@LocationUrl nvarchar(1000),
+@InvitationUrl nvarchar(1000),
+@RecapUrl nvarchar(1000),
+@RecurrenceId int,
+@CanRsvp bit,
+@Cancelled bit,
+@IsFeatured bit,
+@RevisingUser int
+)
+AS
+BEGIN
+	
+	if (@RecurrenceId < 0)
+	begin
+		set @RecurrenceId = null
+	end
+
+	UPDATE {databaseOwner}[{objectQualifier}Engage_Event] 
+	SET [Title] = @Title, 
+		[Overview] = @Overview, 
+		[Description] = @Description,
+		[EventStart] = @EventStart, 
+		[EventEnd] = @EventEnd, 
+		[Organizer] = @Organizer, 
+		[OrganizerEmail] = @OrganizerEmail,
+		[Location] = @Location, 
+		[LocationUrl] = @LocationUrl, 
+		[InvitationUrl] = @InvitationUrl, 
+		[RecapUrl] = @RecapUrl, 
+		[RecurrenceId] = @RecurrenceId, 
+		[CanRsvp] = @CanRsvp, 
+		[Cancelled]  = @Cancelled,
+		[IsFeatured] = @IsFeatured,
+		[RevisingUser] = @RevisingUser, 
+		[RevisionDate] = GETDATE()
+	WHERE EventId = @EventId
+END
+GO
+
