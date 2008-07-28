@@ -59,38 +59,6 @@ namespace Engage.Events
         }
 
         /// <summary>
-        /// Loads the specified page of events.
-        /// </summary>
-        /// <param name="portalId">The ID of the portal that the events are for.</param>
-        /// <param name="sortColumn">The column by which to sort the event list.</param>
-        /// <param name="index">The index of the page to retrieve.</param>
-        /// <param name="pageSize">Size of the page, or <c>0</c> if all records should be returned.</param>
-        /// <param name="showAll">if set to <c>true</c>, gets cancelled and end-dated events, too.</param>
-        /// <returns>A page of events in the given <paramref name="portalId"/>.</returns>
-        //public static EventCollection Load(int portalId, string sortColumn, int index, int pageSize, bool showAll)
-        //{
-        //    IDataProvider dp = DataProvider.Instance;
-        //    try
-        //    {
-        //        using (IDataReader reader = dp.ExecuteReader(
-        //            CommandType.StoredProcedure, 
-        //            dp.NamePrefix + "spGetEvents", 
-        //            Utility.CreateIntegerParam("@portalId", portalId),
-        //            Utility.CreateVarcharParam("@sortColumn", sortColumn, 200), 
-        //            Utility.CreateIntegerParam("@index", index),
-        //            Utility.CreateIntegerParam("@pageSize", pageSize), 
-        //            Utility.CreateBitParam("@showAll", showAll)))
-        //        {
-        //            return FillEvents(reader);
-        //        }
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        throw new DBException("spGetEvents", exc);
-        //    }
-        //}
-
-        /// <summary>
         /// Loads a page of events either for the current month, or all future months.
         /// </summary>
         /// <param name="portalId">The ID of the portal that the events are for.</param>
@@ -106,21 +74,7 @@ namespace Engage.Events
         public static EventCollection Load(int portalId, ListingMode mode, string sortColumn, int index, int pageSize, bool showAll, bool featuredOnly)
         {
             string storedProcName = "spGetEvents";
-            //switch (mode)
-            //{
-            //    case ListingMode.CurrentMonth:
-            //        storedProcName = "spGetEventsCurrent";
-            //        break;
-            //    case ListingMode.Future:
-            //        storedProcName = "spGetEventsFuture";
-            //        break;
-            //    case ListingMode.Past:
-            //        storedProcName = "spGetEventsPast";
-            //        break;
-            //    default:
-            //        break; //All records.
-            //}
-
+     
             IDataProvider dp = DataProvider.Instance;
             try
             {
