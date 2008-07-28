@@ -30,6 +30,7 @@ namespace Engage.Dnn.Events.Controls
 
         private void Page_Load(object sender, EventArgs e)
         {
+            
         }
     }
 }
