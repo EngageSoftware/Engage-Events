@@ -17,6 +17,7 @@ namespace Engage.Events
     using System.Diagnostics;
     using System.IO;
     using System.Reflection;
+    using System.Xml.Serialization;
     using aspNetEmail;
     using aspNetEmail.Calendaring;
     using Data;
@@ -24,6 +25,7 @@ namespace Engage.Events
     /// <summary>
     /// An event, with a title, description, location, and start and end date.
     /// </summary>
+    [XmlRoot(ElementName = "event", IsNullable = false)]
     public class Event : IEditableObject, INotifyPropertyChanged
     {
         /// <summary>
@@ -31,6 +33,12 @@ namespace Engage.Events
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private bool cancelled;
+
+        /// <summary>
+        /// Backing field for <see cref="IsFeatured"/>.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private bool isFeatured;
 
         /// <summary>
         /// Backing field for <see cref="CreatedBy"/>.
@@ -186,6 +194,7 @@ namespace Engage.Events
         /// Gets the id of this event.
         /// </summary>
         /// <value>This <see cref="Event"/>'s id.</value>
+        [XmlElement(Order = 1)]
         public int Id
         {
             [DebuggerStepThrough]
@@ -216,6 +225,7 @@ namespace Engage.Events
         /// Gets or sets the title.
         /// </summary>
         /// <value>The title of this event.</value>
+        [XmlElement(Order = 2)]
         public string Title
         {
             [DebuggerStepThrough]
@@ -228,6 +238,7 @@ namespace Engage.Events
         /// Gets or sets the location.
         /// </summary>
         /// <value>The location of this event.</value>
+        [XmlElement(Order = 6)]
         public string Location
         {
             [DebuggerStepThrough]
@@ -240,6 +251,7 @@ namespace Engage.Events
         /// Gets or sets the URL for this event's <see cref="Location"/>.
         /// </summary>
         /// <value>The URL for this event's <see cref="Location"/>.</value>
+        [XmlElement(Order = 7)]
         public string LocationUrl
         {
             [DebuggerStepThrough]
@@ -276,6 +288,7 @@ namespace Engage.Events
         /// Gets or sets the overview.
         /// </summary>
         /// <value>The overview.</value>
+        [XmlElement(Order = 3)]
         public string Overview
         {
             [DebuggerStepThrough]
@@ -288,6 +301,7 @@ namespace Engage.Events
         /// Gets or sets the Description.
         /// </summary>
         /// <value>The Description.</value>
+        [XmlElement(Order = 8)]
         public string Description
         {
             [DebuggerStepThrough]
@@ -300,6 +314,7 @@ namespace Engage.Events
         /// Gets or sets when the event starts.
         /// </summary>
         /// <value>The event's start date and time.</value>
+        [XmlElement(Order = 9)]
         public DateTime EventStart
         {
             [DebuggerStepThrough]
@@ -332,6 +347,7 @@ namespace Engage.Events
         /// Gets or sets when this event ends.
         /// </summary>
         /// <value>The event's end date and time.</value>
+        [XmlElement(Order = 10)]
         public DateTime EventEnd
         {
             [DebuggerStepThrough]
@@ -375,9 +391,25 @@ namespace Engage.Events
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this instance is featured.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if this instance is featured; otherwise, <c>false</c>.
+        /// </value>
+        [XmlElement(Order = 11)]
+        public bool IsFeatured
+        {
+            [DebuggerStepThrough]
+            get { return this.isFeatured; }
+            [DebuggerStepThrough]
+            set { this.isFeatured = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the name of the organizer of this event.
         /// </summary>
         /// <value>The event's organizer.</value>
+        [XmlElement(Order = 4)]
         public string Organizer
         {
             [DebuggerStepThrough]
@@ -390,6 +422,7 @@ namespace Engage.Events
         /// Gets the email address of the organizer of this event.
         /// </summary>
         /// <value>The organizer's email.</value>
+        [XmlElement(Order = 5)]
         public string OrganizerEmail
         {
             [DebuggerStepThrough]
@@ -556,6 +589,7 @@ namespace Engage.Events
 
             e.createdBy = (int)eventRecord["CreatedBy"];
             e.cancelled = (bool)eventRecord["Cancelled"];
+            e.isFeatured = (bool)eventRecord["IsFeatured"];
             e.organizer = eventRecord["Organizer"].ToString();
             e.organizerEmail = eventRecord["OrganizerEmail"].ToString();
             e.location = eventRecord["Location"].ToString();
@@ -618,6 +652,7 @@ namespace Engage.Events
                     Utility.CreateVarcharParam("@RecapUrl", this.recapUrl),
                     Utility.CreateIntegerParam("@RecurrenceId", this.recurrenceId),
                     Utility.CreateBitParam("@CanRsvp", true),
+                    Utility.CreateBitParam("@isFeatured", this.isFeatured),
                     Utility.CreateIntegerParam("@CreatedBy", revisingUser));
             }
             catch (SystemException de)
@@ -654,6 +689,7 @@ namespace Engage.Events
                     Utility.CreateIntegerParam("@RecurrenceId", this.recurrenceId),
                     Utility.CreateBitParam("@CanRsvp", true),
                     Utility.CreateBitParam("@Cancelled", this.cancelled),
+                    Utility.CreateBitParam("@isFeatured", this.isFeatured),
                     Utility.CreateIntegerParam("@RevisingUser", revisingUser));
             }
             catch (SystemException de)

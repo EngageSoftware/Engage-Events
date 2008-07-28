@@ -67,58 +67,59 @@ namespace Engage.Events
         /// <param name="pageSize">Size of the page, or <c>0</c> if all records should be returned.</param>
         /// <param name="showAll">if set to <c>true</c>, gets cancelled and end-dated events, too.</param>
         /// <returns>A page of events in the given <paramref name="portalId"/>.</returns>
-        public static EventCollection Load(int portalId, string sortColumn, int index, int pageSize, bool showAll)
-        {
-            IDataProvider dp = DataProvider.Instance;
-            try
-            {
-                using (IDataReader reader = dp.ExecuteReader(
-                    CommandType.StoredProcedure, 
-                    dp.NamePrefix + "spGetEvents", 
-                    Utility.CreateIntegerParam("@portalId", portalId),
-                    Utility.CreateVarcharParam("@sortColumn", sortColumn, 200), 
-                    Utility.CreateIntegerParam("@index", index),
-                    Utility.CreateIntegerParam("@pageSize", pageSize), 
-                    Utility.CreateBitParam("@showAll", showAll)))
-                {
-                    return FillEvents(reader);
-                }
-            }
-            catch (Exception exc)
-            {
-                throw new DBException("spGetEvents", exc);
-            }
-        }
+        //public static EventCollection Load(int portalId, string sortColumn, int index, int pageSize, bool showAll)
+        //{
+        //    IDataProvider dp = DataProvider.Instance;
+        //    try
+        //    {
+        //        using (IDataReader reader = dp.ExecuteReader(
+        //            CommandType.StoredProcedure, 
+        //            dp.NamePrefix + "spGetEvents", 
+        //            Utility.CreateIntegerParam("@portalId", portalId),
+        //            Utility.CreateVarcharParam("@sortColumn", sortColumn, 200), 
+        //            Utility.CreateIntegerParam("@index", index),
+        //            Utility.CreateIntegerParam("@pageSize", pageSize), 
+        //            Utility.CreateBitParam("@showAll", showAll)))
+        //        {
+        //            return FillEvents(reader);
+        //        }
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        throw new DBException("spGetEvents", exc);
+        //    }
+        //}
 
         /// <summary>
         /// Loads a page of events either for the current month, or all future months.
         /// </summary>
         /// <param name="portalId">The ID of the portal that the events are for.</param>
-        /// <param name="status">if set to <c>true</c> gets events that start in this month, otherwise gets events that start in any month after this month.</param>
+        /// <param name="mode">The mode.</param>
         /// <param name="sortColumn">The sort column.</param>
         /// <param name="index">The index.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="showAll">if set to <c>true</c> [show all].</param>
+        /// <param name="featuredOnly">if set to <c>true</c> [featured only].</param>
         /// <returns>
         /// A page of events for either this month, or all future months.
         /// </returns>
-        public static EventCollection Load(int portalId, ListingMode mode, string sortColumn, int index, int pageSize, bool showAll)
+        public static EventCollection Load(int portalId, ListingMode mode, string sortColumn, int index, int pageSize, bool showAll, bool featuredOnly)
         {
             string storedProcName = "spGetEvents";
-            switch (mode)
-            {
-                case ListingMode.CurrentMonth:
-                    storedProcName = "spGetEventsCurrent";
-                    break;
-                case ListingMode.Future:
-                    storedProcName = "spGetEventsFuture";
-                    break;
-                case ListingMode.Past:
-                    storedProcName = "spGetEventsPast";
-                    break;
-                default:
-                    break; //All records.
-            }
+            //switch (mode)
+            //{
+            //    case ListingMode.CurrentMonth:
+            //        storedProcName = "spGetEventsCurrent";
+            //        break;
+            //    case ListingMode.Future:
+            //        storedProcName = "spGetEventsFuture";
+            //        break;
+            //    case ListingMode.Past:
+            //        storedProcName = "spGetEventsPast";
+            //        break;
+            //    default:
+            //        break; //All records.
+            //}
 
             IDataProvider dp = DataProvider.Instance;
             try
@@ -128,9 +129,12 @@ namespace Engage.Events
                     dp.NamePrefix + storedProcName,
                     Utility.CreateIntegerParam("@portalId", portalId),
                     Utility.CreateVarcharParam("@sortColumn", sortColumn, 200),
+                    Utility.CreateVarcharParam("@listingMode", mode.ToString(), 20),
                     Utility.CreateIntegerParam("@index", index),
                     Utility.CreateIntegerParam("@pageSize", pageSize),
-                    Utility.CreateBitParam("@showAll", showAll)))
+                    Utility.CreateBitParam("@showAll", showAll),
+                    Utility.CreateBitParam("@featured", featuredOnly))
+                    )
                 {
                     return FillEvents(reader);
                 }
