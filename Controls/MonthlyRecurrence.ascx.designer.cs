@@ -23,13 +23,13 @@ namespace Engage.Dnn.Events.Controls {
         protected global::System.Web.UI.WebControls.Panel monthlyPanel;
         
         /// <summary>
-        /// Label10 control.
+        /// MonthsLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label10;
+        protected global::System.Web.UI.WebControls.Label MonthsLabel;
         
         /// <summary>
         /// monthlyRadio control.
@@ -95,12 +95,12 @@ namespace Engage.Dnn.Events.Controls {
         protected global::System.Web.UI.WebControls.DropDownList monthlyDayCombo;
         
         /// <summary>
-        /// Label9 control.
+        /// MonthlyEveryLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label9;
+        protected global::System.Web.UI.WebControls.Label MonthlyEveryLabel;
     }
 }

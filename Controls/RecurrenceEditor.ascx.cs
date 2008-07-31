@@ -13,17 +13,17 @@
 namespace Engage.Dnn.Events.Controls
 {
     using System;
-    using ModuleBase=Engage.Dnn.Events.ModuleBase;
-
+    
     public partial class RecurrenceEditor : ModuleBase
     {
-        public void Clear()
-        {
-            this.phRecurrencePattern.Controls.Clear();
-        }
+        //public void Clear()
+        //{
+        //    this.phRecurrencePattern.Controls.Clear();
+        //}
 
         public void Add(System.Web.UI.Control control)
         {
+            this.phRecurrencePattern.Controls.Clear();
             this.phRecurrencePattern.Controls.Add(control);
         }
 
@@ -31,6 +31,12 @@ namespace Engage.Dnn.Events.Controls
         {
             base.OnInit(e);
             this.Load += this.Page_Load;
+            this.RecurringCheckbox.CheckedChanged += this.RecurringCheckbox_CheckedChanged;
+        }
+
+        private void RecurringCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            RecurrenceEditorDiv.Visible = RecurringCheckbox.Checked;
         }
 
         protected void Page_Load(object sender, EventArgs e)

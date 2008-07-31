@@ -15,8 +15,9 @@ namespace Engage.Dnn.Events.Controls
     using System;
     using System.IO;
     using System.Web.UI;
+    using DotNetNuke.Common;
 
-    public partial class RecurrenceSelector : System.Web.UI.UserControl
+    public partial class RecurrenceSelector : UserControl
     {
         private RecurrenceEditor editor;
         public RecurrenceEditor Editor
@@ -28,17 +29,27 @@ namespace Engage.Dnn.Events.Controls
         {
             base.OnInit(e);
             this.Load += this.Page_Load;
+            this.RecurrenceRadio.SelectedIndexChanged += this.RecurrenceRadio_SelectedIndexChanged;
+        }
+
+        private void RecurrenceRadio_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadRecurrenceControl();
         }
 
         private void Page_Load(object sender, EventArgs e)
         {
-            this.editor.Clear();
-            string control = "DialyRecurrence.ascx";
+            LoadRecurrenceControl();
+        }
+
+        private void LoadRecurrenceControl()
+        {
+            string control = "DailyRecurrence.ascx";
 
             switch (this.RecurrenceRadio.SelectedIndex)
             {
                 case 0:
-                    control = "DialyRecurrence.ascx";
+                    control = "DailyRecurrence.ascx";
                     break;
                 case 1:
                     control = "WeeklyRecurrence.ascx";
@@ -54,7 +65,7 @@ namespace Engage.Dnn.Events.Controls
             }
 
             Control c = this.LoadControl(control);
-            c.ID = Path.GetFileNameWithoutExtension(control);
+            c.EnableViewState = false;
             this.editor.Add(c);
         }
     }

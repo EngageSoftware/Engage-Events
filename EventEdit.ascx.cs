@@ -59,7 +59,7 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                if (!this.IsPostBack && this.EventId > 0)
+                if (!this.IsPostBack && EventId > 0)
                 {
                     this.BindData();
                 }
@@ -186,7 +186,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void LocalizeControl()
         {
-            if (this.EventId > 0)
+            if (EventId > 0)
             {
                 this.AddEditEventLabel.Text = Localization.GetString("EditEvent.Text", this.LocalResourceFile);
             }
@@ -207,7 +207,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void Save()
         {
-            if (this.EventId > 0)
+            if (EventId > 0)
             {
                 this.Update();
             }
@@ -222,7 +222,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void Update()
         {
-            Event e = Event.Load(this.EventId);
+            Event e = Event.Load(EventId);
             e.EventStart = this.StartDateTimePicker.SelectedDate.Value;
             e.EventEnd = this.EndDateTimePicker.SelectedDate.Value;
             e.Location = this.EventLocationTextBox.Text;
@@ -257,7 +257,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void BindData()
         {
-            Event e = Event.Load(this.EventId);
+            Event e = Event.Load(EventId);
             this.EventTitleTextBox.Text = e.Title;
             this.EventLocationTextBox.Text = e.Location;
             this.EventOverviewTextEditor.Text = e.Overview;

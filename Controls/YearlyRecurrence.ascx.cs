@@ -13,6 +13,8 @@
 namespace Engage.Dnn.Events.Controls
 {
     using System;
+    using DotNetNuke.Services.Exceptions;
+    using Framework.Recurrence;
 
     public partial class YearlyRecurrence : System.Web.UI.UserControl
     {
@@ -30,6 +32,27 @@ namespace Engage.Dnn.Events.Controls
 
         private void Page_Load(object sender, EventArgs e)
         {
+            try
+            {
+                FillCombos();
+            }
+            catch (Exception exc)
+            {
+                Exceptions.ProcessModuleLoadException(this, exc);
+            }
+        }
+
+        private void FillCombos()
+        {
+            Framework.Utility.SetDataSource(yearlyDayCombo, RecurrenceHelper.CreateDayList());
+            Framework.Utility.SetDataSource(yearlyDayOfWeekCombo, RecurrenceHelper.CreateDayOfWeekList());
+            Framework.Utility.SetDataSource(yearlyDayMonthCombo, RecurrenceHelper.CreateMonthList());
+            Framework.Utility.SetDataSource(yearlyDayOfWeekMonthCombo, RecurrenceHelper.CreateMonthList());
+            Framework.Utility.SetDataSource(yearlyNthOccurrenceCombo, RecurrenceHelper.CreateNthOccurrenceList());
+            Framework.Utility.SetDataSource(yearlyDayOccurrenceCombo, RecurrenceHelper.CreateWeekDayOccurrenceList());
+            Framework.Utility.SetDataSource(yearlyWeekDayTypeCombo, RecurrenceHelper.CreateWeekDayTypeList());
+            Framework.Utility.SetDataSource(yearlyWeekDayMonthCombo, RecurrenceHelper.CreateMonthList());
+
         }
     }
 }

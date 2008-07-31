@@ -13,6 +13,8 @@
 namespace Engage.Dnn.Events.Controls
 {
     using System;
+    using DotNetNuke.Services.Exceptions;
+    using Framework.Recurrence;
 
     public partial class MonthlyRecurrence : System.Web.UI.UserControl
     {
@@ -30,15 +32,23 @@ namespace Engage.Dnn.Events.Controls
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.FillCombos();
+            try
+            {
+                FillCombos();
+            }
+            catch (Exception exc)
+            {
+                Exceptions.ProcessModuleLoadException(this, exc);
+            }
         }
 
         private void FillCombos()
         {
-            this.monthlyNthOccurrenceCombo.DataTextField = "DisplayMember";
-            this.monthlyNthOccurrenceCombo.DataValueField = "ValueMember";
-            ////monthlyNthOccurrenceCombo.DataSource = Recurrence.RecurrenceHelper.CreateNthOccurrenceList();
-            this.monthlyNthOccurrenceCombo.DataBind();
+            Framework.Utility.SetDataSource(monthlyDayCombo, RecurrenceHelper.CreateDayList());
+            Framework.Utility.SetDataSource(monthlyDayOfWeekCombo, RecurrenceHelper.CreateDayOfWeekList());
+            Framework.Utility.SetDataSource(monthlyNthOccurrenceCombo, RecurrenceHelper.CreateNthOccurrenceList());
+            Framework.Utility.SetDataSource(monthlyDayOccurrenceCombo, RecurrenceHelper.CreateWeekDayOccurrenceList());
+            Framework.Utility.SetDataSource(monthlyWeekDayTypeCombo, RecurrenceHelper.CreateWeekDayTypeList());
         }
     }
 }

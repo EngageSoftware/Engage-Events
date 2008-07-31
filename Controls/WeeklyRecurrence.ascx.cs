@@ -13,6 +13,7 @@
 namespace Engage.Dnn.Events.Controls
 {
     using System;
+    using DotNetNuke.Services.Exceptions;
 
     public partial class WeeklyRecurrence : System.Web.UI.UserControl
     {
@@ -30,6 +31,14 @@ namespace Engage.Dnn.Events.Controls
 
         private void Page_Load(object sender, EventArgs e)
         {
+            try
+            {
+            }
+            catch (Exception exc)
+            {
+                Exceptions.ProcessModuleLoadException(this, exc);
+            }
+
         }
     }
 }

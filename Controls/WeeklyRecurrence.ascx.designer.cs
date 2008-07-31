@@ -32,22 +32,22 @@ namespace Engage.Dnn.Events.Controls {
         protected global::System.Web.UI.WebControls.TextBox weeklyEveryNthWeekEdit;
         
         /// <summary>
-        /// Label7 control.
+        /// WeeklyWeeksLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label7;
+        protected global::System.Web.UI.WebControls.Label WeeklyWeeksLabel;
         
         /// <summary>
-        /// Label8 control.
+        /// WeeklyEveryLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label8;
+        protected global::System.Web.UI.WebControls.Label WeeklyEveryLabel;
         
         /// <summary>
         /// weekDaysBtns control.

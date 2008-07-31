@@ -23,22 +23,22 @@ namespace Engage.Dnn.Events.Controls {
         protected global::System.Web.UI.WebControls.Panel yearlyPanel;
         
         /// <summary>
-        /// Label12 control.
+        /// YearsLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label12;
+        protected global::System.Web.UI.WebControls.Label YearsLabel;
         
         /// <summary>
-        /// Label11 control.
+        /// EveryLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label11;
+        protected global::System.Web.UI.WebControls.Label EveryLabel;
         
         /// <summary>
         /// yearlyRadio control.
@@ -122,22 +122,22 @@ namespace Engage.Dnn.Events.Controls {
         protected global::System.Web.UI.WebControls.DropDownList yearlyWeekDayMonthCombo;
         
         /// <summary>
-        /// Label13 control.
+        /// OfLabel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label13;
+        protected global::System.Web.UI.WebControls.Label OfLabel1;
         
         /// <summary>
-        /// Label14 control.
+        /// OfLabel2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label14;
+        protected global::System.Web.UI.WebControls.Label OfLabel2;
         
         /// <summary>
         /// yearlyDayCombo control.

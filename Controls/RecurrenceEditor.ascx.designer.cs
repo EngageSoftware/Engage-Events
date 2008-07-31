@@ -11,13 +11,34 @@
 namespace Engage.Dnn.Events.Controls {
     
     
-    /// <summary>
-    /// RecurrenceEditor class.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated class.
-    /// </remarks>
     public partial class RecurrenceEditor {
+        
+        /// <summary>
+        /// RecurringCheckbox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox RecurringCheckbox;
+        
+        /// <summary>
+        /// RecurrenceEditorDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RecurrenceEditorDiv;
+        
+        /// <summary>
+        /// UpdatePanel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
         /// RecurrenceSelector1 control.
@@ -38,40 +59,31 @@ namespace Engage.Dnn.Events.Controls {
         protected global::System.Web.UI.WebControls.PlaceHolder phRecurrencePattern;
         
         /// <summary>
-        /// Label4 control.
+        /// RecurrenceRangeLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
+        protected global::System.Web.UI.WebControls.Label RecurrenceRangeLabel;
         
         /// <summary>
-        /// Label5 control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label5;
+        protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// startDate control.
+        /// StartDateTimePicker control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox startDate;
-        
-        /// <summary>
-        /// startTime control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox startTime;
+        protected global::Telerik.Web.UI.RadDateTimePicker StartDateTimePicker;
         
         /// <summary>
         /// endRadio control.
@@ -83,6 +95,24 @@ namespace Engage.Dnn.Events.Controls {
         protected global::System.Web.UI.WebControls.RadioButtonList endRadio;
         
         /// <summary>
+        /// EndDateLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label EndDateLabel;
+        
+        /// <summary>
+        /// EndDateTimePicker control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDateTimePicker EndDateTimePicker;
+        
+        /// <summary>
         /// endMaxOccurrencesEdit control.
         /// </summary>
         /// <remarks>
@@ -92,15 +122,6 @@ namespace Engage.Dnn.Events.Controls {
         protected global::System.Web.UI.WebControls.TextBox endMaxOccurrencesEdit;
         
         /// <summary>
-        /// endDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox endDate;
-        
-        /// <summary>
         /// Label6 control.
         /// </summary>
         /// <remarks>
@@ -108,41 +129,5 @@ namespace Engage.Dnn.Events.Controls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label6;
-        
-        /// <summary>
-        /// refreshBtn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button refreshBtn;
-        
-        /// <summary>
-        /// iCalendarText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox iCalendarText;
-        
-        /// <summary>
-        /// cancelBtn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cancelBtn;
-        
-        /// <summary>
-        /// okBtn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button okBtn;
     }
 }
