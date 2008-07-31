@@ -54,7 +54,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetVisibility()
         {
-            this.Button.Visible = this.IsLoggedIn;
+            this.Button.Visible = IsLoggedIn;
         }
 
         /// <summary>

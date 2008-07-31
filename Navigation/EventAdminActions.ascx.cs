@@ -161,7 +161,7 @@ namespace Engage.Dnn.Events.Navigation
         /// </summary>
         private void SetVisibility()
         {
-            this.AddToCalendarButton.Visible = this.IsLoggedIn;
+            this.AddToCalendarButton.Visible = IsLoggedIn;
             this.CancelButton.Visible = this.IsAdmin;
             this.DeleteEventButton.Visible = this.IsAdmin;
             this.EditEventButton.Visible = this.IsAdmin;

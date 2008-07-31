@@ -72,7 +72,7 @@ namespace Engage.Dnn.Events
 
         private string GetEventLinkUrl()
         {
-            return this.EditUrl("EventId", this.EventId.ToString(CultureInfo.InvariantCulture), "View");
+            return this.EditUrl("EventId", EventId.ToString(CultureInfo.InvariantCulture), "View");
         }
 	}
 }

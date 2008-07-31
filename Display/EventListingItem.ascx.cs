@@ -160,6 +160,7 @@ namespace Engage.Dnn.Events.Display
                     editEventAction.Href = href;
                     editEventAction.Text = Localization.GetString("EditEventButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(editEventAction);
+                    editEventAction.Visible = IsAdmin;
                     break;
                 case "VIEWRESPONSESBUTTON":
                     ButtonAction responsesEventAction = (ButtonAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
@@ -169,6 +170,7 @@ namespace Engage.Dnn.Events.Display
                     responsesEventAction.Href = href;
                     responsesEventAction.Text = Localization.GetString("ResponsesButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(responsesEventAction);
+                    responsesEventAction.Visible = IsAdmin;
                     break;
                 case "REGISTERBUTTON":
                     ButtonAction registerEventAction = (ButtonAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
@@ -178,11 +180,13 @@ namespace Engage.Dnn.Events.Display
                     registerEventAction.Href = href;
                     registerEventAction.Text = Localization.GetString("RegisterButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(registerEventAction);
+                    registerEventAction.Visible = IsLoggedIn;
                     break;
                 case "ADDTOCALENDARBUTTON":
                     AddToCalendarAction addToCalendarAction = (AddToCalendarAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/AddToCalendarAction.ascx");
                     addToCalendarAction.CurrentEvent = ev;
                     addToCalendarAction.ModuleConfiguration = this.ModuleConfiguration;
+                    addToCalendarAction.Visible = ModuleBase.IsRegistered || IsAdmin;
                     container.Controls.Add(addToCalendarAction);
                     break;
                 case "DELETEBUTTON":
@@ -205,6 +209,7 @@ namespace Engage.Dnn.Events.Display
                     editEmailAction.Href = href;
                     editEmailAction.Text = Localization.GetString("EditEmailButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(editEmailAction);
+                    editEmailAction.Visible = IsAdmin;
                     break;
                 case "SORTEVENTBYDATE":
                     this.sortAction = (SortAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/SortAction.ascx");

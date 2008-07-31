@@ -32,14 +32,14 @@ namespace Engage.Dnn.Events
         /// This method looks at the query string and the currently logged in user (if any) and checks for
         /// an existing RSVP(registration) for the user.
         /// </summary>
-        protected bool IsRegistered
+        internal static bool IsRegistered
         {
             get
             {
                 bool registered = false;
-                if (this.EventId > 0 && this.IsLoggedIn)
+                if (EventId > 0 && IsLoggedIn)
                 {
-                    Engage.Events.Rsvp rsvp = Engage.Events.Rsvp.Load(this.EventId, this.UserInfo.Email);
+                    Engage.Events.Rsvp rsvp = Engage.Events.Rsvp.Load(EventId, DotNetNuke.Entities.Users.UserController.GetCurrentUserInfo().Email);
                     registered = (rsvp != null);
                 }
                 return registered;
@@ -57,7 +57,7 @@ namespace Engage.Dnn.Events
                 return
                     this.BuildLinkUrl(
                         "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid="
-                        + this.EventId.ToString(CultureInfo.InvariantCulture));
+                        + EventId.ToString(CultureInfo.InvariantCulture));
             }
         }
 
@@ -72,7 +72,7 @@ namespace Engage.Dnn.Events
                 return
                     this.BuildLinkUrl(
                         "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Rsvp&eventid="
-                        + this.EventId.ToString(CultureInfo.InvariantCulture));
+                        + EventId.ToString(CultureInfo.InvariantCulture));
             }
         }
 
@@ -80,14 +80,14 @@ namespace Engage.Dnn.Events
         /// Gets the event id.
         /// </summary>
         /// <value>The event id.</value>
-        protected int EventId
+        protected static int EventId
         {
             get
             {
                 int id = -1;
-                if (this.Request.QueryString["eventId"] != null)
+                if (HttpContext.Current.Request.QueryString["eventId"] != null)
                 {
-                    id = Convert.ToInt32(this.Request.QueryString["eventId"]);
+                    id = Convert.ToInt32(HttpContext.Current.Request.QueryString["eventId"]);
                 }
 
                 return id;

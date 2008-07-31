@@ -109,7 +109,7 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void AddToCalendarButton_Click(object sender, EventArgs e)
         {
-                Event evnt = Event.Load(this.EventId);
+                Event evnt = Event.Load(EventId);
                 SendICalendarToClient(HttpContext.Current.Response, evnt.ToICal(UserInfo.Email), evnt.Title);
         }
 

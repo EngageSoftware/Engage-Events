@@ -20,6 +20,7 @@ namespace Engage.Dnn.Events
     /// <remarks>
     /// This control's behavior changed from using LinkButtons to standard buttons. Something to do with a postback
     /// not occurring on the container form. Not sure why? Anyhow, it stores the EventID in viewstate and uses it if needed.hk
+    /// Note: the visibility of this control must be done outside by calling code.
     /// </remarks>
     public partial class ButtonAction : ActionControlBase
     {
@@ -44,16 +45,7 @@ namespace Engage.Dnn.Events
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            this.SetVisibility();
             this.Button.Text = text;
-        }
-
-        /// <summary>
-        /// Sets the visibility of this control's child controls.
-        /// </summary>
-        private void SetVisibility()
-        {
-            this.Button.Visible = this.IsAdmin;
         }
 
         /// <summary>
