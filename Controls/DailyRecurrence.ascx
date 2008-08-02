@@ -1,9 +1,17 @@
 <%@ Control Language="C#" AutoEventWireup="false" CodeBehind="DailyRecurrence.ascx.cs" Inherits="Engage.Dnn.Events.Controls.DailyRecurrence" %>
-<asp:Panel ID="dailyPanel" runat="server" Height="129px" Style="left: 8px;" Width="424px">
-    <asp:RadioButtonList ID="dailyRadio" runat="server" AutoPostBack="True" Font-Names="Verdana" Font-Size="X-Small" Height="64px" Style="left: 0px; top: 40px" Width="144px">
-        <asp:ListItem Value="0">Every</asp:ListItem>
-        <asp:ListItem Value="1">Every weekday</asp:ListItem>
-    </asp:RadioButtonList>
-    <asp:TextBox ID="dailyEveryNthDayEdit" runat="server"></asp:TextBox>&nbsp;
-    <asp:Label ID="DaysLabel" runat="server">day(s)</asp:Label>
+
+<asp:Panel ID="DailyRecurrencePanel" runat="server" style="width: 100%;">
+
+    <div style="float: left; width: 20%;">
+        <asp:RadioButtonList ID="DailyRecurrenceList" runat="server" AutoPostBack="True">
+            <asp:ListItem Value="0" ResourceKey="Every" />
+            <asp:ListItem Value="1" ResourceKey="EveryWeekday" />
+        </asp:RadioButtonList>
+    </div>
+    
+    <div style="float: right; width: 80%;">
+        <asp:TextBox ID="DailyRecurrenceTextBox" runat="server" />
+        <asp:Label runat="server" ResourceKey="Days" />    
+    </div>
+    
 </asp:Panel>
