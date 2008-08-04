@@ -11,7 +11,7 @@
     
     <!-- Step 2: What day of the week? -->
     <div>
-        <asp:CheckBoxList ID="WeekDaysList" runat="server">
+        <asp:CheckBoxList ID="WeekDaysList" runat="server" RepeatDirection="Horizontal">
             <asp:ListItem Value="Sunday" ResourceKey="Sunday" />
             <asp:ListItem Value="Monday" ResourceKey="Monday" />
             <asp:ListItem Value="Tuesday" ResourceKey="Tuesday" />
