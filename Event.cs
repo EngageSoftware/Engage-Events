@@ -125,10 +125,18 @@ namespace Engage.Events
         private string recapUrl = string.Empty;
 
         /// <summary>
-        /// Backing field for <see cref="RecurrenceId"/>.
+        /// Backing field for <see cref="RecurrenceParentId"/>. This is used for exception cases where the user has modified
+        /// an event in a series of recurrences.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int recurrenceId;
+        private int recurrenceParentId;
+
+
+        /// <summary>
+        /// Backing field for <see cref="RecurrenceRule"/>. This is the actual ICAL data.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private string recurrenceRule = string.Empty;
 
         /// <summary>
         /// Backing field for <see cref="Title"/>.
@@ -370,12 +378,24 @@ namespace Engage.Events
         /// Gets or sets the ID of the recurrence type used by this event.
         /// </summary>
         /// <value>The recurrence id.</value>
-        public int RecurrenceId
+        public int RecurrenceParentId
         {
             [DebuggerStepThrough]
-            get { return this.recurrenceId; }
+            get { return this.recurrenceParentId; }
             [DebuggerStepThrough]
-            set { this.recurrenceId = value; }
+            set { this.recurrenceParentId = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the recurrence rule.
+        /// </summary>
+        /// <value>The recurrence rule.</value>
+        public string RecurrenceRule
+        {
+            [DebuggerStepThrough]
+            get { return this.recurrenceRule; }
+            [DebuggerStepThrough]
+            set { this.recurrenceRule = value; }
         }
 
         /// <summary>
@@ -650,7 +670,7 @@ namespace Engage.Events
                     Utility.CreateVarcharParam("@LocationUrl", this.locationUrl),
                     Utility.CreateVarcharParam("@InvitationUrl", this.invitationUrl),
                     Utility.CreateVarcharParam("@RecapUrl", this.recapUrl),
-                    Utility.CreateIntegerParam("@RecurrenceId", this.recurrenceId),
+                    Utility.CreateTextParam("@RecurrenceRule", this.recurrenceRule),
                     Utility.CreateBitParam("@CanRsvp", true),
                     Utility.CreateBitParam("@isFeatured", this.isFeatured),
                     Utility.CreateIntegerParam("@CreatedBy", revisingUser));
@@ -686,7 +706,8 @@ namespace Engage.Events
                     Utility.CreateVarcharParam("@LocationUrl", this.locationUrl),
                     Utility.CreateVarcharParam("@InvitationUrl", this.invitationUrl),
                     Utility.CreateVarcharParam("@RecapUrl", this.recapUrl),
-                    Utility.CreateIntegerParam("@RecurrenceId", this.recurrenceId),
+                    Utility.CreateTextParam("@RecurrenceRule", this.recurrenceRule),
+                    Utility.CreateIntegerParam("@RecurrenceParentId", this.recurrenceParentId),
                     Utility.CreateBitParam("@CanRsvp", true),
                     Utility.CreateBitParam("@Cancelled", this.cancelled),
                     Utility.CreateBitParam("@isFeatured", this.isFeatured),
