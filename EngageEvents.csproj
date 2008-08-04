@@ -174,6 +174,13 @@
     <Compile Include="Admin\NotConfigured.ascx.designer.cs">
       <DependentUpon>NotConfigured.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ModuleMessage.ascx.cs">
+      <DependentUpon>ModuleMessage.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\ModuleMessage.ascx.designer.cs">
+      <DependentUpon>ModuleMessage.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Display\EventDetail.ascx.cs">
       <DependentUpon>EventDetail.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -194,13 +201,6 @@
     <Compile Include="Properties\Assemblyinfo.cs" />
     <Compile Include="Components\EmailScheduler.cs" />
     <Compile Include="Components\FeaturesController.cs" />
-    <Compile Include="Controls\ModuleMessage.ascx.cs">
-      <DependentUpon>ModuleMessage.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\ModuleMessage.ascx.designer.cs">
-      <DependentUpon>ModuleMessage.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Recurrence\DailyRecurrence.ascx.cs">
       <DependentUpon>DailyRecurrence.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -567,7 +567,6 @@
     <Content Include="Navigation\App_LocalResources\EventAdminActions.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Controls\ModuleMessage.ascx" />
     <Content Include="Display\CalendarDisplayOptions.ascx" />
     <Content Include="Display\EventCalendar.ascx" />
     <Content Include="Images\errorSmallIcon.png" />
@@ -707,6 +706,7 @@
     <Content Include="Recurrence\YearlyRecurrence.ascx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Controls\ModuleMessage.ascx" />
     <Content Include="Recurrence\App_LocalResources\DailyRecurrence.ascx.resx" />
     <Content Include="Recurrence\App_LocalResources\MonthlyRecurrence.ascx.resx" />
     <Content Include="Recurrence\App_LocalResources\RecurrenceEditor.ascx.resx" />
