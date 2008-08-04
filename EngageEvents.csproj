@@ -713,6 +713,7 @@
     <Content Include="Recurrence\App_LocalResources\RecurrenceSelector.ascx.resx" />
     <Content Include="Recurrence\App_LocalResources\WeeklyRecurrence.ascx.resx" />
     <Content Include="Recurrence\App_LocalResources\YearlyRecurrence.ascx.resx" />
+    <Content Include="Templates\Header.Featured.html" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v8.0\WebApplications\Microsoft.WebApplication.targets" Condition="'$(Solutions.VSVersion)' == '8.0'" />
