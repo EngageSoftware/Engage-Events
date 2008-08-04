@@ -269,7 +269,7 @@ namespace Engage.Dnn.Events
             this.EndDateTimePicker.SelectedDate = e.EventEnd;
             this.FeaturedCheckbox.Checked = e.IsFeatured;
             this.RecurringCheckbox.Checked = e.RecurrenceRule.Length > 0;
-            this.RecurringCheckbox.Checked = e.RecurrenceRule.Length > 0;
+            this.RecurrenceEditor1.Visible = this.RecurringCheckbox.Checked;
         }
 
         private void RecurringCheckbox_CheckedChanged(object sender, EventArgs e)

@@ -72,7 +72,7 @@
     </div>
     <div>
         <asp:CheckBox ID="RecurringCheckbox" runat="server" CssClass="NormalBold" Text="Recurring Event" AutoPostBack="true" />
-        <uc1:RecurrenceEditor ID="RecurrenceEditor1" runat="server" Visible="false" />
+        <uc1:RecurrenceEditor ID="RecurrenceEditor1" runat="server"  />
     </div>
     
 </div>
