@@ -615,8 +615,10 @@ namespace Engage.Events
             e.location = eventRecord["Location"].ToString();
             e.invitationUrl = eventRecord["InvitationUrl"].ToString();
             e.recapUrl = eventRecord["RecapUrl"].ToString();
+            e.recurrenceParentId = (int)eventRecord["RecurrenceParentId"];
+            e.recurrenceRule = eventRecord["RecurrenceRule"].ToString();
             e.totalRecords = totalRecords;
-
+            
             return e;
         }
 
