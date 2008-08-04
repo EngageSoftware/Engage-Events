@@ -109,6 +109,32 @@ END
 
 GO
 
+--get rid of some not needed stuff
+if exists (select * from dbo.sysobjects where id = object_id(N'[{objectQualifier}FK_Engage_Recurrence_Engage_RecurrenceType]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Recurrence] DROP CONSTRAINT [{objectQualifier}FK_Engage_Recurrence_Engage_RecurrenceType] 
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Recurrence]') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+DROP TABLE {databaseOwner}[{objectQualifier}Engage_Recurrence]
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_RecurrenceType]') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+DROP TABLE {databaseOwner}[{objectQualifier}Engage_RecurrenceType]
+GO
+
+IF EXISTS (SELECT * FROM dbo.syscolumns where id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Event]') and name = 'RecurrenceId')
+ALTER TABLE  {databaseOwner}[{objectQualifier}Engage_Event] DROP COLUMN RecurrenceId
+GO
+
+IF NOT EXISTS (SELECT * FROM dbo.syscolumns where id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Event]') and name = 'RecurrenceRule')
+ALTER TABLE  {databaseOwner}[{objectQualifier}Engage_Event] ADD RecurrenceRule ntext null
+GO
+
+IF NOT EXISTS (SELECT * FROM dbo.syscolumns where id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Event]') and name = 'RecurrenceParentId')
+ALTER TABLE  {databaseOwner}[{objectQualifier}Engage_Event] ADD RecurrenceParentId int null
+GO
+
+
 if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertEvent]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
 drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertEvent]
 GO
@@ -128,7 +154,7 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertEvent]
 @LocationUrl nvarchar(1000),
 @InvitationUrl nvarchar(1000),
 @RecapUrl nvarchar(1000),
-@RecurrenceId int,
+@RecurrenceRule ntext,
 @CanRsvp int,
 @IsFeatured bit,
 @CreatedBy int
@@ -136,20 +162,15 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertEvent]
 AS
 BEGIN
 	
-	if (@RecurrenceId < 0)
-	begin
-		set @RecurrenceId = null
-	end
-	
 	Insert into {databaseOwner}[{objectQualifier}Engage_Event] 
 	(
 		[PortalId], [ModuleId], [Title], [Overview], [Description], [EventStart], [EventEnd], [Organizer], [OrganizerEmail],
-		[Location], [LocationUrl], [InvitationUrl], [RecapUrl], [RecurrenceId], [CanRsvp], [IsFeatured], [CreatedBy], [RevisingUser]
+		[Location], [LocationUrl], [InvitationUrl], [RecapUrl], [RecurrenceRule], [CanRsvp], [IsFeatured], [CreatedBy], [RevisingUser]
 	)
 	Values
 	(
 		@PortalId, @ModuleId, @Title, @Overview, @Description, @EventStart, @EventEnd, @Organizer, @OrganizerEmail,
-		@Location, @LocationUrl, @InvitationUrl,  @RecapUrl, @RecurrenceId, @CanRsvp, @IsFeatured, @CreatedBy, @CreatedBy
+		@Location, @LocationUrl, @InvitationUrl,  @RecapUrl, @RecurrenceRule, @CanRsvp, @IsFeatured, @CreatedBy, @CreatedBy
 	)
 
 	SELECT @@Identity
@@ -176,7 +197,8 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spUpdateEvent]
 @LocationUrl nvarchar(1000),
 @InvitationUrl nvarchar(1000),
 @RecapUrl nvarchar(1000),
-@RecurrenceId int,
+@RecurrenceRule ntext,
+@RecurrenceParentId int,
 @CanRsvp bit,
 @Cancelled bit,
 @IsFeatured bit,
@@ -185,9 +207,9 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spUpdateEvent]
 AS
 BEGIN
 	
-	if (@RecurrenceId < 0)
+	if (@RecurrenceParentId < 0)
 	begin
-		set @RecurrenceId = null
+		set @RecurrenceParentId = null
 	end
 
 	UPDATE {databaseOwner}[{objectQualifier}Engage_Event] 
@@ -202,7 +224,8 @@ BEGIN
 		[LocationUrl] = @LocationUrl, 
 		[InvitationUrl] = @InvitationUrl, 
 		[RecapUrl] = @RecapUrl, 
-		[RecurrenceId] = @RecurrenceId, 
+		[RecurrenceRule] = @RecurrenceRule,
+		[RecurrenceParentId] = @RecurrenceParentId, 
 		[CanRsvp] = @CanRsvp, 
 		[Cancelled]  = @Cancelled,
 		[IsFeatured] = @IsFeatured,

@@ -201,46 +201,49 @@
     <Compile Include="Controls\ModuleMessage.ascx.designer.cs">
       <DependentUpon>ModuleMessage.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Controls\YearlyRecurrence.ascx.cs">
+    <Compile Include="Recurrence\RecurrenceControlBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Recurrence\YearlyRecurrence.ascx.cs">
       <DependentUpon>YearlyRecurrence.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controls\YearlyRecurrence.ascx.designer.cs">
+    <Compile Include="Recurrence\YearlyRecurrence.ascx.designer.cs">
       <DependentUpon>YearlyRecurrence.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Controls\WeeklyRecurrence.ascx.cs">
+    <Compile Include="Recurrence\WeeklyRecurrence.ascx.cs">
       <DependentUpon>WeeklyRecurrence.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controls\WeeklyRecurrence.ascx.designer.cs">
+    <Compile Include="Recurrence\WeeklyRecurrence.ascx.designer.cs">
       <DependentUpon>WeeklyRecurrence.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DailyRecurrence.ascx.cs">
+    <Compile Include="Recurrence\DailyRecurrence.ascx.cs">
       <DependentUpon>DailyRecurrence.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controls\DailyRecurrence.ascx.designer.cs">
+    <Compile Include="Recurrence\DailyRecurrence.ascx.designer.cs">
       <DependentUpon>DailyRecurrence.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MonthlyRecurrence.ascx.cs">
+    <Compile Include="Recurrence\MonthlyRecurrence.ascx.cs">
       <DependentUpon>MonthlyRecurrence.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controls\MonthlyRecurrence.ascx.designer.cs">
+    <Compile Include="Recurrence\MonthlyRecurrence.ascx.designer.cs">
       <DependentUpon>MonthlyRecurrence.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RecurrenceEditor.ascx.cs">
+    <Compile Include="Recurrence\RecurrenceEditor.ascx.cs">
       <DependentUpon>RecurrenceEditor.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controls\RecurrenceEditor.ascx.designer.cs">
+    <Compile Include="Recurrence\RecurrenceEditor.ascx.designer.cs">
       <DependentUpon>RecurrenceEditor.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RecurrenceSelector.ascx.cs">
+    <Compile Include="Recurrence\RecurrenceSelector.ascx.cs">
       <DependentUpon>RecurrenceSelector.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controls\RecurrenceSelector.ascx.designer.cs">
+    <Compile Include="Recurrence\RecurrenceSelector.ascx.designer.cs">
       <DependentUpon>RecurrenceSelector.ascx</DependentUpon>
     </Compile>
     <Compile Include="Display\EventListingTemplate.ascx.cs">
@@ -475,12 +478,12 @@
     <Content Include="Admin\App_LocalResources\NotConfigured.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Controls\YearlyRecurrence.ascx" />
-    <Content Include="Controls\WeeklyRecurrence.ascx" />
-    <Content Include="Controls\DailyRecurrence.ascx" />
-    <Content Include="Controls\MonthlyRecurrence.ascx" />
-    <Content Include="Controls\RecurrenceEditor.ascx" />
-    <Content Include="Controls\RecurrenceSelector.ascx" />
+    <Content Include="Recurrence\YearlyRecurrence.ascx" />
+    <Content Include="Recurrence\WeeklyRecurrence.ascx" />
+    <Content Include="Recurrence\DailyRecurrence.ascx" />
+    <Content Include="Recurrence\MonthlyRecurrence.ascx" />
+    <Content Include="Recurrence\RecurrenceEditor.ascx" />
+    <Content Include="Recurrence\RecurrenceSelector.ascx" />
     <Content Include="Util\Approval.ascx" />
     <Content Include="RsvpSummary.ascx" />
     <Content Include="EmailEdit.ascx" />
@@ -649,7 +652,7 @@
       <Project>{319B4FE6-A016-41E0-93CE-748DA517D542}</Project>
       <Name>Engage.Utility</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\code\Engage 3.0\Engage.Dnn.Framework\Engage.Dnn.Framework.csproj">
+    <ProjectReference Include="..\Engage.Dnn.Framework\Engage.Dnn.Framework.csproj">
       <Project>{A58A0922-35E3-49BD-BD18-55A6BA45EC7A}</Project>
       <Name>Engage.Dnn.Framework</Name>
     </ProjectReference>
@@ -702,39 +705,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Display\EventDetail.ascx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_LocalResources\DailyRecurrence.ascx.resx">
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_LocalResources\MonthlyRecurrence.ascx.resx">
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_LocalResources\RecurrenceEditor.ascx.resx">
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_LocalResources\RecurrenceSelector.ascx.resx">
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_LocalResources\WeeklyRecurrence.ascx.resx">
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_LocalResources\YearlyRecurrence.ascx.resx">
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Recurrence\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v8.0\WebApplications\Microsoft.WebApplication.targets" Condition="'$(Solutions.VSVersion)' == '8.0'" />

@@ -1,37 +1,40 @@
-//Engage: Events - http://www.engagemodules.com
-//Copyright (c) 2004-2008
-//by Engage Software ( http://www.engagesoftware.com )
-
-//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
-//TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
-//THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
-//CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
-//DEALINGS IN THE SOFTWARE.
-
-using System;
-using System.IO;
-using System.Web.UI.WebControls;
-using DotNetNuke.Entities.Modules;
-using DotNetNuke.Entities.Host;
-using DotNetNuke.Services.Exceptions;
-using DotNetNuke.Services.Localization;
-using System.Globalization;
+// <copyright file="Settings.ascx.cs" company="Engage Software">
+// Engage: Events - http://www.engagemodules.com
+// Copyright (c) 2004-2008
+// by Engage Software ( http://www.engagesoftware.com )
+// </copyright>
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
+// TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
+// CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// DEALINGS IN THE SOFTWARE.
 
 namespace Engage.Dnn.Events
 {
+    using System;
+    using System.IO;
+    using System.Web.UI.WebControls;
+    using DotNetNuke.Entities.Modules;
+    using DotNetNuke.Entities.Host;
+    using DotNetNuke.Services.Exceptions;
+    using DotNetNuke.Services.Localization;
+    using System.Globalization;
+
+    /// <summary>
+    /// This is the settings code behind for Event related Settings.
+    /// </summary>
     public partial class Settings : ModuleSettingsBase
     {
+        /// <summary>
+        /// Backing field for the current module settings base selected.
+        /// </summary>
         private ModuleSettingsBase currentSettingsBase;
 
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            DisplaySettingsControl();
-        }
-
+        /// <summary>
+        /// Updates the settings.
+        /// </summary>
         public override void UpdateSettings()
         {
-
             if (Page.IsValid)
             {
                 try
@@ -40,15 +43,11 @@ namespace Engage.Dnn.Events
                     controller.UpdateHostSetting(Framework.Utility.ModuleConfigured + PortalId.ToString(CultureInfo.InvariantCulture), "true");
 
                     ModuleController modules = new ModuleController();
-                    modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.DisplayTemplate.PropertyName, DropDownChooseDisplay.SelectedValue);
+                    modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.DisplayTemplate.PropertyName, this.DropDownChooseDisplay.SelectedValue);
 
-                    modules.UpdateTabModuleSetting(this.TabModuleId, Setting.FeaturedOnly.PropertyName, FeaturedCheckbox.Checked.ToString());
-                    //modules.UpdateTabModuleSetting(this.TabModuleId, Setting.UnsubscribeUrl.PropertyName, txtUnsubscribeUrl.Text);
-                    //modules.UpdateTabModuleSetting(this.TabModuleId, Setting.PrivacyPolicyUrl.PropertyName, txtPrivacyPolicyUrl.Text);
-                    //modules.UpdateTabModuleSetting(this.TabModuleId, Setting.OpenLinkUrl.PropertyName, txtOpenLinkUrl.Text);
-
-                    currentSettingsBase.UpdateSettings();
-
+                    modules.UpdateTabModuleSetting(this.TabModuleId, Setting.FeaturedOnly.PropertyName, this.FeaturedCheckbox.Checked.ToString());
+                    
+                    this.currentSettingsBase.UpdateSettings();
                 }
                 catch (Exception exc)
                 {
@@ -57,6 +56,9 @@ namespace Engage.Dnn.Events
             }
         }
 
+        /// <summary>
+        /// Loads the settings.
+        /// </summary>
         public override void LoadSettings()
         {
             base.LoadSettings();
@@ -64,14 +66,13 @@ namespace Engage.Dnn.Events
             {
                 if (Page.IsPostBack == false)
                 {
-                    ListItem TemplatedListItem = new ListItem(Localization.GetString("EventListingTemplate", LocalResourceFile), "Display.Listing.html");
-                    ListItem CalendarListItem = new ListItem(Localization.GetString("EventCalendar", LocalResourceFile), "Display.Calendar.html");
+                    ListItem templatedListItem = new ListItem(Localization.GetString("EventListingTemplate", LocalResourceFile), "Display.Listing.html");
+                    ListItem calendarListItem = new ListItem(Localization.GetString("EventCalendar", LocalResourceFile), "Display.Calendar.html");
 
-                    DropDownChooseDisplay.Items.Add(TemplatedListItem);
-                    DropDownChooseDisplay.Items.Add(CalendarListItem);
+                    this.DropDownChooseDisplay.Items.Add(templatedListItem);
+                    this.DropDownChooseDisplay.Items.Add(calendarListItem);
 
-                    SetOptions();
-
+                    this.SetOptions();
                 }
             }
             catch (Exception exc)
@@ -80,11 +81,34 @@ namespace Engage.Dnn.Events
             }
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            this.DisplaySettingsControl();
+        }
+
+        /// <summary>
+        /// Handles the SelectedIndexChanged event of the DropDownChooseDisplay control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void DropDownChooseDisplay_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.DisplaySettingsControl();
+        }
+
+        /// <summary>
+        /// Sets the options.
+        /// </summary>
         private void SetOptions()
         {
             string displayType = Utility.GetStringSetting(Settings, Framework.Setting.DisplayTemplate.PropertyName);
 
-            ListItem li = DropDownChooseDisplay.Items.FindByValue(displayType);
+            ListItem li = this.DropDownChooseDisplay.Items.FindByValue(displayType);
             if (li != null)
             {
                 li.Selected = true;
@@ -93,43 +117,47 @@ namespace Engage.Dnn.Events
             string featured = Utility.GetStringSetting(Settings, Setting.FeaturedOnly.PropertyName);
             if (!string.IsNullOrEmpty(featured))
             {
-                FeaturedCheckbox.Checked = Convert.ToBoolean(featured);
+                this.FeaturedCheckbox.Checked = Convert.ToBoolean(featured);
             }
-
-
         }
 
-        protected void DropDownChooseDisplay_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            DisplaySettingsControl();
-        }
-
+        /// <summary>
+        /// Displays the settings control.
+        /// </summary>
         private void DisplaySettingsControl()
         {
-
-            string selectedDisplayType = DropDownChooseDisplay.SelectedValue;
+            string selectedDisplayType = this.DropDownChooseDisplay.SelectedValue;
             switch (selectedDisplayType)
             {
                 case "Display.Listing.html":
-                    LoadSettingsControl("Display/TemplateDisplayOptions.ascx");
+                    this.LoadSettingsControl("Display/TemplateDisplayOptions.ascx");
                     break;
                 case "Display.Calendar.html":
-                    LoadSettingsControl("Display/CalendarDisplayOptions.ascx");
+                    this.LoadSettingsControl("Display/CalendarDisplayOptions.ascx");
                     break;
                 default:
                     break;
             }
         }
 
+        /// <summary>
+        /// Loads the settings control.
+        /// </summary>
+        /// <param name="controlName">Name of the control.</param>
         private void LoadSettingsControl(string controlName)
         {
             this.phControls.EnableViewState = false;
             this.phControls.Controls.Clear();
 
-            currentSettingsBase = CreateSettingsControl(controlName);
-            this.phControls.Controls.Add(currentSettingsBase);
+            this.currentSettingsBase = this.CreateSettingsControl(controlName);
+            this.phControls.Controls.Add(this.currentSettingsBase);
         }
 
+        /// <summary>
+        /// Creates the settings control.
+        /// </summary>
+        /// <param name="controlName">Name of the control.</param>
+        /// <returns>Module Settings Base</returns>
         private ModuleSettingsBase CreateSettingsControl(string controlName)
         {
             ModuleSettingsBase settingsControl = (ModuleSettingsBase)LoadControl(controlName);
@@ -137,8 +165,8 @@ namespace Engage.Dnn.Events
             ModuleInfo mi = mc.GetModule(ModuleId, TabId);
             settingsControl.ModuleConfiguration = mi;
 
-            //SEE LINE BELOW remove the following two lines for 4.6 because 4.6 no longer supports setting the moduleid, you have to get it through the module configuration.
-            //the following appears to work fine in 4.6.2 now
+            // SEE LINE BELOW remove the following two lines for 4.6 because 4.6 no longer supports setting the moduleid, you have to get it through the module configuration.
+            // the following appears to work fine in 4.6.2 now
             settingsControl.ModuleId = ModuleId;
             settingsControl.TabModuleId = TabModuleId;
 

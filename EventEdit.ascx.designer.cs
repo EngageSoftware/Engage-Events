@@ -122,13 +122,22 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.CheckBox FeaturedCheckbox;
         
         /// <summary>
+        /// RecurringCheckbox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox RecurringCheckbox;
+        
+        /// <summary>
         /// RecurrenceEditor1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Engage.Dnn.Events.Controls.RecurrenceEditor RecurrenceEditor1;
+        protected global::Engage.Dnn.Events.Recurrence.RecurrenceEditor RecurrenceEditor1;
         
         /// <summary>
         /// AddEventFooterButtons control.

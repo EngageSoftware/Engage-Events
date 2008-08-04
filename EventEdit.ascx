@@ -5,7 +5,7 @@
 <%@ Register TagPrefix="engage" Namespace="Engage.Controls" Assembly="Engage.Utilityv3.0" %>
 <%@ Import Namespace="DotNetNuke.Services.Localization"%>
 
-<%@ Register src="Controls/RecurrenceEditor.ascx" tagname="RecurrenceEditor" tagprefix="uc1" %>
+<%@ Register src="Recurrence/RecurrenceEditor.ascx" tagname="RecurrenceEditor" tagprefix="uc1" %>
 
 <engage:ModuleMessage runat="server" ID="SuccessModuleMessage" MessageType="Success" TextResourceKey="AddEventSuccess" CssClass="AddEventSuccessMessage"/>
 
@@ -69,7 +69,10 @@
     <div class="AEEventEditor">
         <asp:Label ID="FeaturedEventLabel" runat="server" ResourceKey="FeaturedEventLabel" CssClass="NormalBold"/>
         <asp:CheckBox ID="FeaturedCheckbox" runat="server" />        
-        <uc1:RecurrenceEditor ID="RecurrenceEditor1" runat="server" />
+    </div>
+    <div>
+        <asp:CheckBox ID="RecurringCheckbox" runat="server" CssClass="NormalBold" Text="Recurring Event" AutoPostBack="true" />
+        <uc1:RecurrenceEditor ID="RecurrenceEditor1" runat="server" Visible="false" />
     </div>
     
 </div>

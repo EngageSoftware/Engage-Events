@@ -186,10 +186,15 @@ namespace Engage.Dnn.Events
 
             EventNameLabel.Text = e.Title;
 
-            //now load the email details. using?
+            ///now load the email details. using?
 
         }
 
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
 

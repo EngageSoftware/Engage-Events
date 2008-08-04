@@ -69,7 +69,6 @@ namespace Engage.Dnn.Events
         /// <returns>A relative path to the control that should be loaded into this container</returns>
         private string GetControlToLoad()
         {
-
             if (!IsConfigured)
             {
                 return  "Admin/NotConfigured.ascx";
@@ -88,10 +87,7 @@ namespace Engage.Dnn.Events
                     break;
                 }
             }
-
             return Utility.HasValue(keyParam) ? ControlKeys[keyParam] : "Display/EventListingTemplate.ascx";
-
-            
         }
 
         /// <summary>

@@ -46,6 +46,7 @@ namespace Engage.Dnn.Events
             this.SaveEventButton.Click += this.SaveEventButton_OnClick;
             this.SaveAndCreateNewEventButton.Click += this.SaveAndCreateNewEventButton_OnClick;
             this.CreateAnotherEventButton.Click += this.CreateAnotherEventButton_Click;
+            this.RecurringCheckbox.CheckedChanged += this.RecurringCheckbox_CheckedChanged;
 
             ////this.eventDescriptionTextEditor = Utility.SetupTextEditor(EventDescriptionTextEditorPlaceHolder);
         }
@@ -230,6 +231,7 @@ namespace Engage.Dnn.Events
             e.Overview = this.EventOverviewTextEditor.Text;
             e.Description = this.EventDescriptionTextEditor.Text;
             e.IsFeatured = this.FeaturedCheckbox.Checked;
+            e.RecurrenceRule = this.RecurrenceEditor1.RecurrenceRule;
             e.Save(this.UserId);
         }
 
@@ -249,6 +251,7 @@ namespace Engage.Dnn.Events
             e.EventEnd = this.EndDateTimePicker.SelectedDate.Value;
             e.Description = this.EventDescriptionTextEditor.Text;
             e.IsFeatured = this.FeaturedCheckbox.Checked;
+            e.RecurrenceRule = this.RecurrenceEditor1.RecurrenceRule;
             e.Save(this.UserId);
         }
 
@@ -265,6 +268,13 @@ namespace Engage.Dnn.Events
             this.StartDateTimePicker.SelectedDate = e.EventStart;
             this.EndDateTimePicker.SelectedDate = e.EventEnd;
             this.FeaturedCheckbox.Checked = e.IsFeatured;
+            this.RecurringCheckbox.Checked = e.RecurrenceRule.Length > 0;
+            this.RecurringCheckbox.Checked = e.RecurrenceRule.Length > 0;
+        }
+
+        private void RecurringCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            this.RecurrenceEditor1.Visible = this.RecurringCheckbox.Checked;
         }
     }
 }
