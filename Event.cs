@@ -188,17 +188,6 @@ namespace Engage.Events
         #endregion
 
         /// <summary>
-        /// Gets a value indicating whether this instance is recurring.
-        /// </summary>
-        /// <value>
-        /// 	<c>true</c> if this instance is recurring; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsRecurring
-        {
-            get { return false; }
-        }
-
-        /// <summary>
         /// Gets the id of this event.
         /// </summary>
         /// <value>This <see cref="Event"/>'s id.</value>
@@ -615,7 +604,10 @@ namespace Engage.Events
             e.location = eventRecord["Location"].ToString();
             e.invitationUrl = eventRecord["InvitationUrl"].ToString();
             e.recapUrl = eventRecord["RecapUrl"].ToString();
-            e.recurrenceParentId = (int)eventRecord["RecurrenceParentId"];
+            if (!(eventRecord["RecurrenceParentId"] is DBNull))
+            {
+                e.recurrenceParentId = (int)eventRecord["RecurrenceParentId"];
+            }
             e.recurrenceRule = eventRecord["RecurrenceRule"].ToString();
             e.totalRecords = totalRecords;
             
@@ -731,6 +723,7 @@ namespace Engage.Events
             this.LoadAspnetEmailLicense();
 
             iCalendar ic = new iCalendar();
+            
             ic.OptimizedFormat = OptimizedFormat.Exchange2003;
 
             // create the organizer
@@ -777,7 +770,7 @@ namespace Engage.Events
             Attendee att1 = new Attendee();
             ////att1.FullName = attendeeEmail;
             att1.Email = attendeeEmail;
-            att1.ParticipationStatus = ParticipationStatus.ACCEPTED;
+            att1.ParticipationStatus = ParticipationStatus.NEEDSACTION;
             att1.Role = RoleType.REQ_PARTICIPANT;
             ////att1.RSVP = true;
             ic.Event.Attendees.Add(att1);
@@ -785,7 +778,7 @@ namespace Engage.Events
             ic.Event.Classification.ClassificationType = ClassificationType.Private;
             ic.Event.Categories.Add(CategoryType.APPOINTMENT);
 
-            if (this.IsRecurring)
+            if (this.recurrenceRule.Length > 0)
             {
                 // make this a recurring event - NOT YET IMPLEMENTED!!!!!hk
                 // Day 31 of every two months for 10 months. For some months it will fall on the last day.
