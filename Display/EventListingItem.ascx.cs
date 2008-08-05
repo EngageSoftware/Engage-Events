@@ -156,9 +156,13 @@ namespace Engage.Dnn.Events.Display
                     ButtonAction editEventAction = (ButtonAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
                     editEventAction.CurrentEvent = ev;
                     editEventAction.ModuleConfiguration = this.ModuleConfiguration;
-                    href = this.BuildLinkUrl("&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId=" + ev.Id.ToString(CultureInfo.InvariantCulture));
+                    href =
+                        this.BuildLinkUrl(
+                            "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId="
+                            + ev.Id.ToString(CultureInfo.InvariantCulture));
                     editEventAction.Href = href;
-                    editEventAction.Text = Localization.GetString("EditEventButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
+                    editEventAction.Text = Localization.GetString(
+                        "EditEventButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(editEventAction);
                     editEventAction.Visible = IsAdmin;
                     break;
@@ -166,9 +170,13 @@ namespace Engage.Dnn.Events.Display
                     ButtonAction responsesEventAction = (ButtonAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
                     responsesEventAction.CurrentEvent = ev;
                     responsesEventAction.ModuleConfiguration = this.ModuleConfiguration;
-                    href = this.BuildLinkUrl("&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpDetail&eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
+                    href =
+                        this.BuildLinkUrl(
+                            "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpDetail&eventid="
+                            + ev.Id.ToString(CultureInfo.InvariantCulture));
                     responsesEventAction.Href = href;
-                    responsesEventAction.Text = Localization.GetString("ResponsesButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
+                    responsesEventAction.Text = Localization.GetString(
+                        "ResponsesButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(responsesEventAction);
                     responsesEventAction.Visible = IsAdmin;
                     break;
@@ -176,17 +184,25 @@ namespace Engage.Dnn.Events.Display
                     ButtonAction registerEventAction = (ButtonAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
                     registerEventAction.CurrentEvent = ev;
                     registerEventAction.ModuleConfiguration = this.ModuleConfiguration;
-                    href = this.BuildLinkUrl("&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
+                    href =
+                        this.BuildLinkUrl(
+                            "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid="
+                            + ev.Id.ToString(CultureInfo.InvariantCulture));
                     registerEventAction.Href = href;
-                    registerEventAction.Text = Localization.GetString("RegisterButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
+                    registerEventAction.Text = Localization.GetString(
+                        "RegisterButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(registerEventAction);
-                    registerEventAction.Visible = IsLoggedIn;
+                    // user must be logged in, must be an active event and has not ended to register
+                    registerEventAction.Visible = this.IsAdmin || IsLoggedIn && ev.Cancelled == false && ev.EventEnd > DateTime.Now;
+
                     break;
                 case "ADDTOCALENDARBUTTON":
-                    AddToCalendarAction addToCalendarAction = (AddToCalendarAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/AddToCalendarAction.ascx");
+                    AddToCalendarAction addToCalendarAction =
+                        (AddToCalendarAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/AddToCalendarAction.ascx");
                     addToCalendarAction.CurrentEvent = ev;
                     addToCalendarAction.ModuleConfiguration = this.ModuleConfiguration;
-                    addToCalendarAction.Visible = ModuleBase.IsRegistered || IsAdmin;
+                    // user must be registered for the event, must be an active event and has not ended to register
+                    addToCalendarAction.Visible = this.IsAdmin || ModuleBase.IsRegistered(ev.Id) && ev.Cancelled == false && ev.EventEnd > DateTime.Now;
                     container.Controls.Add(addToCalendarAction);
                     break;
                 case "DELETEBUTTON":

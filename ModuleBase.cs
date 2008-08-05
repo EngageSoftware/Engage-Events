@@ -29,21 +29,18 @@ namespace Engage.Dnn.Events
     public class ModuleBase : Framework.ModuleBase, IActionable
     {
         /// <summary>
-        /// This method looks at the query string and the currently logged in user (if any) and checks for
+        /// This method takes the eventid and the currently logged in user (if any) and checks for
         /// an existing RSVP(registration) for the user.
         /// </summary>
-        internal static bool IsRegistered
+        internal static bool IsRegistered(int eventId)
         {
-            get
+            bool registered = false;
+            if (eventId > 0 && IsLoggedIn)
             {
-                bool registered = false;
-                if (EventId > 0 && IsLoggedIn)
-                {
-                    Engage.Events.Rsvp rsvp = Engage.Events.Rsvp.Load(EventId, DotNetNuke.Entities.Users.UserController.GetCurrentUserInfo().Email);
-                    registered = (rsvp != null);
-                }
-                return registered;
+                Engage.Events.Rsvp rsvp = Engage.Events.Rsvp.Load(eventId, DotNetNuke.Entities.Users.UserController.GetCurrentUserInfo().Email);
+                registered = (rsvp != null);
             }
+            return registered;
         }
 
         /// <summary>
