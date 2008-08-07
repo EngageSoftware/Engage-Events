@@ -20,6 +20,7 @@ namespace Engage.Events
     using System.Xml.Serialization;
     using aspNetEmail;
     using aspNetEmail.Calendaring;
+    using Telerik.Web.UI;
     using Data;
 
     /// <summary>
@@ -125,27 +126,22 @@ namespace Engage.Events
         private string recapUrl = string.Empty;
 
         /// <summary>
-        /// Backing field for <see cref="RecurrenceParentId"/>. This is used for exception cases where the user has modified
-        /// an event in a series of recurrences.
+        /// Backing field for <see cref="RecurrenceParentId"/>.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int recurrenceParentId;
-
+        private int? recurrenceParentId;
 
         /// <summary>
-        /// Backing field for <see cref="RecurrenceRule"/>. This is the actual ICAL data.
+        /// Backing field for <see cref="RecurrenceRule"/>.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string recurrenceRule = string.Empty;
+        private RecurrenceRule recurrenceRule;
 
         /// <summary>
         /// Backing field for <see cref="Title"/>.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string title = string.Empty;
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int totalRecords;
 
         /// <summary>
         /// Indicates whether the license for this assembly has yet been loaded.
@@ -186,6 +182,17 @@ namespace Engage.Events
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is recurring.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if this instance is recurring; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsRecurring
+        {
+            get { return this.RecurrenceRule != null; }
+        }
 
         /// <summary>
         /// Gets the id of this event.
@@ -364,10 +371,10 @@ namespace Engage.Events
         }
 
         /// <summary>
-        /// Gets or sets the ID of the recurrence type used by this event.
+        /// Gets or sets the ID of the parent event if this event is overriding a recurring event.
         /// </summary>
         /// <value>The recurrence id.</value>
-        public int RecurrenceParentId
+        public int? RecurrenceParentId
         {
             [DebuggerStepThrough]
             get { return this.recurrenceParentId; }
@@ -379,7 +386,7 @@ namespace Engage.Events
         /// Gets or sets the recurrence rule.
         /// </summary>
         /// <value>The recurrence rule.</value>
-        public string RecurrenceRule
+        public RecurrenceRule RecurrenceRule
         {
             [DebuggerStepThrough]
             get { return this.recurrenceRule; }
@@ -439,20 +446,11 @@ namespace Engage.Events
         }
 
         /// <summary>
-        /// Gets the total records associated with this Event.
-        /// </summary>
-        /// <value>The total records.</value>
-        public int TotalRecords
-        {
-            [DebuggerStepThrough]
-            get { return this.totalRecords; }
-        }
-
-        /// <summary>
         /// Loads the specified event.
         /// </summary>
         /// <param name="id">The id of an event to load.</param>
         /// <returns>The requested Event</returns>
+        /// <exception cref="DBException">If an error occurs while going to the database to get the event</exception>
         public static Event Load(int id)
         {
             IDataProvider dp = DataProvider.Instance;
@@ -460,20 +458,17 @@ namespace Engage.Events
 
             try
             {
-                using (IDataReader reader = dp.ExecuteReader(
-                    CommandType.StoredProcedure, 
-                    dp.NamePrefix + "spGetEvent", 
-                    Utility.CreateIntegerParam("@EventId", id)))
+                using (IDataReader reader = dp.ExecuteReader(CommandType.StoredProcedure, dp.NamePrefix + "spGetEvent", Utility.CreateIntegerParam("@EventId", id)))
                 {
                     if (reader.Read())
                     {
-                        e = Fill(reader, 0);
+                        e = Fill(reader);
                     }
                 }
             }
             catch (Exception se)
             {
-                throw new DBException("spGetEvents", se);
+                throw new DBException("spGetEvent", se);
             }
 
             return e;
@@ -498,6 +493,7 @@ namespace Engage.Events
         /// Deletes the specified event.
         /// </summary>
         /// <param name="eventId">The event id.</param>
+        /// <exception cref="DBException">If an error occurs while going to the database to delete the event</exception>
         public static void Delete(int eventId)
         {
             IDataProvider dp = DataProvider.Instance;
@@ -579,9 +575,8 @@ namespace Engage.Events
         /// Fills an Event with the data in the specified <paramref name="eventRecord"/>.
         /// </summary>
         /// <param name="eventRecord">A pre-initialized data record that represents an Event instance.</param>
-        /// <param name="totalRecords">The total records.</param>
         /// <returns>An instantiated Event object.</returns>
-        internal static Event Fill(IDataRecord eventRecord, int totalRecords)
+        internal static Event Fill(IDataRecord eventRecord)
         {
             Event e = new Event();
 
@@ -591,11 +586,7 @@ namespace Engage.Events
             e.overview = eventRecord["OverView"].ToString();
             e.description = eventRecord["Description"].ToString();
             e.eventStart = (DateTime)eventRecord["EventStart"];
-            if (!(eventRecord["EventEnd"] is DBNull))
-            {
-                e.eventEnd = (DateTime)eventRecord["EventEnd"];
-            }
-
+            e.eventEnd = (DateTime)eventRecord["EventEnd"];
             e.createdBy = (int)eventRecord["CreatedBy"];
             e.cancelled = (bool)eventRecord["Cancelled"];
             e.isFeatured = (bool)eventRecord["IsFeatured"];
@@ -608,8 +599,12 @@ namespace Engage.Events
             {
                 e.recurrenceParentId = (int)eventRecord["RecurrenceParentId"];
             }
-            e.recurrenceRule = eventRecord["RecurrenceRule"].ToString();
-            e.totalRecords = totalRecords;
+
+            RecurrenceRule rule;
+            if (RecurrenceRule.TryParse(eventRecord["RecurrenceRule"].ToString(), out rule))
+            {
+                e.recurrenceRule = rule;
+            }
             
             return e;
         }
@@ -623,8 +618,8 @@ namespace Engage.Events
             // embedded resources are embedded using the following convention
             // namespace.foldername.subfolder.subfolder.subfolder.filename etc...
             // in our case, the license is embedded as
-            const string ResourceLocation = "Engage.Events.aspnetemail.xml.lic";
-            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(ResourceLocation))
+            const string resourceLocation = "Engage.Events.aspnetemail.xml.lic";
+            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceLocation))
             {
                 if (stream != null)
                 {
@@ -642,6 +637,7 @@ namespace Engage.Events
         /// Inserts this event.
         /// </summary>
         /// <param name="revisingUser">The user who is inserting this event.</param>
+        /// <exception cref="DBException">If an error occurs while going to the database to insert the event</exception>
         private void Insert(int revisingUser)
         {
             IDataProvider dp = DataProvider.Instance;
@@ -664,7 +660,7 @@ namespace Engage.Events
                     Utility.CreateVarcharParam("@LocationUrl", this.locationUrl),
                     Utility.CreateVarcharParam("@InvitationUrl", this.invitationUrl),
                     Utility.CreateVarcharParam("@RecapUrl", this.recapUrl),
-                    Utility.CreateTextParam("@RecurrenceRule", this.recurrenceRule),
+                    Utility.CreateTextParam("@RecurrenceRule", this.recurrenceRule != null ? this.recurrenceRule.ToString() : null),
                     Utility.CreateBitParam("@CanRsvp", true),
                     Utility.CreateBitParam("@isFeatured", this.isFeatured),
                     Utility.CreateIntegerParam("@CreatedBy", revisingUser));
@@ -679,6 +675,7 @@ namespace Engage.Events
         /// Updates this event.
         /// </summary>
         /// <param name="revisingUser">The user responsible for updating this event.</param>
+        /// <exception cref="DBException">If an error occurs while going to the database to update the event</exception>
         private void Update(int revisingUser)
         {
             IDataProvider dp = DataProvider.Instance;
@@ -700,7 +697,7 @@ namespace Engage.Events
                     Utility.CreateVarcharParam("@LocationUrl", this.locationUrl),
                     Utility.CreateVarcharParam("@InvitationUrl", this.invitationUrl),
                     Utility.CreateVarcharParam("@RecapUrl", this.recapUrl),
-                    Utility.CreateTextParam("@RecurrenceRule", this.recurrenceRule),
+                    Utility.CreateTextParam("@RecurrenceRule", this.recurrenceRule != null ? this.recurrenceRule.ToString() : null),
                     Utility.CreateIntegerParam("@RecurrenceParentId", this.recurrenceParentId),
                     Utility.CreateBitParam("@CanRsvp", true),
                     Utility.CreateBitParam("@Cancelled", this.cancelled),
@@ -743,10 +740,7 @@ namespace Engage.Events
 
             // set the dates.
             ic.Event.DateStart.Date = this.eventStart;
-            if (this.eventEnd != null)
-            {
-                ic.Event.DateEnd.Date = (DateTime)this.eventEnd;
-            }
+            ic.Event.DateEnd.Date = this.eventEnd;
 
             // mark the time as busy (not available to free-busy searches).
             ic.Event.TimeTransparency.TransparencyType = TransparencyType.Opaque;
@@ -778,7 +772,7 @@ namespace Engage.Events
             ic.Event.Classification.ClassificationType = ClassificationType.Private;
             ic.Event.Categories.Add(CategoryType.APPOINTMENT);
 
-            if (this.recurrenceRule.Length > 0)
+            if (this.recurrenceRule != null)
             {
                 // make this a recurring event - NOT YET IMPLEMENTED!!!!!hk
                 // Day 31 of every two months for 10 months. For some months it will fall on the last day.
