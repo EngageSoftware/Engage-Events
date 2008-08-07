@@ -1,4 +1,4 @@
-// <copyright file="EventAdminActions.ascx.cs" company="Engage Software">
+// <copyright file="SortStatusAction.ascx.cs" company="Engage Software">
 // Engage: Events - http://www.engagemodules.com
 // Copyright (c) 2004-2008
 // by Engage Software ( http://www.engagesoftware.com )
@@ -22,12 +22,15 @@ namespace Engage.Dnn.Events
     /// </remarks>
     public partial class SortStatusAction : ActionControlBase
     {
-
         /// <summary>
         /// Occurs when the sort has changed.
         /// </summary>
         public event EventHandler SortChanged;
 
+        internal string SelectedValue
+        {
+            get { return this.RadioButtonListStatusSort.SelectedValue; }
+        }
 
         /// <summary>
         /// Raises the <see cref="SortChanged"/> event.
@@ -36,6 +39,47 @@ namespace Engage.Dnn.Events
         protected void OnSortChanged(EventArgs e)
         {
             this.InvokeSortChanged(e);
+        }
+
+        /// <summary>
+        /// Sets the visibility of each of the buttons.  Also, sets the text for the cancel/uncancel button, and the delete confirm.
+        /// </summary>
+        protected override void BindData()
+        {
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+
+            this.Load += this.Page_Load;
+            this.LocalResourceFile = "~" + DesktopModuleFolderName + "Display/App_LocalResources/EventListingItem.ascx.resx";
+            this.RadioButtonListStatusSort.SelectedIndexChanged += this.RadioButtonListStatusSort_SelectedIndexChanged;
+        }
+
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void Page_Load(object sender, EventArgs e)
+        {
+            this.SetVisibility();
+            this.LocalizeControls();
+        }
+
+        /// <summary>
+        /// Handles the SelectedIndexChanged event of the RadioButtonListStatusSort control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void RadioButtonListStatusSort_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.OnSortChanged(e);
         }
 
         /// <summary>
@@ -52,38 +96,6 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
-        protected override void OnInit(EventArgs e)
-        {
-            base.OnInit(e);
-
-            this.LocalResourceFile = "~" + DesktopModuleFolderName + "Display/App_LocalResources/EventListingItem.ascx.resx";
-            this.RadioButtonListStatusSort.SelectedIndexChanged += this.RadioButtonListStatusSort_SelectedIndexChanged;
-        }
-
-        private void RadioButtonListStatusSort_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.OnSortChanged(e);
-        }
-
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            this.SetVisibility();
-            this.LocalizeControls();
-        }
-
-     
-        /// <summary>
-        /// Sets the visibility of each of the buttons.  Also, sets the text for the cancel/uncancel button, and the delete confirm.
-        /// </summary>
-        protected override void BindData()
-        {
-        }
-
-        /// <summary>
         /// Sets the visibility of this control's child controls.
         /// </summary>
         private void SetVisibility()
@@ -95,11 +107,6 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void LocalizeControls()
         {
-        }
-
-        internal string SelectedValue
-        {
-            get { return this.RadioButtonListStatusSort.SelectedValue; }
         }
     }
 }

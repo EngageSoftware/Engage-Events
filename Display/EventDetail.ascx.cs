@@ -1,4 +1,4 @@
-// <copyright file="EventListing.ascx.cs" company="Engage Software">
+// <copyright file="EventDetail.ascx.cs" company="Engage Software">
 // Engage: Events - http://www.engagemodules.com
 // Copyright (c) 2004-2008
 // by Engage Software ( http://www.engagesoftware.com )
@@ -12,6 +12,7 @@
 namespace Engage.Dnn.Events.Display
 {
     using System;
+    using System.IO;
     using System.Web.UI;
     using DotNetNuke.Common;
     using DotNetNuke.Services.Exceptions;
@@ -24,17 +25,42 @@ namespace Engage.Dnn.Events.Display
     /// </summary>
     public partial class EventDetail : ModuleBase
     {
-        protected override void OnInit(EventArgs e)
+        internal static void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)
         {
-            base.OnInit(e);
-            this.LocalResourceFile = "~" + DesktopModuleFolderName + "Display/App_LocalResources/EventDetail.ascx.resx";
+            // do nothing here, handled up in TemplateEngine - for now.
         }
 
         /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
+        /// Binds the data.
         /// </summary>
-        /// <param name="e">The <see cref="T:System.EventArgs"/> object that contains the event data.</param>
-        protected override void OnLoad(EventArgs e)
+        internal void BindData()
+        {
+            Event ev = Event.Load(EventId);
+            string templateName = Utility.GetStringSetting(this.Settings, Framework.Setting.DetailTemplate.PropertyName, "Detail.Item.html");
+
+            Template template = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
+            TemplateEngine.ProcessTags(this.DetailPlaceHolder, template.ChildTags, ev, this.LocalResourceFile, ProcessTag);
+
+            this.BackHyperLink.NavigateUrl = Globals.NavigateURL();
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+            this.Load += this.Page_Load;
+            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + "App_LocalResources/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
+        }
+
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void Page_Load(object sender, EventArgs e)
         {
             try
             {
@@ -45,27 +71,6 @@ namespace Engage.Dnn.Events.Display
                 Exceptions.ProcessModuleLoadException(this, exc);
             }
         }
-
-        /// <summary>
-        /// Binds the data.
-        /// </summary>
-        internal void BindData()
-        {
-            Event ev = Event.Load(EventId);
-            string templateName = Utility.GetStringSetting(Settings, Framework.Setting.DetailTemplate.PropertyName);
-            if (templateName == null) templateName = "Detail.Item.html";
-
-            Engage.Templating.Template template = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
-            TemplateEngine.ProcessTags(this.DetailPlaceHolder, template.ChildTags, ev, LocalResourceFile, ProcessTag);
-
-            BackHyperLink.NavigateUrl = Globals.NavigateURL();
-        }
-
-        internal static void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)
-        {
-            //do nothing here, handled up in TemplateEngine - for now.
-        }
-
     }
 }
 

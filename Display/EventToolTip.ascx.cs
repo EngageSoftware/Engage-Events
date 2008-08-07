@@ -14,9 +14,10 @@ namespace Engage.Dnn.Events.Display
     using System;
     using System.Diagnostics;
     using System.Globalization;
+    using System.IO;
     using DotNetNuke.Framework;
     using Engage.Events;
-    using ModuleBase=ModuleBase;
+    using ModuleBase = Engage.Dnn.Events.ModuleBase;
 
     /// <summary>
     /// Used to display a "tool tip" for an appointment.
@@ -123,7 +124,7 @@ namespace Engage.Dnn.Events.Display
             this.EditButton.Click += this.EditButton_Click;
 
             AJAX.RegisterPostBackControl(this.AddToCalendarButton);
-            this.LocalResourceFile = "~" + DesktopModuleFolderName + "Display/App_LocalResources/EventToolTip";
+            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + "App_LocalResources/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
         }
 
         /// <summary>
@@ -172,6 +173,11 @@ namespace Engage.Dnn.Events.Display
             SendICalendarToClient(this.Response, currentEvent.ToICal(this.UserInfo.Email), currentEvent.Title);
         }
 
+        /// <summary>
+        /// Handles the Click event of the EditButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void EditButton_Click(object sender, EventArgs e)
         {
             string href =
@@ -179,7 +185,6 @@ namespace Engage.Dnn.Events.Display
                    "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId="
                    + this.currentEventId.ToString(CultureInfo.InvariantCulture));
             this.Response.Redirect(href, true);
-
         }
     }
 }

@@ -1,4 +1,4 @@
-// <copyright file="EventListing.ascx.cs" company="Engage Software">
+// <copyright file="EventListingItem.ascx.cs" company="Engage Software">
 // Engage: Events - http://www.engagemodules.com
 // Copyright (c) 2004-2008
 // by Engage Software ( http://www.engagesoftware.com )
@@ -13,75 +13,84 @@ namespace Engage.Dnn.Events.Display
 {
     using System;
     using System.Globalization;
+    using System.IO;
     using System.Web.UI;
     using System.Web.UI.WebControls;
     using DotNetNuke.Services.Localization;
-    using Framework.Templating;
     using Engage.Events;
+    using Framework.Templating;
     using Templating;
-    using Setting=Setting;
+    using Utility = Engage.Utility;
 
     /// <summary>
     /// Custom event listing item
     /// </summary>
     public partial class EventListingItem : RepeaterItemListing
     {
+        /// <summary>
+        /// Backing field for <see cref="Mode"/>
+        /// </summary>
+        private string mode = string.Empty;
+
+        /// <summary>
+        /// Backing field for <see cref="SortAction"/>
+        /// </summary>
+        private SortAction sortAction;
+
+        /// <summary>
+        /// Backing field for <see cref="SortStatusAction"/>
+        /// </summary>
+        private SortStatusAction sortStatusAction;
+
+        private EventCollection events; // keep a reference around of the data that you have loaded
+
         private ListingMode listingMode;
-        private EventCollection events; //keep a reference around of the data that you have loaded
-        protected SortStatusAction sortStatusAction;
-        protected SortAction sortAction;
 
         /// <summary>
-        /// Raises the <see cref="EventArgs"/> event.
+        /// Gets or sets the mode.
         /// </summary>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected override void OnInit(EventArgs e)
+        /// <value>The mode.</value>
+        public string Mode
         {
-            //we must set the local resource file first since process will occur before we define the LocalResourceFile
-            this.LocalResourceFile = "~" + DesktopModuleFolderName + "Display/App_LocalResources/EventListingItem.ascx.resx";
-            base.OnInit(e);
+            get { return this.mode; }
+            set { this.mode = value; }
+        }
 
-            string setting = this.mode.Length == 0 ? Utility.GetStringSetting(Settings, Setting.DisplayModeOption.PropertyName) : this.mode;
-            this.listingMode = (ListingMode)Enum.Parse(typeof(ListingMode), setting);
+        public SortAction SortAction
+        {
+            get { return this.sortAction; }
+            set { this.sortAction = value; }
+        }
 
+        public SortStatusAction SortStatusAction
+        {
+            get { return this.sortStatusAction; }
+            set { this.sortStatusAction = value; }
         }
 
         /// <summary>
-        /// Gets the item template.
+        /// Gets the total records. 
         /// </summary>
-        /// <returns></returns>
-        protected override Template GetItemTemplate()
+        /// <value>The total records.</value>
+        protected override int TotalRecords
         {
-            string templateName = this.itemTemplateName.Length == 0 ? Utility.GetStringSetting(Settings, Framework.Setting.ItemTemplate.PropertyName) : this.itemTemplateName;
-            Template itemTemplate = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
-            return itemTemplate;
+            get { return this.events.TotalRecords; }
         }
 
-        /// <summary>
-        /// Processes the header.
-        /// </summary>
-        /// <returns></returns>
-        protected override Template GetHeaderTemplate()
+        protected override PlaceHolder HeaderContainer
         {
-            string templateName = this.headerTemplateName.Length == 0 ? Utility.GetStringSetting(Settings, Framework.Setting.HeaderTemplate.PropertyName) : this.headerTemplateName;
-            Template headerTemplate = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
-            return headerTemplate;
+            get { return this.PlaceHolderHeader; }
         }
 
-        /// <summary>
-        /// Processes the footer.
-        /// </summary>
-        protected override Template GetFooterTemplate()
+        protected override PlaceHolder FooterContainer
         {
-            string templateName = this.footerTemplateName.Length == 0 ? Utility.GetStringSetting(Settings, Framework.Setting.FooterTemplate.PropertyName) : this.footerTemplateName;
-            Template footerTemplate = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
-            return footerTemplate;
+            get { return this.PlaceHolderFooter; }
         }
 
         /// <summary>
         /// Binds the data.
         /// </summary>
-        public override  void BindData()
+        public override void BindData()
         {
             string sort = "EventStart";
             if (this.sortAction != null)
@@ -96,45 +105,70 @@ namespace Engage.Dnn.Events.Display
             }
 
             int pageSize;
-            //need to make sure that paging got rendered. if not, get all records
+
+            // need to make sure that paging got rendered. if not, get all records
             if (this.PreviousButton == null || this.NextButton == null)
             {
                 pageSize = 0;
             }
             else
             {
-                pageSize = RecordsPerPage;
+                pageSize = this.RecordsPerPage;
             }
-            
-            this.events = EventCollection.Load(PortalId, this.listingMode, sort, this.CurrentPageIndex, pageSize, statusSort == "All", this.IsFeatured);
-            RepeaterEvents.DataSource = events;
-            RepeaterEvents.DataBind();
+
+            this.events = EventCollection.Load(this.PortalId, this.listingMode, sort, this.CurrentPageIndex, pageSize, statusSort == "All", this.IsFeatured);
+            this.RepeaterEvents.DataSource = this.events;
+            this.RepeaterEvents.DataBind();
+        }
+
+        protected override Template GetFooterTemplate()
+        {
+            string templateName = this.footerTemplateName.Length == 0
+                                      ? Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.FooterTemplate.PropertyName)
+                                      : this.footerTemplateName;
+            Template footerTemplate = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
+            return footerTemplate;
         }
 
         /// <summary>
-        /// Gets the total records. 
+        /// Raises the <see cref="EventArgs"/> event.
         /// </summary>
-        /// <value>The total records.</value>
-        protected override int TotalRecords
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected override void OnInit(EventArgs e)
         {
-            get
-            {
-                return this.events.TotalRecords;
-            }
+            // we must set the local resource file first since process will occur before we define the LocalResourceFile
+            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + "App_LocalResources/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
+            base.OnInit(e);
+
+            string setting = this.mode.Length == 0 ? Dnn.Utility.GetStringSetting(this.Settings, Setting.DisplayModeOption.PropertyName) : this.mode;
+            this.listingMode = (ListingMode)Enum.Parse(typeof(ListingMode), setting);
         }
 
-        private string mode = string.Empty;
         /// <summary>
-        /// Gets or sets the mode.
+        /// Gets the item template.
         /// </summary>
-        /// <value>The mode.</value>
-        public string Mode
+        /// <returns></returns>
+        protected override Template GetItemTemplate()
         {
-            get { return this.mode; }
-            set { this.mode = value; }
-
+            string templateName = this.itemTemplateName.Length == 0
+                                      ? Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.ItemTemplate.PropertyName)
+                                      : this.itemTemplateName;
+            Template itemTemplate = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
+            return itemTemplate;
         }
 
+        /// <summary>
+        /// Processes the header.
+        /// </summary>
+        /// <returns></returns>
+        protected override Template GetHeaderTemplate()
+        {
+            string templateName = this.headerTemplateName.Length == 0
+                                      ? Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.HeaderTemplate.PropertyName)
+                                      : this.headerTemplateName;
+            Template headerTemplate = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
+            return headerTemplate;
+        }
 
         /// <summary>
         /// Method used to process a token. This method is invoked from the TemplateEngine class. Since this control knows
@@ -148,52 +182,35 @@ namespace Engage.Dnn.Events.Display
         {
             Event ev = (Event)engageObject;
 
-            string href;
-
             switch (tag.LocalName.ToUpperInvariant())
             {
                 case "EDITEVENTBUTTON":
                     ButtonAction editEventAction = (ButtonAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
                     editEventAction.CurrentEvent = ev;
                     editEventAction.ModuleConfiguration = this.ModuleConfiguration;
-                    href =
-                        this.BuildLinkUrl(
-                            "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId="
-                            + ev.Id.ToString(CultureInfo.InvariantCulture));
-                    editEventAction.Href = href;
-                    editEventAction.Text = Localization.GetString(
-                        "EditEventButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
+                    editEventAction.Href = this.BuildLinkUrl(this.ModuleId, "EventEdit", "eventId=" + ev.Id.ToString(CultureInfo.InvariantCulture));
+                    editEventAction.Text = Localization.GetString("EditEventButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(editEventAction);
-                    editEventAction.Visible = IsAdmin;
+                    editEventAction.Visible = this.IsAdmin;
                     break;
                 case "VIEWRESPONSESBUTTON":
                     ButtonAction responsesEventAction = (ButtonAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
                     responsesEventAction.CurrentEvent = ev;
                     responsesEventAction.ModuleConfiguration = this.ModuleConfiguration;
-                    href =
-                        this.BuildLinkUrl(
-                            "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpDetail&eventid="
-                            + ev.Id.ToString(CultureInfo.InvariantCulture));
-                    responsesEventAction.Href = href;
-                    responsesEventAction.Text = Localization.GetString(
-                        "ResponsesButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
+                    responsesEventAction.Href = this.BuildLinkUrl(this.ModuleId, "RsvpDetail", "eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
+                    responsesEventAction.Text = Localization.GetString("ResponsesButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(responsesEventAction);
-                    responsesEventAction.Visible = IsAdmin;
+                    responsesEventAction.Visible = this.IsAdmin;
                     break;
                 case "REGISTERBUTTON":
                     ButtonAction registerEventAction = (ButtonAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
                     registerEventAction.CurrentEvent = ev;
                     registerEventAction.ModuleConfiguration = this.ModuleConfiguration;
-                    href =
-                        this.BuildLinkUrl(
-                            "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid="
-                            + ev.Id.ToString(CultureInfo.InvariantCulture));
-                    registerEventAction.Href = href;
-                    registerEventAction.Text = Localization.GetString(
-                        "RegisterButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
+                    registerEventAction.Href = this.BuildLinkUrl(this.ModuleId, "Register", "eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
+                    registerEventAction.Text = Localization.GetString("RegisterButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(registerEventAction);
-                    // user must be logged in, must be an active event and has not ended to register
-                    registerEventAction.Visible = this.IsAdmin || IsLoggedIn && ev.Cancelled == false && ev.EventEnd > DateTime.Now;
+                    // must be an active event and has not ended to register
+                    registerEventAction.Visible = ev.Cancelled == false && ev.EventEnd > DateTime.Now;
 
                     break;
                 case "ADDTOCALENDARBUTTON":
@@ -221,18 +238,17 @@ namespace Engage.Dnn.Events.Display
                     ButtonAction editEmailAction = (ButtonAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
                     editEmailAction.CurrentEvent = ev;
                     editEmailAction.ModuleConfiguration = this.ModuleConfiguration;
-                    href = this.BuildLinkUrl("&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailEdit&eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
-                    editEmailAction.Href = href;
+                    editEmailAction.Href = this.BuildLinkUrl(this.ModuleId.ToString(CultureInfo.InvariantCulture), "EmailEdit", "eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
                     editEmailAction.Text = Localization.GetString("EditEmailButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(editEmailAction);
-                    editEmailAction.Visible = IsAdmin;
+                    editEmailAction.Visible = this.IsAdmin;
                     break;
                 case "SORTEVENTBYDATE":
                     this.sortAction = (SortAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/SortAction.ascx");
                     this.sortAction.ModuleConfiguration = this.ModuleConfiguration;
                     this.sortAction.SortChanged += this.SortStatusAction_SortChanged;
                     container.Controls.Add(this.sortAction);
-                   break;
+                    break;
                 case "SORTEVENTBYSTATUS":
                     this.sortStatusAction = (SortStatusAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/SortStatusAction.ascx");
                     this.sortStatusAction.ModuleConfiguration = this.ModuleConfiguration;
@@ -260,23 +276,23 @@ namespace Engage.Dnn.Events.Display
                     container.Controls.Add(this.NextButton);
                     break;
                 case "PAGER":
-                    //int cp;
-                    //string fs = Localization.GetString("Pager", LocalResourceFile);
-                    //DropDownList objDropDown = new DropDownList();
-                    //objDropDown.ID = "lnkPgHPages";
-                    //objDropDown.CssClass = oRepositoryBusinessController.GetSkinAttribute(xmlHeaderDoc, "PAGER", "CssClass", "normal");
-                    //objDropDown.Width = System.Web.UI.WebControls.Unit.Parse(oRepositoryBusinessController.GetSkinAttribute(xmlHeaderDoc, "PAGER", "Width", "75"));
-                    //objDropDown.AutoPostBack = true;
-                    //cp = 1;
-                    //while (cp < lstObjects.PageCount + 1)
-                    //{
-                    //    objdropdown.Items.Add(new ListItem(string.Format(fs, cp), cp));
-                    //    cp = cp + 1;
-                    //}
+                    ////int cp;
+                    ////string fs = Localization.GetString("Pager", LocalResourceFile);
+                    ////DropDownList objDropDown = new DropDownList();
+                    ////objDropDown.ID = "lnkPgHPages";
+                    ////objDropDown.CssClass = oRepositoryBusinessController.GetSkinAttribute(xmlHeaderDoc, "PAGER", "CssClass", "normal");
+                    ////objDropDown.Width = System.Web.UI.WebControls.Unit.Parse(oRepositoryBusinessController.GetSkinAttribute(xmlHeaderDoc, "PAGER", "Width", "75"));
+                    ////objDropDown.AutoPostBack = true;
+                    ////cp = 1;
+                    ////while (cp < lstObjects.PageCount + 1)
+                    ////{
+                    ////    objdropdown.Items.Add(new ListItem(string.Format(fs, cp), cp));
+                    ////    cp = cp + 1;
+                    ////}
 
-                    //objdropdown.SelectedValue = lstObjects.CurrentPageIndex + 1;
-                    //objDropDown.SelectedIndexChanged += lnkPg_SelectedIndexChanged;
-                    //hPlaceHolder.Controls.Add(objDropDown);
+                    ////objdropdown.SelectedValue = lstObjects.CurrentPageIndex + 1;
+                    ////objDropDown.SelectedIndexChanged += lnkPg_SelectedIndexChanged;
+                    ////hPlaceHolder.Controls.Add(objDropDown);
                     break;
                 case "CURRENTPAGE":
                     this.CurrentPageLabel = new Label();
@@ -291,7 +307,7 @@ namespace Engage.Dnn.Events.Display
                     container.Controls.Add(this.PageCountLabel);
                     break;
                 case "READMORE":
-                    if (Engage.Utility.HasValue(ev.Description))
+                    if (Utility.HasValue(ev.Description))
                     {
                         HyperLink detailLink = new HyperLink();
                         detailLink.Text = Localization.GetString(tag.GetAttributeValue("ResourceKey"), this.LocalResourceFile);
@@ -299,28 +315,17 @@ namespace Engage.Dnn.Events.Display
                         {
                             detailLink.Text = "Read More...";
                         }
+
                         detailLink.CssClass = tag.GetAttributeValue("CssClass");
                         detailLink.NavigateUrl = this.BuildLinkUrl(this.ModuleId, "EventDetail", "eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
 
                         container.Controls.Add(detailLink);
                     }
+
                     break;
                 default:
                     break;
             }
-
         }
-
-        protected override PlaceHolder HeaderContainer
-        {
-            get { return this.PlaceHolderHeader; }
-        }
-
-        protected override PlaceHolder FooterContainer
-        {
-            get { return this.PlaceHolderFooter; }
-        }
-
     }
 }
-

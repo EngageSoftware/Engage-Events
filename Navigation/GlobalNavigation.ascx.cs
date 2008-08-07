@@ -13,6 +13,7 @@ namespace Engage.Dnn.Events.Navigation
 {
     using System;
     using System.Globalization;
+    using System.IO;
     using DotNetNuke.Common;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Security.Permissions;
@@ -24,6 +25,19 @@ namespace Engage.Dnn.Events.Navigation
     public partial class GlobalNavigation : ModuleBase
     {
         /// <summary>
+        /// Gets the current control key.
+        /// </summary>
+        /// <value>The current control key.</value>
+        private string CurrentControlKey
+        {
+            get
+            {
+                object o = this.Request.QueryString["key"];
+                return (o == null ? string.Empty : o.ToString());
+            }
+        }
+
+        /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
@@ -34,7 +48,7 @@ namespace Engage.Dnn.Events.Navigation
             // since the global navigation control is not loaded using DNN mechanisms we need to set it here so that calls to 
             // module related information will appear the same as the actual control this navigation is sitting on.hk
             this.ModuleConfiguration = ((PortalModuleBase)base.Parent).ModuleConfiguration;
-            this.LocalResourceFile = "~" + DesktopModuleFolderName + "App_LocalResources/GlobalNavigation";
+            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + "App_LocalResources/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
 
             this.Load += this.Page_Load;
         }
@@ -98,15 +112,6 @@ namespace Engage.Dnn.Events.Navigation
                 default:
                     this.HomeLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/home_disabled.gif";
                     break;
-            }
-        }
-
-        private string CurrentControlKey
-        {
-            get
-            {
-                object o = this.Request.QueryString["key"];
-                return (o == null ? string.Empty : o.ToString());
             }
         }
     }

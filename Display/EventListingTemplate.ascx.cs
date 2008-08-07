@@ -1,4 +1,4 @@
-// <copyright file="EventListing.ascx.cs" company="Engage Software">
+// <copyright file="EventListingTemplate.ascx.cs" company="Engage Software">
 // Engage: Events - http://www.engagemodules.com
 // Copyright (c) 2004-2008
 // by Engage Software ( http://www.engagesoftware.com )
@@ -11,7 +11,6 @@
 
 namespace Engage.Dnn.Events.Display
 {
-    using System;
     using System.Web.UI;
     using Framework.Templating;
     using Templating;
@@ -34,40 +33,39 @@ namespace Engage.Dnn.Events.Display
             switch (tag.LocalName.ToUpperInvariant())
             {
                 case "EVENTLISTING":
-                    EventListingItem listingCurrent = (EventListingItem)LoadControl("~" + DesktopModuleFolderName + "Display/EventListingItem.ascx");
-                    //need to default to all and set if attribute is defined.
+                    EventListingItem listingCurrent = (EventListingItem)this.LoadControl("~" + DesktopModuleFolderName + "Display/EventListingItem.ascx");
+
+                    // need to default to all and set if attribute is defined.
                     if (tag.HasAttribute("ListingMode"))
                     {
                         listingCurrent.Mode = tag.GetAttributeValue("ListingMode");
                     }
+
                     if (tag.HasAttribute("HeaderTemplate"))
                     {
                         listingCurrent.HeaderTemplateName = tag.GetAttributeValue("HeaderTemplate");
                     }
+
                     if (tag.HasAttribute("ItemTemplate"))
                     {
                         listingCurrent.ItemTemplateName = tag.GetAttributeValue("ItemTemplate");
                     }
+
                     if (tag.HasAttribute("FooterTemplate"))
                     {
                         listingCurrent.FooterTemplateName = tag.GetAttributeValue("FooterTemplate");
                     }
-                    string featured = Utility.GetStringSetting(Settings, Setting.FeaturedOnly.PropertyName);
-                    if (!string.IsNullOrEmpty(featured))
-                    {
-                        listingCurrent.IsFeatured  = Convert.ToBoolean(featured);
-                    }
-                    listingCurrent.ModuleConfiguration = ModuleConfiguration;
+
+                    listingCurrent.IsFeatured  = Utility.GetBoolSetting(this.Settings, Setting.FeaturedOnly.PropertyName, false);
+
+                    listingCurrent.ModuleConfiguration = this.ModuleConfiguration;
                     container.Controls.Add(listingCurrent);
                     break;
                 case "CALENDAR":
-                    EventCalendar calendar = (EventCalendar)LoadControl("~" + DesktopModuleFolderName + "Display/EventCalendar.ascx");
-                    calendar.ModuleConfiguration = ModuleConfiguration;
-                    string calendarFeatured = Utility.GetStringSetting(Settings, Setting.FeaturedOnly.PropertyName);
-                    if (!string.IsNullOrEmpty(calendarFeatured))
-                    {
-                        calendar.IsFeatured = Convert.ToBoolean(calendarFeatured);
-                    }
+                    EventCalendar calendar = (EventCalendar)this.LoadControl("~" + DesktopModuleFolderName + "Display/EventCalendar.ascx");
+                    calendar.ModuleConfiguration = this.ModuleConfiguration;
+                    calendar.IsFeatured = Utility.GetBoolSetting(this.Settings, Setting.FeaturedOnly.PropertyName, false);
+
                     container.Controls.Add(calendar);
                     break;
                 default:

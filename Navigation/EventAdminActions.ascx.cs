@@ -13,6 +13,7 @@ namespace Engage.Dnn.Events.Navigation
 {
     using System;
     using System.Globalization;
+    using System.IO;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Framework;
     using DotNetNuke.Services.Localization;
@@ -107,7 +108,7 @@ namespace Engage.Dnn.Events.Navigation
             // since the global navigation control is not loaded using DNN mechanisms we need to set it here so that calls to 
             // module related information will appear the same as the actual control this navigation is sitting on.hk
             this.ModuleConfiguration = ((PortalModuleBase)base.Parent.Parent.Parent).ModuleConfiguration;
-            this.LocalResourceFile = "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions";
+            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + "App_LocalResources/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
 
             this.EditEventButton.Click += this.EditEventButton_Click;
             this.ResponsesButton.Click += this.ResponsesButton_Click;
@@ -243,9 +244,8 @@ namespace Engage.Dnn.Events.Navigation
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            //since we are reloading the object each time (no caching yet) you can't do the following
-            //this.CurrentEvent.Cancelled = !this.CurrentEvent.Cancelled;  hk
-
+            // since we are reloading the object each time (no caching yet) you can't do the following
+            // this.CurrentEvent.Cancelled = !this.CurrentEvent.Cancelled;  hk
             Event ev = this.CurrentEvent;
             ev.Cancelled = !this.CurrentEvent.Cancelled;
             ev.Save(this.UserId);

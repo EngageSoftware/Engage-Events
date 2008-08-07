@@ -1,4 +1,4 @@
-// <copyright file="ModuleBase.cs" company="Engage Software">
+// <copyright file="ActionControlBase.cs" company="Engage Software">
 // Engage: Events - http://www.engagemodules.com
 // Copyright (c) 2004-2008
 // by Engage Software ( http://www.engagesoftware.com )

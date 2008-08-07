@@ -21,13 +21,37 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Entities.Modules.Actions;
     using DotNetNuke.Security;
     using DotNetNuke.Services.Localization;
-    using Utility=Engage.Utility;
+    using Utility = Engage.Utility;
 
     /// <summary>
     /// This class extends the framework version in order for developers to add on any specific methods/behavior.
     /// </summary>
     public class ModuleBase : Framework.ModuleBase, IActionable
     {
+        public ModuleActionCollection ModuleActions
+        {
+            get
+            {
+                ModuleActionCollection actions = new ModuleActionCollection();
+
+                if (HostSettings.GetHostSetting("EnableModuleOnLineHelp") == "Y" && Utility.HasValue(this.ModuleConfiguration.HelpUrl))
+                {
+                    ModuleAction helpAction = new ModuleAction(this.GetNextActionID());
+                    helpAction.Title = Localization.GetString(ModuleActionType.OnlineHelp, Localization.GlobalResourceFile);
+                    helpAction.CommandName = ModuleActionType.OnlineHelp;
+                    helpAction.CommandArgument = string.Empty;
+                    helpAction.Icon = "action_help.gif";
+                    helpAction.Url = Globals.FormatHelpUrl(this.ModuleConfiguration.HelpUrl, this.PortalSettings, this.ModuleConfiguration.FriendlyName);
+                    helpAction.Secure = SecurityAccessLevel.Edit;
+                    helpAction.UseActionEvent = true;
+                    helpAction.Visible = true;
+                    helpAction.NewWindow = true;
+                    actions.Add(helpAction);
+                }
+
+                return actions;
+            }
+        }
         /// <summary>
         /// This method takes the eventid and the currently logged in user (if any) and checks for
         /// an existing RSVP(registration) for the user.
@@ -42,37 +66,6 @@ namespace Engage.Dnn.Events
             }
             return registered;
         }
-
-        /// <summary>
-        /// Gets the register URL.
-        /// </summary>
-        /// <value>The register URL.</value>
-        protected string RegisterUrl
-        {
-            get
-            {
-                return
-                    this.BuildLinkUrl(
-                        "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid="
-                        + EventId.ToString(CultureInfo.InvariantCulture));
-            }
-        }
-
-        /// <summary>
-        /// Gets the RSVP URL.
-        /// </summary>
-        /// <value>The RSVP URL.</value>
-        protected string RsvpUrl
-        {
-            get
-            {
-                return
-                    this.BuildLinkUrl(
-                        "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Rsvp&eventid="
-                        + EventId.ToString(CultureInfo.InvariantCulture));
-            }
-        }
-
         /// <summary>
         /// Gets the event id.
         /// </summary>
@@ -90,41 +83,34 @@ namespace Engage.Dnn.Events
                 return id;
             }
         }
+        /// <summary>
+        /// Gets the register URL.
+        /// </summary>
+        /// <value>The register URL.</value>
+        protected string RegisterUrl
+        {
+            get
+            {
+                return this.BuildLinkUrl(this.ModuleId, "Register", "eventid=" + EventId.ToString(CultureInfo.InvariantCulture));
+            }
+        }
+
+        /// <summary>
+        /// Gets the RSVP URL.
+        /// </summary>
+        /// <value>The RSVP URL.</value>
+        protected string RsvpUrl
+        {
+            get
+            {
+                return this.BuildLinkUrl(this.ModuleId, "Rsvp", "eventid=" + EventId.ToString(CultureInfo.InvariantCulture));
+            }
+        }
 
         protected override bool IsConfigured
         {
             get { return Utility.HasValue(Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.DisplayTemplate.PropertyName)); }
         }
-
-        #region IActionable Members
-
-        public ModuleActionCollection ModuleActions
-        {
-            get
-            {
-                ModuleActionCollection actions = new ModuleActionCollection();
-
-                //Add OnLine Help Action
-                string helpUrl = this.GetOnLineHelp(this.ModuleConfiguration.HelpUrl, this.ModuleConfiguration);
-                if (helpUrl != null)
-                {
-                    ModuleAction helpAction = new ModuleAction(this.GetNextActionID());
-                    helpAction.Title = Localization.GetString(ModuleActionType.OnlineHelp, Localization.GlobalResourceFile);
-                    helpAction.CommandName = ModuleActionType.OnlineHelp;
-                    helpAction.CommandArgument = string.Empty;
-                    helpAction.Icon = "action_help.gif";
-                    helpAction.Url = Globals.FormatHelpUrl(helpUrl, this.PortalSettings, this.ModuleConfiguration.FriendlyName);
-                    helpAction.Secure = SecurityAccessLevel.Edit;
-                    helpAction.UseActionEvent = true;
-                    helpAction.Visible = true;
-                    helpAction.NewWindow = true;
-                    actions.Add(helpAction);
-                }
-                return actions;
-            }
-        }
-
-        #endregion
 
         /// <summary>
         /// Sends an iCalendar to the client to download.
@@ -152,9 +138,14 @@ namespace Engage.Dnn.Events
             response.Flush();
         }
 
-        public string GetOnLineHelp(string helpUrl, ModuleInfo moduleConfig)
+        /// <summary>
+        /// Gets localized text for the given resource key using this control's <see cref="DotNetNuke.Entities.Modules.PortalModuleBase.LocalResourceFile"/>.
+        /// </summary>
+        /// <param name="resourceKey">The resource key.</param>
+        /// <returns>Localized text for the given resource key</returns>
+        protected string Localize(string resourceKey)
         {
-            return (HostSettings.GetHostSetting("EnableModuleOnLineHelp") != "Y") ? string.Empty : helpUrl;
+            return Localization.GetString(resourceKey, this.LocalResourceFile);
         }
     }
 }

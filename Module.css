@@ -41,8 +41,121 @@
 	.AddEventSuccessMessage { padding-left: 10%; }
 	.AddNewEvent {padding-top: 2%; width: 100%; height: 100%;}
 	.AddNewEvent h2.SubHead {text-align: left; border-bottom: dashed 1px black; margin-bottom: 1em; padding-bottom: 0.375em; font-size: 125%;}
-
-
+	
+	.rsAdvRecurrenceFreq:after,
+	.rsAdvRecurrencePatterns:after
+	{
+		content:".";
+		display:block;
+		clear:both;
+		height:0;
+		visibility:hidden;
+	}
+	.rsAdvRecurrenceRangePanel ul, .rsAdvRecurrenceRangePanel ul li
+	{
+		list-style:none;
+	}
+	.rsAdvRecurrenceRangePanel ul
+	{
+		margin:0.8em 0 0 15px;
+		padding:0;
+	}
+	.rsAdvRecurrenceRangePanel label
+	{
+		padding-right: 4px;
+	}
+	.rsAdvancedEdit .rsAdvCheckboxWrapper input
+	{
+		vertical-align: middle;
+	}
+	.rsAdvancedEdit .rsAdvCheckboxWrapper label
+	{
+		width: auto;
+	}
+	.rsAdvRecurrenceRange
+	{
+		margin:1em 0 0;
+		padding:0.8em 0 0 15px;
+	}
+	.rsAdvRecurrenceFreq
+	{
+		float:left;
+		width:150px;
+		margin:0.8em 0 0 0;
+		border-right:1px solid #dfdfdf;
+	}
+	.rsAdvRecurrenceFreq ul
+	{
+		list-style:none;
+		margin:0 0 0 15px;
+		padding:0;
+	}
+	.rsAdvHourly,
+	.rsAdvDaily,
+	.rsAdvWeekly,
+	.rsAdvMonthly,
+	.rsAdvYearly
+	{
+		float:left;
+		margin:1em 0 0 0;
+		padding-left:2em;
+		position:relative;
+		left:-2px;
+	}
+	.rsAdvHourly ul,
+	.rsAdvDaily ul,
+	.rsAdvWeekly ul,
+	.rsAdvMonthly ul,
+	.rsAdvYearly ul
+	{
+		list-style:none;
+		margin:0 0 0 15px;
+		padding:0;
+		width: 390px;
+	}
+    .rsAdvHourly li,
+    .rsAdvDaily li,
+    .rsAdvWeekly li,
+    .rsAdvMonthly li,
+    .rsAdvYearly li,
+    .rsAdvRecurrenceRangePanel li,
+    .rsAdvMoreControls li
+	{
+		margin:0 0 0.3em 0;
+	}
+    .rsAdvHourly input,
+    .rsAdvDaily input,
+    .rsAdvWeekly input,
+    .rsAdvMonthly input,
+    .rsAdvYearly input,
+    .rsAdvHourly select,
+    .rsAdvDaily select,
+    .rsAdvWeekly select,
+    .rsAdvMonthly select,
+    .rsAdvYearly select
+	{
+		margin:0 2px;
+	}
+    .rsAdvRecurrencePatterns .rsAdvInput,
+    .rsAdvRecurrenceRangePanel .rsAdvInput
+	{
+		width: 30px;
+		padding-left: 1px;
+		padding-right: 1px;
+	}
+    .rsAdvRecurrencePatterns .rsAdvWeekly_Weekday
+	{
+		float: left;
+		width: 100px;
+	}
+	.rsAdvRecurrencePatterns ul li
+	{
+		list-style-type: none;
+	}
+	.rsAdvRecurrencePatterns
+	{
+		zoom:1;
+	}
 /* ============================ manage events page ============================ */
 
 .MEEventsHeader{}
@@ -59,10 +172,11 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 /* ============================ end manage events page ============================ */
 
 
-	.AEEventTitle, .AEEventStartDate, .AEEventEndDate, .AEEventLocationAdd, .AEEventEditor {clear: both; overflow: hidden; padding-bottom: 0.675em;}
-		.AEEventEditor .NormalBold, .AEEventTitle .NormalBold, .AEEventStartDate .NormalBold, .AEEventLocationAdd .NormalBold, .AEEventEndDate .NormalBold
+	.AEEventTitle, .AEEventStartDate, .AEEventEndDate, .AEEventLocationAdd, .AEEventEditor, .AEEventFeature, .AEEventRecur {clear: both; overflow: hidden; padding-bottom: 0.675em;}
+		.AEEventEditor .NormalBold, .AEEventTitle .NormalBold, .AEEventStartDate .NormalBold, .AEEventLocationAdd .NormalBold, .AEEventEndDate .NormalBold, .AEEventFeature .NormalBold, .AEEventRecur .NormalBold
 		{float:left; width: 20%; margin-right: 3%; text-align: right;}
-		.AEEventEditor .Normal, .AEEventTitle .Normal, .AEEventStartDate .Normal, .AEEventLocationAdd .Normal, .AEEventEndDate .Normal{float: left; width: 81%;}
+		.AEEventEditor .Normal, .AEEventTitle .Normal, .AEEventStartDate .Normal, .AEEventLocationAdd .Normal, .AEEventEndDate .Normal, .AEEventFeature .Normal, .AEEventRecur .Normal
+		{float: left; width: 81%;}
 
 		
 

@@ -66,7 +66,7 @@
             CssClass="NormalBold" />
         <telerik:RadDateTimePicker runat="server" ID="EmailSendTimePicker" Skin="WebBlue">
             <TimeView Skin="WebBlue" />
-            <Calendar Skin="WebBlue" />
+            <Calendar Skin="WebBlue" ShowRowHeaders="False" />
             <DateInput InvalidStyleDuration="100" />
         </telerik:RadDateTimePicker>
         <asp:RequiredFieldValidator ID="EmailSendTimePickerRequired" runat="server" ControlToValidate="EmailSendTimePicker"

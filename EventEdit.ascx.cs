@@ -24,10 +24,14 @@ namespace Engage.Dnn.Events
     /// </summary>
     public partial class EventEdit : ModuleBase
     {
-        /////// <summary>
-        /////// Text editor control for the Event's description.
-        /////// </summary>
-        ////private TextEditor eventDescriptionTextEditor;
+        /// <summary>
+        /// Gets the URL to navigate to in order to add a new event.
+        /// </summary>
+        /// <value>The URL to navigate to in order to add a new event</value>
+        private string AddEventUrl
+        {
+            get { return this.BuildLinkUrl(this.ModuleId, "EventEdit"); }
+        }
 
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
@@ -45,10 +49,7 @@ namespace Engage.Dnn.Events
             this.EventDescriptionTextEditorValidator.ServerValidate += this.EventDescriptionTextEditorValidator_ServerValidate;
             this.SaveEventButton.Click += this.SaveEventButton_OnClick;
             this.SaveAndCreateNewEventButton.Click += this.SaveAndCreateNewEventButton_OnClick;
-            this.CreateAnotherEventButton.Click += this.CreateAnotherEventButton_Click;
             this.RecurringCheckbox.CheckedChanged += this.RecurringCheckbox_CheckedChanged;
-
-            ////this.eventDescriptionTextEditor = Utility.SetupTextEditor(EventDescriptionTextEditorPlaceHolder);
         }
 
         /// <summary>
@@ -68,7 +69,6 @@ namespace Engage.Dnn.Events
                 this.SetButtonLinks();
                 this.LocalizeControl();
                 this.SuccessModuleMessage.Visible = false;
-                this.FinalButtons.Visible = false;
             }
             catch (Exception exc)
             {
@@ -109,26 +109,13 @@ namespace Engage.Dnn.Events
                 if (this.Page.IsValid)
                 {
                     this.Save();
-                    this.DisplaySuccessWithCleanForm();
+                    this.Response.Redirect(this.AddEventUrl);
                 }
             }
             catch (Exception exc)
             {
                 Exceptions.ProcessModuleLoadException(this, exc);
             }
-        }
-
-        /// <summary>
-        /// Handles the Click event of the CreateAnotherEventButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void CreateAnotherEventButton_Click(object sender, EventArgs e)
-        {
-            this.CleanForm();
-            this.SuccessModuleMessage.Visible = false;
-            this.AddNewEvent.Visible = true;
-            this.AddEventFooterButtons.Visible = true;
         }
 
         /// <summary>
@@ -142,36 +129,13 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Displays the success with clean form so that user may enter another event.
-        /// </summary>
-        private void DisplaySuccessWithCleanForm()
-        {
-            this.SuccessModuleMessage.Visible = true;
-            this.CleanForm();
-        }
-
-        /// <summary>
-        /// Cleans the form.
-        /// </summary>
-        private void CleanForm()
-        {
-            this.StartDateTimePicker.SelectedDate = null;
-            this.EndDateTimePicker.SelectedDate = null;
-            this.EventLocationTextBox.Text = String.Empty;
-            this.EventTitleTextBox.Text = String.Empty;
-            this.EventDescriptionTextEditor.Text = string.Empty;
-            this.EventOverviewTextEditor.Text = string.Empty;
-        }
-
-        /// <summary>
         /// Displays the final success.
         /// </summary>
         private void DisplayFinalSuccess()
         {
             this.SuccessModuleMessage.Visible = true;
             this.AddNewEvent.Visible = false;
-            this.AddEventFooterButtons.Visible = false;
-            this.FinalButtons.Visible = true;
+            this.FooterMultiView.SetActiveView(this.FinalFooterView);
         }
 
         /// <summary>
@@ -180,6 +144,7 @@ namespace Engage.Dnn.Events
         private void SetButtonLinks()
         {
             this.CancelGoHomeLink.NavigateUrl = this.CancelEventLink.NavigateUrl = Globals.NavigateURL();
+            this.CreateAnotherEventLink.NavigateUrl = this.AddEventUrl;
         }
 
         /// <summary>
@@ -187,20 +152,10 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void LocalizeControl()
         {
-            if (EventId > 0)
-            {
-                this.AddEditEventLabel.Text = Localization.GetString("EditEvent.Text", this.LocalResourceFile);
-            }
-            else
-            {
-                this.AddEditEventLabel.Text = Localization.GetString("AddNewEvent.Text", this.LocalResourceFile);
-            }
-
-            this.CreateAnotherEventButton.AlternateText = Localization.GetString("CreateAnother.Alt", LocalResourceFile);
+            string addEditResourceKey = EventId > 0 ? "EditEvent.Text" : "AddNewEvent.Text";
+            this.AddEditEventLabel.Text = Localization.GetString(addEditResourceKey, this.LocalResourceFile);
             this.SaveAndCreateNewEventButton.AlternateText = Localization.GetString("SaveAndCreateNew.Alt", LocalResourceFile);
             this.SaveEventButton.AlternateText = Localization.GetString("Save.Alt", LocalResourceFile);
-            this.CancelGoHomeLink.Text = Localization.GetString("CancelGoHome.Alt", LocalResourceFile);
-            this.CancelEventLink.Text = Localization.GetString("Cancel.Alt", LocalResourceFile);
         }
 
         /// <summary>
@@ -231,7 +186,7 @@ namespace Engage.Dnn.Events
             e.Overview = this.EventOverviewTextEditor.Text;
             e.Description = this.EventDescriptionTextEditor.Text;
             e.IsFeatured = this.FeaturedCheckbox.Checked;
-            e.RecurrenceRule = this.RecurrenceEditor1.RecurrenceRule;
+            e.RecurrenceRule = this.RecurrenceEditor.GetRecurrenceRule(e.EventStart, e.EventEnd);
             e.Save(this.UserId);
         }
 
@@ -247,11 +202,12 @@ namespace Engage.Dnn.Events
                 this.EventTitleTextBox.Text,
                 this.EventOverviewTextEditor.Text,
                 this.StartDateTimePicker.SelectedDate.Value);
+
             e.Location = this.EventLocationTextBox.Text;
             e.EventEnd = this.EndDateTimePicker.SelectedDate.Value;
             e.Description = this.EventDescriptionTextEditor.Text;
             e.IsFeatured = this.FeaturedCheckbox.Checked;
-            e.RecurrenceRule = this.RecurrenceEditor1.RecurrenceRule;
+            e.RecurrenceRule = this.RecurrenceEditor.GetRecurrenceRule(e.EventStart, e.EventEnd);
             e.Save(this.UserId);
         }
 
@@ -268,13 +224,19 @@ namespace Engage.Dnn.Events
             this.StartDateTimePicker.SelectedDate = e.EventStart;
             this.EndDateTimePicker.SelectedDate = e.EventEnd;
             this.FeaturedCheckbox.Checked = e.IsFeatured;
-            this.RecurringCheckbox.Checked = e.RecurrenceRule.Length > 0;
-            this.RecurrenceEditor1.Visible = this.RecurringCheckbox.Checked;
+            this.RecurringCheckbox.Checked = e.IsRecurring;
+            this.RecurrenceEditor.Visible = this.RecurringCheckbox.Checked;
+            this.RecurrenceEditor.SetRecurrenceRule(e.RecurrenceRule);
         }
 
+        /// <summary>
+        /// Handles the CheckedChanged event of the RecurringCheckbox control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void RecurringCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            this.RecurrenceEditor1.Visible = this.RecurringCheckbox.Checked;
+            this.RecurrenceEditor.Visible = this.RecurringCheckbox.Checked;
         }
     }
 }

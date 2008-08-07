@@ -71,7 +71,7 @@ namespace Engage.Dnn.Events
         {
             if (!IsConfigured)
             {
-                return  "Admin/NotConfigured.ascx";
+                return "Admin/NotConfigured.ascx";
             }
 
             string keyParam = string.Empty;
@@ -87,6 +87,7 @@ namespace Engage.Dnn.Events
                     break;
                 }
             }
+
             return Utility.HasValue(keyParam) ? ControlKeys[keyParam] : "Display/EventListingTemplate.ascx";
         }
 

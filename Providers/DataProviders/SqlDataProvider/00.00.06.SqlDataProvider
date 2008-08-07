@@ -29,71 +29,29 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEvents](
 	@pageSize int, 
 	@showAll bit,
 	@featured bit,
-	@listingMode nvarchar(20)
+	@startDate datetime,
+	@endDate datetime
 )
 AS
 BEGIN
-	DECLARE @startDate datetime, @endDate datetime
-
-	if (@listingMode = 'all')
-	begin
-		set @startDate = GETDATE()
-		set @endDate = '12/1/9999'
-	end
-
-	if (@listingMode = 'currentMonth')
-	begin
-		set @startDate = GETDATE()
-		set @endDate = DATEADD(mm, DATEDIFF(mm, 0, GETDATE()) + 1, 0) --first day of the next month
-	end
-
-	if (@listingMode = 'past')
-	begin
-		set @startDate = '01/01/01'
-		set @endDate = GETDATE()
-	end
-
-	if (@listingMode = 'future')
-	begin
-		set @startDate = DATEADD(mm, DATEDIFF(mm, 0, GETDATE()) + 1, 0) --first day of the next month
-		set @endDate = '12/1/9999'
-	end
-
-	--show all means show evertying no matter the mode.
-	if (@showAll= 1)
-	begin
-		set @startDate = '01/01/01'
-		set @endDate = '12/1/9999'
-	end
-
 	CREATE TABLE #results 
 	(
 		[Id] INT NOT NULL IDENTITY(1,1),
 		[EventId] INT
 	)
 	
-	DECLARE @sql VARCHAR(8000)
-	SET @sql = 'INSERT INTO #results ([EventId]) '
-	SET @sql = @sql + 'SELECT [EventId] '
-	SET @sql = @sql + 'FROM   {databaseOwner}[{objectQualifier}Engage_Event] '
-	SET @sql = @sql + 'WHERE  PortalId = ' + str(@portalId)
-	SET @sql = @sql + ' AND EventStart > ''' + Convert(varchar(25),@startDate, 101) + ''''
-	SET @sql = @sql + ' AND EventEnd < ''' + Convert(varchar(25), @endDate, 101) + ''''
-	if (@featured = 1)
-	begin
-		SET @sql = @sql + ' AND IsFeatured = 1'
-	end
-	if (@showAll = 0)
-	begin
-		--include cancelled when show all - the dates are already changed above to all
-		SET @sql = @sql + ' AND Cancelled = 0 '
-	end
-	print @sql
-	EXEC (@sql)
+	INSERT INTO #results ([EventId])
+	 SELECT [EventId]
+	 FROM   dbo.[dnn_Engage_Event]
+	 WHERE  PortalId = @portalId
+	  AND (EventEnd >= @startDate OR @startDate IS NULL)
+	  AND (EventStart <= @endDate OR @endDate IS NULL)
+	  AND (@featured = 0 OR IsFeatured = @featured)
+	  AND (@showAll = 1 OR Cancelled = @showAll)
 
 	SELECT @@ROWCOUNT AS TotalRecords
+	DECLARE @sql VARCHAR(8000)
 
-	set @sql = ''
 	SET @sql = 'SELECT e.* FROM #results r '
 	SET @sql = @sql + 'JOIN {databaseOwner}[{objectQualifier}Engage_Event] e ON (r.EventId = e.EventId) '
 	IF (@PageSize != 0)

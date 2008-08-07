@@ -12,20 +12,38 @@
 namespace Engage.Dnn.Events.Display
 {
     using System;
+    using System.Diagnostics;
     using System.Globalization;
     using System.Web.UI;
     using DotNetNuke.Services.Exceptions;
     using Engage.Events;
     using Telerik.Web.UI;
-    using Setting=Setting;
+    using Setting = Engage.Dnn.Events.Setting;
 
     /// <summary>
     /// Control to display the events calendar view
     /// </summary>
     public partial class EventCalendar : ModuleBase
     {
-
+        /// <summary>
+        /// Backing field for <see cref="IsFeatured"/>.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private bool isFeatured;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is displaying only featured events.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if this instance is displaying only featured events; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsFeatured
+        {
+            [DebuggerStepThrough]
+            set { this.isFeatured = value; }
+            [DebuggerStepThrough]
+            protected get { return this.isFeatured; }
+        }
 
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
@@ -166,12 +184,6 @@ namespace Engage.Dnn.Events.Display
             {
                 this.EventsCalendarDisplay.Skin = this.EventsCalendarToolTipManager.Skin = Utility.GetStringSetting(this.Settings, Setting.SkinSelection.PropertyName);
             }
-        }
-
-        public bool IsFeatured
-        {
-            set { this.isFeatured = value; }
-            protected get { return this.isFeatured; }
         }
     }
 }

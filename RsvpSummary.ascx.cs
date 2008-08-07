@@ -44,6 +44,17 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Gets the formatted date string for this event.
+        /// </summary>
+        /// <param name="startDate">The event's start date.</param>
+        /// <param name="endDate">The event's end date.</param>
+        /// <returns>A formatted string representing the timespan over which this event occurs.</returns>
+        protected string GetDateString(object startDate, object endDate)
+        {
+            return string.Format(CultureInfo.CurrentCulture, Localization.GetString("Timespan.Text", this.LocalResourceFile), startDate, endDate);
+        }
+
+        /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
@@ -76,6 +87,11 @@ namespace Engage.Dnn.Events
             }
         }
 
+        /// <summary>
+        /// Handles the ItemDataBound event of the SummaryRepeater control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
         private void SummaryRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -130,17 +146,6 @@ namespace Engage.Dnn.Events
             this.SummaryPager.PageSize = 10;
             this.SummaryPager.CurrentPage = this.CurrentPageIndex;
             this.SummaryPager.TabID = this.TabId;
-        }
-
-        /// <summary>
-        /// Gets the formatted date string for this event.
-        /// </summary>
-        /// <param name="startDate">The event's start date.</param>
-        /// <param name="endDate">The event's end date.</param>
-        /// <returns>A formatted string representing the timespan over which this event occurs.</returns>
-        protected string GetDateString(object startDate, object endDate)
-        {
-            return string.Format(CultureInfo.CurrentCulture, Localization.GetString("Timespan.Text", LocalResourceFile), startDate, endDate);
         }
     }
 }

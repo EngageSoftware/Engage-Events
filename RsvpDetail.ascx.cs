@@ -23,7 +23,7 @@ namespace Engage.Dnn.Events
     public partial class RsvpDetail : ModuleBase
     {
         #region Properties
-        
+
         /// <summary>
         /// Gets the index of the current page.
         /// </summary>
@@ -35,9 +35,9 @@ namespace Engage.Dnn.Events
                 int index = 1;
 
                 // Get the currentpage index from the url parameter
-                if (Request.QueryString["currentpage"] != null)
+                if (this.Request.QueryString["currentpage"] != null)
                 {
-                    index = Convert.ToInt32(Request.QueryString["currentpage"]);
+                    index = Convert.ToInt32(this.Request.QueryString["currentpage"]);
                 }
 
                 return index;
@@ -55,9 +55,9 @@ namespace Engage.Dnn.Events
                 string status = string.Empty;
 
                 // Get the currentpage index from the url parameter
-                if (Request.QueryString["status"] != null)
+                if (this.Request.QueryString["status"] != null)
                 {
-                    status = Request.QueryString["status"].ToString();
+                    status = this.Request.QueryString["status"];
                 }
 
                 return status;
@@ -105,7 +105,7 @@ namespace Engage.Dnn.Events
             this.Load += this.Page_Load;
             this.SortRadioButtonList.SelectedIndexChanged += this.SortRadioButtonList_SelectedIndexChanged;
         }
-        
+
         /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>
@@ -115,7 +115,7 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                if (!Page.IsPostBack)
+                if (!this.Page.IsPostBack)
                 {
                     this.SetupControl();
                     this.BindData();
@@ -124,7 +124,7 @@ namespace Engage.Dnn.Events
             catch (Exception exc)
             {
                 Exceptions.ProcessModuleLoadException(this, exc);
-            }    
+            }
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetupControl()
         {
-            this.CancelGoHomeLink.Text = Localization.GetString("CancelGoHomeLink.Alt", LocalResourceFile);
+            this.CancelGoHomeLink.Text = Localization.GetString("CancelGoHomeLink.Alt", this.LocalResourceFile);
             this.CancelGoHomeLink.NavigateUrl = Globals.NavigateURL();
         }
 
@@ -164,16 +164,16 @@ namespace Engage.Dnn.Events
         /// <param name="sortColumn">The sort column.</param>
         private void BindData(string sortColumn)
         {
-            RsvpCollection rsvps = RsvpCollection.Load(EventId, this.Status, sortColumn, this.CurrentPageIndex - 1, grdRsvpDetail.PageSize);
-            grdRsvpDetail.DataSource = rsvps;
-            grdRsvpDetail.DataBind();
+            RsvpCollection rsvps = RsvpCollection.Load(EventId, this.Status, sortColumn, this.CurrentPageIndex - 1, this.grdRsvpDetail.PageSize);
+            this.grdRsvpDetail.DataSource = rsvps;
+            this.grdRsvpDetail.DataBind();
 
-            pager.TotalRecords = rsvps.TotalRecords;
-            pager.PageSize = grdRsvpDetail.PageSize;
-            pager.CurrentPage = this.CurrentPageIndex;
-            pager.TabID = TabId;
-            pager.QuerystringParams = "&modId=" + ModuleId.ToString() + "&key=rsvpDetail&status=" + this.Status + "&eventid=" + EventId;
-            grdRsvpDetail.Attributes.Add("SortColumn", sortColumn);
+            this.pager.TotalRecords = rsvps.TotalRecords;
+            this.pager.PageSize = this.grdRsvpDetail.PageSize;
+            this.pager.CurrentPage = this.CurrentPageIndex;
+            this.pager.TabID = this.TabId;
+            this.pager.QuerystringParams = "&modId=" + this.ModuleId + "&key=rsvpDetail&status=" + this.Status + "&eventid=" + EventId;
+            this.grdRsvpDetail.Attributes.Add("SortColumn", sortColumn);
 
             this.RsvpDisplay.SetRsvpSummary(Engage.Events.RsvpSummary.Load(EventId));
             this.RsvpDisplay.ModuleConfiguration = this.ModuleConfiguration;

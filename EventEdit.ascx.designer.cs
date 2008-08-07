@@ -122,6 +122,15 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.CheckBox FeaturedCheckbox;
         
         /// <summary>
+        /// RecurringEventLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label RecurringEventLabel;
+        
+        /// <summary>
         /// RecurringCheckbox control.
         /// </summary>
         /// <remarks>
@@ -131,22 +140,31 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.CheckBox RecurringCheckbox;
         
         /// <summary>
-        /// RecurrenceEditor1 control.
+        /// RecurrenceEditor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Engage.Dnn.Events.Recurrence.RecurrenceEditor RecurrenceEditor1;
+        protected global::Engage.Dnn.Events.Recurrence.RecurrenceEditor RecurrenceEditor;
         
         /// <summary>
-        /// AddEventFooterButtons control.
+        /// FooterMultiView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AddEventFooterButtons;
+        protected global::System.Web.UI.WebControls.MultiView FooterMultiView;
+        
+        /// <summary>
+        /// AddEventFooterView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.View AddEventFooterView;
         
         /// <summary>
         /// SaveEventButton control.
@@ -176,22 +194,22 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.ImageButton SaveAndCreateNewEventButton;
         
         /// <summary>
-        /// FinalButtons control.
+        /// FinalFooterView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FinalButtons;
+        protected global::System.Web.UI.WebControls.View FinalFooterView;
         
         /// <summary>
-        /// CreateAnotherEventButton control.
+        /// CreateAnotherEventLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton CreateAnotherEventButton;
+        protected global::System.Web.UI.WebControls.HyperLink CreateAnotherEventLink;
         
         /// <summary>
         /// CancelGoHomeLink control.
