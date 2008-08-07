@@ -1,4 +1,4 @@
-// <copyright file="EventAdminActions.ascx.cs" company="Engage Software">
+// <copyright file="ButtonAction.ascx.cs" company="Engage Software">
 // Engage: Events - http://www.engagemodules.com
 // Copyright (c) 2004-2008
 // by Engage Software ( http://www.engagesoftware.com )
@@ -12,7 +12,6 @@
 namespace Engage.Dnn.Events
 {
     using System;
-    using DotNetNuke.Entities.Modules;
 
     /// <summary>
     /// Displays the actions that users can perform on an event instance.
@@ -24,51 +23,15 @@ namespace Engage.Dnn.Events
     /// </remarks>
     public partial class ButtonAction : ActionControlBase
     {
+        /// <summary>
+        /// Backing field for <see cref="Href"/>
+        /// </summary>
         private string href;
+
+        /// <summary>
+        /// Backing field for <see cref="Text"/>
+        /// </summary>
         private string text;
-
-        /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
-        protected override void OnInit(EventArgs e)
-        {
-            base.OnInit(e);
-            this.Button.Click += this.Button_Click;
-        }
-
-        protected override void BindData()
-        {
-            this.LocalizeControls();
-        }
-
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            this.Button.Text = text;
-        }
-
-        /// <summary>
-        /// Localizes this control's child controls.
-        /// </summary>
-        private void LocalizeControls()
-        {
-        }
-
-        /// <summary>
-        /// Handles the OnClick event of the EditEventButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void Button_Click(object sender, EventArgs e)
-        {
-            //string href =
-            //    this.BuildLinkUrl(
-            //        "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId="
-            //        + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture));
-            
-            this.Response.Redirect(href, true);
-        }
 
         public string Href
         {
@@ -80,6 +43,54 @@ namespace Engage.Dnn.Events
         {
             get { return this.text; }
             set { this.text = value; }
+        }
+
+        protected override void BindData()
+        {
+            this.LocalizeControls();
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+            this.Load += this.Page_Load;
+            this.Button.Click += this.Button_Click;
+        }
+
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void Page_Load(object sender, EventArgs e)
+        {
+            this.Button.Text = this.text;
+        }
+
+        /// <summary>
+        /// Handles the OnClick event of the EditEventButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void Button_Click(object sender, EventArgs e)
+        {
+            ////string href =
+            ////    this.BuildLinkUrl(
+            ////        "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId="
+            ////        + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture));
+            
+            this.Response.Redirect(this.href, true);
+        }
+
+        /// <summary>
+        /// Localizes this control's child controls.
+        /// </summary>
+        private void LocalizeControls()
+        {
         }
     }
 }

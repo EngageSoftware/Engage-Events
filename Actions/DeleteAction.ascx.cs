@@ -1,4 +1,4 @@
-// <copyright file="EventAdminActions.ascx.cs" company="Engage Software">
+// <copyright file="DeleteAction.ascx.cs" company="Engage Software">
 // Engage: Events - http://www.engagemodules.com
 // Copyright (c) 2004-2008
 // by Engage Software ( http://www.engagesoftware.com )
@@ -13,7 +13,6 @@ namespace Engage.Dnn.Events
 {
     using System;
     using Display;
-    using DotNetNuke.Entities.Modules;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.Utilities;
     using Engage.Events;
@@ -32,6 +31,13 @@ namespace Engage.Dnn.Events
         /// Occurs when the Delete button is pressed.
         /// </summary>
         public event EventHandler Delete;
+
+        /// <summary>
+        /// Sets the visibility of each of the buttons.  Also, sets the text for the cancel/uncancel button, and the delete confirm.
+        /// </summary>
+        protected override void BindData()
+        {
+        }
 
         /// <summary>
         /// Raises the <see cref="Delete"/> event.
@@ -53,14 +59,37 @@ namespace Engage.Dnn.Events
             // since the global navigation control is not loaded using DNN mechanisms we need to set it here so that calls to 
             // module related information will appear the same as the actual control this navigation is sitting on.hk
             this.LocalResourceFile = "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions";
+            this.Load += this.Page_Load;
             this.DeleteEventButton.Click += this.DeleteEventButton_Click;
         }
 
-        protected override void OnLoad(EventArgs e)
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void Page_Load(object sender, EventArgs e)
         {
-            base.OnLoad(e);
             this.SetVisibility();
             this.LocalizeControls();
+        }
+
+        /// <summary>
+        /// Handles the OnClick event of the DeleteEventButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void DeleteEventButton_Click(object sender, EventArgs e)
+        {
+            Event.Delete(this.CurrentEvent.Id);
+            this.OnDelete(e);
+
+            EventListingItem listing = this.Parent.Parent.Parent as EventListingItem;
+            if (listing != null)
+            {
+                listing.BindData();
+            }
+
         }
 
         /// <summary>
@@ -77,13 +106,6 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Sets the visibility of each of the buttons.  Also, sets the text for the cancel/uncancel button, and the delete confirm.
-        /// </summary>
-        protected override void BindData()
-        {
-        }
-
-        /// <summary>
         /// Sets the visibility of this control's child controls.
         /// </summary>
         private void SetVisibility()
@@ -97,22 +119,6 @@ namespace Engage.Dnn.Events
         private void LocalizeControls()
         {
             ClientAPI.AddButtonConfirm(this.DeleteEventButton, Localization.GetString("ConfirmDelete", this.LocalResourceFile));
-        }
-
-
-        /// <summary>
-        /// Handles the OnClick event of the DeleteEventButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void DeleteEventButton_Click(object sender, EventArgs e)
-        {
-            Event.Delete(this.CurrentEvent.Id);
-            this.OnDelete(e);
-
-            EventListingItem listing = this.Parent.Parent.Parent as EventListingItem;
-            if (listing != null) listing.BindData();
-
         }
     }
 }

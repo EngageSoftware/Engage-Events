@@ -172,7 +172,7 @@
     <value>Event Title</value>
   </data>
   <data name="EventTitleRangeValidator.Text" xml:space="preserve">
-    <value>Max length for title is 250 characters</value>
+    <value>The event title must be no longer than 250 characters</value>
   </data>
   <data name="EventTitleTextBoxRequired.Text" xml:space="preserve">
     <value>You must supply a title for your event</value>
@@ -182,6 +182,9 @@
   </data>
   <data name="FeaturedEventLabel.Text" xml:space="preserve">
     <value>Featured Event</value>
+  </data>
+  <data name="RecurringEventLabel.Text" xml:space="preserve">
+    <value>Recurring Event</value>
   </data>
   <data name="Save.Alt" xml:space="preserve">
     <value>Save</value>

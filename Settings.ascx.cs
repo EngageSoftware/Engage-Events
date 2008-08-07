@@ -64,13 +64,10 @@ namespace Engage.Dnn.Events
             base.LoadSettings();
             try
             {
-                if (Page.IsPostBack == false)
+                if (!this.IsPostBack)
                 {
-                    ListItem templatedListItem = new ListItem(Localization.GetString("EventListingTemplate", LocalResourceFile), "Display.Listing.html");
-                    ListItem calendarListItem = new ListItem(Localization.GetString("EventCalendar", LocalResourceFile), "Display.Calendar.html");
-
-                    this.DropDownChooseDisplay.Items.Add(templatedListItem);
-                    this.DropDownChooseDisplay.Items.Add(calendarListItem);
+                    this.DropDownChooseDisplay.Items.Add(new ListItem(Localization.GetString("EventListingTemplate", this.LocalResourceFile), "Display.Listing.html"));
+                    this.DropDownChooseDisplay.Items.Add(new ListItem(Localization.GetString("EventCalendar", this.LocalResourceFile), "Display.Calendar.html"));
 
                     this.SetOptions();
                 }
@@ -82,12 +79,24 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
+        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="T:System.EventArgs"/> object that contains the event data.</param>
-        protected override void OnLoad(EventArgs e)
+        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        protected override void OnInit(EventArgs e)
         {
-            base.OnLoad(e);
+            base.OnInit(e);
+
+            this.Load += this.Page_Load;
+            this.DropDownChooseDisplay.SelectedIndexChanged += this.DropDownChooseDisplay_SelectedIndexChanged;
+        }
+
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void Page_Load(object sender, EventArgs e)
+        {
             this.DisplaySettingsControl();
         }
 
@@ -96,7 +105,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void DropDownChooseDisplay_SelectedIndexChanged(object sender, EventArgs e)
+        private void DropDownChooseDisplay_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.DisplaySettingsControl();
         }

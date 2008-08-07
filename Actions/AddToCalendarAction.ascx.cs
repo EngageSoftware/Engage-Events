@@ -1,4 +1,4 @@
-// <copyright file="EventAdminActions.ascx.cs" company="Engage Software">
+// <copyright file="AddToCalendarAction.ascx.cs" company="Engage Software">
 // Engage: Events - http://www.engagemodules.com
 // Copyright (c) 2004-2008
 // by Engage Software ( http://www.engagesoftware.com )
@@ -12,7 +12,6 @@
 namespace Engage.Dnn.Events
 {
     using System;
-    using DotNetNuke.Entities.Modules;
     using DotNetNuke.Framework;
 
     /// <summary>
@@ -20,7 +19,11 @@ namespace Engage.Dnn.Events
     /// </summary>
     public partial class AddToCalendarAction : ActionControlBase
     {
- 
+        protected override void BindData()
+        {
+            this.LocalizeControls();
+        }
+
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
         /// </summary>
@@ -33,28 +36,20 @@ namespace Engage.Dnn.Events
             // module related information will appear the same as the actual control this navigation is sitting on.hk
             this.LocalResourceFile = "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions";
 
+            this.Load += this.Page_Load;
             this.Button.Click += this.Button_Click;
 
             AJAX.RegisterPostBackControl(this.Button);
         }
 
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            this.SetVisibility();
-        }
-        
-        protected override void BindData()
-        {
-            this.LocalizeControls();
-        }
-
         /// <summary>
-        /// Sets the visibility of this control's child controls.
+        /// Handles the Load event of the Page control.
         /// </summary>
-        private void SetVisibility()
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void Page_Load(object sender, EventArgs e)
         {
-            this.Button.Visible = IsLoggedIn;
+            this.SetVisibility();
         }
 
         /// <summary>
@@ -64,6 +59,13 @@ namespace Engage.Dnn.Events
         {
         }
 
+        /// <summary>
+        /// Sets the visibility of this control's child controls.
+        /// </summary>
+        private void SetVisibility()
+        {
+            this.Button.Visible = IsLoggedIn;
+        }
 
         /// <summary>
         /// Handles the OnClick event of the AddToCalendarButton control.
