@@ -15,11 +15,7 @@ namespace Engage.Events
     using System.ComponentModel;
     using System.Data;
     using System.Diagnostics;
-    using System.IO;
-    using System.Reflection;
     using System.Xml.Serialization;
-    using aspNetEmail;
-    using aspNetEmail.Calendaring;
     using Telerik.Web.UI;
     using Data;
 
@@ -146,7 +142,7 @@ namespace Engage.Events
         /// <summary>
         /// Indicates whether the license for this assembly has yet been loaded.
         /// </summary>
-        private bool aspnetEmailLicenseLoaded;
+        ////private bool aspnetEmailLicenseLoaded;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Event"/> class.
@@ -528,22 +524,12 @@ namespace Engage.Events
         /// Creates an iCal representation of this event.
         /// </summary>
         /// <param name="attendeeEmail">The attendee email.</param>
+        /// <param name="attendeeTimeZoneOffset">The attendee time zone offset.</param>
         /// <returns>An iCal representation of this event</returns>
-        public string ToICal(string attendeeEmail)
+        public string ToICal(string attendeeEmail, TimeSpan attendeeTimeZoneOffset)
         {
-            iCalendar ic = this.GenerateICalendar(attendeeEmail);
-            return ic.ToString();
-        }
-
-        /// <summary>
-        /// Creates an iCal representation of this event, then saves it in a file.
-        /// </summary>
-        /// <param name="pathAndFileName">{Path to and name of the file to create.</param>
-        /// <param name="attendeeEmail">The attendee email.</param>
-        public void ToiCalAsFile(string pathAndFileName, string attendeeEmail)
-        {
-            iCalendar ic = this.GenerateICalendar(attendeeEmail);
-            ic.WriteToFile(pathAndFileName, iCalendarType.iCal);
+            string rule = this.RecurrenceRule != null ? this.RecurrenceRule.ToString() : null;
+            return RadScheduler.ExportToICalendar(new Appointment(this.Id, this.EventStart, this.EventEnd, this.Title, rule), attendeeTimeZoneOffset);
         }
 
         #region IEditableObject Members
@@ -613,25 +599,25 @@ namespace Engage.Events
         /// Gets a string representation of the embedded license for the aspnetEmail component.
         /// </summary>
         /// <returns>A string representation of the embedded license for the aspnetEmail component</returns>
-        private static string GetLicenseString()
-        {
-            // embedded resources are embedded using the following convention
-            // namespace.foldername.subfolder.subfolder.subfolder.filename etc...
-            // in our case, the license is embedded as
-            const string resourceLocation = "Engage.Events.aspnetemail.xml.lic";
-            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceLocation))
-            {
-                if (stream != null)
-                {
-                    using (StreamReader sr = new StreamReader(stream))
-                    {
-                        return sr.ReadToEnd();
-                    }
-                }
-            }
+        ////private static string GetLicenseString()
+        ////{
+        ////    // embedded resources are embedded using the following convention
+        ////    // namespace.foldername.subfolder.subfolder.subfolder.filename etc...
+        ////    // in our case, the license is embedded as
+        ////    const string resourceLocation = "Engage.Events.aspnetemail.xml.lic";
+        ////    using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceLocation))
+        ////    {
+        ////        if (stream != null)
+        ////        {
+        ////            using (StreamReader sr = new StreamReader(stream))
+        ////            {
+        ////                return sr.ReadToEnd();
+        ////            }
+        ////        }
+        ////    }
 
-            return null;
-        }
+        ////    return null;
+        ////}
 
         /// <summary>
         /// Inserts this event.
@@ -715,97 +701,97 @@ namespace Engage.Events
         /// </summary>
         /// <param name="attendeeEmail">The attendee email.</param>
         /// <returns>A strongly-typed iCalendar representation of this event.</returns>
-        private iCalendar GenerateICalendar(string attendeeEmail)
-        {
-            this.LoadAspnetEmailLicense();
+        ////private iCalendar GenerateICalendar(string attendeeEmail)
+        ////{
+        ////    this.LoadAspnetEmailLicense();
 
-            iCalendar ic = new iCalendar();
+        ////    iCalendar ic = new iCalendar();
             
-            ic.OptimizedFormat = OptimizedFormat.Exchange2003;
+        ////    ic.OptimizedFormat = OptimizedFormat.Exchange2003;
 
-            // create the organizer
-            ic.Event.Organizer.FullName = this.organizer;
-            ic.Event.Organizer.Email = this.organizerEmail;
+        ////    // create the organizer
+        ////    ic.Event.Organizer.FullName = this.organizer;
+        ////    ic.Event.Organizer.Email = this.organizerEmail;
 
-            // set the timezone - this will need to be based on the current environment timezone.hk
-            ic.TimeZone.TimeZoneIndex = TimeZoneHelper.CentralAmericaGMTm0600;
-            ic.Type = iCalendarType.iCal;
+        ////    // set the timezone - this will need to be based on the current environment timezone.hk
+        ////    ic.TimeZone.TimeZoneIndex = TimeZoneHelper.CentralAmericaGMTm0600;
+        ////    ic.Type = iCalendarType.iCal;
 
-            // define the event
-            ic.Event.Summary.Text = this.title;
-            ic.Event.Description.Text = this.overview;
+        ////    // define the event
+        ////    ic.Event.Summary.Text = this.title;
+        ////    ic.Event.Description.Text = this.overview;
 
-            // set the location 
-            ic.Event.Location.Text = this.location;
+        ////    // set the location 
+        ////    ic.Event.Location.Text = this.location;
 
-            // set the dates.
-            ic.Event.DateStart.Date = this.eventStart;
-            ic.Event.DateEnd.Date = this.eventEnd;
+        ////    // set the dates.
+        ////    ic.Event.DateStart.Date = this.eventStart;
+        ////    ic.Event.DateEnd.Date = this.eventEnd;
 
-            // mark the time as busy (not available to free-busy searches).
-            ic.Event.TimeTransparency.TransparencyType = TransparencyType.Opaque;
-            ////ic.Method = new Method(Method.PublishMethod);
-            ic.Method = new Method(Method.RequestMethod);
+        ////    // mark the time as busy (not available to free-busy searches).
+        ////    ic.Event.TimeTransparency.TransparencyType = TransparencyType.Opaque;
+        ////    ////ic.Method = new Method(Method.PublishMethod);
+        ////    ic.Method = new Method(Method.RequestMethod);
 
-            // set an alarm/reminder
-            Alarm a = new DisplayAlarm("This is a reminder of an upcoming event.");
+        ////    // set an alarm/reminder
+        ////    Alarm a = new DisplayAlarm("This is a reminder of an upcoming event.");
 
-            // repeat the alarm for 10 times (snooze)
-            a.Repeat.Count = 10;
+        ////    // repeat the alarm for 10 times (snooze)
+        ////    a.Repeat.Count = 10;
 
-            // triggers 30 minutes before the event starts
-            a.Trigger.RelativeTrigger.Negative = true;
-            a.Trigger.RelativeTrigger.TimeSpan = new TimeSpan(0, 30, 0);
+        ////    // triggers 30 minutes before the event starts
+        ////    a.Trigger.RelativeTrigger.Negative = true;
+        ////    a.Trigger.RelativeTrigger.TimeSpan = new TimeSpan(0, 30, 0);
 
-            // delay period after which the alarm will repeat
-            a.DelayPeriod.TimeSpan = new TimeSpan(0, 10, 0);
+        ////    // delay period after which the alarm will repeat
+        ////    a.DelayPeriod.TimeSpan = new TimeSpan(0, 10, 0);
 
-            // Add the Attendee
-            Attendee att1 = new Attendee();
-            ////att1.FullName = attendeeEmail;
-            att1.Email = attendeeEmail;
-            att1.ParticipationStatus = ParticipationStatus.NEEDSACTION;
-            att1.Role = RoleType.REQ_PARTICIPANT;
-            ////att1.RSVP = true;
-            ic.Event.Attendees.Add(att1);
+        ////    // Add the Attendee
+        ////    Attendee att1 = new Attendee();
+        ////    ////att1.FullName = attendeeEmail;
+        ////    att1.Email = attendeeEmail;
+        ////    att1.ParticipationStatus = ParticipationStatus.NEEDSACTION;
+        ////    att1.Role = RoleType.REQ_PARTICIPANT;
+        ////    ////att1.RSVP = true;
+        ////    ic.Event.Attendees.Add(att1);
 
-            ic.Event.Classification.ClassificationType = ClassificationType.Private;
-            ic.Event.Categories.Add(CategoryType.APPOINTMENT);
+        ////    ic.Event.Classification.ClassificationType = ClassificationType.Private;
+        ////    ic.Event.Categories.Add(CategoryType.APPOINTMENT);
 
-            if (this.recurrenceRule != null)
-            {
-                // make this a recurring event - NOT YET IMPLEMENTED!!!!!hk
-                // Day 31 of every two months for 10 months. For some months it will fall on the last day.
-                MonthlyRecurrence mr = new MonthlyRecurrence();
+        ////    if (this.recurrenceRule != null)
+        ////    {
+        ////        // make this a recurring event - NOT YET IMPLEMENTED!!!!!hk
+        ////        // Day 31 of every two months for 10 months. For some months it will fall on the last day.
+        ////        MonthlyRecurrence mr = new MonthlyRecurrence();
 
-                mr.WeekStart = iCalendarDay.Sunday; // change the default weekstart to sunday
-                mr.Interval = 2;
-                mr.Occurs = 10;
-                mr.DayNumber = 31;
-                ic.Event.Recurrence = mr;
-            }
+        ////        mr.WeekStart = iCalendarDay.Sunday; // change the default weekstart to sunday
+        ////        mr.Interval = 2;
+        ////        mr.Occurs = 10;
+        ////        mr.DayNumber = 31;
+        ////        ic.Event.Recurrence = mr;
+        ////    }
 
-            ////ic.WriteToFile(@"c:\inetpub\wwwroot\aspnetgenerated.ics");
+        ////    ////ic.WriteToFile(@"c:\inetpub\wwwroot\aspnetgenerated.ics");
 
-            return ic;
-        }
+        ////    return ic;
+        ////}
 
         /// <summary>
         /// Loads the license for the aspnetEmail component.
         /// </summary>
-        private void LoadAspnetEmailLicense()
-        {
-            // we only need to load the license once. 
-            // aspNetEmail will cache it internally.
-            if (!this.aspnetEmailLicenseLoaded)
-            {
-                // load the license, or an exception will be thrown about "unable to locate license"
-                string contents = GetLicenseString();
-                EmailMessage.LoadLicenseString(contents);
+        ////private void LoadAspnetEmailLicense()
+        ////{
+        ////    // we only need to load the license once. 
+        ////    // aspNetEmail will cache it internally.
+        ////    if (!this.aspnetEmailLicenseLoaded)
+        ////    {
+        ////        // load the license, or an exception will be thrown about "unable to locate license"
+        ////        string contents = GetLicenseString();
+        ////        EmailMessage.LoadLicenseString(contents);
 
-                // set the flag that the license has already been loaded
-                this.aspnetEmailLicenseLoaded = true;
-            }
-        }
+        ////        // set the flag that the license has already been loaded
+        ////        this.aspnetEmailLicenseLoaded = true;
+        ////    }
+        ////}
     }
 }
