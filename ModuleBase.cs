@@ -123,18 +123,15 @@ namespace Engage.Dnn.Events
             response.ClearContent();
 
             // Stream The ICalendar 
-            response.ContentEncoding = Encoding.GetEncoding(CultureInfo.CurrentUICulture.TextInfo.ANSICodePage);
-            response.BufferOutput = true;
-            response.ContentType = "text/calendar";
-            response.Cache.SetCacheability(HttpCacheability.NoCache);
-            response.AppendHeader("Content-Class", "urn:content-classes:calendarmessage");
-            response.AppendHeader("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(name) + ".ics");
+            response.Buffer = true;
 
-            ////Engage.Logging.FileNotifier fn = new Engage.Logging.FileNotifier();
-            ////fn.Notify("Ical", "", content);
+            response.ContentType = "text/calendar";
+            response.ContentEncoding = Encoding.UTF8;
+            response.Charset = "utf-8";
+
+            response.AddHeader("Content-Disposition", "attachment;filename=\"" + HttpUtility.UrlEncode(name) + ".ics" +"\"");
 
             response.Write(content);
-
             response.Flush();
         }
 

@@ -74,7 +74,7 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Button_Click(object sender, EventArgs e)
         {
-            SendICalendarToClient(this.Response, CurrentEvent.ToICal(this.UserInfo.Email), this.CurrentEvent.Title);
+            SendICalendarToClient(this.Response, CurrentEvent.ToICal(this.UserInfo.Email, Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings)), this.CurrentEvent.Title);
         }
     }
 }

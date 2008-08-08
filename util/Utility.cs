@@ -12,6 +12,7 @@
 namespace Engage.Dnn.Events.Util
 {
     using System.Text;
+    using System.Web.Hosting;
     using DotNetNuke.Common;
 
     /// <summary>
@@ -49,6 +50,10 @@ namespace Engage.Dnn.Events.Util
             }
         }
 
+        /// <summary>
+        /// Gets the relative path to the templates folder.
+        /// </summary>
+        /// <value>The relative path to the templates folder</value>
         public static string TemplatesFolderName
         {
             get
@@ -57,11 +62,15 @@ namespace Engage.Dnn.Events.Util
             }
         }
 
-        public static string PhysicialTemplatesFolderName
+        /// <summary>
+        /// Gets the full physical path for the templates folder.
+        /// </summary>
+        /// <value>The full physical path for the templates folder</value>
+        public static string PhysicalTemplatesFolderName
         {
             get
             {
-                return System.Web.HttpContext.Current.Request.MapPath("~" + TemplatesFolderName);
+                return HostingEnvironment.MapPath("~" + TemplatesFolderName);
             }
         }
 
@@ -74,8 +83,7 @@ namespace Engage.Dnn.Events.Util
         /// </returns>
         public static bool IsValidEmailAddress(string emailAddress)
         {
-            aspNetEmail.EmailMessage message = new aspNetEmail.EmailMessage();
-            return message.IsValidEmail(emailAddress);
+            return Engage.Utility.ValidateEmailAddress(emailAddress);
         }
     }
 }

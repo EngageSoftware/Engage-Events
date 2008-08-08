@@ -155,11 +155,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void RegisterButton_Click(object sender, EventArgs e)
         {
-            this.Response.Redirect(
-                this.BuildLinkUrl(
-                    this.ModuleId,
-                    "Register",
-                    "eventid=" + this.currentEventId.ToString(CultureInfo.InvariantCulture)));
+            this.Response.Redirect(this.BuildLinkUrl(this.ModuleId, "Register", "eventid=" + this.currentEventId.ToString(CultureInfo.InvariantCulture)));
         }
 
         /// <summary>
@@ -170,7 +166,7 @@ namespace Engage.Dnn.Events.Display
         private void AddToCalendarButton_Click(object sender, EventArgs e)
         {
             Event currentEvent = Event.Load(this.currentEventId);
-            SendICalendarToClient(this.Response, currentEvent.ToICal(this.UserInfo.Email), currentEvent.Title);
+            SendICalendarToClient(this.Response, currentEvent.ToICal(this.UserInfo.Email, Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings)), currentEvent.Title);
         }
 
         /// <summary>
@@ -180,11 +176,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void EditButton_Click(object sender, EventArgs e)
         {
-            string href =
-               this.BuildLinkUrl(
-                   "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId="
-                   + this.currentEventId.ToString(CultureInfo.InvariantCulture));
-            this.Response.Redirect(href, true);
+            this.Response.Redirect(this.BuildLinkUrl(this.ModuleId, "EventEdit", "eventId=" + this.currentEventId.ToString(CultureInfo.InvariantCulture)), true);
         }
     }
 }

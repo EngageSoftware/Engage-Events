@@ -85,11 +85,8 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                Engage.Events.Rsvp rsvp = Engage.Events.Rsvp.Load(EventId, UserInfo.Email);
-                if (rsvp == null)
-                {
-                    rsvp = Engage.Events.Rsvp.Create(EventId, UserInfo.FirstName, UserInfo.LastName, UserInfo.Email);
-                }
+                Engage.Events.Rsvp rsvp = Engage.Events.Rsvp.Load(EventId, this.UserInfo.Email)
+                                          ?? Engage.Events.Rsvp.Create(EventId, this.UserInfo.FirstName, this.UserInfo.LastName, this.UserInfo.Email);
 
                 rsvp.Status = (RsvpStatus)Enum.Parse(typeof(RsvpStatus), this.RsvpStatusRadioButtons.SelectedValue);
                 rsvp.Save(UserId);
@@ -109,8 +106,8 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void AddToCalendarButton_Click(object sender, EventArgs e)
         {
-                Event evnt = Event.Load(EventId);
-                SendICalendarToClient(HttpContext.Current.Response, evnt.ToICal(UserInfo.Email), evnt.Title);
+            Event evnt = Event.Load(EventId);
+            SendICalendarToClient(HttpContext.Current.Response, evnt.ToICal(this.UserInfo.Email, Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings)), evnt.Title);
         }
 
         /// <summary>

@@ -328,8 +328,11 @@ namespace Engage.Dnn.Events.Recurrence
         /// <param name="rule">The recurrence rule with which to populate this control.</param>
         internal void SetRecurrenceRule(RecurrenceRule rule)
         {
-            this.SetRecurrencePattern(rule.Pattern);
-            this.SetRecurrenceRange(rule.Range);
+            if (rule != null)
+            {
+                this.SetRecurrencePattern(rule.Pattern);
+                this.SetRecurrenceRange(rule.Range);
+            }
         }
 
         /// <summary>

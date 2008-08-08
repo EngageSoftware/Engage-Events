@@ -197,7 +197,6 @@
         <include name="../../bin/Engage.Licensing.dll" />
         <include name="C:\code\Engage 3.0\Engage.Licensing\bin\Release\Engage.Licensing.dll.config" />
         <include name="../../bin/Telerik.Web.UI.dll" />
-        <include name="../../bin/aspNetEmail.dll" />
         <include name="**/*.sqldataprovider" />
         <include name="**/SearchRedirector.ascx" />
         <include name="**/ReadMe.txt" />
@@ -236,7 +235,6 @@
         <include name="../../bin/Engage.Licensing.dll" />
         <include name="C:\code\Engage 3.0\Engage.Licensing\bin\Release\Engage.Licensing.dll.config" />
         <include name="../../bin/Telerik.Web.UI.dll" />
-        <include name="../../bin/aspNetEmail.dll" />
         <include name="**/*.sqldataprovider" />
         <include name="**/SearchRedirector.ascx" />
         <include name="**/ReadMe.txt" />
@@ -275,7 +273,6 @@
         <include name="../../bin/Engage.Dnn.Framework.dll" />
         <include name="C:\code\Engage 3.0\Engage.Licensing\bin\Release\Engage.Licensing.dll.config" />
         <include name="../../bin/Telerik.Web.UI.dll" />
-        <include name="../../bin/aspNetEmail.dll" />
         <include name="**/*.sqldataprovider" />
         <include name="**/ReadMe.txt" />
         <include name="**/licenses/EULA-Enterprise.txt" />
@@ -314,7 +311,6 @@
         <include name="../../bin/Engage.Templating.dll" />
         <include name="../../bin/Engage.Dnn.Framework.dll" />
         <include name="../../bin/Telerik.Web.UI.dll" />
-        <include name="../../bin/aspNetEmail.dll" />
         <include name="C:\code\Engage 3.0\Engage.Licensing\bin\Release\Engage.Licensing.dll.config" />
         <include name="**/*.sqldataprovider" />
         <include name="**/ReadMe.txt" />
