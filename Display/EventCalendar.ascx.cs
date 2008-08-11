@@ -42,14 +42,32 @@ namespace Engage.Dnn.Events.Display
             [DebuggerStepThrough]
             set { this.isFeatured = value; }
             [DebuggerStepThrough]
-            protected get { return this.isFeatured; }
+            get { return this.isFeatured; }
         }
 
         /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
+        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="T:System.EventArgs"/> object that contains the event data.</param>
-        protected override void OnLoad(EventArgs e)
+        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+
+            this.Load += this.Page_Load;
+            this.EventsCalendarDisplay.AppointmentDelete += EventsCalendarDisplay_AppointmentDelete;
+            this.EventsCalendarDisplay.AppointmentInsert += this.EventsCalendarDisplay_AppointmentInsert;
+            this.EventsCalendarDisplay.AppointmentUpdate += this.EventsCalendarDisplay_AppointmentUpdate;
+            this.EventsCalendarDisplay.AppointmentCreated += this.EventsCalendarDisplay_AppointmentCreated;
+            this.EventsCalendarDisplay.AppointmentDataBound += this.EventsCalendarDisplay_AppointmentDataBound;
+            this.EventsCalendarToolTipManager.AjaxUpdate += this.EventsCalendarToolTipManager_AjaxUpdate;
+        }
+
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void Page_Load(object sender, EventArgs e)
         {
             try
             {
@@ -66,7 +84,7 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="Telerik.Web.UI.SchedulerCancelEventArgs"/> instance containing the event data.</param>
-        protected void EventsCalendarDisplay_AppointmentInsert(object sender, SchedulerCancelEventArgs e)
+        private void EventsCalendarDisplay_AppointmentInsert(object sender, SchedulerCancelEventArgs e)
         {
             Event ev = Event.Create(this.PortalId, this.ModuleId, this.UserInfo.Email, e.Appointment.Subject, "", e.Appointment.Start);
             ev.EventEnd = e.Appointment.Start.Add(e.Appointment.Duration);
@@ -78,9 +96,9 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="Telerik.Web.UI.SchedulerCancelEventArgs"/> instance containing the event data.</param>
-        protected void EventsCalendarDisplay_AppointmentDelete(object sender, SchedulerCancelEventArgs e)
+        private static void EventsCalendarDisplay_AppointmentDelete(object sender, SchedulerCancelEventArgs e)
         {
-            Event.Delete(Convert.ToInt32(e.Appointment.ID));
+            Event.Delete(Convert.ToInt32(e.Appointment.ID, CultureInfo.InvariantCulture));
         }
 
         /// <summary>
@@ -88,9 +106,9 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="Telerik.Web.UI.AppointmentUpdateEventArgs"/> instance containing the event data.</param>
-        protected void EventsCalendarDisplay_AppointmentUpdate(object sender, AppointmentUpdateEventArgs e)
+        private void EventsCalendarDisplay_AppointmentUpdate(object sender, AppointmentUpdateEventArgs e)
         {
-            Event ev = Event.Load(Convert.ToInt32(e.Appointment.ID));
+            Event ev = Event.Load(Convert.ToInt32(e.Appointment.ID, CultureInfo.InvariantCulture));
             ev.EventStart = e.Appointment.Start;
             ev.EventEnd = e.Appointment.Start.Add(e.Appointment.Duration);
             ev.Title = e.Appointment.Subject;
@@ -102,11 +120,11 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="Telerik.Web.UI.AppointmentCreatedEventArgs"/> instance containing the event data.</param>
-        protected void EventsCalendarDisplay_AppointmentCreated(object sender, AppointmentCreatedEventArgs e)
+        private void EventsCalendarDisplay_AppointmentCreated(object sender, AppointmentCreatedEventArgs e)
         {
             if (e.Appointment.Visible && !this.IsAppointmentRegisteredForTooltip(e.Appointment))
             {
-                this.EventsCalendarToolTipManager.TargetControls.Add(e.Appointment.ClientID, true);
+                this.EventsCalendarToolTipManager.TargetControls.Add(e.Appointment.ClientID, ((int)e.Appointment.ID).ToString(CultureInfo.InvariantCulture), true);
             }
         }
 
@@ -115,18 +133,12 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="Telerik.Web.UI.SchedulerEventArgs"/> instance containing the event data.</param>
-        protected void EventsCalendarDisplay_AppointmentDataBound(object sender, SchedulerEventArgs e)
+        private void EventsCalendarDisplay_AppointmentDataBound(object sender, SchedulerEventArgs e)
         {
             Event ev = Event.Load(Convert.ToInt32(e.Appointment.ID, CultureInfo.InvariantCulture));
-            e.Appointment.Attributes["EventTitle"] = ev.Title;
-            e.Appointment.Attributes["EventStart"] = ev.EventStart.ToString();
-            e.Appointment.Attributes["Overview"] = ev.Overview;
-            e.Appointment.Attributes["EventId"] = ev.Id.ToString(CultureInfo.InvariantCulture);
-
-            if (ev.EventEnd != null)
-            {
-                e.Appointment.Attributes["EventEnd"] = ev.EventEnd.ToString();
-            }
+            e.Appointment.Subject = ev.Title;
+            e.Appointment.Start = ev.EventStart;
+            e.Appointment.End = ev.EventEnd;
 
             this.EventsCalendarToolTipManager.TargetControls.Clear();
             ScriptManager.RegisterStartupScript(this, typeof(EventCalendar), "HideToolTip", "hideActiveToolTip();", true);
@@ -137,18 +149,17 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="Telerik.Web.UI.ToolTipUpdateEventArgs"/> instance containing the event data.</param>
-        protected void EventsCalendarToolTipManager_AjaxUpdate(object sender, ToolTipUpdateEventArgs e)
+        private void EventsCalendarToolTipManager_AjaxUpdate(object sender, ToolTipUpdateEventArgs e)
         {
-            int aptId = int.Parse(e.TargetControlID.Split('_')[5]);
-            Appointment apt = this.EventsCalendarDisplay.Appointments[aptId];
+            Event ev = Event.Load(Convert.ToInt32(e.Value, CultureInfo.InvariantCulture));
             EventToolTip toolTip = (EventToolTip)this.LoadControl("EventToolTip.ascx");
 
             toolTip.ModuleConfiguration = this.ModuleConfiguration;
-            toolTip.EventStartDate = apt.Attributes["EventStart"];
-            toolTip.Overview = apt.Attributes["Overview"];
-            toolTip.Title = apt.Attributes["EventTitle"];
-            toolTip.EventEndDate = apt.Attributes["EventEnd"];
-            toolTip.SetEventId(Convert.ToInt32(apt.Attributes["EventId"], CultureInfo.InvariantCulture));
+            toolTip.EventStartDate = ev.EventStart.ToShortDateString();
+            toolTip.Overview = ev.Overview;
+            toolTip.Title = ev.Title;
+            toolTip.EventEndDate = ev.EventEnd.ToShortDateString();
+            toolTip.SetEventId(ev.Id);
             e.UpdatePanel.ContentTemplateContainer.Controls.Add(toolTip);
         }
 

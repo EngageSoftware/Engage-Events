@@ -123,11 +123,7 @@ namespace Engage.Dnn.Events
                 li.Selected = true;
             }
 
-            string featured = Utility.GetStringSetting(Settings, Setting.FeaturedOnly.PropertyName);
-            if (!string.IsNullOrEmpty(featured))
-            {
-                this.FeaturedCheckbox.Checked = Convert.ToBoolean(featured);
-            }
+            this.FeaturedCheckbox.Checked = Utility.GetBoolSetting(Settings, Setting.FeaturedOnly.PropertyName, false);
         }
 
         /// <summary>

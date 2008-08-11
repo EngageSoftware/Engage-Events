@@ -238,7 +238,7 @@ namespace Engage.Dnn.Events.Display
                     ButtonAction editEmailAction = (ButtonAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
                     editEmailAction.CurrentEvent = ev;
                     editEmailAction.ModuleConfiguration = this.ModuleConfiguration;
-                    editEmailAction.Href = this.BuildLinkUrl(this.ModuleId.ToString(CultureInfo.InvariantCulture), "EmailEdit", "eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
+                    editEmailAction.Href = this.BuildLinkUrl(this.ModuleId, "EmailEdit", "eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
                     editEmailAction.Text = Localization.GetString("EditEmailButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(editEmailAction);
                     editEmailAction.Visible = this.IsAdmin;

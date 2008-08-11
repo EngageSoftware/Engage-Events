@@ -50,6 +50,7 @@ namespace Engage.Dnn.Events
             this.SaveEventButton.Click += this.SaveEventButton_OnClick;
             this.SaveAndCreateNewEventButton.Click += this.SaveAndCreateNewEventButton_OnClick;
             this.RecurringCheckbox.CheckedChanged += this.RecurringCheckbox_CheckedChanged;
+            this.RecurrenceEditorValidator.ServerValidate += this.RecurrenceEditorValidator_ServerValidate;
         }
 
         /// <summary>
@@ -126,6 +127,16 @@ namespace Engage.Dnn.Events
         private void EventDescriptionTextEditorValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
             args.IsValid = Engage.Utility.HasValue(this.EventDescriptionTextEditor.Text);
+        }
+
+        /// <summary>
+        /// Handles the ServerValidate event of the RecurrenceEditorValidator control.
+        /// </summary>
+        /// <param name="source">The source of the event.</param>
+        /// <param name="args">The <see cref="System.Web.UI.WebControls.ServerValidateEventArgs"/> instance containing the event data.</param>
+        private void RecurrenceEditorValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = this.RecurrenceEditor.IsValid;
         }
 
         /// <summary>

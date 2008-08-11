@@ -77,7 +77,7 @@ namespace Engage.Dnn.Events
                 int id = -1;
                 if (HttpContext.Current.Request.QueryString["eventId"] != null)
                 {
-                    id = Convert.ToInt32(HttpContext.Current.Request.QueryString["eventId"]);
+                    id = Convert.ToInt32(HttpContext.Current.Request.QueryString["eventId"], CultureInfo.InvariantCulture);
                 }
 
                 return id;
@@ -120,7 +120,7 @@ namespace Engage.Dnn.Events
         /// <param name="name">The name of the file.</param>
         protected static void SendICalendarToClient(HttpResponse response, string content, string name)
         {
-            response.ClearContent();
+            response.Clear();
 
             // Stream The ICalendar 
             response.Buffer = true;
@@ -132,7 +132,7 @@ namespace Engage.Dnn.Events
             response.AddHeader("Content-Disposition", "attachment;filename=\"" + HttpUtility.UrlEncode(name) + ".ics" +"\"");
 
             response.Write(content);
-            response.Flush();
+            response.End();
         }
 
         /// <summary>

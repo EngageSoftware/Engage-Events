@@ -81,7 +81,25 @@ namespace Engage.Dnn.Events.Display
         /// <returns>A formatted string representing the timespan over which this event occurs.</returns>
         private string GetFormattedEventDate(DateTime startDate, DateTime endDate)
         {
-            return string.Format(CultureInfo.CurrentCulture, Localization.GetString("Timespan.Text", this.LocalResourceFile), startDate, endDate);
+            string timespanResourceKey;
+            if (startDate.Year != endDate.Year)
+            {
+                timespanResourceKey = "TimespanDifferentYear.Text";
+            }
+            else if (startDate.Month != endDate.Month)
+            {
+                timespanResourceKey = "TimespanDifferentMonth.Text";
+            }
+            else if (startDate.Day != endDate.Day)
+            {
+                timespanResourceKey = "TimespanDifferentDay.Text";
+            }
+            else
+            {
+                timespanResourceKey = "Timespan.Text";
+            }
+
+            return string.Format(CultureInfo.CurrentCulture, Localization.GetString(timespanResourceKey, this.LocalResourceFile), startDate, endDate);
         }
 
         /// <summary>
@@ -95,8 +113,8 @@ namespace Engage.Dnn.Events.Display
         {
             return count > 0
                        ? this.BuildLinkUrl(
-                             "modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture),
-                             "key=RsvpDetail",
+                             this.ModuleId,
+                             "RsvpDetail",
                              "eventid=" + eventId.ToString(CultureInfo.InvariantCulture),
                              "status=" + status)
                        : string.Empty;

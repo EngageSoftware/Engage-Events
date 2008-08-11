@@ -191,11 +191,8 @@ namespace Engage.Dnn.Events.Navigation
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void EditEventButton_Click(object sender, EventArgs e)
         {
-            string href =
-                this.BuildLinkUrl(
-                    "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId="
-                    + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture));
-            this.Response.Redirect(href, true);
+            this.Response.Redirect(
+                this.BuildLinkUrl(this.ModuleId, "EventEdit", "eventId=" + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture)), true);
         }
 
         /// <summary>
@@ -205,11 +202,8 @@ namespace Engage.Dnn.Events.Navigation
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void RegisterButton_Click(object sender, EventArgs e)
         {
-            string href =
-                this.BuildLinkUrl(
-                    "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=Register&eventid="
-                    + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture));
-            this.Response.Redirect(href, true);
+            this.Response.Redirect(
+                this.BuildLinkUrl(this.ModuleId, "Register", "eventid=" + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture)), true);
         }
 
         /// <summary>
@@ -219,11 +213,8 @@ namespace Engage.Dnn.Events.Navigation
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void ResponsesButton_Click(object sender, EventArgs e)
         {
-            string href =
-                this.BuildLinkUrl(
-                    "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=RsvpDetail&eventid="
-                    + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture));
-            this.Response.Redirect(href, true);
+            this.Response.Redirect(
+                this.BuildLinkUrl(this.ModuleId, "RsvpDetail", "eventid=" + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture)), true);
         }
 
         /// <summary>
@@ -259,11 +250,8 @@ namespace Engage.Dnn.Events.Navigation
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void EditEmailButton_Click(object sender, EventArgs e)
         {
-            string href =
-                this.BuildLinkUrl(
-                    "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EmailEdit&eventid="
-                    + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture));
-            this.Response.Redirect(href, true);
+            this.Response.Redirect(
+                this.BuildLinkUrl(this.ModuleId, "EmailEdit", "eventid=" + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture)), true);
         }
 
         /// <summary>

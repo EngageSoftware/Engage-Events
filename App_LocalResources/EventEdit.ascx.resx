@@ -183,6 +183,9 @@
   <data name="FeaturedEventLabel.Text" xml:space="preserve">
     <value>Featured Event</value>
   </data>
+  <data name="InvalidRecurrence.Text" xml:space="preserve">
+    <value>You must fill in all required text boxes in order to create a valid recurrence for this event</value>
+  </data>
   <data name="RecurringEventLabel.Text" xml:space="preserve">
     <value>Recurring Event</value>
   </data>

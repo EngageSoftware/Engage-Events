@@ -193,3 +193,62 @@ BEGIN
 END
 GO
 
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetRsvpSummaries]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROC {databaseOwner}[{objectQualifier}Engage_spGetRsvpSummaries]
+GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetRsvpSummaries]  
+(  
+@PortalId int,  
+@sortColumn nvarchar(200),   
+@index int,   
+@pageSize int  
+)  
+AS  
+BEGIN  
+  
+ Create table #results   
+ (  
+  [Id] int not null IDENTITY(1,1),  
+  [EventId] [int],  
+  [Title] [nvarchar] (100),  
+  [EventStart] datetime,  
+  [Attending] int,  
+  [NotAttending] int,  
+  [NoResponse] int
+ )  
+  
+  
+ declare @sql varchar(8000)  
+ declare @Attending nvarchar(20), @NotAttending nvarchar(20), @NoResponse nvarchar(20)  
+ select @Attending = 'Attending'  
+ select @NotAttending = 'NotAttending'  
+ select @NoResponse = 'NoResponse'  
+  
+ set @sql = 'insert into #results ([EventId], [Title], [EventStart], [Attending], [NotAttending], [NoResponse]) '  
+ set @sql = @sql + 'Select distinct e.EventId, e.Title, e.EventStart, '  
+ set @sql = @sql + '(Select Count(*) from [{objectQualifier}Engage_Rsvp] where EventId = e.EventId and Status = ''' + @Attending + ''' ), '  
+ set @sql = @sql + '(Select Count(*) from [{objectQualifier}Engage_Rsvp] where EventId = e.EventId and Status = ''' + @NotAttending + '''), '  
+ set @sql = @sql + '(Select Count(*) from [{objectQualifier}Engage_Rsvp] where EventId = e.EventId and Status = ''' + @NoResponse + ''') '  
+ set @sql = @sql + ' FROM {databaseOwner}[{objectQualifier}Engage_Event] e '  
+ set @sql = @sql + ' LEFT JOIN {databaseOwner}[{objectQualifier}Engage_Rsvp] r ON (r.EventID = e.EventId) '  
+ set @sql = @sql + ' WHERE e.PortalId = ' + str(@PortalId)  
+ set @sql = @sql + ' Order by ' + @sortColumn  
+  
+ print (@sql)  
+ exec (@sql)  
+  
+ SELECT @@RowCount AS TotalRecords
+  
+ if (@PageSize = 0)  
+   BEGIN  
+    select * from #results
+   END  
+ ELSE  
+   BEGIN  
+    select * from #results  
+    where (id >= @index * @PageSize + 1) and id < (@index * @PageSize) + @PageSize + 1  
+   END  
+END  
+GO
+
+

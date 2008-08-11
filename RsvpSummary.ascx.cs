@@ -34,24 +34,13 @@ namespace Engage.Dnn.Events
             get
             {
                 int index = 1;
-                if (this.Request.QueryString["currentpage"] != null)
+                if (this.Request.QueryString["currentPage"] != null)
                 {
-                    index = Convert.ToInt32(this.Request.QueryString["currentpage"]);
+                    index = Convert.ToInt32(this.Request.QueryString["currentPage"], CultureInfo.InvariantCulture);
                 }
 
                 return index;
             }
-        }
-
-        /// <summary>
-        /// Gets the formatted date string for this event.
-        /// </summary>
-        /// <param name="startDate">The event's start date.</param>
-        /// <param name="endDate">The event's end date.</param>
-        /// <returns>A formatted string representing the timespan over which this event occurs.</returns>
-        protected string GetDateString(object startDate, object endDate)
-        {
-            return string.Format(CultureInfo.CurrentCulture, Localization.GetString("Timespan.Text", this.LocalResourceFile), startDate, endDate);
         }
 
         /// <summary>
@@ -97,7 +86,7 @@ namespace Engage.Dnn.Events
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 RsvpDisplay rsvpDisplay = (RsvpDisplay)e.Item.FindControl("RsvpDisplay");
-                rsvpDisplay.SetRsvpSummary(Engage.Events.RsvpSummary.Load(((Engage.Events.RsvpSummary)e.Item.DataItem).EventId));
+                rsvpDisplay.SetRsvpSummary((Engage.Events.RsvpSummary)e.Item.DataItem);
                 rsvpDisplay.ModuleConfiguration = this.ModuleConfiguration;
             }
         }

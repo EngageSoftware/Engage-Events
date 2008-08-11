@@ -205,7 +205,7 @@ namespace Engage.Dnn.Events.Display
                 this.ItemTemplate = this.ItemDropdownlist.SelectedValue;
                 this.FooterTemplate = this.FooterDropdownlist.SelectedValue;
                 this.DetailTemplate = this.DetailDropdownlist.SelectedValue;
-                this.RecordsPerPage = Convert.ToInt32(this.RadNumericRecordsPerPage.Value);
+                this.RecordsPerPage = (int)this.RadNumericRecordsPerPage.Value.Value;
             }
         }
     }

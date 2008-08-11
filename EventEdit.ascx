@@ -78,6 +78,7 @@
                 <asp:Label ID="RecurringEventLabel" runat="server" ResourceKey="RecurringEventLabel" CssClass="NormalBold" AssociatedControlID="RecurringCheckbox"/>
                 <asp:CheckBox ID="RecurringCheckbox" runat="server" AutoPostBack="true" />
                 <engage:RecurrenceEditor ID="RecurrenceEditor" runat="server" Visible="false" DatePickerSkin="WebBlue" />
+                <asp:CustomValidator ID="RecurrenceEditorValidator" runat="server" ResourceKey="InvalidRecurrence" Display="None" />
             </ContentTemplate>
         </asp:UpdatePanel>
     </div>

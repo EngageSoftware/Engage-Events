@@ -12,6 +12,7 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.Globalization;
     using DotNetNuke.Common;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
@@ -37,7 +38,7 @@ namespace Engage.Dnn.Events
                 // Get the currentpage index from the url parameter
                 if (this.Request.QueryString["currentpage"] != null)
                 {
-                    index = Convert.ToInt32(this.Request.QueryString["currentpage"]);
+                    index = Convert.ToInt32(this.Request.QueryString["currentpage"], CultureInfo.InvariantCulture);
                 }
 
                 return index;
