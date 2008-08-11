@@ -28,6 +28,11 @@ namespace Engage.Dnn.Events
     /// </summary>
     public class ModuleBase : Framework.ModuleBase, IActionable
     {
+        /// <summary>
+        /// A resource file for shared resources in this module.
+        /// </summary>
+        protected static readonly string LocalSharedResourceFile = "~" + DesktopModuleFolderName + Localization.LocalResourceDirectory + "/" + Localization.LocalSharedResourceFile;
+
         public ModuleActionCollection ModuleActions
         {
             get

@@ -663,6 +663,11 @@
     <Content Include="Templates\Header.Featured.html" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_LocalResources\SharedResources.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

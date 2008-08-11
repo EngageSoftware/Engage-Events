@@ -99,7 +99,7 @@ namespace Engage.Dnn.Events.Display
                 timespanResourceKey = "Timespan.Text";
             }
 
-            return string.Format(CultureInfo.CurrentCulture, Localization.GetString(timespanResourceKey, this.LocalResourceFile), startDate, endDate);
+            return string.Format(CultureInfo.CurrentCulture, Localization.GetString(timespanResourceKey, LocalSharedResourceFile), startDate, endDate);
         }
 
         /// <summary>

@@ -117,4 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Timespan.Text" xml:space="preserve">
+    <value>{0:dddd, MMMM d, yyyy, hh:mmtt} - {1:hh:mmtt}</value>
+  </data>
+  <data name="TimespanDifferentDay.Text" xml:space="preserve">
+    <value>{0:dddd, MMMM d, yyyy, hh:mmtt} - {1:dddd, MMMM d, hh:mmtt}</value>
+  </data>
+  <data name="TimespanDifferentMonth.Text" xml:space="preserve">
+    <value>{0:dddd, MMMM d, yyyy, hh:mmtt} - {1:dddd, MMMM d, hh:mmtt}</value>
+  </data>
+  <data name="TimespanDifferentYear.Text" xml:space="preserve">
+    <value>{0:dddd, MMMM d, yyyy, hh:mmtt} - {1:dddd, MMMM d, yyyy, hh:mmtt}</value>
+  </data>
 </root>

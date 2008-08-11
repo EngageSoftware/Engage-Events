@@ -73,7 +73,7 @@ namespace Engage.Dnn.Events.Recurrence
         };
 
         /// <summary>
-        /// Gets a value that indicates whether the this control is in a valid state.
+        /// Gets a value indicating whether the this control is in a valid state.
         /// </summary>
         /// <remarks>
         /// Checks whether the currently selected recurrence rule is defined in part by any <see cref="RadNumericTextBox"/>es.  
