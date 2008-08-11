@@ -116,6 +116,7 @@ namespace Engage.Events
                         startDate = endDate = null;
                         break;
                 }
+
                 using (IDataReader reader = dp.ExecuteReader(
                     CommandType.StoredProcedure,
                     dp.NamePrefix + "spGetEvents",

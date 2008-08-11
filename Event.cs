@@ -529,7 +529,7 @@ namespace Engage.Events
         public string ToICal(string attendeeEmail, TimeSpan attendeeTimeZoneOffset)
         {
             string rule = this.RecurrenceRule != null ? this.RecurrenceRule.ToString() : null;
-            return RadScheduler.ExportToICalendar(new Appointment(this.Id, this.EventStart, this.EventEnd, this.Title, rule), attendeeTimeZoneOffset);
+            return Util.ICalUtil.Export(new Appointment(this.Id, this.EventStart, this.EventEnd, this.Title, rule), true, attendeeTimeZoneOffset);
         }
 
         #region IEditableObject Members

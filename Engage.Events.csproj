@@ -56,6 +56,7 @@
     <Compile Include="EventCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\EmailEventType.cs" />
+    <Compile Include="Util\ICalUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engage.DataProvider\Engage.DataProvider.csproj">
