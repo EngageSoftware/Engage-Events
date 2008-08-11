@@ -42,7 +42,7 @@ BEGIN
 	
 	INSERT INTO #results ([EventId])
 	 SELECT [EventId]
-	 FROM   dbo.[dnn_Engage_Event]
+	 FROM   {databaseOwner}[{objectQualifier}Engage_Event]
 	 WHERE  PortalId = @portalId
 	  AND (EventEnd >= @startDate OR @startDate IS NULL)
 	  AND (EventStart <= @endDate OR @endDate IS NULL)
