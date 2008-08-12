@@ -529,7 +529,10 @@ namespace Engage.Events
         public string ToICal(string attendeeEmail, TimeSpan attendeeTimeZoneOffset)
         {
             string rule = this.RecurrenceRule != null ? this.RecurrenceRule.ToString() : null;
-            return Util.ICalUtil.Export(new Appointment(this.Id, this.EventStart, this.EventEnd, this.Title, rule), true, attendeeTimeZoneOffset);
+            //the description stored in the database contains open/close p tags that must be removed.
+            string rawDescription = description.Replace("<p>", string.Empty);
+            rawDescription = rawDescription.Replace("</p>", string.Empty);
+            return Util.ICalUtil.Export(rawDescription, location, new Appointment(this.Id, this.EventStart, this.EventEnd, this.Title, rule), true, attendeeTimeZoneOffset);
         }
 
         #region IEditableObject Members

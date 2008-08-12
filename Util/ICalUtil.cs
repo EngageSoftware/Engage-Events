@@ -8,7 +8,7 @@
     {
         private const string DateFormat = "yyyyMMddTHHmmssZ";
 
-        public static string Export(Appointment app, bool outlookCompatibleMode, TimeSpan timeZoneOffset)
+        public static string Export(string description, string location, Appointment app, bool outlookCompatibleMode, TimeSpan timeZoneOffset)
         {
             StringBuilder output = new StringBuilder();
             WriteFileHeader(output, outlookCompatibleMode);
@@ -21,7 +21,7 @@
             //    }
             //}
 
-            WriteTask(output, app, outlookCompatibleMode, timeZoneOffset);
+            WriteTask(description, location,output, app, outlookCompatibleMode, timeZoneOffset);
 
             WriteFileFooter(output);
 
@@ -59,9 +59,11 @@
             }
         }
 
-        private static void WriteTask(StringBuilder output, Appointment app, bool outlookCompatibleMode, TimeSpan timeZoneOffset)
+        private static void WriteTask(string description, string location, StringBuilder output, Appointment app, bool outlookCompatibleMode, TimeSpan timeZoneOffset)
         {
             output.AppendLine("BEGIN:VEVENT");
+            output.AppendLine("DESCRIPTION:" + description);
+            output.AppendLine("LOCATION:" + location);
 
             if (app.RecurrenceRule != string.Empty)
             {
