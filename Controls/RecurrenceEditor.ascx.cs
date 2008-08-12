@@ -10,7 +10,7 @@
 // CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 // DEALINGS IN THE SOFTWARE.
 
-namespace Engage.Dnn.Events.Recurrence
+namespace Engage.Dnn.Events.Controls
 {
     using System;
     using System.Globalization;
@@ -28,49 +28,49 @@ namespace Engage.Dnn.Events.Recurrence
         /// The list of possible day selections, from <see cref="RecurrenceDay"/>.
         /// </summary>
         private static readonly ListItem[] DayMaskItems = 
-        {
-            new ListItem(RecurrenceDay.EveryDay.ToString()), 
-            new ListItem(RecurrenceDay.WeekDays.ToString()),
-            new ListItem(RecurrenceDay.WeekendDays.ToString()), 
-            new ListItem(RecurrenceDay.Sunday.ToString()),
-            new ListItem(RecurrenceDay.Monday.ToString()), 
-            new ListItem(RecurrenceDay.Tuesday.ToString()),
-            new ListItem(RecurrenceDay.Wednesday.ToString()), 
-            new ListItem(RecurrenceDay.Thursday.ToString()),
-            new ListItem(RecurrenceDay.Friday.ToString()), 
-            new ListItem(RecurrenceDay.Saturday.ToString())
-        };
+            {
+                new ListItem(RecurrenceDay.EveryDay.ToString()), 
+                new ListItem(RecurrenceDay.WeekDays.ToString()),
+                new ListItem(RecurrenceDay.WeekendDays.ToString()), 
+                new ListItem(RecurrenceDay.Sunday.ToString()),
+                new ListItem(RecurrenceDay.Monday.ToString()), 
+                new ListItem(RecurrenceDay.Tuesday.ToString()),
+                new ListItem(RecurrenceDay.Wednesday.ToString()), 
+                new ListItem(RecurrenceDay.Thursday.ToString()),
+                new ListItem(RecurrenceDay.Friday.ToString()), 
+                new ListItem(RecurrenceDay.Saturday.ToString())
+            };
 
         /// <summary>
         /// The list of possible months selections, from <see cref="RecurrenceMonth"/>.
         /// </summary>
         private static readonly ListItem[] MonthItems = 
-        {
-            new ListItem(RecurrenceMonth.January.ToString()), 
-            new ListItem(RecurrenceMonth.February.ToString()),
-            new ListItem(RecurrenceMonth.March.ToString()), 
-            new ListItem(RecurrenceMonth.April.ToString()),
-            new ListItem(RecurrenceMonth.May.ToString()), 
-            new ListItem(RecurrenceMonth.June.ToString()),
-            new ListItem(RecurrenceMonth.July.ToString()), 
-            new ListItem(RecurrenceMonth.August.ToString()),
-            new ListItem(RecurrenceMonth.September.ToString()), 
-            new ListItem(RecurrenceMonth.October.ToString()),
-            new ListItem(RecurrenceMonth.November.ToString()), 
-            new ListItem(RecurrenceMonth.December.ToString())
-        };
+            {
+                new ListItem(RecurrenceMonth.January.ToString()), 
+                new ListItem(RecurrenceMonth.February.ToString()),
+                new ListItem(RecurrenceMonth.March.ToString()), 
+                new ListItem(RecurrenceMonth.April.ToString()),
+                new ListItem(RecurrenceMonth.May.ToString()), 
+                new ListItem(RecurrenceMonth.June.ToString()),
+                new ListItem(RecurrenceMonth.July.ToString()), 
+                new ListItem(RecurrenceMonth.August.ToString()),
+                new ListItem(RecurrenceMonth.September.ToString()), 
+                new ListItem(RecurrenceMonth.October.ToString()),
+                new ListItem(RecurrenceMonth.November.ToString()), 
+                new ListItem(RecurrenceMonth.December.ToString())
+            };
 
         /// <summary>
         /// The list of possible ordinal selections, for example, First, Second or Last.  Based on <see cref="RecurrencePattern.DayOrdinal"/>.
         /// </summary>
         private static readonly ListItem[] OrdinalItems = 
-        {
-            new ListItem("First", "1"), 
-            new ListItem("Second", "2"), 
-            new ListItem("Third", "3"),
-            new ListItem("Fourth", "4"), 
-            new ListItem("Last", "-1")
-        };
+            {
+                new ListItem("First", "1"), 
+                new ListItem("Second", "2"), 
+                new ListItem("Third", "3"),
+                new ListItem("Fourth", "4"), 
+                new ListItem("Last", "-1")
+            };
 
         /// <summary>
         /// Gets a value indicating whether the this control is in a valid state.
@@ -112,7 +112,7 @@ namespace Engage.Dnn.Events.Recurrence
                         }
 
                         break;
-                    ////case RecurrenceFrequency.Daily:
+                        ////case RecurrenceFrequency.Daily:
                     default:
                         if (this.RepeatEveryNthDay.Checked)
                         {
@@ -452,7 +452,7 @@ namespace Engage.Dnn.Events.Recurrence
                 case RecurrenceFrequency.Yearly:
                     activeView = this.RecurrencePatternYearlyView;
                     break;
-                ////case RecurrenceFrequency.Daily:
+                    ////case RecurrenceFrequency.Daily:
                 default:
                     activeView = this.RecurrencePatternDailyView;
                     break;
@@ -480,7 +480,7 @@ namespace Engage.Dnn.Events.Recurrence
                 case RecurrenceFrequency.Yearly:
                     this.SetupYearlyRecurrence(pattern);
                     break;
-                ////case RecurrenceFrequency.Daily:
+                    ////case RecurrenceFrequency.Daily:
                 default:
                     this.SetupDailyRecurrence(pattern);
                     break;
@@ -494,9 +494,9 @@ namespace Engage.Dnn.Events.Recurrence
         {
             this.RepeatFrequencyDaily.Checked
                 = this.RepeatFrequencyWeekly.Checked
-                = this.RepeatFrequencyMonthly.Checked
-                = this.RepeatFrequencyYearly.Checked
-                = false;
+                  = this.RepeatFrequencyMonthly.Checked
+                    = this.RepeatFrequencyYearly.Checked
+                      = false;
         }
 
         /// <summary>

@@ -9,8 +9,8 @@
 //------------------------------------------------------------------------------
 
 namespace Engage.Dnn.Events {
-    
-    
+    using RecurrenceEditor=Engage.Dnn.Events.Controls.RecurrenceEditor;
+
     public partial class EventEdit {
         
         /// <summary>
@@ -146,7 +146,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Engage.Dnn.Events.Recurrence.RecurrenceEditor RecurrenceEditor;
+        protected RecurrenceEditor RecurrenceEditor;
         
         /// <summary>
         /// RecurrenceEditorValidator control.

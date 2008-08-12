@@ -8,9 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Engage.Dnn.Events.Recurrence {
-    
-    
+namespace Engage.Dnn.Events.Controls
+{
     public partial class RecurrenceEditor {
         
         /// <summary>

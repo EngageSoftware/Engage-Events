@@ -89,12 +89,10 @@
         <!-- everything included here ends up in resource.zip, this should be excluded in the CreateBinZip -->
         <include name="**/images/*" />
         <include name="**/Docs/*.pdf" />
-        <include name="**/RadEditor/*" />
         <include name="**/${localresource.dir}/*.resx" />
         <include name="**/${globalresource.dir}/*.resx" />
         <include name="**/${globalresource.dir}/*.xml" />
         <include name="**/*.ascx" />
-        <include name="**/*.js" />
         <include name="**/*.css" />
         <include name="**/*.aspx" />
         <include name="**/*.asmx" />
