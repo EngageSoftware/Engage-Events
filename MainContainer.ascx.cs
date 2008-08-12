@@ -74,20 +74,7 @@ namespace Engage.Dnn.Events
                 return "Admin/NotConfigured.ascx";
             }
 
-            string keyParam = string.Empty;
-            string[] modIdParams = this.Request.QueryString["modId"] == null ? new string[] { } : this.Request.QueryString["modId"].Split(';');
-            string[] keyParams = this.Request.QueryString["key"] == null ? new string[] { } : this.Request.QueryString["key"].Split(';');
-
-            for (int i = 0; i < modIdParams.Length && i < keyParams.Length; i++)
-            {
-                int modId;
-                if (int.TryParse(modIdParams[i], NumberStyles.Integer, CultureInfo.InvariantCulture, out modId) && modId == this.ModuleId)
-                {
-                    keyParam = keyParams[i];
-                    break;
-                }
-            }
-
+            string keyParam = this.GetCurrentControlKey();
             return Utility.HasValue(keyParam) ? ControlKeys[keyParam] : "Display/EventListingTemplate.ascx";
         }
 

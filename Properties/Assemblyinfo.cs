@@ -12,12 +12,13 @@
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Web.UI;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Engage: Events (Alpha2)")]
-[assembly: AssemblyDescription("Engage Software's DotNetnuke Events System (Alpha2).")]
+[assembly: AssemblyTitle("Engage: Events (Beta)")]
+[assembly: AssemblyDescription("Engage Software's DotNetnuke Events System (Beta).")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Engage Software, Inc.")]
 [assembly: AssemblyProduct("")]
@@ -38,3 +39,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]
+
+[assembly: WebResource("Engage.Dnn.Events.JavaScript.EngageEvents.EditTypeDialog.js", "text/javascript")]

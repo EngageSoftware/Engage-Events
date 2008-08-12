@@ -14,12 +14,14 @@ namespace Engage.Dnn.Events.Controls
 {
     using System;
     using System.IO;
+    using System.Web.UI;
+    using DotNetNuke.Framework;
     using DotNetNuke.Services.Localization;
 
     /// <summary>
     /// A dialog for determining whether a requested action should be performed against a recurring series of events, or only a single occurrence.
     /// </summary>
-    public partial class EditTypeDialog : ModuleBase
+    public partial class EditTypeDialog : PageBase
     {
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
@@ -29,6 +31,7 @@ namespace Engage.Dnn.Events.Controls
         {
             base.OnInit(e);
             this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
+            ScriptManager.RegisterClientScriptResource(this, typeof(EditTypeDialog), "Engage.Dnn.Events.JavaScript.EngageEvents.EditTypeDialog.js");
         }
     }
 }

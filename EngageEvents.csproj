@@ -162,12 +162,12 @@
     <Compile Include="Admin\NotConfigured.ascx.designer.cs">
       <DependentUpon>NotConfigured.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Controls\EditTypeDialog.ascx.cs">
-      <DependentUpon>EditTypeDialog.ascx</DependentUpon>
+    <Compile Include="Controls\EditTypeDialog.aspx.cs">
+      <DependentUpon>EditTypeDialog.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controls\EditTypeDialog.ascx.designer.cs">
-      <DependentUpon>EditTypeDialog.ascx</DependentUpon>
+    <Compile Include="Controls\EditTypeDialog.aspx.designer.cs">
+      <DependentUpon>EditTypeDialog.aspx</DependentUpon>
     </Compile>
     <Compile Include="Controls\ModuleMessage.ascx.cs">
       <DependentUpon>ModuleMessage.ascx</DependentUpon>
@@ -665,7 +665,7 @@
     <Content Include="App_LocalResources\SharedResources.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Controls\EditTypeDialog.ascx" />
+    <Content Include="Controls\EditTypeDialog.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Controls\App_LocalResources\EditTypeDialog.ascx.resx">

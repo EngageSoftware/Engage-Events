@@ -33,6 +33,10 @@ namespace Engage.Dnn.Events
         /// </summary>
         protected static readonly string LocalSharedResourceFile = "~" + DesktopModuleFolderName + Localization.LocalResourceDirectory + "/" + Localization.LocalSharedResourceFile;
 
+        /// <summary>
+        /// Gets the module actions.
+        /// </summary>
+        /// <value>The module actions.</value>
         public ModuleActionCollection ModuleActions
         {
             get
@@ -112,16 +116,22 @@ namespace Engage.Dnn.Events
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this instance is configured.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if this instance is configured; otherwise, <c>false</c>.
+        /// </value>
         protected override bool IsConfigured
         {
             get { return Utility.HasValue(Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.DisplayTemplate.PropertyName)); }
         }
 
         /// <summary>
-        /// Sends an iCalendar to the client to download.
+        /// Sends an <c>iCalendar</c> to the client to download.
         /// </summary>
-        /// <param name="response">The response to use to send the iCalendar.</param>
-        /// <param name="content">The content of the iCalendar.</param>
+        /// <param name="response">The response to use to send the <c>iCalendar</c>.</param>
+        /// <param name="content">The content of the <c>iCalendar</c>.</param>
         /// <param name="name">The name of the file.</param>
         protected static void SendICalendarToClient(HttpResponse response, string content, string name)
         {
@@ -148,6 +158,28 @@ namespace Engage.Dnn.Events
         protected string Localize(string resourceKey)
         {
             return Localization.GetString(resourceKey, this.LocalResourceFile);
+        }
+
+        /// <summary>
+        /// Gets the <c>QueryString</c> control key for the current <c>Request</c>.
+        /// </summary>
+        /// <returns>The <c>QueryString</c> control key for the current <c>Request</c></returns>
+        protected string GetCurrentControlKey()
+        {
+            string keyParam = string.Empty;
+            string[] modIdParams = this.Request.QueryString["modId"] == null ? new string[] { } : this.Request.QueryString["modId"].Split(';');
+            string[] keyParams = this.Request.QueryString["key"] == null ? new string[] { } : this.Request.QueryString["key"].Split(';');
+
+            for (int i = 0; i < modIdParams.Length && i < keyParams.Length; i++)
+            {
+                int modId;
+                if (int.TryParse(modIdParams[i], NumberStyles.Integer, CultureInfo.InvariantCulture, out modId) && modId == this.ModuleId)
+                {
+                    keyParam = keyParams[i];
+                    break;
+                }
+            }
+            return keyParam;
         }
     }
 }

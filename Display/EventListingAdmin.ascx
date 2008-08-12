@@ -1,7 +1,7 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.Display.EventListingAdmin" CodeBehind="EventListingAdmin.ascx.cs" EnableViewState="true" %>
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
 <%@ Register Src="../Navigation/EventAdminActions.ascx" TagName="actions" TagPrefix="engage" %>
-<%@ Register Src="../Controls/EditTypeDialog.ascx" TagName="editTypeDialog" TagPrefix="engage" %>
 
 <div class="MEEventHeader">
     <h2 class="MEvents SuhHead"><asp:Label ID="Label1" runat="server" ResourceKey="MyEventsLabel" /></h2>
@@ -45,4 +45,8 @@
 		</div>
     </ItemTemplate>
 </asp:Repeater>
-<engage:editTypeDialog runat="server" />
+<telerik:RadWindowManager runat="server">
+    <windows>
+        <telerik:radwindow ID="EditTypeDialogWindow" runat="server" InitialBehaviors="close" NavigateUrl="../Controls/EditTypeDialog.aspx" ClientCallBackFunction="EngageEvents.EditTypeDialogWindow_Callback" />
+    </windows>
+</telerik:RadWindowManager>
