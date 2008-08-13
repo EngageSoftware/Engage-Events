@@ -62,7 +62,11 @@
         private static void WriteTask(string description, string location, StringBuilder output, Appointment app, bool outlookCompatibleMode, TimeSpan timeZoneOffset)
         {
             output.AppendLine("BEGIN:VEVENT");
-            output.AppendLine("DESCRIPTION:" + description);
+
+            /// just so happened that during testing my text overview I swiped from an RCP Event had /r/n (Environment.NewLine)
+            /// in it. Need to remove them as they do affect the ICAL output. hk
+            description = description.Replace(Environment.NewLine, string.Empty);
+            output.AppendLine("DESCRIPTION:" + Engage.Util.Utility.RemoveHtmlTags(description, true));
             output.AppendLine("LOCATION:" + location);
 
             if (app.RecurrenceRule != string.Empty)
@@ -115,7 +119,8 @@
         {
             output.AppendLine("BEGIN:VCALENDAR");
             output.AppendLine("VERSION:2.0");
-            output.AppendLine("PRODID:-//Telerik Inc.//NONSGML RadScheduler//EN");
+            //output.AppendLine("PRODID:-//Telerik Inc.//NONSGML RadScheduler//EN");
+            output.AppendLine("PRODID:-//Microsoft Corporation//Outlook 12.0 MIMEDIR//EN");
 
             if (outlookCompatibleMode)
             {
