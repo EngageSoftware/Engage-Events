@@ -3,7 +3,6 @@
 // Copyright (c) 2004-2008
 // by Engage Software ( http://www.engagesoftware.com )
 // </copyright>
-
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
 // TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
 // THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
@@ -13,10 +12,8 @@
 namespace Engage.Dnn.Events.Controls
 {
     using System;
-    using System.IO;
     using System.Web.UI;
     using DotNetNuke.Framework;
-    using DotNetNuke.Services.Localization;
 
     /// <summary>
     /// A dialog for determining whether a requested action should be performed against a recurring series of events, or only a single occurrence.
@@ -30,7 +27,6 @@ namespace Engage.Dnn.Events.Controls
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
-            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
             ScriptManager.RegisterClientScriptResource(this, typeof(EditTypeDialog), "Engage.Dnn.Events.JavaScript.EngageEvents.EditTypeDialog.js");
         }
     }
