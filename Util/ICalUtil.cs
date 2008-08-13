@@ -62,11 +62,8 @@
         private static void WriteTask(string description, string location, StringBuilder output, Appointment app, bool outlookCompatibleMode, TimeSpan timeZoneOffset)
         {
             output.AppendLine("BEGIN:VEVENT");
-
-            /// just so happened that during testing my text overview I swiped from an RCP Event had /r/n (Environment.NewLine)
-            /// in it. Need to remove them as they do affect the ICAL output. hk
-            description = description.Replace(Environment.NewLine, string.Empty);
-            output.AppendLine("DESCRIPTION:" + Engage.Util.Utility.RemoveHtmlTags(description, true));
+            /// output.AppendLine("DESCRIPTION:" + Engage.Util.Utility.RemoveHtmlTags(description, true));
+            output.AppendLine("DESCRIPTION:" + description);
             output.AppendLine("LOCATION:" + location);
 
             if (app.RecurrenceRule != string.Empty)
