@@ -426,7 +426,7 @@ namespace Engage.Events
             }
             catch (SystemException de)
             {
-                throw new DBException("spInsertEvent", de);
+                throw new DBException("spInsertRsvp", de);
             }
         }
 
@@ -453,7 +453,7 @@ namespace Engage.Events
             }
             catch (SystemException de)
             {
-                throw new DBException("spUpdateEvent", de);
+                throw new DBException("spUpdateRsvp", de);
             }
         }
     }

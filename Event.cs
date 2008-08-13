@@ -38,6 +38,12 @@ namespace Engage.Events
         private bool isFeatured;
 
         /// <summary>
+        /// Backing field for <see cref="IsDeleted"/>.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private bool isDeleted;
+
+        /// <summary>
         /// Backing field for <see cref="CreatedBy"/>.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -418,6 +424,20 @@ namespace Engage.Events
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this instance is deleted.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if this instance is deleted; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsDeleted
+        {
+            [DebuggerStepThrough]
+            get { return this.isDeleted; }
+            [DebuggerStepThrough]
+            set { this.isDeleted = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the name of the organizer of this event.
         /// </summary>
         /// <value>The event's organizer.</value>
@@ -439,6 +459,37 @@ namespace Engage.Events
         {
             [DebuggerStepThrough]
             get { return this.organizerEmail; }
+        }
+
+        /// <summary>
+        /// Gets the final recurring end date.
+        /// </summary>
+        /// <value>The final recurring end date.</value>
+        [XmlIgnore]
+        private DateTime? FinalRecurringEndDate
+        {
+            get
+            {
+                if (this.recurrenceRule == null 
+                    || (0 == this.recurrenceRule.Range.MaxOccurrences && this.recurrenceRule.Range.RecursUntil == DateTime.MaxValue))
+                {
+                    return null;
+                }
+
+                // TODO: Calculate FinalRecurringEndDate efficiently
+                int originalMaxOccurrences = this.recurrenceRule.Range.MaxOccurrences;
+                this.recurrenceRule.Range.MaxOccurrences = int.MaxValue;
+
+                DateTime lastOccurrence = this.eventStart;
+                foreach (DateTime occurrence in this.recurrenceRule.Occurrences)
+                {
+                    lastOccurrence = occurrence;
+                }
+
+                this.recurrenceRule.Range.MaxOccurrences = originalMaxOccurrences;
+
+                return lastOccurrence + this.recurrenceRule.Range.EventDuration;
+            }
         }
 
         /// <summary>
@@ -532,6 +583,17 @@ namespace Engage.Events
             return Util.ICalUtil.Export(overview, location, new Appointment(this.Id, this.EventStart, this.EventEnd, this.Title, rule), true, attendeeTimeZoneOffset);
         }
 
+        /// <summary>
+        /// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("Title: {0}, Id: {1}, EventStart: {2}, EventEnd: {3}", this.title, this.id, this.eventStart, this.eventEnd);
+        }
+
         #region IEditableObject Members
 
         /// <summary>
@@ -576,6 +638,7 @@ namespace Engage.Events
             e.createdBy = (int)eventRecord["CreatedBy"];
             e.cancelled = (bool)eventRecord["Cancelled"];
             e.isFeatured = (bool)eventRecord["IsFeatured"];
+            e.isDeleted = (bool)eventRecord["IsDeleted"];
             e.organizer = eventRecord["Organizer"].ToString();
             e.organizerEmail = eventRecord["OrganizerEmail"].ToString();
             e.location = eventRecord["Location"].ToString();
@@ -646,10 +709,13 @@ namespace Engage.Events
                     Utility.CreateVarcharParam("@LocationUrl", this.locationUrl),
                     Utility.CreateVarcharParam("@InvitationUrl", this.invitationUrl),
                     Utility.CreateVarcharParam("@RecapUrl", this.recapUrl),
-                    Utility.CreateTextParam("@RecurrenceRule", this.recurrenceRule != null ? this.recurrenceRule.ToString() : null),
+                    Utility.CreateIntegerParam("@RecurrenceParentId", this.recurrenceParentId),
+                    Utility.CreateVarcharParam("@RecurrenceRule", this.recurrenceRule != null ? this.recurrenceRule.ToString() : null),
                     Utility.CreateBitParam("@CanRsvp", true),
                     Utility.CreateBitParam("@isFeatured", this.isFeatured),
-                    Utility.CreateIntegerParam("@CreatedBy", revisingUser));
+                    Utility.CreateIntegerParam("@CreatedBy", revisingUser),
+                    Utility.CreateDateTimeParam("@FinalRecurringEndDate", this.FinalRecurringEndDate),
+                    Utility.CreateBitParam("@IsDeleted", this.isDeleted));
             }
             catch (SystemException de)
             {
@@ -688,7 +754,9 @@ namespace Engage.Events
                     Utility.CreateBitParam("@CanRsvp", true),
                     Utility.CreateBitParam("@Cancelled", this.cancelled),
                     Utility.CreateBitParam("@isFeatured", this.isFeatured),
-                    Utility.CreateIntegerParam("@RevisingUser", revisingUser));
+                    Utility.CreateIntegerParam("@RevisingUser", revisingUser),
+                    Utility.CreateDateTimeParam("@FinalRecurringEndDate", this.FinalRecurringEndDate),
+                    Utility.CreateBitParam("@IsDeleted", this.isDeleted));
             }
             catch (SystemException de)
             {

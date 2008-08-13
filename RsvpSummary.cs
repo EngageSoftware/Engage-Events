@@ -40,12 +40,6 @@ namespace Engage.Events
         private Event @event;
 
         /// <summary>
-        /// Backing field for <see cref="EventStart"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DateTime eventStart;
-
-        /// <summary>
         /// Backing field for <see cref="NoResponse"/>.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -62,12 +56,6 @@ namespace Engage.Events
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string title = string.Empty;
-
-        /// <summary>
-        /// Backing field for <see cref="TotalRecords"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int totalRecords;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RsvpSummary"/> class.
@@ -178,16 +166,6 @@ namespace Engage.Events
         {
             [DebuggerStepThrough]
             get { return this.noResponse; }
-        }
-
-        /// <summary>
-        /// Gets the total number of records.
-        /// </summary>
-        /// <value>The total records.</value>
-        public int TotalRecords
-        {
-            [DebuggerStepThrough]
-            get { return this.totalRecords; }
         }
 
         /// <summary>
