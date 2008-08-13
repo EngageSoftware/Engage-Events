@@ -56,7 +56,7 @@
 
     <div class="AEEventEditor">
         <asp:Label runat="server" ResourceKey="EventOverviewLabel" CssClass="NormalBold" AssociatedControlID="EventOverviewTextEditor"/>
-        <dnn:TextEditor ID="EventOverviewTextEditor" runat="server" Width="400" TextRenderMode="Raw" HtmlEncode="False" DefaultMode="Rich" Height="350" ChooseMode="True" ChooseRender="False" />
+        <asp:TextBox  ID="EventOverviewTextEditor" runat="server" Columns="30" Rows="5" Width="400" TextMode="MultiLine" Height="350" />
     </div>
     
     <div class="AEEventEditor">
