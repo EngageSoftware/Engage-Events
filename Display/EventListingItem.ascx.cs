@@ -28,11 +28,6 @@ namespace Engage.Dnn.Events.Display
     public partial class EventListingItem : RepeaterItemListing
     {
         /// <summary>
-        /// Backing field for <see cref="Mode"/>
-        /// </summary>
-        private string mode = string.Empty;
-
-        /// <summary>
         /// Backing field for <see cref="SortAction"/>
         /// </summary>
         private SortAction sortAction;
@@ -42,26 +37,40 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         private SortStatusAction sortStatusAction;
 
-        private EventCollection events; // keep a reference around of the data that you have loaded
-
+        /// <summary>
+        /// Backing field for <see cref="ListingMode"/>
+        /// </summary>
         private ListingMode listingMode;
 
         /// <summary>
-        /// Gets or sets the mode.
+        /// The collection of events to display
+        /// </summary>
+        private EventCollection events; // keep a reference around of the data that you have loaded
+
+        /// <summary>
+        /// Gets the listing mode used for this display.
         /// </summary>
         /// <value>The mode.</value>
-        public string Mode
+        public ListingMode ListingMode
         {
-            get { return this.mode; }
-            set { this.mode = value; }
+            get { return this.listingMode; }
+            private set { this.listingMode = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the sort action control.
+        /// </summary>
+        /// <value>The sort action control.</value>
         public SortAction SortAction
         {
             get { return this.sortAction; }
             set { this.sortAction = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the sort status action control.
+        /// </summary>
+        /// <value>The sort status action control.</value>
         public SortStatusAction SortStatusAction
         {
             get { return this.sortStatusAction; }
@@ -77,14 +86,34 @@ namespace Engage.Dnn.Events.Display
             get { return this.events.TotalRecords; }
         }
 
+        /// <summary>
+        /// Gets the header container.
+        /// </summary>
+        /// <value>The header container.</value>
         protected override PlaceHolder HeaderContainer
         {
             get { return this.PlaceHolderHeader; }
         }
 
+        /// <summary>
+        /// Gets the footer container.
+        /// </summary>
+        /// <value>The footer container.</value>
         protected override PlaceHolder FooterContainer
         {
             get { return this.PlaceHolderFooter; }
+        }
+
+        /// <summary>
+        /// Sets the listing mode used for this display.
+        /// </summary>
+        /// <param name="listingMode">The listing mode used for this display.</param>
+        public void SetListingMode(string listingMode)
+        {
+            if (!string.IsNullOrEmpty(listingMode))
+            {
+                this.ListingMode = (ListingMode)Enum.Parse(typeof(ListingMode), listingMode, true);
+            }
         }
 
         /// <summary>
@@ -104,28 +133,20 @@ namespace Engage.Dnn.Events.Display
                 statusSort = this.sortStatusAction.SelectedValue;
             }
 
-            int pageSize;
-
-            // need to make sure that paging got rendered. if not, get all records
-            if (this.PreviousButton == null || this.NextButton == null)
-            {
-                pageSize = 0;
-            }
-            else
-            {
-                pageSize = this.RecordsPerPage;
-            }
-
-            this.events = EventCollection.Load(this.PortalId, this.listingMode, sort, this.CurrentPageIndex, pageSize, statusSort == "All", this.IsFeatured);
+            this.events = EventCollection.Load(this.PortalId, this.listingMode, sort, this.CurrentPageIndex, this.RecordsPerPage, statusSort == "All", this.IsFeatured);
             this.RepeaterEvents.DataSource = this.events;
             this.RepeaterEvents.DataBind();
         }
 
+        /// <summary>
+        /// Gets the footer template.
+        /// </summary>
+        /// <returns>The footer template</returns>
         protected override Template GetFooterTemplate()
         {
-            string templateName = this.footerTemplateName.Length == 0
+            string templateName = this.FooterTemplateName.Length == 0
                                       ? Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.FooterTemplate.PropertyName)
-                                      : this.footerTemplateName;
+                                      : this.FooterTemplateName;
             Template footerTemplate = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
             return footerTemplate;
         }
@@ -137,35 +158,34 @@ namespace Engage.Dnn.Events.Display
         protected override void OnInit(EventArgs e)
         {
             // we must set the local resource file first since process will occur before we define the LocalResourceFile
-            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + "App_LocalResources/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
+            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
             base.OnInit(e);
 
-            string setting = this.mode.Length == 0 ? Dnn.Utility.GetStringSetting(this.Settings, Setting.DisplayModeOption.PropertyName) : this.mode;
-            this.listingMode = (ListingMode)Enum.Parse(typeof(ListingMode), setting);
+            this.listingMode = Dnn.Utility.GetEnumSetting(this.Settings, Setting.DisplayModeOption.PropertyName, ListingMode.All);
         }
 
         /// <summary>
         /// Gets the item template.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The item template</returns>
         protected override Template GetItemTemplate()
         {
-            string templateName = this.itemTemplateName.Length == 0
+            string templateName = this.ItemTemplateName.Length == 0
                                       ? Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.ItemTemplate.PropertyName)
-                                      : this.itemTemplateName;
+                                      : this.ItemTemplateName;
             Template itemTemplate = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
             return itemTemplate;
         }
 
         /// <summary>
-        /// Processes the header.
+        /// Gets the header template.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The header template</returns>
         protected override Template GetHeaderTemplate()
         {
-            string templateName = this.headerTemplateName.Length == 0
+            string templateName = this.HeaderTemplateName.Length == 0
                                       ? Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.HeaderTemplate.PropertyName)
-                                      : this.headerTemplateName;
+                                      : this.HeaderTemplateName;
             Template headerTemplate = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
             return headerTemplate;
         }
@@ -209,6 +229,7 @@ namespace Engage.Dnn.Events.Display
                     registerEventAction.Href = this.BuildLinkUrl(this.ModuleId, "Register", "eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
                     registerEventAction.Text = Localization.GetString("RegisterButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(registerEventAction);
+
                     // must be an active event and has not ended to register
                     registerEventAction.Visible = ev.Cancelled == false && ev.EventEnd > DateTime.Now;
 
@@ -218,8 +239,9 @@ namespace Engage.Dnn.Events.Display
                         (AddToCalendarAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/AddToCalendarAction.ascx");
                     addToCalendarAction.CurrentEvent = ev;
                     addToCalendarAction.ModuleConfiguration = this.ModuleConfiguration;
-                    // user must be registered for the event, must be an active event and has not ended to register
-                    addToCalendarAction.Visible = this.IsAdmin || ModuleBase.IsRegistered(ev.Id) && ev.Cancelled == false && ev.EventEnd > DateTime.Now;
+
+                    // must be an active event and has not ended
+                    addToCalendarAction.Visible = ev.Cancelled == false && ev.EventEnd > DateTime.Now;
                     container.Controls.Add(addToCalendarAction);
                     break;
                 case "DELETEBUTTON":

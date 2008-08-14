@@ -206,19 +206,21 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void Insert()
         {
+            DateTime eventStart = this.StartDateTimePicker.SelectedDate.Value;
+            DateTime eventEnd = this.EndDateTimePicker.SelectedDate.Value;
             Event e = Event.Create(
                 this.PortalId,
                 this.ModuleId,
                 this.UserInfo.Email,
                 this.EventTitleTextBox.Text,
                 this.EventOverviewTextEditor.Text,
-                this.StartDateTimePicker.SelectedDate.Value);
+                this.EventDescriptionTextEditor.Text,
+                eventStart, 
+                eventEnd, 
+                this.EventLocationTextBox.Text, 
+                this.FeaturedCheckbox.Checked,
+                this.RecurrenceEditor.GetRecurrenceRule(eventStart, eventEnd));
 
-            e.Location = this.EventLocationTextBox.Text;
-            e.EventEnd = this.EndDateTimePicker.SelectedDate.Value;
-            e.Description = this.EventDescriptionTextEditor.Text;
-            e.IsFeatured = this.FeaturedCheckbox.Checked;
-            e.RecurrenceRule = this.RecurrenceEditor.GetRecurrenceRule(e.EventStart, e.EventEnd);
             e.Save(this.UserId);
         }
 

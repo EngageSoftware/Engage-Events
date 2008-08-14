@@ -21,8 +21,8 @@ namespace Engage.Dnn.Events.Display
     public partial class EventListingTemplate : TemplateModuleBase
     {
         /// <summary>
-        /// Method used to process a tag. This method is invoked from the TemplateEngine class. Since this control knows
-        /// best on how to contruct the control. ListingItem templates are used here.
+        /// Method used to process a tag. This method is invoked from the <see cref="TemplateEngine"/> class. Since this control knows
+        /// best on how to construct the control. ListingItem templates are used here.
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="tag">The tag.</param>
@@ -38,7 +38,7 @@ namespace Engage.Dnn.Events.Display
                     // need to default to all and set if attribute is defined.
                     if (tag.HasAttribute("ListingMode"))
                     {
-                        listingCurrent.Mode = tag.GetAttributeValue("ListingMode");
+                        listingCurrent.SetListingMode(tag.GetAttributeValue("ListingMode"));
                     }
 
                     if (tag.HasAttribute("HeaderTemplate"))

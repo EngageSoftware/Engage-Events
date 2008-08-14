@@ -43,9 +43,6 @@ IF EXISTS (SELECT * FROM   dbo.sysobjects WHERE  id = Object_id(N'{databaseOwner
 GO
 CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEvents](
 	@portalId int, 
-	@sortColumn nvarchar(200), 
-	@index int, 
-	@pageSize int, 
 	@showAll bit,
 	@featured bit,
 	@startDate datetime,
@@ -53,14 +50,7 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEvents](
 )
 AS
 BEGIN
-	CREATE TABLE #results 
-	(
-		[Id] INT NOT NULL IDENTITY(1,1),
-		[EventId] INT
-	)
-	
-	INSERT INTO #results ([EventId])
-	 SELECT [EventId]
+	 SELECT *
 	 FROM   {databaseOwner}[{objectQualifier}Engage_Event]
 	 WHERE  PortalId = @portalId
 	  AND (@featured = 0 OR IsFeatured = @featured)
@@ -73,19 +63,6 @@ BEGIN
 		  )
 
 	SELECT @@ROWCOUNT AS TotalRecords
-	DECLARE @sql VARCHAR(8000)
-
-	SET @sql = 'SELECT e.* FROM #results r '
-	SET @sql = @sql + 'JOIN {databaseOwner}[{objectQualifier}Engage_Event] e ON (r.EventId = e.EventId) '
-	IF (@PageSize != 0)
- 		BEGIN
- 			SET @sql = @sql + 'WHERE (id >= ' + str(@index) + ' * ' + str(@PageSize) + ' + 1) AND id < (' + str(@index) + ' * ' + str(@PageSize) + ') + ' + str(@PageSize) + ' + 1 '
- 		END
-	SET @sql = @sql + 'ORDER BY ' + @sortColumn
-
-	--print @sql
-	exec (@sql)
-
 END
 GO
 

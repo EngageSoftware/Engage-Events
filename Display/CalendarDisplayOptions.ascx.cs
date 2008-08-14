@@ -16,8 +16,15 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Services.Exceptions;
 
+    /// <summary>
+    /// The settings page for the calendar display mode.
+    /// </summary>
     public partial class CalendarDisplayOptions : ModuleSettingsBase
     {
+        /// <summary>
+        /// Gets or sets which Skin to use for the calendar display.
+        /// </summary>
+        /// <value>The Skin to use for the calendar display</value>
         internal string SkinOption
         {
             set
@@ -32,6 +39,9 @@ namespace Engage.Dnn.Events
             }
         }
 
+        /// <summary>
+        /// Sets up this control.
+        /// </summary>
         public override void LoadSettings()
         {
             try
@@ -62,6 +72,9 @@ namespace Engage.Dnn.Events
             }
         }
 
+        /// <summary>
+        /// Saves the settings for this control.
+        /// </summary>
         public override void UpdateSettings()
         {
             base.UpdateSettings();

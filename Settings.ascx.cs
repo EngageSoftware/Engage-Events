@@ -12,13 +12,14 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.Globalization;
     using System.IO;
     using System.Web.UI.WebControls;
-    using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Host;
+    using DotNetNuke.Entities.Modules;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
-    using System.Globalization;
+    using Utility = Engage.Dnn.Utility;
 
     /// <summary>
     /// This is the settings code behind for Event related Settings.
@@ -35,18 +36,18 @@ namespace Engage.Dnn.Events
         /// </summary>
         public override void UpdateSettings()
         {
-            if (Page.IsValid)
+            if (this.Page.IsValid)
             {
                 try
                 {
                     HostSettingsController controller = new HostSettingsController();
-                    controller.UpdateHostSetting(Framework.Utility.ModuleConfigured + PortalId.ToString(CultureInfo.InvariantCulture), "true");
+                    controller.UpdateHostSetting(Framework.Utility.ModuleConfigured + this.PortalId.ToString(CultureInfo.InvariantCulture), "true");
 
                     ModuleController modules = new ModuleController();
                     modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.DisplayTemplate.PropertyName, this.DropDownChooseDisplay.SelectedValue);
 
                     modules.UpdateTabModuleSetting(this.TabModuleId, Setting.FeaturedOnly.PropertyName, this.FeaturedCheckbox.Checked.ToString());
-                    
+
                     this.currentSettingsBase.UpdateSettings();
                 }
                 catch (Exception exc)
@@ -66,7 +67,8 @@ namespace Engage.Dnn.Events
             {
                 if (!this.IsPostBack)
                 {
-                    this.DropDownChooseDisplay.Items.Add(new ListItem(Localization.GetString("EventListingTemplate", this.LocalResourceFile), "Display.Listing.html"));
+                    this.DropDownChooseDisplay.Items.Add(
+                        new ListItem(Localization.GetString("EventListingTemplate", this.LocalResourceFile), "Display.Listing.html"));
                     this.DropDownChooseDisplay.Items.Add(new ListItem(Localization.GetString("EventCalendar", this.LocalResourceFile), "Display.Calendar.html"));
 
                     this.SetOptions();
@@ -115,7 +117,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetOptions()
         {
-            string displayType = Utility.GetStringSetting(Settings, Framework.Setting.DisplayTemplate.PropertyName);
+            string displayType = Utility.GetStringSetting(this.Settings, Framework.Setting.DisplayTemplate.PropertyName);
 
             ListItem li = this.DropDownChooseDisplay.Items.FindByValue(displayType);
             if (li != null)
@@ -123,7 +125,7 @@ namespace Engage.Dnn.Events
                 li.Selected = true;
             }
 
-            this.FeaturedCheckbox.Checked = Utility.GetBoolSetting(Settings, Setting.FeaturedOnly.PropertyName, false);
+            this.FeaturedCheckbox.Checked = Utility.GetBoolSetting(this.Settings, Setting.FeaturedOnly.PropertyName, false);
         }
 
         /// <summary>
@@ -165,15 +167,15 @@ namespace Engage.Dnn.Events
         /// <returns>Module Settings Base</returns>
         private ModuleSettingsBase CreateSettingsControl(string controlName)
         {
-            ModuleSettingsBase settingsControl = (ModuleSettingsBase)LoadControl(controlName);
+            ModuleSettingsBase settingsControl = (ModuleSettingsBase)this.LoadControl(controlName);
             ModuleController mc = new ModuleController();
-            ModuleInfo mi = mc.GetModule(ModuleId, TabId);
+            ModuleInfo mi = mc.GetModule(this.ModuleId, this.TabId);
             settingsControl.ModuleConfiguration = mi;
 
             // SEE LINE BELOW remove the following two lines for 4.6 because 4.6 no longer supports setting the moduleid, you have to get it through the module configuration.
             // the following appears to work fine in 4.6.2 now
-            settingsControl.ModuleId = ModuleId;
-            settingsControl.TabModuleId = TabModuleId;
+            settingsControl.ModuleId = this.ModuleId;
+            settingsControl.TabModuleId = this.TabModuleId;
 
             settingsControl.ID = Path.GetFileNameWithoutExtension(controlName);
             settingsControl.LoadSettings();
@@ -182,4 +184,3 @@ namespace Engage.Dnn.Events
         }
     }
 }
-
