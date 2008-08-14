@@ -164,16 +164,23 @@ namespace Engage.Events
         /// <param name="moduleId">The module id.</param>
         /// <param name="organizerEmail">The organizer email.</param>
         /// <param name="title">The title of the event.</param>
-        /// <param name="overview">The overview or description of the event.</param>
+        /// <param name="overview">The overview (short description) of the event.</param>
+        /// <param name="description">The event description.</param>
         /// <param name="eventStart">When the event starts.</param>
-        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, DateTime eventStart)
+        /// <param name="eventEnd">When the event ends.</param>
+        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, string location, bool isFeatured, RecurrenceRule recurrenceRule)
         {
-            this.moduleId = moduleId;
             this.portalId = portalId;
+            this.moduleId = moduleId;
+            this.organizerEmail = organizerEmail ?? string.Empty;
             this.title = title;
             this.overview = overview;
+            this.description = description;
             this.eventStart = eventStart;
-            this.organizerEmail = organizerEmail ?? string.Empty;
+            this.eventEnd = eventEnd;
+            this.location = location;
+            this.isFeatured = isFeatured;
+            this.recurrenceRule = recurrenceRule;
         }
 
         #region INotifyPropertyChanged Members
@@ -184,17 +191,6 @@ namespace Engage.Events
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
-
-        /// <summary>
-        /// Gets a value indicating whether this instance is recurring.
-        /// </summary>
-        /// <value>
-        /// 	<c>true</c> if this instance is recurring; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsRecurring
-        {
-            get { return this.RecurrenceRule != null; }
-        }
 
         /// <summary>
         /// Gets the id of this event.
@@ -225,6 +221,25 @@ namespace Engage.Events
         {
             [DebuggerStepThrough]
             get { return this.moduleId; }
+        }
+        /// <summary>
+        /// Gets the ID of the user who created this event.
+        /// </summary>
+        /// <value>The ID of the user that created this event.</value>
+        public int CreatedBy
+        {
+            [DebuggerStepThrough]
+            get { return this.createdBy; }
+        }
+        /// <summary>
+        /// Gets the email address of the organizer of this event.
+        /// </summary>
+        /// <value>The organizer's email.</value>
+        [XmlElement(Order = 5)]
+        public string OrganizerEmail
+        {
+            [DebuggerStepThrough]
+            get { return this.organizerEmail; }
         }
 
         /// <summary>
@@ -330,26 +345,6 @@ namespace Engage.Events
         }
 
         /// <summary>
-        /// Gets <see cref="EventStart"/> with "short" formatting (M.dd.yyyy).
-        /// </summary>
-        /// <value>The event start formatted "short".</value>
-        public string EventStartFormatted
-        {
-            [DebuggerStepThrough]
-            get { return this.eventStart.ToString("M.dd.yyyy"); }
-        }
-
-        /// <summary>
-        /// Gets <see cref="EventStart"/> with "long" formatting (dddd, MMMM d, yyyy, h:mm tt).
-        /// </summary>
-        /// <value>The event start formatted "long".</value>
-        public string EventStartLongFormatted
-        {
-            [DebuggerStepThrough]
-            get { return this.eventStart.ToString("dddd, MMMM d, yyyy, h:mm tt"); }
-        }
-
-        /// <summary>
         /// Gets or sets when this event ends.
         /// </summary>
         /// <value>The event's end date and time.</value>
@@ -360,16 +355,6 @@ namespace Engage.Events
             get { return this.eventEnd; }
             [DebuggerStepThrough]
             set { this.eventEnd = value; }
-        }
-
-        /// <summary>
-        /// Gets the ID of the user who created this event.
-        /// </summary>
-        /// <value>The ID of the user that created this event.</value>
-        public int CreatedBy
-        {
-            [DebuggerStepThrough]
-            get { return this.createdBy; }
         }
 
         /// <summary>
@@ -451,14 +436,44 @@ namespace Engage.Events
         }
 
         /// <summary>
-        /// Gets the email address of the organizer of this event.
+        /// Gets a value indicating whether this instance is recurring.
         /// </summary>
-        /// <value>The organizer's email.</value>
-        [XmlElement(Order = 5)]
-        public string OrganizerEmail
+        /// <value>
+        /// 	<c>true</c> if this instance is recurring; otherwise, <c>false</c>.
+        /// </value>
+        [XmlIgnore]
+        public bool IsRecurring
+        {
+            get { return this.RecurrenceRule != null; }
+        }
+        /// <summary>
+        /// Gets <see cref="EventStart"/> with "short" formatting (M.dd.yyyy).
+        /// </summary>
+        /// <value>The event start formatted "short".</value>
+        [XmlIgnore]
+        public string EventStartFormatted
         {
             [DebuggerStepThrough]
-            get { return this.organizerEmail; }
+            get { return this.eventStart.ToString("M.dd.yyyy"); }
+        }
+        /// <summary>
+        /// Gets <see cref="EventStart"/> with "long" formatting (dddd, MMMM d, yyyy, h:mm tt).
+        /// </summary>
+        /// <value>The event start formatted "long".</value>
+        [XmlIgnore]
+        public string EventStartLongFormatted
+        {
+            [DebuggerStepThrough]
+            get { return this.eventStart.ToString("dddd, MMMM d, yyyy, h:mm tt"); }
+        }
+        /// <summary>
+        /// Gets the duration of this event.
+        /// </summary>
+        /// <value>The event's duration</value>
+        [XmlIgnore]
+        private TimeSpan Duration
+        {
+            get { return this.eventEnd - this.eventStart; }
         }
 
         /// <summary>
@@ -529,11 +544,16 @@ namespace Engage.Events
         /// <param name="organizerEmail">The organizer email.</param>
         /// <param name="title">The title of the event.</param>
         /// <param name="overview">The overview or description of the event.</param>
+        /// <param name="description">The description.</param>
         /// <param name="eventStart">The event's start date and time.</param>
+        /// <param name="eventEnd">The event end.</param>
+        /// <param name="location">The location of the event.</param>
+        /// <param name="isFeatured">if set to <c>true</c> the event should be listed in featured displays.</param>
+        /// <param name="recurrenceRule">The recurrence rule.</param>
         /// <returns>A new event object.</returns>
-        public static Event Create(int portalId, int moduleId, string organizerEmail, string title, string overview, DateTime eventStart)
+        public static Event Create(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, string location, bool isFeatured, RecurrenceRule recurrenceRule)
         {
-            return new Event(portalId, moduleId, organizerEmail, title, overview, eventStart);
+            return new Event(portalId, moduleId, organizerEmail, title, overview, description, eventStart, eventEnd, location, isFeatured, recurrenceRule);
         }
 
         /// <summary>
@@ -553,6 +573,18 @@ namespace Engage.Events
             {
                 throw new DBException("spDeleteEvent", se);
             }
+        }
+
+        /// <summary>
+        /// Creates an occurrence of this <see cref="Event"/>, for the given <paramref name="occurrenceDate"/>.
+        /// </summary>
+        /// <param name="occurrenceDate">The date and time at which this occurrence starts.</param>
+        /// <returns>An occurrence of this <see cref="Event"/></returns>
+        public Event CreateOccurrence(DateTime occurrenceDate)
+        {
+            Event occurrence = new Event(this.portalId, this.moduleId, this.organizerEmail, this.title, this.overview, this.description, occurrenceDate, occurrenceDate + this.Duration, this.location, this.isFeatured, this.recurrenceRule);
+            occurrence.recurrenceParentId = this.id;
+            return occurrence;
         }
 
         /// <summary>
@@ -763,103 +795,5 @@ namespace Engage.Events
                 throw new DBException("spUpdateEvent", de);
             }
         }
-
-        /// <summary>
-        /// Generates an iCalendar representation of this event.
-        /// </summary>
-        /// <param name="attendeeEmail">The attendee email.</param>
-        /// <returns>A strongly-typed iCalendar representation of this event.</returns>
-        ////private iCalendar GenerateICalendar(string attendeeEmail)
-        ////{
-        ////    this.LoadAspnetEmailLicense();
-
-        ////    iCalendar ic = new iCalendar();
-            
-        ////    ic.OptimizedFormat = OptimizedFormat.Exchange2003;
-
-        ////    // create the organizer
-        ////    ic.Event.Organizer.FullName = this.organizer;
-        ////    ic.Event.Organizer.Email = this.organizerEmail;
-
-        ////    // set the timezone - this will need to be based on the current environment timezone.hk
-        ////    ic.TimeZone.TimeZoneIndex = TimeZoneHelper.CentralAmericaGMTm0600;
-        ////    ic.Type = iCalendarType.iCal;
-
-        ////    // define the event
-        ////    ic.Event.Summary.Text = this.title;
-        ////    ic.Event.Description.Text = this.overview;
-
-        ////    // set the location 
-        ////    ic.Event.Location.Text = this.location;
-
-        ////    // set the dates.
-        ////    ic.Event.DateStart.Date = this.eventStart;
-        ////    ic.Event.DateEnd.Date = this.eventEnd;
-
-        ////    // mark the time as busy (not available to free-busy searches).
-        ////    ic.Event.TimeTransparency.TransparencyType = TransparencyType.Opaque;
-        ////    ////ic.Method = new Method(Method.PublishMethod);
-        ////    ic.Method = new Method(Method.RequestMethod);
-
-        ////    // set an alarm/reminder
-        ////    Alarm a = new DisplayAlarm("This is a reminder of an upcoming event.");
-
-        ////    // repeat the alarm for 10 times (snooze)
-        ////    a.Repeat.Count = 10;
-
-        ////    // triggers 30 minutes before the event starts
-        ////    a.Trigger.RelativeTrigger.Negative = true;
-        ////    a.Trigger.RelativeTrigger.TimeSpan = new TimeSpan(0, 30, 0);
-
-        ////    // delay period after which the alarm will repeat
-        ////    a.DelayPeriod.TimeSpan = new TimeSpan(0, 10, 0);
-
-        ////    // Add the Attendee
-        ////    Attendee att1 = new Attendee();
-        ////    ////att1.FullName = attendeeEmail;
-        ////    att1.Email = attendeeEmail;
-        ////    att1.ParticipationStatus = ParticipationStatus.NEEDSACTION;
-        ////    att1.Role = RoleType.REQ_PARTICIPANT;
-        ////    ////att1.RSVP = true;
-        ////    ic.Event.Attendees.Add(att1);
-
-        ////    ic.Event.Classification.ClassificationType = ClassificationType.Private;
-        ////    ic.Event.Categories.Add(CategoryType.APPOINTMENT);
-
-        ////    if (this.recurrenceRule != null)
-        ////    {
-        ////        // make this a recurring event - NOT YET IMPLEMENTED!!!!!hk
-        ////        // Day 31 of every two months for 10 months. For some months it will fall on the last day.
-        ////        MonthlyRecurrence mr = new MonthlyRecurrence();
-
-        ////        mr.WeekStart = iCalendarDay.Sunday; // change the default weekstart to sunday
-        ////        mr.Interval = 2;
-        ////        mr.Occurs = 10;
-        ////        mr.DayNumber = 31;
-        ////        ic.Event.Recurrence = mr;
-        ////    }
-
-        ////    ////ic.WriteToFile(@"c:\inetpub\wwwroot\aspnetgenerated.ics");
-
-        ////    return ic;
-        ////}
-
-        /// <summary>
-        /// Loads the license for the aspnetEmail component.
-        /// </summary>
-        ////private void LoadAspnetEmailLicense()
-        ////{
-        ////    // we only need to load the license once. 
-        ////    // aspNetEmail will cache it internally.
-        ////    if (!this.aspnetEmailLicenseLoaded)
-        ////    {
-        ////        // load the license, or an exception will be thrown about "unable to locate license"
-        ////        string contents = GetLicenseString();
-        ////        EmailMessage.LoadLicenseString(contents);
-
-        ////        // set the flag that the license has already been loaded
-        ////        this.aspnetEmailLicenseLoaded = true;
-        ////    }
-        ////}
     }
 }
