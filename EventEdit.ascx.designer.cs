@@ -146,7 +146,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Engage.Dnn.Events.Recurrence.RecurrenceEditor RecurrenceEditor;
+        protected global::Engage.Dnn.Events.Controls.RecurrenceEditor RecurrenceEditor;
         
         /// <summary>
         /// RecurrenceEditorValidator control.
