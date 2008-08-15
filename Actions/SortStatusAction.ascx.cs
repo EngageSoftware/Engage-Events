@@ -14,7 +14,7 @@ namespace Engage.Dnn.Events
     using System;
 
     /// <summary>
-    /// Displays the actions that users can perform on an event instance.
+    /// Allows the user to choose whether to display all events or only active events.
     /// </summary>
     /// <remarks>
     /// This control's behavior changed from using LinkButtons to standard buttons. Something to do with a postback
@@ -27,6 +27,10 @@ namespace Engage.Dnn.Events
         /// </summary>
         public event EventHandler SortChanged;
 
+        /// <summary>
+        /// Gets the selected status of event to display.
+        /// </summary>
+        /// <value>The selected status of event to display.</value>
         internal string SelectedValue
         {
             get { return this.RadioButtonListStatusSort.SelectedValue; }

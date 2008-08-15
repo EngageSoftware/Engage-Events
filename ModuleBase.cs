@@ -61,20 +61,7 @@ namespace Engage.Dnn.Events
                 return actions;
             }
         }
-        /// <summary>
-        /// This method takes the eventid and the currently logged in user (if any) and checks for
-        /// an existing RSVP(registration) for the user.
-        /// </summary>
-        internal static bool IsRegistered(int eventId)
-        {
-            bool registered = false;
-            if (eventId > 0 && IsLoggedIn)
-            {
-                Engage.Events.Rsvp rsvp = Engage.Events.Rsvp.Load(eventId, DotNetNuke.Entities.Users.UserController.GetCurrentUserInfo().Email);
-                registered = (rsvp != null);
-            }
-            return registered;
-        }
+
         /// <summary>
         /// Gets the event id.
         /// </summary>
@@ -92,6 +79,7 @@ namespace Engage.Dnn.Events
                 return id;
             }
         }
+
         /// <summary>
         /// Gets the register URL.
         /// </summary>
@@ -128,6 +116,26 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// This method takes the eventid and the currently logged in user (if any) and checks for
+        /// an existing RSVP(registration) for the user.
+        /// </summary>
+        /// <param name="eventId">The event id.</param>
+        /// <returns>
+        /// 	<c>true</c> if the current user if registered for the specified event; otherwise, <c>false</c>.
+        /// </returns>
+        internal static bool IsRegistered(int eventId)
+        {
+            bool registered = false;
+            if (eventId > 0 && IsLoggedIn)
+            {
+                Engage.Events.Rsvp rsvp = Engage.Events.Rsvp.Load(eventId, DotNetNuke.Entities.Users.UserController.GetCurrentUserInfo().Email);
+                registered = (rsvp != null);
+            }
+
+            return registered;
+        }
+
+        /// <summary>
         /// Sends an <c>iCalendar</c> to the client to download.
         /// </summary>
         /// <param name="response">The response to use to send the <c>iCalendar</c>.</param>
@@ -144,7 +152,7 @@ namespace Engage.Dnn.Events
             response.ContentEncoding = Encoding.UTF8;
             response.Charset = "utf-8";
 
-            response.AddHeader("Content-Disposition", "attachment;filename=\"" + HttpUtility.UrlEncode(name) + ".ics" +"\"");
+            response.AddHeader("Content-Disposition", "attachment;filename=\"" + HttpUtility.UrlEncode(name) + ".ics" + "\"");
 
             response.Write(content);
             response.End();
@@ -179,6 +187,7 @@ namespace Engage.Dnn.Events
                     break;
                 }
             }
+
             return keyParam;
         }
     }

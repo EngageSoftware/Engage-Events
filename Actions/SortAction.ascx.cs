@@ -14,7 +14,7 @@ namespace Engage.Dnn.Events
     using System;
 
     /// <summary>
-    /// Displays the actions that users can perform on an event instance.
+    /// Allows the user to choose whether to sort the events by date or title.
     /// </summary>
     /// <remarks>
     /// This control's behavior changed from using LinkButtons to standard buttons. Something to do with a postback
@@ -27,6 +27,10 @@ namespace Engage.Dnn.Events
         /// </summary>
         public event EventHandler SortChanged;
 
+        /// <summary>
+        /// Gets the selected field by which to sort the event listing.
+        /// </summary>
+        /// <value>The selected field by which to sort the event listing</value>
         internal string SelectedValue
         {
             get { return this.RadioButtonListDateSort.SelectedValue; }

@@ -17,16 +17,32 @@ namespace Engage.Dnn.Events
     /// </summary>
     internal class Setting : Framework.Setting
     {
+        /// <summary>
+        /// What set of data to display in this module: All, Past, Future, or Current Month
+        /// </summary>
         public static readonly Setting DisplayModeOption = new Setting("DisplayModeOption", "What data to display.");
         public static readonly Setting EmailAFriend = new Setting("pnlEmailAFriend", "Hide/Show the Email a Friend link on the module");
+
+        /// <summary>
+        /// Whether only featured events should be displayed by this module
+        /// </summary>
         public static readonly Setting FeaturedOnly = new Setting("FeaturedOnly", "Whether or not to display Featured Events.");
         public static readonly Setting OpenLinkUrl = new Setting("openLinkUrl", "Specify the URL for your Open Link to track opens.");
         public static readonly Setting PrinterFriendly = new Setting("pnlPrinterFriendly", "Hide/Show the printer friendly link on the module");
         public static readonly Setting PrivacyPolicyUrl = new Setting("upnlRating", "Specify the URL for your Privacy Policy.");
         public static readonly Setting ReplacementMessage = new Setting("replacementMessage", "You can include an entire section of replaceable text in your message using this setting.");
+
+        /// <summary>
+        /// The skin used for the Calendar display
+        /// </summary>
         public static readonly Setting SkinSelection = new Setting("SkinSelection", "The skin used for Calendar Display.");
         public static readonly Setting UnsubscribeUrl = new Setting("unsubscribeUrl", "Specify the URL for unsubscribing.");
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Setting"/> class.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <param name="description">The description.</param>
         protected Setting(string propertyName, string description)
             : base(propertyName, description)
         {

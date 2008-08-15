@@ -25,6 +25,14 @@ namespace Engage.Dnn.Events.Display
     /// </summary>
     public partial class EventDetail : ModuleBase
     {
+        /// <summary>
+        /// Method used to process a tag. This method is invoked from the <see cref="TemplateEngine"/> class. Since this control knows
+        /// best on how to construct the control. ListingItem templates are used here.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        /// <param name="tag">The tag that is being processed.</param>
+        /// <param name="engageObject">The engage object.</param>
+        /// <param name="resourceFile">The resource file.</param>
         internal static void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)
         {
             // do nothing here, handled up in TemplateEngine - for now.

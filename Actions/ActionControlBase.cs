@@ -56,6 +56,9 @@ namespace Engage.Dnn.Events
             set { this.ViewState["id"] = value.ToString(CultureInfo.InvariantCulture); }
         }
 
+        /// <summary>
+        /// Performs all necessary operations to display the control's data correctly.
+        /// </summary>
         protected abstract void BindData();
     }
 }

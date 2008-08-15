@@ -50,7 +50,7 @@ namespace Engage.Dnn.Events.Display
         /// <summary>
         /// Gets the listing mode used for this display.
         /// </summary>
-        /// <value>The mode.</value>
+        /// <value>The listing mode used for this display</value>
         public ListingMode ListingMode
         {
             get { return this.listingMode; }
@@ -195,7 +195,7 @@ namespace Engage.Dnn.Events.Display
         /// best on how to contruct the page. ListingHeader, ListingItem and Listing Footer templates are processed here.
         /// </summary>
         /// <param name="container">The container.</param>
-        /// <param name="tag">The tag.</param>
+        /// <param name="tag">The tag being processed.</param>
         /// <param name="engageObject">The engage object.</param>
         /// <param name="resourceFile">The resource file name.</param>
         protected override void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)

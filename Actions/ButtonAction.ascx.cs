@@ -33,18 +33,29 @@ namespace Engage.Dnn.Events
         /// </summary>
         private string text;
 
+        /// <summary>
+        /// Gets or sets the URL to navigate to when this button is clicked.
+        /// </summary>
+        /// <value>The URL to navigate to when this button is clicked.</value>
         public string Href
         {
             get { return this.href; }
             set { this.href = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the text to display on this button.
+        /// </summary>
+        /// <value>The text to display on this button</value>
         public string Text
         {
             get { return this.text; }
             set { this.text = value; }
         }
 
+        /// <summary>
+        /// Performs all necessary operations to display the control's data correctly.
+        /// </summary>
         protected override void BindData()
         {
             this.LocalizeControls();

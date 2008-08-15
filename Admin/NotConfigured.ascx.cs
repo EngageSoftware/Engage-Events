@@ -40,6 +40,9 @@ namespace Engage.Dnn.Events
             this.Response.Redirect(Globals.NavigateURL());
         }
 
+        /// <summary>
+        /// Sets up the module with a default configuration.
+        /// </summary>
         private void SetupDefaultSettings()
         {
             HostSettingsController controller = new HostSettingsController();

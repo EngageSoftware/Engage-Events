@@ -25,7 +25,7 @@ namespace Engage.Dnn.Events.Display
         /// best on how to construct the control. ListingItem templates are used here.
         /// </summary>
         /// <param name="container">The container.</param>
-        /// <param name="tag">The tag.</param>
+        /// <param name="tag">The tag that is being processed.</param>
         /// <param name="engageObject">The engage object.</param>
         /// <param name="resourceFile">The resource file.</param>
         protected override void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)

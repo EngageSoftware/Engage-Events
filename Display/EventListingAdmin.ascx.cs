@@ -110,7 +110,7 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         private void BindData()
         {
-            EventCollection events = EventCollection.Load(this.PortalId, ListingMode.All, this.SortRadioButtonList.SelectedValue, 0, 0, this.StatusRadioButtonList.SelectedValue == "All", false);
+            EventCollection events = EventCollection.Load(this.PortalId, ListingMode.All, this.SortRadioButtonList.SelectedValue, this.PagingControl.CurrentPage, this.PagingControl.PageSize, this.StatusRadioButtonList.SelectedValue == "All", false);
             this.EventListingRepeater.DataSource = events;
             this.EventListingRepeater.DataBind();
         }

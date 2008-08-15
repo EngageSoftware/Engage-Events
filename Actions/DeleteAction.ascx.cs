@@ -26,7 +26,6 @@ namespace Engage.Dnn.Events
     /// </remarks>
     public partial class DeleteAction : ActionControlBase
     {
-
         /// <summary>
         /// Occurs when the Delete button is pressed.
         /// </summary>
@@ -89,7 +88,6 @@ namespace Engage.Dnn.Events
             {
                 listing.BindData();
             }
-
         }
 
         /// <summary>

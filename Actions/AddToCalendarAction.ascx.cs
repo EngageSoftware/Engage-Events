@@ -19,6 +19,9 @@ namespace Engage.Dnn.Events
     /// </summary>
     public partial class AddToCalendarAction : ActionControlBase
     {
+        /// <summary>
+        /// Performs all necessary operations to display the control's data correctly.
+        /// </summary>
         protected override void BindData()
         {
             this.LocalizeControls();

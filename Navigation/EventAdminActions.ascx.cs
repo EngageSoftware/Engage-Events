@@ -166,9 +166,21 @@ namespace Engage.Dnn.Events.Navigation
         /// </summary>
         private void BindData()
         {
+            ////this.SetupControls();
             this.SetVisibility();
             this.LocalizeControls();
-            this.SetupRecurringEditTypeDialog();
+            ////this.SetupRecurringEditTypeDialog();
+        }
+
+        /// <summary>
+        /// Sets up the button action controls.
+        /// </summary>
+        private void SetupControls()
+        {
+            this.EventEditButtonAction.CurrentEvent = this.CurrentEvent;
+            this.EventEditButtonAction.ModuleConfiguration = this.ModuleConfiguration;
+            this.EventEditButtonAction.Href = this.BuildLinkUrl(this.ModuleId, "EventEdit", "eventId=" + this.CurrentEventId.ToString(CultureInfo.InvariantCulture));
+            this.EventEditButtonAction.Text = Localization.GetString("EditEventButton", this.LocalResourceFile);
         }
 
         /// <summary>

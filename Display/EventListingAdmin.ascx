@@ -45,8 +45,10 @@
 		</div>
     </ItemTemplate>
 </asp:Repeater>
-<telerik:RadWindowManager runat="server">
+<dnn:PagingControl ID="PagingControl" runat="server" PageSize="25" />
+
+<%--<telerik:RadWindowManager runat="server">
     <windows>
         <telerik:radwindow ID="EditTypeDialogWindow" runat="server" InitialBehaviors="close" NavigateUrl="../Controls/EditTypeDialog.aspx" ClientCallBackFunction="EngageEvents.EditTypeDialogWindow_Callback" />
     </windows>
-</telerik:RadWindowManager>
+</telerik:RadWindowManager>--%>

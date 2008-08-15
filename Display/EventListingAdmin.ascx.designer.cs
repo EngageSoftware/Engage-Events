@@ -68,12 +68,12 @@ namespace Engage.Dnn.Events.Display {
         protected global::System.Web.UI.WebControls.Repeater EventListingRepeater;
         
         /// <summary>
-        /// EditTypeDialogWindow control.
+        /// PagingControl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadWindow EditTypeDialogWindow;
+        protected global::DotNetNuke.UI.WebControls.PagingControl PagingControl;
     }
 }

@@ -29,6 +29,10 @@ namespace Engage.Dnn.Events.Display
     /// </summary>
     public partial class TemplateDisplayOptions : ModuleSettingsBase
     {
+        /// <summary>
+        /// Gets or sets the <see cref="ListingMode"/> for this listing.
+        /// </summary>
+        /// <value>The <see cref="ListingMode"/> for this listing</value>
         internal string DisplayModeOption
         {
             set
@@ -43,6 +47,10 @@ namespace Engage.Dnn.Events.Display
             }
         }
 
+        /// <summary>
+        /// Gets or sets the template used to display the header of the event listing.
+        /// </summary>
+        /// <value>The template used to display the header of the event listing.</value>
         internal string HeaderTemplate
         {
             set
@@ -57,6 +65,10 @@ namespace Engage.Dnn.Events.Display
             }
         }
 
+        /// <summary>
+        /// Gets or sets the template used to display each event in the event listing.
+        /// </summary>
+        /// <value>The template used to display each event in the event listing.</value>
         internal string ItemTemplate
         {
             set
@@ -71,6 +83,10 @@ namespace Engage.Dnn.Events.Display
             }
         }
 
+        /// <summary>
+        /// Gets or sets the template used to display the footer of the event listing.
+        /// </summary>
+        /// <value>The template used to display the footer of the event listing</value>
         internal string FooterTemplate
         {
             set
@@ -85,6 +101,10 @@ namespace Engage.Dnn.Events.Display
             }
         }
 
+        /// <summary>
+        /// Gets or sets the template used to display event details.
+        /// </summary>
+        /// <value>The template used to display event details</value>
         internal string DetailTemplate
         {
             set
@@ -99,6 +119,10 @@ namespace Engage.Dnn.Events.Display
             }
         }
 
+        /// <summary>
+        /// Gets or sets the number of records per page.
+        /// </summary>
+        /// <value>The number of records per page.</value>
         internal int RecordsPerPage
         {
             set
