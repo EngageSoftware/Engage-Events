@@ -85,6 +85,22 @@ namespace Engage.Events
         /// </summary>
         /// <param name="portalId">The ID of the portal that the events are for.</param>
         /// <param name="listingMode">The listing mode.</param>
+        /// <param name="showAll">if set to <c>true</c> included canceled events.</param>
+        /// <param name="featuredOnly">if set to <c>true</c> only include events that are featured.</param>
+        /// <returns>
+        /// A page of events based on the given <paramref name="listingMode"/>.
+        /// </returns>
+        /// <exception cref="DBException">if there's an error while going to the database to retrieve the events</exception>
+        public static EventCollection Load(int portalId, ListingMode listingMode, bool showAll, bool featuredOnly)
+        {
+            return Load(portalId, listingMode, null, null, null, showAll, featuredOnly, false);
+        }
+
+        /// <summary>
+        /// Loads a page of events based on the given <paramref name="listingMode"/>.
+        /// </summary>
+        /// <param name="portalId">The ID of the portal that the events are for.</param>
+        /// <param name="listingMode">The listing mode.</param>
         /// <param name="sortExpression">The property by which the events should be sorted.</param>
         /// <param name="pageIndex">The index of the page of events.</param>
         /// <param name="pageSize">Size of the page of events.</param>
@@ -96,6 +112,27 @@ namespace Engage.Events
         /// <exception cref="DBException">if there's an error while going to the database to retrieve the events</exception>
         public static EventCollection Load(int portalId, ListingMode listingMode, string sortExpression, int pageIndex, int pageSize, bool showAll, bool featuredOnly)
         {
+            return Load(portalId, listingMode, sortExpression, pageIndex, pageSize, showAll, featuredOnly, true);
+        }
+
+        /// <summary>
+        /// Loads a page of events based on the given <paramref name="listingMode"/>.
+        /// </summary>
+        /// <param name="portalId">The ID of the portal that the events are for.</param>
+        /// <param name="listingMode">The listing mode.</param>
+        /// <param name="sortExpression">The property by which the events should be sorted.</param>
+        /// <param name="pageIndex">The index of the page of events.</param>
+        /// <param name="pageSize">Size of the page of events.</param>
+        /// <param name="showAll">if set to <c>true</c> included canceled events.</param>
+        /// <param name="featuredOnly">if set to <c>true</c> only include events that are featured.</param>
+        /// <param name="processCollection">if set to <c>true</c> the collection should be sorted and paged, and each recurring event should be replaced by its earliest occurrence.</param>
+        /// <returns>
+        /// A page of events based on the given <paramref name="listingMode"/>.
+        /// </returns>
+        /// <exception cref="DBException">if there's an error while going to the database to retrieve the events</exception>
+        private static EventCollection Load(int portalId, ListingMode listingMode, string sortExpression, int? pageIndex, int? pageSize, bool showAll, bool featuredOnly, bool processCollection)
+        {
+
             IDataProvider dp = DataProvider.Instance;
             try
             {
@@ -115,23 +152,23 @@ namespace Engage.Events
                         startDate = null;
                         endDate = DateTime.Today;
                         break;
-                    ////case ListingMode.All:
+                        ////case ListingMode.All:
                     default:
                         startDate = endDate = null;
                         break;
                 }
 
-                using (IDataReader reader = dp.ExecuteReader(
-                    CommandType.StoredProcedure,
-                    dp.NamePrefix + "spGetEvents",
-                    Utility.CreateIntegerParam("@portalId", portalId),
-                    Utility.CreateDateTimeParam("@startDate", startDate),
-                    Utility.CreateDateTimeParam("@endDate", endDate),
-                    Utility.CreateBitParam("@showAll", showAll),
-                    Utility.CreateBitParam("@featured", featuredOnly))
-                    )
+                using (
+                    IDataReader reader = dp.ExecuteReader(
+                        CommandType.StoredProcedure,
+                        dp.NamePrefix + "spGetEvents",
+                        Utility.CreateIntegerParam("@portalId", portalId),
+                        Utility.CreateDateTimeParam("@startDate", startDate),
+                        Utility.CreateDateTimeParam("@endDate", endDate),
+                        Utility.CreateBitParam("@showAll", showAll),
+                        Utility.CreateBitParam("@featured", featuredOnly)))
                 {
-                    return FillEvents(reader, pageIndex, pageSize, sortExpression, startDate, endDate);
+                    return FillEvents(reader, processCollection, pageIndex, pageSize, sortExpression, startDate, endDate);
                 }
             }
             catch (Exception exc)
@@ -164,6 +201,7 @@ namespace Engage.Events
         /// <param name="reader">An un-initialized data reader with two records.
         /// The first should be a collection of records representing the events requested.
         /// The second should be a single integer, representing the total number of events (non-paged) for the requested query.</param>
+        /// <param name="processCollection">if set to <c>true</c> the collection should be sorted and paged, and each recurring event should be replaced by its earliest occurrence.</param>
         /// <param name="pageIndex">Index of the page of events being retrieved.</param>
         /// <param name="pageSize">Size of the page (number of events) being retrieved.</param>
         /// <param name="sortExpression">The property by which we should sort.</param>
@@ -173,16 +211,16 @@ namespace Engage.Events
         /// A collection of instantiated <see cref="Event"/> object, as represented in <paramref name="reader"/>.
         /// </returns>
         /// <exception cref="DBException">Data reader did not have the expected structure.  An error must have occurred in the query.</exception>
-        private static EventCollection FillEvents(IDataReader reader, int pageIndex, int pageSize, string sortExpression, DateTime? startDate, DateTime? endDate)
+        private static EventCollection FillEvents(IDataReader reader, bool processCollection, int? pageIndex, int? pageSize, string sortExpression, DateTime? startDate, DateTime? endDate)
         {
-            int beginIndex = pageIndex * pageSize;
-            int endIndex = (pageIndex + 1) * pageSize;
-            List<Event> events = new List<Event>(pageSize);
+            int? beginIndex = processCollection && pageIndex.HasValue && pageSize.HasValue ? pageIndex * pageSize : null;
+            int? endIndex = beginIndex.HasValue ? (pageIndex + 1) * pageSize : null;
+            List<Event> events = new List<Event>(pageSize ?? 0);
 
             while (reader.Read())
             {
                 Event masterEvent = Event.Fill(reader);
-                if (!masterEvent.IsRecurring || (masterEvent.EventStart <= endDate && masterEvent.EventEnd >= startDate))
+                if (!processCollection || !masterEvent.IsRecurring || (masterEvent.EventStart <= endDate && masterEvent.EventEnd >= startDate))
                 {
                     events.Add(masterEvent);
                 }
@@ -208,21 +246,23 @@ namespace Engage.Events
                 // there are cases in the UI where we need to know what the total number of records are.
                 int totalRecords = (int)reader["TotalRecords"];
 
-                // TODO: we may need to remove this GenericComparer if performance becomes an issue
-                GenericComparer<Event> eventComparer = new GenericComparer<Event>(sortExpression, SortDirection.Ascending);
-                events.Sort(eventComparer);
-
-                int endCount = events.Count - endIndex;
-                if (endCount > 0)
+                if (processCollection && endIndex.HasValue)
                 {
-                    events.RemoveRange(endIndex, endCount);
-                }
+                    // TODO: we may need to remove this GenericComparer if performance becomes an issue
+                    GenericComparer<Event> eventComparer = new GenericComparer<Event>(sortExpression, SortDirection.Ascending);
+                    events.Sort(eventComparer);
 
-                if (beginIndex > 0)
-                {
-                    events.RemoveRange(0, beginIndex);
+                    int endCount = events.Count - endIndex.Value;
+                    if (endCount > 0)
+                    {
+                        events.RemoveRange(endIndex.Value, endCount);
+                    }
+
+                    if (beginIndex > 0)
+                    {
+                        events.RemoveRange(0, beginIndex.Value);
+                    }
                 }
-                
 
                 return new EventCollection(events, totalRecords);
             }
