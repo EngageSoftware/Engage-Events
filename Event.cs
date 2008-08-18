@@ -146,8 +146,14 @@ namespace Engage.Events
         private string title = string.Empty;
 
         /// <summary>
-        /// Indicates whether the license for this assembly has yet been loaded.
+        /// Backing field for <see cref="AllowRegistrations"/>.
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private bool allowRegistrations = true;
+
+        /////// <summary>
+        /////// Indicates whether the license for this assembly has yet been loaded.
+        /////// </summary>
         ////private bool aspnetEmailLicenseLoaded;
 
         /// <summary>
@@ -168,7 +174,11 @@ namespace Engage.Events
         /// <param name="description">The event description.</param>
         /// <param name="eventStart">When the event starts.</param>
         /// <param name="eventEnd">When the event ends.</param>
-        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, string location, bool isFeatured, RecurrenceRule recurrenceRule)
+        /// <param name="location">The location of the event.</param>
+        /// <param name="isFeatured">if set to <c>true</c> this event is featured.</param>
+        /// <param name="allowRegistrations">if set to <c>true</c> this event allows users to register for it.</param>
+        /// <param name="recurrenceRule">The recurrence rule.</param>
+        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule)
         {
             this.portalId = portalId;
             this.moduleId = moduleId;
@@ -180,6 +190,7 @@ namespace Engage.Events
             this.eventEnd = eventEnd;
             this.location = location;
             this.isFeatured = isFeatured;
+            this.allowRegistrations = allowRegistrations;
             this.recurrenceRule = recurrenceRule;
         }
 
@@ -414,6 +425,7 @@ namespace Engage.Events
         /// <value>
         /// 	<c>true</c> if this instance is deleted; otherwise, <c>false</c>.
         /// </value>
+        [XmlElement(Order = 12)]
         public bool IsDeleted
         {
             [DebuggerStepThrough]
@@ -433,6 +445,19 @@ namespace Engage.Events
             get { return this.organizer; }
             [DebuggerStepThrough]
             set { this.organizer = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets whether users can register to attend this event.
+        /// </summary>
+        /// <value><c>true</c> if users can register to attend this event; otherwise, <c>false</c>.</value>
+        [XmlElement(Order = 13)]
+        public bool AllowRegistrations
+        {
+            [DebuggerStepThrough]
+            get { return this.allowRegistrations; }
+            [DebuggerStepThrough]
+            set { this.allowRegistrations = value; }
         }
 
         /// <summary>
@@ -549,11 +574,12 @@ namespace Engage.Events
         /// <param name="eventEnd">The event end.</param>
         /// <param name="location">The location of the event.</param>
         /// <param name="isFeatured">if set to <c>true</c> the event should be listed in featured displays.</param>
+        /// <param name="allowRegistrations">if set to <c>true</c> this event allows users to register for it.</param>
         /// <param name="recurrenceRule">The recurrence rule.</param>
         /// <returns>A new event object.</returns>
-        public static Event Create(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, string location, bool isFeatured, RecurrenceRule recurrenceRule)
+        public static Event Create(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule)
         {
-            return new Event(portalId, moduleId, organizerEmail, title, overview, description, eventStart, eventEnd, location, isFeatured, recurrenceRule);
+            return new Event(portalId, moduleId, organizerEmail, title, overview, description, eventStart, eventEnd, location, isFeatured, allowRegistrations, recurrenceRule);
         }
 
         /// <summary>
@@ -582,8 +608,9 @@ namespace Engage.Events
         /// <returns>An occurrence of this <see cref="Event"/></returns>
         public Event CreateOccurrence(DateTime occurrenceDate)
         {
-            Event occurrence = new Event(this.portalId, this.moduleId, this.organizerEmail, this.title, this.overview, this.description, occurrenceDate, occurrenceDate + this.Duration, this.location, this.isFeatured, this.recurrenceRule);
+            Event occurrence = new Event(this.portalId, this.moduleId, this.organizerEmail, this.title, this.overview, this.description, occurrenceDate, occurrenceDate + this.Duration, this.location, this.isFeatured, allowRegistrations, this.recurrenceRule);
             occurrence.recurrenceParentId = this.id;
+            occurrence.id = this.id;
             return occurrence;
         }
 
@@ -671,6 +698,7 @@ namespace Engage.Events
             e.cancelled = (bool)eventRecord["Cancelled"];
             e.isFeatured = (bool)eventRecord["IsFeatured"];
             e.isDeleted = (bool)eventRecord["IsDeleted"];
+            e.allowRegistrations = (bool)eventRecord["CanRsvp"];
             e.organizer = eventRecord["Organizer"].ToString();
             e.organizerEmail = eventRecord["OrganizerEmail"].ToString();
             e.location = eventRecord["Location"].ToString();
@@ -690,10 +718,10 @@ namespace Engage.Events
             return e;
         }
 
-        /// <summary>
-        /// Gets a string representation of the embedded license for the aspnetEmail component.
-        /// </summary>
-        /// <returns>A string representation of the embedded license for the aspnetEmail component</returns>
+        /////// <summary>
+        /////// Gets a string representation of the embedded license for the aspnetEmail component.
+        /////// </summary>
+        /////// <returns>A string representation of the embedded license for the aspnetEmail component</returns>
         ////private static string GetLicenseString()
         ////{
         ////    // embedded resources are embedded using the following convention
@@ -743,7 +771,7 @@ namespace Engage.Events
                     Utility.CreateVarcharParam("@RecapUrl", this.recapUrl),
                     Utility.CreateIntegerParam("@RecurrenceParentId", this.recurrenceParentId),
                     Utility.CreateVarcharParam("@RecurrenceRule", this.recurrenceRule != null ? this.recurrenceRule.ToString() : null),
-                    Utility.CreateBitParam("@CanRsvp", true),
+                    Utility.CreateBitParam("@CanRsvp", this.allowRegistrations),
                     Utility.CreateBitParam("@isFeatured", this.isFeatured),
                     Utility.CreateIntegerParam("@CreatedBy", revisingUser),
                     Utility.CreateDateTimeParam("@FinalRecurringEndDate", this.FinalRecurringEndDate),
@@ -783,7 +811,7 @@ namespace Engage.Events
                     Utility.CreateVarcharParam("@RecapUrl", this.recapUrl),
                     Utility.CreateTextParam("@RecurrenceRule", this.recurrenceRule != null ? this.recurrenceRule.ToString() : null),
                     Utility.CreateIntegerParam("@RecurrenceParentId", this.recurrenceParentId),
-                    Utility.CreateBitParam("@CanRsvp", true),
+                    Utility.CreateBitParam("@CanRsvp", this.allowRegistrations),
                     Utility.CreateBitParam("@Cancelled", this.cancelled),
                     Utility.CreateBitParam("@isFeatured", this.isFeatured),
                     Utility.CreateIntegerParam("@RevisingUser", revisingUser),
