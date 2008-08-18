@@ -40,26 +40,10 @@ namespace Engage.Dnn.Events.Util
         ////public const string AdminRole = "EventsAminRole";
 
         /// <summary>
-        /// A dictionary mapping ordinal day values (based on <see cref="RecurrencePattern.DayOrdinal"/>) to their localization resource keys.
+        /// Backing field for <see cref="OrdinalValues"/>
         /// </summary>
-        public readonly static IDictionary<int, string> OrdinalValues = GetOrdinalValues();
+        private static readonly IDictionary<int, string> ordinalValues = GetOrdinalValues();
 
-        /// <summary>
-        /// Fills <see cref="OrdinalValues"/>.
-        /// </summary>
-        /// <returns>A dictionary mapping ordinal day values (based on <see cref="RecurrencePattern.DayOrdinal"/>) to their localization resource keys</returns>
-        private static Dictionary<int, string> GetOrdinalValues()
-        {
-            Dictionary<int, string> ordinalValues = new Dictionary<int, string>();
-            
-            ordinalValues.Add(1, "First");
-            ordinalValues.Add(2, "Second");
-            ordinalValues.Add(3, "Third");
-            ordinalValues.Add(4, "Fourth");
-            ordinalValues.Add(-1, "Last");
-
-            return ordinalValues;
-        }
         /// <summary>
         /// Gets the name of the desktop module folder.
         /// </summary>
@@ -98,6 +82,14 @@ namespace Engage.Dnn.Events.Util
             {
                 return HostingEnvironment.MapPath("~" + TemplatesFolderName);
             }
+        }
+
+        /// <summary>
+        /// Gets a dictionary mapping ordinal day values (based on <see cref="RecurrencePattern.DayOrdinal"/>) to their localization resource keys.
+        /// </summary>
+        public static IDictionary<int, string> OrdinalValues
+        {
+            get { return ordinalValues; }
         }
 
         /// <summary>
@@ -181,11 +173,28 @@ namespace Engage.Dnn.Events.Util
         }
 
         /// <summary>
+        /// Fills <see cref="ordinalValues"/>.
+        /// </summary>
+        /// <returns>A dictionary mapping ordinal day values (based on <see cref="RecurrencePattern.DayOrdinal"/>) to their localization resource keys</returns>
+        private static IDictionary<int, string> GetOrdinalValues()
+        {
+            IDictionary<int, string> ordinalsDictionary = new Dictionary<int, string>();
+            
+            ordinalsDictionary.Add(1, "First");
+            ordinalsDictionary.Add(2, "Second");
+            ordinalsDictionary.Add(3, "Third");
+            ordinalsDictionary.Add(4, "Fourth");
+            ordinalsDictionary.Add(-1, "Last");
+
+            return ordinalsDictionary;
+        }
+
+        /// <summary>
         /// Gets a comma-delimited list of the days of week from the given <paramref name="daysOfWeekMask"/> with localized day names.
         /// </summary>
         /// <param name="daysOfWeekMask">The days of week mask.</param>
         /// <returns>A list of the days of week from the given <paramref name="daysOfWeekMask"/> with localized day names</returns>
-        public static string GetDaysOfWeekList(RecurrenceDay daysOfWeekMask)
+        private static string GetDaysOfWeekList(RecurrenceDay daysOfWeekMask)
         {
             StringBuilder daysOfWeek = new StringBuilder();
 
@@ -207,7 +216,7 @@ namespace Engage.Dnn.Events.Util
         /// <param name="daysOfWeek">The days of week.</param>
         /// <param name="recurrenceDay">The recurrence day.</param>
         /// <param name="dayOfWeek">The day of week.</param>
-        public static void AddDayToList(RecurrenceDay daysOfWeekMask, StringBuilder daysOfWeek, RecurrenceDay recurrenceDay, DayOfWeek dayOfWeek)
+        private static void AddDayToList(RecurrenceDay daysOfWeekMask, StringBuilder daysOfWeek, RecurrenceDay recurrenceDay, DayOfWeek dayOfWeek)
         {
             if ((daysOfWeekMask & recurrenceDay) != 0)
             {
@@ -226,7 +235,7 @@ namespace Engage.Dnn.Events.Util
         /// <param name="pattern">The recurrence pattern.</param>
         /// <param name="resourceFile">The resource file to use to find get localized text.</param>
         /// <returns>A human-readable, localized summary of the provided recurrence pattern.</returns>
-        public static string GetWeeklyRecurrenceSummary(RecurrencePattern pattern, string resourceFile)
+        private static string GetWeeklyRecurrenceSummary(RecurrencePattern pattern, string resourceFile)
         {
             return string.Format(
                 CultureInfo.CurrentCulture,
@@ -241,7 +250,7 @@ namespace Engage.Dnn.Events.Util
         /// <param name="pattern">The recurrence pattern.</param>
         /// <param name="resourceFile">The resource file to use to find get localized text.</param>
         /// <returns>A human-readable, localized summary of the provided recurrence pattern.</returns>
-        public static string GetMonthlyRecurrenceSummary(RecurrencePattern pattern, string resourceFile)
+        private static string GetMonthlyRecurrenceSummary(RecurrencePattern pattern, string resourceFile)
         {
             if (pattern.DayOfMonth > 0)
             {
@@ -256,7 +265,7 @@ namespace Engage.Dnn.Events.Util
                 return string.Format(
                     CultureInfo.CurrentCulture,
                     Localization.GetString("MonthlyRecurrenceOnGivenDay.Text", resourceFile),
-                    Localization.GetString(OrdinalValues[pattern.DayOrdinal], resourceFile),
+                    Localization.GetString(ordinalValues[pattern.DayOrdinal], resourceFile),
                     Localization.GetString(pattern.DaysOfWeekMask.ToString(), resourceFile),
                     pattern.Interval);
             }
@@ -268,7 +277,7 @@ namespace Engage.Dnn.Events.Util
         /// <param name="pattern">The recurrence pattern.</param>
         /// <param name="resourceFile">The resource file to use to find get localized text.</param>
         /// <returns>A human-readable, localized summary of the provided recurrence pattern.</returns>
-        public static string GetYearlyRecurrenceSummary(RecurrencePattern pattern, string resourceFile)
+        private static string GetYearlyRecurrenceSummary(RecurrencePattern pattern, string resourceFile)
         {
             if (pattern.DayOfMonth > 0)
             {
@@ -283,8 +292,8 @@ namespace Engage.Dnn.Events.Util
                 return string.Format(
                     CultureInfo.CurrentCulture,
                     Localization.GetString("YearlyRecurrenceOnGivenDay.Text", resourceFile),
-                    Localization.GetString(OrdinalValues[pattern.DayOrdinal], resourceFile),
-                    Localization.GetString(pattern.DaysOfWeekMask.ToString(), resourceFile),
+                    Localization.GetString(ordinalValues[pattern.DayOrdinal], resourceFile),
+                    GetLocalizedDayOfWeek(pattern.DaysOfWeekMask, resourceFile),
                     new DateTime(1, (int)pattern.Month, 1));
             }
         }
@@ -297,7 +306,7 @@ namespace Engage.Dnn.Events.Util
         /// <returns>
         /// A human-readable, localized summary of the provided recurrence pattern.
         /// </returns>
-        public static string GetDailyRecurrenceSummary(RecurrencePattern pattern, string resourceFile)
+        private static string GetDailyRecurrenceSummary(RecurrencePattern pattern, string resourceFile)
         {
             if (pattern.DaysOfWeekMask == RecurrenceDay.WeekDays)
             {
@@ -310,6 +319,50 @@ namespace Engage.Dnn.Events.Util
                     Localization.GetString("DailyRecurrence.Text", resourceFile), 
                     pattern.Interval);
             }
+        }
+
+        /// <summary>
+        /// Gets the localized resource for the day of week.  
+        /// Uses <see cref="DateTimeFormatInfo.GetDayName"/> if it's a day of the week, otherwise uses localization for composite values.
+        /// </summary>
+        /// <param name="daysOfWeekMask">The days of week mask.</param>
+        /// <param name="resourceFile">The resource file to use to find get localized text.</param>
+        /// <returns>
+        /// A human-readable, localized representation of the given <paramref name="daysOfWeekMask"/>
+        /// </returns>
+        private static string GetLocalizedDayOfWeek(RecurrenceDay daysOfWeekMask, string resourceFile)
+        {
+            DayOfWeek dayOfWeek;
+            switch (daysOfWeekMask)
+            {
+                case RecurrenceDay.Sunday:
+                    dayOfWeek = DayOfWeek.Sunday;
+                    break;
+                case RecurrenceDay.Monday:
+                    dayOfWeek = DayOfWeek.Monday;
+                    break;
+                case RecurrenceDay.Tuesday:
+                    dayOfWeek = DayOfWeek.Tuesday;
+                    break;
+                case RecurrenceDay.Wednesday:
+                    dayOfWeek = DayOfWeek.Wednesday;
+                    break;
+                case RecurrenceDay.Thursday:
+                    dayOfWeek = DayOfWeek.Thursday;
+                    break;
+                case RecurrenceDay.Friday:
+                    dayOfWeek = DayOfWeek.Friday;
+                    break;
+                case RecurrenceDay.Saturday:
+                    dayOfWeek = DayOfWeek.Saturday;
+                    break;
+                    
+                // If it's not a day of the week, it should be a named composite value, like EveryDay, WeekDays, etc.
+                default:
+                    return Localization.GetString(daysOfWeekMask.ToString(), resourceFile);
+            }
+
+            return CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(dayOfWeek);
         }
     }
 }

@@ -18,24 +18,24 @@ namespace Engage.Dnn.Events.Navigation
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Security.Permissions;
     using DotNetNuke.Services.Exceptions;
+    using DotNetNuke.Services.Localization;
 
     /// <summary>
     /// A navigation control that is always displayed at the top of the module.  Currently only for admins.
     /// </summary>
     public partial class GlobalNavigation : ModuleBase
     {
-        /// <summary>
-        /// Gets the current control key.
-        /// </summary>
-        /// <value>The current control key.</value>
-        private string CurrentControlKey
-        {
-            get
-            {
-                object o = this.Request.QueryString["key"];
-                return (o == null ? string.Empty : o.ToString());
-            }
-        }
+        /////// <summary>
+        /////// Gets the current control key.
+        /////// </summary>
+        /////// <value>The current control key.</value>
+        ////private string CurrentControlKey
+        ////{
+        ////    get
+        ////    {
+        ////        return this.Request.QueryString["key"] ?? string.Empty;
+        ////    }
+        ////}
 
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
@@ -48,7 +48,7 @@ namespace Engage.Dnn.Events.Navigation
             // since the global navigation control is not loaded using DNN mechanisms we need to set it here so that calls to 
             // module related information will appear the same as the actual control this navigation is sitting on.hk
             this.ModuleConfiguration = ((PortalModuleBase)base.Parent).ModuleConfiguration;
-            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + "App_LocalResources/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
+            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
 
             this.Load += this.Page_Load;
         }
@@ -64,7 +64,7 @@ namespace Engage.Dnn.Events.Navigation
             {
                 this.SetupLinks();
                 this.SetVisibility();
-                this.SetDisabledImages();
+                ////this.SetDisabledImages();
             }
             catch (Exception exc)
             {
@@ -93,26 +93,26 @@ namespace Engage.Dnn.Events.Navigation
             this.SettingsLink.Visible = TabPermissionController.HasTabPermission("EDIT");
         }
 
-        /// <summary>
-        /// Sets the image for the current page to a disabled image, if appropriate.
-        /// </summary>
-        private void SetDisabledImages()
-        {
-            switch (this.CurrentControlKey)
-            {
-                case "EventEdit":
-                    this.AddAnEventLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/add_event_disabled.gif";
-                    break;
-                case "EventListingAdmin":
-                    this.ManageEventsLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/manage_events_disabled.gif";
-                    break;
-                case "RsvpSummary":
-                    this.ResponsesLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/responses_disabled.gif";
-                    break;
-                default:
-                    this.HomeLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/home_disabled.gif";
-                    break;
-            }
-        }
+        /////// <summary>
+        /////// Sets the image for the current page to a disabled image, if appropriate.
+        /////// </summary>
+        ////private void SetDisabledImages()
+        ////{
+        ////    switch (this.CurrentControlKey)
+        ////    {
+        ////        case "EventEdit":
+        ////            this.AddAnEventLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/add_event_disabled.gif";
+        ////            break;
+        ////        case "EventListingAdmin":
+        ////            this.ManageEventsLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/manage_events_disabled.gif";
+        ////            break;
+        ////        case "RsvpSummary":
+        ////            this.ResponsesLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/responses_disabled.gif";
+        ////            break;
+        ////        default:
+        ////            this.HomeLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/home_disabled.gif";
+        ////            break;
+        ////    }
+        ////}
     }
 }

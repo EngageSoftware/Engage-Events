@@ -11,6 +11,8 @@
 
 namespace Engage.Dnn.Events.Display
 {
+    using System;
+    using System.Text;
     using System.Web.UI;
     using Framework.Templating;
     using Templating;
@@ -30,46 +32,49 @@ namespace Engage.Dnn.Events.Display
         /// <param name="resourceFile">The resource file.</param>
         protected override void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)
         {
-            switch (tag.LocalName.ToUpperInvariant())
+            if (tag.TagType == TagType.Open)
             {
-                case "EVENTLISTING":
-                    EventListingItem listingCurrent = (EventListingItem)this.LoadControl("~" + DesktopModuleFolderName + "Display/EventListingItem.ascx");
+                switch (tag.LocalName.ToUpperInvariant())
+                {
+                    case "EVENTLISTING":
+                        EventListingItem listingCurrent = (EventListingItem)this.LoadControl("~" + DesktopModuleFolderName + "Display/EventListingItem.ascx");
 
-                    // need to default to all and set if attribute is defined.
-                    if (tag.HasAttribute("ListingMode"))
-                    {
-                        listingCurrent.SetListingMode(tag.GetAttributeValue("ListingMode"));
-                    }
+                        // need to default to all and set if attribute is defined.
+                        if (tag.HasAttribute("ListingMode"))
+                        {
+                            listingCurrent.SetListingMode(tag.GetAttributeValue("ListingMode"));
+                        }
 
-                    if (tag.HasAttribute("HeaderTemplate"))
-                    {
-                        listingCurrent.HeaderTemplateName = tag.GetAttributeValue("HeaderTemplate");
-                    }
+                        if (tag.HasAttribute("HeaderTemplate"))
+                        {
+                            listingCurrent.HeaderTemplateName = tag.GetAttributeValue("HeaderTemplate");
+                        }
 
-                    if (tag.HasAttribute("ItemTemplate"))
-                    {
-                        listingCurrent.ItemTemplateName = tag.GetAttributeValue("ItemTemplate");
-                    }
+                        if (tag.HasAttribute("ItemTemplate"))
+                        {
+                            listingCurrent.ItemTemplateName = tag.GetAttributeValue("ItemTemplate");
+                        }
 
-                    if (tag.HasAttribute("FooterTemplate"))
-                    {
-                        listingCurrent.FooterTemplateName = tag.GetAttributeValue("FooterTemplate");
-                    }
+                        if (tag.HasAttribute("FooterTemplate"))
+                        {
+                            listingCurrent.FooterTemplateName = tag.GetAttributeValue("FooterTemplate");
+                        }
 
-                    listingCurrent.IsFeatured  = Utility.GetBoolSetting(this.Settings, Setting.FeaturedOnly.PropertyName, false);
+                        listingCurrent.IsFeatured = Utility.GetBoolSetting(this.Settings, Setting.FeaturedOnly.PropertyName, false);
 
-                    listingCurrent.ModuleConfiguration = this.ModuleConfiguration;
-                    container.Controls.Add(listingCurrent);
-                    break;
-                case "CALENDAR":
-                    EventCalendar calendar = (EventCalendar)this.LoadControl("~" + DesktopModuleFolderName + "Display/EventCalendar.ascx");
-                    calendar.ModuleConfiguration = this.ModuleConfiguration;
-                    calendar.IsFeatured = Utility.GetBoolSetting(this.Settings, Setting.FeaturedOnly.PropertyName, false);
+                        listingCurrent.ModuleConfiguration = this.ModuleConfiguration;
+                        container.Controls.Add(listingCurrent);
+                        break;
+                    case "CALENDAR":
+                        EventCalendar calendar = (EventCalendar)this.LoadControl("~" + DesktopModuleFolderName + "Display/EventCalendar.ascx");
+                        calendar.ModuleConfiguration = this.ModuleConfiguration;
+                        calendar.IsFeatured = Utility.GetBoolSetting(this.Settings, Setting.FeaturedOnly.PropertyName, false);
 
-                    container.Controls.Add(calendar);
-                    break;
-                default:
-                    break;
+                        container.Controls.Add(calendar);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }

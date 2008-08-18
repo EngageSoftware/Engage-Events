@@ -1,4 +1,4 @@
-<div id="EventItem">
+<Engage:RecurrenceWrapper CssClass="EventItem" RecurringEventCssClass="RecurringEventItem">
   <div class="EventTitle">
         <h2 class="Head"><Engage:DataEntity PropertyName="Title" /></h2>
     </div>
@@ -21,8 +21,7 @@
     <div class="EventButtons">
         <Engage:EditEventButton /> <Engage:ViewResponsesButton /> <Engage:RegisterButton /> <Engage:AddToCalendarButton /> <Engage:DeleteButton /> <Engage:CancelButton />
     </div>
-</div>
-
+</Engage:RecurrenceWrapper>
 
 <!-- Documentation 
 Entity - DateEntity contains a property called Format, valid values are any DateTime format string e.g. MM/dd/yyyy or MM.dd.yy

@@ -22,9 +22,9 @@
 .ResponsesSummary {padding: 25px 0;}
 .PagingTable { margin: 10px 0; }
 
-		#EventItem{border-bottom: 1px #ccc dotted; overflow: hidden; padding: 1em 0; width: 100%;}
-			#EventItem p{margin-top: 0; margin-bottom: 0.875em;}
-
+		.EventItem{border-bottom: 1px #ccc dotted; overflow: hidden; padding: 1em 0; width: 100%;}
+			.EventItem p{margin-top: 0; margin-bottom: 0.875em;}
+		.RecurringEventItem{background:Transparent url(images/rsRecurrence.gif) no-repeat;}
 		
 		.EventButtons{margin-top: 0.675em; overflow:hidden; padding-left: 18%; clear: both; }
 		.EventStats{font-weight:bold;}	

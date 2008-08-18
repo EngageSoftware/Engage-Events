@@ -666,6 +666,7 @@
   <ItemGroup>
     <Content Include="Controls\App_LocalResources\EditTypeDialog.aspx.resx">
     </Content>
+    <Content Include="Images\rsRecurrence.gif" />
     <Content Include="References\aspNetEmail.dll" />
     <Content Include="References\DotNetNuke.dll" />
     <Content Include="References\DotNetNuke.WebUtility.dll" />

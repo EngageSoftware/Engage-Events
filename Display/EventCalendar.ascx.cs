@@ -107,24 +107,25 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="Telerik.Web.UI.ToolTipUpdateEventArgs"/> instance containing the event data.</param>
         private void EventsCalendarToolTipManager_AjaxUpdate(object sender, ToolTipUpdateEventArgs e)
         {
-            Event ev = Event.Load(Convert.ToInt32(e.Value, CultureInfo.InvariantCulture));
+            int eventId = Convert.ToInt32(e.Value.Split('_')[0], CultureInfo.InvariantCulture);
+            Event ev = Event.Load(eventId);
             EventToolTip toolTip = (EventToolTip)this.LoadControl("EventToolTip.ascx");
 
             toolTip.ModuleConfiguration = this.ModuleConfiguration;
-            toolTip.EventStartDate = ev.EventStart.ToShortDateString();
+            toolTip.EventStartDate = ev.EventStart.ToShortTimeString();
             toolTip.Overview = ev.Overview;
             toolTip.Title = ev.Title;
-            toolTip.EventEndDate = ev.EventEnd.ToShortDateString();
+            toolTip.EventEndDate = ev.EventEnd.ToShortTimeString();
             toolTip.SetEventId(ev.Id);
             e.UpdatePanel.ContentTemplateContainer.Controls.Add(toolTip);
         }
 
         /// <summary>
-        /// Determines whether [is appointment registered for tooltip] [the specified apt].
+        /// Determines whether the specified appointment is registered with the tooltip manager.
         /// </summary>
         /// <param name="apt">The appointment</param>
         /// <returns>
-        /// 	<c>true</c> if [is appointment registered for tooltip] [the specified apt]; otherwise, <c>false</c>.
+        /// 	<c>true</c> if the specified appointment is registered with the tooltip manager; otherwise, <c>false</c>.
         /// </returns>
         private bool IsAppointmentRegisteredForTooltip(Appointment apt)
         {
@@ -144,7 +145,7 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         private void BindData()
         {
-            this.EventsCalendarDisplay.DataSource = EventCollection.Load(this.PortalId, ListingMode.All, "EventStart", 0, 0, true, this.isFeatured);
+            this.EventsCalendarDisplay.DataSource = EventCollection.Load(this.PortalId, ListingMode.All, false, this.isFeatured);
             this.EventsCalendarDisplay.DataEndField = "EventEnd";
             this.EventsCalendarDisplay.DataKeyField = "Id";
             this.EventsCalendarDisplay.DataRecurrenceField = "RecurrenceRule";
