@@ -31,7 +31,7 @@ namespace Engage.Dnn.Events.Display
         /// </returns>
         protected static string GetRecurrenceSummary(object currentEvent)
         {
-            return Dnn.Events.Util.Utility.GetRecurrenceSummary(((Event)currentEvent).RecurrenceRule, LocalSharedResourceFile);
+            return Dnn.Events.Util.Utility.GetRecurrenceSummary(((Event)currentEvent).RecurrenceRule);
         }
 
         /// <summary>

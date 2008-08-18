@@ -14,8 +14,6 @@ namespace Engage.Dnn.Events.Navigation
     using System;
     using System.Globalization;
     using System.IO;
-    using System.Web.UI;
-    using Controls;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Framework;
     using DotNetNuke.Services.Localization;
@@ -124,16 +122,16 @@ namespace Engage.Dnn.Events.Navigation
             AJAX.RegisterPostBackControl(this.AddToCalendarButton);
         }
 
-        /// <summary>
-        /// Gets the script to show the event type dialog window.
-        /// </summary>
-        /// <param name="occurrenceUrl">The URL to navigate to when the user chooses to apply the action to that occurrence.</param>
-        /// <param name="seriesUrl">The URL to navigate to when the user chooses to apply the action to the entire series.</param>
-        /// <returns>The script to show the event type dialog window</returns>
-        private static string GetShowEventTypeDialogScript(string occurrenceUrl, string seriesUrl)
-        {
-            return string.Format("EngageEvents.showEditTypeDialog('{0}', '{1}');return false;", ClientAPI.GetSafeJSString(occurrenceUrl), ClientAPI.GetSafeJSString(seriesUrl));
-        }
+        /////// <summary>
+        /////// Gets the script to show the event type dialog window.
+        /////// </summary>
+        /////// <param name="occurrenceUrl">The URL to navigate to when the user chooses to apply the action to that occurrence.</param>
+        /////// <param name="seriesUrl">The URL to navigate to when the user chooses to apply the action to the entire series.</param>
+        /////// <returns>The script to show the event type dialog window</returns>
+        ////private static string GetShowEventTypeDialogScript(string occurrenceUrl, string seriesUrl)
+        ////{
+        ////    return string.Format(CultureInfo.InvariantCulture, "EngageEvents.showEditTypeDialog('{0}', '{1}');return false;", ClientAPI.GetSafeJSString(occurrenceUrl), ClientAPI.GetSafeJSString(seriesUrl));
+        ////}
 
         /// <summary>
         /// Invokes the cancel.
@@ -183,27 +181,27 @@ namespace Engage.Dnn.Events.Navigation
         ////    this.EventEditButtonAction.Text = Localization.GetString("EditEventButton", this.LocalResourceFile);
         ////}
 
-        /// <summary>
-        /// Sets up the edit buttons (i.e. <see cref="EditEventButton"/>, <see cref="DeleteEventButton"/>, and <see cref="CancelButton"/>)
-        /// to display a dialog asking the user whether to perform the requested action on that occurrence or the whole series.
-        /// </summary>
-        private void SetupRecurringEditTypeDialog()
-        {
-            if (this.CurrentEvent.IsRecurring)
-            {
-                ScriptManager.RegisterClientScriptResource(this, typeof(EditTypeDialog), "Engage.Dnn.Events.JavaScript.EngageEvents.EditTypeDialog.js");
-                this.EditEventButton.UseSubmitBehavior = this.DeleteEventButton.UseSubmitBehavior = this.CancelButton.UseSubmitBehavior = false;
-                this.EditEventButton.OnClientClick = GetShowEventTypeDialogScript(
-                    this.BuildLinkUrl(this.ModuleId, "EventEdit", "eventId=" + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture), "start=" + this.CurrentEvent.EventStart.Ticks.ToString(CultureInfo.InvariantCulture)),
-                    this.BuildLinkUrl(this.ModuleId, "EventEdit", "eventId=" + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture)));
-                this.DeleteEventButton.OnClientClick = GetShowEventTypeDialogScript(
-                    this.Page.ClientScript.GetPostBackClientHyperlink(this.DeleteEventButton, this.CurrentEvent.EventStart.Ticks.ToString(CultureInfo.InvariantCulture)),
-                    this.Page.ClientScript.GetPostBackClientHyperlink(this.DeleteEventButton, string.Empty));
-                this.CancelButton.OnClientClick = GetShowEventTypeDialogScript(
-                    this.Page.ClientScript.GetPostBackClientHyperlink(this.CancelButton, this.CurrentEvent.EventStart.Ticks.ToString(CultureInfo.InvariantCulture)),
-                    this.Page.ClientScript.GetPostBackClientHyperlink(this.CancelButton, string.Empty));
-            }
-        }
+        /////// <summary>
+        /////// Sets up the edit buttons (i.e. <see cref="EditEventButton"/>, <see cref="DeleteEventButton"/>, and <see cref="CancelButton"/>)
+        /////// to display a dialog asking the user whether to perform the requested action on that occurrence or the whole series.
+        /////// </summary>
+        ////private void SetupRecurringEditTypeDialog()
+        ////{
+        ////    if (this.CurrentEvent.IsRecurring)
+        ////    {
+        ////        ScriptManager.RegisterClientScriptResource(this, typeof(EditTypeDialog), "Engage.Dnn.Events.JavaScript.EngageEvents.EditTypeDialog.js");
+        ////        this.EditEventButton.UseSubmitBehavior = this.DeleteEventButton.UseSubmitBehavior = this.CancelButton.UseSubmitBehavior = false;
+        ////        this.EditEventButton.OnClientClick = GetShowEventTypeDialogScript(
+        ////            this.BuildLinkUrl(this.ModuleId, "EventEdit", "eventId=" + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture), "start=" + this.CurrentEvent.EventStart.Ticks.ToString(CultureInfo.InvariantCulture)),
+        ////            this.BuildLinkUrl(this.ModuleId, "EventEdit", "eventId=" + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture)));
+        ////        this.DeleteEventButton.OnClientClick = GetShowEventTypeDialogScript(
+        ////            this.Page.ClientScript.GetPostBackClientHyperlink(this.DeleteEventButton, this.CurrentEvent.EventStart.Ticks.ToString(CultureInfo.InvariantCulture)),
+        ////            this.Page.ClientScript.GetPostBackClientHyperlink(this.DeleteEventButton, string.Empty));
+        ////        this.CancelButton.OnClientClick = GetShowEventTypeDialogScript(
+        ////            this.Page.ClientScript.GetPostBackClientHyperlink(this.CancelButton, this.CurrentEvent.EventStart.Ticks.ToString(CultureInfo.InvariantCulture)),
+        ////            this.Page.ClientScript.GetPostBackClientHyperlink(this.CancelButton, string.Empty));
+        ////    }
+        ////}
 
         /// <summary>
         /// Sets the visibility of this control's child controls.
@@ -215,6 +213,7 @@ namespace Engage.Dnn.Events.Navigation
             this.DeleteEventButton.Visible = this.IsAdmin;
             this.EditEventButton.Visible = this.IsAdmin;
             this.ResponsesButton.Visible = this.IsAdmin;
+            this.RegisterButton.Visible = this.CurrentEvent.AllowRegistrations;
             ////this.ViewInviteButton.Visible = Engage.Util.Utility.IsValidEmail(CurrentEvent.InvitationUrl);
         }
 

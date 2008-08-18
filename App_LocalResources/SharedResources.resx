@@ -117,12 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="April.Text" xml:space="preserve">
-    <value>April</value>
-  </data>
-  <data name="August.Text" xml:space="preserve">
-    <value>August</value>
-  </data>
   <data name="DailyRecurrence.Text" xml:space="preserve">
     <value>Recurs every {0} day(s)</value>
     <comment>{0} is replaced by number of days</comment>
@@ -130,14 +124,8 @@
   <data name="DailyRecurrenceWeekdays.Text" xml:space="preserve">
     <value>Recurs every weekday</value>
   </data>
-  <data name="December.Text" xml:space="preserve">
-    <value>December</value>
-  </data>
   <data name="EveryDay.Text" xml:space="preserve">
     <value>day</value>
-  </data>
-  <data name="February.Text" xml:space="preserve">
-    <value>February</value>
   </data>
   <data name="First.Text" xml:space="preserve">
     <value>first</value>
@@ -148,26 +136,8 @@
   <data name="Friday.Text" xml:space="preserve">
     <value>Friday</value>
   </data>
-  <data name="January.Text" xml:space="preserve">
-    <value>January</value>
-  </data>
-  <data name="July.Text" xml:space="preserve">
-    <value>July</value>
-  </data>
-  <data name="June.Text" xml:space="preserve">
-    <value>June</value>
-  </data>
   <data name="Last.Text" xml:space="preserve">
     <value>last</value>
-  </data>
-  <data name="March.Text" xml:space="preserve">
-    <value>March</value>
-  </data>
-  <data name="May.Text" xml:space="preserve">
-    <value>May</value>
-  </data>
-  <data name="Monday.Text" xml:space="preserve">
-    <value>Monday</value>
   </data>
   <data name="MonthlyRecurrenceOnDate.Text" xml:space="preserve">
     <value>Recurs on day {0} of every {1} month(s)</value>
@@ -177,29 +147,11 @@
     <value>Recurs the {0} {1} of every {2} month(s)</value>
     <comment>{0} is replaced by the ordinal (first, second, last, etc), {1} is replaced by the day {weekday, Wednesday, etc), {2} is replaced by the number of months</comment>
   </data>
-  <data name="November.Text" xml:space="preserve">
-    <value>November</value>
-  </data>
-  <data name="October.Text" xml:space="preserve">
-    <value>October</value>
-  </data>
-  <data name="Saturday.Text" xml:space="preserve">
-    <value>Saturday</value>
-  </data>
   <data name="Second.Text" xml:space="preserve">
     <value>second</value>
   </data>
-  <data name="September.Text" xml:space="preserve">
-    <value>September</value>
-  </data>
-  <data name="Sunday.Text" xml:space="preserve">
-    <value>Sunday</value>
-  </data>
   <data name="Third.Text" xml:space="preserve">
     <value>third</value>
-  </data>
-  <data name="Thursday.Text" xml:space="preserve">
-    <value>Thursday</value>
   </data>
   <data name="Timespan.Text" xml:space="preserve">
     <value>{0:dddd, MMMM d, yyyy, hh:mmtt} - {1:hh:mmtt}</value>
@@ -212,12 +164,6 @@
   </data>
   <data name="TimespanDifferentYear.Text" xml:space="preserve">
     <value>{0:dddd, MMMM d, yyyy, hh:mmtt} - {1:dddd, MMMM d, yyyy, hh:mmtt}</value>
-  </data>
-  <data name="Tuesday.Text" xml:space="preserve">
-    <value>Tuesday</value>
-  </data>
-  <data name="Wednesday.Text" xml:space="preserve">
-    <value>Wednesday</value>
   </data>
   <data name="WeekDays.Text" xml:space="preserve">
     <value>weekday</value>

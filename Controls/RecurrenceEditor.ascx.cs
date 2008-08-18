@@ -25,57 +25,7 @@ namespace Engage.Dnn.Events.Controls
     public partial class RecurrenceEditor : ModuleBase
     {
         /// <summary>
-        /// The list of possible day selections, from <see cref="RecurrenceDay"/>.
-        /// </summary>
-        private static readonly ListItem[] DayMaskItems = 
-            {
-                // TODO: use CultureInfo.CurrentCulture.DateTimeFormat.DayNames or .GetDayName instead of localization (for more consistency across the module)
-                new ListItem(RecurrenceDay.EveryDay.ToString()), 
-                new ListItem(RecurrenceDay.WeekDays.ToString()),
-                new ListItem(RecurrenceDay.WeekendDays.ToString()), 
-                new ListItem(RecurrenceDay.Sunday.ToString()),
-                new ListItem(RecurrenceDay.Monday.ToString()), 
-                new ListItem(RecurrenceDay.Tuesday.ToString()),
-                new ListItem(RecurrenceDay.Wednesday.ToString()), 
-                new ListItem(RecurrenceDay.Thursday.ToString()),
-                new ListItem(RecurrenceDay.Friday.ToString()), 
-                new ListItem(RecurrenceDay.Saturday.ToString())
-            };
-
-        /// <summary>
-        /// The list of possible months selections, from <see cref="RecurrenceMonth"/>.
-        /// </summary>
-        private static readonly ListItem[] MonthItems = 
-            {
-                // TODO: use CultureInfo.CurrentCulture.DateTimeFormat.MonthNames or .GetMonthName instead of localization (for more consistency across the module)
-                new ListItem(RecurrenceMonth.January.ToString()), 
-                new ListItem(RecurrenceMonth.February.ToString()),
-                new ListItem(RecurrenceMonth.March.ToString()), 
-                new ListItem(RecurrenceMonth.April.ToString()),
-                new ListItem(RecurrenceMonth.May.ToString()), 
-                new ListItem(RecurrenceMonth.June.ToString()),
-                new ListItem(RecurrenceMonth.July.ToString()), 
-                new ListItem(RecurrenceMonth.August.ToString()),
-                new ListItem(RecurrenceMonth.September.ToString()), 
-                new ListItem(RecurrenceMonth.October.ToString()),
-                new ListItem(RecurrenceMonth.November.ToString()), 
-                new ListItem(RecurrenceMonth.December.ToString())
-            };
-
-        /// <summary>
-        /// The list of possible ordinal selections, for example, First, Second or Last.  Based on <see cref="RecurrencePattern.DayOrdinal"/>.
-        /// </summary>
-        private static readonly ListItem[] OrdinalItems = 
-            {
-                new ListItem("First", "1"), 
-                new ListItem("Second", "2"), 
-                new ListItem("Third", "3"),
-                new ListItem("Fourth", "4"), 
-                new ListItem("Last", "-1")
-            };
-
-        /// <summary>
-        /// Gets a value indicating whether the this control is in a valid state.
+        /// Gets a value indicating whether this control is in a valid state.
         /// </summary>
         /// <remarks>
         /// Checks whether the currently selected recurrence rule is defined in part by any <see cref="RadNumericTextBox"/>es.  
@@ -376,6 +326,66 @@ namespace Engage.Dnn.Events.Controls
         }
 
         /// <summary>
+        /// Gets the list of possible months selections, from <see cref="RecurrenceMonth"/>.
+        /// </summary>
+        /// <returns>The list of possible months selections, from <see cref="RecurrenceMonth"/></returns>
+        public static ListItem[] GetMonthItems()
+        {
+            return new ListItem[]
+            {
+                new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((int)RecurrenceMonth.January), RecurrenceMonth.January.ToString()), 
+                new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((int)RecurrenceMonth.February), RecurrenceMonth.February.ToString()),
+                new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((int)RecurrenceMonth.March), RecurrenceMonth.March.ToString()), 
+                new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((int)RecurrenceMonth.April), RecurrenceMonth.April.ToString()),
+                new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((int)RecurrenceMonth.May), RecurrenceMonth.May.ToString()), 
+                new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((int)RecurrenceMonth.June), RecurrenceMonth.June.ToString()),
+                new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((int)RecurrenceMonth.July), RecurrenceMonth.July.ToString()), 
+                new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((int)RecurrenceMonth.August), RecurrenceMonth.August.ToString()),
+                new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((int)RecurrenceMonth.September), RecurrenceMonth.September.ToString()), 
+                new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((int)RecurrenceMonth.October), RecurrenceMonth.October.ToString()),
+                new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((int)RecurrenceMonth.November), RecurrenceMonth.November.ToString()), 
+                new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((int)RecurrenceMonth.December), RecurrenceMonth.December.ToString())
+            };
+        }
+
+        /// <summary>
+        /// Gets the list of possible day selections, from <see cref="RecurrenceDay"/>.
+        /// </summary>
+        /// <returns>The list of possible day selections, from <see cref="RecurrenceDay"/></returns>
+        public static ListItem[] GetDayMaskItems()
+        {
+            return new ListItem[]
+               {
+                   new ListItem(Localization.GetString(RecurrenceDay.EveryDay.ToString(), LocalSharedResourceFile), RecurrenceDay.EveryDay.ToString()), 
+                   new ListItem(Localization.GetString(RecurrenceDay.WeekDays.ToString(), LocalSharedResourceFile), RecurrenceDay.WeekDays.ToString()),
+                   new ListItem(Localization.GetString(RecurrenceDay.WeekendDays.ToString(), LocalSharedResourceFile), RecurrenceDay.WeekendDays.ToString()), 
+                   new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DayOfWeek.Sunday), RecurrenceDay.Sunday.ToString()),
+                   new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DayOfWeek.Monday), RecurrenceDay.Monday.ToString()), 
+                   new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DayOfWeek.Tuesday), RecurrenceDay.Tuesday.ToString()),
+                   new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DayOfWeek.Wednesday), RecurrenceDay.Wednesday.ToString()), 
+                   new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DayOfWeek.Thursday), RecurrenceDay.Thursday.ToString()),
+                   new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DayOfWeek.Friday), RecurrenceDay.Friday.ToString()), 
+                   new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DayOfWeek.Saturday), RecurrenceDay.Saturday.ToString())
+               };
+        }
+
+        /// <summary>
+        /// Gets the list of possible ordinal selections, for example, First, Second or Last.  Based on <see cref="RecurrencePattern.DayOrdinal"/>.
+        /// </summary>
+        /// <returns>The list of possible ordinal selections</returns>
+        public static ListItem[] GetOrdinalItems()
+        {
+            return new ListItem[]
+               {
+                   new ListItem(Localization.GetString(Util.Utility.OrdinalValues[1], LocalSharedResourceFile), "1"),
+                   new ListItem(Localization.GetString(Util.Utility.OrdinalValues[2], LocalSharedResourceFile), "2"),
+                   new ListItem(Localization.GetString(Util.Utility.OrdinalValues[3], LocalSharedResourceFile), "3"),
+                   new ListItem(Localization.GetString(Util.Utility.OrdinalValues[4], LocalSharedResourceFile), "4"),
+                   new ListItem(Localization.GetString(Util.Utility.OrdinalValues[-1], LocalSharedResourceFile), "-1"),
+               };
+        }
+
+        /// <summary>
         /// Gets the recurrence rule for this control instance.
         /// </summary>
         /// <param name="startDate">The start date of the event in question.</param>
@@ -429,13 +439,7 @@ namespace Engage.Dnn.Events.Controls
         private static void FillListControl(ListControl listControl, ListItem[] listItems)
         {
             listControl.Items.Clear();
-            for (int i = 0; i < listItems.Length; i++)
-            {
-                ListItem listItem = listItems[i];
-                listControl.Items.Add(new ListItem(listItem.Text, listItem.Value));
-            }
-
-            Utility.LocalizeListControl(listControl, LocalSharedResourceFile);
+            listControl.Items.AddRange(listItems);
         }
 
         /// <summary>
@@ -685,12 +689,12 @@ namespace Engage.Dnn.Events.Controls
         /// </summary>
         private void FillDropDowns()
         {
-            FillListControl(this.MonthlyDayOrdinalDropDown, OrdinalItems);
-            FillListControl(this.MonthlyDayMaskDropDown, DayMaskItems);
-            FillListControl(this.YearlyRepeatMonthForDate, MonthItems);
-            FillListControl(this.YearlyDayOrdinalDropDown, OrdinalItems);
-            FillListControl(this.YearlyDayMaskDropDown, DayMaskItems);
-            FillListControl(this.YearlyRepeatMonthForGivenDay, MonthItems);
+            FillListControl(this.MonthlyDayOrdinalDropDown, GetOrdinalItems());
+            FillListControl(this.MonthlyDayMaskDropDown, GetDayMaskItems());
+            FillListControl(this.YearlyRepeatMonthForDate, GetMonthItems());
+            FillListControl(this.YearlyDayOrdinalDropDown, GetOrdinalItems());
+            FillListControl(this.YearlyDayMaskDropDown, GetDayMaskItems());
+            FillListControl(this.YearlyRepeatMonthForGivenDay, GetMonthItems());
         }
     }
 }

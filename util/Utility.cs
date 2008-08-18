@@ -12,12 +12,12 @@
 namespace Engage.Dnn.Events.Util
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.Text;
     using System.Web.Hosting;
     using DotNetNuke.Common;
     using DotNetNuke.Services.Localization;
-    using Engage.Events;
     using Telerik.Web.UI;
 
     /// <summary>
@@ -34,11 +34,32 @@ namespace Engage.Dnn.Events.Util
         /// The host setting key base for whether this module have been configured
         /// </summary>
         public const string ModuleConfigured = "ModuleConfigured";
-        
+
         ////public const string AdminContainer = "AdminContainer";
         ////public const string Container = "UserContainer";
         ////public const string AdminRole = "EventsAminRole";
 
+        /// <summary>
+        /// A dictionary mapping ordinal day values (based on <see cref="RecurrencePattern.DayOrdinal"/>) to their localization resource keys.
+        /// </summary>
+        public readonly static IDictionary<int, string> OrdinalValues = GetOrdinalValues();
+
+        /// <summary>
+        /// Fills <see cref="OrdinalValues"/>.
+        /// </summary>
+        /// <returns>A dictionary mapping ordinal day values (based on <see cref="RecurrencePattern.DayOrdinal"/>) to their localization resource keys</returns>
+        private static Dictionary<int, string> GetOrdinalValues()
+        {
+            Dictionary<int, string> ordinalValues = new Dictionary<int, string>();
+            
+            ordinalValues.Add(1, "First");
+            ordinalValues.Add(2, "Second");
+            ordinalValues.Add(3, "Third");
+            ordinalValues.Add(4, "Fourth");
+            ordinalValues.Add(-1, "Last");
+
+            return ordinalValues;
+        }
         /// <summary>
         /// Gets the name of the desktop module folder.
         /// </summary>
@@ -89,6 +110,40 @@ namespace Engage.Dnn.Events.Util
         public static bool IsValidEmailAddress(string emailAddress)
         {
             return Engage.Utility.ValidateEmailAddress(emailAddress);
+        }
+
+        /// <summary>
+        /// Gets the recurrence summary for the recurrence pattern of the given <paramref name="recurrenceRule"/>.
+        /// </summary>
+        /// <param name="recurrenceRule">The recurrence rule to summarize.</param>
+        /// <returns>
+        /// A human-readable, localized summary of the provided recurrence pattern.
+        /// </returns>
+        public static string GetRecurrenceSummary(RecurrenceRule recurrenceRule)
+        {
+            string resourceFile = ModuleBase.LocalSharedResourceFile;
+            string recurrenceSummary = string.Empty;
+            if (recurrenceRule != null)
+            {
+                switch (recurrenceRule.Pattern.Frequency)
+                {
+                    case RecurrenceFrequency.Weekly:
+                        recurrenceSummary = GetWeeklyRecurrenceSummary(recurrenceRule.Pattern, resourceFile);
+                        break;
+                    case RecurrenceFrequency.Monthly:
+                        recurrenceSummary = GetMonthlyRecurrenceSummary(recurrenceRule.Pattern, resourceFile);
+                        break;
+                    case RecurrenceFrequency.Yearly:
+                        recurrenceSummary = GetYearlyRecurrenceSummary(recurrenceRule.Pattern, resourceFile);
+                        break;
+                        ////case RecurrenceFrequency.Daily:
+                    default:
+                        recurrenceSummary = GetDailyRecurrenceSummary(recurrenceRule.Pattern, resourceFile);
+                        break;
+                }
+            }
+
+            return recurrenceSummary;
         }
 
         /// <summary>
@@ -198,12 +253,11 @@ namespace Engage.Dnn.Events.Util
             }
             else
             {
-                // TODO: Localize DayOrdinal and Day of Week
                 return string.Format(
                     CultureInfo.CurrentCulture,
                     Localization.GetString("MonthlyRecurrenceOnGivenDay.Text", resourceFile),
-                    pattern.DayOrdinal,
-                    pattern.DaysOfWeekMask,
+                    Localization.GetString(OrdinalValues[pattern.DayOrdinal], resourceFile),
+                    Localization.GetString(pattern.DaysOfWeekMask.ToString(), resourceFile),
                     pattern.Interval);
             }
         }
@@ -226,12 +280,11 @@ namespace Engage.Dnn.Events.Util
             }
             else
             {
-                // TODO: Localize DayOrdinal, Day of Week
                 return string.Format(
                     CultureInfo.CurrentCulture,
                     Localization.GetString("YearlyRecurrenceOnGivenDay.Text", resourceFile),
-                    pattern.DayOrdinal,
-                    pattern.DaysOfWeekMask,
+                    Localization.GetString(OrdinalValues[pattern.DayOrdinal], resourceFile),
+                    Localization.GetString(pattern.DaysOfWeekMask.ToString(), resourceFile),
                     new DateTime(1, (int)pattern.Month, 1));
             }
         }

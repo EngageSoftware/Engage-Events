@@ -66,8 +66,12 @@
     </div>
     
     <div class="AEEventFeature">
-        <asp:Label ID="FeaturedEventLabel" runat="server" ResourceKey="FeaturedEventLabel" CssClass="NormalBold" AssociatedControlID="FeaturedCheckbox"/>
+        <asp:Label runat="server" ResourceKey="FeaturedEventLabel" CssClass="NormalBold" AssociatedControlID="FeaturedCheckbox"/>
         <asp:CheckBox ID="FeaturedCheckbox" runat="server" />        
+    </div>
+    <div class="AEEventRegister">
+        <asp:Label runat="server" ResourceKey="AllowRegistrationsLabel" CssClass="NormalBold" AssociatedControlID="AllowRegistrationsCheckbox"/>
+        <asp:CheckBox ID="AllowRegistrationsCheckbox" runat="server" Checked="true" />
     </div>
     <div class="AEEventRecur">
         <asp:UpdatePanel runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">

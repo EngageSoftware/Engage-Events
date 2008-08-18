@@ -31,7 +31,7 @@
     <OutputPath>..\..\Bin\</OutputPath>
     <DocumentationFile>EngagePublish.xml</DocumentationFile>
     <WarningLevel>1</WarningLevel>
-    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRules>-Microsoft.Design#CA1031;-Microsoft.Design#CA1054;-Microsoft.Design#CA1056;-Microsoft.Design#CA1055</CodeAnalysisRules>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -340,10 +340,6 @@
     <Compile Include="Util\Utility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content.Events.xsd">
-      <SubType>
-      </SubType>
-    </None>
     <None Include="docs\Engage Publish Users Guide.doc" />
     <None Include="docs\Engage Publish Users Guide.pdf" />
     <None Include="EngageEvents.dnn" />

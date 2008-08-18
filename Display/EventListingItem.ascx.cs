@@ -230,8 +230,8 @@ namespace Engage.Dnn.Events.Display
                     registerEventAction.Text = Localization.GetString("RegisterButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
                     container.Controls.Add(registerEventAction);
 
-                    // must be an active event and has not ended to register
-                    registerEventAction.Visible = ev.Cancelled == false && ev.EventEnd > DateTime.Now;
+                    // to register must be an event that allows registrations, be active, and have not ended
+                    registerEventAction.Visible = ev.AllowRegistrations && !ev.Cancelled && ev.EventEnd > DateTime.Now;
 
                     break;
                 case "ADDTOCALENDARBUTTON":
@@ -346,7 +346,7 @@ namespace Engage.Dnn.Events.Display
 
                     break;
                 case "RECURRENCESUMMARY":
-                    container.Controls.Add(new LiteralControl(Util.Utility.GetRecurrenceSummary(ev.RecurrenceRule, ModuleBase.LocalSharedResourceFile)));
+                    container.Controls.Add(new LiteralControl(Util.Utility.GetRecurrenceSummary(ev.RecurrenceRule)));
                     break;
                 default:
                     break;

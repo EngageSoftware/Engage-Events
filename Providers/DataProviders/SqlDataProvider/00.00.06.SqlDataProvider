@@ -13,6 +13,9 @@ GO
 IF NOT EXISTS (SELECT * FROM dbo.syscolumns where id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Event]') and name = 'RecurrenceParentId')
 ALTER TABLE  {databaseOwner}[{objectQualifier}Engage_Event] ADD RecurrenceParentId int null
 GO
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Event]
+ ALTER COLUMN EventEnd DATETIME NOT NULL
+GO
 
 --get rid of some not needed stuff
 if exists (select * from dbo.sysobjects where id = object_id(N'[{objectQualifier}FK_Engage_Recurrence_Engage_RecurrenceType]'))

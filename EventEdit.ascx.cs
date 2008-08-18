@@ -197,6 +197,7 @@ namespace Engage.Dnn.Events
             e.Overview = this.EventOverviewTextEditor.Text;
             e.Description = this.EventDescriptionTextEditor.Text;
             e.IsFeatured = this.FeaturedCheckbox.Checked;
+            e.AllowRegistrations = this.AllowRegistrationsCheckbox.Checked;
             e.RecurrenceRule = this.RecurrenceEditor.GetRecurrenceRule(e.EventStart, e.EventEnd);
             e.Save(this.UserId);
         }
@@ -218,7 +219,8 @@ namespace Engage.Dnn.Events
                 eventStart, 
                 eventEnd, 
                 this.EventLocationTextBox.Text, 
-                this.FeaturedCheckbox.Checked,
+                this.FeaturedCheckbox.Checked, 
+                this.AllowRegistrationsCheckbox.Checked,
                 this.RecurrenceEditor.GetRecurrenceRule(eventStart, eventEnd));
 
             e.Save(this.UserId);
@@ -237,6 +239,7 @@ namespace Engage.Dnn.Events
             this.StartDateTimePicker.SelectedDate = e.EventStart;
             this.EndDateTimePicker.SelectedDate = e.EventEnd;
             this.FeaturedCheckbox.Checked = e.IsFeatured;
+            this.AllowRegistrationsCheckbox.Checked = e.AllowRegistrations;
             this.RecurringCheckbox.Checked = e.IsRecurring;
             this.RecurrenceEditor.Visible = this.RecurringCheckbox.Checked;
             this.RecurrenceEditor.SetRecurrenceRule(e.RecurrenceRule);

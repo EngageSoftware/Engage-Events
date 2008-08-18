@@ -126,6 +126,9 @@
   <data name="AddNewEvent.Text" xml:space="preserve">
     <value>Add a New Event</value>
   </data>
+  <data name="AllowRegistrationsLabel.Text" xml:space="preserve">
+    <value>Allow Event Registrations</value>
+  </data>
   <data name="Cancel.Alt" xml:space="preserve">
     <value>Cancel</value>
   </data>
