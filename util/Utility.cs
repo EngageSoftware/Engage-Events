@@ -11,9 +11,14 @@
 
 namespace Engage.Dnn.Events.Util
 {
+    using System;
+    using System.Globalization;
     using System.Text;
     using System.Web.Hosting;
     using DotNetNuke.Common;
+    using DotNetNuke.Services.Localization;
+    using Engage.Events;
+    using Telerik.Web.UI;
 
     /// <summary>
     /// All common, shared functionality for the Engage: Events module.
@@ -84,6 +89,174 @@ namespace Engage.Dnn.Events.Util
         public static bool IsValidEmailAddress(string emailAddress)
         {
             return Engage.Utility.ValidateEmailAddress(emailAddress);
+        }
+
+        /// <summary>
+        /// Gets the recurrence summary for the recurrence pattern of the given <paramref name="recurrenceRule"/>.
+        /// </summary>
+        /// <param name="recurrenceRule">The recurrence rule to summarize.</param>
+        /// <param name="resourceFile">The resource file to use to find get localized text.</param>
+        /// <returns>
+        /// A human-readable, localized summary of the provided recurrence pattern.
+        /// </returns>
+        public static string GetRecurrenceSummary(RecurrenceRule recurrenceRule, string resourceFile)
+        {
+            string recurrenceSummary = string.Empty;
+            if (recurrenceRule != null)
+            {
+                switch (recurrenceRule.Pattern.Frequency)
+                {
+                    case RecurrenceFrequency.Weekly:
+                        recurrenceSummary = GetWeeklyRecurrenceSummary(recurrenceRule.Pattern, resourceFile);
+                        break;
+                    case RecurrenceFrequency.Monthly:
+                        recurrenceSummary = GetMonthlyRecurrenceSummary(recurrenceRule.Pattern, resourceFile);
+                        break;
+                    case RecurrenceFrequency.Yearly:
+                        recurrenceSummary = GetYearlyRecurrenceSummary(recurrenceRule.Pattern, resourceFile);
+                        break;
+                        ////case RecurrenceFrequency.Daily:
+                    default:
+                        recurrenceSummary = GetDailyRecurrenceSummary(recurrenceRule.Pattern, resourceFile);
+                        break;
+                }
+            }
+
+            return recurrenceSummary;
+        }
+
+        /// <summary>
+        /// Gets a comma-delimited list of the days of week from the given <paramref name="daysOfWeekMask"/> with localized day names.
+        /// </summary>
+        /// <param name="daysOfWeekMask">The days of week mask.</param>
+        /// <returns>A list of the days of week from the given <paramref name="daysOfWeekMask"/> with localized day names</returns>
+        public static string GetDaysOfWeekList(RecurrenceDay daysOfWeekMask)
+        {
+            StringBuilder daysOfWeek = new StringBuilder();
+
+            AddDayToList(daysOfWeekMask, daysOfWeek, RecurrenceDay.Sunday, DayOfWeek.Sunday);
+            AddDayToList(daysOfWeekMask, daysOfWeek, RecurrenceDay.Monday, DayOfWeek.Monday);
+            AddDayToList(daysOfWeekMask, daysOfWeek, RecurrenceDay.Tuesday, DayOfWeek.Tuesday);
+            AddDayToList(daysOfWeekMask, daysOfWeek, RecurrenceDay.Wednesday, DayOfWeek.Wednesday);
+            AddDayToList(daysOfWeekMask, daysOfWeek, RecurrenceDay.Thursday, DayOfWeek.Thursday);
+            AddDayToList(daysOfWeekMask, daysOfWeek, RecurrenceDay.Friday, DayOfWeek.Friday);
+            AddDayToList(daysOfWeekMask, daysOfWeek, RecurrenceDay.Saturday, DayOfWeek.Saturday);
+
+            return daysOfWeek.ToString();
+        }
+
+        /// <summary>
+        /// Adds the day to list.
+        /// </summary>
+        /// <param name="daysOfWeekMask">The days of week mask.</param>
+        /// <param name="daysOfWeek">The days of week.</param>
+        /// <param name="recurrenceDay">The recurrence day.</param>
+        /// <param name="dayOfWeek">The day of week.</param>
+        public static void AddDayToList(RecurrenceDay daysOfWeekMask, StringBuilder daysOfWeek, RecurrenceDay recurrenceDay, DayOfWeek dayOfWeek)
+        {
+            if ((daysOfWeekMask & recurrenceDay) != 0)
+            {
+                if (daysOfWeek.Length > 0)
+                {
+                    daysOfWeek.Append(", ");
+                }
+
+                daysOfWeek.Append(CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(dayOfWeek));
+            }
+        }
+
+        /// <summary>
+        /// Gets the recurrence summary for a weekly recurrence pattern.
+        /// </summary>
+        /// <param name="pattern">The recurrence pattern.</param>
+        /// <param name="resourceFile">The resource file to use to find get localized text.</param>
+        /// <returns>A human-readable, localized summary of the provided recurrence pattern.</returns>
+        public static string GetWeeklyRecurrenceSummary(RecurrencePattern pattern, string resourceFile)
+        {
+            return string.Format(
+                CultureInfo.CurrentCulture,
+                Localization.GetString("WeeklyRecurrence.Text", resourceFile),
+                pattern.Interval,
+                GetDaysOfWeekList(pattern.DaysOfWeekMask));
+        }
+
+        /// <summary>
+        /// Gets the recurrence summary for a monthly recurrence pattern.
+        /// </summary>
+        /// <param name="pattern">The recurrence pattern.</param>
+        /// <param name="resourceFile">The resource file to use to find get localized text.</param>
+        /// <returns>A human-readable, localized summary of the provided recurrence pattern.</returns>
+        public static string GetMonthlyRecurrenceSummary(RecurrencePattern pattern, string resourceFile)
+        {
+            if (pattern.DayOfMonth > 0)
+            {
+                return string.Format(
+                    CultureInfo.CurrentCulture,
+                    Localization.GetString("MonthlyRecurrenceOnDate.Text", resourceFile),
+                    pattern.DayOfMonth,
+                    pattern.Interval);
+            }
+            else
+            {
+                // TODO: Localize DayOrdinal and Day of Week
+                return string.Format(
+                    CultureInfo.CurrentCulture,
+                    Localization.GetString("MonthlyRecurrenceOnGivenDay.Text", resourceFile),
+                    pattern.DayOrdinal,
+                    pattern.DaysOfWeekMask,
+                    pattern.Interval);
+            }
+        }
+
+        /// <summary>
+        /// Gets the recurrence summary for a yearly recurrence pattern.
+        /// </summary>
+        /// <param name="pattern">The recurrence pattern.</param>
+        /// <param name="resourceFile">The resource file to use to find get localized text.</param>
+        /// <returns>A human-readable, localized summary of the provided recurrence pattern.</returns>
+        public static string GetYearlyRecurrenceSummary(RecurrencePattern pattern, string resourceFile)
+        {
+            if (pattern.DayOfMonth > 0)
+            {
+                return string.Format(
+                    CultureInfo.CurrentCulture,
+                    Localization.GetString("YearlyRecurrenceOnDate.Text", resourceFile),
+                    new DateTime(1, (int)pattern.Month, 1),
+                    pattern.DayOfMonth);
+            }
+            else
+            {
+                // TODO: Localize DayOrdinal, Day of Week
+                return string.Format(
+                    CultureInfo.CurrentCulture,
+                    Localization.GetString("YearlyRecurrenceOnGivenDay.Text", resourceFile),
+                    pattern.DayOrdinal,
+                    pattern.DaysOfWeekMask,
+                    new DateTime(1, (int)pattern.Month, 1));
+            }
+        }
+
+        /// <summary>
+        /// Gets the recurrence summary for a daily recurrence pattern.
+        /// </summary>
+        /// <param name="pattern">The recurrence pattern.</param>
+        /// <param name="resourceFile">The resource file to use to find get localized text.</param>
+        /// <returns>
+        /// A human-readable, localized summary of the provided recurrence pattern.
+        /// </returns>
+        public static string GetDailyRecurrenceSummary(RecurrencePattern pattern, string resourceFile)
+        {
+            if (pattern.DaysOfWeekMask == RecurrenceDay.WeekDays)
+            {
+                return Localization.GetString("DailyRecurrenceWeekdays.Text", resourceFile);
+            }
+            else
+            {
+                return string.Format(
+                    CultureInfo.CurrentCulture, 
+                    Localization.GetString("DailyRecurrence.Text", resourceFile), 
+                    pattern.Interval);
+            }
         }
     }
 }

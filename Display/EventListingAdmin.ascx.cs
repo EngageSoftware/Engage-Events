@@ -18,10 +18,22 @@ namespace Engage.Dnn.Events.Display
     using Navigation;
 
     /// <summary>
-    /// The Event Listing Admin class allows for the management of events.
+    /// A control that displays a listing of events for administration.  Displayed when the Manage Events button is clicked.
     /// </summary>
     public partial class EventListingAdmin : ModuleBase
     {
+        /// <summary>
+        /// Gets the recurrence summary for the recurrence pattern of the given event.
+        /// </summary>
+        /// <param name="currentEvent">The event of which to display the recurrence summary.</param>
+        /// <returns>
+        /// A human-readable, localized summary of the provided recurrence pattern.
+        /// </returns>
+        protected static string GetRecurrenceSummary(object currentEvent)
+        {
+            return Dnn.Events.Util.Utility.GetRecurrenceSummary(((Event)currentEvent).RecurrenceRule, LocalSharedResourceFile);
+        }
+
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
         /// </summary>
@@ -92,6 +104,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void StatusRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            this.PagingControl.CurrentPage = 1;
             this.BindData();
         }
 
@@ -102,6 +115,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void SortRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            this.PagingControl.CurrentPage = 1;
             this.BindData();
         }
 
@@ -110,9 +124,11 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         private void BindData()
         {
-            EventCollection events = EventCollection.Load(this.PortalId, ListingMode.All, this.SortRadioButtonList.SelectedValue, this.PagingControl.CurrentPage, this.PagingControl.PageSize, this.StatusRadioButtonList.SelectedValue == "All", false);
+            EventCollection events = EventCollection.Load(this.PortalId, ListingMode.All, this.SortRadioButtonList.SelectedValue, this.CurrentPageIndex - 1, this.PagingControl.PageSize, this.StatusRadioButtonList.SelectedValue == "All", false);
             this.EventListingRepeater.DataSource = events;
             this.EventListingRepeater.DataBind();
+
+            this.SetupPagingControl(this.PagingControl, events.TotalRecords, "modId", "key");
         }
     }
 }

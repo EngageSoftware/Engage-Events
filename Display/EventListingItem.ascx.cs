@@ -345,6 +345,9 @@ namespace Engage.Dnn.Events.Display
                     }
 
                     break;
+                case "RECURRENCESUMMARY":
+                    container.Controls.Add(new LiteralControl(Util.Utility.GetRecurrenceSummary(ev.RecurrenceRule, ModuleBase.LocalSharedResourceFile)));
+                    break;
                 default:
                     break;
             }

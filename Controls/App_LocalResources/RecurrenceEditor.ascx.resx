@@ -117,12 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="April.Text" xml:space="preserve">
-    <value>April</value>
-  </data>
-  <data name="August.Text" xml:space="preserve">
-    <value>August</value>
-  </data>
   <data name="Daily.Text" xml:space="preserve">
     <value>Daily</value>
   </data>
@@ -131,9 +125,6 @@
   </data>
   <data name="Days.Text" xml:space="preserve">
     <value> day(s)</value>
-  </data>
-  <data name="December.Text" xml:space="preserve">
-    <value>December</value>
   </data>
   <data name="EndAfter.Text" xml:space="preserve">
     <value>End after:</value>
@@ -144,50 +135,14 @@
   <data name="Every.Text" xml:space="preserve">
     <value>Every</value>
   </data>
-  <data name="EveryDay.Text" xml:space="preserve">
-    <value>day</value>
-  </data>
   <data name="EveryWeekday.Text" xml:space="preserve">
     <value>Every weekday</value>
-  </data>
-  <data name="February.Text" xml:space="preserve">
-    <value>February</value>
-  </data>
-  <data name="First.Text" xml:space="preserve">
-    <value>first</value>
-  </data>
-  <data name="Fourth.Text" xml:space="preserve">
-    <value>fourth</value>
-  </data>
-  <data name="Friday.Text" xml:space="preserve">
-    <value>Friday</value>
   </data>
   <data name="Hourly.Text" xml:space="preserve">
     <value>Hourly</value>
   </data>
   <data name="Hours.Text" xml:space="preserve">
     <value> hour(s)</value>
-  </data>
-  <data name="January.Text" xml:space="preserve">
-    <value>January</value>
-  </data>
-  <data name="July.Text" xml:space="preserve">
-    <value>July</value>
-  </data>
-  <data name="June.Text" xml:space="preserve">
-    <value>June</value>
-  </data>
-  <data name="Last.Text" xml:space="preserve">
-    <value>last</value>
-  </data>
-  <data name="March.Text" xml:space="preserve">
-    <value>March</value>
-  </data>
-  <data name="May.Text" xml:space="preserve">
-    <value>May</value>
-  </data>
-  <data name="Monday.Text" xml:space="preserve">
-    <value>Monday</value>
   </data>
   <data name="Monthly.Text" xml:space="preserve">
     <value>Monthly</value>
@@ -198,14 +153,8 @@
   <data name="NoEndDate.Text" xml:space="preserve">
     <value>No end date</value>
   </data>
-  <data name="November.Text" xml:space="preserve">
-    <value>November</value>
-  </data>
   <data name="Occurrences.Text" xml:space="preserve">
     <value> occurrences</value>
-  </data>
-  <data name="October.Text" xml:space="preserve">
-    <value>October</value>
   </data>
   <data name="Of.Text" xml:space="preserve">
     <value> of </value>
@@ -222,38 +171,8 @@
   <data name="Recurrence.Text" xml:space="preserve">
     <value>Recurrence:</value>
   </data>
-  <data name="Saturday.Text" xml:space="preserve">
-    <value>Saturday</value>
-  </data>
-  <data name="Second.Text" xml:space="preserve">
-    <value>second</value>
-  </data>
-  <data name="September.Text" xml:space="preserve">
-    <value>September</value>
-  </data>
-  <data name="Sunday.Text" xml:space="preserve">
-    <value>Sunday</value>
-  </data>
   <data name="The.Text" xml:space="preserve">
     <value>The</value>
-  </data>
-  <data name="Third.Text" xml:space="preserve">
-    <value>third</value>
-  </data>
-  <data name="Thursday.Text" xml:space="preserve">
-    <value>Thursday</value>
-  </data>
-  <data name="Tuesday.Text" xml:space="preserve">
-    <value>Tuesday</value>
-  </data>
-  <data name="Wednesday.Text" xml:space="preserve">
-    <value>Wednesday</value>
-  </data>
-  <data name="WeekDays.Text" xml:space="preserve">
-    <value>weekday</value>
-  </data>
-  <data name="WeekendDays.Text" xml:space="preserve">
-    <value>weekend day</value>
   </data>
   <data name="Weekly.Text" xml:space="preserve">
     <value>Weekly</value>

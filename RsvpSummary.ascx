@@ -39,6 +39,6 @@
         </ItemTemplate>
         <FooterTemplate></ol></FooterTemplate>
     </asp:Repeater>
-    <dnn:PagingControl ID="SummaryPager" runat="server" />
+    <dnn:PagingControl ID="SummaryPager" runat="server" PageSize="10"/>
     <asp:HyperLink ID="CancelGoHomeLink" runat="server" ImageUrl="~/DesktopModules/EngageEvents/Images/cancel_go_home.gif"/>
 </div>

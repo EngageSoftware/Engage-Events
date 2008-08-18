@@ -10,6 +10,6 @@
     <asp:Button ID="ViewInviteButton" runat="server" ResourceKey="ViewInviteButton" Visible="false"/>
     <asp:Button ID="EditEmailButton" runat="server" ResourceKey="EditEmailButton" Visible="false"/>
 </div>
-<div class="EventButtons Normal">
+<%--<div class="EventButtons Normal">
     <engage:ButtonAction ID="EventEditButtonAction" runat="server" />
-</div>
+</div>--%>

@@ -29,6 +29,7 @@ namespace Engage.Dnn.Events.Controls
         /// </summary>
         private static readonly ListItem[] DayMaskItems = 
             {
+                // TODO: use CultureInfo.CurrentCulture.DateTimeFormat.DayNames or .GetDayName instead of localization (for more consistency across the module)
                 new ListItem(RecurrenceDay.EveryDay.ToString()), 
                 new ListItem(RecurrenceDay.WeekDays.ToString()),
                 new ListItem(RecurrenceDay.WeekendDays.ToString()), 
@@ -46,6 +47,7 @@ namespace Engage.Dnn.Events.Controls
         /// </summary>
         private static readonly ListItem[] MonthItems = 
             {
+                // TODO: use CultureInfo.CurrentCulture.DateTimeFormat.MonthNames or .GetMonthName instead of localization (for more consistency across the module)
                 new ListItem(RecurrenceMonth.January.ToString()), 
                 new ListItem(RecurrenceMonth.February.ToString()),
                 new ListItem(RecurrenceMonth.March.ToString()), 
@@ -413,6 +415,23 @@ namespace Engage.Dnn.Events.Controls
         }
 
         /// <summary>
+        /// Fills a list with <see cref="ListItem"/>s and localizes the list.
+        /// </summary>
+        /// <param name="listControl">The list control to fill with the given items.</param>
+        /// <param name="listItems">The list items to use when filling the list.</param>
+        private static void FillListControl(ListControl listControl, ListItem[] listItems)
+        {
+            listControl.Items.Clear();
+            for (int i = 0; i < listItems.Length; i++)
+            {
+                ListItem listItem = listItems[i];
+                listControl.Items.Add(new ListItem(listItem.Text, listItem.Value));
+            }
+
+            Utility.LocalizeListControl(listControl, LocalSharedResourceFile);
+        }
+
+        /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -644,29 +663,12 @@ namespace Engage.Dnn.Events.Controls
         /// </summary>
         private void FillDropDowns()
         {
-            this.FillListControl(this.MonthlyDayOrdinalDropDown, OrdinalItems);
-            this.FillListControl(this.MonthlyDayMaskDropDown, DayMaskItems);
-            this.FillListControl(this.YearlyRepeatMonthForDate, MonthItems);
-            this.FillListControl(this.YearlyDayOrdinalDropDown, OrdinalItems);
-            this.FillListControl(this.YearlyDayMaskDropDown, DayMaskItems);
-            this.FillListControl(this.YearlyRepeatMonthForGivenDay, MonthItems);
-        }
-
-        /// <summary>
-        /// Fills a list with <see cref="ListItem"/>s and localizes the list.
-        /// </summary>
-        /// <param name="listControl">The list control to fill with the given items.</param>
-        /// <param name="listItems">The list items to use when filling the list.</param>
-        private void FillListControl(ListControl listControl, ListItem[] listItems)
-        {
-            listControl.Items.Clear();
-            for (int i = 0; i < listItems.Length; i++)
-            {
-                ListItem listItem = listItems[i];
-                listControl.Items.Add(new ListItem(listItem.Text, listItem.Value));
-            }
-
-            Utility.LocalizeListControl(listControl, this.LocalResourceFile);
+            FillListControl(this.MonthlyDayOrdinalDropDown, OrdinalItems);
+            FillListControl(this.MonthlyDayMaskDropDown, DayMaskItems);
+            FillListControl(this.YearlyRepeatMonthForDate, MonthItems);
+            FillListControl(this.YearlyDayOrdinalDropDown, OrdinalItems);
+            FillListControl(this.YearlyDayMaskDropDown, DayMaskItems);
+            FillListControl(this.YearlyRepeatMonthForGivenDay, MonthItems);
         }
     }
 }

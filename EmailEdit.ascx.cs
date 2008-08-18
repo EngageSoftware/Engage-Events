@@ -25,7 +25,7 @@ namespace Engage.Dnn.Events
     using Utility = Engage.Dnn.Utility;
 
     /// <summary>
-    /// 
+    /// A control which allows for editing an email
     /// </summary>
     public partial class EmailEdit : ModuleBase
     {

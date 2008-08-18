@@ -12,7 +12,6 @@
 namespace Engage.Dnn.Events
 {
     using System;
-    using System.Globalization;
     using System.Web.UI.WebControls;
     using Display;
     using DotNetNuke.Common;
@@ -25,24 +24,6 @@ namespace Engage.Dnn.Events
     /// </summary>
     public partial class RsvpSummary : ModuleBase
     {
-        /// <summary>
-        /// Gets the index of the current page from the querystring.
-        /// </summary>
-        /// <value>The index of the current page.</value>
-        private int CurrentPageIndex
-        {
-            get
-            {
-                int index = 1;
-                if (this.Request.QueryString["currentPage"] != null)
-                {
-                    index = Convert.ToInt32(this.Request.QueryString["currentPage"], CultureInfo.InvariantCulture);
-                }
-
-                return index;
-            }
-        }
-
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
         /// </summary>
@@ -124,17 +105,12 @@ namespace Engage.Dnn.Events
         /// <param name="sortColumn">The sort column.</param>
         private void BindData(string sortColumn)
         {
-            RsvpSummaryCollection rsvps = RsvpSummaryCollection.Load(this.PortalId, sortColumn, this.CurrentPageIndex - 1, 10);
+            RsvpSummaryCollection rsvps = RsvpSummaryCollection.Load(this.PortalId, sortColumn, this.CurrentPageIndex - 1, this.SummaryPager.PageSize);
             this.SummaryRepeater.DataSource = rsvps;
             this.SummaryRepeater.DataBind();
 
-            this.NoRsvpsMessageLabel.Visible = rsvps.TotalRecords == 0;
-
-            this.SummaryPager.Visible = !this.NoRsvpsMessageLabel.Visible;
-            this.SummaryPager.TotalRecords = rsvps.TotalRecords;
-            this.SummaryPager.PageSize = 10;
-            this.SummaryPager.CurrentPage = this.CurrentPageIndex;
-            this.SummaryPager.TabID = this.TabId;
+            this.SetupPagingControl(this.SummaryPager, rsvps.TotalRecords, "modId", "key");
+            this.NoRsvpsMessageLabel.Visible = !this.SummaryPager.Visible;
         }
     }
 }

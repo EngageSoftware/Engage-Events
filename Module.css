@@ -28,6 +28,7 @@
 		
 		.EventButtons{margin-top: 0.675em; overflow:hidden; padding-left: 18%; clear: both; }
 		.EventStats{font-weight:bold;}	
+.RecurrenceSummary {padding-left: 1em;}
 
 /* event calendar display page */
 

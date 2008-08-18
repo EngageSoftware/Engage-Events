@@ -12,6 +12,7 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.Text;
     using System.Web;
@@ -21,6 +22,7 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Entities.Modules.Actions;
     using DotNetNuke.Security;
     using DotNetNuke.Services.Localization;
+    using DotNetNuke.UI.WebControls;
     using Utility = Engage.Utility;
 
     /// <summary>
@@ -31,7 +33,7 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// A resource file for shared resources in this module.
         /// </summary>
-        protected static readonly string LocalSharedResourceFile = "~" + DesktopModuleFolderName + Localization.LocalResourceDirectory + "/" + Localization.LocalSharedResourceFile;
+        protected internal static readonly string LocalSharedResourceFile = "~" + DesktopModuleFolderName + Localization.LocalResourceDirectory + "/" + Localization.LocalSharedResourceFile;
 
         /// <summary>
         /// Gets the module actions.
@@ -116,10 +118,28 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// This method takes the eventid and the currently logged in user (if any) and checks for
+        /// Gets the index of the current page from the QueryString.
+        /// </summary>
+        /// <value>The index of the current page.</value>
+        protected int CurrentPageIndex
+        {
+            get
+            {
+                int index;
+                if (!int.TryParse(this.Request.QueryString["currentPage"], NumberStyles.Integer, CultureInfo.InvariantCulture, out index))
+                {
+                    index = 1;
+                }
+
+                return index;
+            }
+        }
+
+        /// <summary>
+        /// This method takes the eventId and the currently logged in user (if any) and checks for
         /// an existing RSVP(registration) for the user.
         /// </summary>
-        /// <param name="eventId">The event id.</param>
+        /// <param name="eventId">The event ID.</param>
         /// <returns>
         /// 	<c>true</c> if the current user if registered for the specified event; otherwise, <c>false</c>.
         /// </returns>
@@ -189,6 +209,47 @@ namespace Engage.Dnn.Events
             }
 
             return keyParam;
+        }
+
+        /// <summary>
+        /// Sets up a DNN <see cref="PagingControl"/>.
+        /// </summary>
+        /// <param name="pagingControl">The pager control.</param>
+        /// <param name="totalRecords">The total records.</param>
+        /// <param name="queryStringKeys">The QueryString keys which should be persisted when the paging links are clicked.</param>
+        protected void SetupPagingControl(PagingControl pagingControl, int totalRecords, params string[] queryStringKeys)
+        {
+            pagingControl.Visible = totalRecords != 0;
+            pagingControl.TotalRecords = totalRecords;
+            pagingControl.CurrentPage = this.CurrentPageIndex;
+            pagingControl.TabID = this.TabId;
+            pagingControl.QuerystringParams = GenerateQueryStringParameters(this.Request, queryStringKeys);
+        }
+
+        /// <summary>
+        /// Generates a list of QueryString parameters for the given list of <paramref name="queryStringKeys"/>.
+        /// </summary>
+        /// <param name="request">The current request.</param>
+        /// <param name="queryStringKeys">The keys for which to generate parameters.</param>
+        /// <returns>
+        /// A list of QueryString parameters for the given list of <paramref name="queryStringKeys"/>
+        /// </returns>
+        private static string GenerateQueryStringParameters(HttpRequest request, IEnumerable<string> queryStringKeys)
+        {
+            StringBuilder queryString = new StringBuilder(64);
+            foreach (string key in queryStringKeys)
+            {
+                if (queryString.Length > 0)
+                {
+                    queryString.Append("&");
+                }
+
+                queryString.Append(key);
+                queryString.Append("=");
+                queryString.Append(request.QueryString[key]);
+            }
+
+            return queryString.ToString();
         }
     }
 }

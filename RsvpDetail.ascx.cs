@@ -23,28 +23,6 @@ namespace Engage.Dnn.Events
     /// </summary>
     public partial class RsvpDetail : ModuleBase
     {
-        #region Properties
-
-        /// <summary>
-        /// Gets the index of the current page.
-        /// </summary>
-        /// <value>The index of the current page.</value>
-        private int CurrentPageIndex
-        {
-            get
-            {
-                int index = 1;
-
-                // Get the currentpage index from the url parameter
-                if (this.Request.QueryString["currentpage"] != null)
-                {
-                    index = Convert.ToInt32(this.Request.QueryString["currentpage"], CultureInfo.InvariantCulture);
-                }
-
-                return index;
-            }
-        }
-
         /// <summary>
         /// Gets the status.
         /// </summary>
@@ -64,10 +42,6 @@ namespace Engage.Dnn.Events
                 return status;
             }
         }
-
-        #endregion
-
-        #region Static Methods
 
         /// <summary>
         /// Gets the status icon.
@@ -91,10 +65,6 @@ namespace Engage.Dnn.Events
 
             return url;
         }
-
-        #endregion
-
-        #region Event Handlers
 
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
@@ -138,10 +108,6 @@ namespace Engage.Dnn.Events
             this.BindData(this.SortRadioButtonList.SelectedValue);
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>
         /// Sets up this control.  Sets localization and sets the NavigateUrl for the Cancel and Go Home button.
         /// </summary>
@@ -168,18 +134,13 @@ namespace Engage.Dnn.Events
             RsvpCollection rsvps = RsvpCollection.Load(EventId, this.Status, sortColumn, this.CurrentPageIndex - 1, this.grdRsvpDetail.PageSize);
             this.grdRsvpDetail.DataSource = rsvps;
             this.grdRsvpDetail.DataBind();
-
-            this.pager.TotalRecords = rsvps.TotalRecords;
-            this.pager.PageSize = this.grdRsvpDetail.PageSize;
-            this.pager.CurrentPage = this.CurrentPageIndex;
-            this.pager.TabID = this.TabId;
-            this.pager.QuerystringParams = "&modId=" + this.ModuleId + "&key=rsvpDetail&status=" + this.Status + "&eventid=" + EventId;
             this.grdRsvpDetail.Attributes.Add("SortColumn", sortColumn);
+
+            this.pager.PageSize = this.grdRsvpDetail.PageSize;
+            this.SetupPagingControl(this.pager, rsvps.TotalRecords, "modId", "key", "status", "eventId");
 
             this.RsvpDisplay.SetRsvpSummary(Engage.Events.RsvpSummary.Load(EventId));
             this.RsvpDisplay.ModuleConfiguration = this.ModuleConfiguration;
         }
-
-        #endregion
     }
 }

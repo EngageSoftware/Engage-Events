@@ -31,7 +31,7 @@
             </div>
             <div class="EventDate">
                 <p class="NormalBold"><asp:Label runat="server" ResourceKey="When"/></p>
-                <p class="Normal"><%# DataBinder.Eval(Container.DataItem, "EventStartFormatted")%></p>
+                <p class="Normal"><%# DataBinder.Eval(Container.DataItem, "EventStartFormatted")%><span class="RecurrenceSummary"><%#GetRecurrenceSummary(Container.DataItem)%></span></p>
             </div>
             <div class="EventLocation">
                 <p class="NormalBold"><asp:Label runat="server" ResourceKey="Where"/></p>
@@ -45,7 +45,7 @@
 		</div>
     </ItemTemplate>
 </asp:Repeater>
-<dnn:PagingControl ID="PagingControl" runat="server" PageSize="25" />
+<dnn:PagingControl ID="PagingControl" runat="server" PageSize="10"  />
 
 <%--<telerik:RadWindowManager runat="server">
     <windows>

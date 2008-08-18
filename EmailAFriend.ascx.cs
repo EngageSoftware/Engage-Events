@@ -12,7 +12,7 @@
 namespace Engage.Dnn.Events
 {
     /// <summary>
-    /// 
+    /// A control which lets the user email a link to this page or site to a friend
     /// </summary>
     public partial class EmailAFriend : ModuleBase
     {
