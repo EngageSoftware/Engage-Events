@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F9BEB83D-4945-45DE-BF7D-11FBD4A15080}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -599,7 +599,7 @@
       <Project>{319B4FE6-A016-41E0-93CE-748DA517D542}</Project>
       <Name>Engage.Utility</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Engage.Dnn.Framework\Engage.Dnn.Framework.csproj">
+    <ProjectReference Include="..\..\..\..\..\..\Code\Engage 3.0\Engage.Dnn.Framework\Engage.Dnn.Framework.csproj">
       <Project>{A58A0922-35E3-49BD-BD18-55A6BA45EC7A}</Project>
       <Name>Engage.Dnn.Framework</Name>
     </ProjectReference>
@@ -696,6 +696,9 @@
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
           <IISAppRootUrl>http://localhost/DotNetNuke_2</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

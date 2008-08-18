@@ -90,7 +90,14 @@ namespace Engage.Dnn.Events.Controls
                 switch (this.Frequency)
                 {
                     case RecurrenceFrequency.Weekly:
-                        isValid = this.WeeklyRepeatInterval.Value.HasValue;
+                        isValid = this.WeeklyRepeatInterval.Value.HasValue
+                            && (this.WeeklyWeekDaySunday.Checked
+                                || this.WeeklyWeekDayMonday.Checked
+                                || this.WeeklyWeekDayTuesday.Checked
+                                || this.WeeklyWeekDayWednesday.Checked
+                                || this.WeeklyWeekDayThursday.Checked
+                                || this.WeeklyWeekDayFriday.Checked
+                                || this.WeeklyWeekDaySaturday.Checked);
                         break;
                     case RecurrenceFrequency.Monthly:
                         if (this.RepeatEveryNthMonthOnDate.Checked)
@@ -440,6 +447,7 @@ namespace Engage.Dnn.Events.Controls
         {
             if (!this.IsPostBack)
             {
+                this.LocalizeControl();
                 this.SetRecurrenceFrequency();
             }
         }
@@ -452,6 +460,20 @@ namespace Engage.Dnn.Events.Controls
         private void RepeatFrequency_CheckedChanged(object sender, EventArgs e)
         {
             this.SetRecurrenceFrequency();
+        }
+
+        /// <summary>
+        /// Localizes this control's components that can't be localized easily in the markup.  Specifically, the weekday checkboxes for weekly recurrence are localized.
+        /// </summary>
+        private void LocalizeControl()
+        {
+            this.WeeklyWeekDaySunday.Text = Localization.GetString("Sunday", LocalSharedResourceFile);
+            this.WeeklyWeekDayMonday.Text = Localization.GetString("Monday", LocalSharedResourceFile);
+            this.WeeklyWeekDayTuesday.Text = Localization.GetString("Tuesday", LocalSharedResourceFile);
+            this.WeeklyWeekDayWednesday.Text = Localization.GetString("Wednesday", LocalSharedResourceFile);
+            this.WeeklyWeekDayThursday.Text = Localization.GetString("Thursday", LocalSharedResourceFile);
+            this.WeeklyWeekDayFriday.Text = Localization.GetString("Friday", LocalSharedResourceFile);
+            this.WeeklyWeekDaySaturday.Text = Localization.GetString("Saturday", LocalSharedResourceFile);
         }
 
         /// <summary>

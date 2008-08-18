@@ -48,25 +48,25 @@
                                     <%=Localize("RecurEvery")%><telerik:RadNumericTextBox ID="WeeklyRepeatInterval" runat="server" CssClass="rsAdvInput" MinValue="1" ShowSpinButtons="True" Value="1" Width="50px"><NumberFormat AllowRounding="True" DecimalDigits="0"/></telerik:RadNumericTextBox><%=Localize("Weeks")%>
                                 </li>
                                 <li class="rsAdvWeekly_Weekday">
-                                    <asp:CheckBox ID="WeeklyWeekDayMonday" runat="server" CssClass="rsAdvCheckboxWrapper" ResourceKey="Monday" />
+                                    <asp:CheckBox ID="WeeklyWeekDayMonday" runat="server" CssClass="rsAdvCheckboxWrapper" />
                                 </li>
                                 <li class="rsAdvWeekly_Weekday">
-                                    <asp:CheckBox ID="WeeklyWeekDayTuesday" runat="server" CssClass="rsAdvCheckboxWrapper" ResourceKey="Tuesday" />
+                                    <asp:CheckBox ID="WeeklyWeekDayTuesday" runat="server" CssClass="rsAdvCheckboxWrapper" />
                                 </li>
                                 <li class="rsAdvWeekly_Weekday">
-                                    <asp:CheckBox ID="WeeklyWeekDayWednesday" runat="server" CssClass="rsAdvCheckboxWrapper" ResourceKey="Wednesday" />
+                                    <asp:CheckBox ID="WeeklyWeekDayWednesday" runat="server" CssClass="rsAdvCheckboxWrapper" />
                                 </li>
                                 <li class="rsAdvWeekly_Weekday">
-                                    <asp:CheckBox ID="WeeklyWeekDayThursday" runat="server" CssClass="rsAdvCheckboxWrapper" ResourceKey="Thursday" />
+                                    <asp:CheckBox ID="WeeklyWeekDayThursday" runat="server" CssClass="rsAdvCheckboxWrapper" />
                                 </li>
                                 <li class="rsAdvWeekly_Weekday">
-                                    <asp:CheckBox ID="WeeklyWeekDayFriday" runat="server" CssClass="rsAdvCheckboxWrapper" ResourceKey="Friday" />
+                                    <asp:CheckBox ID="WeeklyWeekDayFriday" runat="server" CssClass="rsAdvCheckboxWrapper" />
                                 </li>
                                 <li class="rsAdvWeekly_Weekday">
-                                    <asp:CheckBox ID="WeeklyWeekDaySaturday" runat="server" CssClass="rsAdvCheckboxWrapper" ResourceKey="Saturday" />
+                                    <asp:CheckBox ID="WeeklyWeekDaySaturday" runat="server" CssClass="rsAdvCheckboxWrapper" />
                                 </li>
                                 <li class="rsAdvWeekly_Weekday">
-                                    <asp:CheckBox ID="WeeklyWeekDaySunday" runat="server" CssClass="rsAdvCheckboxWrapper" ResourceKey="Sunday" />
+                                    <asp:CheckBox ID="WeeklyWeekDaySunday" runat="server" CssClass="rsAdvCheckboxWrapper" />
                                 </li>
                             </ul>
                         </asp:Panel>
