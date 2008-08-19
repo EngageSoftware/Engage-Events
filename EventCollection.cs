@@ -136,7 +136,8 @@ namespace Engage.Events
             IDataProvider dp = DataProvider.Instance;
             try
             {
-                DateTime? startDate, endDate;
+                DateTime? startDate;
+                DateTime? endDate;
 
                 switch (listingMode)
                 {
