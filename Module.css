@@ -170,6 +170,9 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 		.MEStatus .NormalBold {display: block; float: left; padding-top: 4px;}
 		.MEStatus table{ display: inline;}
 
+#MEEventItem {padding-bottom: 2em;}
+#MEEventItem .EventDate p, #MEEventItem .EventLocation p, #MEEventItem .EventDescription p {margin-top: 0;}
+
 /* ============================ end manage events page ============================ */
 
 
