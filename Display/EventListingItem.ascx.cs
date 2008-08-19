@@ -93,7 +93,7 @@ namespace Engage.Dnn.Events.Display
         /// <value>The header container.</value>
         protected override PlaceHolder HeaderContainer
         {
-            get { return this.PlaceHolderHeader; }
+            get { return this.HeaderPlaceholder; }
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Engage.Dnn.Events.Display
         /// <value>The footer container.</value>
         protected override PlaceHolder FooterContainer
         {
-            get { return this.PlaceHolderFooter; }
+            get { return this.FooterPlaceholder; }
         }
 
         /// <summary>
@@ -113,7 +113,14 @@ namespace Engage.Dnn.Events.Display
         {
             if (!string.IsNullOrEmpty(listingMode))
             {
-                this.ListingMode = (ListingMode)Enum.Parse(typeof(ListingMode), listingMode, true);
+                try
+                {
+                    this.ListingMode = (ListingMode)Enum.Parse(typeof(ListingMode), listingMode, true);
+                }
+                catch (ArgumentException)
+                {
+                    // if listingMode does not parse, just leave this.ListingMode to its default
+                }
             }
         }
 
@@ -325,7 +332,7 @@ namespace Engage.Dnn.Events.Display
                         break;
                     case "CURRENTPAGE":
                         this.CurrentPageLabel = new Label();
-                        this.CurrentPageLabel.Text = (this.CurrentPageIndex + 1).ToString();
+                        this.CurrentPageLabel.Text = (this.CurrentPageIndex + 1).ToString(CultureInfo.CurrentCulture);
                         this.CurrentPageLabel.CssClass = tag.GetAttributeValue("CssClass");
                         this.CurrentPageLabel.ToolTip = Localization.GetString("CurrentPageToolTip", this.LocalResourceFile);
                         container.Controls.Add(this.CurrentPageLabel);
@@ -353,7 +360,7 @@ namespace Engage.Dnn.Events.Display
 
                         break;
                     case "RECURRENCESUMMARY":
-                        container.Controls.Add(new LiteralControl(Util.Utility.GetRecurrenceSummary(ev.RecurrenceRule)));
+                        container.Controls.Add(new LiteralControl(Dnn.Events.Utility.GetRecurrenceSummary(ev.RecurrenceRule)));
                         break;
                     case "RECURRENCEWRAPPER":
                         StringBuilder cssClass = new StringBuilder(tag.GetAttributeValue("CssClass"));

@@ -5,7 +5,7 @@
     <p><asp:Label runat="server" resourcekey="Instructions"/></p>
     
     <div class="LoginButtons">
-        <p><asp:HyperLink ID="LoginLink" runat="server" CssClass="CommandButton" ResourceKey="LoginLink" /></p>
+        <p><asp:HyperLink ID="LogOnLink" runat="server" CssClass="CommandButton" ResourceKey="LoginLink" /></p>
         <p><asp:HyperLink ID="RegisterLink" runat="server" CssClass="CommandButton" ResourceKey="RegisterLink" /></p>
     </div>
 </div>

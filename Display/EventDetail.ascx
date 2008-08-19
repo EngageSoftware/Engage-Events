@@ -5,5 +5,5 @@
     @import url(<%=ApplicationUrl %><%=DesktopModuleFolderName %>Module.css);
 </style>
 
-<asp:PlaceHolder ID="DetailPlaceHolder" runat="server"></asp:PlaceHolder>
-<asp:HyperLink ID="BackHyperLink" runat="server"></asp:HyperLink>
+<asp:PlaceHolder ID="DetailPlaceholder" runat="server"></asp:PlaceHolder>
+<asp:HyperLink ID="BackHyperlink" runat="server"></asp:HyperLink>

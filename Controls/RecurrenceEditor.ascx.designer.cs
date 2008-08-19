@@ -67,13 +67,13 @@ namespace Engage.Dnn.Events.Controls
         protected global::System.Web.UI.WebControls.RadioButton RepeatFrequencyYearly;
         
         /// <summary>
-        /// RecurrencePatternMultiView control.
+        /// RecurrencePatternMultiview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.MultiView RecurrencePatternMultiView;
+        protected global::System.Web.UI.WebControls.MultiView RecurrencePatternMultiview;
         
         /// <summary>
         /// RecurrencePatternDailyView control.
@@ -148,67 +148,67 @@ namespace Engage.Dnn.Events.Controls
         protected global::Telerik.Web.UI.RadNumericTextBox WeeklyRepeatInterval;
         
         /// <summary>
-        /// WeeklyWeekDayMonday control.
+        /// EeeklyWeekdayMonday control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox WeeklyWeekDayMonday;
+        protected global::System.Web.UI.WebControls.CheckBox EeeklyWeekdayMonday;
         
         /// <summary>
-        /// WeeklyWeekDayTuesday control.
+        /// WeeklyWeekdayTuesday control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox WeeklyWeekDayTuesday;
+        protected global::System.Web.UI.WebControls.CheckBox WeeklyWeekdayTuesday;
         
         /// <summary>
-        /// WeeklyWeekDayWednesday control.
+        /// WeeklyWeekdayWednesday control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox WeeklyWeekDayWednesday;
+        protected global::System.Web.UI.WebControls.CheckBox WeeklyWeekdayWednesday;
         
         /// <summary>
-        /// WeeklyWeekDayThursday control.
+        /// WeeklyWeekdayThursday control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox WeeklyWeekDayThursday;
+        protected global::System.Web.UI.WebControls.CheckBox WeeklyWeekdayThursday;
         
         /// <summary>
-        /// WeeklyWeekDayFriday control.
+        /// WeeklyWeekdayFriday control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox WeeklyWeekDayFriday;
+        protected global::System.Web.UI.WebControls.CheckBox WeeklyWeekdayFriday;
         
         /// <summary>
-        /// WeeklyWeekDaySaturday control.
+        /// WeeklyWeekdaySaturday control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox WeeklyWeekDaySaturday;
+        protected global::System.Web.UI.WebControls.CheckBox WeeklyWeekdaySaturday;
         
         /// <summary>
-        /// WeeklyWeekDaySunday control.
+        /// WeeklyWeekdaySunday control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox WeeklyWeekDaySunday;
+        protected global::System.Web.UI.WebControls.CheckBox WeeklyWeekdaySunday;
         
         /// <summary>
         /// RecurrencePatternMonthlyView control.

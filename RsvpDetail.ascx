@@ -29,7 +29,7 @@
         </div>
     </div>
     <engage:RsvpDisplay ID="RsvpDisplay" runat="server" />
-    <asp:DataGrid ID="grdRsvpDetail" runat="server" AutoGenerateColumns="False" Width="100%" AllowSorting="False" PageSize="10" BorderWidth="0" GridLines="None" HeaderStyle-CssClass="rsvpDetailHeader" CssClass="Normal">
+    <asp:DataGrid ID="RsvpDetailGrid" runat="server" AutoGenerateColumns="False" Width="100%" AllowSorting="False" PageSize="10" BorderWidth="0" GridLines="None" HeaderStyle-CssClass="rsvpDetailHeader" CssClass="Normal">
         <SelectedItemStyle CssClass="rsvpDetailItemSelect"></SelectedItemStyle>
         <PagerStyle HorizontalAlign="Center" Mode="NumericPages" PageButtonCount="15"></PagerStyle>
         <AlternatingItemStyle CssClass="rsvpDetailAltItem"></AlternatingItemStyle>

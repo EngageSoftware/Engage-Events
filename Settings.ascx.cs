@@ -46,7 +46,7 @@ namespace Engage.Dnn.Events
                     ModuleController modules = new ModuleController();
                     modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.DisplayTemplate.PropertyName, this.DropDownChooseDisplay.SelectedValue);
 
-                    modules.UpdateTabModuleSetting(this.TabModuleId, Setting.FeaturedOnly.PropertyName, this.FeaturedCheckbox.Checked.ToString());
+                    modules.UpdateTabModuleSetting(this.TabModuleId, Setting.FeaturedOnly.PropertyName, this.FeaturedCheckBox.Checked.ToString());
 
                     this.currentSettingsBase.UpdateSettings();
                 }
@@ -117,7 +117,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetOptions()
         {
-            string displayType = Utility.GetStringSetting(this.Settings, Framework.Setting.DisplayTemplate.PropertyName);
+            string displayType = Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.DisplayTemplate.PropertyName);
 
             ListItem li = this.DropDownChooseDisplay.Items.FindByValue(displayType);
             if (li != null)
@@ -125,7 +125,7 @@ namespace Engage.Dnn.Events
                 li.Selected = true;
             }
 
-            this.FeaturedCheckbox.Checked = Utility.GetBoolSetting(this.Settings, Setting.FeaturedOnly.PropertyName, false);
+            this.FeaturedCheckBox.Checked = Dnn.Utility.GetBoolSetting(this.Settings, Setting.FeaturedOnly.PropertyName, false);
         }
 
         /// <summary>

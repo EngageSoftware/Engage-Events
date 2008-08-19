@@ -191,16 +191,16 @@ namespace Engage.Dnn.Events.Controls
         /// GetLocalizedText gets the localized text for the provided key
         /// </summary>
         /// <param name="key">The resource key</param>
-        /// <param name="ctl">The current control</param>
+        /// <param name="control">The current control</param>
         /// <returns>Localized text for the given <paramref name="key"/></returns>
         /// <history>
         /// [cnurse]	9/8/2004	Created
         /// [bdukes]    6/13/2008   Adapted for new ModuleMessage control
         /// </history>
-        protected static string GetLocalizedText(string key, Control ctl)
+        protected static string GetLocalizedText(string key, Control control)
         {
             // We need to find the parent module
-            PortalModuleBase parentControl = ctl.Parent as PortalModuleBase;
+            PortalModuleBase parentControl = control.Parent as PortalModuleBase;
             if (parentControl != null)
             {
                 // We are at the Module Level so return key
@@ -209,16 +209,16 @@ namespace Engage.Dnn.Events.Controls
             }
             else
             {
-                System.Reflection.PropertyInfo pi = ctl.Parent.GetType().GetProperty("LocalResourceFile");
+                System.Reflection.PropertyInfo pi = control.Parent.GetType().GetProperty("LocalResourceFile");
                 if (pi != null && pi.PropertyType.Equals(typeof(string)))
                 {
                     // If control has a LocalResourceFile property use this
-                    return Localization.GetString(key, (string)pi.GetValue(ctl.Parent, null));
+                    return Localization.GetString(key, (string)pi.GetValue(control.Parent, null));
                 }
                 else
                 {
                     // Drill up to the next level 
-                    return GetLocalizedText(key, ctl.Parent);
+                    return GetLocalizedText(key, control.Parent);
                 }
             }
         }

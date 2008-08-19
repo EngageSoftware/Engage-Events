@@ -35,7 +35,7 @@ namespace Engage.Dnn.Events
 
             get
             {
-                return Utility.GetStringSetting(this.Settings, Setting.SkinSelection.PropertyName);
+                return Dnn.Utility.GetStringSetting(this.Settings, Setting.SkinSelection.PropertyName);
             }
         }
 
@@ -46,21 +46,21 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                this.ddlSkin.Items.Clear();
-                this.ddlSkin.Items.Add(new ListItem("Black"));
-                this.ddlSkin.Items.Add(new ListItem("WebBlue"));
-                this.ddlSkin.Items.Add(new ListItem("Default"));
-                this.ddlSkin.Items.Add(new ListItem("Hay"));
-                this.ddlSkin.Items.Add(new ListItem("Inox"));
-                this.ddlSkin.Items.Add(new ListItem("Office2007"));
-                this.ddlSkin.Items.Add(new ListItem("Mac"));
-                this.ddlSkin.Items.Add(new ListItem("Outlook"));
-                this.ddlSkin.Items.Add(new ListItem("Telerik"));
-                this.ddlSkin.Items.Add(new ListItem("Sunset"));
-                this.ddlSkin.Items.Add(new ListItem("Vista"));
-                this.ddlSkin.Items.Add(new ListItem("Web20"));
+                this.SkinDropDownList.Items.Clear();
+                this.SkinDropDownList.Items.Add(new ListItem("Black"));
+                this.SkinDropDownList.Items.Add(new ListItem("WebBlue"));
+                this.SkinDropDownList.Items.Add(new ListItem("Default"));
+                this.SkinDropDownList.Items.Add(new ListItem("Hay"));
+                this.SkinDropDownList.Items.Add(new ListItem("Inox"));
+                this.SkinDropDownList.Items.Add(new ListItem("Office2007"));
+                this.SkinDropDownList.Items.Add(new ListItem("Mac"));
+                this.SkinDropDownList.Items.Add(new ListItem("Outlook"));
+                this.SkinDropDownList.Items.Add(new ListItem("Telerik"));
+                this.SkinDropDownList.Items.Add(new ListItem("Sunset"));
+                this.SkinDropDownList.Items.Add(new ListItem("Vista"));
+                this.SkinDropDownList.Items.Add(new ListItem("Web20"));
 
-                ListItem li = this.ddlSkin.Items.FindByValue(this.SkinOption);
+                ListItem li = this.SkinDropDownList.Items.FindByValue(this.SkinOption);
                 if (li != null)
                 {
                     li.Selected = true;
@@ -81,7 +81,7 @@ namespace Engage.Dnn.Events
 
             if (this.Page.IsValid)
             {
-                this.SkinOption = this.ddlSkin.SelectedValue;
+                this.SkinOption = this.SkinDropDownList.SelectedValue;
             }
         }
     }

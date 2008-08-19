@@ -13,7 +13,7 @@
     <asp:DropDownList ID="RolesDropDown" runat="server" />
 </div>
 <div class="border" style="left: 16px; width: 800px; top: 64px; height: 112px" title="Define E-Mail">
-    <asp:Label ID="lblEmailType" runat="server" CssClass="NormalBold" Text="Please select e-mail you would like to send:"></asp:Label>
+    <asp:Label ID="EmailTypeLabel" runat="server" CssClass="NormalBold" Text="Please select e-mail you would like to send:"></asp:Label>
     <asp:RadioButtonList ID="EmailTypeRadioButtons" runat="server" CssClass="Normal"
         AutoPostBack="true" RepeatDirection="Horizontal" Width="440px">
         <asp:ListItem Selected="True" Value="Invitation">Invitation</asp:ListItem>
@@ -21,7 +21,7 @@
         <asp:ListItem Value="Recap">Recap</asp:ListItem>
     </asp:RadioButtonList>
     <br />
-    <asp:Label ID="lblApprovalRequired" runat="server" CssClass="NormalBold" Text="Are approvals required?"></asp:Label><br />
+    <asp:Label ID="ApprovalRequiredLabel" runat="server" CssClass="NormalBold" Text="Are approvals required?"></asp:Label><br />
     <asp:RadioButtonList ID="ApprovalRequiredRadioButtons" runat="server" CssClass="Normal"
         RepeatDirection="Horizontal">
         <asp:ListItem Selected="True">Yes</asp:ListItem>
@@ -46,9 +46,9 @@
     <br />
     <asp:Label ID="EmailLocationLabel1" runat="server" CssClass="NormalBold" Text="Locate e-mail body:"></asp:Label>
     <asp:TextBox ID="EmailLocationTextBox1" runat="server" Width="280px"></asp:TextBox>
-    <asp:ImageButton ID="btnBrowse" runat="server" ImageUrl="~/Images/view.gif" />
+    <asp:ImageButton ID="BrowseButton" runat="server" ImageUrl="~/Images/view.gif" />
     <br />
-    <div class="Normal" id="dvReminderOnly" visible="false" runat="server">
+    <div class="Normal" id="ReminderOnlyDiv" visible="false" runat="server">
         <asp:Label ID="EmailLocationLabel2" runat="server" CssClass="NormalBold" Text="Locate e-mail body:"></asp:Label>
         <asp:TextBox ID="EmailLocationTextBox2" runat="server" Width="280px"></asp:TextBox>
         <asp:ImageButton ID="ImageButton6" runat="server" ImageUrl="~/Images/view.gif" />

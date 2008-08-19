@@ -77,13 +77,13 @@ namespace Engage.Dnn.Events {
         protected global::Engage.Dnn.Events.Display.RsvpDisplay RsvpDisplay;
         
         /// <summary>
-        /// grdRsvpDetail control.
+        /// RsvpDetailGrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataGrid grdRsvpDetail;
+        protected global::System.Web.UI.WebControls.DataGrid RsvpDetailGrid;
         
         /// <summary>
         /// pager control.

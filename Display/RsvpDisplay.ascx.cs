@@ -64,7 +64,7 @@ namespace Engage.Dnn.Events.Display
                     this.NotAttendingLink.Text = this.rsvpSummary.NotAttending.ToString(CultureInfo.CurrentCulture);
                     this.AttendingLink.NavigateUrl = this.GetDetailUrl(this.rsvpSummary.EventId, RsvpStatus.Attending, this.rsvpSummary.Attending);
                     this.AttendingLink.Text = this.rsvpSummary.Attending.ToString(CultureInfo.CurrentCulture);
-                    this.DateLabel.Text = this.GetFormattedEventDate(this.rsvpSummary.EventStart, this.rsvpSummary.EventEnd);
+                    this.DateLabel.Text = GetFormattedEventDate(this.rsvpSummary.EventStart, this.rsvpSummary.EventEnd);
                 }
             }
             catch (Exception exc)
@@ -79,7 +79,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="startDate">The event's start date.</param>
         /// <param name="endDate">The event's end date.</param>
         /// <returns>A formatted string representing the timespan over which this event occurs.</returns>
-        private string GetFormattedEventDate(DateTime startDate, DateTime endDate)
+        private static string GetFormattedEventDate(DateTime startDate, DateTime endDate)
         {
             string timespanResourceKey;
             if (startDate.Year != endDate.Year)

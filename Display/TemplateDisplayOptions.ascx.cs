@@ -22,7 +22,7 @@ namespace Engage.Dnn.Events.Display
     using Framework;
     using Templating;
     using Setting = Setting;
-    using Utility = Utility;
+    using Utility = Dnn.Utility;
 
     /// <summary>
     /// The settings for a template
@@ -156,48 +156,48 @@ namespace Engage.Dnn.Events.Display
                 }
 
                 List<Template> templates = TemplateEngine.GetHeaderTemplates(ModuleBase.PhysicialTemplatesFolderName);
-                this.HeaderDropdownlist.DataTextField = "DocumentName";
-                this.HeaderDropdownlist.DataValueField = "DocumentName";
-                this.HeaderDropdownlist.DataSource = templates;
-                this.HeaderDropdownlist.DataBind();
+                this.HeaderDropDownList.DataTextField = "DocumentName";
+                this.HeaderDropDownList.DataValueField = "DocumentName";
+                this.HeaderDropDownList.DataSource = templates;
+                this.HeaderDropDownList.DataBind();
 
-                li = this.HeaderDropdownlist.Items.FindByValue(this.HeaderTemplate);
+                li = this.HeaderDropDownList.Items.FindByValue(this.HeaderTemplate);
                 if (li != null)
                 {
                     li.Selected = true;
                 }
 
                 templates = TemplateEngine.GetItemTemplates(ModuleBase.PhysicialTemplatesFolderName);
-                this.ItemDropdownlist.DataTextField = "DocumentName";
-                this.ItemDropdownlist.DataValueField = "DocumentName";
-                this.ItemDropdownlist.DataSource = templates;
-                this.ItemDropdownlist.DataBind();
+                this.ItemDropDownList.DataTextField = "DocumentName";
+                this.ItemDropDownList.DataValueField = "DocumentName";
+                this.ItemDropDownList.DataSource = templates;
+                this.ItemDropDownList.DataBind();
 
-                li = this.ItemDropdownlist.Items.FindByValue(this.ItemTemplate);
+                li = this.ItemDropDownList.Items.FindByValue(this.ItemTemplate);
                 if (li != null)
                 {
                     li.Selected = true;
                 }
 
                 templates = TemplateEngine.GetFooterTemplates(ModuleBase.PhysicialTemplatesFolderName);
-                this.FooterDropdownlist.DataTextField = "DocumentName";
-                this.FooterDropdownlist.DataValueField = "DocumentName";
-                this.FooterDropdownlist.DataSource = templates;
-                this.FooterDropdownlist.DataBind();
+                this.FooterDropDownList.DataTextField = "DocumentName";
+                this.FooterDropDownList.DataValueField = "DocumentName";
+                this.FooterDropDownList.DataSource = templates;
+                this.FooterDropDownList.DataBind();
 
-                li = this.FooterDropdownlist.Items.FindByValue(this.FooterTemplate);
+                li = this.FooterDropDownList.Items.FindByValue(this.FooterTemplate);
                 if (li != null)
                 {
                     li.Selected = true;
                 }
 
                 templates = TemplateEngine.GetDetailTemplates(ModuleBase.PhysicialTemplatesFolderName);
-                this.DetailDropdownlist.DataTextField = "DocumentName";
-                this.DetailDropdownlist.DataValueField = "DocumentName";
-                this.DetailDropdownlist.DataSource = templates;
-                this.DetailDropdownlist.DataBind();
+                this.DetailDropDownList.DataTextField = "DocumentName";
+                this.DetailDropDownList.DataValueField = "DocumentName";
+                this.DetailDropDownList.DataSource = templates;
+                this.DetailDropDownList.DataBind();
 
-                li = this.DetailDropdownlist.Items.FindByValue(this.DetailTemplate);
+                li = this.DetailDropDownList.Items.FindByValue(this.DetailTemplate);
                 if (li != null)
                 {
                     li.Selected = true;
@@ -206,7 +206,7 @@ namespace Engage.Dnn.Events.Display
                 string recordPerPage = Utility.GetStringSetting(this.Settings, Framework.Setting.RecordsPerPage.PropertyName);
                 if (recordPerPage != null)
                 {
-                    this.RadNumericRecordsPerPage.Value = Convert.ToDouble(this.RecordsPerPage);
+                    this.RecordsPerPageTextbox.Value = Convert.ToDouble(this.RecordsPerPage);
                 }
             }
             catch (Exception exc)
@@ -225,11 +225,11 @@ namespace Engage.Dnn.Events.Display
             if (this.Page.IsValid)
             {
                 this.DisplayModeOption = this.DisplayModeDropDown.SelectedValue;
-                this.HeaderTemplate = this.HeaderDropdownlist.SelectedValue;
-                this.ItemTemplate = this.ItemDropdownlist.SelectedValue;
-                this.FooterTemplate = this.FooterDropdownlist.SelectedValue;
-                this.DetailTemplate = this.DetailDropdownlist.SelectedValue;
-                this.RecordsPerPage = (int)this.RadNumericRecordsPerPage.Value.Value;
+                this.HeaderTemplate = this.HeaderDropDownList.SelectedValue;
+                this.ItemTemplate = this.ItemDropDownList.SelectedValue;
+                this.FooterTemplate = this.FooterDropDownList.SelectedValue;
+                this.DetailTemplate = this.DetailDropDownList.SelectedValue;
+                this.RecordsPerPage = (int)this.RecordsPerPageTextbox.Value.Value;
             }
         }
     }

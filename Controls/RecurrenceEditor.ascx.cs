@@ -41,13 +41,13 @@ namespace Engage.Dnn.Events.Controls
                 {
                     case RecurrenceFrequency.Weekly:
                         isValid = this.WeeklyRepeatInterval.Value.HasValue
-                            && (this.WeeklyWeekDaySunday.Checked
-                                || this.WeeklyWeekDayMonday.Checked
-                                || this.WeeklyWeekDayTuesday.Checked
-                                || this.WeeklyWeekDayWednesday.Checked
-                                || this.WeeklyWeekDayThursday.Checked
-                                || this.WeeklyWeekDayFriday.Checked
-                                || this.WeeklyWeekDaySaturday.Checked);
+                            && (this.WeeklyWeekdaySunday.Checked
+                                || this.EeeklyWeekdayMonday.Checked
+                                || this.WeeklyWeekdayTuesday.Checked
+                                || this.WeeklyWeekdayWednesday.Checked
+                                || this.WeeklyWeekdayThursday.Checked
+                                || this.WeeklyWeekdayFriday.Checked
+                                || this.WeeklyWeekdaySaturday.Checked);
                         break;
                     case RecurrenceFrequency.Monthly:
                         if (this.RepeatEveryNthMonthOnDate.Checked)
@@ -193,13 +193,13 @@ namespace Engage.Dnn.Events.Controls
 
                     case RecurrenceFrequency.Weekly:
                         RecurrenceDay finalMask = RecurrenceDay.None;
-                        finalMask |= this.WeeklyWeekDayMonday.Checked ? RecurrenceDay.Monday : finalMask;
-                        finalMask |= this.WeeklyWeekDayTuesday.Checked ? RecurrenceDay.Tuesday : finalMask;
-                        finalMask |= this.WeeklyWeekDayWednesday.Checked ? RecurrenceDay.Wednesday : finalMask;
-                        finalMask |= this.WeeklyWeekDayThursday.Checked ? RecurrenceDay.Thursday : finalMask;
-                        finalMask |= this.WeeklyWeekDayFriday.Checked ? RecurrenceDay.Friday : finalMask;
-                        finalMask |= this.WeeklyWeekDaySaturday.Checked ? RecurrenceDay.Saturday : finalMask;
-                        finalMask |= this.WeeklyWeekDaySunday.Checked ? RecurrenceDay.Sunday : finalMask;
+                        finalMask |= this.EeeklyWeekdayMonday.Checked ? RecurrenceDay.Monday : finalMask;
+                        finalMask |= this.WeeklyWeekdayTuesday.Checked ? RecurrenceDay.Tuesday : finalMask;
+                        finalMask |= this.WeeklyWeekdayWednesday.Checked ? RecurrenceDay.Wednesday : finalMask;
+                        finalMask |= this.WeeklyWeekdayThursday.Checked ? RecurrenceDay.Thursday : finalMask;
+                        finalMask |= this.WeeklyWeekdayFriday.Checked ? RecurrenceDay.Friday : finalMask;
+                        finalMask |= this.WeeklyWeekdaySaturday.Checked ? RecurrenceDay.Saturday : finalMask;
+                        finalMask |= this.WeeklyWeekdaySunday.Checked ? RecurrenceDay.Sunday : finalMask;
 
                         return finalMask;
 
@@ -257,14 +257,14 @@ namespace Engage.Dnn.Events.Controls
                     case RecurrenceFrequency.Monthly:
                         if (this.RepeatEveryNthMonthOnGivenDay.Checked)
                         {
-                            return int.Parse(this.MonthlyDayOrdinalDropDown.SelectedValue);
+                            return int.Parse(this.MonthlyDayOrdinalDropDown.SelectedValue, CultureInfo.InvariantCulture);
                         }
 
                         break;
                     case RecurrenceFrequency.Yearly:
                         if (this.RepeatEveryYearOnGivenDay.Checked)
                         {
-                            return int.Parse(this.YearlyDayOrdinalDropDown.SelectedValue);
+                            return int.Parse(this.YearlyDayOrdinalDropDown.SelectedValue, CultureInfo.InvariantCulture);
                         }
 
                         break;
@@ -377,11 +377,11 @@ namespace Engage.Dnn.Events.Controls
         {
             return new ListItem[]
                {
-                   new ListItem(Localization.GetString(Util.Utility.OrdinalValues[1], LocalSharedResourceFile), "1"),
-                   new ListItem(Localization.GetString(Util.Utility.OrdinalValues[2], LocalSharedResourceFile), "2"),
-                   new ListItem(Localization.GetString(Util.Utility.OrdinalValues[3], LocalSharedResourceFile), "3"),
-                   new ListItem(Localization.GetString(Util.Utility.OrdinalValues[4], LocalSharedResourceFile), "4"),
-                   new ListItem(Localization.GetString(Util.Utility.OrdinalValues[-1], LocalSharedResourceFile), "-1"),
+                   new ListItem(Localization.GetString(Utility.OrdinalValues[1], LocalSharedResourceFile), "1"),
+                   new ListItem(Localization.GetString(Utility.OrdinalValues[2], LocalSharedResourceFile), "2"),
+                   new ListItem(Localization.GetString(Utility.OrdinalValues[3], LocalSharedResourceFile), "3"),
+                   new ListItem(Localization.GetString(Utility.OrdinalValues[4], LocalSharedResourceFile), "4"),
+                   new ListItem(Localization.GetString(Utility.OrdinalValues[-1], LocalSharedResourceFile), "-1"),
                };
         }
 
@@ -471,13 +471,13 @@ namespace Engage.Dnn.Events.Controls
         /// </summary>
         private void LocalizeControl()
         {
-            this.WeeklyWeekDaySunday.Text = Localization.GetString("Sunday", LocalSharedResourceFile);
-            this.WeeklyWeekDayMonday.Text = Localization.GetString("Monday", LocalSharedResourceFile);
-            this.WeeklyWeekDayTuesday.Text = Localization.GetString("Tuesday", LocalSharedResourceFile);
-            this.WeeklyWeekDayWednesday.Text = Localization.GetString("Wednesday", LocalSharedResourceFile);
-            this.WeeklyWeekDayThursday.Text = Localization.GetString("Thursday", LocalSharedResourceFile);
-            this.WeeklyWeekDayFriday.Text = Localization.GetString("Friday", LocalSharedResourceFile);
-            this.WeeklyWeekDaySaturday.Text = Localization.GetString("Saturday", LocalSharedResourceFile);
+            this.WeeklyWeekdaySunday.Text = Localization.GetString("Sunday", LocalSharedResourceFile);
+            this.EeeklyWeekdayMonday.Text = Localization.GetString("Monday", LocalSharedResourceFile);
+            this.WeeklyWeekdayTuesday.Text = Localization.GetString("Tuesday", LocalSharedResourceFile);
+            this.WeeklyWeekdayWednesday.Text = Localization.GetString("Wednesday", LocalSharedResourceFile);
+            this.WeeklyWeekdayThursday.Text = Localization.GetString("Thursday", LocalSharedResourceFile);
+            this.WeeklyWeekdayFriday.Text = Localization.GetString("Friday", LocalSharedResourceFile);
+            this.WeeklyWeekdaySaturday.Text = Localization.GetString("Saturday", LocalSharedResourceFile);
         }
 
         /// <summary>
@@ -503,7 +503,7 @@ namespace Engage.Dnn.Events.Controls
                     break;
             }
 
-            this.RecurrencePatternMultiView.SetActiveView(activeView);
+            this.RecurrencePatternMultiview.SetActiveView(activeView);
         }
 
         /// <summary>
@@ -568,13 +568,13 @@ namespace Engage.Dnn.Events.Controls
             this.RepeatFrequencyWeekly.Checked = true;
 
             this.WeeklyRepeatInterval.Value = pattern.Interval;
-            this.WeeklyWeekDayMonday.Checked = (pattern.DaysOfWeekMask & RecurrenceDay.Monday) != 0;
-            this.WeeklyWeekDayTuesday.Checked = (pattern.DaysOfWeekMask & RecurrenceDay.Tuesday) != 0;
-            this.WeeklyWeekDayWednesday.Checked = (pattern.DaysOfWeekMask & RecurrenceDay.Wednesday) != 0;
-            this.WeeklyWeekDayThursday.Checked = (pattern.DaysOfWeekMask & RecurrenceDay.Thursday) != 0;
-            this.WeeklyWeekDayFriday.Checked = (pattern.DaysOfWeekMask & RecurrenceDay.Friday) != 0;
-            this.WeeklyWeekDaySaturday.Checked = (pattern.DaysOfWeekMask & RecurrenceDay.Saturday) != 0;
-            this.WeeklyWeekDaySunday.Checked = (pattern.DaysOfWeekMask & RecurrenceDay.Sunday) != 0;
+            this.EeeklyWeekdayMonday.Checked = (pattern.DaysOfWeekMask & RecurrenceDay.Monday) != 0;
+            this.WeeklyWeekdayTuesday.Checked = (pattern.DaysOfWeekMask & RecurrenceDay.Tuesday) != 0;
+            this.WeeklyWeekdayWednesday.Checked = (pattern.DaysOfWeekMask & RecurrenceDay.Wednesday) != 0;
+            this.WeeklyWeekdayThursday.Checked = (pattern.DaysOfWeekMask & RecurrenceDay.Thursday) != 0;
+            this.WeeklyWeekdayFriday.Checked = (pattern.DaysOfWeekMask & RecurrenceDay.Friday) != 0;
+            this.WeeklyWeekdaySaturday.Checked = (pattern.DaysOfWeekMask & RecurrenceDay.Saturday) != 0;
+            this.WeeklyWeekdaySunday.Checked = (pattern.DaysOfWeekMask & RecurrenceDay.Sunday) != 0;
         }
 
         /// <summary>

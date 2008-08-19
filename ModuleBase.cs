@@ -45,7 +45,7 @@ namespace Engage.Dnn.Events
             {
                 ModuleActionCollection actions = new ModuleActionCollection();
 
-                if (HostSettings.GetHostSetting("EnableModuleOnLineHelp") == "Y" && Utility.HasValue(this.ModuleConfiguration.HelpUrl))
+                if (HostSettings.GetHostSetting("EnableModuleOnLineHelp") == "Y" && Engage.Utility.HasValue(this.ModuleConfiguration.HelpUrl))
                 {
                     ModuleAction helpAction = new ModuleAction(this.GetNextActionID());
                     helpAction.Title = Localization.GetString(ModuleActionType.OnlineHelp, Localization.GlobalResourceFile);
@@ -114,7 +114,7 @@ namespace Engage.Dnn.Events
         /// </value>
         protected override bool IsConfigured
         {
-            get { return Utility.HasValue(Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.DisplayTemplate.PropertyName)); }
+            get { return Engage.Utility.HasValue(Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.DisplayTemplate.PropertyName)); }
         }
 
         /// <summary>
@@ -135,25 +135,25 @@ namespace Engage.Dnn.Events
             }
         }
 
-        /// <summary>
-        /// This method takes the eventId and the currently logged in user (if any) and checks for
-        /// an existing RSVP(registration) for the user.
-        /// </summary>
-        /// <param name="eventId">The event ID.</param>
-        /// <returns>
-        /// 	<c>true</c> if the current user if registered for the specified event; otherwise, <c>false</c>.
-        /// </returns>
-        internal static bool IsRegistered(int eventId)
-        {
-            bool registered = false;
-            if (eventId > 0 && IsLoggedIn)
-            {
-                Engage.Events.Rsvp rsvp = Engage.Events.Rsvp.Load(eventId, DotNetNuke.Entities.Users.UserController.GetCurrentUserInfo().Email);
-                registered = (rsvp != null);
-            }
+        /////// <summary>
+        /////// This method takes the eventId and the currently logged in user (if any) and checks for
+        /////// an existing RSVP(registration) for the user.
+        /////// </summary>
+        /////// <param name="eventId">The event ID.</param>
+        /////// <returns>
+        /////// 	<c>true</c> if the current user if registered for the specified event; otherwise, <c>false</c>.
+        /////// </returns>
+        ////internal static bool IsRegistered(int eventId)
+        ////{
+        ////    bool registered = false;
+        ////    if (eventId > 0 && IsLoggedIn)
+        ////    {
+        ////        Engage.Events.Rsvp rsvp = Engage.Events.Rsvp.Load(eventId, DotNetNuke.Entities.Users.UserController.GetCurrentUserInfo().Email);
+        ////        registered = (rsvp != null);
+        ////    }
 
-            return registered;
-        }
+        ////    return registered;
+        ////}
 
         /// <summary>
         /// Sends an <c>iCalendar</c> to the client to download.

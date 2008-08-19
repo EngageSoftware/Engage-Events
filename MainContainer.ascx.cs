@@ -75,7 +75,7 @@ namespace Engage.Dnn.Events
             }
 
             string keyParam = this.GetCurrentControlKey();
-            return Utility.HasValue(keyParam) ? ControlKeys[keyParam] : "Display/EventListingTemplate.ascx";
+            return Engage.Utility.HasValue(keyParam) ? ControlKeys[keyParam] : "Display/EventListingTemplate.ascx";
         }
 
         /// <summary>

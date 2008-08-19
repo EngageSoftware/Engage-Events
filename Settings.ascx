@@ -4,12 +4,12 @@
     @import url(<%=Engage.Dnn.Framework.ModuleBase.ApplicationUrl %><%=Engage.Dnn.Framework.ModuleBase.DesktopModuleFolderName %>Module.css);
 </style>
 <br />
-<asp:UpdatePanel ID="upnlSettings" runat="server" UpdateMode="Conditional">
+<asp:UpdatePanel ID="SettingsUpdatePanel" runat="server" UpdateMode="Conditional">
     <ContentTemplate>
         <div style="text-align: left" class="SettingsTable">
             <dnn:label ID="LabelChooseDisplayType" ResourceKey="LabelChooseDisplayType" runat="server" CssClass="Normal" />
             <asp:DropDownList ID="DropDownChooseDisplay" CssClass="NormalTextBox" runat="server" AutoPostBack="True" />
-            <div id="dvDisplay" runat="server">
+            <div id="DisplayDiv" runat="server">
                 <br />
                 <asp:PlaceHolder ID="phControls" runat="server"></asp:PlaceHolder>
             </div>
@@ -20,7 +20,7 @@
                         <dnn:label ID="FeaturedEventLabel" ResourceKey="FeaturedEventLabel" runat="server" CssClass="SubHead" />
                     </td>
                     <td class="Normal">
-                        <asp:CheckBox ID="FeaturedCheckbox" runat="server" />
+                        <asp:CheckBox ID="FeaturedCheckBox" runat="server" />
                     </td>
                 </tr>
             </table>

@@ -66,12 +66,12 @@
     </div>
     
     <div class="AEEventFeature">
-        <asp:Label runat="server" ResourceKey="FeaturedEventLabel" CssClass="NormalBold" AssociatedControlID="FeaturedCheckbox"/>
-        <asp:CheckBox ID="FeaturedCheckbox" runat="server" />        
+        <asp:Label runat="server" ResourceKey="FeaturedEventLabel" CssClass="NormalBold" AssociatedControlID="FeaturedCheckBox"/>
+        <asp:CheckBox ID="FeaturedCheckBox" runat="server" />        
     </div>
     <div class="AEEventRegister">
-        <asp:Label runat="server" ResourceKey="AllowRegistrationsLabel" CssClass="NormalBold" AssociatedControlID="AllowRegistrationsCheckbox"/>
-        <asp:CheckBox ID="AllowRegistrationsCheckbox" runat="server" Checked="true" />
+        <asp:Label runat="server" ResourceKey="AllowRegistrationsLabel" CssClass="NormalBold" AssociatedControlID="AllowRegistrationsCheckBox"/>
+        <asp:CheckBox ID="AllowRegistrationsCheckBox" runat="server" Checked="true" />
     </div>
     <div class="AEEventRecur">
         <asp:UpdatePanel runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
@@ -79,8 +79,8 @@
                 <asp:AsyncPostBackTrigger ControlID="RecurringCheckbox" />
             </Triggers>
             <ContentTemplate>
-                <asp:Label ID="RecurringEventLabel" runat="server" ResourceKey="RecurringEventLabel" CssClass="NormalBold" AssociatedControlID="RecurringCheckbox"/>
-                <asp:CheckBox ID="RecurringCheckbox" runat="server" AutoPostBack="true" />
+                <asp:Label ID="RecurringEventLabel" runat="server" ResourceKey="RecurringEventLabel" CssClass="NormalBold" AssociatedControlID="RecurringCheckBox"/>
+                <asp:CheckBox ID="RecurringCheckBox" runat="server" AutoPostBack="true" />
                 <engage:RecurrenceEditor ID="RecurrenceEditor" runat="server" Visible="false" DatePickerSkin="WebBlue" />
                 <asp:CustomValidator ID="RecurrenceEditorValidator" runat="server" ResourceKey="InvalidRecurrence" Display="None" />
             </ContentTemplate>
@@ -90,7 +90,7 @@
 
 <engage:ValidationSummary runat="server" />
 
-<asp:MultiView ID="FooterMultiView" runat="server" ActiveViewIndex="0">
+<asp:MultiView ID="FooterMultiview" runat="server" ActiveViewIndex="0">
     <asp:View ID="AddEventFooterView" runat="server">
         <div class="AddEventFooterButtons AdminButtons FooterButtons">
             <asp:ImageButton ID="SaveEventButton" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/save.gif" ResourceKey="SaveAndCreateNew.Alt2" />

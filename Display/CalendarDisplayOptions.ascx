@@ -7,7 +7,7 @@
 
 <table cellspacing="0" cellpadding="0" border="0" class="SettingsTable">
     <tr>
-        <td class="SubHead"><dnn:label id="lblSkin" runat="server" controlname="ddlSkin" text="Select an Skin:" ResourceKey="lblSkin"/></td>
-		<td class="NormalTextBox" style="width: 252px" colspan="3"><asp:dropdownlist id="ddlSkin" Runat="server"/></td>
+        <td class="SubHead"><dnn:label id="SkinLabel" runat="server" controlname="ddlSkin" text="Select an Skin:" ResourceKey="lblSkin"/></td>
+		<td class="NormalTextBox" style="width: 252px" colspan="3"><asp:dropdownlist id="SkinDropDownList" Runat="server"/></td>
 	</tr>
 </table>

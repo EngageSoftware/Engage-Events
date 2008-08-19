@@ -19,10 +19,9 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Services.Exceptions;
     using Engage.Events;
     using Engage.Events.Util;
-    using Engage.Util;
+    using Util;
     using Communication.Email;
     using Services.Client;
-    using Utility = Engage.Dnn.Utility;
 
     /// <summary>
     /// A control which allows for editing an email
@@ -35,7 +34,7 @@ namespace Engage.Dnn.Events
         /// <value>The unsubscribe URL.</value>
         private string UnsubscribeUrl
         {
-            get { return Utility.GetStringSetting(this.Settings, Setting.UnsubscribeUrl.PropertyName); }
+            get { return Dnn.Utility.GetStringSetting(this.Settings, Setting.UnsubscribeUrl.PropertyName); }
         }
 
         /// <summary>
@@ -44,7 +43,7 @@ namespace Engage.Dnn.Events
         /// <value>The privacy policy URL.</value>
         private string PrivacyPolicyUrl
         {
-            get { return Utility.GetStringSetting(this.Settings, Setting.PrivacyPolicyUrl.PropertyName); }
+            get { return Dnn.Utility.GetStringSetting(this.Settings, Setting.PrivacyPolicyUrl.PropertyName); }
         }
 
         /// <summary>
@@ -53,7 +52,7 @@ namespace Engage.Dnn.Events
         /// <value>The open link URL.</value>
         private string OpenLinkUrl
         {
-            get { return Utility.GetStringSetting(this.Settings, Setting.OpenLinkUrl.PropertyName); }
+            get { return Dnn.Utility.GetStringSetting(this.Settings, Setting.OpenLinkUrl.PropertyName); }
         }
 
         /// <summary>
@@ -161,7 +160,7 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void EmailTypeRadioButtons_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.dvReminderOnly.Visible = (this.EmailTypeRadioButtons.SelectedValue == EmailEventType.Reminder.Description);
+            this.ReminderOnlyDiv.Visible = (this.EmailTypeRadioButtons.SelectedValue == EmailEventType.Reminder.Description);
         }
 
         /// <summary>

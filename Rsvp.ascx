@@ -2,7 +2,7 @@
 <%@ Register TagPrefix="engage" TagName="ModuleMessage" Src="Controls/ModuleMessage.ascx" %>
 <%@ Register TagPrefix="engage" Namespace="Engage.Controls" Assembly="Engage.Utilityv3.0" %>
 
-<asp:MultiView ID="RsvpMultiView" ActiveViewIndex="0" runat="server">
+<asp:MultiView ID="RsvpMultiview" ActiveViewIndex="0" runat="server">
     <asp:View ID="View1" runat="server">
         <div id="Description">
             <h2 class="Head"><asp:Label ID="Label1" ResourceKey="titleLabel" runat="server"/></p>

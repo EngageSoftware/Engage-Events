@@ -58,7 +58,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         protected override void BindData()
         {
-            this.LocalizeControls();
+            LocalizeControls();
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// Localizes this control's child controls.
         /// </summary>
-        private void LocalizeControls()
+        private static void LocalizeControls()
         {
         }
     }

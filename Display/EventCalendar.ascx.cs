@@ -19,6 +19,7 @@ namespace Engage.Dnn.Events.Display
     using Engage.Events;
     using Telerik.Web.UI;
     using Setting = Engage.Dnn.Events.Setting;
+    using Utility=Engage.Dnn.Utility;
 
     /// <summary>
     /// Control to display the events calendar view

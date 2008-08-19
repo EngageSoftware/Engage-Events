@@ -49,7 +49,7 @@ namespace Engage.Dnn.Events
             this.EventDescriptionTextEditorValidator.ServerValidate += this.EventDescriptionTextEditorValidator_ServerValidate;
             this.SaveEventButton.Click += this.SaveEventButton_OnClick;
             this.SaveAndCreateNewEventButton.Click += this.SaveAndCreateNewEventButton_OnClick;
-            this.RecurringCheckbox.CheckedChanged += this.RecurringCheckbox_CheckedChanged;
+            this.RecurringCheckBox.CheckedChanged += this.RecurringCheckbox_CheckedChanged;
             this.RecurrenceEditorValidator.ServerValidate += this.RecurrenceEditorValidator_ServerValidate;
         }
 
@@ -146,7 +146,7 @@ namespace Engage.Dnn.Events
         {
             this.SuccessModuleMessage.Visible = true;
             this.AddNewEvent.Visible = false;
-            this.FooterMultiView.SetActiveView(this.FinalFooterView);
+            this.FooterMultiview.SetActiveView(this.FinalFooterView);
         }
 
         /// <summary>
@@ -196,8 +196,8 @@ namespace Engage.Dnn.Events
             e.Title = this.EventTitleTextBox.Text;
             e.Overview = this.EventOverviewTextEditor.Text;
             e.Description = this.EventDescriptionTextEditor.Text;
-            e.IsFeatured = this.FeaturedCheckbox.Checked;
-            e.AllowRegistrations = this.AllowRegistrationsCheckbox.Checked;
+            e.IsFeatured = this.FeaturedCheckBox.Checked;
+            e.AllowRegistrations = this.AllowRegistrationsCheckBox.Checked;
             e.RecurrenceRule = this.RecurrenceEditor.GetRecurrenceRule(e.EventStart, e.EventEnd);
             e.Save(this.UserId);
         }
@@ -219,8 +219,8 @@ namespace Engage.Dnn.Events
                 eventStart, 
                 eventEnd, 
                 this.EventLocationTextBox.Text, 
-                this.FeaturedCheckbox.Checked, 
-                this.AllowRegistrationsCheckbox.Checked,
+                this.FeaturedCheckBox.Checked, 
+                this.AllowRegistrationsCheckBox.Checked,
                 this.RecurrenceEditor.GetRecurrenceRule(eventStart, eventEnd));
 
             e.Save(this.UserId);
@@ -238,21 +238,21 @@ namespace Engage.Dnn.Events
             this.EventDescriptionTextEditor.Text = e.Description;
             this.StartDateTimePicker.SelectedDate = e.EventStart;
             this.EndDateTimePicker.SelectedDate = e.EventEnd;
-            this.FeaturedCheckbox.Checked = e.IsFeatured;
-            this.AllowRegistrationsCheckbox.Checked = e.AllowRegistrations;
-            this.RecurringCheckbox.Checked = e.IsRecurring;
-            this.RecurrenceEditor.Visible = this.RecurringCheckbox.Checked;
+            this.FeaturedCheckBox.Checked = e.IsFeatured;
+            this.AllowRegistrationsCheckBox.Checked = e.AllowRegistrations;
+            this.RecurringCheckBox.Checked = e.IsRecurring;
+            this.RecurrenceEditor.Visible = this.RecurringCheckBox.Checked;
             this.RecurrenceEditor.SetRecurrenceRule(e.RecurrenceRule);
         }
 
         /// <summary>
-        /// Handles the CheckedChanged event of the RecurringCheckbox control.
+        /// Handles the CheckedChanged event of the RecurringCheckBox control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void RecurringCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            this.RecurrenceEditor.Visible = this.RecurringCheckbox.Checked;
+            this.RecurrenceEditor.Visible = this.RecurringCheckBox.Checked;
         }
     }
 }

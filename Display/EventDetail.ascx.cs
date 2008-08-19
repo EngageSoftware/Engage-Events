@@ -19,6 +19,7 @@ namespace Engage.Dnn.Events.Display
     using Framework.Templating;
     using Engage.Events;
     using Templating;
+    using Utility=Engage.Dnn.Utility;
 
     /// <summary>
     /// Event Detail view.
@@ -47,9 +48,9 @@ namespace Engage.Dnn.Events.Display
             string templateName = Utility.GetStringSetting(this.Settings, Framework.Setting.DetailTemplate.PropertyName, "Detail.Item.html");
 
             Template template = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
-            TemplateEngine.ProcessTags(this.DetailPlaceHolder, template.ChildTags, ev, this.LocalResourceFile, ProcessTag);
+            TemplateEngine.ProcessTags(this.DetailPlaceholder, template.ChildTags, ev, this.LocalResourceFile, ProcessTag);
 
-            this.BackHyperLink.NavigateUrl = Globals.NavigateURL();
+            this.BackHyperlink.NavigateUrl = Globals.NavigateURL();
         }
 
         /// <summary>

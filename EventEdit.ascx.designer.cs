@@ -104,22 +104,22 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.CustomValidator EventDescriptionTextEditorValidator;
         
         /// <summary>
-        /// FeaturedCheckbox control.
+        /// FeaturedCheckBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox FeaturedCheckbox;
+        protected global::System.Web.UI.WebControls.CheckBox FeaturedCheckBox;
         
         /// <summary>
-        /// AllowRegistrationsCheckbox control.
+        /// AllowRegistrationsCheckBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox AllowRegistrationsCheckbox;
+        protected global::System.Web.UI.WebControls.CheckBox AllowRegistrationsCheckBox;
         
         /// <summary>
         /// RecurringEventLabel control.
@@ -131,13 +131,13 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.Label RecurringEventLabel;
         
         /// <summary>
-        /// RecurringCheckbox control.
+        /// RecurringCheckBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox RecurringCheckbox;
+        protected global::System.Web.UI.WebControls.CheckBox RecurringCheckBox;
         
         /// <summary>
         /// RecurrenceEditor control.
@@ -158,13 +158,13 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.CustomValidator RecurrenceEditorValidator;
         
         /// <summary>
-        /// FooterMultiView control.
+        /// FooterMultiview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.MultiView FooterMultiView;
+        protected global::System.Web.UI.WebControls.MultiView FooterMultiview;
         
         /// <summary>
         /// AddEventFooterView control.

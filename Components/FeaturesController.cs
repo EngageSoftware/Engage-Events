@@ -14,6 +14,7 @@ namespace Engage.Dnn.Events.Components
     /// <summary>
     /// Controls which DNN features are available for this module.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Instantiated through reflection by DNN")]
     internal class FeaturesController
     {
     }

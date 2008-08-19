@@ -19,6 +19,7 @@ namespace Engage.Dnn.Events.Navigation
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.Utilities;
     using Engage.Events;
+    using Utility=Engage.Dnn.Utility;
 
     /// <summary>
     /// Displays the actions that users can perform on an event instance.

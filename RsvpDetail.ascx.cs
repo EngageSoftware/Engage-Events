@@ -46,12 +46,12 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// Gets the status icon.
         /// </summary>
-        /// <param name="o">An object representing the registration status</param>
+        /// <param name="rsvpStatus">An object representing the registration status</param>
         /// <returns>the url to the icon for the corresponding registration status</returns>
-        protected static string GetStatusIcon(object o)
+        protected static string GetStatusIcon(object rsvpStatus)
         {
             string url = string.Empty;
-            RsvpStatus status = (RsvpStatus)Enum.Parse(typeof(RsvpStatus), o.ToString());
+            RsvpStatus status = (RsvpStatus)Enum.Parse(typeof(RsvpStatus), rsvpStatus.ToString());
 
             switch (status)
             {
@@ -131,12 +131,12 @@ namespace Engage.Dnn.Events
         /// <param name="sortColumn">The sort column.</param>
         private void BindData(string sortColumn)
         {
-            RsvpCollection rsvps = RsvpCollection.Load(EventId, this.Status, sortColumn, this.CurrentPageIndex - 1, this.grdRsvpDetail.PageSize);
-            this.grdRsvpDetail.DataSource = rsvps;
-            this.grdRsvpDetail.DataBind();
-            this.grdRsvpDetail.Attributes.Add("SortColumn", sortColumn);
+            RsvpCollection rsvps = RsvpCollection.Load(EventId, this.Status, sortColumn, this.CurrentPageIndex - 1, this.RsvpDetailGrid.PageSize);
+            this.RsvpDetailGrid.DataSource = rsvps;
+            this.RsvpDetailGrid.DataBind();
+            this.RsvpDetailGrid.Attributes.Add("SortColumn", sortColumn);
 
-            this.pager.PageSize = this.grdRsvpDetail.PageSize;
+            this.pager.PageSize = this.RsvpDetailGrid.PageSize;
             this.SetupPagingControl(this.pager, rsvps.TotalRecords, "modId", "key", "status", "eventId");
 
             this.RsvpDisplay.SetRsvpSummary(Engage.Events.RsvpSummary.Load(EventId));

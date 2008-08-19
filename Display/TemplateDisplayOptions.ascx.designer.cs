@@ -59,13 +59,13 @@ namespace Engage.Dnn.Events.Display {
         protected global::DotNetNuke.UI.UserControls.LabelControl HeaderLabel;
         
         /// <summary>
-        /// HeaderDropdownlist control.
+        /// HeaderDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList HeaderDropdownlist;
+        protected global::System.Web.UI.WebControls.DropDownList HeaderDropDownList;
         
         /// <summary>
         /// ItemLabel control.
@@ -77,13 +77,13 @@ namespace Engage.Dnn.Events.Display {
         protected global::DotNetNuke.UI.UserControls.LabelControl ItemLabel;
         
         /// <summary>
-        /// ItemDropdownlist control.
+        /// ItemDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ItemDropdownlist;
+        protected global::System.Web.UI.WebControls.DropDownList ItemDropDownList;
         
         /// <summary>
         /// FooterLabel control.
@@ -95,13 +95,13 @@ namespace Engage.Dnn.Events.Display {
         protected global::DotNetNuke.UI.UserControls.LabelControl FooterLabel;
         
         /// <summary>
-        /// FooterDropdownlist control.
+        /// FooterDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList FooterDropdownlist;
+        protected global::System.Web.UI.WebControls.DropDownList FooterDropDownList;
         
         /// <summary>
         /// DetailLabel control.
@@ -113,13 +113,13 @@ namespace Engage.Dnn.Events.Display {
         protected global::DotNetNuke.UI.UserControls.LabelControl DetailLabel;
         
         /// <summary>
-        /// DetailDropdownlist control.
+        /// DetailDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DetailDropdownlist;
+        protected global::System.Web.UI.WebControls.DropDownList DetailDropDownList;
         
         /// <summary>
         /// PagingLabel control.
@@ -131,12 +131,12 @@ namespace Engage.Dnn.Events.Display {
         protected global::DotNetNuke.UI.UserControls.LabelControl PagingLabel;
         
         /// <summary>
-        /// RadNumericRecordsPerPage control.
+        /// RecordsPerPageTextbox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox RadNumericRecordsPerPage;
+        protected global::Telerik.Web.UI.RadNumericTextBox RecordsPerPageTextbox;
     }
 }

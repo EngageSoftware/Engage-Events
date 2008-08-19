@@ -9,7 +9,7 @@
 // CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 // DEALINGS IN THE SOFTWARE.
 
-namespace Engage.Dnn.Events.Util
+namespace Engage.Dnn.Events
 {
     using System;
     using System.Collections.Generic;
@@ -357,7 +357,7 @@ namespace Engage.Dnn.Events.Util
                     dayOfWeek = DayOfWeek.Saturday;
                     break;
                     
-                // If it's not a day of the week, it should be a named composite value, like EveryDay, WeekDays, etc.
+                    // If it's not a day of the week, it should be a named composite value, like EveryDay, WeekDays, etc.
                 default:
                     return Localization.GetString(daysOfWeekMask.ToString(), resourceFile);
             }
@@ -366,4 +366,3 @@ namespace Engage.Dnn.Events.Util
         }
     }
 }
-

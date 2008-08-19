@@ -91,7 +91,7 @@ namespace Engage.Dnn.Events
                 rsvp.Status = (RsvpStatus)Enum.Parse(typeof(RsvpStatus), this.RsvpStatusRadioButtons.SelectedValue);
                 rsvp.Save(UserId);
 
-                this.RsvpMultiView.ActiveViewIndex = 1;
+                this.RsvpMultiview.ActiveViewIndex = 1;
             }
             catch (Exception exc)
             {
@@ -107,7 +107,7 @@ namespace Engage.Dnn.Events
         private void AddToCalendarButton_Click(object sender, EventArgs e)
         {
             Event evnt = Event.Load(EventId);
-            SendICalendarToClient(HttpContext.Current.Response, evnt.ToICal(this.UserInfo.Email, Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings)), evnt.Title);
+            SendICalendarToClient(HttpContext.Current.Response, evnt.ToICal(this.UserInfo.Email, Dnn.Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings)), evnt.Title);
         }
 
         /// <summary>

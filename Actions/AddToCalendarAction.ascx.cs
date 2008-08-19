@@ -24,7 +24,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         protected override void BindData()
         {
-            this.LocalizeControls();
+            LocalizeControls();
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// Localizes this control's child controls.
         /// </summary>
-        private void LocalizeControls()
+        private static void LocalizeControls()
         {
         }
 
@@ -77,7 +77,7 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Button_Click(object sender, EventArgs e)
         {
-            SendICalendarToClient(this.Response, CurrentEvent.ToICal(this.UserInfo.Email, Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings)), this.CurrentEvent.Title);
+            SendICalendarToClient(this.Response, CurrentEvent.ToICal(this.UserInfo.Email, Dnn.Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings)), this.CurrentEvent.Title);
         }
     }
 }

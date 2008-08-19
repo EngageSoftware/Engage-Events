@@ -190,6 +190,7 @@
     <Compile Include="Display\TemplateDisplayOptions.ascx.designer.cs">
       <DependentUpon>TemplateDisplayOptions.ascx</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ModuleBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

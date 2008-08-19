@@ -32,9 +32,9 @@ namespace Engage.Dnn.Events
         {
             base.OnInit(e);
 
-            ////lnkConfigure.Text = Localization.GetString("UnableToFindAction", LocalResourceFile);
-            ////lnkConfigure.NavigateUrl = EditUrl("ModuleId", ModuleId.ToString(CultureInfo.InvariantCulture), "Module");
-            ////lnkConfigure.Visible = true;
+            ////ConfigureLink.Text = Localization.GetString("UnableToFindAction", LocalResourceFile);
+            ////ConfigureLink.NavigateUrl = EditUrl("ModuleId", ModuleId.ToString(CultureInfo.InvariantCulture), "Module");
+            ////ConfigureLink.Visible = true;
 
             this.SetupDefaultSettings();
             this.Response.Redirect(Globals.NavigateURL());

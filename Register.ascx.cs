@@ -38,7 +38,7 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Page_Load(object sender, EventArgs e)
         {
-            if (Utility.IsLoggedIn)
+            if (Engage.Utility.IsLoggedIn)
             {
                 this.Response.Redirect(this.RsvpUrl, true);
             }
@@ -52,7 +52,7 @@ namespace Engage.Dnn.Events
         private void SetupLinks()
         {
             this.RegisterLink.NavigateUrl = Globals.NavigateURL("Register", "returnUrl=" + HttpUtility.UrlEncode(this.Request.RawUrl));
-            this.LoginLink.NavigateUrl = Dnn.Utility.GetLoginUrl(this.PortalSettings, this.Request);
+            this.LogOnLink.NavigateUrl = Dnn.Utility.GetLoginUrl(this.PortalSettings, this.Request);
         }
     }
 }

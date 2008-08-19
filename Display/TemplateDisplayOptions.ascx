@@ -25,7 +25,7 @@
                         ResourceKey="HeaderLabel" />
                 </td>
                 <td class="NormalTextBox" style="width: 252px" colspan="3">
-                    <asp:DropDownList ID="HeaderDropdownlist" runat="server" />
+                    <asp:DropDownList ID="HeaderDropDownList" runat="server" />
                 </td>
             </tr>
             <tr>
@@ -34,7 +34,7 @@
                         ResourceKey="ItemLabel" />
                 </td>
                 <td class="NormalTextBox" style="width: 252px" colspan="3">
-                    <asp:DropDownList ID="ItemDropdownlist" runat="server" />
+                    <asp:DropDownList ID="ItemDropDownList" runat="server" />
                 </td>
             </tr>
             <tr>
@@ -43,7 +43,7 @@
                         ResourceKey="FooterLabel" />
                 </td>
                 <td class="NormalTextBox" style="width: 252px" colspan="3">
-                    <asp:DropDownList ID="FooterDropdownlist" runat="server" />
+                    <asp:DropDownList ID="FooterDropDownList" runat="server" />
                 </td>
             </tr>
             <tr>
@@ -52,7 +52,7 @@
                         ResourceKey="DetailLabel" />
                 </td>
                 <td class="NormalTextBox" style="width: 252px" colspan="3">
-                    <asp:DropDownList ID="DetailDropdownlist" runat="server" />
+                    <asp:DropDownList ID="DetailDropDownList" runat="server" />
                 </td>
             </tr>
              <tr><td>&nbsp;</td></tr>
@@ -62,7 +62,7 @@
                         ResourceKey="PagingLabel" />
                 </td>
                 <td class="NormalTextBox" style="width: 252px" colspan="3">
-                    <telerik:RadNumericTextBox ID="RadNumericRecordsPerPage" runat="server" MaxLength="3" MaxValue="100" MinValue="1" ShowSpinButtons="True" Value="1" Width="50px">
+                    <telerik:RadNumericTextBox ID="RecordsPerPageTextbox" runat="server" MaxLength="3" MaxValue="100" MinValue="1" ShowSpinButtons="True" Value="1" Width="50px">
                         <NumberFormat AllowRounding="True" DecimalDigits="0"/>
                     </telerik:RadNumericTextBox>
                 </td>
