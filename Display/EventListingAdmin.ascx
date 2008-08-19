@@ -25,23 +25,23 @@
 <asp:Repeater runat="server" ID="EventListingRepeater" >
     <ItemTemplate>
         <asp:Label ID="IdLabel" Visible="False" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "Id")  %>'/>
-		<div id="EventItem">
+		<div id="MEEventItem">
             <div class="EventTitle">
                 <h2 class="Head"><%# DataBinder.Eval(Container.DataItem, "Title")  %></h2>
             </div>
             <div class="EventDate">
-                <p class="NormalBold"><asp:Label runat="server" ResourceKey="When"/></p>
+                <p class="NormalBold"><asp:Label ID="Label1" runat="server" ResourceKey="When"/></p>
                 <p class="Normal"><%# DataBinder.Eval(Container.DataItem, "EventStartFormatted")%><span class="RecurrenceSummary"><%#GetRecurrenceSummary(Container.DataItem)%></span></p>
             </div>
             <div class="EventLocation">
-                <p class="NormalBold"><asp:Label runat="server" ResourceKey="Where"/></p>
+                <p class="NormalBold"><asp:Label ID="Label2" runat="server" ResourceKey="Where"/></p>
                 <p class="Normal"><%# DataBinder.Eval(Container.DataItem, "Location")  %></p>
             </div>
             <div class="EventDescription">
-                <p class="NormalBold"><asp:Label runat="server" ResourceKey="Description"/></p>
+                <p class="NormalBold"><asp:Label ID="Label3" runat="server" ResourceKey="Description"/></p>
                 <div class="Normal"><%# DataBinder.Eval(Container.DataItem, "Overview")  %></div>
             </div>
-            <div class="EventButtons"><engage:actions ID="EventActions" runat="server" OnCancel="EventActions_Cancel" OnDelete="EventActions_Delete" /></div><%-- Cancel and Delete must be wired-up here, rather than in the code behind.  Otherwise they get wired-up too late in the page lifecycle. --%>
+            <div><engage:actions ID="EventActions" runat="server" OnCancel="EventActions_Cancel" OnDelete="EventActions_Delete" /></div><%-- Cancel and Delete must be wired-up here, rather than in the code behind.  Otherwise they get wired-up too late in the page lifecycle. --%>
 		</div>
     </ItemTemplate>
 </asp:Repeater>
