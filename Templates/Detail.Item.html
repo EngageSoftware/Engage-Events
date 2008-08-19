@@ -1,5 +1,5 @@
 <div class="EventItem">
-  <div class="EventTitle">
+	<div class="EventTitle">
         <h2 class="Head"><Engage:DataEntity PropertyName="Title" /></h2>
     </div>
     <div class="EventLocation">
@@ -12,16 +12,17 @@
         <p class="NormalBold">Time</p>
         <p class="Normal"><Engage:DateEntity PropertyName = "EventStart" Format="%h:mm tt" /></p>
     </div>
-    <div class="EventOverView">
+    <div class="EventOverview">
         <p class="NormalBold">Overview</p>
         <div class="Normal">
-            <p><Engage:DataEntity PropertyName="Overview" /></p>
+            <div><Engage:DataEntity PropertyName="Overview" /></div>
+            <p><Engage:ReadMore ResourceKey="ReadMore" /></p>
         </div>
     </div>
     <div class="EventDescription">
         <p class="NormalBold">Description</p>
         <div class="Normal">
-            <p><Engage:DataEntity PropertyName="Description" /></p>
+            <div><Engage:DataEntity PropertyName="Description" /></div>
         </div>
     </div>
 </div>
