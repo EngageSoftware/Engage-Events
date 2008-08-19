@@ -11,12 +11,10 @@
 
 namespace Engage.Dnn.Events.Display
 {
-    using System;
-    using System.Text;
     using System.Web.UI;
     using Framework.Templating;
     using Templating;
-    using Utility=Engage.Dnn.Utility;
+    using Utility = Engage.Dnn.Utility;
 
     /// <summary>
     /// Custom event listing

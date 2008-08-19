@@ -362,16 +362,16 @@ namespace Engage.Dnn.Events.Display
                     case "RECURRENCESUMMARY":
                         container.Controls.Add(new LiteralControl(Dnn.Events.Utility.GetRecurrenceSummary(ev.RecurrenceRule)));
                         break;
-                    case "RECURRENCEWRAPPER":
+                    case "EVENTWRAPPER":
                         StringBuilder cssClass = new StringBuilder(tag.GetAttributeValue("CssClass"));
                         if (ev.IsRecurring)
                         {
-                            if (cssClass.Length > 0)
-                            {
-                                cssClass.Append(" ");
-                            }
+                            AppendCssClassAttribute(tag, cssClass, "RecurringEventCssClass");
+                        }
 
-                            cssClass.Append(tag.GetAttributeValue("RecurringEventCssClass"));
+                        if (ev.IsFeatured)
+                        {
+                            AppendCssClassAttribute(tag, cssClass, "FeaturedEventCssClass");
                         }
 
                         container.Controls.Add(new LiteralControl(string.Format(CultureInfo.InvariantCulture, "<div class=\"{0}\">", cssClass.ToString())));
@@ -382,11 +382,27 @@ namespace Engage.Dnn.Events.Display
             }
             else if (tag.TagType == TagType.Close)
             {
-                if (tag.LocalName.Equals("RECURRENCEWRAPPER", StringComparison.OrdinalIgnoreCase))
+                if (tag.LocalName.Equals("EVENTWRAPPER", StringComparison.OrdinalIgnoreCase))
                 {
                     container.Controls.Add(new LiteralControl("</div>"));
                 }
             }
+        }
+
+        /// <summary>
+        /// Appends the given attribute to <paramref name="cssClassBuilder"/>, adding a space beforehand if necessary.
+        /// </summary>
+        /// <param name="tag">The tag whose attribute we are appending.</param>
+        /// <param name="cssClassBuilder">The <see cref="StringBuilder"/> which will contain the appended CSS class.</param>
+        /// <param name="attributeName">Name of the attribute being appended.</param>
+        private static void AppendCssClassAttribute(Tag tag, StringBuilder cssClassBuilder, string attributeName)
+        {
+            if (cssClassBuilder.Length > 0)
+            {
+                cssClassBuilder.Append(" ");
+            }
+
+            cssClassBuilder.Append(tag.GetAttributeValue(attributeName));
         }
     }
 }
