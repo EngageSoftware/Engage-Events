@@ -108,17 +108,20 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="Telerik.Web.UI.ToolTipUpdateEventArgs"/> instance containing the event data.</param>
         private void EventsCalendarToolTipManager_AjaxUpdate(object sender, ToolTipUpdateEventArgs e)
         {
-            int eventId = Convert.ToInt32(e.Value.Split('_')[0], CultureInfo.InvariantCulture);
-            Event ev = Event.Load(eventId);
-            EventToolTip toolTip = (EventToolTip)this.LoadControl("EventToolTip.ascx");
+            int eventId;
+            if (int.TryParse(e.Value.Split('_')[0], NumberStyles.Integer, CultureInfo.InvariantCulture, out eventId))
+            {
+                Event ev = Event.Load(eventId);
+                EventToolTip toolTip = (EventToolTip)this.LoadControl("EventToolTip.ascx");
 
-            toolTip.ModuleConfiguration = this.ModuleConfiguration;
-            toolTip.EventStartDate = ev.EventStart.ToShortTimeString();
-            toolTip.Overview = ev.Overview;
-            toolTip.Title = ev.Title;
-            toolTip.EventEndDate = ev.EventEnd.ToShortTimeString();
-            toolTip.SetEventId(ev.Id);
-            e.UpdatePanel.ContentTemplateContainer.Controls.Add(toolTip);
+                toolTip.ModuleConfiguration = this.ModuleConfiguration;
+                toolTip.EventStartDate = ev.EventStart.ToShortTimeString();
+                toolTip.Overview = ev.Overview;
+                toolTip.Title = ev.Title;
+                toolTip.EventEndDate = ev.EventEnd.ToShortTimeString();
+                toolTip.SetEventId(ev.Id);
+                e.UpdatePanel.ContentTemplateContainer.Controls.Add(toolTip);
+            }
         }
 
         /// <summary>
