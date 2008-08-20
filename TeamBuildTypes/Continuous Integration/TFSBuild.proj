@@ -220,5 +220,6 @@
          <AdditionalReferencePath Include="C:\MyFolder\" />
          <AdditionalReferencePath Include="C:\MyFolder2\" />
     -->
+    <AdditionalReferencePath Include="C:\TFS Code\Engage 3.0\" />
   </ItemGroup>
 </Project>
