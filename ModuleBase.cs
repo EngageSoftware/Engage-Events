@@ -23,7 +23,6 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Security;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.WebControls;
-    using Utility = Engage.Utility;
 
     /// <summary>
     /// This class extends the framework version in order for developers to add on any specific methods/behavior.
@@ -110,7 +109,7 @@ namespace Engage.Dnn.Events
         /// Gets a value indicating whether this instance is configured.
         /// </summary>
         /// <value>
-        /// 	<c>true</c> if this instance is configured; otherwise, <c>false</c>.
+        /// <c>true</c> if this instance is configured; otherwise, <c>false</c>.
         /// </value>
         protected override bool IsConfigured
         {
@@ -141,7 +140,7 @@ namespace Engage.Dnn.Events
         /////// </summary>
         /////// <param name="eventId">The event ID.</param>
         /////// <returns>
-        /////// 	<c>true</c> if the current user if registered for the specified event; otherwise, <c>false</c>.
+        /////// <c>true</c> if the current user if registered for the specified event; otherwise, <c>false</c>.
         /////// </returns>
         ////internal static bool IsRegistered(int eventId)
         ////{
@@ -192,6 +191,7 @@ namespace Engage.Dnn.Events
         /// Gets the <c>QueryString</c> control key for the current <c>Request</c>.
         /// </summary>
         /// <returns>The <c>QueryString</c> control key for the current <c>Request</c></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "The method performs a time-consuming operation. The method is perceivably slower than the time it takes to set or get a field's value.")]
         protected string GetCurrentControlKey()
         {
             string keyParam = string.Empty;

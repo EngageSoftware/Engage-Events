@@ -49,31 +49,6 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Handles the PreRender event of the Page control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void Page_PreRender(object sender, EventArgs e)
-        {
-            try
-            {
-                if (this.rsvpSummary != null)
-                {
-                    this.TitleLabel.Text = this.rsvpSummary.Title;
-                    this.NotAttendingLink.NavigateUrl = this.GetDetailUrl(this.rsvpSummary.EventId, RsvpStatus.NotAttending, this.rsvpSummary.NotAttending);
-                    this.NotAttendingLink.Text = this.rsvpSummary.NotAttending.ToString(CultureInfo.CurrentCulture);
-                    this.AttendingLink.NavigateUrl = this.GetDetailUrl(this.rsvpSummary.EventId, RsvpStatus.Attending, this.rsvpSummary.Attending);
-                    this.AttendingLink.Text = this.rsvpSummary.Attending.ToString(CultureInfo.CurrentCulture);
-                    this.DateLabel.Text = GetFormattedEventDate(this.rsvpSummary.EventStart, this.rsvpSummary.EventEnd);
-                }
-            }
-            catch (Exception exc)
-            {
-                Exceptions.ProcessModuleLoadException(this, exc);
-            }
-        }
-
-        /// <summary>
         /// Gets the formatted date string for this event.
         /// </summary>
         /// <param name="startDate">The event's start date.</param>
@@ -118,6 +93,31 @@ namespace Engage.Dnn.Events.Display
                              "eventid=" + eventId.ToString(CultureInfo.InvariantCulture),
                              "status=" + status)
                        : string.Empty;
+        }
+
+        /// <summary>
+        /// Handles the PreRender event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void Page_PreRender(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.rsvpSummary != null)
+                {
+                    this.TitleLabel.Text = this.rsvpSummary.Title;
+                    this.NotAttendingLink.NavigateUrl = this.GetDetailUrl(this.rsvpSummary.EventId, RsvpStatus.NotAttending, this.rsvpSummary.NotAttending);
+                    this.NotAttendingLink.Text = this.rsvpSummary.NotAttending.ToString(CultureInfo.CurrentCulture);
+                    this.AttendingLink.NavigateUrl = this.GetDetailUrl(this.rsvpSummary.EventId, RsvpStatus.Attending, this.rsvpSummary.Attending);
+                    this.AttendingLink.Text = this.rsvpSummary.Attending.ToString(CultureInfo.CurrentCulture);
+                    this.DateLabel.Text = GetFormattedEventDate(this.rsvpSummary.EventStart, this.rsvpSummary.EventEnd);
+                }
+            }
+            catch (Exception exc)
+            {
+                Exceptions.ProcessModuleLoadException(this, exc);
+            }
         }
     }
 }

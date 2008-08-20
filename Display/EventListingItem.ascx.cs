@@ -108,18 +108,18 @@ namespace Engage.Dnn.Events.Display
         /// <summary>
         /// Sets the listing mode used for this display.
         /// </summary>
-        /// <param name="listingMode">The listing mode used for this display.</param>
-        public void SetListingMode(string listingMode)
+        /// <param name="listingModeValue">The listing mode used for this display.</param>
+        public void SetListingMode(string listingModeValue)
         {
-            if (!string.IsNullOrEmpty(listingMode))
+            if (!string.IsNullOrEmpty(listingModeValue))
             {
                 try
                 {
-                    this.ListingMode = (ListingMode)Enum.Parse(typeof(ListingMode), listingMode, true);
+                    this.ListingMode = (ListingMode)Enum.Parse(typeof(ListingMode), listingModeValue, true);
                 }
                 catch (ArgumentException)
                 {
-                    // if listingMode does not parse, just leave this.ListingMode to its default
+                    // if listingModeValue does not parse, just leave this.ListingMode to its default
                 }
             }
         }

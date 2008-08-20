@@ -13,15 +13,15 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Collections;
+    using Communication.Email;
     using DotNetNuke.Common;
     using DotNetNuke.Entities.Users;
     using DotNetNuke.Security.Roles;
     using DotNetNuke.Services.Exceptions;
     using Engage.Events;
     using Engage.Events.Util;
-    using Util;
-    using Communication.Email;
     using Services.Client;
+    using Util;
 
     /// <summary>
     /// A control which allows for editing an email

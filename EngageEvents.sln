@@ -61,7 +61,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engage.Templating", "..\..\
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engage.Dnn.Framework", "..\Engage.Dnn.Framework\Engage.Dnn.Framework.csproj", "{A58A0922-35E3-49BD-BD18-55A6BA45EC7A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engage.Dnn.Framework", "..\..\..\..\..\..\Code\Engage 3.0\Engage.Dnn.Framework\Engage.Dnn.Framework.csproj", "{A58A0922-35E3-49BD-BD18-55A6BA45EC7A}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
@@ -102,9 +102,10 @@ Global
 		SccProjectUniqueName10 = ..\\..\\..\\..\\..\\..\\Code\\Engage\u00203.0\\Engage.Templating\\Engage.Templating.csproj
 		SccProjectName10 = ../Engage\u00203.0/Engage.Templating
 		SccLocalPath10 = ..\\..\\..\\..\\..\\..\\Code\\Engage\u00203.0\\Engage.Templating
-		SccProjectUniqueName11 = ..\\Engage.Dnn.Framework\\Engage.Dnn.Framework.csproj
+		SccProjectUniqueName11 = ..\\..\\..\\..\\..\\..\\Code\\Engage\u00203.0\\Engage.Dnn.Framework\\Engage.Dnn.Framework.csproj
 		SccProjectName11 = ../Engage\u00203.0/Engage.Dnn.Framework
 		SccLocalPath11 = ..\\Engage.Dnn.Framework
+		SccProjectFilePathRelativizedFromConnection11 = ..\\..\\..\\..\\..\\..\\Code\\Engage\u00203.0\\Engage.Dnn.Framework\\
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -48,7 +48,7 @@
                                     <%=Localize("RecurEvery")%><telerik:RadNumericTextBox ID="WeeklyRepeatInterval" runat="server" CssClass="rsAdvInput" MinValue="1" ShowSpinButtons="True" Value="1" Width="50px"><NumberFormat AllowRounding="True" DecimalDigits="0"/></telerik:RadNumericTextBox><%=Localize("Weeks")%>
                                 </li>
                                 <li class="rsAdvWeekly_Weekday">
-                                    <asp:CheckBox ID="EeeklyWeekdayMonday" runat="server" CssClass="rsAdvCheckboxWrapper" />
+                                    <asp:CheckBox ID="WeeklyWeekdayMonday" runat="server" CssClass="rsAdvCheckboxWrapper" />
                                 </li>
                                 <li class="rsAdvWeekly_Weekday">
                                     <asp:CheckBox ID="WeeklyWeekdayTuesday" runat="server" CssClass="rsAdvCheckboxWrapper" />

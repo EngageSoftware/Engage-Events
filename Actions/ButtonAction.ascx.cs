@@ -73,6 +73,13 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Localizes this control's child controls.
+        /// </summary>
+        private static void LocalizeControls()
+        {
+        }
+
+        /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -95,13 +102,6 @@ namespace Engage.Dnn.Events
             ////        + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture));
             
             this.Response.Redirect(this.href, true);
-        }
-
-        /// <summary>
-        /// Localizes this control's child controls.
-        /// </summary>
-        private static void LocalizeControls()
-        {
         }
     }
 }

@@ -62,7 +62,7 @@
                         ResourceKey="PagingLabel" />
                 </td>
                 <td class="NormalTextBox" style="width: 252px" colspan="3">
-                    <telerik:RadNumericTextBox ID="RecordsPerPageTextbox" runat="server" MaxLength="3" MaxValue="100" MinValue="1" ShowSpinButtons="True" Value="1" Width="50px">
+                    <telerik:RadNumericTextBox ID="RecordsPerPageTextBox" runat="server" MaxLength="3" MaxValue="100" MinValue="1" ShowSpinButtons="True" Width="50px">
                         <NumberFormat AllowRounding="True" DecimalDigits="0"/>
                     </telerik:RadNumericTextBox>
                 </td>

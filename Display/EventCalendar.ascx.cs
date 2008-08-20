@@ -18,8 +18,8 @@ namespace Engage.Dnn.Events.Display
     using DotNetNuke.Services.Exceptions;
     using Engage.Events;
     using Telerik.Web.UI;
-    using Setting = Engage.Dnn.Events.Setting;
-    using Utility=Engage.Dnn.Utility;
+    using Setting = Events.Setting;
+    using Utility = Dnn.Utility;
 
     /// <summary>
     /// Control to display the events calendar view
@@ -36,7 +36,7 @@ namespace Engage.Dnn.Events.Display
         /// Gets or sets a value indicating whether this instance is displaying only featured events.
         /// </summary>
         /// <value>
-        /// 	<c>true</c> if this instance is displaying only featured events; otherwise, <c>false</c>.
+        /// <c>true</c> if this instance is displaying only featured events; otherwise, <c>false</c>.
         /// </value>
         public bool IsFeatured
         {
@@ -126,7 +126,7 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         /// <param name="apt">The appointment</param>
         /// <returns>
-        /// 	<c>true</c> if the specified appointment is registered with the tooltip manager; otherwise, <c>false</c>.
+        /// <c>true</c> if the specified appointment is registered with the tooltip manager; otherwise, <c>false</c>.
         /// </returns>
         private bool IsAppointmentRegisteredForTooltip(Appointment apt)
         {

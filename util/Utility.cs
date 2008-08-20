@@ -97,7 +97,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <param name="emailAddress">The email address.</param>
         /// <returns>
-        /// 	<c>true</c> if the specified email address is valid; otherwise, <c>false</c>.
+        /// <c>true</c> if the specified email address is valid; otherwise, <c>false</c>.
         /// </returns>
         public static bool IsValidEmailAddress(string emailAddress)
         {

@@ -8,8 +8,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Engage.Dnn.Events.Controls
-{
+namespace Engage.Dnn.Events.Controls {
+    
+    
     public partial class RecurrenceEditor {
         
         /// <summary>
@@ -148,13 +149,13 @@ namespace Engage.Dnn.Events.Controls
         protected global::Telerik.Web.UI.RadNumericTextBox WeeklyRepeatInterval;
         
         /// <summary>
-        /// EeeklyWeekdayMonday control.
+        /// WeeklyWeekdayMonday control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox EeeklyWeekdayMonday;
+        protected global::System.Web.UI.WebControls.CheckBox WeeklyWeekdayMonday;
         
         /// <summary>
         /// WeeklyWeekdayTuesday control.

@@ -12,15 +12,14 @@
 namespace Engage.Dnn.Events.Display
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections;
     using System.Globalization;
     using System.Web.UI.WebControls;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Services.Exceptions;
-    using Framework.Templating;
     using Engage.Events;
     using Framework;
-    using Templating;
+    using Framework.Templating;
     using Setting = Setting;
     using Utility = Dnn.Utility;
 
@@ -133,7 +132,8 @@ namespace Engage.Dnn.Events.Display
 
             get
             {
-                return Utility.GetIntSetting(this.Settings, Framework.Setting.RecordsPerPage.PropertyName, 0);
+                int recordsPerPage = Utility.GetIntSetting(this.Settings, Framework.Setting.RecordsPerPage.PropertyName, 10);
+                return recordsPerPage > 0 ? recordsPerPage : 10;
             }
         }
 
@@ -144,70 +144,15 @@ namespace Engage.Dnn.Events.Display
         {
             try
             {
-                this.DisplayModeDropDown.Items.Add(new ListItem(ListingMode.All.ToString()));
-                this.DisplayModeDropDown.Items.Add(new ListItem(ListingMode.Past.ToString()));
-                this.DisplayModeDropDown.Items.Add(new ListItem(ListingMode.CurrentMonth.ToString()));
-                this.DisplayModeDropDown.Items.Add(new ListItem(ListingMode.Future.ToString()));
+                FillListControl(this.DisplayModeDropDown, Enum.GetNames(typeof(ListingMode)), string.Empty, string.Empty);
+                SelectListValue(this.DisplayModeDropDown, this.DisplayModeOption);
 
-                ListItem li = this.DisplayModeDropDown.Items.FindByValue(this.DisplayModeOption);
-                if (li != null)
-                {
-                    li.Selected = true;
-                }
+                SetupTemplateList(this.HeaderDropDownList, TemplateEngine.GetHeaderTemplates(ModuleBase.PhysicialTemplatesFolderName), this.HeaderTemplate);
+                SetupTemplateList(this.ItemDropDownList, TemplateEngine.GetItemTemplates(ModuleBase.PhysicialTemplatesFolderName), this.ItemTemplate);
+                SetupTemplateList(this.FooterDropDownList, TemplateEngine.GetFooterTemplates(ModuleBase.PhysicialTemplatesFolderName), this.FooterTemplate);
+                SetupTemplateList(this.DetailDropDownList, TemplateEngine.GetDetailTemplates(ModuleBase.PhysicialTemplatesFolderName), this.DetailTemplate);
 
-                List<Template> templates = TemplateEngine.GetHeaderTemplates(ModuleBase.PhysicialTemplatesFolderName);
-                this.HeaderDropDownList.DataTextField = "DocumentName";
-                this.HeaderDropDownList.DataValueField = "DocumentName";
-                this.HeaderDropDownList.DataSource = templates;
-                this.HeaderDropDownList.DataBind();
-
-                li = this.HeaderDropDownList.Items.FindByValue(this.HeaderTemplate);
-                if (li != null)
-                {
-                    li.Selected = true;
-                }
-
-                templates = TemplateEngine.GetItemTemplates(ModuleBase.PhysicialTemplatesFolderName);
-                this.ItemDropDownList.DataTextField = "DocumentName";
-                this.ItemDropDownList.DataValueField = "DocumentName";
-                this.ItemDropDownList.DataSource = templates;
-                this.ItemDropDownList.DataBind();
-
-                li = this.ItemDropDownList.Items.FindByValue(this.ItemTemplate);
-                if (li != null)
-                {
-                    li.Selected = true;
-                }
-
-                templates = TemplateEngine.GetFooterTemplates(ModuleBase.PhysicialTemplatesFolderName);
-                this.FooterDropDownList.DataTextField = "DocumentName";
-                this.FooterDropDownList.DataValueField = "DocumentName";
-                this.FooterDropDownList.DataSource = templates;
-                this.FooterDropDownList.DataBind();
-
-                li = this.FooterDropDownList.Items.FindByValue(this.FooterTemplate);
-                if (li != null)
-                {
-                    li.Selected = true;
-                }
-
-                templates = TemplateEngine.GetDetailTemplates(ModuleBase.PhysicialTemplatesFolderName);
-                this.DetailDropDownList.DataTextField = "DocumentName";
-                this.DetailDropDownList.DataValueField = "DocumentName";
-                this.DetailDropDownList.DataSource = templates;
-                this.DetailDropDownList.DataBind();
-
-                li = this.DetailDropDownList.Items.FindByValue(this.DetailTemplate);
-                if (li != null)
-                {
-                    li.Selected = true;
-                }
-
-                string recordPerPage = Utility.GetStringSetting(this.Settings, Framework.Setting.RecordsPerPage.PropertyName);
-                if (recordPerPage != null)
-                {
-                    this.RecordsPerPageTextbox.Value = Convert.ToDouble(this.RecordsPerPage);
-                }
+                this.RecordsPerPageTextBox.Value = this.RecordsPerPage;
             }
             catch (Exception exc)
             {
@@ -229,7 +174,30 @@ namespace Engage.Dnn.Events.Display
                 this.ItemTemplate = this.ItemDropDownList.SelectedValue;
                 this.FooterTemplate = this.FooterDropDownList.SelectedValue;
                 this.DetailTemplate = this.DetailDropDownList.SelectedValue;
-                this.RecordsPerPage = (int)this.RecordsPerPageTextbox.Value.Value;
+                this.RecordsPerPage = (int)this.RecordsPerPageTextBox.Value.Value;
+            }
+        }
+
+        private static void SetupTemplateList(ListControl list, IEnumerable templates, string settingValue)
+        {
+            FillListControl(list, templates, "DocumentName", "DocumentName");
+            SelectListValue(list, settingValue);
+        }
+
+        private static void FillListControl(ListControl list, IEnumerable items, string dataTextField, string dataValueField)
+        {
+            list.DataTextField = dataTextField;
+            list.DataValueField = dataValueField;
+            list.DataSource = items;
+            list.DataBind();
+        }
+
+        private static void SelectListValue(ListControl list, string selectedValue)
+        {
+            ListItem li = list.Items.FindByValue(selectedValue);
+            if (li != null)
+            {
+                li.Selected = true;
             }
         }
     }

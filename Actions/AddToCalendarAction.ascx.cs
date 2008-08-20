@@ -46,16 +46,6 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Handles the Load event of the Page control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void Page_Load(object sender, EventArgs e)
-        {
-            this.SetVisibility();
-        }
-
-        /// <summary>
         /// Localizes this control's child controls.
         /// </summary>
         private static void LocalizeControls()
@@ -68,6 +58,16 @@ namespace Engage.Dnn.Events
         private void SetVisibility()
         {
             this.Button.Visible = IsLoggedIn;
+        }
+
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void Page_Load(object sender, EventArgs e)
+        {
+            this.SetVisibility();
         }
 
         /// <summary>

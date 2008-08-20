@@ -57,7 +57,7 @@ namespace Engage.Dnn.Events
             modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.ItemTemplate.PropertyName, TemplateEngine.GetItemTemplates(PhysicialTemplatesFolderName)[0].DocumentName);
             modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.FooterTemplate.PropertyName, TemplateEngine.GetFooterTemplates(PhysicialTemplatesFolderName)[0].DocumentName);
             modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.DetailTemplate.PropertyName, TemplateEngine.GetDetailTemplates(PhysicialTemplatesFolderName)[0].DocumentName);
-            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.RecordsPerPage.PropertyName, 0.ToString(CultureInfo.InvariantCulture));
+            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.RecordsPerPage.PropertyName, 10.ToString(CultureInfo.InvariantCulture));
         }
     }
 }

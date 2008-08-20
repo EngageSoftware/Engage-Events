@@ -11,39 +11,7 @@
 
 namespace Engage.Dnn.Events
 {
-    using System;
-    using DotNetNuke.Services.Exceptions;
-
-    /// <summary>
-    /// 
-    /// </summary>
     public partial class Approval : ModuleBase
     {
-        /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
-        protected override void OnInit(EventArgs e)
-        {
-            base.OnInit(e);
-            this.Load += this.Page_Load;
-        }
-
-        /// <summary>
-        /// Handles the Load event of the Page control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void Page_Load(object sender, EventArgs e)
-        {
-            try
-            {
-                // need eventid and emaileventid
-            }
-            catch (Exception exc)
-            {
-                Exceptions.ProcessModuleLoadException(this, exc);
-            }
-        }      
     }
 }

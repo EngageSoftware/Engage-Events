@@ -16,10 +16,10 @@ namespace Engage.Dnn.Events.Display
     using System.Web.UI;
     using DotNetNuke.Common;
     using DotNetNuke.Services.Exceptions;
-    using Framework.Templating;
     using Engage.Events;
+    using Framework.Templating;
     using Templating;
-    using Utility=Engage.Dnn.Utility;
+    using Utility = Dnn.Utility;
 
     /// <summary>
     /// Event Detail view.

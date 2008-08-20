@@ -13,8 +13,8 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Web.UI.WebControls;
-    using DotNetNuke.Framework;
     using DotNetNuke.Common;
+    using DotNetNuke.Framework;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
     using Engage.Events;

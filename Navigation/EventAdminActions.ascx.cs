@@ -19,14 +19,14 @@ namespace Engage.Dnn.Events.Navigation
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.Utilities;
     using Engage.Events;
-    using Utility=Engage.Dnn.Utility;
+    using Utility = Dnn.Utility;
 
     /// <summary>
     /// Displays the actions that users can perform on an event instance.
     /// </summary>
     /// <remarks>
     /// This control's behavior changed from using LinkButtons to standard buttons. Something to do with a postback
-    /// not occurring on the container form. Not sure why? Anyhow, it stores the EventID in viewstate and uses it if needed.hk
+    /// not occurring on the container form. Not sure why? Anyhow, it stores the EventID in <c>ViewState</c> and uses it if needed.hk
     /// </remarks>
     public partial class EventAdminActions : ModuleBase
     {
