@@ -220,6 +220,6 @@
          <AdditionalReferencePath Include="C:\MyFolder\" />
          <AdditionalReferencePath Include="C:\MyFolder2\" />
     -->
-    <AdditionalReferencePath Include="C:\TFS Code\Engage 3.0\" />
+    <AdditionalReferencePath Include="\\etg19\qa\Engage\Engage 3.0\Builds\" />
   </ItemGroup>
 </Project>
