@@ -6,7 +6,7 @@
       <foldername>EngageEvents</foldername>
       <modulename>Engage: Events</modulename>
       <description>The DotNetNuke Events (Beta) module by Engage Software (www.engagemodules.com)</description>
-      <version>00.00.06</version>
+      <version>00.00.07</version>
       <businesscontrollerclass>Engage.Dnn.Events.Components.FeaturesController</businesscontrollerclass>
       <resourcefile>Resources.zip</resourcefile>
       <modules>
