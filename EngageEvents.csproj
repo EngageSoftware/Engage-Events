@@ -651,6 +651,7 @@
     <Content Include="References\Engage.Servicesv3.0.dll" />
     <Content Include="References\Engage.Templating.dll" />
     <Content Include="References\Engage.Utilityv3.0.dll" />
+    <Content Include="References\Microsoft.ApplicationBlocks.Data.dll" />
     <Content Include="References\Telerik.Web.UI.dll" />
     <EmbeddedResource Include="JavaScript\EngageEvents.EditTypeDialog.js" />
   </ItemGroup>
