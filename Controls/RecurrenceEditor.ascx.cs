@@ -471,13 +471,13 @@ namespace Engage.Dnn.Events.Controls
         /// </summary>
         private void LocalizeControl()
         {
-            this.WeeklyWeekdaySunday.Text = Localization.GetString("Sunday", LocalSharedResourceFile);
-            this.WeeklyWeekdayMonday.Text = Localization.GetString("Monday", LocalSharedResourceFile);
-            this.WeeklyWeekdayTuesday.Text = Localization.GetString("Tuesday", LocalSharedResourceFile);
-            this.WeeklyWeekdayWednesday.Text = Localization.GetString("Wednesday", LocalSharedResourceFile);
-            this.WeeklyWeekdayThursday.Text = Localization.GetString("Thursday", LocalSharedResourceFile);
-            this.WeeklyWeekdayFriday.Text = Localization.GetString("Friday", LocalSharedResourceFile);
-            this.WeeklyWeekdaySaturday.Text = Localization.GetString("Saturday", LocalSharedResourceFile);
+            this.WeeklyWeekdaySunday.Text = CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DayOfWeek.Sunday);
+            this.WeeklyWeekdayMonday.Text = CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DayOfWeek.Monday);
+            this.WeeklyWeekdayTuesday.Text = CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DayOfWeek.Tuesday);
+            this.WeeklyWeekdayWednesday.Text = CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DayOfWeek.Wednesday);
+            this.WeeklyWeekdayThursday.Text = CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DayOfWeek.Thursday);
+            this.WeeklyWeekdayFriday.Text = CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DayOfWeek.Friday);
+            this.WeeklyWeekdaySaturday.Text = CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DayOfWeek.Saturday);
         }
 
         /// <summary>
