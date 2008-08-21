@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F9BEB83D-4945-45DE-BF7D-11FBD4A15080}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -51,9 +51,19 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Engage.Communicationv3.0, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Engage.DataProviderv3.0, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Engage.Dnn.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Engage.Dnn.Utility, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Engage.Eventsv3.0, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Engage.Frameworkv3.0, Version=2.0.5.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Engage.Licensing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Engage.Routingv3.0, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Engage.Servicesv3.0, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Engage.Templating, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Engage.Utilityv3.0, Version=3.0.0.16373, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral">
       <HintPath>..\..\bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
@@ -560,48 +570,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\Code\Engage 3.0\Engage.Communication\Engage.Communication.csproj">
-      <Project>{55CBD824-C0E0-4F1B-AECA-905B84C5A600}</Project>
-      <Name>Engage.Communication</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\Code\Engage 3.0\Engage.DataProvider\Engage.DataProvider.csproj">
-      <Project>{36A4AB27-530A-4687-8016-7029E967DDE0}</Project>
-      <Name>Engage.DataProvider</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\Code\Engage 3.0\Engage.Events\Engage.Events.csproj">
-      <Project>{34458836-3711-4D60-B394-B44347A8F0DF}</Project>
-      <Name>Engage.Events</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\Code\Engage 3.0\Engage.Framework\Engage.Framework.csproj">
-      <Project>{0EA52814-FB21-4258-A411-BF2A6B1699F0}</Project>
-      <Name>Engage.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\Code\Engage 3.0\Engage.Licensing\Engage.Licensing.csproj">
-      <Project>{11D57DA1-F585-4814-9E5E-5CDF6C9017C4}</Project>
-      <Name>Engage.Licensing</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\Code\Engage 3.0\Engage.Routing\Engage.Routing.csproj">
-      <Project>{CE72C274-F07E-4F4A-9854-DFB1354293E7}</Project>
-      <Name>Engage.Routing</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\Code\Engage 3.0\Engage.Services\Engage.Services.csproj">
-      <Project>{C446747D-B3DD-43E2-9908-13CC6663E45F}</Project>
-      <Name>Engage.Services</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\Code\Engage 3.0\Engage.Templating\Engage.Templating.csproj">
-      <Project>{791E6642-6BE2-413B-AC8A-7677600E07BF}</Project>
-      <Name>Engage.Templating</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\Code\Engage 3.0\Engage.Utility\Engage.Utility.csproj">
-      <Project>{319B4FE6-A016-41E0-93CE-748DA517D542}</Project>
-      <Name>Engage.Utility</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Engage.Dnn.Framework\Engage.Dnn.Framework.csproj">
-      <Project>{A58A0922-35E3-49BD-BD18-55A6BA45EC7A}</Project>
-      <Name>Engage.Dnn.Framework</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="App_LocalResources\Register.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
@@ -672,7 +640,17 @@
     <Content Include="References\aspNetEmail.dll" />
     <Content Include="References\DotNetNuke.dll" />
     <Content Include="References\DotNetNuke.WebUtility.dll" />
+    <Content Include="References\Engage.Communicationv3.0.dll" />
+    <Content Include="References\Engage.DataProviderv3.0.dll" />
+    <Content Include="References\Engage.Dnn.Framework.dll" />
     <Content Include="References\Engage.Dnn.Utility.dll" />
+    <Content Include="References\Engage.Eventsv3.0.dll" />
+    <Content Include="References\Engage.Frameworkv3.0.dll" />
+    <Content Include="References\Engage.Licensing.dll" />
+    <Content Include="References\Engage.Routingv3.0.dll" />
+    <Content Include="References\Engage.Servicesv3.0.dll" />
+    <Content Include="References\Engage.Templating.dll" />
+    <Content Include="References\Engage.Utilityv3.0.dll" />
     <Content Include="References\Telerik.Web.UI.dll" />
     <EmbeddedResource Include="JavaScript\EngageEvents.EditTypeDialog.js" />
   </ItemGroup>
@@ -692,6 +670,9 @@
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
           <IISAppRootUrl>http://localhost/DotNetNuke_2</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
