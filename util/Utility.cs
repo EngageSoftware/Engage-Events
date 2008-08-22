@@ -266,7 +266,7 @@ namespace Engage.Dnn.Events
                     CultureInfo.CurrentCulture,
                     Localization.GetString("MonthlyRecurrenceOnGivenDay.Text", resourceFile),
                     Localization.GetString(ordinalValues[pattern.DayOrdinal], resourceFile),
-                    Localization.GetString(pattern.DaysOfWeekMask.ToString(), resourceFile),
+                    GetLocalizedDayOfWeek(pattern.DaysOfWeekMask, resourceFile),
                     pattern.Interval);
             }
         }
