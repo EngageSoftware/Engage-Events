@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DisplayModeLabel.Help" xml:space="preserve">
-    <value>Select what data you want to be displayed. </value>
+    <value>Select what data you want to be displayed</value>
   </data>
   <data name="DisplayModeLabel.Text" xml:space="preserve">
     <value>Select a Display Mode</value>
@@ -142,13 +142,13 @@
     <value>Listing</value>
   </data>
   <data name="FeaturedEventLabel.Help" xml:space="preserve">
-    <value>Choose whether to display Featured Events only.</value>
+    <value>Choose whether to display Featured Events only</value>
   </data>
   <data name="FeaturedEventLabel.Text" xml:space="preserve">
-    <value>Display Featured Events Only.</value>
+    <value>Display Featured Events Only</value>
   </data>
   <data name="LabelChooseDisplayType.Help" xml:space="preserve">
-    <value>Pick from the dropdown the default display for events.</value>
+    <value>Pick from the dropdown the default display for events</value>
   </data>
   <data name="LabelChooseDisplayType.Text" xml:space="preserve">
     <value>Select a display for events</value>

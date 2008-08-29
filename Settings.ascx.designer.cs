@@ -14,15 +14,6 @@ namespace Engage.Dnn.Events {
     public partial class Settings {
         
         /// <summary>
-        /// SettingsUpdatePanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel SettingsUpdatePanel;
-        
-        /// <summary>
         /// LabelChooseDisplayType control.
         /// </summary>
         /// <remarks>
@@ -41,22 +32,13 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.DropDownList DropDownChooseDisplay;
         
         /// <summary>
-        /// DisplayDiv control.
+        /// ControlsPlaceholder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DisplayDiv;
-        
-        /// <summary>
-        /// phControls control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder phControls;
+        protected global::System.Web.UI.WebControls.PlaceHolder ControlsPlaceholder;
         
         /// <summary>
         /// FeaturedEventLabel control.

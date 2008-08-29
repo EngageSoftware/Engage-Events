@@ -19,7 +19,6 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
-    using Utility = Engage.Dnn.Utility;
 
     /// <summary>
     /// This is the settings code behind for Event related Settings.
@@ -153,11 +152,11 @@ namespace Engage.Dnn.Events
         /// <param name="controlName">Name of the control.</param>
         private void LoadSettingsControl(string controlName)
         {
-            this.phControls.EnableViewState = false;
-            this.phControls.Controls.Clear();
+            this.ControlsPlaceholder.EnableViewState = false;
+            this.ControlsPlaceholder.Controls.Clear();
 
             this.currentSettingsBase = this.CreateSettingsControl(controlName);
-            this.phControls.Controls.Add(this.currentSettingsBase);
+            this.ControlsPlaceholder.Controls.Add(this.currentSettingsBase);
         }
 
         /// <summary>

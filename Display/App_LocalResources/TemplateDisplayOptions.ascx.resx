@@ -124,7 +124,7 @@
     <value>Select a Detail Template</value>
   </data>
   <data name="DisplayModeLabel.Help" xml:space="preserve">
-    <value>Select what data you want to be displayed. </value>
+    <value>Select what data you want to be displayed</value>
   </data>
   <data name="DisplayModeLabel.Text" xml:space="preserve">
     <value>Select a Display Mode</value>
@@ -139,7 +139,7 @@
     <value>The Header template contains information like a Title, Sorting and Status Sorting</value>
   </data>
   <data name="HeaderLabel.Text" xml:space="preserve">
-    <value>Select a Header Template:</value>
+    <value>Select a Header Template</value>
   </data>
   <data name="ItemLabel.Help" xml:space="preserve">
     <value>The Item template represents a single event and any information displayed. This is repeated for all Events listed.</value>
@@ -151,6 +151,6 @@
     <value>Specify how many records you want to display per page. A value of zero indicates to display all records.</value>
   </data>
   <data name="PagingLabel.Text" xml:space="preserve">
-    <value>Enter the number of records to display per page.</value>
+    <value>Enter the number of records to display per page</value>
   </data>
 </root>

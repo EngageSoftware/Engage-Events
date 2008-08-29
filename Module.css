@@ -223,7 +223,53 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 
 /*========================================================
 
-		2. Validation
+		2. Settings
+
+========================================================*/
+
+.EventsSetting label
+{
+	float:left;
+	width: 49%;
+}
+
+.EventsSetting br /*dnn label renders a br tag*/
+{
+	display: none;
+}
+
+.EventsSetting input, .EventsSetting select, .EventsSetting .NumericTextBoxWrapper
+{
+	float:right;
+	width:49%;
+}
+
+.EventsSetting .NumericTextBoxWrapper
+{
+	text-align: center;
+}
+
+.EventsSetting .NumericTextBoxWrapper div, .EventsSetting .NumericTextBoxWrapper div table
+{
+	text-align: right;
+	width: 5em !important;
+}
+
+.TemplatesSection
+{
+	margin: 1em;
+}
+
+.EventsSetting
+{
+	clear: both;
+	padding: 0 0 2em;
+}
+
+
+/*========================================================
+
+		3. Validation
 
 ========================================================*/
 .ModuleMessage{width:60%; padding-top: 1em; margin: 0 auto;}

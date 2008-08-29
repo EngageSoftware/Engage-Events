@@ -41,13 +41,13 @@ namespace Engage.Dnn.Events.Display {
         protected global::DotNetNuke.UI.UserControls.SectionHeadControl TemplateSettingsSectionHead;
         
         /// <summary>
-        /// TemplateTable control.
+        /// TemplatesSection control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TemplateTable;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TemplatesSection;
         
         /// <summary>
         /// HeaderLabel control.
