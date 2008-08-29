@@ -104,7 +104,7 @@ namespace Engage.Dnn.Events
 
             if (this.EmailTypeRadioButtons.SelectedValue == EmailEventType.Reminder.Description)
             {
-                // reminder emails have three different messages depending on whether or not the person has RSVP'd.
+                // reminder emails have three different messages depending on whether or not the person has responded.
                 emailEvent = new EmailEvent(
                     EmailEventType.Reminder,
                     "Name Here",

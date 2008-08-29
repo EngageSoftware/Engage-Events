@@ -18,8 +18,8 @@ if exists (select * from dbo.sysobjects where id = object_id(N'[{objectQualifier
 ALTER TABLE {databaseOwner}[{objectQualifier}Engage_RoutingEvent] DROP CONSTRAINT [{objectQualifier}FK_Engage_RoutingEvent_Engage_EmailEvent]
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'[{objectQualifier}FK_Engage_Event_Engage_Rsvp]') and OBJECTPROPERTY(id, N'IsForeignKey') = 1)
-ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Rsvp] DROP CONSTRAINT [{objectQualifier}FK_Engage_Event_Engage_Rsvp]
+if exists (select * from dbo.sysobjects where id = object_id(N'[{objectQualifier}FK_Engage_Event_Engage_Response]') and OBJECTPROPERTY(id, N'IsForeignKey') = 1)
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Response] DROP CONSTRAINT [{objectQualifier}FK_Engage_Event_Engage_Response]
 GO
 
 if exists (select * from dbo.sysobjects where id = object_id(N'[{objectQualifier}FK_Engage_RoutingEvent_Engage_lkpRoutingEventType]') and OBJECTPROPERTY(id, N'IsForeignKey') = 1)
@@ -71,8 +71,8 @@ if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{
 drop table {databaseOwner}[{objectQualifier}Engage_Event]
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_Rsvp]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
-drop table {databaseOwner}[{objectQualifier}Engage_Rsvp]
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_Response]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table {databaseOwner}[{objectQualifier}Engage_Response]
 GO
 
 if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_EventMessage]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
@@ -171,28 +171,28 @@ if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{
 drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertRoutingTransaction]
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertRsvp]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertRsvp]
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertResponse]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertResponse]
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spUpdateRsvp]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-drop procedure {databaseOwner}[{objectQualifier}Engage_spUpdateRsvp]
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spUpdateResponse]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spUpdateResponse]
 GO
 
 if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spWriteMessageId]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
 drop procedure {databaseOwner}[{objectQualifier}Engage_spWriteMessageId]
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetRsvpByEmail]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-drop procedure {databaseOwner}[{objectQualifier}Engage_spGetRsvpByEmail]
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetResponseByEmail]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spGetResponseByEmail]
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetRsvpSummary]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-drop procedure {databaseOwner}[{objectQualifier}Engage_spGetRsvpSummary]
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetResponseSummary]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spGetResponseSummary]
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetRsvps]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-drop procedure {databaseOwner}[{objectQualifier}Engage_spGetRsvps]
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetResponses]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spGetResponses]
 GO
 
 if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertApproval]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)

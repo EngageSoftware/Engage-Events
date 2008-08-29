@@ -132,8 +132,8 @@
   <data name="lbPrint.Text" xml:space="preserve">
     <value>Print</value>
   </data>
-  <data name="lbRsvp.Text" xml:space="preserve">
-    <value>Rsvp for Event</value>
+  <data name="lbResponse.Text" xml:space="preserve">
+    <value>Response for Event</value>
   </data>
   <data name="lbViewInvite.Text" xml:space="preserve">
     <value>View Invite</value>

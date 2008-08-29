@@ -195,29 +195,29 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 		.StatusTypeHeaders .Normal{}
 		.StatusTypeHeaders p{margin: 0;}
 
-	.rsvpAtt{float: left; width: 49%;}
-	.rsvpNotAtt{float: right; width: 49%;}
+	.ResponseAtt{float: left; width: 49%;}
+	.ResponseNotAtt{float: right; width: 49%;}
 
-.rsvpDetailHeader td{background: #fff; color: #000; font-weight: bold; border-top: 1px #555 solid; border-bottom: 1px #333 solid; padding: 10px 0 6px; font-size: 120%;}
-.rsvpDetailItem{border-bottom: 1px #ccc dotted; border-top: 1px #ccc dotted; }
-.rsvpDetailItem td, .rsvpDetailAltItem td {padding: 8px 0;}
-.rsvpDetailItem:hover, .rsvpDetailAltItem:hover{}
+.ResponseDetailHeader td{background: #fff; color: #000; font-weight: bold; border-top: 1px #555 solid; border-bottom: 1px #333 solid; padding: 10px 0 6px; font-size: 120%;}
+.ResponseDetailItem{border-bottom: 1px #ccc dotted; border-top: 1px #ccc dotted; }
+.ResponseDetailItem td, .ResponseDetailAltItem td {padding: 8px 0;}
+.ResponseDetailItem:hover, .ResponseDetailAltItem:hover{}
 
-.rsvpDetailAltItem{background: #f2f9fc;}
-.rsvpDetailItemSelect{}
+.ResponseDetailAltItem{background: #f2f9fc;}
+.ResponseDetailItemSelect{}
 
 .ResponseHeader .SortByHeader p, .ResponseHeader .StatusHeader p{display:inline; text-transform: uppercase; font-weight: bold; font-size: 90%;}
 .ResponsesSummary .PagingTable{border: none; border-bottom: 1px #000 solid; border-top: 1px #999 solid; padding: 12px 0 6px;}
-.rsvpMemberName{font-weight: bold;}
-.rsvpDisplay{padding: 8px 0;}
-	.rsvpEventDisplay{float: left; width: 49%;}
-		.rsvpEventDisplay h3 {font-weight: bold; color: #046380; margin: 0; font-size: 110%;}
-		.rsvpEventDisplay p{margin: 0; color: #555; font-size: 95%;}
-	.rsvpEventStats{float: right; width: 49%; text-align: center;}
-		.rsvpEventStats p{margin: 0;}
+.ResponseMemberName{font-weight: bold;}
+.ResponseDisplay{padding: 8px 0;}
+	.ResponseEventDisplay{float: left; width: 49%;}
+		.ResponseEventDisplay h3 {font-weight: bold; color: #046380; margin: 0; font-size: 110%;}
+		.ResponseEventDisplay p{margin: 0; color: #555; font-size: 95%;}
+	.ResponseEventStats{float: right; width: 49%; text-align: center;}
+		.ResponseEventStats p{margin: 0;}
 
 .ResponsesSummary ol{margin: 0 0 0 1.675em; padding:0;}
-	.ResponsesSummary ol li .rsvpDisplay {padding: 0; margin: 12px 0 8px;}
+	.ResponsesSummary ol li .ResponseDisplay {padding: 0; margin: 12px 0 8px;}
 	.ResponsesSummary ol li {}
 
 

@@ -118,11 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DailyRecurrence.Text" xml:space="preserve">
-    <value>Recurs every {0} day(s)</value>
+    <value>Occurs every {0} day(s)</value>
     <comment>{0} is replaced by number of days</comment>
   </data>
   <data name="DailyRecurrenceWeekdays.Text" xml:space="preserve">
-    <value>Recurs every weekday</value>
+    <value>Occurs every weekday</value>
   </data>
   <data name="EveryDay.Text" xml:space="preserve">
     <value>day</value>
@@ -137,11 +137,11 @@
     <value>last</value>
   </data>
   <data name="MonthlyRecurrenceOnDate.Text" xml:space="preserve">
-    <value>Recurs on day {0} of every {1} month(s)</value>
+    <value>Occurs on day {0} of every {1} month(s)</value>
     <comment>{0} is replaced by the day of the month, {1} is replaced by the number of months</comment>
   </data>
   <data name="MonthlyRecurrenceOnGivenDay.Text" xml:space="preserve">
-    <value>Recurs the {0} {1} of every {2} month(s)</value>
+    <value>Occurs the {0} {1} of every {2} month(s)</value>
     <comment>{0} is replaced by the ordinal (first, second, last, etc), {1} is replaced by the day {weekday, Wednesday, etc), {2} is replaced by the number of months</comment>
   </data>
   <data name="Second.Text" xml:space="preserve">
@@ -169,15 +169,15 @@
     <value>weekend day</value>
   </data>
   <data name="WeeklyRecurrence.Text" xml:space="preserve">
-    <value>Recurs every {0} week(s) on {1}</value>
+    <value>Occurs every {0} week(s) on {1}</value>
     <comment>{0} is replaced by number of weeks, {1} is replaced by list of days</comment>
   </data>
   <data name="YearlyRecurrenceOnDate.Text" xml:space="preserve">
-    <value>Recurs every {0:MMMM} {1}</value>
+    <value>Occurs every {0:MMMM} {1}</value>
     <comment>{0:MMMM} is replaced by the month name (use %M for month number, MM for month number with leading zero, or MMM for abbreviated month name), {1} is replaced by the day of the month</comment>
   </data>
   <data name="YearlyRecurrenceOnGivenDay.Text" xml:space="preserve">
-    <value>Recurs the {0} {1} of {2:MMMM}</value>
+    <value>Occurs the {0} {1} of {2:MMMM}</value>
     <comment>{0} is replaced by the ordinal (first, second, last, etc), {1} is replaced by the day {weekday, Wednesday, etc), {2:MMMM} is replaced by the month name (use %M for month number, MM for month number with leading zero, or MMM for abbreviated month name)</comment>
   </data>
 </root>

@@ -67,17 +67,43 @@ namespace Engage.Dnn.Events
         /// Gets the event id.
         /// </summary>
         /// <value>The event id.</value>
-        protected static int EventId
+        /// <exception cref="InvalidOperationException">EventId is not present on QueryString</exception>
+        protected int EventId
         {
             get
             {
-                int id = -1;
-                if (HttpContext.Current.Request.QueryString["eventId"] != null)
+                if (this.Request.QueryString["eventId"] != null)
                 {
-                    id = Convert.ToInt32(HttpContext.Current.Request.QueryString["eventId"], CultureInfo.InvariantCulture);
+                    int eventId;
+                    if (int.TryParse(this.Request.QueryString["eventId"], NumberStyles.Integer, CultureInfo.InvariantCulture, out eventId))
+                    {
+                        return eventId;
+                    }
                 }
 
-                return id;
+                throw new InvalidOperationException("EventId is not present on QueryString: " + this.Request.RawUrl);
+            }
+        }
+
+        /// <summary>
+        /// Gets the occurrence date.
+        /// </summary>
+        /// <value>The date when the event occurs.</value>
+        /// <exception cref="InvalidOperationException">EventStart is not present on QueryString</exception>
+        protected DateTime EventStart
+        {
+            get
+            {
+                if (this.Request.QueryString["start"] != null)
+                {
+                    long startTicks;
+                    if (long.TryParse(this.Request.QueryString["start"], NumberStyles.Integer, CultureInfo.InvariantCulture, out startTicks))
+                    {
+                        return new DateTime(startTicks);
+                    }
+                }
+
+                throw new InvalidOperationException("EventStart is not present on QueryString: " + this.Request.RawUrl);
             }
         }
 
@@ -89,19 +115,19 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                return this.BuildLinkUrl(this.ModuleId, "Register", "eventid=" + EventId.ToString(CultureInfo.InvariantCulture));
+                return this.BuildLinkUrl(this.ModuleId, "Register", Utility.GetEventParameters(this.EventId, this.EventStart));
             }
         }
 
         /// <summary>
-        /// Gets the RSVP URL.
+        /// Gets the Response URL.
         /// </summary>
-        /// <value>The RSVP URL.</value>
-        protected string RsvpUrl
+        /// <value>The Response URL.</value>
+        protected string ResponseUrl
         {
             get
             {
-                return this.BuildLinkUrl(this.ModuleId, "Rsvp", "eventid=" + EventId.ToString(CultureInfo.InvariantCulture));
+                return this.BuildLinkUrl(this.ModuleId, "Response", Utility.GetEventParameters(this.EventId, this.EventStart));
             }
         }
 
@@ -133,26 +159,6 @@ namespace Engage.Dnn.Events
                 return index;
             }
         }
-
-        /////// <summary>
-        /////// This method takes the eventId and the currently logged in user (if any) and checks for
-        /////// an existing RSVP(registration) for the user.
-        /////// </summary>
-        /////// <param name="eventId">The event ID.</param>
-        /////// <returns>
-        /////// <c>true</c> if the current user if registered for the specified event; otherwise, <c>false</c>.
-        /////// </returns>
-        ////internal static bool IsRegistered(int eventId)
-        ////{
-        ////    bool registered = false;
-        ////    if (eventId > 0 && IsLoggedIn)
-        ////    {
-        ////        Engage.Events.Rsvp rsvp = Engage.Events.Rsvp.Load(eventId, DotNetNuke.Entities.Users.UserController.GetCurrentUserInfo().Email);
-        ////        registered = (rsvp != null);
-        ////    }
-
-        ////    return registered;
-        ////}
 
         /// <summary>
         /// Sends an <c>iCalendar</c> to the client to download.

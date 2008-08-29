@@ -16,6 +16,7 @@ namespace Engage.Dnn.Events.Display
     using System.Web.UI;
     using DotNetNuke.Common;
     using DotNetNuke.Services.Exceptions;
+    using DotNetNuke.Services.Localization;
     using Engage.Events;
     using Framework.Templating;
     using Templating;
@@ -61,7 +62,7 @@ namespace Engage.Dnn.Events.Display
         {
             base.OnInit(e);
             this.Load += this.Page_Load;
-            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + "App_LocalResources/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
+            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
         }
 
         /// <summary>

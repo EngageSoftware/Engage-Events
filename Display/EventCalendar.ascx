@@ -35,11 +35,8 @@
     <asp:UpdatePanel runat="server" ID="UpdatePanel1" UpdateMode="Conditional">
         <ContentTemplate>
             <telerik:radscheduler id="EventsCalendarDisplay" runat="server" selectedview="MonthView"
-                enableembeddedskins="True" daystarttime="08:00:00" dayendtime="18:00:00"
-                timezoneoffset="03:00:00" datakeyfield="Id" datasubjectfield="Title" datastartfield="EventStart"
-                dataendfield="EventEnd" allowdelete="False" allowedit="False" allowinsert="False"
-                overflowbehavior="Expand" 
-                customattributenames="Overview">
+                enableembeddedskins="True" allowdelete="False" allowedit="False" allowinsert="False"
+                overflowbehavior="Expand" ReadOnly="true" >
                 <timelineview userselectable="False" />
             </telerik:radscheduler>
             <telerik:radtooltipmanager runat="server" id="EventsCalendarToolTipManager" width="300" height="150"

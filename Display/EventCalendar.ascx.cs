@@ -115,11 +115,7 @@ namespace Engage.Dnn.Events.Display
                 EventToolTip toolTip = (EventToolTip)this.LoadControl("EventToolTip.ascx");
 
                 toolTip.ModuleConfiguration = this.ModuleConfiguration;
-                toolTip.EventStartDate = ev.EventStart.ToShortTimeString();
-                toolTip.Overview = ev.Overview;
-                toolTip.Title = ev.Title;
-                toolTip.EventEndDate = ev.EventEnd.ToShortTimeString();
-                toolTip.SetEventId(ev.Id);
+                toolTip.SetEvent(ev);
                 e.UpdatePanel.ContentTemplateContainer.Controls.Add(toolTip);
             }
         }
@@ -158,9 +154,10 @@ namespace Engage.Dnn.Events.Display
             this.EventsCalendarDisplay.DataSubjectField = "Title";
             this.EventsCalendarDisplay.DataBind();
 
-            if (Utility.GetStringSetting(this.Settings, Setting.SkinSelection.PropertyName) != null)
+            string skinSetting = Utility.GetStringSetting(this.Settings, Setting.SkinSelection.PropertyName);
+            if (skinSetting != null)
             {
-                this.EventsCalendarDisplay.Skin = this.EventsCalendarToolTipManager.Skin = Utility.GetStringSetting(this.Settings, Setting.SkinSelection.PropertyName);
+                this.EventsCalendarDisplay.Skin = this.EventsCalendarToolTipManager.Skin = skinSetting;
             }
         }
     }

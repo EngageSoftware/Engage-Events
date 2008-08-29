@@ -80,7 +80,7 @@ namespace Engage.Dnn.Events.Navigation
             this.HomeLink.NavigateUrl = Globals.NavigateURL();
             this.SettingsLink.NavigateUrl = this.EditUrl("ModuleId", this.ModuleId.ToString(CultureInfo.InvariantCulture), "Module");
             this.AddAnEventLink.NavigateUrl = this.BuildLinkUrl(this.ModuleId, "EventEdit");
-            this.ResponsesLink.NavigateUrl = this.BuildLinkUrl(this.ModuleId, "RsvpSummary");
+            this.ResponsesLink.NavigateUrl = this.BuildLinkUrl(this.ModuleId, "ResponseSummary");
             this.ManageEventsLink.NavigateUrl = this.BuildLinkUrl(this.ModuleId, "EventListingAdmin");
         }
 
@@ -106,7 +106,7 @@ namespace Engage.Dnn.Events.Navigation
         ////        case "EventListingAdmin":
         ////            this.ManageEventsLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/manage_events_disabled.gif";
         ////            break;
-        ////        case "RsvpSummary":
+        ////        case "ResponseSummaryDisplay":
         ////            this.ResponsesLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/responses_disabled.gif";
         ////            break;
         ////        default:

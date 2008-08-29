@@ -169,6 +169,6 @@
     <value>Unsubscribe URL</value>
   </data>
   <data name="lblUnsubscribeUrl.Text" xml:space="preserve">
-    <value>Speicfy the URL to include in outgoing emails to unsusbcribe</value>
+    <value>Specify the URL to include in outgoing emails to unsusbcribe</value>
   </data>
 </root>

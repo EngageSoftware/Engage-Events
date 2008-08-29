@@ -145,6 +145,7 @@ namespace Engage.Dnn.Events.Display
             try
             {
                 FillListControl(this.DisplayModeDropDown, Enum.GetNames(typeof(ListingMode)), string.Empty, string.Empty);
+                Utility.LocalizeListControl(this.DisplayModeDropDown, this.LocalResourceFile);
                 SelectListValue(this.DisplayModeDropDown, this.DisplayModeOption);
 
                 SetupTemplateList(this.HeaderDropDownList, TemplateEngine.GetHeaderTemplates(ModuleBase.PhysicialTemplatesFolderName), this.HeaderTemplate);
@@ -178,12 +179,25 @@ namespace Engage.Dnn.Events.Display
             }
         }
 
+        /// <summary>
+        /// Sets up a <see cref="ListControl"/> with the given list of templates, selecting the given <paramref name="settingValue"/>.
+        /// </summary>
+        /// <param name="list">The list to fill.</param>
+        /// <param name="templates">The templates which which to fill the <paramref name="list"/>.</param>
+        /// <param name="settingValue">The value which should be selected in the list.</param>
         private static void SetupTemplateList(ListControl list, IEnumerable templates, string settingValue)
         {
             FillListControl(list, templates, "DocumentName", "DocumentName");
             SelectListValue(list, settingValue);
         }
 
+        /// <summary>
+        /// Fills the given list control with the items.
+        /// </summary>
+        /// <param name="list">The list to fill.</param>
+        /// <param name="items">The items with which to fill the <paramref name="list"/>.</param>
+        /// <param name="dataTextField">Name of the field in the <paramref name="items"/> that should be displayed as text in the <paramref name="list"/></param>
+        /// <param name="dataValueField">Name of the field in the <paramref name="items"/> that should be the value of the item in the <paramref name="list"/></param>
         private static void FillListControl(ListControl list, IEnumerable items, string dataTextField, string dataValueField)
         {
             list.DataTextField = dataTextField;
@@ -192,6 +206,11 @@ namespace Engage.Dnn.Events.Display
             list.DataBind();
         }
 
+        /// <summary>
+        /// Selects the given value in the list, if an item with that value is in the list.
+        /// </summary>
+        /// <param name="list">The list of items whose selected value is to be set.</param>
+        /// <param name="selectedValue">The value of the item to be selected.</param>
         private static void SelectListValue(ListControl list, string selectedValue)
         {
             ListItem li = list.Items.FindByValue(selectedValue);

@@ -109,7 +109,7 @@ namespace Engage.Dnn.Events.Navigation
             // since the global navigation control is not loaded using DNN mechanisms we need to set it here so that calls to 
             // module related information will appear the same as the actual control this navigation is sitting on.hk
             this.ModuleConfiguration = ((PortalModuleBase)base.Parent.Parent.Parent).ModuleConfiguration;
-            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + "App_LocalResources/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
+            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
 
             this.EditEventButton.Click += this.EditEventButton_Click;
             this.ResponsesButton.Click += this.ResponsesButton_Click;
@@ -209,7 +209,7 @@ namespace Engage.Dnn.Events.Navigation
         /// </summary>
         private void SetVisibility()
         {
-            this.AddToCalendarButton.Visible = IsLoggedIn;
+            ////this.AddToCalendarButton.Visible = IsLoggedIn;
             this.CancelButton.Visible = this.IsAdmin;
             this.DeleteEventButton.Visible = this.IsAdmin;
             this.EditEventButton.Visible = this.IsAdmin;
@@ -262,7 +262,7 @@ namespace Engage.Dnn.Events.Navigation
         private void ResponsesButton_Click(object sender, EventArgs e)
         {
             this.Response.Redirect(
-                this.BuildLinkUrl(this.ModuleId, "RsvpDetail", "eventid=" + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture)), true);
+                this.BuildLinkUrl(this.ModuleId, "ResponseDetail", "eventid=" + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture)), true);
         }
 
         /// <summary>

@@ -15,7 +15,9 @@ namespace Engage.Dnn.Events.Display
     using System.Diagnostics;
     using System.Globalization;
     using System.IO;
+    using System.Text;
     using DotNetNuke.Framework;
+    using DotNetNuke.Services.Localization;
     using Engage.Events;
     using ModuleBase = Events.ModuleBase;
     using Utility = Dnn.Utility;
@@ -26,90 +28,18 @@ namespace Engage.Dnn.Events.Display
     public partial class EventToolTip : ModuleBase
     {
         /// <summary>
-        /// The backing field for <see cref="SetEventId"/>.
+        /// The backing field for <see cref="SetEvent"/>.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int currentEventId;
+        private Event currentEvent;
 
         /// <summary>
-        /// The backing field for <see cref="EventStartDate"/>.
+        /// Sets the event to be displayed in the event tooltip.
         /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string eventStartDate;
-
-        /// <summary>
-        /// The backing field for <see cref="EventEndDate"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string eventEndDate;
-
-        /// <summary>
-        /// The backing field for <see cref="Overview"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string overview;
-
-        /// <summary>
-        /// The backing field for <see cref="Title"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string title;
-
-        /// <summary>
-        /// Gets or sets the event start date to be displayed in the event tooltip.
-        /// </summary>
-        /// <value>The event start date to be displayed in the event tooltip.</value>
-        public string EventStartDate
+        /// <param name="tooltipEvent">The event to display in the tooltip.</param>
+        public void SetEvent(Event tooltipEvent)
         {
-            [DebuggerStepThrough]
-            get { return this.eventStartDate; }
-            [DebuggerStepThrough]
-            set { this.eventStartDate = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the event end date to be displayed in the event tooltip.
-        /// </summary>
-        /// <value>The event end date to be displayed in the event tooltip.</value>
-        public string EventEndDate
-        {
-            [DebuggerStepThrough]
-            get { return this.eventEndDate; }
-            [DebuggerStepThrough]
-            set { this.eventEndDate = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the overview to be displayed in the event tooltip.
-        /// </summary>
-        /// <value>The overview to be displayed in the event tooltip.</value>
-        public string Overview
-        {
-            [DebuggerStepThrough]
-            get { return this.overview; }
-            [DebuggerStepThrough]
-            set { this.overview = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the title to be displayed in the event tooltip.
-        /// </summary>
-        /// <value>The title to be displayed in the event tooltip.</value>
-        public string Title
-        {
-            [DebuggerStepThrough]
-            get { return this.title; }
-            [DebuggerStepThrough]
-            set { this.title = value; }
-        }
-
-        /// <summary>
-        /// Sets the ID of the event to be displayed in the event tooltip.
-        /// </summary>
-        /// <param name="eventId">The event id.</param>
-        public void SetEventId(int eventId)
-        {
-            this.currentEventId = eventId;
+            this.currentEvent = tooltipEvent;
         }
 
         /// <summary>
@@ -125,7 +55,7 @@ namespace Engage.Dnn.Events.Display
             this.EditButton.Click += this.EditButton_Click;
 
             AJAX.RegisterPostBackControl(this.AddToCalendarButton);
-            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + "App_LocalResources/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
+            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
         }
 
         /// <summary>
@@ -134,19 +64,14 @@ namespace Engage.Dnn.Events.Display
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Page_PreRender(object sender, EventArgs e)
-        {            
-            string date = this.EventStartDate;
-            if (this.EventEndDate != null)
-            {
-                date += " - " + this.EventEndDate;
-            }
+        {
+            this.EventDate.Text = Dnn.Events.Utility.GetFormattedEventDate(this.currentEvent.EventStart, this.currentEvent.EventEnd);
+            this.EventOverview.Text = this.currentEvent.Overview;
+            this.EventTitle.Text = this.currentEvent.Title;
 
-            this.EventDate.Text = date;
-            this.EventOverview.Text = this.Overview;
-            this.EventTitle.Text = this.Title;
-
-            this.AddToCalendarButton.Visible = Engage.Utility.IsLoggedIn;
-            this.EditButton.Visible = IsAdmin;
+            ////this.AddToCalendarButton.Visible = Engage.Utility.IsLoggedIn;
+            this.RegisterButton.Visible = this.currentEvent.AllowRegistrations;
+            this.EditButton.Visible = this.IsAdmin;
         }
 
         /// <summary>
@@ -156,7 +81,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void RegisterButton_Click(object sender, EventArgs e)
         {
-            this.Response.Redirect(this.BuildLinkUrl(this.ModuleId, "Register", "eventid=" + this.currentEventId.ToString(CultureInfo.InvariantCulture)));
+            this.Response.Redirect(this.BuildLinkUrl(this.ModuleId, "Register", Dnn.Events.Utility.GetEventParameters(this.currentEvent)));
         }
 
         /// <summary>
@@ -166,8 +91,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void AddToCalendarButton_Click(object sender, EventArgs e)
         {
-            Event currentEvent = Event.Load(this.currentEventId);
-            SendICalendarToClient(this.Response, currentEvent.ToICal(this.UserInfo.Email, Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings)), currentEvent.Title);
+            SendICalendarToClient(this.Response, this.currentEvent.ToICal(this.UserInfo.Email, Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings)), this.currentEvent.Title);
         }
 
         /// <summary>
@@ -177,7 +101,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void EditButton_Click(object sender, EventArgs e)
         {
-            this.Response.Redirect(this.BuildLinkUrl(this.ModuleId, "EventEdit", "eventId=" + this.currentEventId.ToString(CultureInfo.InvariantCulture)), true);
+            this.Response.Redirect(this.BuildLinkUrl(this.ModuleId, "EventEdit", Dnn.Events.Utility.GetEventParameters(this.currentEvent)), true);
         }
     }
 }

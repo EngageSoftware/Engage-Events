@@ -14,7 +14,6 @@ namespace Engage.Dnn.Events
     using System;
     using System.Web;
     using DotNetNuke.Common;
-    using Utility = Engage.Utility;
 
     /// <summary>
     /// The code-behind for the <c>Register.ascx</c> control, which allows the user to specify whether they are or are not attending an event.
@@ -40,7 +39,7 @@ namespace Engage.Dnn.Events
         {
             if (Engage.Utility.IsLoggedIn)
             {
-                this.Response.Redirect(this.RsvpUrl, true);
+                this.Response.Redirect(this.ResponseUrl, true);
             }
 
             this.SetupLinks();

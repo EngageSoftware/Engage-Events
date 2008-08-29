@@ -13,11 +13,9 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.IO;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Services.Exceptions;
-    using Utility = Engage.Utility;
 
     /// <summary>
     /// The main container that is used by the Engage: Events module.  
@@ -53,9 +51,9 @@ namespace Engage.Dnn.Events
             keyDictionary.Add("EventEdit", "EventEdit.ascx");
             keyDictionary.Add("EventListing", "Display/EventListingTemplate.ascx");
             keyDictionary.Add("EventListingAdmin", "Display/EventListingAdmin.ascx");
-            keyDictionary.Add("RsvpSummary", "RsvpSummary.ascx");
-            keyDictionary.Add("RsvpDetail", "RsvpDetail.ascx");
-            keyDictionary.Add("Rsvp", "Rsvp.ascx");
+            keyDictionary.Add("ResponseSummary", "ResponseSummaryDisplay.ascx");
+            keyDictionary.Add("ResponseDetail", "ResponseDetail.ascx");
+            keyDictionary.Add("Response", "Respond.ascx");
             keyDictionary.Add("EmailAFriend", "EmailAFriend.ascx");
             keyDictionary.Add("Register", "Register.ascx");
             keyDictionary.Add("EventDetail", "Display/EventDetail.ascx");

@@ -95,12 +95,7 @@ namespace Engage.Dnn.Events
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Button_Click(object sender, EventArgs e)
-        {
-            ////string href =
-            ////    this.BuildLinkUrl(
-            ////        "&modId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture) + "&key=EventEdit&eventId="
-            ////        + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture));
-            
+        {            
             this.Response.Redirect(this.href, true);
         }
     }

@@ -21,13 +21,17 @@ namespace Engage.Dnn.Events.Display
     using Engage.Events;
     using Framework.Templating;
     using Templating;
-    using Utility = Engage.Utility;
 
     /// <summary>
     /// Custom event listing item
     /// </summary>
     public partial class EventListingItem : RepeaterItemListing
     {
+        /// <summary>
+        /// Relative path to the folder where the action controls are located in this module
+        /// </summary>
+        private static readonly string ActionsControlsFolder = "~" + DesktopModuleFolderName + "Actions/";
+
         /// <summary>
         /// Backing field for <see cref="SortAction"/>
         /// </summary>
@@ -46,7 +50,10 @@ namespace Engage.Dnn.Events.Display
         /// <summary>
         /// The collection of events to display
         /// </summary>
-        private EventCollection events; // keep a reference around of the data that you have loaded
+        /// <remarks>
+        /// keep a reference around of the data that you have loaded
+        /// </remarks>
+        private EventCollection events;
 
         /// <summary>
         /// Gets the listing mode used for this display.
@@ -208,85 +215,85 @@ namespace Engage.Dnn.Events.Display
         /// <param name="resourceFile">The resource file name.</param>
         protected override void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)
         {
-            Event ev = (Event)engageObject;
+            Event currentEvent = (Event)engageObject;
 
             if (tag.TagType == TagType.Open)
             {
+                resourceFile = "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions";
                 switch (tag.LocalName.ToUpperInvariant())
                 {
                     case "EDITEVENTBUTTON":
-                        ButtonAction editEventAction = (ButtonAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
-                        editEventAction.CurrentEvent = ev;
+                        ButtonAction editEventAction = (ButtonAction)this.LoadControl(ActionsControlsFolder + "ButtonAction.ascx");
+                        editEventAction.CurrentEvent = currentEvent;
                         editEventAction.ModuleConfiguration = this.ModuleConfiguration;
-                        editEventAction.Href = this.BuildLinkUrl(this.ModuleId, "EventEdit", "eventId=" + ev.Id.ToString(CultureInfo.InvariantCulture));
+                        editEventAction.Href = this.BuildLinkUrl(this.ModuleId, "EventEdit", Dnn.Events.Utility.GetEventParameters(currentEvent));
                         editEventAction.Text = Localization.GetString(
-                            "EditEventButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
+                            "EditEventButton", resourceFile);
                         container.Controls.Add(editEventAction);
                         editEventAction.Visible = this.IsAdmin;
                         break;
                     case "VIEWRESPONSESBUTTON":
-                        ButtonAction responsesEventAction = (ButtonAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
-                        responsesEventAction.CurrentEvent = ev;
+                        ButtonAction responsesEventAction = (ButtonAction)this.LoadControl(ActionsControlsFolder + "ButtonAction.ascx");
+                        responsesEventAction.CurrentEvent = currentEvent;
                         responsesEventAction.ModuleConfiguration = this.ModuleConfiguration;
-                        responsesEventAction.Href = this.BuildLinkUrl(this.ModuleId, "RsvpDetail", "eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
+                        responsesEventAction.Href = this.BuildLinkUrl(this.ModuleId, "ResponseDetail", Dnn.Events.Utility.GetEventParameters(currentEvent));
                         responsesEventAction.Text = Localization.GetString(
-                            "ResponsesButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
+                            "ResponsesButton", resourceFile);
                         container.Controls.Add(responsesEventAction);
                         responsesEventAction.Visible = this.IsAdmin;
                         break;
                     case "REGISTERBUTTON":
-                        ButtonAction registerEventAction = (ButtonAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
-                        registerEventAction.CurrentEvent = ev;
+                        ButtonAction registerEventAction = (ButtonAction)this.LoadControl(ActionsControlsFolder + "ButtonAction.ascx");
+                        registerEventAction.CurrentEvent = currentEvent;
                         registerEventAction.ModuleConfiguration = this.ModuleConfiguration;
-                        registerEventAction.Href = this.BuildLinkUrl(this.ModuleId, "Register", "eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
-                        registerEventAction.Text = Localization.GetString(
-                            "RegisterButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
+                        registerEventAction.Href = this.BuildLinkUrl(this.ModuleId, "Register", Dnn.Events.Utility.GetEventParameters(currentEvent));
+                        registerEventAction.Text = Localization.GetString("RegisterButton", resourceFile);
                         container.Controls.Add(registerEventAction);
 
                         // to register must be an event that allows registrations, be active, and have not ended
-                        registerEventAction.Visible = ev.AllowRegistrations && !ev.Cancelled && ev.EventEnd > DateTime.Now;
+                        registerEventAction.Visible = currentEvent.AllowRegistrations && !currentEvent.Cancelled && currentEvent.EventEnd > DateTime.Now;
 
                         break;
                     case "ADDTOCALENDARBUTTON":
                         AddToCalendarAction addToCalendarAction =
-                            (AddToCalendarAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/AddToCalendarAction.ascx");
-                        addToCalendarAction.CurrentEvent = ev;
+                            (AddToCalendarAction)this.LoadControl(ActionsControlsFolder + "AddToCalendarAction.ascx");
+                        addToCalendarAction.CurrentEvent = currentEvent;
                         addToCalendarAction.ModuleConfiguration = this.ModuleConfiguration;
 
                         // must be an active event and has not ended
-                        addToCalendarAction.Visible = ev.Cancelled == false && ev.EventEnd > DateTime.Now;
+                        addToCalendarAction.Visible = !currentEvent.Cancelled && currentEvent.EventEnd > DateTime.Now;
                         container.Controls.Add(addToCalendarAction);
                         break;
                     case "DELETEBUTTON":
-                        DeleteAction deleteAction = (DeleteAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/DeleteAction.ascx");
-                        deleteAction.CurrentEvent = ev;
+                        DeleteAction deleteAction = (DeleteAction)this.LoadControl(ActionsControlsFolder + "DeleteAction.ascx");
+                        deleteAction.CurrentEvent = currentEvent;
                         deleteAction.ModuleConfiguration = this.ModuleConfiguration;
                         container.Controls.Add(deleteAction);
                         break;
                     case "CANCELBUTTON":
-                        CancelAction cancelAction = (CancelAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/CancelAction.ascx");
-                        cancelAction.CurrentEvent = ev;
+                        CancelAction cancelAction = (CancelAction)this.LoadControl(ActionsControlsFolder + "CancelAction.ascx");
+                        cancelAction.CurrentEvent = currentEvent;
                         cancelAction.ModuleConfiguration = this.ModuleConfiguration;
                         container.Controls.Add(cancelAction);
                         break;
                     case "EDITEMAILBUTTON":
-                        ButtonAction editEmailAction = (ButtonAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/ButtonAction.ascx");
-                        editEmailAction.CurrentEvent = ev;
+                        ButtonAction editEmailAction = (ButtonAction)this.LoadControl(ActionsControlsFolder + "ButtonAction.ascx");
+                        editEmailAction.CurrentEvent = currentEvent;
                         editEmailAction.ModuleConfiguration = this.ModuleConfiguration;
-                        editEmailAction.Href = this.BuildLinkUrl(this.ModuleId, "EmailEdit", "eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
+                        editEmailAction.Href = this.BuildLinkUrl(this.ModuleId, "EmailEdit", Dnn.Events.Utility.GetEventParameters(currentEvent));
                         editEmailAction.Text = Localization.GetString(
-                            "EditEmailButton", "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions");
+                            "EditEmailButton", resourceFile);
                         container.Controls.Add(editEmailAction);
                         editEmailAction.Visible = this.IsAdmin;
                         break;
                     case "SORTEVENTBYDATE":
-                        this.sortAction = (SortAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/SortAction.ascx");
+                        this.sortAction = (SortAction)this.LoadControl(ActionsControlsFolder + "SortAction.ascx");
                         this.sortAction.ModuleConfiguration = this.ModuleConfiguration;
                         this.sortAction.SortChanged += this.SortStatusAction_SortChanged;
                         container.Controls.Add(this.sortAction);
                         break;
                     case "SORTEVENTBYSTATUS":
-                        this.sortStatusAction = (SortStatusAction)this.LoadControl("~" + DesktopModuleFolderName + "Actions/SortStatusAction.ascx");
+                        this.sortStatusAction = (SortStatusAction)this.LoadControl(ActionsControlsFolder + "SortStatusAction.ascx");
                         this.sortStatusAction.ModuleConfiguration = this.ModuleConfiguration;
                         this.sortStatusAction.SortChanged += this.SortStatusAction_SortChanged;
                         container.Controls.Add(this.sortStatusAction);
@@ -343,7 +350,7 @@ namespace Engage.Dnn.Events.Display
                         container.Controls.Add(this.PageCountLabel);
                         break;
                     case "READMORE":
-                        if (Utility.HasValue(ev.Description))
+                        if (Engage.Utility.HasValue(currentEvent.Description))
                         {
                             HyperLink detailLink = new HyperLink();
                             detailLink.Text = Localization.GetString(tag.GetAttributeValue("ResourceKey"), this.LocalResourceFile);
@@ -353,23 +360,23 @@ namespace Engage.Dnn.Events.Display
                             }
 
                             detailLink.CssClass = tag.GetAttributeValue("CssClass");
-                            detailLink.NavigateUrl = this.BuildLinkUrl(this.ModuleId, "EventDetail", "eventid=" + ev.Id.ToString(CultureInfo.InvariantCulture));
+                            detailLink.NavigateUrl = this.BuildLinkUrl(this.ModuleId, "EventDetail", Dnn.Events.Utility.GetEventParameters(currentEvent));
 
                             container.Controls.Add(detailLink);
                         }
 
                         break;
                     case "RECURRENCESUMMARY":
-                        container.Controls.Add(new LiteralControl(Dnn.Events.Utility.GetRecurrenceSummary(ev.RecurrenceRule)));
+                        container.Controls.Add(new LiteralControl(Dnn.Events.Utility.GetRecurrenceSummary(currentEvent.RecurrenceRule)));
                         break;
                     case "EVENTWRAPPER":
                         StringBuilder cssClass = new StringBuilder(tag.GetAttributeValue("CssClass"));
-                        if (ev.IsRecurring)
+                        if (currentEvent.IsRecurring)
                         {
                             AppendCssClassAttribute(tag, cssClass, "RecurringEventCssClass");
                         }
 
-                        if (ev.IsFeatured)
+                        if (currentEvent.IsFeatured)
                         {
                             AppendCssClassAttribute(tag, cssClass, "FeaturedEventCssClass");
                         }

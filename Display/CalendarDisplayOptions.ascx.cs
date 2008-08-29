@@ -25,17 +25,17 @@ namespace Engage.Dnn.Events
         /// Gets or sets which Skin to use for the calendar display.
         /// </summary>
         /// <value>The Skin to use for the calendar display</value>
-        internal string SkinOption
+        internal TelerikSkin SkinOption
         {
             set
             {
                 ModuleController modules = new ModuleController();
-                modules.UpdateTabModuleSetting(this.TabModuleId, Setting.SkinSelection.PropertyName, value);
+                modules.UpdateTabModuleSetting(this.TabModuleId, Setting.SkinSelection.PropertyName, value.ToString());
             }
 
             get
             {
-                return Dnn.Utility.GetStringSetting(this.Settings, Setting.SkinSelection.PropertyName);
+                return Dnn.Utility.GetEnumSetting(this.Settings, Setting.SkinSelection.PropertyName, TelerikSkin.Default);
             }
         }
 
@@ -46,21 +46,10 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                this.SkinDropDownList.Items.Clear();
-                this.SkinDropDownList.Items.Add(new ListItem("Black"));
-                this.SkinDropDownList.Items.Add(new ListItem("WebBlue"));
-                this.SkinDropDownList.Items.Add(new ListItem("Default"));
-                this.SkinDropDownList.Items.Add(new ListItem("Hay"));
-                this.SkinDropDownList.Items.Add(new ListItem("Inox"));
-                this.SkinDropDownList.Items.Add(new ListItem("Office2007"));
-                this.SkinDropDownList.Items.Add(new ListItem("Mac"));
-                this.SkinDropDownList.Items.Add(new ListItem("Outlook"));
-                this.SkinDropDownList.Items.Add(new ListItem("Telerik"));
-                this.SkinDropDownList.Items.Add(new ListItem("Sunset"));
-                this.SkinDropDownList.Items.Add(new ListItem("Vista"));
-                this.SkinDropDownList.Items.Add(new ListItem("Web20"));
-
-                ListItem li = this.SkinDropDownList.Items.FindByValue(this.SkinOption);
+                this.SkinDropDownList.DataSource = Enum.GetNames(typeof(TelerikSkin));
+                this.SkinDropDownList.DataBind();
+                
+                ListItem li = this.SkinDropDownList.Items.FindByValue(this.SkinOption.ToString());
                 if (li != null)
                 {
                     li.Selected = true;
@@ -81,7 +70,7 @@ namespace Engage.Dnn.Events
 
             if (this.Page.IsValid)
             {
-                this.SkinOption = this.SkinDropDownList.SelectedValue;
+                this.SkinOption = (TelerikSkin)Enum.Parse(typeof(TelerikSkin), this.SkinDropDownList.SelectedValue);
             }
         }
     }

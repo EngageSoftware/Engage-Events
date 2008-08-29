@@ -1,0 +1,386 @@
+﻿IF EXISTS (SELECT * FROM dbo.syscolumns where id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Event]') and name = 'CanRsvp')
+EXECUTE sp_rename N'{databaseOwner}{objectQualifier}Engage_Event.CanRsvp', N'AllowRegistrations', 'COLUMN' 
+GO
+IF EXISTS (SELECT * FROM dbo.syscolumns where id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Rsvp]') and name = 'RsvpId')
+EXECUTE sp_rename N'{databaseOwner}{objectQualifier}Engage_Rsvp.RsvpId', N'ResponseId', 'COLUMN' 
+GO
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}Engage_Rsvp]') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+EXECUTE sp_rename N'{databaseOwner}{objectQualifier}Engage_Rsvp', N'{objectQualifier}Engage_Response'
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spUpdateRsvp]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROC {databaseOwner}[{objectQualifier}Engage_spUpdateRsvp]
+GO
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertRsvp]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROC {databaseOwner}[{objectQualifier}Engage_spInsertRsvp]
+GO
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetRsvpSummary]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROC {databaseOwner}[{objectQualifier}Engage_spGetRsvpSummary]
+GO
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetRsvpSummaries]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROC {databaseOwner}[{objectQualifier}Engage_spGetRsvpSummaries]
+GO
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetRsvps]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROC {databaseOwner}[{objectQualifier}Engage_spGetRsvps]
+GO
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetRsvpByEmail]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROC {databaseOwner}[{objectQualifier}Engage_spGetRsvpByEmail]
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}FK_Engage_Event_Engage_Rsvp]') AND type = 'F')
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Response] DROP CONSTRAINT [{objectQualifier}FK_Engage_Event_Engage_Rsvp]
+GO
+IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}FK_Engage_Event_Engage_Response]') AND type = 'F')
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Response]  WITH CHECK ADD  CONSTRAINT [{objectQualifier}FK_Engage_Event_Engage_Response] FOREIGN KEY([EventId])
+REFERENCES {databaseOwner}[{objectQualifier}Engage_Event] ([EventId])
+GO
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}FK_Engage_Event_Engage_Response]') AND type = 'F')
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Response] CHECK CONSTRAINT [{objectQualifier}FK_Engage_Event_Engage_Response]
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysindexes WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Response]') AND name = N'{objectQualifier}PK_Engage_Rsvp')
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Response] DROP CONSTRAINT [{objectQualifier}PK_Engage_Rsvp]
+GO
+IF NOT EXISTS (SELECT * FROM dbo.sysindexes WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Response]') AND name = N'{objectQualifier}PK_Engage_Response')
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Response] ADD  CONSTRAINT [{objectQualifier}PK_Engage_Response] PRIMARY KEY CLUSTERED 
+(
+	[ResponseId] ASC
+) ON [PRIMARY]
+GO
+
+IF NOT EXISTS (SELECT * FROM dbo.syscolumns where id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Response]') and name = 'EventStart')
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Response] ADD EventStart DateTime NULL
+GO
+
+UPDATE {databaseOwner}[{objectQualifier}Engage_Response]
+SET EventStart = e.EventStart
+FROM {databaseOwner}[{objectQualifier}Engage_Response] r
+ JOIN {databaseOwner}[{objectQualifier}Engage_Event] e on (r.EventId = e.EventId)
+WHERE r.EventStart IS NULL
+GO
+
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Response] ALTER COLUMN EventStart DateTime NOT NULL
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetResponses]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spGetResponses]
+GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetResponses]
+(
+@EventId int,
+@Status nvarchar(100),
+@sortColumn nvarchar(200), 
+@index int, 
+@pageSize int
+)
+AS
+BEGIN
+
+	Create table #results 
+	(
+		[Id] int not null IDENTITY(1,1),
+		[ResponseId] [int]
+	)
+	
+	declare @sql varchar(8000)
+
+	set @sql = 'insert into #results ([ResponseId]) '
+	set @sql = @sql + 'Select [ResponseId] '
+	set @sql = @sql + 'from '
+	set @sql = @sql + '{databaseOwner}[{objectQualifier}Engage_Response] '
+	set @sql = @sql + 'Where EventId = ' + STR(@EventId)
+	if (@Status != '')
+	begin
+		set @sql = @sql + ' and Status = ''' + @Status + ''''
+	end
+	set @sql = @sql + ' Order by ' + @sortColumn
+
+	--print (@sql)
+	exec (@sql)
+
+	select @@RowCount as TotalRecords
+
+	if (@PageSize = 0)
+	 	BEGIN
+	 		select e.* from #results r
+			join {databaseOwner}[{objectQualifier}Engage_Response] e on (r.ResponseId = e.ResponseId)
+	 	END
+	ELSE
+	 	BEGIN
+	 		select e.* from #results r
+			join {databaseOwner}[{objectQualifier}Engage_Response] e on (r.ResponseId = e.ResponseId)
+	 		where (id >= @index * @PageSize + 1) and id < (@index * @PageSize) + @PageSize + 1
+	 	END
+	
+END
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetResponseSummaries]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROC {databaseOwner}[{objectQualifier}Engage_spGetResponseSummaries]
+GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetResponseSummaries]  
+(  
+@PortalId int,  
+@sortColumn nvarchar(200),   
+@index int,   
+@pageSize int  
+)  
+AS  
+BEGIN  
+  
+ Create table #results   
+ (  
+  [Id] int not null IDENTITY(1,1),  
+  [EventId] int,  
+  [EventStart] datetime,
+  [Title] [nvarchar] (100),  
+  [Attending] int,  
+  [NotAttending] int,  
+  [NoResponse] int
+ )  
+  
+  
+ declare @sql varchar(8000)  
+ declare @Attending nvarchar(20), @NotAttending nvarchar(20), @NoResponse nvarchar(20)  
+ select @Attending = 'Attending'  
+ select @NotAttending = 'NotAttending'  
+ select @NoResponse = 'NoResponse' 
+ 
+ if @sortColumn = 'EventStart' 
+ BEGIN
+	SET @sortColumn = 'COALESCE(r.EventStart, e.EventStart)'
+ END 
+  
+ set @sql = 'insert into #results ([EventId], [EventStart], [Title], [Attending], [NotAttending], [NoResponse]) '  
+ set @sql = @sql + 'Select distinct e.EventId, COALESCE(r.EventStart, e.EventStart), e.Title, '  
+ set @sql = @sql + '(Select Count(*) from [{objectQualifier}Engage_Response] where EventId = e.EventId and EventStart = r.EventStart and Status = ''' + @Attending + ''' ), '  
+ set @sql = @sql + '(Select Count(*) from [{objectQualifier}Engage_Response] where EventId = e.EventId and EventStart = r.EventStart and Status = ''' + @NotAttending + '''), '  
+ set @sql = @sql + '(Select Count(*) from [{objectQualifier}Engage_Response] where EventId = e.EventId and EventStart = r.EventStart and Status = ''' + @NoResponse + ''') '  
+ set @sql = @sql + ' FROM {databaseOwner}[{objectQualifier}Engage_Event] e '  
+ set @sql = @sql + ' LEFT JOIN {databaseOwner}[{objectQualifier}Engage_Response] r ON (r.EventID = e.EventId) '  
+ set @sql = @sql + ' WHERE e.PortalId = ' + str(@PortalId)  
+ set @sql = @sql + ' Order by ' + @sortColumn  
+  
+ --print (@sql)  
+ exec (@sql)  
+  
+ SELECT @@RowCount AS TotalRecords
+  
+ if (@PageSize = 0)  
+   BEGIN  
+    select * from #results
+   END  
+ ELSE  
+   BEGIN  
+    select * from #results  
+    where (id >= @index * @PageSize + 1) and id < (@index * @PageSize) + @PageSize + 1  
+   END  
+END  
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetResponseSummary]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROC {databaseOwner}[{objectQualifier}Engage_spGetResponseSummary]
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetResponseSummary]  
+(  
+@EventId int,
+@EventStart datetime
+)  
+AS  
+BEGIN  
+  
+ declare @Attending nvarchar(20), @NotAttending nvarchar(20), @NoResponse nvarchar(20)  
+ select @Attending = 'Attending'  
+ select @NotAttending = 'NotAttending'  
+ select @NoResponse = 'NoResponse'  
+  
+Select distinct e.EventId, r.EventStart, 
+	(Select Count(*) from [{objectQualifier}Engage_Response] where EventId = e.EventId and EventStart = r.EventStart and Status = @Attending) AS Attending, 
+	(Select Count(*) from [{objectQualifier}Engage_Response] where EventId = e.EventId and EventStart = r.EventStart and Status = @NotAttending) AS NotAttending, 
+	(Select Count(*) from [{objectQualifier}Engage_Response] where EventId = e.EventId and EventStart = r.EventStart and Status = @NoResponse) AS NoResponse 
+FROM {databaseOwner}[{objectQualifier}Engage_Event] e 
+ JOIN {databaseOwner}[{objectQualifier}Engage_Response] r ON (r.EventID = e.EventId) 
+WHERE e.EventId = @EventId
+ AND r.EventStart = @EventStart
+
+END  
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetResponseByEmail]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spGetResponseByEmail]
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetResponseByEmail] 
+(
+@EventId int,
+@EventStart datetime,
+@Email nvarchar(100)
+)
+AS
+BEGIN
+
+	SELECT * 
+	FROM {databaseOwner}[{objectQualifier}Engage_Response]
+	WHERE EventId = @EventId
+	 AND Email = @Email
+	 AND EventStart = @EventStart
+	
+END
+
+GO
+
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertResponse]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertResponse]
+
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertResponse] 
+(
+@EventId int,
+@EventStart datetime,
+@FirstName nvarchar(100),
+@LastName nvarchar(100),
+@Email nvarchar(100),
+@Status nvarchar(20),
+@RevisingUser int
+)
+AS
+BEGIN
+	
+	INSERT INTO {databaseOwner}[{objectQualifier}Engage_Response] ([EventId], [EventStart], [FirstName], [LastName], [Email], [Status], [Createdby], [RevisingUser])
+	VALUES (@EventId, @EventStart, @FirstName, @LastName, @Email, @Status, @RevisingUser, @RevisingUser)
+END
+
+SELECT @@IDENTITY
+
+GO
+
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_spUpdateResponse]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE {databaseOwner}[{objectQualifier}Engage_spUpdateResponse]
+GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spUpdateResponse] 
+(
+@ResponseId int,
+@FirstName nvarchar(100),
+@LastName nvarchar(100),
+@Email nvarchar(100),
+@Status nvarchar(20),
+@RevisingUser int
+)
+AS
+BEGIN
+	
+	UPDATE {databaseOwner}[{objectQualifier}Engage_Response] 
+		SET [FirstName] = @FirstName, 
+		[LastName] =@LastName, 
+		[Email] = @Email, 
+		[Status] = @Status, 
+		[Createdby] = @RevisingUser, 
+		[RevisingUser] = @RevisingUser
+	WHERE ResponseId = @ResponseId
+END
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_spInsertEvent]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertEvent]
+GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertEvent] 
+(
+@PortalId int,
+@ModuleId int,
+@Title nvarchar(500),
+@Overview ntext,
+@Description nText,
+@EventStart DateTime,
+@EventEnd DateTime,
+@Organizer nvarchar(100),
+@OrganizerEmail nvarchar(100),
+@Location nvarchar(1000),
+@LocationUrl nvarchar(1000),
+@InvitationUrl nvarchar(1000),
+@RecapUrl nvarchar(1000),
+@RecurrenceRule nvarchar(256),
+@RecurrenceParentId int,
+@AllowRegistrations int,
+@IsFeatured bit,
+@CreatedBy int,
+@FinalRecurringEndDate datetime,
+@IsDeleted bit = 0
+)
+AS
+BEGIN
+	
+	Insert into {databaseOwner}[{objectQualifier}Engage_Event] 
+	(
+		[PortalId], [ModuleId], [Title], [Overview], [Description], [EventStart], [EventEnd], [Organizer], [OrganizerEmail],
+		[Location], [LocationUrl], [InvitationUrl], [RecapUrl], [RecurrenceRule], [AllowRegistrations], [IsFeatured], [CreatedBy], 
+		[RevisingUser], [FinalRecurringEndDate], [IsDeleted], [RecurrenceParentId]
+	)
+	Values
+	(
+		@PortalId, @ModuleId, @Title, @Overview, @Description, @EventStart, @EventEnd, @Organizer, @OrganizerEmail,
+		@Location, @LocationUrl, @InvitationUrl,  @RecapUrl, @RecurrenceRule, @AllowRegistrations, @IsFeatured, @CreatedBy, 
+		@CreatedBy, @FinalRecurringEndDate, @IsDeleted, @RecurrenceParentId
+	)
+
+	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_spUpdateEvent]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE {databaseOwner}[{objectQualifier}Engage_spUpdateEvent]
+GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spUpdateEvent] 
+(
+@EventId int,
+@Title nvarchar(500),
+@Overview ntext,
+@EventStart DateTime,
+@EventEnd DateTime,
+@Organizer nvarchar(100),
+@Description nText,
+@OrganizerEmail nvarchar(100),
+@Location nvarchar(1000),
+@LocationUrl nvarchar(1000),
+@InvitationUrl nvarchar(1000),
+@RecapUrl nvarchar(1000),
+@RecurrenceRule nvarchar(256),
+@RecurrenceParentId int,
+@AllowRegistrations bit,
+@Cancelled bit,
+@IsFeatured bit,
+@RevisingUser int,
+@FinalRecurringEndDate datetime,
+@IsDeleted bit
+)
+AS
+BEGIN
+
+	UPDATE {databaseOwner}[{objectQualifier}Engage_Event] 
+	SET [Title] = @Title, 
+		[Overview] = @Overview, 
+		[Description] = @Description,
+		[EventStart] = @EventStart, 
+		[EventEnd] = @EventEnd, 
+		[Organizer] = @Organizer, 
+		[OrganizerEmail] = @OrganizerEmail,
+		[Location] = @Location, 
+		[LocationUrl] = @LocationUrl, 
+		[InvitationUrl] = @InvitationUrl, 
+		[RecapUrl] = @RecapUrl, 
+		[RecurrenceRule] = @RecurrenceRule,
+		[RecurrenceParentId] = @RecurrenceParentId, 
+		[AllowRegistrations] = @AllowRegistrations, 
+		[Cancelled]  = @Cancelled,
+		[IsFeatured] = @IsFeatured,
+		[RevisingUser] = @RevisingUser, 
+		[RevisionDate] = GETDATE(),
+		[FinalRecurringEndDate] = @FinalRecurringEndDate,
+		[IsDeleted] = IsDeleted
+	WHERE EventId = @EventId
+END
+GO
+

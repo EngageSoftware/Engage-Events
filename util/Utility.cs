@@ -18,6 +18,7 @@ namespace Engage.Dnn.Events
     using System.Web.Hosting;
     using DotNetNuke.Common;
     using DotNetNuke.Services.Localization;
+    using Engage.Events;
     using Telerik.Web.UI;
 
     /// <summary>
@@ -102,6 +103,72 @@ namespace Engage.Dnn.Events
         public static bool IsValidEmailAddress(string emailAddress)
         {
             return Engage.Utility.ValidateEmailAddress(emailAddress);
+        }
+
+        /// <summary>
+        /// Gets <c>QueryString</c> parameter(s) that represent an instance of an <see cref="Event"/>.
+        /// </summary>
+        /// <param name="selectedEvent">The <see cref="Event"/> to represent.</param>
+        /// <returns>A list of <c>QueryString</c> parameters that represent <paramref name="selectedEvent"/></returns>
+        public static string[] GetEventParameters(Event selectedEvent)
+        {
+            return GetEventParameters(selectedEvent.Id, selectedEvent.EventStart);
+        }
+
+        /// <summary>
+        /// Gets <c>QueryString</c> parameter(s) that represent the given event information
+        /// </summary>
+        /// <param name="eventId">The event id.</param>
+        /// <param name="eventStart">The date and time at which this occurrence starts.</param>
+        /// <returns>A list of <c>QueryString</c> parameters that represent the given event information</returns>
+        public static string[] GetEventParameters(int eventId, DateTime eventStart)
+        {
+            return GetEventParameters(eventId, eventStart, new string[0]);
+        }
+
+        /// <summary>
+        /// Gets <c>QueryString</c> parameter(s) that represent the given event information
+        /// </summary>
+        /// <param name="eventId">The event id.</param>
+        /// <param name="eventStart">The date and time at which this occurrence starts.</param>
+        /// <param name="additionalParameters">Any other querystring parameters.</param>
+        /// <returns>A list of <c>QueryString</c> parameters that represent the given event information</returns>
+        public static string[] GetEventParameters(int eventId, DateTime eventStart, params string[] additionalParameters)
+        {
+            Array.Resize(ref additionalParameters, additionalParameters.Length + 2);
+            additionalParameters[additionalParameters.Length - 1] = "eventid=" + eventId.ToString(CultureInfo.InvariantCulture);
+            additionalParameters[additionalParameters.Length - 2] = "start=" + eventStart.Ticks.ToString(CultureInfo.InvariantCulture);
+
+            return additionalParameters;
+        }
+
+        /// <summary>
+        /// Gets the formatted date string for this event.
+        /// </summary>
+        /// <param name="startDate">The event's start date.</param>
+        /// <param name="endDate">The event's end date.</param>
+        /// <returns>A formatted string representing the timespan over which this event occurs.</returns>
+        public static string GetFormattedEventDate(DateTime startDate, DateTime endDate)
+        {
+            string timespanResourceKey;
+            if (startDate.Year != endDate.Year)
+            {
+                timespanResourceKey = "TimespanDifferentYear.Text";
+            }
+            else if (startDate.Month != endDate.Month)
+            {
+                timespanResourceKey = "TimespanDifferentMonth.Text";
+            }
+            else if (startDate.Day != endDate.Day)
+            {
+                timespanResourceKey = "TimespanDifferentDay.Text";
+            }
+            else
+            {
+                timespanResourceKey = "Timespan.Text";
+            }
+
+            return string.Format(CultureInfo.CurrentCulture, Localization.GetString(timespanResourceKey, ModuleBase.LocalSharedResourceFile), startDate, endDate);
         }
 
         /// <summary>

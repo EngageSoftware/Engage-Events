@@ -63,7 +63,7 @@
     <Reference Include="Engage.Routingv3.0, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Engage.Servicesv3.0, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Engage.Templating, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Engage.Utilityv3.0, Version=3.0.0.16373, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Engage.Utilityv3.0, Version=3.0.0.25028, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral">
       <HintPath>..\..\bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
@@ -193,6 +193,7 @@
     <Compile Include="Display\EventDetail.ascx.designer.cs">
       <DependentUpon>EventDetail.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Util\TelerikSkin.cs" />
     <Compile Include="Display\TemplateDisplayOptions.ascx.cs">
       <DependentUpon>TemplateDisplayOptions.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -221,12 +222,12 @@
     <Compile Include="Display\EventListingItem.ascx.designer.cs">
       <DependentUpon>EventListingItem.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Display\RsvpDisplay.ascx.cs">
-      <DependentUpon>RsvpDisplay.ascx</DependentUpon>
+    <Compile Include="Display\ResponseDisplay.ascx.cs">
+      <DependentUpon>ResponseDisplay.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Display\RsvpDisplay.ascx.designer.cs">
-      <DependentUpon>RsvpDisplay.ascx</DependentUpon>
+    <Compile Include="Display\ResponseDisplay.ascx.designer.cs">
+      <DependentUpon>ResponseDisplay.ascx</DependentUpon>
     </Compile>
     <Compile Include="Display\EventToolTip.ascx.cs">
       <DependentUpon>EventToolTip.ascx</DependentUpon>
@@ -284,12 +285,12 @@
     <Compile Include="EmailAFriend.ascx.designer.cs">
       <DependentUpon>EmailAFriend.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Rsvp.ascx.cs">
-      <DependentUpon>Rsvp.ascx</DependentUpon>
+    <Compile Include="Respond.ascx.cs">
+      <DependentUpon>Respond.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Rsvp.ascx.designer.cs">
-      <DependentUpon>Rsvp.ascx</DependentUpon>
+    <Compile Include="Respond.ascx.designer.cs">
+      <DependentUpon>Respond.ascx</DependentUpon>
     </Compile>
     <Compile Include="Display\EventListingAdmin.ascx.cs">
       <DependentUpon>EventListingAdmin.ascx</DependentUpon>
@@ -306,19 +307,19 @@
     <Compile Include="Util\Approval.ascx.designer.cs">
       <DependentUpon>Approval.ascx</DependentUpon>
     </Compile>
-    <Compile Include="RsvpDetail.ascx.cs">
-      <DependentUpon>RsvpDetail.ascx</DependentUpon>
+    <Compile Include="ResponseDetail.ascx.cs">
+      <DependentUpon>ResponseDetail.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="RsvpDetail.ascx.designer.cs">
-      <DependentUpon>RsvpDetail.ascx</DependentUpon>
+    <Compile Include="ResponseDetail.ascx.designer.cs">
+      <DependentUpon>ResponseDetail.ascx</DependentUpon>
     </Compile>
-    <Compile Include="RsvpSummary.ascx.cs">
-      <DependentUpon>RsvpSummary.ascx</DependentUpon>
+    <Compile Include="ResponseSummaryDisplay.ascx.cs">
+      <DependentUpon>ResponseSummaryDisplay.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="RsvpSummary.ascx.designer.cs">
-      <DependentUpon>RsvpSummary.ascx</DependentUpon>
+    <Compile Include="ResponseSummaryDisplay.ascx.designer.cs">
+      <DependentUpon>ResponseSummaryDisplay.ascx</DependentUpon>
     </Compile>
     <Compile Include="EmailEdit.ascx.cs">
       <DependentUpon>EmailEdit.ascx</DependentUpon>
@@ -358,12 +359,10 @@
     <None Include="Providers\DataProviders\SqlDataProvider\00.00.01.SqlDataProvider" />
     <None Include="Providers\DataProviders\SqlDataProvider\00.00.04.SqlDataProvider" />
     <None Include="Providers\DataProviders\SqlDataProvider\00.00.06.SqlDataProvider" />
+    <None Include="Providers\DataProviders\SqlDataProvider\01.00.00.SqlDataProvider" />
     <None Include="Uninstall.SqlDataProvider" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_LocalResources\RsvpListing.ascx.resx">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="App_LocalResources\EventDisplay.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
@@ -440,7 +439,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Util\Approval.ascx" />
-    <Content Include="RsvpSummary.ascx" />
+    <Content Include="ResponseSummaryDisplay.ascx" />
     <Content Include="EmailEdit.ascx" />
     <Content Include="EventEdit.ascx" />
     <Content Include="Samples\AttendingReminder.htm" />
@@ -451,7 +450,7 @@
     <Content Include="App_LocalResources\UserContainer.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="RsvpDetail.ascx" />
+    <Content Include="ResponseDetail.ascx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_LocalResources\Settings.ascx.resx">
@@ -461,7 +460,7 @@
     <Content Include="Images\noresponse.gif" />
     <Content Include="Images\vcalendar.png" />
     <Content Include="Images\yes.gif" />
-    <Content Include="Rsvp.ascx" />
+    <Content Include="Respond.ascx" />
     <Content Include="Display\EventListingAdmin.ascx" />
   </ItemGroup>
   <ItemGroup>
@@ -475,7 +474,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_LocalResources\Rsvp.ascx.resx">
+    <Content Include="App_LocalResources\Respond.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="EmailAFriend.ascx" />
@@ -553,7 +552,7 @@
     <Content Include="Images\save_disabled.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_LocalResources\RsvpSummary.ascx.resx">
+    <Content Include="App_LocalResources\ResponseSummaryDisplay.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Images\create_another_event.gif" />
@@ -565,7 +564,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_LocalResources\RsvpDetail.ascx.resx">
+    <Content Include="App_LocalResources\ResponseDetail.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
@@ -573,7 +572,7 @@
     <Content Include="App_LocalResources\Register.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Display\RsvpDisplay.ascx" />
+    <Content Include="Display\ResponseDisplay.ascx" />
     <Content Include="Images\cancel_go_home.gif" />
     <Content Include="Images\home.gif" />
     <Content Include="Images\home_disabled.gif" />
@@ -647,8 +646,10 @@
     <Content Include="References\Engage.Eventsv3.0.dll" />
     <Content Include="References\Engage.Frameworkv3.0.dll" />
     <Content Include="References\Engage.Licensing.dll" />
+    <Content Include="References\Engage.Licensing.XmlSerializers.dll" />
     <Content Include="References\Engage.Routingv3.0.dll" />
     <Content Include="References\Engage.Servicesv3.0.dll" />
+    <Content Include="References\Engage.Servicesv3.0.XmlSerializers.dll" />
     <Content Include="References\Engage.Templating.dll" />
     <Content Include="References\Engage.Utilityv3.0.dll" />
     <Content Include="References\Microsoft.ApplicationBlocks.Data.dll" />
