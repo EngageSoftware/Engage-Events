@@ -471,6 +471,7 @@ namespace Engage.Events
         {
             get { return this.RecurrenceRule != null; }
         }
+
         /// <summary>
         /// Gets <see cref="EventStart"/> with "short" formatting (M.dd.yyyy).
         /// </summary>
@@ -481,6 +482,7 @@ namespace Engage.Events
             [DebuggerStepThrough]
             get { return this.eventStart.ToString("M.dd.yyyy"); }
         }
+
         /// <summary>
         /// Gets <see cref="EventStart"/> with "long" formatting (dddd, MMMM d, yyyy, h:mm tt).
         /// </summary>
@@ -491,12 +493,13 @@ namespace Engage.Events
             [DebuggerStepThrough]
             get { return this.eventStart.ToString("dddd, MMMM d, yyyy, h:mm tt"); }
         }
+
         /// <summary>
         /// Gets the duration of this event.
         /// </summary>
         /// <value>The event's duration</value>
         [XmlIgnore]
-        private TimeSpan Duration
+        public TimeSpan Duration
         {
             get { return this.eventEnd - this.eventStart; }
         }
@@ -602,13 +605,13 @@ namespace Engage.Events
         }
 
         /// <summary>
-        /// Creates an occurrence of this <see cref="Event"/>, for the given <paramref name="occurrenceDate"/>.
+        /// Creates an occurrence of this <see cref="Event"/>, for the given <paramref name="eventStart"/>.
         /// </summary>
-        /// <param name="occurrenceDate">The date and time at which this occurrence starts.</param>
+        /// <param name="eventStart">The date and time at which this occurrence starts.</param>
         /// <returns>An occurrence of this <see cref="Event"/></returns>
-        public Event CreateOccurrence(DateTime occurrenceDate)
+        public Event CreateOccurrence(DateTime eventStart)
         {
-            Event occurrence = new Event(this.portalId, this.moduleId, this.organizerEmail, this.title, this.overview, this.description, occurrenceDate, occurrenceDate + this.Duration, this.location, this.isFeatured, allowRegistrations, this.recurrenceRule);
+            Event occurrence = new Event(this.portalId, this.moduleId, this.organizerEmail, this.title, this.overview, this.description, eventStart, eventStart + this.Duration, this.location, this.isFeatured, allowRegistrations, this.recurrenceRule);
             occurrence.recurrenceParentId = this.id;
             occurrence.id = this.id;
             return occurrence;
@@ -698,7 +701,7 @@ namespace Engage.Events
             e.cancelled = (bool)eventRecord["Cancelled"];
             e.isFeatured = (bool)eventRecord["IsFeatured"];
             e.isDeleted = (bool)eventRecord["IsDeleted"];
-            e.allowRegistrations = (bool)eventRecord["CanRsvp"];
+            e.allowRegistrations = (bool)eventRecord["AllowRegistrations"];
             e.organizer = eventRecord["Organizer"].ToString();
             e.organizerEmail = eventRecord["OrganizerEmail"].ToString();
             e.location = eventRecord["Location"].ToString();
@@ -771,7 +774,7 @@ namespace Engage.Events
                     Utility.CreateVarcharParam("@RecapUrl", this.recapUrl),
                     Utility.CreateIntegerParam("@RecurrenceParentId", this.recurrenceParentId),
                     Utility.CreateVarcharParam("@RecurrenceRule", this.recurrenceRule != null ? this.recurrenceRule.ToString() : null),
-                    Utility.CreateBitParam("@CanRsvp", this.allowRegistrations),
+                    Utility.CreateBitParam("@AllowRegistrations", this.allowRegistrations),
                     Utility.CreateBitParam("@isFeatured", this.isFeatured),
                     Utility.CreateIntegerParam("@CreatedBy", revisingUser),
                     Utility.CreateDateTimeParam("@FinalRecurringEndDate", this.FinalRecurringEndDate),
@@ -811,7 +814,7 @@ namespace Engage.Events
                     Utility.CreateVarcharParam("@RecapUrl", this.recapUrl),
                     Utility.CreateTextParam("@RecurrenceRule", this.recurrenceRule != null ? this.recurrenceRule.ToString() : null),
                     Utility.CreateIntegerParam("@RecurrenceParentId", this.recurrenceParentId),
-                    Utility.CreateBitParam("@CanRsvp", this.allowRegistrations),
+                    Utility.CreateBitParam("@AllowRegistrations", this.allowRegistrations),
                     Utility.CreateBitParam("@Cancelled", this.cancelled),
                     Utility.CreateBitParam("@isFeatured", this.isFeatured),
                     Utility.CreateIntegerParam("@RevisingUser", revisingUser),

@@ -232,9 +232,9 @@ namespace Engage.Events
                     int originalMaxOccurrences = masterEvent.RecurrenceRule.Range.MaxOccurrences;
                     masterEvent.RecurrenceRule.Range.MaxOccurrences = int.MaxValue;
 
-                    foreach (DateTime occurrenceDate in masterEvent.RecurrenceRule.Occurrences)
+                    foreach (DateTime eventStart in masterEvent.RecurrenceRule.Occurrences)
                     {
-                        events.Add(masterEvent.CreateOccurrence(occurrenceDate));
+                        events.Add(masterEvent.CreateOccurrence(eventStart));
                         break;
                     }
 
