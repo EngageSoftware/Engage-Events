@@ -193,6 +193,7 @@
     <Compile Include="Display\EventDetail.ascx.designer.cs">
       <DependentUpon>EventDetail.ascx</DependentUpon>
     </Compile>
+    <Compile Include="SubControlInfo.cs" />
     <Compile Include="Util\TelerikSkin.cs" />
     <Compile Include="Display\TemplateDisplayOptions.ascx.cs">
       <DependentUpon>TemplateDisplayOptions.ascx</DependentUpon>

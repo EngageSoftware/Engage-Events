@@ -14,7 +14,9 @@ namespace Engage.Dnn.Events
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using DotNetNuke.Common;
     using DotNetNuke.Entities.Modules;
+    using DotNetNuke.Security;
     using DotNetNuke.Services.Exceptions;
 
     /// <summary>
@@ -26,7 +28,12 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// A dictionary mapping control keys to user controls.
         /// </summary>
-        private static readonly IDictionary<string, string> ControlKeys = FillControlKeys();
+        private static readonly IDictionary<string, SubControlInfo> ControlKeys = FillControlKeys();
+
+        /// <summary>
+        /// The default sub-control to load
+        /// </summary>
+        private static readonly SubControlInfo DefaultSubControl = new SubControlInfo("Display/EventListingTemplate.ascx", false);
 
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
@@ -36,27 +43,36 @@ namespace Engage.Dnn.Events
         {
             base.OnInit(e);
 
-            this.LoadChildControl(this.GetControlToLoad());
+            SubControlInfo controlToLoad = this.GetControlToLoad();
+
+            if (!controlToLoad.RequiresEditPermission || PortalSecurity.HasNecessaryPermission(SecurityAccessLevel.Edit, this.PortalSettings, this.ModuleConfiguration, this.UserInfo.Username))
+            {
+                this.LoadChildControl(controlToLoad);
+            }
+            else
+            {
+                this.Response.Redirect(Globals.NavigateURL(this.TabId));
+            }
         }
 
         /// <summary>
         /// Fills <see cref="ControlKeys"/>.
         /// </summary>
         /// <returns>A dictionary mapping control keys to user controls.</returns>
-        private static IDictionary<string, string> FillControlKeys()
+        private static IDictionary<string, SubControlInfo> FillControlKeys()
         {
-            IDictionary<string, string> keyDictionary = new Dictionary<string, string>(11, StringComparer.OrdinalIgnoreCase);
+            IDictionary<string, SubControlInfo> keyDictionary = new Dictionary<string, SubControlInfo>(11, StringComparer.OrdinalIgnoreCase);
 
-            keyDictionary.Add("EmailEdit", "EmailEdit.ascx");
-            keyDictionary.Add("EventEdit", "EventEdit.ascx");
-            keyDictionary.Add("EventListing", "Display/EventListingTemplate.ascx");
-            keyDictionary.Add("EventListingAdmin", "Display/EventListingAdmin.ascx");
-            keyDictionary.Add("ResponseSummary", "ResponseSummaryDisplay.ascx");
-            keyDictionary.Add("ResponseDetail", "ResponseDetail.ascx");
-            keyDictionary.Add("Response", "Respond.ascx");
-            keyDictionary.Add("EmailAFriend", "EmailAFriend.ascx");
-            keyDictionary.Add("Register", "Register.ascx");
-            keyDictionary.Add("EventDetail", "Display/EventDetail.ascx");
+            keyDictionary.Add("EmailEdit", new SubControlInfo("EmailEdit.ascx", true));
+            keyDictionary.Add("EventEdit", new SubControlInfo("EventEdit.ascx", true));
+            keyDictionary.Add("EventListing", DefaultSubControl);
+            keyDictionary.Add("EventListingAdmin", new SubControlInfo("Display/EventListingAdmin.ascx", true));
+            keyDictionary.Add("ResponseSummary", new SubControlInfo("ResponseSummaryDisplay.ascx", true));
+            keyDictionary.Add("ResponseDetail", new SubControlInfo("ResponseDetail.ascx", true));
+            keyDictionary.Add("Response", new SubControlInfo("Respond.ascx", false));
+            keyDictionary.Add("EmailAFriend", new SubControlInfo("EmailAFriend.ascx", false));
+            keyDictionary.Add("Register", new SubControlInfo("Register.ascx", false));
+            keyDictionary.Add("EventDetail", new SubControlInfo("Display/EventDetail.ascx", false));
 
             return keyDictionary;
         }
@@ -65,33 +81,33 @@ namespace Engage.Dnn.Events
         /// Gets the control to load, based on the key (or lack thereof) that is passed on the querystring.
         /// </summary>
         /// <returns>A relative path to the control that should be loaded into this container</returns>
-        private string GetControlToLoad()
+        private SubControlInfo GetControlToLoad()
         {
             if (!IsConfigured)
             {
-                return "Admin/NotConfigured.ascx";
+                return new SubControlInfo("Admin/NotConfigured.ascx", false);
             }
 
             string keyParam = this.GetCurrentControlKey();
-            return Engage.Utility.HasValue(keyParam) ? ControlKeys[keyParam] : "Display/EventListingTemplate.ascx";
+            if (Engage.Utility.HasValue(keyParam))
+            {
+                return ControlKeys[keyParam];
+            }
+
+            return DefaultSubControl;
         }
 
         /// <summary>
         /// Loads the child control to be displayed in this container.
         /// </summary>
         /// <param name="controlToLoad">The control to load.</param>
-        private void LoadChildControl(string controlToLoad)
+        private void LoadChildControl(SubControlInfo controlToLoad)
         {
             try
             {
-                if (controlToLoad == null)
-                {
-                    return;
-                }
-
-                PortalModuleBase mb = (PortalModuleBase)this.LoadControl(controlToLoad);
+                PortalModuleBase mb = (PortalModuleBase)this.LoadControl(controlToLoad.ControlPath);
                 mb.ModuleConfiguration = this.ModuleConfiguration;
-                mb.ID = Path.GetFileNameWithoutExtension(controlToLoad);
+                mb.ID = Path.GetFileNameWithoutExtension(controlToLoad.ControlPath);
                 this.phControls.Controls.Add(mb);
             }
             catch (Exception exc)
