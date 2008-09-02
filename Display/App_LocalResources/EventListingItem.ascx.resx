@@ -144,6 +144,10 @@
   <data name="Page.Text" xml:space="preserve">
     <value>Page</value>
   </data>
+  <data name="PageXOfY.Text" xml:space="preserve">
+    <value>Page {0} of {1}</value>
+    <comment>{0} is replaced by current page number, {1} is replaced by total number of pages</comment>
+  </data>
   <data name="PreviousButton.Text" xml:space="preserve">
     <value>Previous</value>
   </data>

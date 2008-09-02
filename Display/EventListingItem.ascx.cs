@@ -349,6 +349,12 @@ namespace Engage.Dnn.Events.Display
                         this.PageCountLabel.CssClass = tag.GetAttributeValue("CssClass");
                         container.Controls.Add(this.PageCountLabel);
                         break;
+                    case "PAGEXOFY":
+                        this.PageXOfYLabel = new Label();
+                        this.PageXOfYLabel.Text = Localization.GetString(tag.GetAttributeValue("ResourceKey"), this.LocalResourceFile);
+                        this.PageXOfYLabel.CssClass = tag.GetAttributeValue("CssClass");
+                        container.Controls.Add(this.PageXOfYLabel);
+                        break;
                     case "READMORE":
                         if (Engage.Utility.HasValue(currentEvent.Description))
                         {
