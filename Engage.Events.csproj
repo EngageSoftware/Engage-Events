@@ -54,6 +54,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ListingMode.cs" />
     <Compile Include="ResponseStatus.cs" />
     <Compile Include="ResponseSummary.cs" />
     <Compile Include="ResponseSummaryCollection.cs" />

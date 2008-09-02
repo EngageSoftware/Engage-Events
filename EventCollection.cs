@@ -19,32 +19,6 @@ namespace Engage.Events
     using System.Web.UI.WebControls;
     using Data;
 
-    ///<summary>
-    /// Defines the date range for which to retrieve a list of events.
-    ///</summary>
-    public enum ListingMode
-    {
-        /// <summary>
-        /// Display all events, from the beginning of time to the end of time.
-        /// </summary>
-        All,
-
-        /// <summary>
-        /// From today until the end of the month
-        /// </summary>
-        CurrentMonth,
-
-        /// <summary>
-        /// From the beginning of next month until the end of time
-        /// </summary>
-        Future,
-
-        /// <summary>
-        /// From the beginning of time until today
-        /// </summary>
-        Past
-    }
-
     /// <summary>
     /// A strongly-typed collection of <see cref="Event"/> objects.
     /// </summary>
@@ -153,7 +127,7 @@ namespace Engage.Events
                         startDate = null;
                         endDate = DateTime.Today;
                         break;
-                        ////case ListingMode.All:
+                    ////case ListingMode.All:
                     default:
                         startDate = endDate = null;
                         break;
