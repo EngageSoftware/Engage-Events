@@ -39,9 +39,6 @@ namespace Engage.Dnn.Events
             {
                 try
                 {
-                    HostSettingsController controller = new HostSettingsController();
-                    controller.UpdateHostSetting(Framework.Utility.ModuleConfigured + this.PortalId.ToString(CultureInfo.InvariantCulture), "true");
-
                     ModuleController modules = new ModuleController();
                     modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.DisplayTemplate.PropertyName, this.DropDownChooseDisplay.SelectedValue);
 

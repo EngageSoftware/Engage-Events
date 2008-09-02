@@ -45,9 +45,6 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetupDefaultSettings()
         {
-            HostSettingsController controller = new HostSettingsController();
-            controller.UpdateHostSetting(Framework.Utility.ModuleConfigured + PortalId.ToString(CultureInfo.InvariantCulture), "true");
-
             ModuleController modules = new ModuleController();
             modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.DisplayTemplate.PropertyName, "Display.Listing.html");
             modules.UpdateTabModuleSetting(this.TabModuleId, Setting.DisplayModeOption.PropertyName, ListingMode.All.ToString());

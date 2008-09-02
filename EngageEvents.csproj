@@ -644,6 +644,7 @@
     <Content Include="References\Engage.DataProviderv3.0.dll" />
     <Content Include="References\Engage.Dnn.Framework.dll" />
     <Content Include="References\Engage.Dnn.Utility.dll" />
+    <Content Include="References\Engage.Events.Test.dll" />
     <Content Include="References\Engage.Eventsv3.0.dll" />
     <Content Include="References\Engage.Frameworkv3.0.dll" />
     <Content Include="References\Engage.Licensing.dll" />
@@ -654,6 +655,7 @@
     <Content Include="References\Engage.Templating.dll" />
     <Content Include="References\Engage.Utilityv3.0.dll" />
     <Content Include="References\Microsoft.ApplicationBlocks.Data.dll" />
+    <Content Include="References\SMTP.Net.dll" />
     <Content Include="References\Telerik.Web.UI.dll" />
     <Content Include="Display\App_LocalResources\CalendarDisplayOptions.ascx.resx">
     </Content>

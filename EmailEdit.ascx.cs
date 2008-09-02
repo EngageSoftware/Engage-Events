@@ -139,7 +139,7 @@ namespace Engage.Dnn.Events
             int? eventId = this.EventId;
             if (eventId.HasValue)
             {
-                cmd.WriteLocalData(eventId.Value, this.UserId);
+                cmd.WriteLocalData(eventId.Value, this.EventStart, this.UserId);
 
                 Event ee = Event.Load(eventId.Value);
 
