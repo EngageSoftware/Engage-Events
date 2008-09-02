@@ -130,16 +130,20 @@ namespace Engage.Dnn.Events
         /// <param name="sortColumn">The sort column.</param>
         private void BindData(string sortColumn)
         {
-            ResponseCollection responses = ResponseCollection.Load(EventId, this.Status, sortColumn, this.CurrentPageIndex - 1, this.ResponseDetailGrid.PageSize);
-            this.ResponseDetailGrid.DataSource = responses;
-            this.ResponseDetailGrid.DataBind();
-            this.ResponseDetailGrid.Attributes.Add("SortColumn", sortColumn);
+            int? eventId = this.EventId;
+            if (eventId.HasValue)
+            {
+                ResponseCollection responses = ResponseCollection.Load(eventId.Value, this.Status, sortColumn, this.CurrentPageIndex - 1, this.ResponseDetailGrid.PageSize);
+                this.ResponseDetailGrid.DataSource = responses;
+                this.ResponseDetailGrid.DataBind();
+                this.ResponseDetailGrid.Attributes.Add("SortColumn", sortColumn);
 
-            this.pager.PageSize = this.ResponseDetailGrid.PageSize;
-            this.SetupPagingControl(this.pager, responses.TotalRecords, "modId", "key", "status", "eventId");
+                this.pager.PageSize = this.ResponseDetailGrid.PageSize;
+                this.SetupPagingControl(this.pager, responses.TotalRecords, "modId", "key", "status", "eventId");
 
-            this.responseDisplay.SetResponseSummary(Engage.Events.ResponseSummary.Load(this.EventId, this.EventStart));
-            this.responseDisplay.ModuleConfiguration = this.ModuleConfiguration;
+                this.responseDisplay.SetResponseSummary(Engage.Events.ResponseSummary.Load(eventId.Value, this.EventStart));
+                this.responseDisplay.ModuleConfiguration = this.ModuleConfiguration;
+            }
         }
     }
 }

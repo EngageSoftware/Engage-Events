@@ -189,17 +189,21 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void Update()
         {
-            Event e = Event.Load(EventId);
-            e.EventStart = this.StartDateTimePicker.SelectedDate.Value;
-            e.EventEnd = this.EndDateTimePicker.SelectedDate.Value;
-            e.Location = this.EventLocationTextBox.Text;
-            e.Title = this.EventTitleTextBox.Text;
-            e.Overview = this.EventOverviewTextEditor.Text;
-            e.Description = this.EventDescriptionTextEditor.Text;
-            e.IsFeatured = this.FeaturedCheckBox.Checked;
-            e.AllowRegistrations = this.AllowRegistrationsCheckBox.Checked;
-            e.RecurrenceRule = this.RecurrenceEditor.GetRecurrenceRule(e.EventStart, e.EventEnd);
-            e.Save(this.UserId);
+            int? eventId = this.EventId;
+            if (eventId.HasValue)
+            {
+                Event e = Event.Load(eventId.Value);
+                e.EventStart = this.StartDateTimePicker.SelectedDate.Value;
+                e.EventEnd = this.EndDateTimePicker.SelectedDate.Value;
+                e.Location = this.EventLocationTextBox.Text;
+                e.Title = this.EventTitleTextBox.Text;
+                e.Overview = this.EventOverviewTextEditor.Text;
+                e.Description = this.EventDescriptionTextEditor.Text;
+                e.IsFeatured = this.FeaturedCheckBox.Checked;
+                e.AllowRegistrations = this.AllowRegistrationsCheckBox.Checked;
+                e.RecurrenceRule = this.RecurrenceEditor.GetRecurrenceRule(e.EventStart, e.EventEnd);
+                e.Save(this.UserId);
+            }
         }
 
         /// <summary>
@@ -231,18 +235,22 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void BindData()
         {
-            Event e = Event.Load(EventId);
-            this.EventTitleTextBox.Text = e.Title;
-            this.EventLocationTextBox.Text = e.Location;
-            this.EventOverviewTextEditor.Text = e.Overview;
-            this.EventDescriptionTextEditor.Text = e.Description;
-            this.StartDateTimePicker.SelectedDate = e.EventStart;
-            this.EndDateTimePicker.SelectedDate = e.EventEnd;
-            this.FeaturedCheckBox.Checked = e.IsFeatured;
-            this.AllowRegistrationsCheckBox.Checked = e.AllowRegistrations;
-            this.RecurringCheckBox.Checked = e.IsRecurring;
-            this.RecurrenceEditor.Visible = this.RecurringCheckBox.Checked;
-            this.RecurrenceEditor.SetRecurrenceRule(e.RecurrenceRule);
+            int? eventId = this.EventId;
+            if (eventId.HasValue)
+            {
+                Event e = Event.Load(eventId.Value);
+                this.EventTitleTextBox.Text = e.Title;
+                this.EventLocationTextBox.Text = e.Location;
+                this.EventOverviewTextEditor.Text = e.Overview;
+                this.EventDescriptionTextEditor.Text = e.Description;
+                this.StartDateTimePicker.SelectedDate = e.EventStart;
+                this.EndDateTimePicker.SelectedDate = e.EventEnd;
+                this.FeaturedCheckBox.Checked = e.IsFeatured;
+                this.AllowRegistrationsCheckBox.Checked = e.AllowRegistrations;
+                this.RecurringCheckBox.Checked = e.IsRecurring;
+                this.RecurrenceEditor.Visible = this.RecurringCheckBox.Checked;
+                this.RecurrenceEditor.SetRecurrenceRule(e.RecurrenceRule);
+            }
         }
 
         /// <summary>

@@ -1,7 +1,7 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.Controls.RecurrenceEditor" CodeBehind="RecurrenceEditor.ascx.cs" %>
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 
-<div class="rsAdvancedEdit rsAdvOptions">
+<div class="rsAdvancedEdit rsAdvOptions Normal">
     <asp:Panel ID="RecurrencePatternPanel" runat="server" CssClass="rsAdvRecurrencePatterns">
         <p class="rsAdvRecurrence"><strong><%=Localize("Recurrence")%></strong></p>
         <asp:UpdatePanel runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false"><%-- This UpdatePanel needs to include the RecurrenceFrequencyPanel, so that it can update the RepeatFrequencyDaily to postback if it gets reselected.  See http://www.engagesoftware.com/Blog/EntryID/76.aspx --%>

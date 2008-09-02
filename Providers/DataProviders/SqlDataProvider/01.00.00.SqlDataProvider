@@ -384,3 +384,31 @@ BEGIN
 END
 GO
 
+IF EXISTS (SELECT * FROM   dbo.sysobjects WHERE  id = Object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetEvents]') AND Objectproperty(id,N'IsProcedure') = 1)
+  DROP PROC {databaseOwner}[{objectQualifier}Engage_spGetEvents] 
+GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEvents](
+	@portalId int, 
+	@showAll bit,
+	@featured bit,
+	@startDate datetime,
+	@endDate datetime
+)
+AS
+BEGIN
+	 SELECT *
+	 FROM   {databaseOwner}[{objectQualifier}Engage_Event]
+	 WHERE  PortalId = @portalId
+	  AND (@featured = 0 OR IsFeatured = @featured)
+	  AND (@showAll = 1 OR Cancelled = @showAll)
+	  AND (EventStart <= @endDate OR @endDate IS NULL)
+	  AND (
+			(RecurrenceRule IS NULL AND (EventEnd >= @startDate OR @startDate IS NULL))
+			OR 
+			(RecurrenceRule IS NOT NULL AND (FinalRecurringEndDate IS NULL OR FinalRecurringEndDate >= @startDate OR @startDate IS NULL))
+		  )
+
+	SELECT @@ROWCOUNT AS TotalRecords
+END
+GO
+

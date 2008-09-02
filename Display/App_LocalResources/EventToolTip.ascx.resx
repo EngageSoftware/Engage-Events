@@ -126,4 +126,16 @@
   <data name="RegisterButton.Text" xml:space="preserve">
     <value>Register</value>
   </data>
+  <data name="Timespan.Text" xml:space="preserve">
+    <value>{0:hh:mmtt} - {1:hh:mmtt}</value>
+  </data>
+  <data name="TimespanDifferentDay.Text" xml:space="preserve">
+    <value>{0:hh:mmtt} - {1:hh:mmtt}</value>
+  </data>
+  <data name="TimespanDifferentMonth.Text" xml:space="preserve">
+    <value>{0:hh:mmtt} - {1:hh:mmtt}</value>
+  </data>
+  <data name="TimespanDifferentYear.Text" xml:space="preserve">
+    <value>{0:hh:mmtt} - {1:hh:mmtt}</value>
+  </data>
 </root>

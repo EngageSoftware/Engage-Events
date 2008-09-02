@@ -136,21 +136,25 @@ namespace Engage.Dnn.Events
 
             // pass to server (locally or remotely based on config file of Engage.Services.
             cmd = DataServices.Execute(cmd);
-            cmd.WriteLocalData(EventId, this.UserId);
-
-            Event ee = Event.Load(EventId);
-
-            if (this.EmailTypeRadioButtons.SelectedItem.Text == EmailEventType.Invitation.Description)
+            int? eventId = this.EventId;
+            if (eventId.HasValue)
             {
-                ee.InvitationUrl = emailEvent.HtmlBodyLocation1;
-            }
+                cmd.WriteLocalData(eventId.Value, this.UserId);
 
-            if (this.EmailTypeRadioButtons.SelectedItem.Text == EmailEventType.Recap.Description)
-            {
-                ee.RecapUrl = emailEvent.HtmlBodyLocation1;
-            }
+                Event ee = Event.Load(eventId.Value);
 
-            ee.Save(this.UserId);
+                if (this.EmailTypeRadioButtons.SelectedItem.Text == EmailEventType.Invitation.Description)
+                {
+                    ee.InvitationUrl = emailEvent.HtmlBodyLocation1;
+                }
+
+                if (this.EmailTypeRadioButtons.SelectedItem.Text == EmailEventType.Recap.Description)
+                {
+                    ee.RecapUrl = emailEvent.HtmlBodyLocation1;
+                }
+
+                ee.Save(this.UserId);
+            }
         }
 
         /// <summary>
@@ -226,11 +230,15 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void BindData()
         {
-            Event e = Event.Load(EventId);
+            int? eventId = this.EventId;
+            if (eventId.HasValue)
+            {
+                Event e = Event.Load(eventId.Value);
 
-            this.EventNameLabel.Text = e.Title;
+                this.EventNameLabel.Text = e.Title;
 
-            // now load the email details. using?
+                // now load the email details. using?
+            }
         }
     }
 }

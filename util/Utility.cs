@@ -150,6 +150,20 @@ namespace Engage.Dnn.Events
         /// <returns>A formatted string representing the timespan over which this event occurs.</returns>
         public static string GetFormattedEventDate(DateTime startDate, DateTime endDate)
         {
+            return GetFormattedEventDate(startDate, endDate, ModuleBase.LocalSharedResourceFile);
+        }
+
+        /// <summary>
+        /// Gets the formatted date string for this event.
+        /// </summary>
+        /// <param name="startDate">The event's start date.</param>
+        /// <param name="endDate">The event's end date.</param>
+        /// <param name="resourceFile">The resource file to use to find get localized text.</param>
+        /// <returns>
+        /// A formatted string representing the timespan over which this event occurs.
+        /// </returns>
+        public static string GetFormattedEventDate(DateTime startDate, DateTime endDate, string resourceFile)
+        {
             string timespanResourceKey;
             if (startDate.Year != endDate.Year)
             {
@@ -168,7 +182,7 @@ namespace Engage.Dnn.Events
                 timespanResourceKey = "Timespan.Text";
             }
 
-            return string.Format(CultureInfo.CurrentCulture, Localization.GetString(timespanResourceKey, ModuleBase.LocalSharedResourceFile), startDate, endDate);
+            return string.Format(CultureInfo.CurrentCulture, Localization.GetString(timespanResourceKey, resourceFile), startDate, endDate);
         }
 
         /// <summary>

@@ -45,13 +45,17 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         internal void BindData()
         {
-            Event ev = Event.Load(EventId);
-            string templateName = Utility.GetStringSetting(this.Settings, Framework.Setting.DetailTemplate.PropertyName, "Detail.Item.html");
+            int? eventId = this.EventId;
+            if (eventId.HasValue)
+            {
+                Event ev = Event.Load(eventId.Value);
+                string templateName = Utility.GetStringSetting(this.Settings, Framework.Setting.DetailTemplate.PropertyName, "Detail.Item.html");
 
-            Template template = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
-            TemplateEngine.ProcessTags(this.DetailPlaceholder, template.ChildTags, ev, this.LocalResourceFile, ProcessTag);
+                Template template = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
+                TemplateEngine.ProcessTags(this.DetailPlaceholder, template.ChildTags, ev, this.LocalResourceFile, ProcessTag);
 
-            this.BackHyperlink.NavigateUrl = Globals.NavigateURL();
+                this.BackHyperlink.NavigateUrl = Globals.NavigateURL();
+            }
         }
 
         /// <summary>

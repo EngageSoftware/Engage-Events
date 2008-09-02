@@ -118,10 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddEventSuccess.Text" xml:space="preserve">
-    <value>Your event has been successfully created or updated!</value>
-  </data>
-  <data name="AddEventSuccessTitle.Text" xml:space="preserve">
-    <value>Success</value>
+    <value>Your event has been successfully created!</value>
   </data>
   <data name="AddNewEvent.Text" xml:space="preserve">
     <value>Add a New Event</value>
@@ -140,6 +137,9 @@
   </data>
   <data name="EditEvent.Text" xml:space="preserve">
     <value>Edit an Event</value>
+  </data>
+  <data name="EditEventSuccess.Text" xml:space="preserve">
+    <value>Your event has been successfully updated!</value>
   </data>
   <data name="EndDateCompareValidator.Text" xml:space="preserve">
     <value>Your event cannot end before it begins</value>

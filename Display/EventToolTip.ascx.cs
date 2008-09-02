@@ -65,7 +65,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Page_PreRender(object sender, EventArgs e)
         {
-            this.EventDate.Text = Dnn.Events.Utility.GetFormattedEventDate(this.currentEvent.EventStart, this.currentEvent.EventEnd);
+            this.EventDate.Text = Dnn.Events.Utility.GetFormattedEventDate(this.currentEvent.EventStart, this.currentEvent.EventEnd, this.LocalResourceFile);
             this.EventOverview.Text = this.currentEvent.Overview;
             this.EventTitle.Text = this.currentEvent.Title;
 

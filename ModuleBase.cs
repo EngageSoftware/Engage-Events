@@ -68,7 +68,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <value>The event id.</value>
         /// <exception cref="InvalidOperationException">EventId is not present on QueryString</exception>
-        protected int EventId
+        protected int? EventId
         {
             get
             {
@@ -81,7 +81,7 @@ namespace Engage.Dnn.Events
                     }
                 }
 
-                throw new InvalidOperationException("EventId is not present on QueryString: " + this.Request.RawUrl);
+                return null;
             }
         }
 
@@ -115,7 +115,13 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                return this.BuildLinkUrl(this.ModuleId, "Register", Utility.GetEventParameters(this.EventId, this.EventStart));
+                int? eventId = this.EventId;
+                if (eventId.HasValue)
+                {
+                    return this.BuildLinkUrl(this.ModuleId, "Register", Utility.GetEventParameters(eventId.Value, this.EventStart));
+                }
+
+                return null;
             }
         }
 
@@ -127,7 +133,13 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                return this.BuildLinkUrl(this.ModuleId, "Response", Utility.GetEventParameters(this.EventId, this.EventStart));
+                int? eventId = this.EventId;
+                if (eventId.HasValue)
+                {
+                    return this.BuildLinkUrl(this.ModuleId, "Response", Utility.GetEventParameters(eventId.Value, this.EventStart));
+                }
+
+                return null;
             }
         }
 

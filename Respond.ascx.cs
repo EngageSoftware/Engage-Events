@@ -15,7 +15,6 @@ namespace Engage.Dnn.Events
     using System;
     using System.Globalization;
     using System.Web;
-    using System.Web.UI.WebControls;
     using DotNetNuke.Common;
     using DotNetNuke.Framework;
     using DotNetNuke.Services.Exceptions;
@@ -76,13 +75,18 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                Response response = Engage.Events.Response.Load(this.EventId, this.EventStart, this.UserInfo.Email)
-                                    ?? Engage.Events.Response.Create(this.EventId, this.EventStart, this.UserInfo.FirstName, this.UserInfo.LastName, this.UserInfo.Email);
+                int? eventId = this.EventId;
+                if (eventId.HasValue)
+                {
+                    Response response = Engage.Events.Response.Load(eventId.Value, this.EventStart, this.UserInfo.Email)
+                                        ??
+                                        Engage.Events.Response.Create(eventId.Value, this.EventStart, this.UserInfo.FirstName, this.UserInfo.LastName, this.UserInfo.Email);
 
-                response.Status = (ResponseStatus)Enum.Parse(typeof(ResponseStatus), this.ResponseStatusRadioButtons.SelectedValue);
-                response.Save(UserId);
+                    response.Status = (ResponseStatus)Enum.Parse(typeof(ResponseStatus), this.ResponseStatusRadioButtons.SelectedValue);
+                    response.Save(UserId);
 
-                this.ResponseMultiview.ActiveViewIndex = 1;
+                    this.ResponseMultiview.ActiveViewIndex = 1;
+                }
             }
             catch (Exception exc)
             {
@@ -97,8 +101,12 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void AddToCalendarButton_Click(object sender, EventArgs e)
         {
-            Event evnt = Event.Load(EventId);
-            SendICalendarToClient(HttpContext.Current.Response, evnt.ToICal(this.UserInfo.Email, Dnn.Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings)), evnt.Title);
+            int? eventId = this.EventId;
+            if (eventId.HasValue)
+            {
+                Event evnt = Event.Load(eventId.Value);
+                SendICalendarToClient(HttpContext.Current.Response, evnt.ToICal(this.UserInfo.Email, Dnn.Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings)), evnt.Title);
+            }
         }
 
         /// <summary>
@@ -116,15 +124,19 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void BindData()
         {
-            Event e = Event.Load(EventId);
+            int? eventId = this.EventId;
+            if (eventId.HasValue)
+            {
+                Event e = Event.Load(eventId.Value);
 
-            this.EventNameLabel.Text = string.Format(CultureInfo.CurrentCulture, Localization.GetString("EventNameLabel.Text", LocalResourceFile), e.Title);
-            this.AddToCalendarButton.Enabled = true;
+                this.EventNameLabel.Text = string.Format(CultureInfo.CurrentCulture, Localization.GetString("EventNameLabel.Text", LocalResourceFile), e.Title);
+                this.AddToCalendarButton.Enabled = true;
 
-            this.ResponseStatusRadioButtons.Items.Clear();
-            this.ResponseStatusRadioButtons.Items.Add(new ListItem(Localization.GetString(ResponseStatus.Attending.ToString(), LocalResourceFile), ResponseStatus.Attending.ToString()));
-            this.ResponseStatusRadioButtons.Items.Add(new ListItem(Localization.GetString(ResponseStatus.NotAttending.ToString(), LocalResourceFile), ResponseStatus.NotAttending.ToString()));
-            this.ResponseStatusRadioButtons.Items[0].Selected = true;
+                this.ResponseStatusRadioButtons.DataSource = Enum.GetNames(typeof(ResponseStatus));
+                this.ResponseStatusRadioButtons.DataBind();
+                this.ResponseStatusRadioButtons.Items[0].Selected = true;
+                Dnn.Utility.LocalizeListControl(this.ResponseStatusRadioButtons, this.LocalResourceFile);
+            }
         }
     }
 }
