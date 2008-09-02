@@ -48,6 +48,7 @@ namespace Engage.Dnn.Events
             {
                 this.SkinDropDownList.DataSource = Enum.GetNames(typeof(TelerikSkin));
                 this.SkinDropDownList.DataBind();
+                Dnn.Utility.LocalizeListControl(this.SkinDropDownList, this.LocalResourceFile);
                 
                 ListItem li = this.SkinDropDownList.Items.FindByValue(this.SkinOption.ToString());
                 if (li != null)

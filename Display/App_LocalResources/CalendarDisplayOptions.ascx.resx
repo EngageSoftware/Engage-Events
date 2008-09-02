@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,52 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CurrentMonth.Text" xml:space="preserve">
-    <value>Current Month</value>
+  <data name="Black.Text" xml:space="preserve">
+    <value>Black</value>
   </data>
-  <data name="DetailLabel.Help" xml:space="preserve">
-    <value>The Detail template will be used when you have included the ReadMore entity. This will redirect to a new page using this template for fields to display.</value>
+  <data name="Default.Text" xml:space="preserve">
+    <value>Default</value>
   </data>
-  <data name="DetailLabel.Text" xml:space="preserve">
-    <value>Select a Detail Template</value>
+  <data name="Gray.Text" xml:space="preserve">
+    <value>Gray</value>
   </data>
-  <data name="DisplayModeLabel.Help" xml:space="preserve">
-    <value>Select which set of events you want to be displayed in this module</value>
+  <data name="Hay.Text" xml:space="preserve">
+    <value>Hay</value>
   </data>
-  <data name="DisplayModeLabel.Text" xml:space="preserve">
-    <value>Select a Display Mode</value>
+  <data name="Inox.Text" xml:space="preserve">
+    <value>Inox</value>
   </data>
-  <data name="FooterLabel.Help" xml:space="preserve">
-    <value>The Footer template displays at the bottom of the list of events.  Either the footer or header typically holds the paging elements.</value>
+  <data name="Office2007.Text" xml:space="preserve">
+    <value>Office 2007</value>
   </data>
-  <data name="FooterLabel.Text" xml:space="preserve">
-    <value>Select a Footer Template</value>
+  <data name="Outlook.Text" xml:space="preserve">
+    <value>Outlook</value>
   </data>
-  <data name="Future.Text" xml:space="preserve">
-    <value>Future</value>
+  <data name="SkinLabel.Help" xml:space="preserve">
+    <value>A skin determines the look of the calendar.  It will effect the colors (and, to a smaller degree, the layout) of the calendar, the event popup, and the date picker.</value>
   </data>
-  <data name="HeaderLabel.Help" xml:space="preserve">
-    <value>The Header template typically contains information like a title, sorting and status filter.  Either the footer or header typically holds the paging elements.</value>
+  <data name="SkinLabel.Text" xml:space="preserve">
+    <value>Select a Skin</value>
   </data>
-  <data name="HeaderLabel.Text" xml:space="preserve">
-    <value>Select a Header Template</value>
+  <data name="Sunset.Text" xml:space="preserve">
+    <value>Sunset</value>
   </data>
-  <data name="ItemLabel.Help" xml:space="preserve">
-    <value>The Item template represents a single event and any information displayed. This is repeated for all events listed.</value>
+  <data name="Telerik.Text" xml:space="preserve">
+    <value>Telerik</value>
   </data>
-  <data name="ItemLabel.Text" xml:space="preserve">
-    <value>Select a Item Template</value>
+  <data name="Vista.Text" xml:space="preserve">
+    <value>Vista</value>
   </data>
-  <data name="PagingLabel.Help" xml:space="preserve">
-    <value>Specify how many records you want to display per page.</value>
+  <data name="Web20.Text" xml:space="preserve">
+    <value>Web 2.0</value>
   </data>
-  <data name="PagingLabel.Text" xml:space="preserve">
-    <value>Enter the number of events to display per page</value>
-  </data>
-  <data name="Past.Text" xml:space="preserve">
-    <value>Past</value>
-  </data>
-  <data name="TemplateSettingsSectionHead.Text" xml:space="preserve">
-    <value>Templates</value>
+  <data name="WebBlue.Text" xml:space="preserve">
+    <value>Web Blue</value>
   </data>
 </root>

@@ -227,7 +227,7 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 
 ========================================================*/
 
-.EventsSetting label
+.EventsSetting label, .EventsSetting .Help
 {
 	float:left;
 	width: 49%;

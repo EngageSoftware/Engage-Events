@@ -117,58 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DisplayModeLabel.Help" xml:space="preserve">
-    <value>Select what data you want to be displayed</value>
-  </data>
-  <data name="DisplayModeLabel.Text" xml:space="preserve">
-    <value>Select a Display Mode</value>
-  </data>
-  <data name="Event Settings.Text" xml:space="preserve">
-    <value>Settings</value>
-  </data>
   <data name="EventCalendar.Text" xml:space="preserve">
     <value>Calendar Display</value>
-  </data>
-  <data name="EventListing.Text" xml:space="preserve">
-    <value>Current and Upcoming Events</value>
-  </data>
-  <data name="EventListingFeaturedTemplate.Text" xml:space="preserve">
-    <value>Featured Display</value>
-  </data>
-  <data name="EventListingGridStyle.Text" xml:space="preserve">
-    <value>Grid Style (Paging and Sorting)</value>
   </data>
   <data name="EventListingTemplate.Text" xml:space="preserve">
     <value>Listing</value>
   </data>
   <data name="FeaturedEventLabel.Help" xml:space="preserve">
-    <value>Choose whether to display Featured Events only</value>
+    <value>Choose whetherthis module should display only events marked as featured</value>
   </data>
   <data name="FeaturedEventLabel.Text" xml:space="preserve">
     <value>Display Featured Events Only</value>
   </data>
   <data name="LabelChooseDisplayType.Help" xml:space="preserve">
-    <value>Pick from the dropdown the default display for events</value>
+    <value>Choose whether to display events as a templated list, or in a calendar</value>
   </data>
   <data name="LabelChooseDisplayType.Text" xml:space="preserve">
     <value>Select a display for events</value>
-  </data>
-  <data name="lblOpenLinkUrl.Help" xml:space="preserve">
-    <value>Open Link Tracking URL</value>
-  </data>
-  <data name="lblOpenLinkUrl.Text" xml:space="preserve">
-    <value>Specify the URL for tracking email opens</value>
-  </data>
-  <data name="lblPrivacyPolicyUrl.Help" xml:space="preserve">
-    <value>Privacy Policy URL</value>
-  </data>
-  <data name="lblPrivacyPolicyUrl.Text" xml:space="preserve">
-    <value>Specify the URL to your Privacy Policy</value>
-  </data>
-  <data name="lblUnsubscribeUrl.Help" xml:space="preserve">
-    <value>Unsubscribe URL</value>
-  </data>
-  <data name="lblUnsubscribeUrl.Text" xml:space="preserve">
-    <value>Specify the URL to include in outgoing emails to unsusbcribe</value>
   </data>
 </root>
