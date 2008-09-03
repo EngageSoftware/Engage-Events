@@ -55,7 +55,6 @@ namespace Engage.Dnn.Events.Display
             this.EditButton.Click += this.EditButton_Click;
 
             AJAX.RegisterPostBackControl(this.AddToCalendarButton);
-            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
         }
 
         /// <summary>

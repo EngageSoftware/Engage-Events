@@ -66,7 +66,6 @@ namespace Engage.Dnn.Events.Display
         {
             base.OnInit(e);
             this.Load += this.Page_Load;
-            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
         }
 
         /// <summary>

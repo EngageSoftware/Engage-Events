@@ -14,6 +14,7 @@ namespace Engage.Dnn.Events
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.IO;
     using System.Text;
     using System.Web;
     using DotNetNuke.Common;
@@ -170,6 +171,12 @@ namespace Engage.Dnn.Events
 
                 return index;
             }
+        }
+
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
         }
 
         /// <summary>

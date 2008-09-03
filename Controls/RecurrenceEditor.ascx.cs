@@ -422,8 +422,6 @@ namespace Engage.Dnn.Events.Controls
             this.RepeatFrequencyMonthly.CheckedChanged += this.RepeatFrequency_CheckedChanged;
             this.RepeatFrequencyYearly.CheckedChanged += this.RepeatFrequency_CheckedChanged;
 
-            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
-
             // We need to call this before the Load event, since SetRecurrencePattern depends on it.
             if (!this.IsPostBack)
             {
