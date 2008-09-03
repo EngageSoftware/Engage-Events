@@ -179,6 +179,27 @@ namespace Engage.Events
         /// <param name="allowRegistrations">if set to <c>true</c> this event allows users to register for it.</param>
         /// <param name="recurrenceRule">The recurrence rule.</param>
         private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule)
+            : this(portalId, moduleId, organizerEmail, title, overview, description, eventStart, eventEnd, location, isFeatured, allowRegistrations, recurrenceRule, false)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Event"/> class.
+        /// </summary>
+        /// <param name="portalId">The portal id.</param>
+        /// <param name="moduleId">The module id.</param>
+        /// <param name="organizerEmail">The organizer email.</param>
+        /// <param name="title">The title of the event.</param>
+        /// <param name="overview">The overview (short description) of the event.</param>
+        /// <param name="description">The event description.</param>
+        /// <param name="eventStart">When the event starts.</param>
+        /// <param name="eventEnd">When the event ends.</param>
+        /// <param name="location">The location of the event.</param>
+        /// <param name="isFeatured">if set to <c>true</c> this event is featured.</param>
+        /// <param name="allowRegistrations">if set to <c>true</c> this event allows users to register for it.</param>
+        /// <param name="recurrenceRule">The recurrence rule.</param>
+        /// <param name="cancelled">if set to <c>true</c> this event is cancelled.</param>
+        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule, bool cancelled)
         {
             this.portalId = portalId;
             this.moduleId = moduleId;
@@ -192,6 +213,7 @@ namespace Engage.Events
             this.isFeatured = isFeatured;
             this.allowRegistrations = allowRegistrations;
             this.recurrenceRule = recurrenceRule;
+            this.cancelled = cancelled;
         }
 
         #region INotifyPropertyChanged Members
@@ -611,7 +633,7 @@ namespace Engage.Events
         /// <returns>An occurrence of this <see cref="Event"/></returns>
         public Event CreateOccurrence(DateTime eventStart)
         {
-            Event occurrence = new Event(this.portalId, this.moduleId, this.organizerEmail, this.title, this.overview, this.description, eventStart, eventStart + this.Duration, this.location, this.isFeatured, allowRegistrations, this.recurrenceRule);
+            Event occurrence = new Event(this.portalId, this.moduleId, this.organizerEmail, this.title, this.overview, this.description, eventStart, eventStart + this.Duration, this.location, this.isFeatured, this.allowRegistrations, this.recurrenceRule, this.cancelled);
             occurrence.recurrenceParentId = this.id;
             occurrence.id = this.id;
             return occurrence;
