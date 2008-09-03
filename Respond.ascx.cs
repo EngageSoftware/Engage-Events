@@ -121,7 +121,7 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Binds the data for this control.  Sets up values for the specific <see cref="Event"/> that this <see cref="Respond"/> is for.
+        /// Binds the data for this control.  Sets up values for the specific <see cref="Event"/> that this <see cref="Response"/> is for.
         /// </summary>
         private void BindData()
         {

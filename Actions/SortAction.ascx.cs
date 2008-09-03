@@ -60,7 +60,7 @@ namespace Engage.Dnn.Events
         {
             base.OnInit(e);
 
-            this.LocalResourceFile = "~" + DesktopModuleFolderName + "Display/App_LocalResources/EventListingItem.ascx.resx";
+            this.LocalResourceFile = TemplateResourceFile;
             this.Load += this.Page_Load;
             this.SortChanged += this.SortAction_SortChanged;
         }

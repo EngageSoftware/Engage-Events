@@ -158,12 +158,12 @@
     <Compile Include="Actions\SortAction.ascx.designer.cs">
       <DependentUpon>SortAction.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Actions\SortStatusAction.ascx.cs">
-      <DependentUpon>SortStatusAction.ascx</DependentUpon>
+    <Compile Include="Actions\StatusFilterAction.ascx.cs">
+      <DependentUpon>StatusFilterAction.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Actions\SortStatusAction.ascx.designer.cs">
-      <DependentUpon>SortStatusAction.ascx</DependentUpon>
+    <Compile Include="Actions\StatusFilterAction.ascx.designer.cs">
+      <DependentUpon>StatusFilterAction.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\NotConfigured.ascx.cs">
       <DependentUpon>NotConfigured.ascx</DependentUpon>
@@ -193,7 +193,7 @@
     <Compile Include="Display\EventDetail.ascx.designer.cs">
       <DependentUpon>EventDetail.ascx</DependentUpon>
     </Compile>
-    <Compile Include="SubControlInfo.cs" />
+    <Compile Include="Components\SubControlInfo.cs" />
     <Compile Include="Util\TelerikSkin.cs" />
     <Compile Include="Display\TemplateDisplayOptions.ascx.cs">
       <DependentUpon>TemplateDisplayOptions.ascx</DependentUpon>
@@ -353,8 +353,6 @@
     <Compile Include="Util\Utility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="docs\Engage Publish Users Guide.doc" />
-    <None Include="docs\Engage Publish Users Guide.pdf" />
     <None Include="EngageEvents.dnn" />
     <None Include="EngageEvents.Build" />
     <None Include="Providers\DataProviders\SqlDataProvider\00.00.01.SqlDataProvider" />
@@ -378,21 +376,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="docs\images\article-general.gif" />
-    <Content Include="docs\images\article-name-desc.gif" />
-    <Content Include="docs\images\category-settings.gif" />
-    <Content Include="docs\images\categoryfeature-settings.gif" />
-    <Content Include="docs\images\categorylist.gif" />
-    <Content Include="docs\images\childdisplaypage.gif" />
-    <Content Include="docs\images\displaypage.gif" />
-    <Content Include="docs\images\itemlisting-settings.gif" />
-    <Content Include="docs\images\logo_ref_bl.jpg" />
-    <Content Include="docs\images\logo_ref_w.jpg" />
-    <Content Include="docs\images\publish_bn.jpg" />
-    <Content Include="docs\images\publish_logo_small.jpg" />
-    <Content Include="docs\images\toolbar.gif" />
-    <Content Include="docs\license.txt" />
-    <Content Include="docs\install.txt" />
     <Content Include="Images\dn.gif" />
     <Content Include="Images\lt.gif" />
     <Content Include="Images\rt.gif" />
@@ -525,9 +508,6 @@
     <Content Include="Images\updatedisabled.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Navigation\App_LocalResources\EventAdminActions.ascx.resx">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Display\CalendarDisplayOptions.ascx" />
     <Content Include="Display\EventCalendar.ascx" />
     <Content Include="Images\errorSmallIcon.png" />
@@ -595,9 +575,6 @@
     <Content Include="Templates\Template.css" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Display\App_LocalResources\EventListingItem.ascx.resx">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Display\TemplateDisplayOptions.ascx" />
     <Content Include="Templates\Display.Calendar.html" />
     <Content Include="Templates\Detail.Item.html" />
@@ -612,7 +589,7 @@
     <Content Include="Actions\CancelAction.ascx" />
     <Content Include="Actions\DeleteAction.ascx" />
     <Content Include="Actions\SortAction.ascx" />
-    <Content Include="Actions\SortStatusAction.ascx" />
+    <Content Include="Actions\StatusFilterAction.ascx" />
     <Content Include="Display\App_LocalResources\TemplateDisplayOptions.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
@@ -658,6 +635,9 @@
     <Content Include="References\SMTP.Net.dll" />
     <Content Include="References\Telerik.Web.UI.dll" />
     <Content Include="Display\App_LocalResources\CalendarDisplayOptions.ascx.resx">
+    </Content>
+    <Content Include="Templates\App_LocalResources\Template.resx">
+      <SubType>Designer</SubType>
     </Content>
     <EmbeddedResource Include="JavaScript\EngageEvents.EditTypeDialog.js" />
   </ItemGroup>

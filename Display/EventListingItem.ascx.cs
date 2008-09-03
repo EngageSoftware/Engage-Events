@@ -13,7 +13,6 @@ namespace Engage.Dnn.Events.Display
 {
     using System;
     using System.Globalization;
-    using System.IO;
     using System.Text;
     using System.Web.UI;
     using System.Web.UI.WebControls;
@@ -38,9 +37,9 @@ namespace Engage.Dnn.Events.Display
         private SortAction sortAction;
 
         /// <summary>
-        /// Backing field for <see cref="SortStatusAction"/>
+        /// Backing field for <see cref="StatusFilterAction"/>
         /// </summary>
-        private SortStatusAction sortStatusAction;
+        private StatusFilterAction statusFilterAction;
 
         /// <summary>
         /// Backing field for <see cref="ListingMode"/>
@@ -79,10 +78,10 @@ namespace Engage.Dnn.Events.Display
         /// Gets or sets the sort status action control.
         /// </summary>
         /// <value>The sort status action control.</value>
-        public SortStatusAction SortStatusAction
+        public StatusFilterAction StatusFilterAction
         {
-            get { return this.sortStatusAction; }
-            set { this.sortStatusAction = value; }
+            get { return this.statusFilterAction; }
+            set { this.statusFilterAction = value; }
         }
 
         /// <summary>
@@ -143,9 +142,9 @@ namespace Engage.Dnn.Events.Display
             }
 
             string statusSort = "Active";
-            if (this.sortStatusAction != null)
+            if (this.statusFilterAction != null)
             {
-                statusSort = this.sortStatusAction.SelectedValue;
+                statusSort = this.statusFilterAction.SelectedValue;
             }
 
             this.events = EventCollection.Load(this.PortalId, this.listingMode, sort, this.CurrentPageIndex, this.RecordsPerPage, statusSort == "All", this.IsFeatured);
@@ -172,10 +171,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected override void OnInit(EventArgs e)
         {
-            // we must set the local resource file first since process will occur before we define the LocalResourceFile
-            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
             base.OnInit(e);
-
             this.listingMode = Dnn.Utility.GetEnumSetting(this.Settings, Setting.DisplayModeOption.PropertyName, ListingMode.All);
         }
 
@@ -213,13 +209,13 @@ namespace Engage.Dnn.Events.Display
         /// <param name="tag">The tag being processed.</param>
         /// <param name="engageObject">The engage object.</param>
         /// <param name="resourceFile">The resource file name.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "The complexity cannot easily be reduced and the method is easy to understand, test, and maintain")]
         protected override void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)
         {
             Event currentEvent = (Event)engageObject;
 
             if (tag.TagType == TagType.Open)
             {
-                resourceFile = "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions";
                 switch (tag.LocalName.ToUpperInvariant())
                 {
                     case "EDITEVENTBUTTON":
@@ -227,8 +223,7 @@ namespace Engage.Dnn.Events.Display
                         editEventAction.CurrentEvent = currentEvent;
                         editEventAction.ModuleConfiguration = this.ModuleConfiguration;
                         editEventAction.Href = this.BuildLinkUrl(this.ModuleId, "EventEdit", Dnn.Events.Utility.GetEventParameters(currentEvent));
-                        editEventAction.Text = Localization.GetString(
-                            "EditEventButton", resourceFile);
+                        editEventAction.Text = Localization.GetString("EditEventButton", resourceFile);
                         container.Controls.Add(editEventAction);
                         editEventAction.Visible = this.IsAdmin;
                         break;
@@ -237,8 +232,7 @@ namespace Engage.Dnn.Events.Display
                         responsesEventAction.CurrentEvent = currentEvent;
                         responsesEventAction.ModuleConfiguration = this.ModuleConfiguration;
                         responsesEventAction.Href = this.BuildLinkUrl(this.ModuleId, "ResponseDetail", Dnn.Events.Utility.GetEventParameters(currentEvent));
-                        responsesEventAction.Text = Localization.GetString(
-                            "ResponsesButton", resourceFile);
+                        responsesEventAction.Text = Localization.GetString("ResponsesButton", resourceFile);
                         container.Controls.Add(responsesEventAction);
                         responsesEventAction.Visible = this.IsAdmin;
                         break;
@@ -255,8 +249,7 @@ namespace Engage.Dnn.Events.Display
 
                         break;
                     case "ADDTOCALENDARBUTTON":
-                        AddToCalendarAction addToCalendarAction =
-                            (AddToCalendarAction)this.LoadControl(ActionsControlsFolder + "AddToCalendarAction.ascx");
+                        AddToCalendarAction addToCalendarAction = (AddToCalendarAction)this.LoadControl(ActionsControlsFolder + "AddToCalendarAction.ascx");
                         addToCalendarAction.CurrentEvent = currentEvent;
                         addToCalendarAction.ModuleConfiguration = this.ModuleConfiguration;
 
@@ -281,40 +274,39 @@ namespace Engage.Dnn.Events.Display
                         editEmailAction.CurrentEvent = currentEvent;
                         editEmailAction.ModuleConfiguration = this.ModuleConfiguration;
                         editEmailAction.Href = this.BuildLinkUrl(this.ModuleId, "EmailEdit", Dnn.Events.Utility.GetEventParameters(currentEvent));
-                        editEmailAction.Text = Localization.GetString(
-                            "EditEmailButton", resourceFile);
+                        editEmailAction.Text = Localization.GetString("EditEmailButton", resourceFile);
                         container.Controls.Add(editEmailAction);
                         editEmailAction.Visible = this.IsAdmin;
                         break;
-                    case "SORTEVENTBYDATE":
+                    case "EVENTSORT":
                         this.sortAction = (SortAction)this.LoadControl(ActionsControlsFolder + "SortAction.ascx");
                         this.sortAction.ModuleConfiguration = this.ModuleConfiguration;
                         this.sortAction.SortChanged += this.SortStatusAction_SortChanged;
                         container.Controls.Add(this.sortAction);
                         break;
-                    case "SORTEVENTBYSTATUS":
-                        this.sortStatusAction = (SortStatusAction)this.LoadControl(ActionsControlsFolder + "SortStatusAction.ascx");
-                        this.sortStatusAction.ModuleConfiguration = this.ModuleConfiguration;
-                        this.sortStatusAction.SortChanged += this.SortStatusAction_SortChanged;
-                        container.Controls.Add(this.sortStatusAction);
+                    case "STATUSFILTER":
+                        this.statusFilterAction = (StatusFilterAction)this.LoadControl(ActionsControlsFolder + "StatusFilterAction.ascx");
+                        this.statusFilterAction.ModuleConfiguration = this.ModuleConfiguration;
+                        this.statusFilterAction.SortChanged += this.SortStatusAction_SortChanged;
+                        container.Controls.Add(this.statusFilterAction);
                         break;
                     case "PREVIOUSPAGE":
                         this.PreviousButton = new LinkButton();
-                        this.PreviousButton.Text = Localization.GetString("PreviousButton", this.LocalResourceFile);
+                        this.PreviousButton.Text = Localization.GetString("PreviousButton", resourceFile);
                         this.PreviousButton.CssClass = tag.GetAttributeValue("CssClass");
                         this.PreviousButton.CommandName = "PreviousPage";
                         this.PreviousButton.EnableViewState = true;
-                        this.PreviousButton.ToolTip = Localization.GetString(tag.GetAttributeValue("ToolTipResourceKey"), this.LocalResourceFile);
+                        this.PreviousButton.ToolTip = Localization.GetString(tag.GetAttributeValue("ToolTipResourceKey"), resourceFile);
                         this.PreviousButton.Click += this.PreviousButton_Click;
                         container.Controls.Add(this.PreviousButton);
                         break;
                     case "NEXTPAGE":
                         this.NextButton = new LinkButton();
-                        this.NextButton.Text = Localization.GetString("NextButton", this.LocalResourceFile);
+                        this.NextButton.Text = Localization.GetString("NextButton", resourceFile);
                         this.NextButton.CssClass = tag.GetAttributeValue("CssClass");
                         this.NextButton.CommandName = "NextPage";
                         this.NextButton.EnableViewState = true;
-                        this.NextButton.ToolTip = Localization.GetString(tag.GetAttributeValue("ToolTipResourceKey"), this.LocalResourceFile);
+                        this.NextButton.ToolTip = Localization.GetString(tag.GetAttributeValue("ToolTipResourceKey"), resourceFile);
                         this.NextButton.Click += this.NextButton_Click;
                         container.Controls.Add(this.NextButton);
                         break;
@@ -341,7 +333,7 @@ namespace Engage.Dnn.Events.Display
                         this.CurrentPageLabel = new Label();
                         this.CurrentPageLabel.Text = (this.CurrentPageIndex + 1).ToString(CultureInfo.CurrentCulture);
                         this.CurrentPageLabel.CssClass = tag.GetAttributeValue("CssClass");
-                        this.CurrentPageLabel.ToolTip = Localization.GetString("CurrentPageToolTip", this.LocalResourceFile);
+                        this.CurrentPageLabel.ToolTip = Localization.GetString("CurrentPageToolTip", resourceFile);
                         container.Controls.Add(this.CurrentPageLabel);
                         break;
                     case "PAGECOUNT":
@@ -351,15 +343,15 @@ namespace Engage.Dnn.Events.Display
                         break;
                     case "PAGEXOFY":
                         this.PageXOfYLabel = new Label();
-                        this.PageXOfYFormatTemplate = Localization.GetString(tag.GetAttributeValue("ResourceKey"), this.LocalResourceFile);
                         this.PageXOfYLabel.CssClass = tag.GetAttributeValue("CssClass");
                         container.Controls.Add(this.PageXOfYLabel);
+                        this.PageXOfYFormatTemplate = Localization.GetString(tag.GetAttributeValue("ResourceKey"), resourceFile);
                         break;
                     case "READMORE":
                         if (Engage.Utility.HasValue(currentEvent.Description))
                         {
                             HyperLink detailLink = new HyperLink();
-                            detailLink.Text = Localization.GetString(tag.GetAttributeValue("ResourceKey"), this.LocalResourceFile);
+                            detailLink.Text = Localization.GetString(tag.GetAttributeValue("ResourceKey"), resourceFile);
                             if (detailLink.Text.Length == 0)
                             {
                                 detailLink.Text = "Read More...";

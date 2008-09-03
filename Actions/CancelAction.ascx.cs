@@ -57,7 +57,7 @@ namespace Engage.Dnn.Events
 
             // since the global navigation control is not loaded using DNN mechanisms we need to set it here so that calls to 
             // module related information will appear the same as the actual control this navigation is sitting on.hk
-            this.LocalResourceFile = "~" + DesktopModuleFolderName + "Navigation/App_LocalResources/EventAdminActions";
+            this.LocalResourceFile = TemplateResourceFile;
             this.Load += this.Page_Load;
             this.CancelButton.Click += this.CancelButton_Click;
         }

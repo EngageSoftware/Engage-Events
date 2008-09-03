@@ -52,7 +52,7 @@ namespace Engage.Dnn.Events.Display
                 string templateName = Utility.GetStringSetting(this.Settings, Framework.Setting.DetailTemplate.PropertyName, "Detail.Item.html");
 
                 Template template = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
-                TemplateEngine.ProcessTags(this.DetailPlaceholder, template.ChildTags, ev, this.LocalResourceFile, ProcessTag);
+                TemplateEngine.ProcessTags(this.DetailPlaceholder, template.ChildTags, ev, TemplateResourceFile, ProcessTag);
 
                 this.BackHyperlink.NavigateUrl = Globals.NavigateURL();
             }

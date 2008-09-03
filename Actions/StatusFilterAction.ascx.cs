@@ -1,4 +1,4 @@
-// <copyright file="SortStatusAction.ascx.cs" company="Engage Software">
+// <copyright file="StatusFilterAction.ascx.cs" company="Engage Software">
 // Engage: Events - http://www.engagemodules.com
 // Copyright (c) 2004-2008
 // by Engage Software ( http://www.engagesoftware.com )
@@ -20,7 +20,7 @@ namespace Engage.Dnn.Events
     /// This control's behavior changed from using LinkButtons to standard buttons. Something to do with a postback
     /// not occurring on the container form. Not sure why? Anyhow, it stores the EventID in viewstate and uses it if needed.hk
     /// </remarks>
-    public partial class SortStatusAction : ActionControlBase
+    public partial class StatusFilterAction : ActionControlBase
     {
         /// <summary>
         /// Occurs when the sort has changed.
@@ -33,7 +33,7 @@ namespace Engage.Dnn.Events
         /// <value>The selected status of event to display.</value>
         internal string SelectedValue
         {
-            get { return this.RadioButtonListStatusSort.SelectedValue; }
+            get { return this.StatusRadioButtonList.SelectedValue; }
         }
 
         /// <summary>
@@ -61,8 +61,8 @@ namespace Engage.Dnn.Events
             base.OnInit(e);
 
             this.Load += this.Page_Load;
-            this.LocalResourceFile = "~" + DesktopModuleFolderName + "Display/App_LocalResources/EventListingItem.ascx.resx";
-            this.RadioButtonListStatusSort.SelectedIndexChanged += this.RadioButtonListStatusSort_SelectedIndexChanged;
+            this.LocalResourceFile = TemplateResourceFile;
+            this.StatusRadioButtonList.SelectedIndexChanged += this.StatusRadioButtonList_SelectedIndexChanged;
         }
 
         /// <summary>
@@ -91,11 +91,11 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Handles the SelectedIndexChanged event of the RadioButtonListStatusSort control.
+        /// Handles the SelectedIndexChanged event of the StatusRadioButtonList control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void RadioButtonListStatusSort_SelectedIndexChanged(object sender, EventArgs e)
+        private void StatusRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.OnSortChanged(e);
         }

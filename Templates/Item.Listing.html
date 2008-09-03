@@ -3,27 +3,21 @@
         <h2 class="Head"><Engage:DataEntity PropertyName="Title" /></h2>
     </div>
     <div class="EventLocation">
-        <p class="NormalBold"><Engage:Label ResourceKey="Where" Text="Where"></Engage:Label></p>
+        <p class="NormalBold"><Engage:Label ResourceKey="Where"/></p>
         <p class="Normal"><Engage:DataEntity PropertyName="Location"/></p>
     </div>
     <div class="EventDate">
-        <p class="NormalBold">When</p>
+        <p class="NormalBold"><Engage:Label ResourceKey="When" /></p>
         <p class="Normal"><Engage:DateEntity PropertyName="EventStart" Format="MM.dd.yyyy"/><span class="RecurrenceSummary"><Engage:RecurrenceSummary /></span></p>
     </div>
     <div class="EventOverview">
-        <p class="NormalBold">Overview</p>
+        <p class="NormalBold"><Engage:Label ResourceKey="Overview" /></p>
         <div class="Normal">
             <div><Engage:DataEntity PropertyName="Overview" /></div>
             <p><Engage:ReadMore ResourceKey="ReadMore" /></p>
-            <!--Comment here-->
         </div>
     </div>
     <div class="EventButtons">
         <Engage:EditEventButton /> <Engage:ViewResponsesButton /> <Engage:RegisterButton /> <Engage:AddToCalendarButton /> <Engage:DeleteButton /> <Engage:CancelButton />
     </div>
 </Engage:EventWrapper>
-
-<!-- Documentation 
-Entity - DateEntity contains a property called Format, valid values are any DateTime format string e.g. MM/dd/yyyy or MM.dd.yy
-Entity - ReadMore can be used to create a readmore link. Attributes are ResourceKey and is defined in the EventListingItem.ascx.resx
--->
