@@ -26,6 +26,7 @@
             <timeview skin="WebBlue"/>
             <calendar skin="WebBlue" ShowRowHeaders="false"/>
             <DateInput InvalidStyleDuration="100"/>
+            <ClientEvents OnDateSelected="StartDateTimePicker_DateSelected" />
         </telerik:raddatetimepicker>
         
         <asp:RequiredFieldValidator runat="server" ControlToValidate="StartDateTimePicker" ResourceKey="StartDateTimePickerRequired" Display="None" EnableClientScript="false"/>
@@ -106,3 +107,18 @@
         </div>
     </asp:View>
 </asp:MultiView>
+
+<script type="text/ecmascript">
+    function StartDateTimePicker_DateSelected(sender, eventArgs) {
+        var EndDateTimePicker = $find("<%= EndDateTimePicker.ClientID %>");
+        // don't update end date if there's already an end date but not an old start date
+        if (EndDateTimePicker.isEmpty() || eventArgs.get_oldDate()) {
+            var selectedDateSpan = 1800000; // 30 minutes
+            if (!EndDateTimePicker.isEmpty()) {
+                selectedDateSpan = EndDateTimePicker.get_selectedDate() - eventArgs.get_oldDate();
+            }
+
+            EndDateTimePicker.set_selectedDate(new Date(eventArgs.get_newDate().getTime() + selectedDateSpan));
+        }
+    }
+</script>
