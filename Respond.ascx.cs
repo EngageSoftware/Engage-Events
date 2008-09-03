@@ -15,6 +15,7 @@ namespace Engage.Dnn.Events
     using System;
     using System.Globalization;
     using System.Web;
+    using System.Web.UI.WebControls;
     using DotNetNuke.Common;
     using DotNetNuke.Framework;
     using DotNetNuke.Services.Exceptions;
@@ -132,10 +133,10 @@ namespace Engage.Dnn.Events
                 this.EventNameLabel.Text = string.Format(CultureInfo.CurrentCulture, Localization.GetString("EventNameLabel.Text", LocalResourceFile), e.Title);
                 this.AddToCalendarButton.Enabled = true;
 
-                this.ResponseStatusRadioButtons.DataSource = Enum.GetNames(typeof(ResponseStatus));
-                this.ResponseStatusRadioButtons.DataBind();
+                this.ResponseStatusRadioButtons.Items.Clear();
+                this.ResponseStatusRadioButtons.Items.Add(new ListItem(Localization.GetString(ResponseStatus.Attending.ToString(), LocalResourceFile), ResponseStatus.Attending.ToString()));
+                this.ResponseStatusRadioButtons.Items.Add(new ListItem(Localization.GetString(ResponseStatus.NotAttending.ToString(), LocalResourceFile), ResponseStatus.NotAttending.ToString()));
                 this.ResponseStatusRadioButtons.Items[0].Selected = true;
-                Dnn.Utility.LocalizeListControl(this.ResponseStatusRadioButtons, this.LocalResourceFile);
             }
         }
     }
