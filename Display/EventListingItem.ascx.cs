@@ -141,13 +141,13 @@ namespace Engage.Dnn.Events.Display
                 sort = this.sortAction.SelectedValue;
             }
 
-            string statusSort = "Active";
+            string status = "Active";
             if (this.statusFilterAction != null)
             {
-                statusSort = this.statusFilterAction.SelectedValue;
+                status = this.statusFilterAction.SelectedValue;
             }
 
-            this.events = EventCollection.Load(this.PortalId, this.listingMode, sort, this.CurrentPageIndex, this.RecordsPerPage, statusSort == "All", this.IsFeatured);
+            this.events = EventCollection.Load(this.PortalId, this.listingMode, sort, this.CurrentPageIndex, this.RecordsPerPage, status.Equals("All", StringComparison.Ordinal), this.IsFeatured);
             this.RepeaterEvents.DataSource = this.events;
             this.RepeaterEvents.DataBind();
         }
