@@ -63,7 +63,7 @@
     <Reference Include="Engage.Routingv3.0, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Engage.Servicesv3.0, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Engage.Templating, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Engage.Utilityv3.0, Version=3.0.0.25028, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Engage.Utilityv3.0, Version=3.0.0.15801, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral">
       <HintPath>..\..\bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>

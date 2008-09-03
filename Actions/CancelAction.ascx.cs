@@ -88,7 +88,7 @@ namespace Engage.Dnn.Events
             ev.Save(this.UserId);
             this.OnCancel(e);
 
-            EventListingItem listing = this.Parent.Parent.Parent as EventListingItem;
+            EventListingItem listing = Engage.Utility.FindParentControl<EventListingItem>(this);
             if (listing != null)
             {
                 listing.BindData();

@@ -14,6 +14,7 @@ namespace Engage.Dnn.Events
     /// <summary>
     /// Skins embedded into the Telerik assembly for use in styling Telerik controls.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Telerik", Justification = "Telerik is spelled correctly")]
     public enum TelerikSkin
     {
         /// <summary>
@@ -39,6 +40,7 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// A skin called Inox
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Inox", Justification = "Inox is the name of the skin and is correctly spelled")]
         Inox,
 
         /// <summary>
@@ -59,6 +61,7 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// A skin called Telerik
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Telerik", Justification = "Telerik is spelled correctly")]
         Telerik,
 
         /// <summary>

@@ -48,7 +48,7 @@ namespace Engage.Dnn.Events
                 }
                 else
                 {
-                    throw new ArgumentException("controlPath", "controlPath must have a value");
+                    throw new ArgumentException("controlPath must have a value", "controlPath");
                 }
             }
 
@@ -76,6 +76,28 @@ namespace Engage.Dnn.Events
         {
             [DebuggerStepThrough]
             get { return this.requiresEditPermission; }
+        }
+
+        /// <summary>
+        /// Implements the operator ==.
+        /// </summary>
+        /// <param name="left">The left value.</param>
+        /// <param name="right">The right value.</param>
+        /// <returns><c>true</c> if <paramref name="left"/> equals <paramref name="right"/>, otherwise <c>false</c>.</returns>
+        public static bool operator ==(SubControlInfo left, SubControlInfo right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Implements the operator !=.
+        /// </summary>
+        /// <param name="left">The left value.</param>
+        /// <param name="right">The right value.</param>
+        /// <returns><c>true</c> if <paramref name="left"/> does not equal <paramref name="right"/>, otherwise <c>false</c>.</returns>
+        public static bool operator !=(SubControlInfo left, SubControlInfo right)
+        {
+            return !left.Equals(right);
         }
 
         /// <summary>

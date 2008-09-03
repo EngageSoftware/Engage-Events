@@ -351,7 +351,7 @@ namespace Engage.Dnn.Events.Display
                         break;
                     case "PAGEXOFY":
                         this.PageXOfYLabel = new Label();
-                        this.PageXOfYLabel.Text = Localization.GetString(tag.GetAttributeValue("ResourceKey"), this.LocalResourceFile);
+                        this.PageXOfYFormatTemplate = Localization.GetString(tag.GetAttributeValue("ResourceKey"), this.LocalResourceFile);
                         this.PageXOfYLabel.CssClass = tag.GetAttributeValue("CssClass");
                         container.Controls.Add(this.PageXOfYLabel);
                         break;

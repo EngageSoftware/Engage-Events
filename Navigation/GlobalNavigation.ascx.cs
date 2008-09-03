@@ -47,7 +47,7 @@ namespace Engage.Dnn.Events.Navigation
 
             // since the global navigation control is not loaded using DNN mechanisms we need to set it here so that calls to 
             // module related information will appear the same as the actual control this navigation is sitting on.hk
-            this.ModuleConfiguration = ((PortalModuleBase)base.Parent).ModuleConfiguration;
+            this.ModuleConfiguration = Engage.Utility.FindParentControl<PortalModuleBase>(this).ModuleConfiguration;
             this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
 
             this.Load += this.Page_Load;

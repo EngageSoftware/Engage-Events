@@ -412,3 +412,27 @@ BEGIN
 END
 GO
 
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spDeleteEvent]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spDeleteEvent]
+GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spDeleteEvent] 
+(
+@EventId int
+)
+AS
+
+begin transaction
+
+DELETE {databaseOwner}[{objectQualifier}Engage_EventMessage] 
+WHERE EventID = @EventId
+
+DELETE {databaseOwner}[{objectQualifier}Engage_Response] 
+WHERE EventID = @EventId
+
+DELETE {databaseOwner}[{objectQualifier}Engage_Event] 
+WHERE EventID = @EventId OR RecurrenceParentId = @EventId
+
+commit transaction
+GO
+
