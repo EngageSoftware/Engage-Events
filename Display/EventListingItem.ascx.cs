@@ -161,8 +161,7 @@ namespace Engage.Dnn.Events.Display
             string templateName = this.FooterTemplateName.Length == 0
                                       ? Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.FooterTemplate.PropertyName)
                                       : this.FooterTemplateName;
-            Template footerTemplate = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
-            return footerTemplate;
+            return TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
         }
 
         /// <summary>
@@ -184,8 +183,7 @@ namespace Engage.Dnn.Events.Display
             string templateName = this.ItemTemplateName.Length == 0
                                       ? Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.ItemTemplate.PropertyName)
                                       : this.ItemTemplateName;
-            Template itemTemplate = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
-            return itemTemplate;
+            return TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
         }
 
         /// <summary>
@@ -197,8 +195,7 @@ namespace Engage.Dnn.Events.Display
             string templateName = this.HeaderTemplateName.Length == 0
                                       ? Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.HeaderTemplate.PropertyName)
                                       : this.HeaderTemplateName;
-            Template headerTemplate = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
-            return headerTemplate;
+            return TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
         }
 
         /// <summary>
