@@ -151,6 +151,12 @@ namespace Engage.Events
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private bool allowRegistrations = true;
 
+        /// <summary>
+        /// Backing field for <see cref="TimeZoneOffset"/>.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private TimeSpan timeZoneOffset;
+
         /////// <summary>
         /////// Indicates whether the license for this assembly has yet been loaded.
         /////// </summary>
@@ -174,12 +180,13 @@ namespace Engage.Events
         /// <param name="description">The event description.</param>
         /// <param name="eventStart">When the event starts.</param>
         /// <param name="eventEnd">When the event ends.</param>
+        /// <param name="timeZoneOffset">The time zone offset.</param>
         /// <param name="location">The location of the event.</param>
         /// <param name="isFeatured">if set to <c>true</c> this event is featured.</param>
         /// <param name="allowRegistrations">if set to <c>true</c> this event allows users to register for it.</param>
         /// <param name="recurrenceRule">The recurrence rule.</param>
-        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule)
-            : this(portalId, moduleId, organizerEmail, title, overview, description, eventStart, eventEnd, location, isFeatured, allowRegistrations, recurrenceRule, false)
+        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule)
+            : this(portalId, moduleId, organizerEmail, title, overview, description, eventStart, eventEnd, timeZoneOffset, location, isFeatured, allowRegistrations, recurrenceRule, false)
         {
         }
 
@@ -194,12 +201,13 @@ namespace Engage.Events
         /// <param name="description">The event description.</param>
         /// <param name="eventStart">When the event starts.</param>
         /// <param name="eventEnd">When the event ends.</param>
+        /// <param name="timeZoneOffset">The time zone offset.</param>
         /// <param name="location">The location of the event.</param>
         /// <param name="isFeatured">if set to <c>true</c> this event is featured.</param>
         /// <param name="allowRegistrations">if set to <c>true</c> this event allows users to register for it.</param>
         /// <param name="recurrenceRule">The recurrence rule.</param>
         /// <param name="cancelled">if set to <c>true</c> this event is cancelled.</param>
-        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule, bool cancelled)
+        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule, bool cancelled)
         {
             this.portalId = portalId;
             this.moduleId = moduleId;
@@ -209,6 +217,7 @@ namespace Engage.Events
             this.description = description;
             this.eventStart = eventStart;
             this.eventEnd = eventEnd;
+            this.timeZoneOffset = timeZoneOffset;
             this.location = location;
             this.isFeatured = isFeatured;
             this.allowRegistrations = allowRegistrations;
@@ -482,6 +491,20 @@ namespace Engage.Events
             set { this.allowRegistrations = value; }
         }
 
+
+        /// <summary>
+        /// Gets or sets the time zone offset for this event.
+        /// </summary>
+        /// <value>The time zone offset for this event.</value>
+        [XmlElement(Order = 14)]
+        public TimeSpan TimeZoneOffset
+        {
+            [DebuggerStepThrough]
+            get { return this.timeZoneOffset; }
+            [DebuggerStepThrough]
+            set { this.timeZoneOffset = value; }
+        }
+
         /// <summary>
         /// Gets a value indicating whether this instance is recurring.
         /// </summary>
@@ -597,14 +620,15 @@ namespace Engage.Events
         /// <param name="description">The description.</param>
         /// <param name="eventStart">The event's start date and time.</param>
         /// <param name="eventEnd">The event end.</param>
+        /// <param name="timeZoneOffset">The time zone offset.</param>
         /// <param name="location">The location of the event.</param>
         /// <param name="isFeatured">if set to <c>true</c> the event should be listed in featured displays.</param>
         /// <param name="allowRegistrations">if set to <c>true</c> this event allows users to register for it.</param>
         /// <param name="recurrenceRule">The recurrence rule.</param>
         /// <returns>A new event object.</returns>
-        public static Event Create(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule)
+        public static Event Create(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule)
         {
-            return new Event(portalId, moduleId, organizerEmail, title, overview, description, eventStart, eventEnd, location, isFeatured, allowRegistrations, recurrenceRule);
+            return new Event(portalId, moduleId, organizerEmail, title, overview, description, eventStart, eventEnd, timeZoneOffset, location, isFeatured, allowRegistrations, recurrenceRule);
         }
 
         /// <summary>
@@ -633,7 +657,7 @@ namespace Engage.Events
         /// <returns>An occurrence of this <see cref="Event"/></returns>
         public Event CreateOccurrence(DateTime eventStart)
         {
-            Event occurrence = new Event(this.portalId, this.moduleId, this.organizerEmail, this.title, this.overview, this.description, eventStart, eventStart + this.Duration, this.location, this.isFeatured, this.allowRegistrations, this.recurrenceRule, this.cancelled);
+            Event occurrence = new Event(this.portalId, this.moduleId, this.organizerEmail, this.title, this.overview, this.description, eventStart, eventStart + this.Duration, this.TimeZoneOffset, this.location, this.isFeatured, this.allowRegistrations, this.recurrenceRule, this.cancelled);
             occurrence.recurrenceParentId = this.id;
             occurrence.id = this.id;
             return occurrence;
@@ -658,13 +682,11 @@ namespace Engage.Events
         /// <summary>
         /// Creates an iCal representation of this event.
         /// </summary>
-        /// <param name="attendeeEmail">The attendee email.</param>
-        /// <param name="attendeeTimeZoneOffset">The attendee time zone offset.</param>
         /// <returns>An iCal representation of this event</returns>
-        public string ToICal(string attendeeEmail, TimeSpan attendeeTimeZoneOffset)
+        public string ToICal()
         {
             string rule = this.RecurrenceRule != null ? this.RecurrenceRule.ToString() : null;
-            return Util.ICalUtil.Export(overview, location, new Appointment(this.Id, this.EventStart, this.EventEnd, this.Title, rule), true, attendeeTimeZoneOffset);
+            return Util.ICalUtil.Export(overview, location, new Appointment(this.Id, this.EventStart, this.EventEnd, this.Title, rule), true, this.TimeZoneOffset);
         }
 
         /// <summary>
@@ -719,6 +741,7 @@ namespace Engage.Events
             e.description = eventRecord["Description"].ToString();
             e.eventStart = (DateTime)eventRecord["EventStart"];
             e.eventEnd = (DateTime)eventRecord["EventEnd"];
+            e.timeZoneOffset = new TimeSpan(0, (int)eventRecord["TimeZoneOffset"], 0);
             e.createdBy = (int)eventRecord["CreatedBy"];
             e.cancelled = (bool)eventRecord["Cancelled"];
             e.isFeatured = (bool)eventRecord["IsFeatured"];
@@ -729,11 +752,8 @@ namespace Engage.Events
             e.location = eventRecord["Location"].ToString();
             e.invitationUrl = eventRecord["InvitationUrl"].ToString();
             e.recapUrl = eventRecord["RecapUrl"].ToString();
-            if (!(eventRecord["RecurrenceParentId"] is DBNull))
-            {
-                e.recurrenceParentId = (int)eventRecord["RecurrenceParentId"];
-            }
-
+            e.recurrenceParentId = eventRecord["RecurrenceParentId"] as int?;
+            
             RecurrenceRule rule;
             if (RecurrenceRule.TryParse(eventRecord["RecurrenceRule"].ToString(), out rule))
             {
@@ -742,30 +762,6 @@ namespace Engage.Events
             
             return e;
         }
-
-        /////// <summary>
-        /////// Gets a string representation of the embedded license for the aspnetEmail component.
-        /////// </summary>
-        /////// <returns>A string representation of the embedded license for the aspnetEmail component</returns>
-        ////private static string GetLicenseString()
-        ////{
-        ////    // embedded resources are embedded using the following convention
-        ////    // namespace.foldername.subfolder.subfolder.subfolder.filename etc...
-        ////    // in our case, the license is embedded as
-        ////    const string resourceLocation = "Engage.Events.aspnetemail.xml.lic";
-        ////    using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceLocation))
-        ////    {
-        ////        if (stream != null)
-        ////        {
-        ////            using (StreamReader sr = new StreamReader(stream))
-        ////            {
-        ////                return sr.ReadToEnd();
-        ////            }
-        ////        }
-        ////    }
-
-        ////    return null;
-        ////}
 
         /// <summary>
         /// Inserts this event.
@@ -788,6 +784,7 @@ namespace Engage.Events
                     Utility.CreateTextParam("@Description", this.description),
                     Utility.CreateDateTimeParam("@EventStart", this.eventStart),
                     Utility.CreateDateTimeParam("@EventEnd", this.eventEnd),
+                    Utility.CreateIntegerParam("@TimeZoneOffset", (int)this.timeZoneOffset.TotalMinutes),
                     Utility.CreateVarcharParam("@Organizer", this.organizer),
                     Utility.CreateVarcharParam("@OrganizerEmail", this.organizerEmail),
                     Utility.CreateVarcharParam("@Location", this.location),
@@ -828,6 +825,7 @@ namespace Engage.Events
                     Utility.CreateTextParam("@Description", this.description),
                     Utility.CreateDateTimeParam("@EventStart", this.eventStart),
                     Utility.CreateDateTimeParam("@EventEnd", this.eventEnd),
+                    Utility.CreateIntegerParam("@TimeZoneOffset", (int)this.timeZoneOffset.TotalMinutes),
                     Utility.CreateVarcharParam("@Organizer", this.organizer),
                     Utility.CreateVarcharParam("@OrganizerEmail", this.organizerEmail),
                     Utility.CreateVarcharParam("@Location", this.location),
