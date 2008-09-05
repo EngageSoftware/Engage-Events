@@ -51,19 +51,39 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Engage.Communicationv3.0, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Engage.DataProviderv3.0, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Engage.Dnn.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Engage.Communicationv3.0, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Engage.DataProviderv3.0, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Engage.Dnn.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="Engage.Dnn.Utility, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Engage.Eventsv3.0, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Engage.Frameworkv3.0, Version=2.0.5.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Engage.Licensing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Engage.Routingv3.0, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Engage.Servicesv3.0, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Engage.Templating, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Engage.Utilityv3.0, Version=3.0.0.26327, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Engage.Eventsv3.0, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Engage.Frameworkv3.0, Version=2.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Engage.Licensing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Engage.Routingv3.0, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Engage.Servicesv3.0, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Engage.Templating, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Engage.Utilityv3.0, Version=3.0.0.26327, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral">
       <HintPath>..\..\bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
