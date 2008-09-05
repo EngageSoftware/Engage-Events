@@ -71,6 +71,9 @@
         <file>
           <name>Telerik.Web.UI.dll</name>
         </file>
+        <file>
+          <name>aspNetEmail.dll</name>
+        </file>
       </files>
     </folder>
   </folders>  

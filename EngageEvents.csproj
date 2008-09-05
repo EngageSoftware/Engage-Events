@@ -583,7 +583,9 @@
     <Content Include="References\DotNetNuke.dll" />
     <Content Include="References\DotNetNuke.WebUtility.dll" />
     <Content Include="References\Engage.Dnn.Framework.dll" />
+    <Content Include="References\Engage.Dnn.Framework.XmlSerializers.dll" />
     <Content Include="References\Engage.Frameworkv3.0.dll" />
+    <Content Include="References\Engage.Frameworkv3.0.XmlSerializers.dll" />
     <Content Include="References\Microsoft.ApplicationBlocks.Data.dll" />
     <Content Include="References\SMTP.Net.dll" />
     <Content Include="References\Telerik.Web.UI.dll" />
