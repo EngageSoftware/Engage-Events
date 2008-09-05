@@ -38,11 +38,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotNetNuke, Version=4.6.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Inetpub\wwwroot\DotNetNuke\Website\bin\DotNetNuke.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Web" />
@@ -67,10 +62,6 @@
     <Compile Include="Util\ICalUtil.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Engage.DataProvider\Engage.DataProvider.csproj">
-      <Project>{36A4AB27-530A-4687-8016-7029E967DDE0}</Project>
-      <Name>Engage.DataProvider</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Engage.Framework\Engage.Framework.csproj">
       <Project>{0EA52814-FB21-4258-A411-BF2A6B1699F0}</Project>
       <Name>Engage.Framework</Name>
