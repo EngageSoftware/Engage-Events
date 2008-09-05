@@ -13,13 +13,11 @@ namespace Engage.Dnn.Events.Navigation
 {
     using System;
     using System.Globalization;
-    using System.IO;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Framework;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.Utilities;
     using Engage.Events;
-    using Utility = Dnn.Utility;
 
     /// <summary>
     /// Displays the actions that users can perform on an event instance.
@@ -76,7 +74,6 @@ namespace Engage.Dnn.Events.Navigation
         private int CurrentEventId
         {
             get { return Convert.ToInt32(this.ViewState["id"], CultureInfo.InvariantCulture); }
-
             set { this.ViewState["id"] = value.ToString(CultureInfo.InvariantCulture); }
         }
 
@@ -122,17 +119,6 @@ namespace Engage.Dnn.Events.Navigation
             AJAX.RegisterPostBackControl(this.AddToCalendarButton);
         }
 
-        /////// <summary>
-        /////// Gets the script to show the event type dialog window.
-        /////// </summary>
-        /////// <param name="occurrenceUrl">The URL to navigate to when the user chooses to apply the action to that occurrence.</param>
-        /////// <param name="seriesUrl">The URL to navigate to when the user chooses to apply the action to the entire series.</param>
-        /////// <returns>The script to show the event type dialog window</returns>
-        ////private static string GetShowEventTypeDialogScript(string occurrenceUrl, string seriesUrl)
-        ////{
-        ////    return string.Format(CultureInfo.InvariantCulture, "EngageEvents.showEditTypeDialog('{0}', '{1}');return false;", ClientAPI.GetSafeJSString(occurrenceUrl), ClientAPI.GetSafeJSString(seriesUrl));
-        ////}
-
         /// <summary>
         /// Invokes the cancel.
         /// </summary>
@@ -164,44 +150,9 @@ namespace Engage.Dnn.Events.Navigation
         /// </summary>
         private void BindData()
         {
-            ////this.SetupControls();
             this.SetVisibility();
             this.LocalizeControls();
-            ////this.SetupRecurringEditTypeDialog();
         }
-
-        /////// <summary>
-        /////// Sets up the button action controls.
-        /////// </summary>
-        ////private void SetupControls()
-        ////{
-        ////    this.EventEditButtonAction.CurrentEvent = this.CurrentEvent;
-        ////    this.EventEditButtonAction.ModuleConfiguration = this.ModuleConfiguration;
-        ////    this.EventEditButtonAction.Href = this.BuildLinkUrl(this.ModuleId, "EventEdit", "eventId=" + this.CurrentEventId.ToString(CultureInfo.InvariantCulture));
-        ////    this.EventEditButtonAction.Text = Localization.GetString("EditEventButton", this.LocalResourceFile);
-        ////}
-
-        /////// <summary>
-        /////// Sets up the edit buttons (i.e. <see cref="EditEventButton"/>, <see cref="DeleteEventButton"/>, and <see cref="CancelButton"/>)
-        /////// to display a dialog asking the user whether to perform the requested action on that occurrence or the whole series.
-        /////// </summary>
-        ////private void SetupRecurringEditTypeDialog()
-        ////{
-        ////    if (this.CurrentEvent.IsRecurring)
-        ////    {
-        ////        ScriptManager.RegisterClientScriptResource(this, typeof(EditTypeDialog), "Engage.Dnn.Events.JavaScript.EngageEvents.EditTypeDialog.js");
-        ////        this.EditEventButton.UseSubmitBehavior = this.DeleteEventButton.UseSubmitBehavior = this.CancelButton.UseSubmitBehavior = false;
-        ////        this.EditEventButton.OnClientClick = GetShowEventTypeDialogScript(
-        ////            this.BuildLinkUrl(this.ModuleId, "EventEdit", "eventId=" + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture), "start=" + this.CurrentEvent.EventStart.Ticks.ToString(CultureInfo.InvariantCulture)),
-        ////            this.BuildLinkUrl(this.ModuleId, "EventEdit", "eventId=" + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture)));
-        ////        this.DeleteEventButton.OnClientClick = GetShowEventTypeDialogScript(
-        ////            this.Page.ClientScript.GetPostBackClientHyperlink(this.DeleteEventButton, this.CurrentEvent.EventStart.Ticks.ToString(CultureInfo.InvariantCulture)),
-        ////            this.Page.ClientScript.GetPostBackClientHyperlink(this.DeleteEventButton, string.Empty));
-        ////        this.CancelButton.OnClientClick = GetShowEventTypeDialogScript(
-        ////            this.Page.ClientScript.GetPostBackClientHyperlink(this.CancelButton, this.CurrentEvent.EventStart.Ticks.ToString(CultureInfo.InvariantCulture)),
-        ////            this.Page.ClientScript.GetPostBackClientHyperlink(this.CancelButton, string.Empty));
-        ////    }
-        ////}
 
         /// <summary>
         /// Sets the visibility of this control's child controls.
@@ -239,7 +190,7 @@ namespace Engage.Dnn.Events.Navigation
         private void EditEventButton_Click(object sender, EventArgs e)
         {
             this.Response.Redirect(
-                this.BuildLinkUrl(this.ModuleId, "EventEdit", "eventId=" + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture)), true);
+                this.BuildLinkUrl(this.ModuleId, "EventEdit", Dnn.Events.Utility.GetEventParameters(this.CurrentEvent)), true);
         }
 
         /// <summary>
@@ -250,7 +201,7 @@ namespace Engage.Dnn.Events.Navigation
         private void RegisterButton_Click(object sender, EventArgs e)
         {
             this.Response.Redirect(
-                this.BuildLinkUrl(this.ModuleId, "Register", "eventid=" + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture)), true);
+                this.BuildLinkUrl(this.ModuleId, "Register", Dnn.Events.Utility.GetEventParameters(this.CurrentEvent)), true);
         }
 
         /// <summary>
@@ -261,7 +212,7 @@ namespace Engage.Dnn.Events.Navigation
         private void ResponsesButton_Click(object sender, EventArgs e)
         {
             this.Response.Redirect(
-                this.BuildLinkUrl(this.ModuleId, "ResponseDetail", "eventid=" + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture)), true);
+                this.BuildLinkUrl(this.ModuleId, "ResponseDetail", Dnn.Events.Utility.GetEventParameters(this.CurrentEvent)), true);
         }
 
         /// <summary>
@@ -298,7 +249,7 @@ namespace Engage.Dnn.Events.Navigation
         private void EditEmailButton_Click(object sender, EventArgs e)
         {
             this.Response.Redirect(
-                this.BuildLinkUrl(this.ModuleId, "EmailEdit", "eventid=" + this.CurrentEvent.Id.ToString(CultureInfo.InvariantCulture)), true);
+                this.BuildLinkUrl(this.ModuleId, "EmailEdit", Dnn.Events.Utility.GetEventParameters(this.CurrentEvent)), true);
         }
 
         /// <summary>

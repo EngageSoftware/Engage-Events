@@ -188,6 +188,7 @@
         <include name="**/References/Engage.Dnn.Framework.XmlSerializers.dll" />
         <include name="**/References/aspNetEmail.dll" />
         <include name="**/References/Telerik.Web.UI.dll" />
+        <include name="**/01.00.00.txt" />
         <include name="**/*.sqldataprovider" />
         <include name="**/SearchRedirector.ascx" />
         <include name="**/ReadMe.txt" />
@@ -220,6 +221,7 @@
         <include name="**/References/aspNetEmail.dll" />
         <include name="**/References/Telerik.Web.UI.dll" />
         <include name="**/*.sqldataprovider" />
+        <include name="**/01.00.00.txt" />
         <include name="**/SearchRedirector.ascx" />
         <include name="**/ReadMe.txt" />
         <include name="**/licenses/EULA-Professional.txt" />
@@ -250,6 +252,7 @@
         <include name="**/References/Engage.Dnn.Framework.XmlSerializers.dll" />
         <include name="**/References/aspNetEmail.dll" />
         <include name="**/References/Telerik.Web.UI.dll" />
+        <include name="**/01.00.00.txt" />
         <include name="**/*.sqldataprovider" />
         <include name="**/ReadMe.txt" />
         <include name="**/licenses/EULA-Enterprise.txt" />
@@ -282,6 +285,7 @@
         <include name="**/References/Engage.Dnn.Framework.XmlSerializers.dll" />
         <include name="**/References/aspNetEmail.dll" />
         <include name="**/References/Telerik.Web.UI.dll" />
+        <include name="**/01.00.00.txt" />
         <include name="**/*.sqldataprovider" />
         <include name="**/ReadMe.txt" />
         <include name="**/licenses/EULA-Enterprise.txt" />

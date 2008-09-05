@@ -3,7 +3,7 @@
 <%@ Register TagPrefix="dnn" TagName="label" Src="~/controls/labelControl.ascx" %>
 
 <style type="text/css">
-    @import url(<%=Engage.Dnn.Framework.ModuleBase.ApplicationUrl %><%=Engage.Dnn.Framework.ModuleBase.DesktopModuleFolderName %>Module.css);
+    @import url(<%=Engage.Dnn.Framework.ModuleBase.ApplicationUrl %><%=Engage.Dnn.Framework.Utility.GetDesktopModuleFolderName(Engage.Dnn.Events.Utility.DesktopModuleName) %>Module.css);
 </style>
 
 <asp:UpdatePanel runat="server" UpdateMode="Conditional">

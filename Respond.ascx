@@ -1,6 +1,6 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.Respond" Codebehind="Respond.ascx.cs" %>
 <%@ Register TagPrefix="engage" TagName="ModuleMessage" Src="Controls/ModuleMessage.ascx" %>
-<%@ Register TagPrefix="engage" Namespace="Engage.Controls" Assembly="Engage.Utilityv3.0" %>
+<%@ Register TagPrefix="engage" Namespace="Engage.Controls" Assembly="Engage.Dnn.Framework" %>
 
 <asp:MultiView ID="ResponseMultiview" ActiveViewIndex="0" runat="server">
     <asp:View ID="View1" runat="server">

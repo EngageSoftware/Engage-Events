@@ -188,6 +188,7 @@
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ModuleBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Properties\Assemblyinfo.cs" />
     <Compile Include="Components\EmailScheduler.cs" />
@@ -231,6 +232,7 @@
     </Compile>
     <Compile Include="Navigation\EventAdminActions.ascx.cs">
       <DependentUpon>EventAdminActions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Navigation\EventAdminActions.ascx.designer.cs">
       <DependentUpon>EventAdminActions.ascx</DependentUpon>
@@ -261,6 +263,7 @@
     </Compile>
     <Compile Include="Respond.ascx.cs">
       <DependentUpon>Respond.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Respond.ascx.designer.cs">
       <DependentUpon>Respond.ascx</DependentUpon>
@@ -298,6 +301,7 @@
     </Compile>
     <Compile Include="EventEdit.ascx.cs">
       <DependentUpon>EventEdit.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EventEdit.ascx.designer.cs">
       <DependentUpon>EventEdit.ascx</DependentUpon>
@@ -575,6 +579,7 @@
     <Content Include="Controls\EditTypeDialog.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="01.00.00.txt" />
     <Content Include="Controls\App_LocalResources\EditTypeDialog.aspx.resx">
       <SubType>Designer</SubType>
     </Content>
