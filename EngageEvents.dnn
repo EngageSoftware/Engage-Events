@@ -57,34 +57,7 @@
           <name>EngageEvents.dll</name>
         </file>
         <file>
-          <name>Engage.Eventsv3.0.dll</name>
-        </file>
-        <file>
-          <name>Engage.DataProviderv3.0.dll</name>
-        </file>
-        <file>
-          <name>Engage.Routingv3.0.dll</name>
-        </file>
-        <file>
-          <name>Engage.Servicesv3.0.dll</name>
-        </file>
-        <file>
           <name>Engage.Frameworkv3.0.dll</name>
-        </file>
-        <file>
-          <name>Engage.Utilityv3.0.dll</name>
-        </file>
-        <file>
-          <name>Engage.Communicationv3.0.dll</name>
-        </file>
-        <file>
-          <name>Engage.Licensing.dll</name>
-        </file>
-        <file>
-          <name>Engage.Dnn.Utility.dll</name>
-        </file>
-        <file>
-          <name>Engage.Templating.dll</name>
         </file>
         <file>
           <name>Engage.Dnn.Framework.dll</name>
