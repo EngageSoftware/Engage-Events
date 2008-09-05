@@ -148,10 +148,10 @@ namespace Engage.Dnn.Events.Display
                 Utility.LocalizeListControl(this.DisplayModeDropDown, this.LocalResourceFile);
                 SelectListValue(this.DisplayModeDropDown, this.DisplayModeOption);
 
-                SetupTemplateList(this.HeaderDropDownList, TemplateEngine.GetHeaderTemplates(ModuleBase.PhysicialTemplatesFolderName), this.HeaderTemplate);
-                SetupTemplateList(this.ItemDropDownList, TemplateEngine.GetItemTemplates(ModuleBase.PhysicialTemplatesFolderName), this.ItemTemplate);
-                SetupTemplateList(this.FooterDropDownList, TemplateEngine.GetFooterTemplates(ModuleBase.PhysicialTemplatesFolderName), this.FooterTemplate);
-                SetupTemplateList(this.DetailDropDownList, TemplateEngine.GetDetailTemplates(ModuleBase.PhysicialTemplatesFolderName), this.DetailTemplate);
+                SetupTemplateList(this.HeaderDropDownList, TemplateEngine.GetHeaderTemplates(Framework.Utility.GetPhysicialTemplatesFolderName(Dnn.Events.Utility.DesktopModuleName)), this.HeaderTemplate);
+                SetupTemplateList(this.ItemDropDownList, TemplateEngine.GetItemTemplates(Framework.Utility.GetPhysicialTemplatesFolderName(Dnn.Events.Utility.DesktopModuleName)), this.ItemTemplate);
+                SetupTemplateList(this.FooterDropDownList, TemplateEngine.GetFooterTemplates(Framework.Utility.GetPhysicialTemplatesFolderName(Dnn.Events.Utility.DesktopModuleName)), this.FooterTemplate);
+                SetupTemplateList(this.DetailDropDownList, TemplateEngine.GetDetailTemplates(Framework.Utility.GetPhysicialTemplatesFolderName(Dnn.Events.Utility.DesktopModuleName)), this.DetailTemplate);
 
                 this.RecordsPerPageTextBox.Value = this.RecordsPerPage;
             }

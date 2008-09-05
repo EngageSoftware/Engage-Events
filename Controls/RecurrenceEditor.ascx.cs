@@ -14,7 +14,6 @@ namespace Engage.Dnn.Events.Controls
 {
     using System;
     using System.Globalization;
-    using System.IO;
     using System.Web.UI.WebControls;
     using DotNetNuke.Services.Localization;
     using Telerik.Web.UI;
@@ -352,13 +351,13 @@ namespace Engage.Dnn.Events.Controls
         /// Gets the list of possible day selections, from <see cref="RecurrenceDay"/>.
         /// </summary>
         /// <returns>The list of possible day selections, from <see cref="RecurrenceDay"/></returns>
-        public static ListItem[] GetDayMaskItems()
+        public static ListItem[] GetDayMaskItems(string resourceFile)
         {
             return new ListItem[]
                {
-                   new ListItem(Localization.GetString(RecurrenceDay.EveryDay.ToString(), LocalSharedResourceFile), RecurrenceDay.EveryDay.ToString()), 
-                   new ListItem(Localization.GetString(RecurrenceDay.WeekDays.ToString(), LocalSharedResourceFile), RecurrenceDay.WeekDays.ToString()),
-                   new ListItem(Localization.GetString(RecurrenceDay.WeekendDays.ToString(), LocalSharedResourceFile), RecurrenceDay.WeekendDays.ToString()), 
+                   new ListItem(Localization.GetString(RecurrenceDay.EveryDay.ToString(), resourceFile), RecurrenceDay.EveryDay.ToString()), 
+                   new ListItem(Localization.GetString(RecurrenceDay.WeekDays.ToString(), resourceFile), RecurrenceDay.WeekDays.ToString()),
+                   new ListItem(Localization.GetString(RecurrenceDay.WeekendDays.ToString(), resourceFile), RecurrenceDay.WeekendDays.ToString()), 
                    new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DayOfWeek.Sunday), RecurrenceDay.Sunday.ToString()),
                    new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DayOfWeek.Monday), RecurrenceDay.Monday.ToString()), 
                    new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DayOfWeek.Tuesday), RecurrenceDay.Tuesday.ToString()),
@@ -373,15 +372,15 @@ namespace Engage.Dnn.Events.Controls
         /// Gets the list of possible ordinal selections, for example, First, Second or Last.  Based on <see cref="RecurrencePattern.DayOrdinal"/>.
         /// </summary>
         /// <returns>The list of possible ordinal selections</returns>
-        public static ListItem[] GetOrdinalItems()
+        public static ListItem[] GetOrdinalItems(string resourceFile)
         {
             return new ListItem[]
                {
-                   new ListItem(Localization.GetString(Utility.OrdinalValues[1], LocalSharedResourceFile), "1"),
-                   new ListItem(Localization.GetString(Utility.OrdinalValues[2], LocalSharedResourceFile), "2"),
-                   new ListItem(Localization.GetString(Utility.OrdinalValues[3], LocalSharedResourceFile), "3"),
-                   new ListItem(Localization.GetString(Utility.OrdinalValues[4], LocalSharedResourceFile), "4"),
-                   new ListItem(Localization.GetString(Utility.OrdinalValues[-1], LocalSharedResourceFile), "-1"),
+                   new ListItem(Localization.GetString(Utility.OrdinalValues[1], resourceFile), "1"),
+                   new ListItem(Localization.GetString(Utility.OrdinalValues[2], resourceFile), "2"),
+                   new ListItem(Localization.GetString(Utility.OrdinalValues[3], resourceFile), "3"),
+                   new ListItem(Localization.GetString(Utility.OrdinalValues[4], resourceFile), "4"),
+                   new ListItem(Localization.GetString(Utility.OrdinalValues[-1], resourceFile), "-1"),
                };
         }
 
@@ -687,11 +686,11 @@ namespace Engage.Dnn.Events.Controls
         /// </summary>
         private void FillDropDowns()
         {
-            FillListControl(this.MonthlyDayOrdinalDropDown, GetOrdinalItems());
-            FillListControl(this.MonthlyDayMaskDropDown, GetDayMaskItems());
+            FillListControl(this.MonthlyDayOrdinalDropDown, GetOrdinalItems(this.LocalSharedResourceFile));
+            FillListControl(this.MonthlyDayMaskDropDown, GetDayMaskItems(this.LocalSharedResourceFile));
             FillListControl(this.YearlyRepeatMonthForDate, GetMonthItems());
-            FillListControl(this.YearlyDayOrdinalDropDown, GetOrdinalItems());
-            FillListControl(this.YearlyDayMaskDropDown, GetDayMaskItems());
+            FillListControl(this.YearlyDayOrdinalDropDown, GetOrdinalItems(this.LocalSharedResourceFile));
+            FillListControl(this.YearlyDayMaskDropDown, GetDayMaskItems(this.LocalSharedResourceFile));
             FillListControl(this.YearlyRepeatMonthForGivenDay, GetMonthItems());
         }
     }

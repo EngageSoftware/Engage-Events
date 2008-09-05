@@ -33,7 +33,33 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// A resource file for shared resources in this module.
         /// </summary>
-        protected internal static readonly string LocalSharedResourceFile = "~" + DesktopModuleFolderName + Localization.LocalResourceDirectory + "/" + Localization.LocalSharedResourceFile;
+        protected internal readonly string LocalSharedResourceFile;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModuleBase"/> class.
+        /// </summary>
+        public ModuleBase()
+        {
+            this.LocalSharedResourceFile = Utility.LocalSharedResourceFile;
+        }
+
+        /// <summary>
+        /// Gets the license key for this module.
+        /// </summary>
+        /// <value>This module's unique key.</value>
+        public override Guid LicenseKey
+        {
+            get { return Utility.LicenseKey; }
+        }
+
+        /// <summary>
+        /// Gets the name of the this module's desktop module record in DNN.
+        /// </summary>
+        /// <value>The name of this module's desktop module record in DNN.</value>
+        public override string DesktopModuleName
+        {
+            get { return Utility.DesktopModuleName; }
+        }
 
         /// <summary>
         /// Gets the module actions.

@@ -29,16 +29,17 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// The friendly name of this module.
         /// </summary>
-        public const string DnnFriendlyModuleName = "Engage: Events";
+        public const string DesktopModuleName = "Engage: Events";
         
         /// <summary>
         /// The host setting key base for whether this module have been configured
         /// </summary>
         public const string ModuleConfigured = "ModuleConfigured";
 
-        ////public const string AdminContainer = "AdminContainer";
-        ////public const string Container = "UserContainer";
-        ////public const string AdminRole = "EventsAminRole";
+        /// <summary>
+        /// The License Key for the Engage: Events module
+        /// </summary>
+        internal static readonly Guid LicenseKey = new Guid("2de915e1-df71-3443-9f4d-32259c92ced2");
 
         /// <summary>
         /// Backing field for <see cref="OrdinalValues"/>
@@ -55,10 +56,14 @@ namespace Engage.Dnn.Events
             {
                 StringBuilder sb = new StringBuilder(128);
                 sb.Append("/DesktopModules/");
-                sb.Append(Globals.GetDesktopModuleByName(DnnFriendlyModuleName).FolderName);
+                sb.Append(Globals.GetDesktopModuleByName(DesktopModuleName).FolderName);
                 sb.Append("/");
                 return sb.ToString();
             }
+        }
+        public static string LocalSharedResourceFile
+        {
+            get { return "~" + DesktopModuleFolderName + Localization.LocalResourceDirectory + "/" + Localization.LocalSharedResourceFile; }
         }
 
         /// <summary>
@@ -150,7 +155,7 @@ namespace Engage.Dnn.Events
         /// <returns>A formatted string representing the timespan over which this event occurs.</returns>
         public static string GetFormattedEventDate(DateTime startDate, DateTime endDate)
         {
-            return GetFormattedEventDate(startDate, endDate, ModuleBase.LocalSharedResourceFile);
+            return GetFormattedEventDate(startDate, endDate, LocalSharedResourceFile);
         }
 
         /// <summary>
@@ -182,7 +187,7 @@ namespace Engage.Dnn.Events
                 timespanResourceKey = "Timespan.Text";
             }
 
-            return string.Format(CultureInfo.CurrentCulture, Localization.GetString(timespanResourceKey, resourceFile), startDate, endDate);
+            return String.Format(CultureInfo.CurrentCulture, Localization.GetString(timespanResourceKey, resourceFile), startDate, endDate);
         }
 
         /// <summary>
@@ -194,24 +199,23 @@ namespace Engage.Dnn.Events
         /// </returns>
         public static string GetRecurrenceSummary(RecurrenceRule recurrenceRule)
         {
-            string resourceFile = ModuleBase.LocalSharedResourceFile;
-            string recurrenceSummary = string.Empty;
+            string recurrenceSummary = String.Empty;
             if (recurrenceRule != null)
             {
                 switch (recurrenceRule.Pattern.Frequency)
                 {
                     case RecurrenceFrequency.Weekly:
-                        recurrenceSummary = GetWeeklyRecurrenceSummary(recurrenceRule.Pattern, resourceFile);
+                        recurrenceSummary = GetWeeklyRecurrenceSummary(recurrenceRule.Pattern, LocalSharedResourceFile);
                         break;
                     case RecurrenceFrequency.Monthly:
-                        recurrenceSummary = GetMonthlyRecurrenceSummary(recurrenceRule.Pattern, resourceFile);
+                        recurrenceSummary = GetMonthlyRecurrenceSummary(recurrenceRule.Pattern, LocalSharedResourceFile);
                         break;
                     case RecurrenceFrequency.Yearly:
-                        recurrenceSummary = GetYearlyRecurrenceSummary(recurrenceRule.Pattern, resourceFile);
+                        recurrenceSummary = GetYearlyRecurrenceSummary(recurrenceRule.Pattern, LocalSharedResourceFile);
                         break;
                         ////case RecurrenceFrequency.Daily:
                     default:
-                        recurrenceSummary = GetDailyRecurrenceSummary(recurrenceRule.Pattern, resourceFile);
+                        recurrenceSummary = GetDailyRecurrenceSummary(recurrenceRule.Pattern, LocalSharedResourceFile);
                         break;
                 }
             }
@@ -229,7 +233,7 @@ namespace Engage.Dnn.Events
         /// </returns>
         public static string GetRecurrenceSummary(RecurrenceRule recurrenceRule, string resourceFile)
         {
-            string recurrenceSummary = string.Empty;
+            string recurrenceSummary = String.Empty;
             if (recurrenceRule != null)
             {
                 switch (recurrenceRule.Pattern.Frequency)
@@ -318,7 +322,7 @@ namespace Engage.Dnn.Events
         /// <returns>A human-readable, localized summary of the provided recurrence pattern.</returns>
         private static string GetWeeklyRecurrenceSummary(RecurrencePattern pattern, string resourceFile)
         {
-            return string.Format(
+            return String.Format(
                 CultureInfo.CurrentCulture,
                 Localization.GetString("WeeklyRecurrence.Text", resourceFile),
                 pattern.Interval,
@@ -335,7 +339,7 @@ namespace Engage.Dnn.Events
         {
             if (pattern.DayOfMonth > 0)
             {
-                return string.Format(
+                return String.Format(
                     CultureInfo.CurrentCulture,
                     Localization.GetString("MonthlyRecurrenceOnDate.Text", resourceFile),
                     pattern.DayOfMonth,
@@ -343,7 +347,7 @@ namespace Engage.Dnn.Events
             }
             else
             {
-                return string.Format(
+                return String.Format(
                     CultureInfo.CurrentCulture,
                     Localization.GetString("MonthlyRecurrenceOnGivenDay.Text", resourceFile),
                     Localization.GetString(ordinalValues[pattern.DayOrdinal], resourceFile),
@@ -362,7 +366,7 @@ namespace Engage.Dnn.Events
         {
             if (pattern.DayOfMonth > 0)
             {
-                return string.Format(
+                return String.Format(
                     CultureInfo.CurrentCulture,
                     Localization.GetString("YearlyRecurrenceOnDate.Text", resourceFile),
                     new DateTime(1, (int)pattern.Month, 1),
@@ -370,7 +374,7 @@ namespace Engage.Dnn.Events
             }
             else
             {
-                return string.Format(
+                return String.Format(
                     CultureInfo.CurrentCulture,
                     Localization.GetString("YearlyRecurrenceOnGivenDay.Text", resourceFile),
                     Localization.GetString(ordinalValues[pattern.DayOrdinal], resourceFile),
@@ -395,7 +399,7 @@ namespace Engage.Dnn.Events
             }
             else
             {
-                return string.Format(
+                return String.Format(
                     CultureInfo.CurrentCulture, 
                     Localization.GetString("DailyRecurrence.Text", resourceFile), 
                     pattern.Interval);

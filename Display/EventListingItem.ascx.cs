@@ -29,7 +29,7 @@ namespace Engage.Dnn.Events.Display
         /// <summary>
         /// Relative path to the folder where the action controls are located in this module
         /// </summary>
-        private static readonly string ActionsControlsFolder = "~" + DesktopModuleFolderName + "Actions/";
+        private readonly string ActionsControlsFolder;
 
         /// <summary>
         /// Backing field for <see cref="SortAction"/>
@@ -53,6 +53,32 @@ namespace Engage.Dnn.Events.Display
         /// keep a reference around of the data that you have loaded
         /// </remarks>
         private EventCollection events;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventListingItem"/> class.
+        /// </summary>
+        public EventListingItem()
+        {
+            this.ActionsControlsFolder = "~" + this.DesktopModuleFolderName + "Actions/";
+        }
+
+        /// <summary>
+        /// Gets the license key for this module.
+        /// </summary>
+        /// <value>This module's unique key.</value>
+        public override Guid LicenseKey
+        {
+            get { return Utility.LicenseKey; }
+        }
+
+        /// <summary>
+        /// Gets the name of the this module's desktop module record in DNN.
+        /// </summary>
+        /// <value>The name of this module's desktop module record in DNN.</value>
+        public override string DesktopModuleName
+        {
+            get { return Utility.DesktopModuleName; }
+        }
 
         /// <summary>
         /// Gets the listing mode used for this display.

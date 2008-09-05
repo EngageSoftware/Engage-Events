@@ -11,16 +11,34 @@
 
 namespace Engage.Dnn.Events.Display
 {
+    using System;
     using System.Web.UI;
     using Framework.Templating;
     using Templating;
-    using Utility = Engage.Dnn.Utility;
 
     /// <summary>
     /// Custom event listing
     /// </summary>
     public partial class EventListingTemplate : TemplateModuleBase
     {
+        /// <summary>
+        /// Gets the license key for this module.
+        /// </summary>
+        /// <value>This module's unique key.</value>
+        public override Guid LicenseKey
+        {
+            get { return Utility.LicenseKey; }
+        }
+
+        /// <summary>
+        /// Gets the name of the this module's desktop module record in DNN.
+        /// </summary>
+        /// <value>The name of this module's desktop module record in DNN.</value>
+        public override string DesktopModuleName
+        {
+            get { return Utility.DesktopModuleName; }
+        }
+
         /// <summary>
         /// Method used to process a tag. This method is invoked from the <see cref="TemplateEngine"/> class. Since this control knows
         /// best on how to construct the control. ListingItem templates are used here.
@@ -59,7 +77,7 @@ namespace Engage.Dnn.Events.Display
                             listingCurrent.FooterTemplateName = tag.GetAttributeValue("FooterTemplate");
                         }
 
-                        listingCurrent.IsFeatured = Utility.GetBoolSetting(this.Settings, Setting.FeaturedOnly.PropertyName, false);
+                        listingCurrent.IsFeatured = Dnn.Utility.GetBoolSetting(this.Settings, Setting.FeaturedOnly.PropertyName, false);
 
                         listingCurrent.ModuleConfiguration = this.ModuleConfiguration;
                         container.Controls.Add(listingCurrent);
@@ -67,7 +85,7 @@ namespace Engage.Dnn.Events.Display
                     case "CALENDAR":
                         EventCalendar calendar = (EventCalendar)this.LoadControl("~" + DesktopModuleFolderName + "Display/EventCalendar.ascx");
                         calendar.ModuleConfiguration = this.ModuleConfiguration;
-                        calendar.IsFeatured = Utility.GetBoolSetting(this.Settings, Setting.FeaturedOnly.PropertyName, false);
+                        calendar.IsFeatured = Dnn.Utility.GetBoolSetting(this.Settings, Setting.FeaturedOnly.PropertyName, false);
 
                         container.Controls.Add(calendar);
                         break;
