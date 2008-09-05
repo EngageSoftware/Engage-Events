@@ -171,6 +171,12 @@
   <data name="EventStartDateLabel.Text" xml:space="preserve">
     <value>Begins</value>
   </data>
+  <data name="EventTimeZoneLabel.Help" xml:space="preserve">
+    <value>Remember to add an hour if the event occurs in &lt;a href="http://aa.usno.navy.mil/faq/docs/daylight_time.php" target="_blank"&gt;Daylight Saving Time&lt;/a&gt;</value>
+  </data>
+  <data name="EventTimeZoneLabel.Text" xml:space="preserve">
+    <value>Time Zone</value>
+  </data>
   <data name="EventTitleLabel.Text" xml:space="preserve">
     <value>Event Title</value>
   </data>

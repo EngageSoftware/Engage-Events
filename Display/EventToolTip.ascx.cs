@@ -90,7 +90,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void AddToCalendarButton_Click(object sender, EventArgs e)
         {
-            SendICalendarToClient(this.Response, this.currentEvent.ToICal(this.UserInfo.Email, Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings)), this.currentEvent.Title);
+            SendICalendarToClient(this.Response, this.currentEvent.ToICal(), this.currentEvent.Title);
         }
 
         /// <summary>

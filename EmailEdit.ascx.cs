@@ -78,10 +78,10 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                if (this.Page.IsPostBack == false)
+                if (!this.IsPostBack)
                 {
                     this.FillDropDowns();
-                    if (EventId > 0)
+                    if (this.EventId.HasValue)
                     {
                         this.BindData();
                     }

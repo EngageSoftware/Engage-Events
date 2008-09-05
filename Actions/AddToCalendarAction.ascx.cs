@@ -40,9 +40,9 @@ namespace Engage.Dnn.Events
             this.LocalResourceFile = TemplateResourceFile;
 
             this.Load += this.Page_Load;
-            this.Button.Click += this.Button_Click;
+            this.AddToCalendarButton.Click += this.AddToCalendarButton_Click;
 
-            AJAX.RegisterPostBackControl(this.Button);
+            AJAX.RegisterPostBackControl(this.AddToCalendarButton);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetVisibility()
         {
-            this.Button.Visible = IsLoggedIn;
+            this.AddToCalendarButton.Visible = IsLoggedIn;
         }
 
         /// <summary>
@@ -75,9 +75,9 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void Button_Click(object sender, EventArgs e)
+        private void AddToCalendarButton_Click(object sender, EventArgs e)
         {
-            SendICalendarToClient(this.Response, CurrentEvent.ToICal(this.UserInfo.Email, Dnn.Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings)), this.CurrentEvent.Title);
+            SendICalendarToClient(this.Response, CurrentEvent.ToICal(), this.CurrentEvent.Title);
         }
     }
 }

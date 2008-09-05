@@ -175,10 +175,10 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 /* ============================ end manage events page ============================ */
 
 
-	.AEEventTitle, .AEEventStartDate, .AEEventEndDate, .AEEventLocationAdd, .AEEventEditor, .AEEventFeature, .AEEventRecur, .AEEventRegister {clear: both; overflow: hidden; padding-bottom: 0.675em;}
-		.AEEventEditor .NormalBold, .AEEventTitle .NormalBold, .AEEventStartDate .NormalBold, .AEEventLocationAdd .NormalBold, .AEEventEndDate .NormalBold, .AEEventFeature .NormalBold, .AEEventRecur .NormalBold, .AEEventRegister .NormalBold
+	.AEEventTitle, .AEEventStartDate, .AEEventEndDate, .AEEventLocationAdd, .AEEventEditor, .AEEventFeature, .AEEventRecur, .AEEventRegister, .AEEventTimeZone {clear: both; overflow: hidden; padding-bottom: 0.675em;}
+		.AEEventEditor .NormalBold, .AEEventTitle .NormalBold, .AEEventStartDate .NormalBold, .AEEventLocationAdd .NormalBold, .AEEventEndDate .NormalBold, .AEEventFeature .NormalBold, .AEEventRecur .NormalBold, .AEEventRegister .NormalBold, .AEEventTimeZone .NormalBold
 		{float:left; width: 20%; margin-right: 3%; text-align: right;}
-		.AEEventEditor .Normal, .AEEventTitle .Normal, .AEEventStartDate .Normal, .AEEventLocationAdd .Normal, .AEEventEndDate .Normal, .AEEventFeature .Normal, .AEEventRecur .Normal, .AEEventRegister .Normal
+		.AEEventEditor .Normal, .AEEventTitle .Normal, .AEEventStartDate .Normal, .AEEventLocationAdd .Normal, .AEEventEndDate .Normal, .AEEventFeature .Normal, .AEEventRecur .Normal, .AEEventRegister .Normal, .AEEventTimeZone .Normal
 		{float: left; width: 81%;}
 
 		

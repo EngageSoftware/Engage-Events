@@ -49,6 +49,11 @@
         <asp:RequiredFieldValidator runat="server" ControlToValidate="EndDateTimePicker" ResourceKey="EndDateTimePickerRequired" Display="None" EnableClientScript="false"/>
     </div>
     
+    <div class="AEEventTimeZone">
+        <asp:Label runat="server" ResourceKey="EventTimeZoneLabel" CssClass="NormalBold" AssociatedControlID="TimeZoneDropDownList" />
+        <asp:DropDownList runat="server" ID="TimeZoneDropDownList" /><asp:Label runat="server" ResourceKey="EventTimeZoneLabel.Help" CssClass="Help" />
+    </div>
+    
     <div class="AEEventLocationAdd">
         <asp:Label runat="server" ResourceKey="EventLocationLabel" CssClass="NormalBold" AssociatedControlID="EventLocationTextBox"/>
         <asp:TextBox ID="EventLocationTextBox" runat="server" CssClass="NormalTextBox"/>

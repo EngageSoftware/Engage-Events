@@ -60,6 +60,21 @@ WHERE r.EventStart IS NULL
 GO
 
 ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Response] ALTER COLUMN EventStart DateTime NOT NULL
+GO
+
+IF NOT EXISTS (SELECT * FROM dbo.syscolumns where id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Event]') and name = 'TimeZoneOffset')
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Event] ADD TimeZoneOffset INT NULL
+GO
+
+UPDATE {databaseOwner}[{objectQualifier}Engage_Event]
+SET TimeZoneOffset = p.TimezoneOffset
+FROM {databaseOwner}[{objectQualifier}Engage_Event] e
+ JOIN {databaseOwner}[{objectQualifier}Portals] p on (e.PortalId = p.PortalId)
+WHERE e.TimeZoneOffset IS NULL
+GO
+
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Event] ALTER COLUMN TimeZoneOffset INT NOT NULL
+GO
 
 if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetResponses]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
 drop procedure {databaseOwner}[{objectQualifier}Engage_spGetResponses]
@@ -295,6 +310,7 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertEvent]
 @Description nText,
 @EventStart DateTime,
 @EventEnd DateTime,
+@TimeZoneOffset int,
 @Organizer nvarchar(100),
 @OrganizerEmail nvarchar(100),
 @Location nvarchar(1000),
@@ -314,13 +330,13 @@ BEGIN
 	
 	Insert into {databaseOwner}[{objectQualifier}Engage_Event] 
 	(
-		[PortalId], [ModuleId], [Title], [Overview], [Description], [EventStart], [EventEnd], [Organizer], [OrganizerEmail],
+		[PortalId], [ModuleId], [Title], [Overview], [Description], [EventStart], [EventEnd], [TimeZoneOffset], [Organizer], [OrganizerEmail],
 		[Location], [LocationUrl], [InvitationUrl], [RecapUrl], [RecurrenceRule], [AllowRegistrations], [IsFeatured], [CreatedBy], 
 		[RevisingUser], [FinalRecurringEndDate], [IsDeleted], [RecurrenceParentId]
 	)
 	Values
 	(
-		@PortalId, @ModuleId, @Title, @Overview, @Description, @EventStart, @EventEnd, @Organizer, @OrganizerEmail,
+		@PortalId, @ModuleId, @Title, @Overview, @Description, @EventStart, @EventEnd, @TimeZoneOffset, @Organizer, @OrganizerEmail,
 		@Location, @LocationUrl, @InvitationUrl,  @RecapUrl, @RecurrenceRule, @AllowRegistrations, @IsFeatured, @CreatedBy, 
 		@CreatedBy, @FinalRecurringEndDate, @IsDeleted, @RecurrenceParentId
 	)
@@ -340,6 +356,7 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spUpdateEvent]
 @Overview ntext,
 @EventStart DateTime,
 @EventEnd DateTime,
+@TimeZoneOffset int,
 @Organizer nvarchar(100),
 @Description nText,
 @OrganizerEmail nvarchar(100),
@@ -365,6 +382,7 @@ BEGIN
 		[Description] = @Description,
 		[EventStart] = @EventStart, 
 		[EventEnd] = @EventEnd, 
+		[TimeZoneOffset] = @TimeZoneOffset,
 		[Organizer] = @Organizer, 
 		[OrganizerEmail] = @OrganizerEmail,
 		[Location] = @Location, 

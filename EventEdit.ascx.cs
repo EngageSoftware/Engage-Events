@@ -12,6 +12,7 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.Globalization;
     using System.Web.UI.WebControls;
     using DotNetNuke.Common;
     using DotNetNuke.Framework;
@@ -40,17 +41,15 @@ namespace Engage.Dnn.Events
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
-            AJAX.RegisterPostBackControl(this.SaveAndCreateNewEventButton);
             AJAX.RegisterPostBackControl(this.SaveEventButton);
-            AJAX.RegisterPostBackControl(this.EventOverviewTextEditor);
-            AJAX.RegisterPostBackControl(this.EventDescriptionTextEditor);
+            AJAX.RegisterPostBackControl(this.SaveAndCreateNewEventButton);
 
             this.Load += this.Page_Load;
-            this.EventDescriptionTextEditorValidator.ServerValidate += this.EventDescriptionTextEditorValidator_ServerValidate;
             this.SaveEventButton.Click += this.SaveEventButton_OnClick;
             this.SaveAndCreateNewEventButton.Click += this.SaveAndCreateNewEventButton_OnClick;
             this.RecurringCheckBox.CheckedChanged += this.RecurringCheckbox_CheckedChanged;
             this.RecurrenceEditorValidator.ServerValidate += this.RecurrenceEditorValidator_ServerValidate;
+            this.EventDescriptionTextEditorValidator.ServerValidate += this.EventDescriptionTextEditorValidator_ServerValidate;
         }
 
         /// <summary>
@@ -62,9 +61,14 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                if (!this.IsPostBack && EventId > 0)
+                if (!this.IsPostBack)
                 {
-                    this.BindData();
+                    this.FillDropDownWithDefaultValue();
+
+                    if (this.EventId.HasValue)
+                    {
+                        this.BindData();
+                    }
                 }
 
                 this.SetButtonLinks();
@@ -140,6 +144,15 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Fills the TimeZoneDropDownList control and selected the user's time zone as a default.
+        /// </summary>
+        private void FillDropDownWithDefaultValue()
+        {
+            // TODO: Once we support .NET 3.5, replace this with TimeZoneInfo.GetSystemTimeZones
+            Localization.LoadTimeZoneDropDownList(this.TimeZoneDropDownList, CultureInfo.CurrentCulture.Name, ((int)Dnn.Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings).TotalMinutes).ToString(CultureInfo.InvariantCulture));
+        }
+
+        /// <summary>
         /// Displays the final success.
         /// </summary>
         private void DisplayFinalSuccess()
@@ -163,7 +176,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void LocalizeControl()
         {
-            string addEditResourceKey = EventId > 0 ? "EditEvent.Text" : "AddNewEvent.Text";
+            string addEditResourceKey = this.EventId.HasValue ? "EditEvent.Text" : "AddNewEvent.Text";
             this.AddEditEventLabel.Text = Localization.GetString(addEditResourceKey, this.LocalResourceFile);
             this.SaveAndCreateNewEventButton.AlternateText = Localization.GetString("SaveAndCreateNew.Alt", LocalResourceFile);
             this.SaveEventButton.AlternateText = Localization.GetString("Save.Alt", LocalResourceFile);
@@ -174,7 +187,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void Save()
         {
-            if (EventId > 0)
+            if (this.EventId.HasValue)
             {
                 this.Update();
             }
@@ -189,12 +202,15 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void Update()
         {
+            int timeZoneOffset;
             int? eventId = this.EventId;
-            if (eventId.HasValue)
+            if (eventId.HasValue
+                && int.TryParse(this.TimeZoneDropDownList.SelectedValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out timeZoneOffset))
             {
                 Event e = Event.Load(eventId.Value);
                 e.EventStart = this.StartDateTimePicker.SelectedDate.Value;
                 e.EventEnd = this.EndDateTimePicker.SelectedDate.Value;
+                e.TimeZoneOffset = new TimeSpan(0, timeZoneOffset, 0);
                 e.Location = this.EventLocationTextBox.Text;
                 e.Title = this.EventTitleTextBox.Text;
                 e.Overview = this.EventOverviewTextEditor.Text;
@@ -211,23 +227,28 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void Insert()
         {
-            DateTime eventStart = this.StartDateTimePicker.SelectedDate.Value;
-            DateTime eventEnd = this.EndDateTimePicker.SelectedDate.Value;
-            Event e = Event.Create(
-                this.PortalId,
-                this.ModuleId,
-                this.UserInfo.Email,
-                this.EventTitleTextBox.Text,
-                this.EventOverviewTextEditor.Text,
-                this.EventDescriptionTextEditor.Text,
-                eventStart, 
-                eventEnd, 
-                this.EventLocationTextBox.Text, 
-                this.FeaturedCheckBox.Checked, 
-                this.AllowRegistrationsCheckBox.Checked,
-                this.RecurrenceEditor.GetRecurrenceRule(eventStart, eventEnd));
+            int timeZoneOffset;
+            if (int.TryParse(this.TimeZoneDropDownList.SelectedValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out timeZoneOffset))
+            {
+                DateTime eventStart = this.StartDateTimePicker.SelectedDate.Value;
+                DateTime eventEnd = this.EndDateTimePicker.SelectedDate.Value;
+                Event e = Event.Create(
+                    this.PortalId,
+                    this.ModuleId,
+                    this.UserInfo.Email,
+                    this.EventTitleTextBox.Text,
+                    this.EventOverviewTextEditor.Text,
+                    this.EventDescriptionTextEditor.Text,
+                    eventStart,
+                    eventEnd,
+                    new TimeSpan(0, timeZoneOffset, 0), 
+                    this.EventLocationTextBox.Text,
+                    this.FeaturedCheckBox.Checked,
+                    this.AllowRegistrationsCheckBox.Checked,
+                    this.RecurrenceEditor.GetRecurrenceRule(eventStart, eventEnd));
 
-            e.Save(this.UserId);
+                e.Save(this.UserId);
+            }
         }
 
         /// <summary>
@@ -245,6 +266,7 @@ namespace Engage.Dnn.Events
                 this.EventDescriptionTextEditor.Text = e.Description;
                 this.StartDateTimePicker.SelectedDate = e.EventStart;
                 this.EndDateTimePicker.SelectedDate = e.EventEnd;
+                this.TimeZoneDropDownList.SelectedValue = ((int)e.TimeZoneOffset.TotalMinutes).ToString(CultureInfo.InvariantCulture);
                 this.FeaturedCheckBox.Checked = e.IsFeatured;
                 this.AllowRegistrationsCheckBox.Checked = e.AllowRegistrations;
                 this.RecurringCheckBox.Checked = e.IsRecurring;

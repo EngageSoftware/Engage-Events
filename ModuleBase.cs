@@ -173,12 +173,6 @@ namespace Engage.Dnn.Events
             }
         }
 
-        protected override void OnInit(EventArgs e)
-        {
-            base.OnInit(e);
-            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
-        }
-
         /// <summary>
         /// Sends an <c>iCalendar</c> to the client to download.
         /// </summary>
@@ -249,6 +243,16 @@ namespace Engage.Dnn.Events
             pagingControl.CurrentPage = this.CurrentPageIndex;
             pagingControl.TabID = this.TabId;
             pagingControl.QuerystringParams = GenerateQueryStringParameters(this.Request, queryStringKeys);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:Init"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
         }
 
         /// <summary>

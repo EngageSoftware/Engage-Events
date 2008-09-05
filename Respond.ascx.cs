@@ -106,7 +106,7 @@ namespace Engage.Dnn.Events
             if (eventId.HasValue)
             {
                 Event evnt = Event.Load(eventId.Value);
-                SendICalendarToClient(HttpContext.Current.Response, evnt.ToICal(this.UserInfo.Email, Dnn.Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings)), evnt.Title);
+                SendICalendarToClient(HttpContext.Current.Response, evnt.ToICal(), evnt.Title);
             }
         }
 
