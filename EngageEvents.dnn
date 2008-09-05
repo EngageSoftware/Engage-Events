@@ -63,6 +63,12 @@
           <name>Engage.Dnn.Framework.dll</name>
         </file>
         <file>
+          <name>Engage.Frameworkv3.0.XmlSerializers.dll</name>
+        </file>
+        <file>
+          <name>Engage.Dnn.Framework.XmlSerializers.dll</name>
+        </file>
+        <file>
           <name>Telerik.Web.UI.dll</name>
         </file>
       </files>
