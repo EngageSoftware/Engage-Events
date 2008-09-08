@@ -201,6 +201,7 @@
     </Compile>
     <Compile Include="Display\EventListingItem.ascx.cs">
       <DependentUpon>EventListingItem.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Display\EventListingItem.ascx.designer.cs">
       <DependentUpon>EventListingItem.ascx</DependentUpon>
@@ -328,6 +329,7 @@
     <None Include="Providers\DataProviders\SqlDataProvider\00.00.04.SqlDataProvider" />
     <None Include="Providers\DataProviders\SqlDataProvider\00.00.06.SqlDataProvider" />
     <None Include="Providers\DataProviders\SqlDataProvider\01.00.00.SqlDataProvider" />
+    <None Include="Templates\Engage Events Templates.pdf" />
     <None Include="Uninstall.SqlDataProvider" />
   </ItemGroup>
   <ItemGroup>
@@ -550,7 +552,6 @@
     <Content Include="Templates\Display.Listing.html" />
     <Content Include="Templates\Footer.Listing.html" />
     <Content Include="Templates\Header.ListingAll.html" />
-    <Content Include="Templates\Template Documentation.htm" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Actions\AddToCalendarAction.ascx" />
