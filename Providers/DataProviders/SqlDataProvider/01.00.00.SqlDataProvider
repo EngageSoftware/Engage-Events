@@ -298,53 +298,6 @@ BEGIN
 END
 GO
 
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_spInsertEvent]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
-DROP PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertEvent]
-GO
-CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertEvent] 
-(
-@PortalId int,
-@ModuleId int,
-@Title nvarchar(500),
-@Overview ntext,
-@Description nText,
-@EventStart DateTime,
-@EventEnd DateTime,
-@TimeZoneOffset int,
-@Organizer nvarchar(100),
-@OrganizerEmail nvarchar(100),
-@Location nvarchar(1000),
-@LocationUrl nvarchar(1000),
-@InvitationUrl nvarchar(1000),
-@RecapUrl nvarchar(1000),
-@RecurrenceRule nvarchar(256),
-@RecurrenceParentId int,
-@AllowRegistrations int,
-@IsFeatured bit,
-@CreatedBy int,
-@FinalRecurringEndDate datetime,
-@IsDeleted bit = 0
-)
-AS
-BEGIN
-	
-	Insert into {databaseOwner}[{objectQualifier}Engage_Event] 
-	(
-		[PortalId], [ModuleId], [Title], [Overview], [Description], [EventStart], [EventEnd], [TimeZoneOffset], [Organizer], [OrganizerEmail],
-		[Location], [LocationUrl], [InvitationUrl], [RecapUrl], [RecurrenceRule], [AllowRegistrations], [IsFeatured], [CreatedBy], 
-		[RevisingUser], [FinalRecurringEndDate], [IsDeleted], [RecurrenceParentId]
-	)
-	Values
-	(
-		@PortalId, @ModuleId, @Title, @Overview, @Description, @EventStart, @EventEnd, @TimeZoneOffset, @Organizer, @OrganizerEmail,
-		@Location, @LocationUrl, @InvitationUrl,  @RecapUrl, @RecurrenceRule, @AllowRegistrations, @IsFeatured, @CreatedBy, 
-		@CreatedBy, @FinalRecurringEndDate, @IsDeleted, @RecurrenceParentId
-	)
-
-	SELECT SCOPE_IDENTITY()
-
-END
-GO
 
 IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_spUpdateEvent]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
 DROP PROCEDURE {databaseOwner}[{objectQualifier}Engage_spUpdateEvent]
@@ -454,3 +407,172 @@ WHERE EventID = @EventId OR RecurrenceParentId = @EventId
 commit transaction
 GO
 
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertRoutingEvent]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertRoutingEvent]
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertRoutingEvent] 
+(
+@RoutingEventTypeId int,
+@CreatedBy int
+)
+AS
+BEGIN
+	
+	Insert into [{objectQualifier}Engage_RoutingEvent] 
+	(RoutingEventTypeID, CreatedBy, RevisingUser)
+	Values (@RoutingEventTypeId, @createdBy,@createdBy)
+
+	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertEmailEvent]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertEmailEvent]
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertEmailEvent] 
+(
+@RoutingEventId int,
+@Name nvarchar(200),
+@Purpose nvarchar(500),
+@HtmlBodyLocation1 nvarchar(250),
+@HtmlBodyLocation2 nvarchar(250),
+@HtmlBodyLocation3 nvarchar(250),
+@MergeTemplate ntext,
+@Subject nvarchar(100),
+@FromName nvarchar(100),
+@FromEmail nvarchar(100),
+@CreatedBy int
+)
+AS
+BEGIN
+	
+	Insert into [{objectQualifier}Engage_EmailEvent] 
+	(RoutingEventId, [Name], Purpose, HtmlBodyLocation1, HtmlBodyLocation2, HtmlBodyLocation3, MergeTemplate, 
+	Subject,FromName,FromEmail,CreatedBy,RevisingUser)
+	Values (@RoutingEventId, @Name, @Purpose, @HtmlBodyLocation1, @HtmlBodyLocation2, @HtmlBodyLocation3, @MergeTemplate, 
+	@Subject, @FromName, @FromEmail, @CreatedBy, @CreatedBy)
+
+	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertRoutingTransaction]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertRoutingTransaction]
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertRoutingTransaction] 
+(@RoutingEventId int,
+@FirstName nvarchar(20),
+@LastName nvarchar(50),
+@Email nvarchar(100),
+@MergeData ntext,
+@CreatedBy int)
+AS
+INSERT INTO {databaseOwner}[{objectQualifier}Engage_RoutingTransaction]
+	   ([RoutingEventId]
+	   ,[FirstName]
+	   ,[LastName]
+	   ,[Email]
+	   ,[Undeliverable]
+	   ,[MergeData]
+	   ,[Processed]
+	   ,[ActionRequired]
+	   ,[CompletionDate]
+	   ,[CreatedBy]
+	   ,[CreationDate]
+	   ,[RevisingUser]
+	   ,[RevisionDate])
+ VALUES
+	   (@RoutingEventId,
+		@FirstName,
+		@LastName, 
+		@Email,
+		0,
+		@MergeData,
+		0, 
+		1,
+		null,
+		@CreatedBy,
+		GETDATE(),
+		@CreatedBy,
+		GETDATE())
+
+SELECT SCOPE_IDENTITY()
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertRsvp]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertRsvp]
+
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertRsvp] 
+(
+@EventId int,
+@FirstName nvarchar(100),
+@LastName nvarchar(100),
+@Email nvarchar(100),
+@Status nvarchar(20),
+@RevisingUser int
+)
+AS
+BEGIN
+	
+	INSERT INTO {databaseOwner}[{objectQualifier}Engage_Rsvp] ([EventId], [FirstName], [LastName], [Email], [Status], [Createdby], [RevisingUser])
+	VALUES (@EventId, @FirstName, @LastName, @Email, @Status, @RevisingUser, @RevisingUser)
+END
+
+SELECT SCOPE_IDENTITY()
+
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertEvent]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertEvent]
+GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertEvent] 
+(
+@PortalId int,
+@ModuleId int,
+@Title nvarchar(500),
+@Overview ntext,
+@Description nText,
+@EventStart DateTime,
+@EventEnd DateTime,
+@Organizer nvarchar(100),
+@OrganizerEmail nvarchar(100),
+@Location nvarchar(1000),
+@LocationUrl nvarchar(1000),
+@InvitationUrl nvarchar(1000),
+@RecapUrl nvarchar(1000),
+@RecurrenceRule nvarchar(256),
+@RecurrenceParentId int,
+@CanRsvp int,
+@IsFeatured bit,
+@CreatedBy int,
+@FinalRecurringEndDate datetime,
+@IsDeleted bit = 0
+)
+AS
+BEGIN
+	
+	Insert into {databaseOwner}[{objectQualifier}Engage_Event] 
+	(
+		[PortalId], [ModuleId], [Title], [Overview], [Description], [EventStart], [EventEnd], [Organizer], [OrganizerEmail],
+		[Location], [LocationUrl], [InvitationUrl], [RecapUrl], [RecurrenceRule], [CanRsvp], [IsFeatured], [CreatedBy], 
+		[RevisingUser], [FinalRecurringEndDate], [IsDeleted], [RecurrenceParentId]
+	)
+	Values
+	(
+		@PortalId, @ModuleId, @Title, @Overview, @Description, @EventStart, @EventEnd, @Organizer, @OrganizerEmail,
+		@Location, @LocationUrl, @InvitationUrl,  @RecapUrl, @RecurrenceRule, @CanRsvp, @IsFeatured, @CreatedBy, 
+		@CreatedBy, @FinalRecurringEndDate, @IsDeleted, @RecurrenceParentId
+	)
+
+	SELECT SCOPE_IDENTITY()
+
+END
+GO
