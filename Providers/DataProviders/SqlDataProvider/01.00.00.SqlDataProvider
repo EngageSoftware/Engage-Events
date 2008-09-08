@@ -267,7 +267,7 @@ BEGIN
 	VALUES (@EventId, @EventStart, @FirstName, @LastName, @Email, @Status, @RevisingUser, @RevisingUser)
 END
 
-SELECT @@IDENTITY
+SELECT SCOPE_IDENTITY()
 
 GO
 
@@ -505,31 +505,6 @@ INSERT INTO {databaseOwner}[{objectQualifier}Engage_RoutingTransaction]
 SELECT SCOPE_IDENTITY()
 GO
 
-if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertRsvp]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertRsvp]
-
-GO
-
-CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertRsvp] 
-(
-@EventId int,
-@FirstName nvarchar(100),
-@LastName nvarchar(100),
-@Email nvarchar(100),
-@Status nvarchar(20),
-@RevisingUser int
-)
-AS
-BEGIN
-	
-	INSERT INTO {databaseOwner}[{objectQualifier}Engage_Rsvp] ([EventId], [FirstName], [LastName], [Email], [Status], [Createdby], [RevisingUser])
-	VALUES (@EventId, @FirstName, @LastName, @Email, @Status, @RevisingUser, @RevisingUser)
-END
-
-SELECT SCOPE_IDENTITY()
-
-GO
-
 if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertEvent]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
 drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertEvent]
 GO
@@ -550,7 +525,7 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertEvent]
 @RecapUrl nvarchar(1000),
 @RecurrenceRule nvarchar(256),
 @RecurrenceParentId int,
-@CanRsvp int,
+@AllowRegistrations int,
 @IsFeatured bit,
 @CreatedBy int,
 @FinalRecurringEndDate datetime,
@@ -562,13 +537,13 @@ BEGIN
 	Insert into {databaseOwner}[{objectQualifier}Engage_Event] 
 	(
 		[PortalId], [ModuleId], [Title], [Overview], [Description], [EventStart], [EventEnd], [Organizer], [OrganizerEmail],
-		[Location], [LocationUrl], [InvitationUrl], [RecapUrl], [RecurrenceRule], [CanRsvp], [IsFeatured], [CreatedBy], 
+		[Location], [LocationUrl], [InvitationUrl], [RecapUrl], [RecurrenceRule], [AllowRegistrations], [IsFeatured], [CreatedBy], 
 		[RevisingUser], [FinalRecurringEndDate], [IsDeleted], [RecurrenceParentId]
 	)
 	Values
 	(
 		@PortalId, @ModuleId, @Title, @Overview, @Description, @EventStart, @EventEnd, @Organizer, @OrganizerEmail,
-		@Location, @LocationUrl, @InvitationUrl,  @RecapUrl, @RecurrenceRule, @CanRsvp, @IsFeatured, @CreatedBy, 
+		@Location, @LocationUrl, @InvitationUrl,  @RecapUrl, @RecurrenceRule, @AllowRegistrations, @IsFeatured, @CreatedBy, 
 		@CreatedBy, @FinalRecurringEndDate, @IsDeleted, @RecurrenceParentId
 	)
 
