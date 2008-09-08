@@ -47,17 +47,17 @@
             </asp:BoundColumn>
             <asp:TemplateColumn HeaderText="Attending">
                 <ItemTemplate>
-                    <asp:Image ID="lnkAttending" CssClass="Normal" runat="server" ImageUrl='<%# GetStatusIcon(DataBinder.Eval(Container.DataItem, "Status")) %>'></asp:Image>
+                    <asp:Image ID="lnkAttending" CssClass="Normal" runat="server" ImageUrl='<%# GetStatusIcon(Eval("Status")) %>'></asp:Image>
                 </ItemTemplate>
             </asp:TemplateColumn>
             <%-- <asp:TemplateColumn HeaderText ="Not Attending">
 	        <ItemTemplate>
-		        <asp:HyperLink id="lnkAttending" CssClass="Normal"  runat="server" NavigateUrl ='<%# GetDetailUrl(DataBinder.Eval(Container.DataItem, "EventId")) %>' Text ='<%# DataBinder.Eval(Container.DataItem,"NotAttending") %>'></asp:HyperLink>
+		        <asp:HyperLink id="lnkAttending" CssClass="Normal"  runat="server" NavigateUrl ='<%# GetDetailUrl(Eval("EventId")) %>' Text ='<%# DataBinder.Eval(Container.DataItem,"NotAttending") %>'></asp:HyperLink>
 	        </ItemTemplate>
         </asp:TemplateColumn>
         <asp:TemplateColumn HeaderText ="NoResponse">
 	        <ItemTemplate>
-		        <asp:HyperLink id="lnkAttending" CssClass="Normal"  runat="server" NavigateUrl ='<%# GetDetailUrl(DataBinder.Eval(Container.DataItem, "EventId")) %>' Text ='<%# DataBinder.Eval(Container.DataItem,"NoResponse") %>'></asp:HyperLink>
+		        <asp:HyperLink id="lnkAttending" CssClass="Normal"  runat="server" NavigateUrl ='<%# GetDetailUrl(Eval("EventId")) %>' Text ='<%# DataBinder.Eval(Container.DataItem,"NoResponse") %>'></asp:HyperLink>
 	        </ItemTemplate>
         </asp:TemplateColumn>--%>
         </Columns>

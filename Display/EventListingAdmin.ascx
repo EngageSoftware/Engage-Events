@@ -24,22 +24,22 @@
 </div>
 <asp:Repeater runat="server" ID="EventListingRepeater" >
     <ItemTemplate>
-        <asp:Label ID="IdLabel" Visible="False" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "Id")  %>'/>
+        <asp:Label ID="IdLabel" Visible="False" runat="server" Text='<%# Eval("Id")  %>'/>
 		<div id="MEEventItem">
             <div class="EventTitle">
-                <h2 class="Head"><%# DataBinder.Eval(Container.DataItem, "Title")  %></h2>
+                <h2 class="Head"><%# Eval("Title")  %></h2>
             </div>
             <div class="EventDate">
                 <p class="NormalBold"><asp:Label ID="Label1" runat="server" ResourceKey="When"/></p>
-                <p class="Normal"><%# DataBinder.Eval(Container.DataItem, "EventStartFormatted")%><span class="RecurrenceSummary"><%#GetRecurrenceSummary(Container.DataItem)%></span></p>
+                <p class="Normal"><%# ((DateTime)Eval("EventStart")).ToShortDateString()%><span class="RecurrenceSummary"><%#GetRecurrenceSummary(Container.DataItem)%></span></p>
             </div>
             <div class="EventLocation">
                 <p class="NormalBold"><asp:Label ID="Label2" runat="server" ResourceKey="Where"/></p>
-                <p class="Normal"><%# DataBinder.Eval(Container.DataItem, "Location")  %></p>
+                <p class="Normal"><%# Eval("Location")  %></p>
             </div>
             <div class="EventDescription">
                 <p class="NormalBold"><asp:Label ID="Label3" runat="server" ResourceKey="Description"/></p>
-                <div class="Normal"><%# DataBinder.Eval(Container.DataItem, "Overview")  %></div>
+                <div class="Normal"><%# Eval("Overview")  %></div>
             </div>
             <div><engage:actions ID="EventActions" runat="server" OnCancel="EventActions_Cancel" OnDelete="EventActions_Delete" /></div><%-- Cancel and Delete must be wired-up here, rather than in the code behind.  Otherwise they get wired-up too late in the page lifecycle. --%>
 		</div>
