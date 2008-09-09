@@ -231,7 +231,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="container">The container.</param>
         /// <param name="tag">The tag being processed.</param>
         /// <param name="engageObject">The engage object.</param>
-        /// <param name="resourceFile">The resource file name.</param>
+        /// <param name="resourceFile">The resource file to use to find get localized text.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "The complexity cannot easily be reduced and the method is easy to understand, test, and maintain")]
         protected override void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)
         {
@@ -242,7 +242,7 @@ namespace Engage.Dnn.Events.Display
                 switch (tag.LocalName.ToUpperInvariant())
                 {
                     case "EDITEVENTBUTTON":
-                        ButtonAction editEventAction = (ButtonAction)this.LoadControl(ActionsControlsFolder + "ButtonAction.ascx");
+                        ButtonAction editEventAction = (ButtonAction)this.LoadControl(this.ActionsControlsFolder + "ButtonAction.ascx");
                         editEventAction.CurrentEvent = currentEvent;
                         editEventAction.ModuleConfiguration = this.ModuleConfiguration;
                         editEventAction.Href = this.BuildLinkUrl(this.ModuleId, "EventEdit", Dnn.Events.Utility.GetEventParameters(currentEvent));
@@ -251,7 +251,7 @@ namespace Engage.Dnn.Events.Display
                         editEventAction.Visible = this.IsAdmin;
                         break;
                     case "VIEWRESPONSESBUTTON":
-                        ButtonAction responsesEventAction = (ButtonAction)this.LoadControl(ActionsControlsFolder + "ButtonAction.ascx");
+                        ButtonAction responsesEventAction = (ButtonAction)this.LoadControl(this.ActionsControlsFolder + "ButtonAction.ascx");
                         responsesEventAction.CurrentEvent = currentEvent;
                         responsesEventAction.ModuleConfiguration = this.ModuleConfiguration;
                         responsesEventAction.Href = this.BuildLinkUrl(this.ModuleId, "ResponseDetail", Dnn.Events.Utility.GetEventParameters(currentEvent));
@@ -260,7 +260,7 @@ namespace Engage.Dnn.Events.Display
                         responsesEventAction.Visible = this.IsAdmin;
                         break;
                     case "REGISTERBUTTON":
-                        ButtonAction registerEventAction = (ButtonAction)this.LoadControl(ActionsControlsFolder + "ButtonAction.ascx");
+                        ButtonAction registerEventAction = (ButtonAction)this.LoadControl(this.ActionsControlsFolder + "ButtonAction.ascx");
                         registerEventAction.CurrentEvent = currentEvent;
                         registerEventAction.ModuleConfiguration = this.ModuleConfiguration;
                         registerEventAction.Href = this.BuildLinkUrl(this.ModuleId, "Register", Dnn.Events.Utility.GetEventParameters(currentEvent));
@@ -272,7 +272,7 @@ namespace Engage.Dnn.Events.Display
 
                         break;
                     case "ADDTOCALENDARBUTTON":
-                        AddToCalendarAction addToCalendarAction = (AddToCalendarAction)this.LoadControl(ActionsControlsFolder + "AddToCalendarAction.ascx");
+                        AddToCalendarAction addToCalendarAction = (AddToCalendarAction)this.LoadControl(this.ActionsControlsFolder + "AddToCalendarAction.ascx");
                         addToCalendarAction.CurrentEvent = currentEvent;
                         addToCalendarAction.ModuleConfiguration = this.ModuleConfiguration;
 
@@ -281,19 +281,19 @@ namespace Engage.Dnn.Events.Display
                         container.Controls.Add(addToCalendarAction);
                         break;
                     case "DELETEBUTTON":
-                        DeleteAction deleteAction = (DeleteAction)this.LoadControl(ActionsControlsFolder + "DeleteAction.ascx");
+                        DeleteAction deleteAction = (DeleteAction)this.LoadControl(this.ActionsControlsFolder + "DeleteAction.ascx");
                         deleteAction.CurrentEvent = currentEvent;
                         deleteAction.ModuleConfiguration = this.ModuleConfiguration;
                         container.Controls.Add(deleteAction);
                         break;
                     case "CANCELBUTTON":
-                        CancelAction cancelAction = (CancelAction)this.LoadControl(ActionsControlsFolder + "CancelAction.ascx");
+                        CancelAction cancelAction = (CancelAction)this.LoadControl(this.ActionsControlsFolder + "CancelAction.ascx");
                         cancelAction.CurrentEvent = currentEvent;
                         cancelAction.ModuleConfiguration = this.ModuleConfiguration;
                         container.Controls.Add(cancelAction);
                         break;
                     case "EDITEMAILBUTTON":
-                        ButtonAction editEmailAction = (ButtonAction)this.LoadControl(ActionsControlsFolder + "ButtonAction.ascx");
+                        ButtonAction editEmailAction = (ButtonAction)this.LoadControl(this.ActionsControlsFolder + "ButtonAction.ascx");
                         editEmailAction.CurrentEvent = currentEvent;
                         editEmailAction.ModuleConfiguration = this.ModuleConfiguration;
                         editEmailAction.Href = this.BuildLinkUrl(this.ModuleId, "EmailEdit", Dnn.Events.Utility.GetEventParameters(currentEvent));
@@ -302,13 +302,13 @@ namespace Engage.Dnn.Events.Display
                         editEmailAction.Visible = this.IsAdmin;
                         break;
                     case "EVENTSORT":
-                        this.sortAction = (SortAction)this.LoadControl(ActionsControlsFolder + "SortAction.ascx");
+                        this.sortAction = (SortAction)this.LoadControl(this.ActionsControlsFolder + "SortAction.ascx");
                         this.sortAction.ModuleConfiguration = this.ModuleConfiguration;
                         this.sortAction.SortChanged += this.SortStatusAction_SortChanged;
                         container.Controls.Add(this.sortAction);
                         break;
                     case "STATUSFILTER":
-                        this.statusFilterAction = (StatusFilterAction)this.LoadControl(ActionsControlsFolder + "StatusFilterAction.ascx");
+                        this.statusFilterAction = (StatusFilterAction)this.LoadControl(this.ActionsControlsFolder + "StatusFilterAction.ascx");
                         this.statusFilterAction.ModuleConfiguration = this.ModuleConfiguration;
                         this.statusFilterAction.SortChanged += this.SortStatusAction_SortChanged;
                         container.Controls.Add(this.statusFilterAction);

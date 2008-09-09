@@ -36,7 +36,7 @@
         <ContentTemplate>
             <telerik:radscheduler id="EventsCalendarDisplay" runat="server" selectedview="MonthView"
                 enableembeddedskins="True" allowdelete="False" allowedit="False" allowinsert="False"
-                overflowbehavior="Expand" ReadOnly="true" >
+                overflowbehavior="Expand" ReadOnly="true" ShowFullTime="true">
                 <timelineview userselectable="False" />
             </telerik:radscheduler>
             <telerik:radtooltipmanager runat="server" id="EventsCalendarToolTipManager" width="300" height="150"

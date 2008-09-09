@@ -61,6 +61,11 @@ namespace Engage.Dnn.Events
                 return sb.ToString();
             }
         }
+
+        /// <summary>
+        /// Gets the relative path to the resource file holding resources that are shared by multiple controls within the module.
+        /// </summary>
+        /// <value>The relative path to the resource file holding resources that are shared by multiple controls within the module</value>
         public static string LocalSharedResourceFile
         {
             get { return "~" + DesktopModuleFolderName + Localization.LocalResourceDirectory + "/" + Localization.LocalSharedResourceFile; }

@@ -16,6 +16,7 @@ namespace Engage.Dnn.Events.Display
     using System.Globalization;
     using System.Web.UI;
     using DotNetNuke.Services.Exceptions;
+    using DotNetNuke.Services.Localization;
     using Engage.Events;
     using Telerik.Web.UI;
     using Setting = Events.Setting;
@@ -69,12 +70,32 @@ namespace Engage.Dnn.Events.Display
         {
             try
             {
+                this.LocalizeCalendar();
                 this.BindData();
             }
             catch (Exception exc)
             {
                 Exceptions.ProcessModuleLoadException(this, exc);
             }
+        }
+
+        /// <summary>
+        /// Localizes the calendar.
+        /// </summary>
+        private void LocalizeCalendar()
+        {
+            this.EventsCalendarDisplay.Localization.HeaderToday = Localization.GetString("HeaderToday.Text", this.LocalResourceFile);
+            this.EventsCalendarDisplay.Localization.HeaderPrevDay = Localization.GetString("HeaderPrevDay.Text", this.LocalResourceFile);
+            this.EventsCalendarDisplay.Localization.HeaderNextDay = Localization.GetString("HeaderNextDay.Text", this.LocalResourceFile);
+            this.EventsCalendarDisplay.Localization.HeaderDay = Localization.GetString("HeaderDay.Text", this.LocalResourceFile);
+            this.EventsCalendarDisplay.Localization.HeaderWeek = Localization.GetString("HeaderWeek.Text", this.LocalResourceFile);
+            this.EventsCalendarDisplay.Localization.HeaderMonth = Localization.GetString("HeaderMonth.Text", this.LocalResourceFile);
+
+            this.EventsCalendarDisplay.Localization.AllDay = Localization.GetString("AllDay.Text", this.LocalResourceFile);
+            this.EventsCalendarDisplay.Localization.Show24Hours = Localization.GetString("Show24Hours.Text", this.LocalResourceFile);
+            this.EventsCalendarDisplay.Localization.ShowBusinessHours = Localization.GetString("ShowBusinessHours.Text", this.LocalResourceFile);
+
+            this.EventsCalendarDisplay.Localization.ShowMore = Localization.GetString("ShowMore.Text", this.LocalResourceFile);
         }
 
         /// <summary>
@@ -145,6 +166,7 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         private void BindData()
         {
+            this.EventsCalendarDisplay.Culture = CultureInfo.CurrentCulture;
             this.EventsCalendarDisplay.DataSource = EventCollection.Load(this.PortalId, ListingMode.All, false, this.isFeatured);
             this.EventsCalendarDisplay.DataEndField = "EventEnd";
             this.EventsCalendarDisplay.DataKeyField = "Id";

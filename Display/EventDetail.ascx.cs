@@ -34,7 +34,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="container">The container.</param>
         /// <param name="tag">The tag that is being processed.</param>
         /// <param name="engageObject">The engage object.</param>
-        /// <param name="resourceFile">The resource file.</param>
+        /// <param name="resourceFile">The resource file to use to find get localized text.</param>
         internal static void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)
         {
             // do nothing here, handled up in TemplateEngine - for now.

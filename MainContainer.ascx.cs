@@ -49,9 +49,13 @@ namespace Engage.Dnn.Events
             {
                 this.LoadChildControl(controlToLoad);
             }
-            else
+            else if (Engage.Utility.IsLoggedIn)
             {
                 this.Response.Redirect(Globals.NavigateURL(this.TabId));
+            }
+            else
+            {
+                this.Response.Redirect(Dnn.Utility.GetLoginUrl(this.PortalSettings, this.Request));
             }
         }
 

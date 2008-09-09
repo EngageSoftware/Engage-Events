@@ -350,6 +350,7 @@ namespace Engage.Dnn.Events.Controls
         /// <summary>
         /// Gets the list of possible day selections, from <see cref="RecurrenceDay"/>.
         /// </summary>
+        /// <param name="resourceFile">The resource file to use to find get localized text.</param>
         /// <returns>The list of possible day selections, from <see cref="RecurrenceDay"/></returns>
         public static ListItem[] GetDayMaskItems(string resourceFile)
         {
@@ -371,6 +372,7 @@ namespace Engage.Dnn.Events.Controls
         /// <summary>
         /// Gets the list of possible ordinal selections, for example, First, Second or Last.  Based on <see cref="RecurrencePattern.DayOrdinal"/>.
         /// </summary>
+        /// <param name="resourceFile">The resource file to use to find get localized text.</param>
         /// <returns>The list of possible ordinal selections</returns>
         public static ListItem[] GetOrdinalItems(string resourceFile)
         {
