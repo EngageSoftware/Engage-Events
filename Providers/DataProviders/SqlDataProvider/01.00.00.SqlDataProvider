@@ -517,6 +517,7 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertEvent]
 @Description nText,
 @EventStart DateTime,
 @EventEnd DateTime,
+@TimeZoneOffset int,
 @Organizer nvarchar(100),
 @OrganizerEmail nvarchar(100),
 @Location nvarchar(1000),
@@ -536,13 +537,13 @@ BEGIN
 	
 	Insert into {databaseOwner}[{objectQualifier}Engage_Event] 
 	(
-		[PortalId], [ModuleId], [Title], [Overview], [Description], [EventStart], [EventEnd], [Organizer], [OrganizerEmail],
+		[PortalId], [ModuleId], [Title], [Overview], [Description], [EventStart], [EventEnd], [TimeZoneOffset], [Organizer], [OrganizerEmail],
 		[Location], [LocationUrl], [InvitationUrl], [RecapUrl], [RecurrenceRule], [AllowRegistrations], [IsFeatured], [CreatedBy], 
 		[RevisingUser], [FinalRecurringEndDate], [IsDeleted], [RecurrenceParentId]
 	)
 	Values
 	(
-		@PortalId, @ModuleId, @Title, @Overview, @Description, @EventStart, @EventEnd, @Organizer, @OrganizerEmail,
+		@PortalId, @ModuleId, @Title, @Overview, @Description, @EventStart, @EventEnd, @TimeZoneOffset, @Organizer, @OrganizerEmail,
 		@Location, @LocationUrl, @InvitationUrl,  @RecapUrl, @RecurrenceRule, @AllowRegistrations, @IsFeatured, @CreatedBy, 
 		@CreatedBy, @FinalRecurringEndDate, @IsDeleted, @RecurrenceParentId
 	)
