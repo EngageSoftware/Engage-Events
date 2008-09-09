@@ -124,7 +124,7 @@
     <value>Listing</value>
   </data>
   <data name="FeaturedEventLabel.Help" xml:space="preserve">
-    <value>Choose whetherthis module should display only events marked as featured</value>
+    <value>Choose whether this module should display only events marked as featured</value>
   </data>
   <data name="FeaturedEventLabel.Text" xml:space="preserve">
     <value>Display Featured Events Only</value>

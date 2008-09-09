@@ -124,7 +124,7 @@
     <value>Date</value>
   </data>
   <data name="NoResponsesMessageLabel.Text" xml:space="preserve">
-    <value>No respones have been made to any of your events, yet.</value>
+    <value>No responses have been received for your events, yet.</value>
   </data>
   <data name="SortByLabel.Text" xml:space="preserve">
     <value>Sort By</value>
