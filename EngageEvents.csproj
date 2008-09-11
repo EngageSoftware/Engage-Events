@@ -114,45 +114,53 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\ActionControlBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Actions\AddToCalendarAction.ascx.cs">
       <DependentUpon>AddToCalendarAction.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Actions\AddToCalendarAction.ascx.designer.cs">
       <DependentUpon>AddToCalendarAction.ascx</DependentUpon>
     </Compile>
     <Compile Include="Actions\ButtonAction.ascx.cs">
       <DependentUpon>ButtonAction.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Actions\ButtonAction.ascx.designer.cs">
       <DependentUpon>ButtonAction.ascx</DependentUpon>
     </Compile>
     <Compile Include="Actions\CancelAction.ascx.cs">
       <DependentUpon>CancelAction.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Actions\CancelAction.ascx.designer.cs">
       <DependentUpon>CancelAction.ascx</DependentUpon>
     </Compile>
     <Compile Include="Actions\DeleteAction.ascx.cs">
       <DependentUpon>DeleteAction.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Actions\DeleteAction.ascx.designer.cs">
       <DependentUpon>DeleteAction.ascx</DependentUpon>
     </Compile>
     <Compile Include="Actions\SortAction.ascx.cs">
       <DependentUpon>SortAction.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Actions\SortAction.ascx.designer.cs">
       <DependentUpon>SortAction.ascx</DependentUpon>
     </Compile>
     <Compile Include="Actions\StatusFilterAction.ascx.cs">
       <DependentUpon>StatusFilterAction.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Actions\StatusFilterAction.ascx.designer.cs">
       <DependentUpon>StatusFilterAction.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\NotConfigured.ascx.cs">
       <DependentUpon>NotConfigured.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Admin\NotConfigured.ascx.designer.cs">
       <DependentUpon>NotConfigured.ascx</DependentUpon>
@@ -173,6 +181,7 @@
     </Compile>
     <Compile Include="Display\EventDetail.ascx.cs">
       <DependentUpon>EventDetail.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Display\EventDetail.ascx.designer.cs">
       <DependentUpon>EventDetail.ascx</DependentUpon>
@@ -195,6 +204,7 @@
     <Compile Include="Components\FeaturesController.cs" />
     <Compile Include="Display\EventListingTemplate.ascx.cs">
       <DependentUpon>EventListingTemplate.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Display\EventListingTemplate.ascx.designer.cs">
       <DependentUpon>EventListingTemplate.ascx</DependentUpon>
@@ -208,12 +218,14 @@
     </Compile>
     <Compile Include="Display\ResponseDisplay.ascx.cs">
       <DependentUpon>ResponseDisplay.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Display\ResponseDisplay.ascx.designer.cs">
       <DependentUpon>ResponseDisplay.ascx</DependentUpon>
     </Compile>
     <Compile Include="Display\EventToolTip.ascx.cs">
       <DependentUpon>EventToolTip.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Display\EventToolTip.ascx.designer.cs">
       <DependentUpon>EventToolTip.ascx</DependentUpon>
@@ -227,6 +239,7 @@
     </Compile>
     <Compile Include="Display\EventCalendar.ascx.cs">
       <DependentUpon>EventCalendar.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Display\EventCalendar.ascx.designer.cs">
       <DependentUpon>EventCalendar.ascx</DependentUpon>
@@ -240,24 +253,28 @@
     </Compile>
     <Compile Include="Controls\RecurrenceEditor.ascx.cs">
       <DependentUpon>RecurrenceEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controls\RecurrenceEditor.ascx.designer.cs">
       <DependentUpon>RecurrenceEditor.ascx</DependentUpon>
     </Compile>
     <Compile Include="Register.ascx.cs">
       <DependentUpon>Register.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Register.ascx.designer.cs">
       <DependentUpon>Register.ascx</DependentUpon>
     </Compile>
     <Compile Include="Navigation\GlobalNavigation.ascx.cs">
       <DependentUpon>GlobalNavigation.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Navigation\GlobalNavigation.ascx.designer.cs">
       <DependentUpon>GlobalNavigation.ascx</DependentUpon>
     </Compile>
     <Compile Include="EmailAFriend.ascx.cs">
       <DependentUpon>EmailAFriend.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EmailAFriend.ascx.designer.cs">
       <DependentUpon>EmailAFriend.ascx</DependentUpon>
@@ -271,6 +288,7 @@
     </Compile>
     <Compile Include="Display\EventListingAdmin.ascx.cs">
       <DependentUpon>EventListingAdmin.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Display\EventListingAdmin.ascx.designer.cs">
       <DependentUpon>EventListingAdmin.ascx</DependentUpon>
@@ -278,24 +296,28 @@
     <Compile Include="Setting.cs" />
     <Compile Include="Util\Approval.ascx.cs">
       <DependentUpon>Approval.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Util\Approval.ascx.designer.cs">
       <DependentUpon>Approval.ascx</DependentUpon>
     </Compile>
     <Compile Include="ResponseDetail.ascx.cs">
       <DependentUpon>ResponseDetail.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ResponseDetail.ascx.designer.cs">
       <DependentUpon>ResponseDetail.ascx</DependentUpon>
     </Compile>
     <Compile Include="ResponseSummaryDisplay.ascx.cs">
       <DependentUpon>ResponseSummaryDisplay.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ResponseSummaryDisplay.ascx.designer.cs">
       <DependentUpon>ResponseSummaryDisplay.ascx</DependentUpon>
     </Compile>
     <Compile Include="EmailEdit.ascx.cs">
       <DependentUpon>EmailEdit.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EmailEdit.ascx.designer.cs">
       <DependentUpon>EmailEdit.ascx</DependentUpon>
@@ -309,6 +331,7 @@
     </Compile>
     <Compile Include="MainContainer.ascx.cs">
       <DependentUpon>MainContainer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="MainContainer.ascx.designer.cs">
       <DependentUpon>MainContainer.ascx</DependentUpon>
