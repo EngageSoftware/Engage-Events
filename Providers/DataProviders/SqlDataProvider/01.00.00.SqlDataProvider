@@ -82,6 +82,7 @@ GO
 CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetResponses]
 (
 @EventId int,
+@EventStart datetime,
 @Status nvarchar(100),
 @sortColumn nvarchar(200), 
 @index int, 
@@ -103,6 +104,7 @@ BEGIN
 	set @sql = @sql + 'from '
 	set @sql = @sql + '{databaseOwner}[{objectQualifier}Engage_Response] '
 	set @sql = @sql + 'Where EventId = ' + STR(@EventId)
+	set @sql = @sql + 'AND EventStart = ''' + CONVERT(varchar(255), @EventStart) + ''''
 	if (@Status != '')
 	begin
 		set @sql = @sql + ' and Status = ''' + @Status + ''''
@@ -209,14 +211,13 @@ BEGIN
  select @NotAttending = 'NotAttending'  
  select @NoResponse = 'NoResponse'  
   
-Select distinct e.EventId, r.EventStart, 
-	(Select Count(*) from [{objectQualifier}Engage_Response] where EventId = e.EventId and EventStart = r.EventStart and Status = @Attending) AS Attending, 
-	(Select Count(*) from [{objectQualifier}Engage_Response] where EventId = e.EventId and EventStart = r.EventStart and Status = @NotAttending) AS NotAttending, 
-	(Select Count(*) from [{objectQualifier}Engage_Response] where EventId = e.EventId and EventStart = r.EventStart and Status = @NoResponse) AS NoResponse 
+Select distinct e.EventId, @EventStart AS EventStart, 
+	(Select Count(*) from [{objectQualifier}Engage_Response] where EventId = e.EventId and EventStart = @EventStart and Status = @Attending) AS Attending, 
+	(Select Count(*) from [{objectQualifier}Engage_Response] where EventId = e.EventId and EventStart = @EventStart and Status = @NotAttending) AS NotAttending, 
+	(Select Count(*) from [{objectQualifier}Engage_Response] where EventId = e.EventId and EventStart = @EventStart and Status = @NoResponse) AS NoResponse 
 FROM {databaseOwner}[{objectQualifier}Engage_Event] e 
- JOIN {databaseOwner}[{objectQualifier}Engage_Response] r ON (r.EventID = e.EventId) 
+ LEFT JOIN {databaseOwner}[{objectQualifier}Engage_Response] r ON (r.EventID = e.EventId) 
 WHERE e.EventId = @EventId
- AND r.EventStart = @EventStart
 
 END  
 GO

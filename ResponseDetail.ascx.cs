@@ -85,8 +85,9 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                if (!this.Page.IsPostBack)
+                if (!this.IsPostBack)
                 {
+                    Dnn.Utility.LocalizeGridView(ref this.ResponseDetailGrid, this.LocalResourceFile);
                     this.SetupControl();
                     this.BindData();
                 }
@@ -133,10 +134,10 @@ namespace Engage.Dnn.Events
             int? eventId = this.EventId;
             if (eventId.HasValue)
             {
-                ResponseCollection responses = ResponseCollection.Load(eventId.Value, this.Status, sortColumn, this.CurrentPageIndex - 1, this.ResponseDetailGrid.PageSize);
+                ResponseCollection responses = ResponseCollection.Load(eventId.Value, this.EventStart, this.Status, sortColumn, this.CurrentPageIndex - 1, this.ResponseDetailGrid.PageSize);
                 this.ResponseDetailGrid.DataSource = responses;
                 this.ResponseDetailGrid.DataBind();
-                this.ResponseDetailGrid.Attributes.Add("SortColumn", sortColumn);
+                ////this.ResponseDetailGrid.Attributes.Add("SortColumn", sortColumn);
 
                 this.pager.PageSize = this.ResponseDetailGrid.PageSize;
                 this.SetupPagingControl(this.pager, responses.TotalRecords, "modId", "key", "status", "eventId");

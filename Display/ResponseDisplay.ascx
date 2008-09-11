@@ -1,5 +1,4 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.Display.ResponseDisplay" CodeBehind="ResponseDisplay.ascx.cs" %>
-<%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
 <%@ Import Namespace="DotNetNuke.Services.Localization" %>
 <div class="ResponseDisplay ResponseRow">
     <div class="ResponseEventDisplay">
