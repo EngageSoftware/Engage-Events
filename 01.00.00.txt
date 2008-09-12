@@ -1,5 +1,4 @@
 ﻿bin/Engage.Licensing.dll
-bin/Engage.Dnn.Utility.dll
 bin/Engage.Servicesv3.0.dll
 bin/Engage.Templating.dll
 bin/Engage.Routingv3.0.dll
