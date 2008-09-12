@@ -255,6 +255,11 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 	width: 5em !important;
 }
 
+.EventsSetting .NumericTextBoxWrapper td.spinImgCell  a.spinbutton
+{
+     text-align: left;
+}
+
 .TemplatesSection
 {
 	margin: 1em;
