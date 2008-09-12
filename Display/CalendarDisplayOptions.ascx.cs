@@ -12,6 +12,7 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.Globalization;
     using System.Web.UI.WebControls;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Services.Exceptions;
@@ -40,6 +41,24 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Gets or sets the number of events to display on a single day in the calendar's month view.
+        /// </summary>
+        /// <value>The number of events to display on a single day in the calendar's month view</value>
+        internal int EventsPerDay
+        {
+            set
+            {
+                ModuleController modules = new ModuleController();
+                modules.UpdateTabModuleSetting(this.TabModuleId, Setting.EventsPerDay.PropertyName, value.ToString(CultureInfo.InvariantCulture));
+            }
+
+            get
+            {
+                return Dnn.Utility.GetIntSetting(this.Settings, Setting.EventsPerDay.PropertyName, 3);
+            }
+        }
+
+        /// <summary>
         /// Sets up this control.
         /// </summary>
         public override void LoadSettings()
@@ -55,6 +74,8 @@ namespace Engage.Dnn.Events
                 {
                     li.Selected = true;
                 }
+
+                this.EventsPerDayTextBox.Value = this.EventsPerDay;
             }
             catch (Exception exc)
             {
@@ -72,6 +93,11 @@ namespace Engage.Dnn.Events
             if (this.Page.IsValid)
             {
                 this.SkinOption = (TelerikSkin)Enum.Parse(typeof(TelerikSkin), this.SkinDropDownList.SelectedValue);
+
+                if (this.EventsPerDayTextBox.Value.HasValue)
+                {
+                    this.EventsPerDay = (int)this.EventsPerDayTextBox.Value.Value;
+                }
             }
         }
     }

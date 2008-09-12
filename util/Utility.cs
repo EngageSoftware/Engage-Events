@@ -98,6 +98,7 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// Gets a dictionary mapping ordinal day values (based on <see cref="RecurrencePattern.DayOrdinal"/>) to their localization resource keys.
         /// </summary>
+        /// <value>The mapping between ordinal day values and their localization resource keys.</value>
         public static IDictionary<int, string> OrdinalValues
         {
             get { return ordinalValues; }

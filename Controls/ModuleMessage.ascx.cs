@@ -155,8 +155,7 @@ namespace Engage.Dnn.Events.Controls
         /// <summary>
         /// Gets or sets a value indicating whether a server control is rendered as UI on the page.
         /// </summary>
-        /// <value></value>
-        /// <returns><c>true</c> if the control is visible on the page; otherwise <c>false</c>.</returns>
+        /// <value>Whether the control is visible on the page</value>
         public override bool Visible
         {
             [DebuggerStepThrough]

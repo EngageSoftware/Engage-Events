@@ -123,6 +123,12 @@
   <data name="Default.Text" xml:space="preserve">
     <value>Default</value>
   </data>
+  <data name="EventsPerDayLabel.Help" xml:space="preserve">
+    <value>Choose how many events to display in each day of the calendar when it is in month view.  If there are more events on that day than can be shown, a "Show more..." link will be displayed which links to the calendar's view for that day.</value>
+  </data>
+  <data name="EventsPerDayLabel.Text" xml:space="preserve">
+    <value>Events Per Day</value>
+  </data>
   <data name="Gray.Text" xml:space="preserve">
     <value>Gray</value>
   </data>

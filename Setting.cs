@@ -43,6 +43,11 @@ namespace Engage.Dnn.Events
         public static readonly Setting SkinSelection = new Setting("SkinSelection", "The skin used for Calendar Display.");
 
         /// <summary>
+        /// The number of events to display on a single day in the calendar's month view
+        /// </summary>
+        public static readonly Setting EventsPerDay = new Setting("EventsPerDay", "The number of events to display on a single day in the calendar's month view");
+
+        /// <summary>
         /// The unsubscribe URL to use in emails
         /// </summary>
         public static readonly Setting UnsubscribeUrl = new Setting("unsubscribeUrl", "Specify the URL for unsubscribing.");
