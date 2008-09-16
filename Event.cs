@@ -711,7 +711,7 @@ namespace Engage.Events
             e.eventEnd = (DateTime)eventRecord["EventEnd"];
             e.timeZoneOffset = new TimeSpan(0, (int)eventRecord["TimeZoneOffset"], 0);
             e.createdBy = (int)eventRecord["CreatedBy"];
-            e.canceled = (bool)eventRecord["Canceled"];
+            e.canceled = (bool)eventRecord["Cancelled"];
             e.isFeatured = (bool)eventRecord["IsFeatured"];
             e.isDeleted = (bool)eventRecord["IsDeleted"];
             e.allowRegistrations = (bool)eventRecord["AllowRegistrations"];
