@@ -268,7 +268,7 @@ namespace Engage.Dnn.Events.Display
                         container.Controls.Add(registerEventAction);
 
                         // to register must be an event that allows registrations, be active, and have not ended
-                        registerEventAction.Visible = currentEvent.AllowRegistrations && !currentEvent.Cancelled && currentEvent.EventEnd > DateTime.Now;
+                        registerEventAction.Visible = currentEvent.AllowRegistrations && !currentEvent.Canceled && currentEvent.EventEnd > DateTime.Now;
 
                         break;
                     case "ADDTOCALENDARBUTTON":
@@ -277,7 +277,7 @@ namespace Engage.Dnn.Events.Display
                         addToCalendarAction.ModuleConfiguration = this.ModuleConfiguration;
 
                         // must be an active event and has not ended
-                        addToCalendarAction.Visible = !currentEvent.Cancelled && currentEvent.EventEnd > DateTime.Now;
+                        addToCalendarAction.Visible = !currentEvent.Canceled && currentEvent.EventEnd > DateTime.Now;
                         container.Controls.Add(addToCalendarAction);
                         break;
                     case "DELETEBUTTON":

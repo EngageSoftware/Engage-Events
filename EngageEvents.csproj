@@ -54,9 +54,8 @@
     <Reference Include="Engage.Dnn.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Engage.Frameworkv3.0, Version=2.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
+    <Reference Include="Engage.Events, Version=1.0.0.24403, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Engage.Framework, Version=2.0.5.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral">
       <HintPath>..\..\bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
@@ -613,8 +612,9 @@
     <Content Include="References\DotNetNuke.WebUtility.dll" />
     <Content Include="References\Engage.Dnn.Framework.dll" />
     <Content Include="References\Engage.Dnn.Framework.XmlSerializers.dll" />
-    <Content Include="References\Engage.Frameworkv3.0.dll" />
-    <Content Include="References\Engage.Frameworkv3.0.XmlSerializers.dll" />
+    <Content Include="References\Engage.Events.dll" />
+    <Content Include="References\Engage.Framework.dll" />
+    <Content Include="References\Engage.Framework.XmlSerializers.dll" />
     <Content Include="References\Microsoft.ApplicationBlocks.Data.dll" />
     <Content Include="References\SMTP.Net.dll" />
     <Content Include="References\Telerik.Web.UI.dll" />

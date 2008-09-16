@@ -173,13 +173,13 @@ namespace Engage.Dnn.Events.Navigation
         /// </summary>
         private void LocalizeControls()
         {
-            this.CancelButton.Text = this.CurrentEvent.Cancelled
+            this.CancelButton.Text = this.CurrentEvent.Canceled
                                          ? Localization.GetString("UnCancel", this.LocalResourceFile)
                                          : Localization.GetString("Cancel", this.LocalResourceFile);
 
             ClientAPI.AddButtonConfirm(this.DeleteEventButton, Localization.GetString("ConfirmDelete", this.LocalResourceFile));
             ClientAPI.AddButtonConfirm(
-                this.CancelButton, Localization.GetString(this.CurrentEvent.Cancelled ? "ConfirmUnCancel" : "ConfirmCancel", this.LocalResourceFile));
+                this.CancelButton, Localization.GetString(this.CurrentEvent.Canceled ? "ConfirmUnCancel" : "ConfirmCancel", this.LocalResourceFile));
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Engage.Dnn.Events.Navigation
             // since we are reloading the object each time (no caching yet) you can't do the following
             // this.CurrentEvent.Cancelled = !this.CurrentEvent.Cancelled;  hk
             Event ev = this.CurrentEvent;
-            ev.Cancelled = !this.CurrentEvent.Cancelled;
+            ev.Canceled = !this.CurrentEvent.Canceled;
             ev.Save(this.UserId);
             this.OnCancel(e);
         }
