@@ -66,6 +66,9 @@
   <ItemGroup>
     <Content Include="References\Telerik.Web.UI.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Engage.Events.Build" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(ProgramFiles)\MSBuild\Microsoft\StyleCop\v4.3\Microsoft.StyleCop.Targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
