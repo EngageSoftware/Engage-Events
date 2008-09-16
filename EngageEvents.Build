@@ -182,13 +182,8 @@
       <fileset>
         <include name="**${resourcezip.dir}/Resources.zip" />
         <include name="../../bin/Engage${ModuleName}.dll" />
-        <include name="**/References/Engage.Frameworkv3.0.dll" />
-        <include name="**/References/Engage.Frameworkv3.0.XmlSerializers.dll" />
-        <include name="**/References/Engage.Dnn.Framework.dll" />
-        <include name="**/References/Engage.Dnn.Framework.XmlSerializers.dll" />
-        <include name="**/References/aspNetEmail.dll" />
-        <include name="**/References/Telerik.Web.UI.dll" />
-        <include name="**/01.00.00.txt" />
+        <include name="**/References/*.dll" />
+         <include name="**/01.00.00.txt" />
         <include name="**/*.sqldataprovider" />
         <include name="**/SearchRedirector.ascx" />
         <include name="**/ReadMe.txt" />
@@ -214,12 +209,7 @@
       <fileset>
         <include name="**${resourcezip.dir}/Resources.zip" />
         <include name="../../bin/Engage${ModuleName}.dll" />
-        <include name="**/References/Engage.Frameworkv3.0.dll" />
-        <include name="**/References/Engage.Frameworkv3.0.XmlSerializers.dll" />
-        <include name="**/References/Engage.Dnn.Framework.dll" />
-        <include name="**/References/Engage.Dnn.Framework.XmlSerializers.dll" />
-        <include name="**/References/aspNetEmail.dll" />
-        <include name="**/References/Telerik.Web.UI.dll" />
+        <include name="**/References/*.dll" />
         <include name="**/*.sqldataprovider" />
         <include name="**/01.00.00.txt" />
         <include name="**/SearchRedirector.ascx" />
@@ -246,12 +236,7 @@
       <fileset>
         <include name="**${resourcezip.dir}/Resources.zip" />
         <include name="../../bin/Engage${ModuleName}.dll" />
-        <include name="**/References/Engage.Frameworkv3.0.dll" />
-        <include name="**/References/Engage.Frameworkv3.0.XmlSerializers.dll" />
-        <include name="**/References/Engage.Dnn.Framework.dll" />
-        <include name="**/References/Engage.Dnn.Framework.XmlSerializers.dll" />
-        <include name="**/References/aspNetEmail.dll" />
-        <include name="**/References/Telerik.Web.UI.dll" />
+        <include name="**/References/*.dll" />
         <include name="**/01.00.00.txt" />
         <include name="**/*.sqldataprovider" />
         <include name="**/ReadMe.txt" />
@@ -279,12 +264,7 @@
       <fileset>
         <include name="**${resourcezip.dir}/Resources.zip" />
         <include name="../../bin/Engage${ModuleName}.dll" />
-        <include name="**/References/Engage.Frameworkv3.0.dll" />
-        <include name="**/References/Engage.Frameworkv3.0.XmlSerializers.dll" />
-        <include name="**/References/Engage.Dnn.Framework.dll" />
-        <include name="**/References/Engage.Dnn.Framework.XmlSerializers.dll" />
-        <include name="**/References/aspNetEmail.dll" />
-        <include name="**/References/Telerik.Web.UI.dll" />
+        <include name="**/References/*.dll" />
         <include name="**/01.00.00.txt" />
         <include name="**/*.sqldataprovider" />
         <include name="**/ReadMe.txt" />

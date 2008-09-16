@@ -60,13 +60,16 @@
           <name>EngageEvents.dll</name>
         </file>
         <file>
-          <name>Engage.Frameworkv3.0.dll</name>
+          <name>Engage.Framework.dll</name>
         </file>
         <file>
           <name>Engage.Dnn.Framework.dll</name>
         </file>
         <file>
-          <name>Engage.Frameworkv3.0.XmlSerializers.dll</name>
+          <name>Engage.Events.dll</name>
+        </file>
+        <file>
+          <name>Engage.Framework.XmlSerializers.dll</name>
         </file>
         <file>
           <name>Engage.Dnn.Framework.XmlSerializers.dll</name>
