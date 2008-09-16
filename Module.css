@@ -33,6 +33,7 @@
 
 .EventCalendar li { list-style-type: none; }
 .RadScheduler .rsApt { height: auto !important;}
+.RadScheduler_Telerik div.rsHeader p { width:110px; }
 
 /* event edit page */
 

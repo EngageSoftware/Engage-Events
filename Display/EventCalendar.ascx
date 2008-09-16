@@ -32,7 +32,7 @@
     </h2>
 </div>
 <div class="EventCalendar">
-    <asp:UpdatePanel runat="server" ID="UpdatePanel1" UpdateMode="Conditional">
+    <asp:UpdatePanel runat="server" UpdateMode="Conditional">
         <ContentTemplate>
             <telerik:radscheduler id="EventsCalendarDisplay" runat="server" selectedview="MonthView"
                 enableembeddedskins="True" allowdelete="False" allowedit="False" allowinsert="False"
@@ -40,7 +40,7 @@
                 <timelineview userselectable="False" />
             </telerik:radscheduler>
             <telerik:radtooltipmanager runat="server" id="EventsCalendarToolTipManager" width="300" height="150"
-                skin="WebBlue" animation="None" position="BottomRight" sticky="true" text="Loading..." />
+                animation="None" position="BottomRight" sticky="true" text="Loading..." />
         </ContentTemplate>
     </asp:UpdatePanel>
 </div>
