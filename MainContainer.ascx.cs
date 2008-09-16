@@ -51,11 +51,11 @@ namespace Engage.Dnn.Events
             }
             else if (Engage.Utility.IsLoggedIn)
             {
-                this.Response.Redirect(Globals.NavigateURL(this.TabId));
+                this.Response.Redirect(Globals.NavigateURL(this.TabId), true);
             }
             else
             {
-                this.Response.Redirect(Dnn.Utility.GetLoginUrl(this.PortalSettings, this.Request));
+                this.Response.Redirect(Dnn.Utility.GetLoginUrl(this.PortalSettings, this.Request), true);
             }
         }
 

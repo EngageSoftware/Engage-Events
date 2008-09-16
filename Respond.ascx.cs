@@ -117,7 +117,7 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void BackToEventsButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect(Globals.NavigateURL());
+            Response.Redirect(Globals.NavigateURL(), true);
         }
 
         /// <summary>

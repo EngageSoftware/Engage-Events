@@ -80,7 +80,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void RegisterButton_Click(object sender, EventArgs e)
         {
-            this.Response.Redirect(this.BuildLinkUrl(this.ModuleId, "Register", Dnn.Events.Utility.GetEventParameters(this.currentEvent)));
+            this.Response.Redirect(this.BuildLinkUrl(this.ModuleId, "Register", Dnn.Events.Utility.GetEventParameters(this.currentEvent)), true);
         }
 
         /// <summary>

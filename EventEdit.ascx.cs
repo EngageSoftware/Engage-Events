@@ -114,7 +114,7 @@ namespace Engage.Dnn.Events
                 if (this.Page.IsValid)
                 {
                     this.Save();
-                    this.Response.Redirect(this.AddEventUrl);
+                    this.Response.Redirect(this.AddEventUrl, true);
                 }
             }
             catch (Exception exc)

@@ -37,7 +37,7 @@ namespace Engage.Dnn.Events
             ////ConfigureLink.Visible = true;
 
             this.SetupDefaultSettings();
-            this.Response.Redirect(Globals.NavigateURL());
+            this.Response.Redirect(Globals.NavigateURL(), true);
         }
 
         /// <summary>
