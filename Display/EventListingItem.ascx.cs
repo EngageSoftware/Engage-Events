@@ -19,6 +19,7 @@ namespace Engage.Dnn.Events.Display
     using DotNetNuke.Services.Localization;
     using Engage.Events;
     using Framework.Templating;
+    using Licensing;
     using Templating;
 
     /// <summary>
@@ -60,15 +61,7 @@ namespace Engage.Dnn.Events.Display
         public EventListingItem()
         {
             this.ActionsControlsFolder = "~" + this.DesktopModuleFolderName + "Actions/";
-        }
-
-        /// <summary>
-        /// Gets the license key for this module.
-        /// </summary>
-        /// <value>This module's unique key.</value>
-        public override Guid LicenseKey
-        {
-            get { return Utility.LicenseKey; }
+            this.LicenseProvider = new EngageLicenseProvider(Utility.LicenseKey);
         }
 
         /// <summary>

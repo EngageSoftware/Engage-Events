@@ -11,9 +11,9 @@
 
 namespace Engage.Dnn.Events.Display
 {
-    using System;
     using System.Web.UI;
     using Framework.Templating;
+    using Licensing;
     using Templating;
 
     /// <summary>
@@ -22,12 +22,11 @@ namespace Engage.Dnn.Events.Display
     public partial class EventListingTemplate : TemplateModuleBase
     {
         /// <summary>
-        /// Gets the license key for this module.
+        /// Initializes a new instance of the <see cref="EventListingTemplate"/> class.
         /// </summary>
-        /// <value>This module's unique key.</value>
-        public override Guid LicenseKey
+        protected EventListingTemplate()
         {
-            get { return Utility.LicenseKey; }
+            this.LicenseProvider = new EngageLicenseProvider(Utility.LicenseKey);
         }
 
         /// <summary>

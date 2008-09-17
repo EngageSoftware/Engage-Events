@@ -24,6 +24,7 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Security;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.WebControls;
+    using Licensing;
 
     /// <summary>
     /// This class extends the framework version in order for developers to add on any specific methods/behavior.
@@ -41,15 +42,7 @@ namespace Engage.Dnn.Events
         public ModuleBase()
         {
             this.LocalSharedResourceFile = Utility.LocalSharedResourceFile;
-        }
-
-        /// <summary>
-        /// Gets the license key for this module.
-        /// </summary>
-        /// <value>This module's unique key.</value>
-        public override Guid LicenseKey
-        {
-            get { return Utility.LicenseKey; }
+            this.LicenseProvider = new EngageLicenseProvider(Utility.LicenseKey);
         }
 
         /// <summary>
@@ -230,30 +223,6 @@ namespace Engage.Dnn.Events
         protected string Localize(string resourceKey)
         {
             return Localization.GetString(resourceKey, this.LocalResourceFile);
-        }
-
-        /// <summary>
-        /// Gets the <c>QueryString</c> control key for the current <c>Request</c>.
-        /// </summary>
-        /// <returns>The <c>QueryString</c> control key for the current <c>Request</c></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "The method performs a time-consuming operation. The method is perceivably slower than the time it takes to set or get a field's value.")]
-        protected string GetCurrentControlKey()
-        {
-            string keyParam = string.Empty;
-            string[] modIdParams = this.Request.QueryString["modId"] == null ? new string[] { } : this.Request.QueryString["modId"].Split(';');
-            string[] keyParams = this.Request.QueryString["key"] == null ? new string[] { } : this.Request.QueryString["key"].Split(';');
-
-            for (int i = 0; i < modIdParams.Length && i < keyParams.Length; i++)
-            {
-                int modId;
-                if (int.TryParse(modIdParams[i], NumberStyles.Integer, CultureInfo.InvariantCulture, out modId) && modId == this.ModuleId)
-                {
-                    keyParam = keyParams[i];
-                    break;
-                }
-            }
-
-            return keyParam;
         }
 
         /// <summary>

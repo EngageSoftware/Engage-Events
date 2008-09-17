@@ -18,6 +18,7 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Security;
     using DotNetNuke.Services.Exceptions;
+    using Framework;
 
     /// <summary>
     /// The main container that is used by the Engage: Events module.  
