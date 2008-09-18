@@ -11,6 +11,6 @@
 namespace Engage.Dnn.Events {
     
     
-    public partial class NotConfigured {
+    public partial class LicenseError {
     }
 }

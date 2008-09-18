@@ -161,6 +161,13 @@
     <Compile Include="Actions\StatusFilterAction.ascx.designer.cs">
       <DependentUpon>StatusFilterAction.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\LicenseError.ascx.cs">
+      <DependentUpon>LicenseError.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\LicenseError.ascx.designer.cs">
+      <DependentUpon>LicenseError.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\NotConfigured.ascx.cs">
       <DependentUpon>NotConfigured.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -409,9 +416,6 @@
     <Content Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Admin\App_LocalResources\AdminMenu.ascx.resx">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Admin\NotConfigured.ascx" />
   </ItemGroup>
   <ItemGroup>
@@ -606,6 +610,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="01.00.00.txt" />
+    <Content Include="Admin\LicenseError.ascx" />
     <Content Include="Controls\App_LocalResources\EditTypeDialog.aspx.resx">
       <SubType>Designer</SubType>
     </Content>
@@ -625,6 +630,8 @@
     </Content>
     <Content Include="Templates\App_LocalResources\Template.resx">
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Admin\App_LocalResources\LicenseError.ascx.resx">
     </Content>
     <EmbeddedResource Include="JavaScript\EngageEvents.EditTypeDialog.js" />
     <Content Include="Navigation\App_LocalResources\EventAdminActions.ascx.resx">

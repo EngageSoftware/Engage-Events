@@ -13,6 +13,7 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.IO;
     using DotNetNuke.Common;
     using DotNetNuke.Entities.Modules;
@@ -37,14 +38,27 @@ namespace Engage.Dnn.Events
         private static readonly SubControlInfo DefaultSubControl = new SubControlInfo("Display/EventListingTemplate.ascx", false);
 
         /// <summary>
+        /// The default sub-control to load
+        /// </summary>
+        private static readonly SubControlInfo LicenseErrorControl = new SubControlInfo("Admin/LicenseError.ascx", false);
+
+        /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
         protected override void OnInit(EventArgs e)
         {
-            base.OnInit(e);
+            SubControlInfo controlToLoad;
+            try
+            {
+                base.OnInit(e);
 
-            SubControlInfo controlToLoad = this.GetControlToLoad();
+                controlToLoad = this.GetControlToLoad();
+            }
+            catch (LicenseException)
+            {
+                controlToLoad = LicenseErrorControl;
+            }
 
             if (!controlToLoad.RequiresEditPermission || PortalSecurity.HasNecessaryPermission(SecurityAccessLevel.Edit, this.PortalSettings, this.ModuleConfiguration, this.UserInfo.Username))
             {

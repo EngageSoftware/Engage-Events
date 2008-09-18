@@ -12,44 +12,39 @@
 namespace Engage.Dnn.Events.Navigation
 {
     using System;
+    using System.ComponentModel;
     using System.Globalization;
-    using System.IO;
     using DotNetNuke.Common;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Security.Permissions;
     using DotNetNuke.Services.Exceptions;
-    using DotNetNuke.Services.Localization;
 
     /// <summary>
     /// A navigation control that is always displayed at the top of the module.  Currently only for admins.
     /// </summary>
     public partial class GlobalNavigation : ModuleBase
     {
-        /////// <summary>
-        /////// Gets the current control key.
-        /////// </summary>
-        /////// <value>The current control key.</value>
-        ////private string CurrentControlKey
-        ////{
-        ////    get
-        ////    {
-        ////        return this.Request.QueryString["key"] ?? string.Empty;
-        ////    }
-        ////}
-
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
         protected override void OnInit(EventArgs e)
         {
-            base.OnInit(e);
+            try
+            {
+                base.OnInit(e);
 
-            // since the global navigation control is not loaded using DNN mechanisms we need to set it here so that calls to 
-            // module related information will appear the same as the actual control this navigation is sitting on.hk
-            this.ModuleConfiguration = Engage.Utility.FindParentControl<PortalModuleBase>(this).ModuleConfiguration;
+                // since the global navigation control is not loaded using DNN mechanisms we need to set it here so that calls to 
+                // module related information will appear the same as the actual control this navigation is sitting on.hk
+                this.ModuleConfiguration = Engage.Utility.FindParentControl<PortalModuleBase>(this).ModuleConfiguration;
 
-            this.Load += this.Page_Load;
+                this.Load += this.Page_Load;
+            }
+            catch (LicenseException)
+            {
+                // swallow this exception so that MainContainer can handle it
+                this.Visible = false;
+            }
         }
 
         /// <summary>
@@ -91,27 +86,5 @@ namespace Engage.Dnn.Events.Navigation
             this.Visible = this.IsAdmin;
             this.SettingsLink.Visible = TabPermissionController.HasTabPermission("EDIT");
         }
-
-        /////// <summary>
-        /////// Sets the image for the current page to a disabled image, if appropriate.
-        /////// </summary>
-        ////private void SetDisabledImages()
-        ////{
-        ////    switch (this.CurrentControlKey)
-        ////    {
-        ////        case "EventEdit":
-        ////            this.AddAnEventLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/add_event_disabled.gif";
-        ////            break;
-        ////        case "EventListingAdmin":
-        ////            this.ManageEventsLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/manage_events_disabled.gif";
-        ////            break;
-        ////        case "ResponseSummaryDisplay":
-        ////            this.ResponsesLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/responses_disabled.gif";
-        ////            break;
-        ////        default:
-        ////            this.HomeLink.ImageUrl = "~/DesktopModules/EngageEvents/Images/home_disabled.gif";
-        ////            break;
-        ////    }
-        ////}
     }
 }

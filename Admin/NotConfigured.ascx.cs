@@ -14,7 +14,6 @@ namespace Engage.Dnn.Events
     using System;
     using System.Globalization;
     using DotNetNuke.Common;
-    using DotNetNuke.Entities.Host;
     using DotNetNuke.Entities.Modules;
     using Engage.Events;
     using Framework.Templating;
