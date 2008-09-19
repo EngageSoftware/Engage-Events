@@ -170,6 +170,7 @@ namespace Engage.Events
             [DebuggerStepThrough]
             set { this.firstName = value; }
         }
+
         /// <summary>
         /// Gets the id of this Response.
         /// </summary>

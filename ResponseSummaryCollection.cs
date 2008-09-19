@@ -18,6 +18,7 @@ namespace Engage.Events
     using Data;
 
     /// <summary>
+    /// A collection of <see cref="ResponseSummary"/> objects
     /// </summary>
     /// <remarks>
     /// This class inherits from <see cref="BindingList{T}"/> for future support.

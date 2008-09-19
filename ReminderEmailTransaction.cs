@@ -27,6 +27,15 @@ namespace Engage.Communication.Email
         }
 
         /// <summary>
+        /// Gets the response status.
+        /// </summary>
+        /// <value>The response status.</value>
+        private ResponseStatus ResponseStatus
+        {
+            get { return Response.GetResponseStatus(this.EventId, this.EventDate, this.Email); }
+        }
+
+        /// <summary>
         /// This method overrides the default behavior of looking at HtmlBodyLocation1 to inspect the recipient's 
         /// <see cref="ResponseStatus"/> and decide which message to send.
         /// </summary>
@@ -46,15 +55,6 @@ namespace Engage.Communication.Email
             }
 
             this.MessageBody += GetEmailFooter();
-        }
-
-        /// <summary>
-        /// Gets the response status.
-        /// </summary>
-        /// <value>The response status.</value>
-        private ResponseStatus ResponseStatus
-        {
-            get { return Response.GetResponseStatus(this.EventId, this.EventDate, this.Email); }
         }
     }
 }
