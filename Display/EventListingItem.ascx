@@ -7,7 +7,7 @@
 <asp:UpdatePanel runat="server" UpdateMode="Always">
     <ContentTemplate>
         <asp:PlaceHolder ID="HeaderPlaceholder" runat="server"/>
-        <asp:Repeater ID="RepeaterEvents" runat="server" OnItemDataBound="RepeaterEvents_ItemDataBound"/>
+        <asp:PlaceHolder ID="ItemPlaceholder" runat="server" />
         <asp:PlaceHolder ID="FooterPlaceholder" runat="server"/>
     </ContentTemplate>
 </asp:UpdatePanel>

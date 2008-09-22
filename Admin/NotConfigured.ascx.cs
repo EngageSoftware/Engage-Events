@@ -49,10 +49,10 @@ namespace Engage.Dnn.Events
             modules.UpdateTabModuleSetting(this.TabModuleId, Setting.DisplayModeOption.PropertyName, ListingMode.All.ToString());
 
             // TODO: add error handling if a folder doesn't have any documents of a particular type
-            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.HeaderTemplate.PropertyName, TemplateEngine.GetHeaderTemplates(PhysicialTemplatesFolderName)[0].DocumentName);
-            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.ItemTemplate.PropertyName, TemplateEngine.GetItemTemplates(PhysicialTemplatesFolderName)[0].DocumentName);
-            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.FooterTemplate.PropertyName, TemplateEngine.GetFooterTemplates(PhysicialTemplatesFolderName)[0].DocumentName);
-            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.DetailTemplate.PropertyName, TemplateEngine.GetDetailTemplates(PhysicialTemplatesFolderName)[0].DocumentName);
+            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.HeaderTemplate.PropertyName, TemplateEngine.GetHeaderTemplates(this.PhysicialTemplatesFolderName)[0].DocumentName);
+            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.ItemTemplate.PropertyName, TemplateEngine.GetItemTemplates(this.PhysicialTemplatesFolderName)[0].DocumentName);
+            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.FooterTemplate.PropertyName, TemplateEngine.GetFooterTemplates(this.PhysicialTemplatesFolderName)[0].DocumentName);
+            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.DetailTemplate.PropertyName, TemplateEngine.GetDetailTemplates(this.PhysicialTemplatesFolderName)[0].DocumentName);
             modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.RecordsPerPage.PropertyName, 10.ToString(CultureInfo.InvariantCulture));
         }
     }

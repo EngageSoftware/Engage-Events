@@ -28,11 +28,6 @@ namespace Engage.Dnn.Events
     public partial class MainContainer : ModuleBase
     {
         /// <summary>
-        /// A dictionary mapping control keys to user controls.
-        /// </summary>
-        private static readonly IDictionary<string, SubControlInfo> ControlKeys = FillControlKeys();
-
-        /// <summary>
         /// The default sub-control to load
         /// </summary>
         private static readonly SubControlInfo DefaultSubControl = new SubControlInfo("Display/EventListingTemplate.ascx", false);
@@ -41,6 +36,11 @@ namespace Engage.Dnn.Events
         /// The default sub-control to load
         /// </summary>
         private static readonly SubControlInfo LicenseErrorControl = new SubControlInfo("Admin/LicenseError.ascx", false);
+
+        /// <summary>
+        /// A dictionary mapping control keys to user controls.
+        /// </summary>
+        private static readonly IDictionary<string, SubControlInfo> ControlKeys = FillControlKeys();
 
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.

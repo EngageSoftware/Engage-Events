@@ -13,6 +13,7 @@ namespace Engage.Dnn.Events
 {
     using System;
     using DotNetNuke.Framework;
+    using Framework.Templating;
 
     /// <summary>
     /// Displays the Add To Calendar that users can perform on an event instance.
@@ -37,7 +38,7 @@ namespace Engage.Dnn.Events
 
             // since the global navigation control is not loaded using DNN mechanisms we need to set it here so that calls to 
             // module related information will appear the same as the actual control this navigation is sitting on.hk
-            this.LocalResourceFile = TemplateResourceFile;
+            this.LocalResourceFile = this.TemplateResourceFile;
 
             this.Load += this.Page_Load;
             this.AddToCalendarButton.Click += this.AddToCalendarButton_Click;

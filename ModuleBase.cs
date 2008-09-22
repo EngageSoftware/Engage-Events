@@ -17,6 +17,7 @@ namespace Engage.Dnn.Events
     using System.IO;
     using System.Text;
     using System.Web;
+    using System.Web.UI;
     using DotNetNuke.Common;
     using DotNetNuke.Entities.Host;
     using DotNetNuke.Entities.Modules;
@@ -216,13 +217,29 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Gets localized text for the given resource key using this control's <see cref="DotNetNuke.Entities.Modules.PortalModuleBase.LocalResourceFile"/>.
+        /// Generates a list of QueryString parameters for the given list of <paramref name="queryStringKeys"/>.
         /// </summary>
-        /// <param name="resourceKey">The resource key.</param>
-        /// <returns>Localized text for the given resource key</returns>
-        protected string Localize(string resourceKey)
+        /// <param name="request">The current request.</param>
+        /// <param name="queryStringKeys">The keys for which to generate parameters.</param>
+        /// <returns>
+        /// A list of QueryString parameters for the given list of <paramref name="queryStringKeys"/>
+        /// </returns>
+        protected static string GenerateQueryStringParameters(HttpRequest request, params string[] queryStringKeys)
         {
-            return Localization.GetString(resourceKey, this.LocalResourceFile);
+            StringBuilder queryString = new StringBuilder(64);
+            foreach (string key in queryStringKeys)
+            {
+                if (queryString.Length > 0)
+                {
+                    queryString.Append("&");
+                }
+
+                queryString.Append(key);
+                queryString.Append("=");
+                queryString.Append(request.QueryString[key]);
+            }
+
+            return queryString.ToString();
         }
 
         /// <summary>
@@ -241,6 +258,16 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Gets localized text for the given resource key using this control's <see cref="DotNetNuke.Entities.Modules.PortalModuleBase.LocalResourceFile"/>.
+        /// </summary>
+        /// <param name="resourceKey">The resource key.</param>
+        /// <returns>Localized text for the given resource key</returns>
+        protected string Localize(string resourceKey)
+        {
+            return Localization.GetString(resourceKey, this.LocalResourceFile);
+        }
+
+        /// <summary>
         /// Raises the <see cref="E:Init"/> event.
         /// </summary>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
@@ -248,32 +275,6 @@ namespace Engage.Dnn.Events
         {
             base.OnInit(e);
             this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
-        }
-
-        /// <summary>
-        /// Generates a list of QueryString parameters for the given list of <paramref name="queryStringKeys"/>.
-        /// </summary>
-        /// <param name="request">The current request.</param>
-        /// <param name="queryStringKeys">The keys for which to generate parameters.</param>
-        /// <returns>
-        /// A list of QueryString parameters for the given list of <paramref name="queryStringKeys"/>
-        /// </returns>
-        private static string GenerateQueryStringParameters(HttpRequest request, IEnumerable<string> queryStringKeys)
-        {
-            StringBuilder queryString = new StringBuilder(64);
-            foreach (string key in queryStringKeys)
-            {
-                if (queryString.Length > 0)
-                {
-                    queryString.Append("&");
-                }
-
-                queryString.Append(key);
-                queryString.Append("=");
-                queryString.Append(request.QueryString[key]);
-            }
-
-            return queryString.ToString();
         }
     }
 }

@@ -12,10 +12,12 @@
 namespace Engage.Dnn.Events.Display
 {
     using System;
+    using System.Diagnostics;
     using System.Globalization;
     using System.Text;
     using System.Web.UI;
     using System.Web.UI.WebControls;
+    using DotNetNuke.Common;
     using DotNetNuke.Services.Localization;
     using Engage.Events;
     using Framework.Templating;
@@ -25,7 +27,7 @@ namespace Engage.Dnn.Events.Display
     /// <summary>
     /// Custom event listing item
     /// </summary>
-    public partial class EventListingItem : RepeaterItemListing
+    public partial class EventListingItem : ModuleBase
     {
         /// <summary>
         /// Relative path to the folder where the action controls are located in this module
@@ -35,25 +37,26 @@ namespace Engage.Dnn.Events.Display
         /// <summary>
         /// Backing field for <see cref="SortAction"/>
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private SortAction sortAction;
 
         /// <summary>
         /// Backing field for <see cref="StatusFilterAction"/>
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private StatusFilterAction statusFilterAction;
 
         /// <summary>
         /// Backing field for <see cref="ListingMode"/>
         /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ListingMode listingMode;
 
         /// <summary>
-        /// The collection of events to display
+        /// Backing field for <see cref="IsFeatured"/>
         /// </summary>
-        /// <remarks>
-        /// keep a reference around of the data that you have loaded
-        /// </remarks>
-        private EventCollection events;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private bool isFeatured;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventListingItem"/> class.
@@ -79,7 +82,9 @@ namespace Engage.Dnn.Events.Display
         /// <value>The listing mode used for this display</value>
         public ListingMode ListingMode
         {
+            [DebuggerStepThrough]
             get { return this.listingMode; }
+            [DebuggerStepThrough]
             private set { this.listingMode = value; }
         }
 
@@ -89,7 +94,9 @@ namespace Engage.Dnn.Events.Display
         /// <value>The sort action control.</value>
         public SortAction SortAction
         {
+            [DebuggerStepThrough]
             get { return this.sortAction; }
+            [DebuggerStepThrough]
             set { this.sortAction = value; }
         }
 
@@ -99,35 +106,44 @@ namespace Engage.Dnn.Events.Display
         /// <value>The sort status action control.</value>
         public StatusFilterAction StatusFilterAction
         {
+            [DebuggerStepThrough]
             get { return this.statusFilterAction; }
+            [DebuggerStepThrough]
             set { this.statusFilterAction = value; }
         }
 
         /// <summary>
-        /// Gets the total records. 
+        /// Gets or sets a value indicating whether this instance should display only featured events.
         /// </summary>
-        /// <value>The total records.</value>
-        protected override int TotalRecords
+        /// <value>
+        /// <c>true</c> if this instance should only display featured events; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsFeatured
         {
-            get { return this.events.TotalRecords; }
+            [DebuggerStepThrough]
+            get { return this.isFeatured; }
+            [DebuggerStepThrough]
+            set { this.isFeatured = value; }
         }
 
         /// <summary>
-        /// Gets the header container.
+        /// Gets or sets the template provider to use for providing templating functionality within this control.
         /// </summary>
-        /// <value>The header container.</value>
-        protected override PlaceHolder HeaderContainer
+        /// <value>The template provider to use for providing templating functionality within this control</value>
+        /// <exception cref="ArgumentNullException"><c>value</c> is null.</exception>
+        public new RepeaterTemplateProvider TemplateProvider
         {
-            get { return this.HeaderPlaceholder; }
+            get { return (RepeaterTemplateProvider)base.TemplateProvider; }
+            set { base.TemplateProvider = value; }
         }
 
         /// <summary>
-        /// Gets the footer container.
+        /// Gets the number of events per page.
         /// </summary>
-        /// <value>The footer container.</value>
-        protected override PlaceHolder FooterContainer
+        /// <value>The number of events per page.</value>
+        private int RecordsPerPage
         {
-            get { return this.FooterPlaceholder; }
+            get { return Dnn.Utility.GetIntSetting(this.Settings, Framework.Setting.RecordsPerPage.PropertyName, 1); }
         }
 
         /// <summary>
@@ -150,9 +166,9 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Binds the data.
+        /// Binds the data for this control.
         /// </summary>
-        public override void BindData()
+        public void BindData()
         {
             string sort = "EventStart";
             if (this.sortAction != null)
@@ -166,21 +182,11 @@ namespace Engage.Dnn.Events.Display
                 status = this.statusFilterAction.SelectedValue;
             }
 
-            this.events = EventCollection.Load(this.PortalId, this.listingMode, sort, this.CurrentPageIndex, this.RecordsPerPage, status.Equals("All", StringComparison.Ordinal), this.IsFeatured);
-            this.RepeaterEvents.DataSource = this.events;
-            this.RepeaterEvents.DataBind();
-        }
+            EventCollection events = EventCollection.Load(this.PortalId, this.listingMode, sort, this.CurrentPageIndex - 1, this.RecordsPerPage, status.Equals("All", StringComparison.Ordinal), this.IsFeatured);
 
-        /// <summary>
-        /// Gets the footer template.
-        /// </summary>
-        /// <returns>The footer template</returns>
-        protected override Template GetFooterTemplate()
-        {
-            string templateName = this.FooterTemplateName.Length == 0
-                                      ? Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.FooterTemplate.PropertyName)
-                                      : this.FooterTemplateName;
-            return TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
+            this.TemplateProvider.ItemPagingState = new ItemPagingState(this.CurrentPageIndex, events.TotalRecords, this.RecordsPerPage);
+            this.TemplateProvider.DataSource = events;
+            this.TemplateProvider.DataBind();
         }
 
         /// <summary>
@@ -189,32 +195,49 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected override void OnInit(EventArgs e)
         {
+            this.SetupTemplateProvider();
+
             base.OnInit(e);
             this.listingMode = Dnn.Utility.GetEnumSetting(this.Settings, Setting.DisplayModeOption.PropertyName, ListingMode.All);
+
+            this.Load += this.Page_Load;
         }
 
         /// <summary>
-        /// Gets the item template.
+        /// Appends the given attribute to <paramref name="cssClassBuilder"/>, adding a space beforehand if necessary.
         /// </summary>
-        /// <returns>The item template</returns>
-        protected override Template GetItemTemplate()
+        /// <param name="tag">The tag whose attribute we are appending.</param>
+        /// <param name="cssClassBuilder">The <see cref="StringBuilder"/> which will contain the appended CSS class.</param>
+        /// <param name="attributeName">Name of the attribute being appended.</param>
+        private static void AppendCssClassAttribute(Tag tag, StringBuilder cssClassBuilder, string attributeName)
         {
-            string templateName = this.ItemTemplateName.Length == 0
-                                      ? Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.ItemTemplate.PropertyName)
-                                      : this.ItemTemplateName;
-            return TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
+            if (cssClassBuilder.Length > 0)
+            {
+                cssClassBuilder.Append(" ");
+            }
+
+            cssClassBuilder.Append(tag.GetAttributeValue(attributeName));
         }
 
         /// <summary>
-        /// Gets the header template.
+        /// Handles the Load event of the Page control.
         /// </summary>
-        /// <returns>The header template</returns>
-        protected override Template GetHeaderTemplate()
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void Page_Load(object sender, EventArgs e)
         {
-            string templateName = this.HeaderTemplateName.Length == 0
-                                      ? Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.HeaderTemplate.PropertyName)
-                                      : this.HeaderTemplateName;
-            return TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
+            this.BindData();
+        }
+
+        /// <summary>
+        /// Handles the SortChanged event of the SortAction and StatusFilterAction controls.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void SortStatusAction_SortChanged(object sender, EventArgs e)
+        {
+            this.TemplateProvider.ItemPagingState = this.TemplateProvider.ItemPagingState.SetPage(1);
+            this.BindData();
         }
 
         /// <summary>
@@ -226,7 +249,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="engageObject">The engage object.</param>
         /// <param name="resourceFile">The resource file to use to find get localized text.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "The complexity cannot easily be reduced and the method is easy to understand, test, and maintain")]
-        protected override void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)
+        private void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)
         {
             Event currentEvent = (Event)engageObject;
 
@@ -306,63 +329,6 @@ namespace Engage.Dnn.Events.Display
                         this.statusFilterAction.SortChanged += this.SortStatusAction_SortChanged;
                         container.Controls.Add(this.statusFilterAction);
                         break;
-                    case "PREVIOUSPAGE":
-                        this.PreviousButton = new LinkButton();
-                        this.PreviousButton.Text = Localization.GetString("PreviousButton", resourceFile);
-                        this.PreviousButton.CssClass = tag.GetAttributeValue("CssClass");
-                        this.PreviousButton.CommandName = "PreviousPage";
-                        this.PreviousButton.EnableViewState = true;
-                        this.PreviousButton.ToolTip = Localization.GetString(tag.GetAttributeValue("ToolTipResourceKey"), resourceFile);
-                        this.PreviousButton.Click += this.PreviousButton_Click;
-                        container.Controls.Add(this.PreviousButton);
-                        break;
-                    case "NEXTPAGE":
-                        this.NextButton = new LinkButton();
-                        this.NextButton.Text = Localization.GetString("NextButton", resourceFile);
-                        this.NextButton.CssClass = tag.GetAttributeValue("CssClass");
-                        this.NextButton.CommandName = "NextPage";
-                        this.NextButton.EnableViewState = true;
-                        this.NextButton.ToolTip = Localization.GetString(tag.GetAttributeValue("ToolTipResourceKey"), resourceFile);
-                        this.NextButton.Click += this.NextButton_Click;
-                        container.Controls.Add(this.NextButton);
-                        break;
-                    case "PAGER":
-                        ////int cp;
-                        ////string fs = Localization.GetString("Pager", LocalResourceFile);
-                        ////DropDownList objDropDown = new DropDownList();
-                        ////objDropDown.ID = "lnkPgHPages";
-                        ////objDropDown.CssClass = oRepositoryBusinessController.GetSkinAttribute(xmlHeaderDoc, "PAGER", "CssClass", "normal");
-                        ////objDropDown.Width = System.Web.UI.WebControls.Unit.Parse(oRepositoryBusinessController.GetSkinAttribute(xmlHeaderDoc, "PAGER", "Width", "75"));
-                        ////objDropDown.AutoPostBack = true;
-                        ////cp = 1;
-                        ////while (cp < lstObjects.PageCount + 1)
-                        ////{
-                        ////    objdropdown.Items.Add(new ListItem(string.Format(fs, cp), cp));
-                        ////    cp = cp + 1;
-                        ////}
-
-                        ////objdropdown.SelectedValue = lstObjects.CurrentPageIndex + 1;
-                        ////objDropDown.SelectedIndexChanged += lnkPg_SelectedIndexChanged;
-                        ////hPlaceHolder.Controls.Add(objDropDown);
-                        break;
-                    case "CURRENTPAGE":
-                        this.CurrentPageLabel = new Label();
-                        this.CurrentPageLabel.Text = (this.CurrentPageIndex + 1).ToString(CultureInfo.CurrentCulture);
-                        this.CurrentPageLabel.CssClass = tag.GetAttributeValue("CssClass");
-                        this.CurrentPageLabel.ToolTip = Localization.GetString("CurrentPageToolTip", resourceFile);
-                        container.Controls.Add(this.CurrentPageLabel);
-                        break;
-                    case "PAGECOUNT":
-                        this.PageCountLabel = new Label();
-                        this.PageCountLabel.CssClass = tag.GetAttributeValue("CssClass");
-                        container.Controls.Add(this.PageCountLabel);
-                        break;
-                    case "PAGEXOFY":
-                        this.PageXOfYLabel = new Label();
-                        this.PageXOfYLabel.CssClass = tag.GetAttributeValue("CssClass");
-                        container.Controls.Add(this.PageXOfYLabel);
-                        this.PageXOfYFormatTemplate = Localization.GetString(tag.GetAttributeValue("ResourceKey"), resourceFile);
-                        break;
                     case "READMORE":
                         if (Engage.Utility.HasValue(currentEvent.Description))
                         {
@@ -411,19 +377,35 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Appends the given attribute to <paramref name="cssClassBuilder"/>, adding a space beforehand if necessary.
+        /// Sets up the <see cref="TemplateProvider"/> for this control.
         /// </summary>
-        /// <param name="tag">The tag whose attribute we are appending.</param>
-        /// <param name="cssClassBuilder">The <see cref="StringBuilder"/> which will contain the appended CSS class.</param>
-        /// <param name="attributeName">Name of the attribute being appended.</param>
-        private static void AppendCssClassAttribute(Tag tag, StringBuilder cssClassBuilder, string attributeName)
+        private void SetupTemplateProvider()
         {
-            if (cssClassBuilder.Length > 0)
-            {
-                cssClassBuilder.Append(" ");
-            }
+            string headerTemplateName = Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.HeaderTemplate.PropertyName);
+            string itemTemplateName = Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.ItemTemplate.PropertyName);
+            string footerTemplateName = Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.FooterTemplate.PropertyName);
 
-            cssClassBuilder.Append(tag.GetAttributeValue(attributeName));
+            this.TemplateProvider = new RepeaterTemplateProvider(
+                Utility.DesktopModuleName,
+                TemplateEngine.GetTemplate(this.PhysicialTemplatesFolderName, headerTemplateName),
+                this.HeaderPlaceholder,
+                TemplateEngine.GetTemplate(this.PhysicialTemplatesFolderName, itemTemplateName),
+                this.ItemPlaceholder,
+                TemplateEngine.GetTemplate(this.PhysicialTemplatesFolderName, footerTemplateName),
+                this.FooterPlaceholder,
+                this.GetPageUrlTemplate(),
+                this.ProcessTag);
+        }
+
+        /// <summary>
+        /// Gets the URL to use for the paging buttons, with the page number templated out for use with <see cref="string.Format(IFormatProvider,string,object[])"/> (that is, "{0}")
+        /// </summary>
+        /// <returns>The URL to use for the paging buttons, with the page number templated out for use with <see cref="string.Format(IFormatProvider,string,object[])"/> (that is, "{0}")</returns>
+        private string GetPageUrlTemplate()
+        {
+            // We can't just send {0} to BuildLinkUrl, because it will get "special treatment" by the friendly URL provider for its special characters
+            const string UniqueReplaceableTemplateValue = "__--0--__";
+            return this.BuildLinkUrl(this.ModuleId, "EventListing", "currentPage=" + UniqueReplaceableTemplateValue).Replace(UniqueReplaceableTemplateValue, "{0}");
         }
     }
 }

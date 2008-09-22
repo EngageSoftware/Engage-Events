@@ -13,29 +13,27 @@ namespace Engage.Dnn.Events.Display
 {
     using System.Web.UI;
     using Framework.Templating;
-    using Licensing;
     using Templating;
 
     /// <summary>
     /// Custom event listing
     /// </summary>
-    public partial class EventListingTemplate : TemplateModuleBase
+    public partial class EventListingTemplate : ModuleBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventListingTemplate"/> class.
+        /// Raises the <see cref="E:Init"/> event.
         /// </summary>
-        protected EventListingTemplate()
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected override void OnInit(System.EventArgs e)
         {
-            this.LicenseProvider = new EngageLicenseProvider(Utility.LicenseKey);
-        }
+            string displayTemplateName = Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.DisplayTemplate.PropertyName);
+            this.TemplateProvider = new TemplateListingProvider(
+                Utility.DesktopModuleName, 
+                TemplateEngine.GetTemplate(this.PhysicialTemplatesFolderName, displayTemplateName), 
+                this, 
+                this.ProcessTag);
 
-        /// <summary>
-        /// Gets the name of the this module's desktop module record in DNN.
-        /// </summary>
-        /// <value>The name of this module's desktop module record in DNN.</value>
-        public override string DesktopModuleName
-        {
-            get { return Utility.DesktopModuleName; }
+            base.OnInit(e);
         }
 
         /// <summary>
@@ -46,7 +44,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="tag">The tag that is being processed.</param>
         /// <param name="engageObject">The engage object.</param>
         /// <param name="resourceFile">The resource file to use to find get localized text.</param>
-        protected override void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)
+        private void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)
         {
             if (tag.TagType == TagType.Open)
             {
@@ -63,17 +61,17 @@ namespace Engage.Dnn.Events.Display
 
                         if (tag.HasAttribute("HeaderTemplate"))
                         {
-                            listingCurrent.HeaderTemplateName = tag.GetAttributeValue("HeaderTemplate");
+                            listingCurrent.TemplateProvider.HeaderTemplate = TemplateEngine.GetTemplate(this.PhysicialTemplatesFolderName, tag.GetAttributeValue("HeaderTemplate"));
                         }
 
                         if (tag.HasAttribute("ItemTemplate"))
                         {
-                            listingCurrent.ItemTemplateName = tag.GetAttributeValue("ItemTemplate");
+                            listingCurrent.TemplateProvider.ItemTemplate = TemplateEngine.GetTemplate(this.PhysicialTemplatesFolderName, tag.GetAttributeValue("ItemTemplate"));
                         }
 
                         if (tag.HasAttribute("FooterTemplate"))
                         {
-                            listingCurrent.FooterTemplateName = tag.GetAttributeValue("FooterTemplate");
+                            listingCurrent.TemplateProvider.FooterTemplate = TemplateEngine.GetTemplate(this.PhysicialTemplatesFolderName, tag.GetAttributeValue("FooterTemplate"));
                         }
 
                         listingCurrent.IsFeatured = Dnn.Utility.GetBoolSetting(this.Settings, Setting.FeaturedOnly.PropertyName, false);
