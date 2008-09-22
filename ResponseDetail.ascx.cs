@@ -47,7 +47,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <param name="responseStatus">An object representing the registration status</param>
         /// <returns>the url to the icon for the corresponding registration status</returns>
-        protected static string GetStatusIcon(object responseStatus)
+        protected string GetStatusIcon(object responseStatus)
         {
             string url = string.Empty;
             ResponseStatus status = (ResponseStatus)Enum.Parse(typeof(ResponseStatus), responseStatus.ToString());
@@ -55,11 +55,11 @@ namespace Engage.Dnn.Events
             switch (status)
             {
                 case ResponseStatus.Attending:
-                    return "~/DesktopModules/EngageEvents/Images/yes.gif";
+                    return "~" + this.DesktopModuleFolderName + "Images/attending_icon.gif";
                 case ResponseStatus.NotAttending:
-                    return "~/DesktopModules/EngageEvents/Images/no.gif";
+                    return "~" + this.DesktopModuleFolderName + "Images/not_attending_icon.gif";
                 case ResponseStatus.NoResponse:
-                    return "~/DesktopModules/EngageEvents/Images/noresponse.gif";
+                    return "~" + this.DesktopModuleFolderName + "Images/no_response_icon.gif";
             }
 
             return url;

@@ -440,10 +440,7 @@
     <Content Include="App_LocalResources\Settings.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Images\no.gif" />
-    <Content Include="Images\noresponse.gif" />
     <Content Include="Images\vcalendar.png" />
-    <Content Include="Images\yes.gif" />
     <Content Include="Respond.ascx" />
     <Content Include="Display\EventListingAdmin.ascx" />
   </ItemGroup>
@@ -614,6 +611,9 @@
     <Content Include="Controls\App_LocalResources\EditTypeDialog.aspx.resx">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Images\attending_icon.gif" />
+    <Content Include="Images\not_attending_icon.gif" />
+    <Content Include="Images\no_response_icon.gif" />
     <Content Include="Images\rsRecurrence.gif" />
     <Content Include="References\aspNetEmail.dll" />
     <Content Include="References\DotNetNuke.dll" />
