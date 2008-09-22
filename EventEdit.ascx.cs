@@ -130,7 +130,12 @@ namespace Engage.Dnn.Events
         /// <param name="args">The <see cref="System.Web.UI.WebControls.ServerValidateEventArgs"/> instance containing the event data.</param>
         private void EventDescriptionTextEditorValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            args.IsValid = Engage.Utility.HasValue(this.EventDescriptionTextEditor.Text);
+#if DEBUG
+            args.IsValid = Engage.Utility.HasValue(this.EventDescriptionTextEditor.Text) && !this.EventDescriptionTextEditor.Text.Equals(Localization.GetString("DefaultEmptyText.Text", this.LocalResourceFile).Replace("[L]", string.Empty), StringComparison.OrdinalIgnoreCase);
+#else
+            args.IsValid = Engage.Utility.HasValue(this.EventDescriptionTextEditor.Text) && !this.EventDescriptionTextEditor.Text.Equals(Localization.GetString("DefaultEmptyText.Text", this.LocalResourceFile), StringComparison.OrdinalIgnoreCase);
+#endif
+
         }
 
         /// <summary>
@@ -141,6 +146,16 @@ namespace Engage.Dnn.Events
         private void RecurrenceEditorValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
             args.IsValid = this.RecurrenceEditor.IsValid;
+        }
+
+        /// <summary>
+        /// Handles the CheckedChanged event of the RecurringCheckBox control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void RecurringCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            this.RecurrenceEditor.Visible = this.RecurringCheckBox.Checked;
         }
 
         /// <summary>
@@ -273,16 +288,6 @@ namespace Engage.Dnn.Events
                 this.RecurrenceEditor.Visible = this.RecurringCheckBox.Checked;
                 this.RecurrenceEditor.SetRecurrenceRule(e.RecurrenceRule);
             }
-        }
-
-        /// <summary>
-        /// Handles the CheckedChanged event of the RecurringCheckBox control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void RecurringCheckbox_CheckedChanged(object sender, EventArgs e)
-        {
-            this.RecurrenceEditor.Visible = this.RecurringCheckBox.Checked;
         }
     }
 }

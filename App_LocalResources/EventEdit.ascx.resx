@@ -135,6 +135,9 @@
   <data name="CreateAnother.Alt" xml:space="preserve">
     <value>Create Another Event</value>
   </data>
+  <data name="DefaultEmptyText.Text" xml:space="preserve">
+    <value>&lt;p&gt;&amp;#160;&lt;/p&gt;</value>
+  </data>
   <data name="EditEvent.Text" xml:space="preserve">
     <value>Edit an Event</value>
   </data>

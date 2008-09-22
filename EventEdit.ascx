@@ -40,12 +40,7 @@
             <DateInput InvalidStyleDuration="100"/>
         </telerik:raddatetimepicker>
         
-        <asp:CompareValidator 
-            runat="server" Display="None" EnableClientScript="false"
-            ControlToCompare="StartDateTimePicker"
-            ControlToValidate="EndDateTimePicker" 
-            ResourceKey="EndDateCompareValidator"
-            Operator="GreaterThan"/>
+        <asp:CompareValidator runat="server" Display="None" EnableClientScript="false" ControlToCompare="StartDateTimePicker" ControlToValidate="EndDateTimePicker" ResourceKey="EndDateCompareValidator" Operator="GreaterThan"/>
         <asp:RequiredFieldValidator runat="server" ControlToValidate="EndDateTimePicker" ResourceKey="EndDateTimePickerRequired" Display="None" EnableClientScript="false"/>
     </div>
     
