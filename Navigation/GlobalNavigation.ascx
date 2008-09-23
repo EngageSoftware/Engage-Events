@@ -1,6 +1,6 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.Navigation.GlobalNavigation" Codebehind="GlobalNavigation.ascx.cs" %>
 
-<div id="divAdminButtons" class="AdminButtons CommandButton">
+<div id="divAdminButtons" class="AdminButtons">
     <asp:HyperLink ID="HomeLink" runat="server" CausesValidation="false" ImageUrl="~/DesktopModules/EngageEvents/Images/home.gif" ResourceKey="Home"/>
     <asp:HyperLink ID="SettingsLink" runat="server" CausesValidation="false" ImageUrl="~/DesktopModules/EngageEvents/Images/settings.gif" ResourceKey="Settings"/>
     <asp:HyperLink ID="ManageEventsLink" runat="server" CausesValidation="false" ImageUrl="~/DesktopModules/EngageEvents/Images/manage_events.gif" ResourceKey="Manage Events"/>

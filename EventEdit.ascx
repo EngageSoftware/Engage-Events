@@ -40,13 +40,21 @@
             <DateInput InvalidStyleDuration="100"/>
         </telerik:raddatetimepicker>
         
-        <asp:CompareValidator runat="server" Display="None" EnableClientScript="false" ControlToCompare="StartDateTimePicker" ControlToValidate="EndDateTimePicker" ResourceKey="EndDateCompareValidator" Operator="GreaterThan"/>
+        <asp:CompareValidator 
+            runat="server" Display="None" EnableClientScript="false"
+            ControlToCompare="StartDateTimePicker"
+            ControlToValidate="EndDateTimePicker" 
+            ResourceKey="EndDateCompareValidator"
+            Operator="GreaterThan"/>
         <asp:RequiredFieldValidator runat="server" ControlToValidate="EndDateTimePicker" ResourceKey="EndDateTimePickerRequired" Display="None" EnableClientScript="false"/>
     </div>
     
     <div class="AEEventTimeZone">
         <asp:Label runat="server" ResourceKey="EventTimeZoneLabel" CssClass="NormalBold" AssociatedControlID="TimeZoneDropDownList" />
-        <asp:DropDownList runat="server" ID="TimeZoneDropDownList" /><asp:Label runat="server" ResourceKey="EventTimeZoneLabel.Help" CssClass="Help" />
+        <div class="timezone_display">
+        	<asp:DropDownList runat="server" ID="TimeZoneDropDownList" />
+	        <div><asp:Label runat="server" ResourceKey="EventTimeZoneLabel.Help" CssClass="Help" /></div>
+        </div>
     </div>
     
     <div class="AEEventLocationAdd">

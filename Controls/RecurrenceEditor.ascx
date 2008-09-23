@@ -2,8 +2,11 @@
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 
 <div class="rsAdvancedEdit rsAdvOptions Normal">
+  
+<fieldset class="recurrence_fs">
+	
     <asp:Panel ID="RecurrencePatternPanel" runat="server" CssClass="rsAdvRecurrencePatterns">
-        <p class="rsAdvRecurrence"><strong><%=Localize("Recurrence")%></strong></p>
+        <legend class="rsAdvRecurrence"><%=Localize("Recurrence")%></legend>
         <asp:UpdatePanel runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false"><%-- This UpdatePanel needs to include the RecurrenceFrequencyPanel, so that it can update the RepeatFrequencyDaily to postback if it gets reselected.  See http://www.engagesoftware.com/Blog/EntryID/76.aspx --%>
             <Triggers>
                 <asp:AsyncPostBackTrigger ControlID="RepeatFrequencyDaily" />
@@ -99,8 +102,11 @@
             </ContentTemplate>
         </asp:UpdatePanel>
     </asp:Panel>
+</fieldset>
+
+<fieldset class="range_of_recurrence">    
+    <legend class="rsAdvRecurrenceRange"><%=Localize("Range")%></legend>
     <asp:Panel ID="RecurrenceRangePanel" runat="server" CssClass="rsAdvRecurrenceRangePanel">
-        <p class="rsAdvRecurrenceRange"><strong><%=Localize("Range")%></strong></p>
         <ul>
             <li>
                 <asp:RadioButton ID="RepeatIndefinitely" runat="server" ResourceKey="NoEndDate" Checked="true" GroupName="RecurrenceRangeRadioGroup" />
@@ -113,4 +119,5 @@
             </li>
         </ul>
     </asp:Panel>
+</fieldset>    
 </div>

@@ -5,7 +5,7 @@
 
 	.ItemListingHeader{}
 		.ItemListingHeader p{margin: 0; padding: 0;}
-	.ItemListingHeader h2.SubHead{clear: both; overflow: hidden; width: 100%; font-size: 120%; border-bottom: 1px #ccc solid; padding-bottom: 0.375em;}
+	.ItemListingHeader h2.Head{clear: both; overflow: hidden; width: 100%; border-bottom: 1px #ccc solid; padding-bottom: 5px; margin: 5px 0;}
 	.ItemListingHeaderTop{clear: both; overflow: hidden; width: 100%; border-bottom: 1px #ccc solid;}
 		.ItemListingHeaderSorting{overflow: hidden; width: 40%; float: left; padding-right: 2%;}
 			.ItemListingHeaderSorting .NormalBold {display: block; float: left; padding-top: 4px;}
@@ -18,7 +18,8 @@
 /*==================== Item.Listing ==================== */
 
 	.EventTitle{overflow: hidden;}
-		.EventTitle h2{font-size: 120%; margin: 0 0 0.5em 18%;}
+		.EventTitle h3.SubHead{font-size: 120%; padding: 0 0 5px 18%; margin: 0;}
+		.EventTitle h2.Head {padding: 0 0 5px 18%; margin: 0;}
 	
 	.EventLocation{overflow: hidden;}
 		.EventLocation .NormalBold {float:left; width: 15%; text-align: right;}
@@ -28,6 +29,7 @@
 	.EventDate{overflow: hidden;}
 		.EventDate .NormalBold {float:left; width: 15%; text-align: right;}
 		.EventDate .Normal{float:right; width: 82%; text-align: left;}
+		.RecurrenceSummary .NormalBold {float: none; width: auto; text-align: left;}
 		
 	.EventOverview{overflow: hidden;}
 		.EventOverview .NormalBold {float:left; width: 15%; text-align: right;}
@@ -44,4 +46,6 @@
 	.eventButtons{padding-left: 18%;}
 		.eventButtons input {margin-bottom: 0.675em;}
 		
-	.RecurringEventItem{background:Transparent url(../images/rsRecurrence.gif) no-repeat;}
+	.RecurringEventItem{background: transparent url(../images/recurring_icon.gif) no-repeat 42px 14px;}
+	
+	

@@ -614,6 +614,7 @@
     <Content Include="Images\attending_icon.gif" />
     <Content Include="Images\not_attending_icon.gif" />
     <Content Include="Images\no_response_icon.gif" />
+    <Content Include="Images\recurring_icon.gif" />
     <Content Include="Images\rsRecurrence.gif" />
     <Content Include="References\DotNetNuke.dll" />
     <Content Include="References\DotNetNuke.WebUtility.dll" />

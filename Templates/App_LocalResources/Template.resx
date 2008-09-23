@@ -182,7 +182,7 @@
     <value>This Month</value>
   </data>
   <data name="Upcoming.Text" xml:space="preserve">
-    <value>Upcoming</value>
+    <value>Upcoming Events</value>
   </data>
   <data name="ActiveListItem.Text" xml:space="preserve">
     <value>Active</value>

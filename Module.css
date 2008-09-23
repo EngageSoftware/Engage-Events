@@ -15,19 +15,19 @@
 			.ResponseHeader h4, .ResponseHeader h3, .ResponseRow h3 {display:inline;}
 			.ResponseHeader .SortByHeader{width: 49%; float:left;}
 			.ResponseHeader .StatusHeader{width: 49%; float:right; text-align: center;}
-			/*.ResponseHeader .StatusTypeHeaders{width: 40%; float:right; text-align:right;} */
 			.ResponseHeader .StatusTypeHeaders > span{padding-right: 10%;}
 			.ResponseRow .EventStats{float:right; width:30%;}
 			.ResponseRow .EventStats > a {padding-right: 50%;}
 .ResponsesSummary {padding: 25px 0;}
 .PagingTable { margin: 10px 0; }
 
-		.EventItem{border-bottom: 1px #ccc dotted; overflow: hidden; padding: 1em 0; width: 100%;}
-			.EventItem p{margin-top: 0; margin-bottom: 0.875em;}
+		.EventItem{border-bottom: 1px #ccc dotted; overflow: hidden; padding: 10px 0; width: 100%;}
+			.EventItem p{margin-top: 0; margin-bottom: 6px;}
 		
-		.EventButtons{margin-top: 0.675em; overflow:hidden; padding-left: 18%; clear: both; }
+		.EventButtons{margin-top: 10px; overflow:hidden; padding-left: 18%; clear: both;}
 		.EventStats{font-weight:bold;}	
-.RecurrenceSummary {padding-left: 1em;}
+		
+	.RecurrenceSummary {padding-left: 15px;}
 
 /* event calendar display page */
 
@@ -37,126 +37,60 @@
 
 /* event edit page */
 
-.AdminButtons{text-align: left; padding: 1em 0;}
+.AdminButtons{text-align: left;}
+
+	.AdminButtons a img{padding: 0 6px 0 0;}
 	.FooterButtons {padding-top: 3%; }
-	.AddEventSuccessMessage { padding-left: 10%; }
+	.AddEventSuccessMessage {padding-left: 10%; }
 	.AddNewEvent {padding-top: 2%; width: 100%; height: 100%;}
 	.AddNewEvent h2.SubHead {text-align: left; border-bottom: dashed 1px black; margin-bottom: 1em; padding-bottom: 0.375em; font-size: 125%;}
+
+	.rsAdvRecurrenceFreq:after,	.rsAdvRecurrencePatterns:after{	content:"."; display:block; clear:both; height:0; visibility:hidden;}
+	.rsAdvRecurrenceRangePanel ul, .rsAdvRecurrenceRangePanel ul li{ list-style-type: none; list-style: none;}
+	.rsAdvRecurrenceRangePanel ul{margin:0.8em 0 0 15px;padding:0;}
+	.rsAdvRecurrenceRangePanel label{padding-right: 4px;}
+
+	.rsAdvancedEdit .rsAdvCheckboxWrapper input{vertical-align: middle;}
+	.rsAdvancedEdit .rsAdvCheckboxWrapper label{width: auto;}
+
+	.rsAdvRecurrenceFreq{float:left; width:20%; margin:0.8em 0 0 0; border-right:1px solid #dfdfdf;}
+	.rsAdvRecurrenceFreq ul{list-style:none;margin:0 0 0 15px;padding:0;}
+	.rsAdvRecurrenceFreq ul li{list-style: none;}
+
+	.rsAdvHourly, .rsAdvDaily, .rsAdvWeekly, .rsAdvMonthly, .rsAdvYearly{float:right; width: 78%; margin:0.8em 0 0 0;}
+	.rsAdvHourly ul, .rsAdvDaily ul, .rsAdvWeekly ul, .rsAdvMonthly ul, .rsAdvYearly ul {list-style:none;margin:0 0 0 15px;padding:0;width: 390px;}
+    .rsAdvHourly li, .rsAdvDaily li, .rsAdvWeekly li, .rsAdvMonthly li, .rsAdvYearly li, .rsAdvRecurrenceRangePanel li,  .rsAdvMoreControls li{margin:0 0 0.3em 0; list-style: none;}
+
+    .rsAdvHourly input, .rsAdvDaily input, .rsAdvWeekly input, .rsAdvMonthly input, .rsAdvYearly input, .rsAdvHourly select, 
+	.rsAdvDaily select, .rsAdvWeekly select, .rsAdvMonthly select, .rsAdvYearly select{margin:0 2px;}
+    .rsAdvRecurrencePatterns .rsAdvInput, .rsAdvRecurrenceRangePanel .rsAdvInput {width: 30px; padding-left: 1px; padding-right: 1px;}
+    .rsAdvRecurrencePatterns .rsAdvWeekly_Weekday{ float: left; width: 100px;}
+	.rsAdvRecurrencePatterns ul li	{list-style-type: none;}
+	.rsAdvRecurrencePatterns{zoom:1;	}
+
 	
-	.rsAdvRecurrenceFreq:after,
-	.rsAdvRecurrencePatterns:after
-	{
-		content:".";
-		display:block;
-		clear:both;
-		height:0;
-		visibility:hidden;
-	}
-	.rsAdvRecurrenceRangePanel ul, .rsAdvRecurrenceRangePanel ul li
-	{
-		list-style:none;
-	}
-	.rsAdvRecurrenceRangePanel ul
-	{
-		margin:0.8em 0 0 15px;
-		padding:0;
-	}
-	.rsAdvRecurrenceRangePanel label
-	{
-		padding-right: 4px;
-	}
-	.rsAdvancedEdit .rsAdvCheckboxWrapper input
-	{
-		vertical-align: middle;
-	}
-	.rsAdvancedEdit .rsAdvCheckboxWrapper label
-	{
-		width: auto;
-	}
-	.rsAdvRecurrenceRange
-	{
-		margin:1em 0 0;
-		padding:0.8em 0 0 15px;
-	}
-	.rsAdvRecurrenceFreq
-	{
-		float:left;
-		width:150px;
-		margin:0.8em 0 0 0;
-		border-right:1px solid #dfdfdf;
-	}
-	.rsAdvRecurrenceFreq ul
-	{
-		list-style:none;
-		margin:0 0 0 15px;
-		padding:0;
-	}
-	.rsAdvHourly,
-	.rsAdvDaily,
-	.rsAdvWeekly,
-	.rsAdvMonthly,
-	.rsAdvYearly
-	{
-		float:left;
-		margin:1em 0 0 0;
-		padding-left:2em;
-		position:relative;
-		left:-2px;
-	}
-	.rsAdvHourly ul,
-	.rsAdvDaily ul,
-	.rsAdvWeekly ul,
-	.rsAdvMonthly ul,
-	.rsAdvYearly ul
-	{
-		list-style:none;
-		margin:0 0 0 15px;
-		padding:0;
-		width: 390px;
-	}
-    .rsAdvHourly li,
-    .rsAdvDaily li,
-    .rsAdvWeekly li,
-    .rsAdvMonthly li,
-    .rsAdvYearly li,
-    .rsAdvRecurrenceRangePanel li,
-    .rsAdvMoreControls li
-	{
-		margin:0 0 0.3em 0;
-	}
-    .rsAdvHourly input,
-    .rsAdvDaily input,
-    .rsAdvWeekly input,
-    .rsAdvMonthly input,
-    .rsAdvYearly input,
-    .rsAdvHourly select,
-    .rsAdvDaily select,
-    .rsAdvWeekly select,
-    .rsAdvMonthly select,
-    .rsAdvYearly select
-	{
-		margin:0 2px;
-	}
-    .rsAdvRecurrencePatterns .rsAdvInput,
-    .rsAdvRecurrenceRangePanel .rsAdvInput
-	{
-		width: 30px;
-		padding-left: 1px;
-		padding-right: 1px;
-	}
-    .rsAdvRecurrencePatterns .rsAdvWeekly_Weekday
-	{
-		float: left;
-		width: 100px;
-	}
-	.rsAdvRecurrencePatterns ul li
-	{
-		list-style-type: none;
-	}
-	.rsAdvRecurrencePatterns
-	{
-		zoom:1;
-	}
+	
+	.rsAdvancedEdit fieldset, fieldset.range_of_recurrence{border: 1px #ccc solid;}
+		fieldset.range_of_recurrence, fieldset.recurrence_fs {margin-left: 10%; margin-top: 15px; background: #fefefe; padding: 5px 10px;}
+	.rsAdvancedEdit legend, legend.rsAdvRecurrenceRange{font-weight: bold; padding: 0 10px;}
+	
+	
+	
+	
+	
+	
+	
+	.EventToolTip{padding: 10px; padding-bottom: 0;}
+	h2.EventTitleToolTip{margin: 0;}
+	.tooltip_buttons{padding: 10px 0;}	
+	
+	
+	
+	
+	
+	
+	
+	
 /* ============================ manage events page ============================ */
 
 .MEEventsHeader{}
@@ -177,14 +111,13 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 
 
 	.AEEventTitle, .AEEventStartDate, .AEEventEndDate, .AEEventLocationAdd, .AEEventEditor, .AEEventFeature, .AEEventRecur, .AEEventRegister, .AEEventTimeZone {clear: both; overflow: hidden; padding-bottom: 0.675em;}
-		.AEEventEditor .NormalBold, .AEEventTitle .NormalBold, .AEEventStartDate .NormalBold, .AEEventLocationAdd .NormalBold, .AEEventEndDate .NormalBold, .AEEventFeature .NormalBold, .AEEventRecur .NormalBold, .AEEventRegister .NormalBold, .AEEventTimeZone .NormalBold
+		.AEEventEditor .NormalBold, .AEEventTitle .NormalBold, .AEEventStartDate .NormalBold, .AEEventLocationAdd .NormalBold, .AEEventEndDate .NormalBold, 
+		.AEEventFeature .NormalBold, .AEEventRecur .NormalBold, .AEEventRegister .NormalBold, .AEEventTimeZone .NormalBold
 		{float:left; width: 20%; margin-right: 3%; text-align: right;}
-		.AEEventEditor .Normal, .AEEventTitle .Normal, .AEEventStartDate .Normal, .AEEventLocationAdd .Normal, .AEEventEndDate .Normal, .AEEventFeature .Normal, .AEEventRecur .Normal, .AEEventRegister .Normal, .AEEventTimeZone .Normal
-		{float: left; width: 81%;}
+		.AEEventEditor .Normal, .AEEventTitle .Normal, .AEEventStartDate .Normal, .AEEventLocationAdd .Normal, .AEEventEndDate .Normal, .AEEventFeature .Normal  {float: left; width: 81%;}
+/*		.AEEventRecur .Normal, .AEEventRegister .Normal, .AEEventTimeZone .Normal */
 
 		
-
-
 
 .AEEventEditor li { list-style-type: none; }
 .registerSubmitBt, .registerMessage{margin-top: 0.675em;}
@@ -228,50 +161,14 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 
 ========================================================*/
 
-.EventsSetting label, .EventsSetting .Help
-{
-	float:left;
-	width: 49%;
-}
-
-.EventsSetting br /*dnn label renders a br tag*/
-{
-	display: none;
-}
-
-.EventsSetting input, .EventsSetting select, .EventsSetting .NumericTextBoxWrapper
-{
-	float:right;
-	width:49%;
-}
-
-.EventsSetting .NumericTextBoxWrapper
-{
-	text-align: center;
-}
-
-.EventsSetting .NumericTextBoxWrapper div, .EventsSetting .NumericTextBoxWrapper div table
-{
-	text-align: right;
-	width: 5em !important;
-}
-
-.EventsSetting .NumericTextBoxWrapper td.spinImgCell  a.spinbutton
-{
-     text-align: left;
-}
-
-.TemplatesSection
-{
-	margin: 1em;
-}
-
-.EventsSetting
-{
-	clear: both;
-	padding: 0 0 2em;
-}
-
+.EventsSetting label, .EventsSetting .Help{float:left;width: 49%;}
+.EventsSetting br /*dnn label renders a br tag*/ {	display: none;}
+.EventsSetting input, .EventsSetting select, .EventsSetting .NumericTextBoxWrapper{float:right;width:49%;}
+.EventsSetting .NumericTextBoxWrapper{text-align: center;}
+.EventsSetting .NumericTextBoxWrapper div, .EventsSetting .NumericTextBoxWrapper div table{text-align: right;width: 5em !important;}
+.EventsSetting .NumericTextBoxWrapper td.spinImgCell  a.spinbutton{text-align: left;}
+.TemplatesSection{margin: 1em;}
+.EventsSetting{clear: both;padding: 0 0 2em;}
 
 /*========================================================
 
@@ -313,3 +210,8 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 .WarningBody {background-image:url(images/blueBody.gif);}
 .WarningBody .WarningIcon{background-image:url(images/successSmallIcon.png);}
 .WarningBt{background-image:url(images/blueBt.gif);}
+
+
+
+
+.timezone_display{float: left; width: 70%;}
