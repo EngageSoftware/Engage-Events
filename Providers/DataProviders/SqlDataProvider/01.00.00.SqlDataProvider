@@ -1,6 +1,9 @@
 ﻿IF EXISTS (SELECT * FROM dbo.syscolumns where id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Event]') and name = 'CanRsvp')
 EXECUTE sp_rename N'{databaseOwner}{objectQualifier}Engage_Event.CanRsvp', N'AllowRegistrations', 'COLUMN' 
 GO
+IF EXISTS (SELECT * FROM dbo.syscolumns where id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Event]') and name = 'Cancelled')
+EXECUTE sp_rename N'{databaseOwner}{objectQualifier}Engage_Event.Cancelled', N'Canceled', 'COLUMN' 
+GO
 IF EXISTS (SELECT * FROM dbo.syscolumns where id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Rsvp]') and name = 'RsvpId')
 EXECUTE sp_rename N'{databaseOwner}{objectQualifier}Engage_Rsvp.RsvpId', N'ResponseId', 'COLUMN' 
 GO
@@ -321,7 +324,7 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spUpdateEvent]
 @RecurrenceRule nvarchar(256),
 @RecurrenceParentId int,
 @AllowRegistrations bit,
-@Cancelled bit,
+@Canceled bit,
 @IsFeatured bit,
 @RevisingUser int,
 @FinalRecurringEndDate datetime,
@@ -346,7 +349,7 @@ BEGIN
 		[RecurrenceRule] = @RecurrenceRule,
 		[RecurrenceParentId] = @RecurrenceParentId, 
 		[AllowRegistrations] = @AllowRegistrations, 
-		[Cancelled]  = @Cancelled,
+		[Canceled]  = @Canceled,
 		[IsFeatured] = @IsFeatured,
 		[RevisingUser] = @RevisingUser, 
 		[RevisionDate] = GETDATE(),
@@ -372,7 +375,7 @@ BEGIN
 	 FROM   {databaseOwner}[{objectQualifier}Engage_Event]
 	 WHERE  PortalId = @portalId
 	  AND (@featured = 0 OR IsFeatured = @featured)
-	  AND (@showAll = 1 OR Cancelled = @showAll)
+	  AND (@showAll = 1 OR Canceled = @showAll)
 	  AND (EventStart <= @endDate OR @endDate IS NULL)
 	  AND (
 			(RecurrenceRule IS NULL AND (EventEnd >= @startDate OR @startDate IS NULL))
