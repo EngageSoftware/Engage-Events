@@ -206,8 +206,8 @@ namespace Engage.Events
         /// <param name="isFeatured">if set to <c>true</c> this event is featured.</param>
         /// <param name="allowRegistrations">if set to <c>true</c> this event allows users to register for it.</param>
         /// <param name="recurrenceRule">The recurrence rule.</param>
-        /// <param name="cancelled">if set to <c>true</c> this event is canceled.</param>
-        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule, bool cancelled)
+        /// <param name="canceled">if set to <c>true</c> this event is canceled.</param>
+        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule, bool canceled)
         {
             this.portalId = portalId;
             this.moduleId = moduleId;
@@ -222,7 +222,7 @@ namespace Engage.Events
             this.isFeatured = isFeatured;
             this.allowRegistrations = allowRegistrations;
             this.recurrenceRule = recurrenceRule;
-            this.canceled = cancelled;
+            this.canceled = canceled;
         }
 
         #region INotifyPropertyChanged Members
@@ -711,7 +711,7 @@ namespace Engage.Events
             e.eventEnd = (DateTime)eventRecord["EventEnd"];
             e.timeZoneOffset = new TimeSpan(0, (int)eventRecord["TimeZoneOffset"], 0);
             e.createdBy = (int)eventRecord["CreatedBy"];
-            e.canceled = (bool)eventRecord["Cancelled"];
+            e.canceled = (bool)eventRecord["Canceled"];
             e.isFeatured = (bool)eventRecord["IsFeatured"];
             e.isDeleted = (bool)eventRecord["IsDeleted"];
             e.allowRegistrations = (bool)eventRecord["AllowRegistrations"];
