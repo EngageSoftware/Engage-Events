@@ -135,7 +135,6 @@ namespace Engage.Dnn.Events
 #else
             args.IsValid = Engage.Utility.HasValue(this.EventDescriptionTextEditor.Text) && !this.EventDescriptionTextEditor.Text.Equals(Localization.GetString("DefaultEmptyText.Text", this.LocalResourceFile), StringComparison.OrdinalIgnoreCase);
 #endif
-
         }
 
         /// <summary>

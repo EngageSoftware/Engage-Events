@@ -182,19 +182,16 @@
       <fileset>
         <include name="**${resourcezip.dir}/Resources.zip" />
         <include name="../../bin/Engage${ModuleName}.dll" />
-        <include name="**/References/Engage.Events.dll" />
-        <include name="**/References/Engage.Framework.dll" />
-        <include name="**/References/Engage.Framework.XmlSerializers.dll" />
-        <include name="**/References/Engage.Dnn.Framework.dll" />
-        <include name="**/References/Engage.Dnn.Framework.XmlSerializers.dll" />
-        <include name="**/References/aspNetEmail.dll" />
-        <include name="**/References/Telerik.Web.UI.dll" />
+        <include name="**/References/*.dll" />
         <include name="**/01.00.00.txt" />
         <include name="**/*.sqldataprovider" />
         <include name="**/SearchRedirector.ascx" />
         <include name="**/ReadMe.txt" />
         <include name="**/licenses/EULA-Standard.txt" />
         <include name="**/*.dnn" />
+        <exclude name="**/References/DotNetNuke.dll" />
+        <exclude name="**/References/DotNetNuke.WebUtility.dll" />
+        <exclude name="**/References/Microsoft.ApplicationBlocks.Data.dll" />
       </fileset>
     </copy>
 
@@ -215,19 +212,16 @@
       <fileset>
         <include name="**${resourcezip.dir}/Resources.zip" />
         <include name="../../bin/Engage${ModuleName}.dll" />
-        <include name="**/References/Engage.Events.dll" />
-        <include name="**/References/Engage.Framework.dll" />
-        <include name="**/References/Engage.Framework.XmlSerializers.dll" />
-        <include name="**/References/Engage.Dnn.Framework.dll" />
-        <include name="**/References/Engage.Dnn.Framework.XmlSerializers.dll" />
-        <include name="**/References/aspNetEmail.dll" />
-        <include name="**/References/Telerik.Web.UI.dll" />
+        <include name="**/References/*.dll" />
         <include name="**/*.sqldataprovider" />
         <include name="**/01.00.00.txt" />
         <include name="**/SearchRedirector.ascx" />
         <include name="**/ReadMe.txt" />
         <include name="**/licenses/EULA-Professional.txt" />
         <include name="**/*.dnn" />
+        <exclude name="**/References/DotNetNuke.dll" />
+        <exclude name="**/References/DotNetNuke.WebUtility.dll" />
+        <exclude name="**/References/Microsoft.ApplicationBlocks.Data.dll" />
       </fileset>
     </copy>
 
@@ -248,18 +242,15 @@
       <fileset>
         <include name="**${resourcezip.dir}/Resources.zip" />
         <include name="../../bin/Engage${ModuleName}.dll" />
-        <include name="**/References/Engage.Events.dll" />
-        <include name="**/References/Engage.Framework.dll" />
-        <include name="**/References/Engage.Framework.XmlSerializers.dll" />
-        <include name="**/References/Engage.Dnn.Framework.dll" />
-        <include name="**/References/Engage.Dnn.Framework.XmlSerializers.dll" />
-        <include name="**/References/aspNetEmail.dll" />
-        <include name="**/References/Telerik.Web.UI.dll" />
+        <include name="**/References/*.dll" />
         <include name="**/01.00.00.txt" />
         <include name="**/*.sqldataprovider" />
         <include name="**/ReadMe.txt" />
         <include name="**/licenses/EULA-Enterprise.txt" />
         <include name="**/*.dnn" />
+        <exclude name="**/References/DotNetNuke.dll" />
+        <exclude name="**/References/DotNetNuke.WebUtility.dll" />
+        <exclude name="**/References/Microsoft.ApplicationBlocks.Data.dll" />
       </fileset>
     </copy>
 
@@ -282,18 +273,15 @@
       <fileset>
         <include name="**${resourcezip.dir}/Resources.zip" />
         <include name="../../bin/Engage${ModuleName}.dll" />
-        <include name="**/References/Engage.Events.dll" />
-        <include name="**/References/Engage.Framework.dll" />
-        <include name="**/References/Engage.Framework.XmlSerializers.dll" />
-        <include name="**/References/Engage.Dnn.Framework.dll" />
-        <include name="**/References/Engage.Dnn.Framework.XmlSerializers.dll" />
-        <include name="**/References/aspNetEmail.dll" />
-        <include name="**/References/Telerik.Web.UI.dll" />
+        <include name="**/References/*.dll" />
         <include name="**/01.00.00.txt" />
         <include name="**/*.sqldataprovider" />
         <include name="**/ReadMe.txt" />
         <include name="**/licenses/EULA-Enterprise.txt" />
         <include name="**/*.dnn" />
+        <exclude name="**/References/DotNetNuke.dll" />
+        <exclude name="**/References/DotNetNuke.WebUtility.dll" />
+        <exclude name="**/References/Microsoft.ApplicationBlocks.Data.dll" />
       </fileset>
     </copy>
 

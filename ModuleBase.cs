@@ -12,12 +12,10 @@
 namespace Engage.Dnn.Events
 {
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
     using System.Text;
     using System.Web;
-    using System.Web.UI;
     using DotNetNuke.Common;
     using DotNetNuke.Entities.Host;
     using DotNetNuke.Entities.Modules;
@@ -25,7 +23,6 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Security;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.WebControls;
-    using Licensing;
 
     /// <summary>
     /// This class extends the framework version in order for developers to add on any specific methods/behavior.
@@ -43,7 +40,6 @@ namespace Engage.Dnn.Events
         public ModuleBase()
         {
             this.LocalSharedResourceFile = Utility.LocalSharedResourceFile;
-            this.LicenseProvider = new EngageLicenseProvider(Utility.LicenseKey);
         }
 
         /// <summary>
@@ -88,7 +84,6 @@ namespace Engage.Dnn.Events
         /// Gets the event id.
         /// </summary>
         /// <value>The event id.</value>
-        /// <exception cref="InvalidOperationException">EventId is not present on QueryString</exception>
         protected int? EventId
         {
             get

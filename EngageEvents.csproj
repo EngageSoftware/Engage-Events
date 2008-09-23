@@ -615,7 +615,6 @@
     <Content Include="Images\not_attending_icon.gif" />
     <Content Include="Images\no_response_icon.gif" />
     <Content Include="Images\rsRecurrence.gif" />
-    <Content Include="References\aspNetEmail.dll" />
     <Content Include="References\DotNetNuke.dll" />
     <Content Include="References\DotNetNuke.WebUtility.dll" />
     <Content Include="References\Engage.Dnn.Framework.dll" />
@@ -624,7 +623,6 @@
     <Content Include="References\Engage.Framework.dll" />
     <Content Include="References\Engage.Framework.XmlSerializers.dll" />
     <Content Include="References\Microsoft.ApplicationBlocks.Data.dll" />
-    <Content Include="References\SMTP.Net.dll" />
     <Content Include="References\Telerik.Web.UI.dll" />
     <Content Include="Display\App_LocalResources\CalendarDisplayOptions.ascx.resx">
     </Content>

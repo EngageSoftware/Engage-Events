@@ -39,7 +39,7 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// The License Key for the Engage: Events module
         /// </summary>
-        internal static readonly Guid LicenseKey = new Guid("2de915e1-df71-3443-9f4d-32259c92ced2");
+        internal static readonly Guid LicenseKey = new Guid("FB92E7C1-F789-4adc-99F2-47BC612BF541");
 
         /// <summary>
         /// Backing field for <see cref="OrdinalValues"/>
