@@ -32,8 +32,13 @@
 /* event calendar display page */
 
 .EventCalendar li { list-style-type: none; }
-.RadScheduler .rsApt { height: auto !important;}
 .RadScheduler_Telerik div.rsHeader p { width:110px; }
+
+.RadScheduler .rsWrap {margin-bottom: 2px;}
+.RadScheduler .rsMonthView .rsWrap {height: 18px !important; width: 100%; overflow: hidden; white-space:nowrap;}
+.rsAptContent{padding-left: 2px;}
+.rsCell{padding: 0 2px !important;}
+
 
 /* event edit page */
 
