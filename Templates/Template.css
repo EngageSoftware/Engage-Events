@@ -46,6 +46,6 @@
 	.eventButtons{padding-left: 18%;}
 		.eventButtons input {margin-bottom: 0.675em;}
 		
-	.RecurringEventItem{background: transparent url(../images/recurring_icon.gif) no-repeat 42px 14px;}
+	.RecurringEventItem{background: transparent url(../images/recurring_icon.gif) no-repeat 0 16px;}
 	
 	
