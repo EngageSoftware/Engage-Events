@@ -17,7 +17,6 @@ namespace Engage.Dnn.Events.Display
     using System.Text;
     using System.Web.UI;
     using System.Web.UI.WebControls;
-    using DotNetNuke.Common;
     using DotNetNuke.Services.Localization;
     using Engage.Events;
     using Framework.Templating;
@@ -147,6 +146,42 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
+        /// Gets the status of events to retrieve.  Possible values are "Active" and "All".  "Active" by default.
+        /// </summary>
+        /// <value>The status of events to retrieve.</value>
+        private string Status
+        {
+            get
+            {
+                string statusValue = this.Request.QueryString["status"];
+                if (Engage.Utility.HasValue(statusValue))
+                {
+                    return statusValue;
+                }
+
+                return "Active";
+            }
+        }
+
+        /// <summary>
+        /// Gets the field on which to sort the event list.  "EventStart" by default.
+        /// </summary>
+        /// <value>The field on which to sort the event list.</value>
+        private string SortExpression
+        {
+            get
+            {
+                string sortValue = this.Request.QueryString["sort"];
+                if (Engage.Utility.HasValue(sortValue))
+                {
+                    return sortValue;
+                }
+
+                return "EventStart";
+            }
+        }
+
+        /// <summary>
         /// Sets the listing mode used for this display.
         /// </summary>
         /// <param name="listingModeValue">The listing mode used for this display.</param>
@@ -170,19 +205,7 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         public void BindData()
         {
-            string sort = "EventStart";
-            if (this.sortAction != null)
-            {
-                sort = this.sortAction.SelectedValue;
-            }
-
-            string status = "Active";
-            if (this.statusFilterAction != null)
-            {
-                status = this.statusFilterAction.SelectedValue;
-            }
-
-            EventCollection events = EventCollection.Load(this.PortalId, this.listingMode, sort, this.CurrentPageIndex - 1, this.RecordsPerPage, status.Equals("All", StringComparison.Ordinal), this.IsFeatured);
+            EventCollection events = EventCollection.Load(this.PortalId, this.listingMode, this.SortExpression, this.CurrentPageIndex - 1, this.RecordsPerPage, this.Status.Equals("All", StringComparison.Ordinal), this.IsFeatured);
 
             this.TemplateProvider.ItemPagingState = new ItemPagingState(this.CurrentPageIndex, events.TotalRecords, this.RecordsPerPage);
             this.TemplateProvider.DataSource = events;
@@ -236,7 +259,27 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void SortStatusAction_SortChanged(object sender, EventArgs e)
         {
-            this.TemplateProvider.ItemPagingState = this.TemplateProvider.ItemPagingState.SetPage(1);
+            const int PageNumber = 1;
+            this.Response.Redirect(this.GetPageUrl(PageNumber, this.SortAction.SelectedValue, this.StatusFilterAction.SelectedValue), true);
+        }
+
+        /// <summary>
+        /// Handles the Cancel event of the CancelAction control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void CancelAction_Cancel(object sender, EventArgs e)
+        {
+            this.BindData();
+        }
+
+        /// <summary>
+        /// Handles the Delete event of the DeleteAction control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void DeleteAction_Delete(object sender, EventArgs e)
+        {
             this.BindData();
         }
 
@@ -300,12 +343,14 @@ namespace Engage.Dnn.Events.Display
                         DeleteAction deleteAction = (DeleteAction)this.LoadControl(this.ActionsControlsFolder + "DeleteAction.ascx");
                         deleteAction.CurrentEvent = currentEvent;
                         deleteAction.ModuleConfiguration = this.ModuleConfiguration;
+                        deleteAction.Delete += this.DeleteAction_Delete;
                         container.Controls.Add(deleteAction);
                         break;
                     case "CANCELBUTTON":
                         CancelAction cancelAction = (CancelAction)this.LoadControl(this.ActionsControlsFolder + "CancelAction.ascx");
                         cancelAction.CurrentEvent = currentEvent;
                         cancelAction.ModuleConfiguration = this.ModuleConfiguration;
+                        cancelAction.Cancel += this.CancelAction_Cancel;
                         container.Controls.Add(cancelAction);
                         break;
                     case "EDITEMAILBUTTON":
@@ -334,7 +379,7 @@ namespace Engage.Dnn.Events.Display
                         {
                             HyperLink detailLink = new HyperLink();
                             detailLink.Text = Localization.GetString(tag.GetAttributeValue("ResourceKey"), resourceFile);
-                            if (detailLink.Text.Length == 0)
+                            if (string.IsNullOrEmpty(detailLink.Text))
                             {
                                 detailLink.Text = "Read More...";
                             }
@@ -393,19 +438,37 @@ namespace Engage.Dnn.Events.Display
                 this.ItemPlaceholder,
                 TemplateEngine.GetTemplate(this.PhysicialTemplatesFolderName, footerTemplateName),
                 this.FooterPlaceholder,
-                this.GetPageUrlTemplate(),
+                this.GetPageUrlTemplate(this.SortExpression, this.Status),
                 this.ProcessTag);
+        }
+
+        /// <summary>
+        /// Gets the URL to use for this page, for a listing with the given <paramref name="pageNumber"/>, <paramref name="sortExpression"/>, and <paramref name="status"/>.
+        /// </summary>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="sortExpression">The field on which to sort the event list.</param>
+        /// <param name="status">The status of events to retrieve.</param>
+        /// <returns>
+        /// The URL to use for this page, for a listing with the given <paramref name="pageNumber"/>, <paramref name="sortExpression"/>, and <paramref name="status"/>.
+        /// </returns>
+        private string GetPageUrl(int pageNumber, string sortExpression, string status)
+        {
+            return string.Format(CultureInfo.InvariantCulture, this.GetPageUrlTemplate(sortExpression, status), pageNumber);
         }
 
         /// <summary>
         /// Gets the URL to use for the paging buttons, with the page number templated out for use with <see cref="string.Format(IFormatProvider,string,object[])"/> (that is, "{0}")
         /// </summary>
-        /// <returns>The URL to use for the paging buttons, with the page number templated out for use with <see cref="string.Format(IFormatProvider,string,object[])"/> (that is, "{0}")</returns>
-        private string GetPageUrlTemplate()
+        /// <param name="sortExpression">The field on which to sort the event list.</param>
+        /// <param name="status">The status of events to retrieve.</param>
+        /// <returns>
+        /// The URL to use for the paging buttons, with the page number templated out for use with <see cref="string.Format(IFormatProvider,string,object[])"/> (that is, "{0}")
+        /// </returns>
+        private string GetPageUrlTemplate(string sortExpression, string status)
         {
             // We can't just send {0} to BuildLinkUrl, because it will get "special treatment" by the friendly URL provider for its special characters
             const string UniqueReplaceableTemplateValue = "__--0--__";
-            return this.BuildLinkUrl(this.ModuleId, "EventListing", "currentPage=" + UniqueReplaceableTemplateValue).Replace(UniqueReplaceableTemplateValue, "{0}");
+            return this.BuildLinkUrl(this.ModuleId, "EventListing", "sort=" + sortExpression, "status=" + status, "currentPage=" + UniqueReplaceableTemplateValue).Replace(UniqueReplaceableTemplateValue, "{0}");
         }
     }
 }

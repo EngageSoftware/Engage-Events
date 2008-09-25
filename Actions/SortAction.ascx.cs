@@ -33,11 +33,11 @@ namespace Engage.Dnn.Events
         /// <value>The selected field by which to sort the event listing</value>
         internal string SelectedValue
         {
-            get { return this.RadioButtonListDateSort.SelectedValue; }
+            get { return this.SortRadioButtonList.SelectedValue; }
         }
 
         /// <summary>
-        /// Sets the visibility of each of the buttons.  Also, sets the text for the cancel/uncancel button, and the delete confirm.
+        /// Performs all necessary operations to display the control's data correctly.
         /// </summary>
         protected override void BindData()
         {
@@ -60,34 +60,13 @@ namespace Engage.Dnn.Events
         {
             base.OnInit(e);
 
+            if (!this.IsPostBack)
+            {
+                this.SetInitialValue();
+            }
+
             this.LocalResourceFile = TemplateResourceFile;
-            this.Load += this.Page_Load;
-            this.SortChanged += this.SortAction_SortChanged;
-        }
-
-        /// <summary>
-        /// Sets the visibility of this control's child controls.
-        /// </summary>
-        private static void SetVisibility()
-        {
-        }
-
-        /// <summary>
-        /// Localizes this control's child controls.
-        /// </summary>
-        private static void LocalizeControls()
-        {
-        }
-
-        /// <summary>
-        /// Handles the Load event of the Page control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void Page_Load(object sender, EventArgs e)
-        {
-            SetVisibility();
-            LocalizeControls();
+            this.SortRadioButtonList.SelectedIndexChanged += this.SortAction_SortChanged;
         }
 
         /// <summary>
@@ -110,6 +89,18 @@ namespace Engage.Dnn.Events
             if (handler != null)
             {
                 handler(this, e);
+            }
+        }
+
+        /// <summary>
+        /// Sets the initial value for the sort, based on the <c>QueryString</c>.
+        /// </summary>
+        private void SetInitialValue()
+        {
+            string sortValue = this.Request.QueryString["sort"];
+            if (Engage.Utility.HasValue(sortValue))
+            {
+                this.SortRadioButtonList.SelectedValue = sortValue;
             }
         }
     }

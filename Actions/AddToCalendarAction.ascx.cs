@@ -13,7 +13,6 @@ namespace Engage.Dnn.Events
 {
     using System;
     using DotNetNuke.Framework;
-    using Framework.Templating;
 
     /// <summary>
     /// Displays the Add To Calendar that users can perform on an event instance.
@@ -78,7 +77,7 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void AddToCalendarButton_Click(object sender, EventArgs e)
         {
-            SendICalendarToClient(this.Response, CurrentEvent.ToICal(), this.CurrentEvent.Title);
+            SendICalendarToClient(this.Response, this.CurrentEvent.ToICal(), this.CurrentEvent.Title);
         }
     }
 }

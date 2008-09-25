@@ -83,11 +83,11 @@ namespace Engage.Dnn.Events
             Event.Delete(this.CurrentEvent.Id);
             this.OnDelete(e);
 
-            EventListingItem listing = Engage.Utility.FindParentControl<EventListingItem>(this);
-            if (listing != null)
-            {
-                listing.BindData();
-            }
+            ////EventListingItem listing = Engage.Utility.FindParentControl<EventListingItem>(this);
+            ////if (listing != null)
+            ////{
+            ////    listing.BindData();
+            ////}
         }
 
         /// <summary>

@@ -15,7 +15,6 @@ namespace Engage.Dnn.Events
     using Display;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.Utilities;
-    using Engage.Events;
 
     /// <summary>
     /// Displays the actions that users can perform on an event instance.
@@ -80,19 +79,15 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            // since we are reloading the object each time (no caching yet) you can't do the following
-            ////this.CurrentEvent.Cancelled = !this.CurrentEvent.Cancelled;  hk
-
-            Event ev = this.CurrentEvent;
-            ev.Canceled = !this.CurrentEvent.Canceled;
-            ev.Save(this.UserId);
+            this.CurrentEvent.Canceled = !this.CurrentEvent.Canceled;
+            this.CurrentEvent.Save(this.UserId);
             this.OnCancel(e);
 
-            EventListingItem listing = Engage.Utility.FindParentControl<EventListingItem>(this);
-            if (listing != null)
-            {
-                listing.BindData();
-            }
+            ////EventListingItem listing = Engage.Utility.FindParentControl<EventListingItem>(this);
+            ////if (listing != null)
+            ////{
+            ////    listing.BindData();
+            ////}
         }
 
         /// <summary>
