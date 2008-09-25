@@ -107,7 +107,10 @@ namespace Engage.Dnn.Events.Display
         {
             if (e.Appointment.Visible && !this.IsAppointmentRegisteredForTooltip(e.Appointment))
             {
-                this.EventsCalendarToolTipManager.TargetControls.Add(e.Appointment.ClientID, e.Appointment.ID.ToString(), true);
+                foreach (AppointmentControl appointmentControl in e.Appointment.AppointmentControls)
+                {
+                    this.EventsCalendarToolTipManager.TargetControls.Add(appointmentControl.ClientID, e.Appointment.ID.ToString(), true);                    
+                }
             }
         }
 
