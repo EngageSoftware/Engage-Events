@@ -194,7 +194,7 @@
     <value>All</value>
   </data>
   <data name="Cancel.Text" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Cancel this Event</value>
   </data>
   <data name="ConfirmCancel.Text" xml:space="preserve">
     <value>Are you sure you want to cancel this event?</value>
@@ -215,7 +215,7 @@
     <value>Title</value>
   </data>
   <data name="UnCancel.Text" xml:space="preserve">
-    <value>Revive</value>
+    <value>Revive this Event</value>
   </data>
   <data name="ViewInviteButton.Text" xml:space="preserve">
     <value>View Invite</value>

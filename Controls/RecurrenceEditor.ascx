@@ -4,9 +4,9 @@
 <div class="rsAdvancedEdit rsAdvOptions Normal">
   
 <fieldset class="recurrence_fs">
+    <legend class="rsAdvRecurrence SubHead"><%=Localize("Recurrence")%></legend>
 	
     <asp:Panel ID="RecurrencePatternPanel" runat="server" CssClass="rsAdvRecurrencePatterns">
-        <legend class="rsAdvRecurrence"><%=Localize("Recurrence")%></legend>
         <asp:UpdatePanel runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false"><%-- This UpdatePanel needs to include the RecurrenceFrequencyPanel, so that it can update the RepeatFrequencyDaily to postback if it gets reselected.  See http://www.engagesoftware.com/Blog/EntryID/76.aspx --%>
             <Triggers>
                 <asp:AsyncPostBackTrigger ControlID="RepeatFrequencyDaily" />
@@ -105,7 +105,7 @@
 </fieldset>
 
 <fieldset class="range_of_recurrence">    
-    <legend class="rsAdvRecurrenceRange"><%=Localize("Range")%></legend>
+    <legend class="rsAdvRecurrenceRange SubHead"><%=Localize("Range")%></legend>
     <asp:Panel ID="RecurrenceRangePanel" runat="server" CssClass="rsAdvRecurrenceRangePanel">
         <ul>
             <li>
