@@ -220,4 +220,7 @@
   <data name="ViewInviteButton.Text" xml:space="preserve">
     <value>View Invite</value>
   </data>
+  <data name="Back.Text" xml:space="preserve">
+    <value>Back</value>
+  </data>
 </root>

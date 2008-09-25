@@ -12,8 +12,8 @@
 namespace Engage.Dnn.Events.Display
 {
     using System;
-    using System.IO;
     using System.Web.UI;
+    using System.Web.UI.WebControls;
     using DotNetNuke.Common;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
@@ -37,7 +37,19 @@ namespace Engage.Dnn.Events.Display
         /// <param name="resourceFile">The resource file to use to find get localized text.</param>
         internal static void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)
         {
-            // do nothing here, handled up in TemplateEngine - for now.
+            if (tag.TagType == TagType.Open && tag.LocalName.Equals("BackHyperlink", StringComparison.OrdinalIgnoreCase))
+            {
+                HyperLink backHyperlink = new HyperLink();
+                backHyperlink.NavigateUrl = Globals.NavigateURL();
+                backHyperlink.CssClass = tag.GetAttributeValue("CssClass");
+                backHyperlink.Text = Localization.GetString(tag.GetAttributeValue("ResourceKey"), resourceFile);
+                if (string.IsNullOrEmpty(backHyperlink.Text))
+                {
+                    backHyperlink.Text = tag.GetAttributeValue("Text");
+                }
+
+                container.Controls.Add(backHyperlink);
+            }
         }
 
         /// <summary>
