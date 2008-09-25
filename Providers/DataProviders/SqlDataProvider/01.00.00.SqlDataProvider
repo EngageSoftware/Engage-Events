@@ -382,8 +382,6 @@ BEGIN
 			OR 
 			(RecurrenceRule IS NOT NULL AND (FinalRecurringEndDate IS NULL OR FinalRecurringEndDate >= @startDate OR @startDate IS NULL))
 		  )
-
-	SELECT @@ROWCOUNT AS TotalRecords
 END
 GO
 
