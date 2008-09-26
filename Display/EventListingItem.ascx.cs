@@ -137,6 +137,27 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
+        /// Gets or sets the total number of events.
+        /// </summary>
+        /// <remarks>
+        /// So that we can have proper paging information constructed before we query for the list of events, we need to persist the total number of events between postbacks.
+        /// </remarks>
+        /// <value>The total number of events.</value>
+        private int TotalNumberOfEvents
+        {
+            get
+            {
+                // if we haven't set the value in ViewState yet, just make sure that the next page gets populated (it will later be hidden if it isn't necessary)
+                return this.ViewState["TotalNumberOfEvents"] as int? ?? int.MaxValue;
+            }
+
+            set 
+            { 
+                this.ViewState["TotalNumberOfEvents"] = value; 
+            }
+        }
+
+        /// <summary>
         /// Gets the number of events per page.
         /// </summary>
         /// <value>The number of events per page.</value>
@@ -207,6 +228,7 @@ namespace Engage.Dnn.Events.Display
         {
             EventCollection events = EventCollection.Load(this.PortalId, this.listingMode, this.SortExpression, this.CurrentPageIndex - 1, this.RecordsPerPage, this.Status.Equals("All", StringComparison.Ordinal), this.IsFeatured);
 
+            this.TotalNumberOfEvents = events.TotalRecords;
             this.TemplateProvider.ItemPagingState = new ItemPagingState(this.CurrentPageIndex, events.TotalRecords, this.RecordsPerPage);
             this.TemplateProvider.DataSource = events;
             this.TemplateProvider.DataBind();
@@ -439,6 +461,7 @@ namespace Engage.Dnn.Events.Display
                 TemplateEngine.GetTemplate(this.PhysicialTemplatesFolderName, footerTemplateName),
                 this.FooterPlaceholder,
                 this.GetPageUrlTemplate(this.SortExpression, this.Status),
+                new ItemPagingState(this.CurrentPageIndex, this.TotalNumberOfEvents, this.RecordsPerPage), 
                 this.ProcessTag);
         }
 
