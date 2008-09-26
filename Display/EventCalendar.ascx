@@ -40,7 +40,7 @@
                 <timelineview userselectable="False" />
             </telerik:radscheduler>
             <telerik:radtooltipmanager runat="server" id="EventsCalendarToolTipManager" width="300" height="150"
-                animation="None" position="BottomRight" sticky="true" text="Loading..." />
+                animation="None" position="BottomRight" sticky="true" text="Loading..." AutoTooltipify="false" />
         </ContentTemplate>
     </asp:UpdatePanel>
 </div>
