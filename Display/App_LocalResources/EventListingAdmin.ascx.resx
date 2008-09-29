@@ -132,6 +132,9 @@
   <data name="MyEventsLabel.Text" xml:space="preserve">
     <value>My Events</value>
   </data>
+  <data name="Overview.Text" xml:space="preserve">
+    <value>Overview</value>
+  </data>
   <data name="SortByLabel.Text" xml:space="preserve">
     <value>Sort By</value>
   </data>
