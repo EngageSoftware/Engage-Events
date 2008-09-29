@@ -110,8 +110,7 @@ namespace Engage.Events.Util
         private static void WriteTask(string description, string location, StringBuilder output, Appointment app, bool outlookCompatibleMode, TimeSpan timeZoneOffset)
         {
             output.AppendLine("BEGIN:VEVENT");
-            ////output.AppendLine("DESCRIPTION:" + Engage.Util.Utility.RemoveHtmlTags(description, true));
-            output.AppendLine("DESCRIPTION:" + description.Replace("\n", "\\n"));
+            output.AppendLine("DESCRIPTION:" + description.Replace("\n", "\\n").Replace("\r", "\\r"));
             output.AppendLine("LOCATION:" + location);
 
             if (!string.IsNullOrEmpty(app.RecurrenceRule))
