@@ -175,7 +175,7 @@
     <value>Begins</value>
   </data>
   <data name="EventTimeZoneLabel.Help" xml:space="preserve">
-    <value>Remember to add an hour if the event occurs in &lt;a href="http://aa.usno.navy.mil/faq/docs/daylight_time.php" target="_blank"&gt;Daylight Saving Time&lt;/a&gt;</value>
+    <value>Remember to add an hour to the time zone if this event occurs during &lt;a href="http://aa.usno.navy.mil/faq/docs/daylight_time.php" target="_blank"&gt;Daylight Saving Time&lt;/a&gt;</value>
   </data>
   <data name="EventTimeZoneLabel.Text" xml:space="preserve">
     <value>Time Zone</value>
