@@ -106,11 +106,12 @@ namespace Engage.Events.Util
         /// <param name="app">The appointment to export.</param>
         /// <param name="outlookCompatibleMode">if set to <c>true</c> make the output compatible with Outlook.</param>
         /// <param name="timeZoneOffset">The time zone offset.</param>
+        /// <exception cref="InvalidOperationException">Invalid recurrence rule.</exception>
         private static void WriteTask(string description, string location, StringBuilder output, Appointment app, bool outlookCompatibleMode, TimeSpan timeZoneOffset)
         {
             output.AppendLine("BEGIN:VEVENT");
             ////output.AppendLine("DESCRIPTION:" + Engage.Util.Utility.RemoveHtmlTags(description, true));
-            output.AppendLine("DESCRIPTION:" + description);
+            output.AppendLine("DESCRIPTION:" + description.Replace("\n", "\\n"));
             output.AppendLine("LOCATION:" + location);
 
             if (!string.IsNullOrEmpty(app.RecurrenceRule))
