@@ -63,7 +63,6 @@ namespace Engage.Dnn.Events.Display
         public EventListingItem()
         {
             this.ActionsControlsFolder = "~" + this.DesktopModuleFolderName + "Actions/";
-            this.LicenseProvider = new EngageLicenseProvider(Utility.LicenseKey);
         }
 
         /// <summary>
