@@ -224,14 +224,15 @@ namespace Engage.Dnn.Events
             StringBuilder queryString = new StringBuilder(64);
             foreach (string key in queryStringKeys)
             {
-                if (queryString.Length > 0)
+                if (Engage.Utility.HasValue(request.QueryString[key]))
                 {
-                    queryString.Append("&");
-                }
+                    if (queryString.Length > 0)
+                    {
+                        queryString.Append("&");
+                    }
 
-                queryString.Append(key);
-                queryString.Append("=");
-                queryString.Append(request.QueryString[key]);
+                    queryString.Append(key).Append("=").Append(request.QueryString[key]);
+                }
             }
 
             return queryString.ToString();

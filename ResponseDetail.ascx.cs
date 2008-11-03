@@ -140,7 +140,7 @@ namespace Engage.Dnn.Events
                 ////this.ResponseDetailGrid.Attributes.Add("SortColumn", sortColumn);
 
                 this.pager.PageSize = this.ResponseDetailGrid.PageSize;
-                this.SetupPagingControl(this.pager, responses.TotalRecords, "modId", "key", "status", "eventId");
+                this.SetupPagingControl(this.pager, responses.TotalRecords, "modId", "key", "status", "eventId", "start");
 
                 this.responseDisplay.SetResponseSummary(Engage.Events.ResponseSummary.Load(eventId.Value, this.EventStart));
                 this.responseDisplay.ModuleConfiguration = this.ModuleConfiguration;
