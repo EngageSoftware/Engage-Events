@@ -15,6 +15,7 @@ namespace Engage.Dnn.Events.Display
     using System.Diagnostics;
     using System.Globalization;
     using System.Text;
+    using System.Web;
     using System.Web.UI;
     using System.Web.UI.WebControls;
     using DotNetNuke.Services.Localization;
@@ -428,6 +429,9 @@ namespace Engage.Dnn.Events.Display
                         }
 
                         container.Controls.Add(new LiteralControl(string.Format(CultureInfo.InvariantCulture, "<div class=\"{0}\">", cssClass.ToString())));
+                        break;
+                    case "DURATION":
+                        container.Controls.Add(new LiteralControl(HttpUtility.HtmlEncode(Dnn.Events.Utility.GetFormattedEventDate(currentEvent.EventStart, currentEvent.EventEnd))));
                         break;
                     default:
                         break;
