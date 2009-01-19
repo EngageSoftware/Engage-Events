@@ -361,6 +361,7 @@
     <None Include="Providers\DataProviders\SqlDataProvider\00.00.04.SqlDataProvider" />
     <None Include="Providers\DataProviders\SqlDataProvider\00.00.06.SqlDataProvider" />
     <None Include="Providers\DataProviders\SqlDataProvider\01.00.00.SqlDataProvider" />
+    <None Include="Templates\Engage Events Templates.docx" />
     <None Include="Templates\Engage Events Templates.pdf" />
     <None Include="Uninstall.SqlDataProvider" />
   </ItemGroup>
