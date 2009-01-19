@@ -399,17 +399,40 @@ namespace Engage.Dnn.Events.Display
                     case "READMORE":
                         if (Engage.Utility.HasValue(currentEvent.Description))
                         {
-                            HyperLink detailLink = new HyperLink();
-                            detailLink.Text = Localization.GetString(tag.GetAttributeValue("ResourceKey"), resourceFile);
-                            if (string.IsNullOrEmpty(detailLink.Text))
+                            StringBuilder detailLinkBuilder = new StringBuilder();
+                            detailLinkBuilder.AppendFormat(
+                                    CultureInfo.InvariantCulture,
+                                    "<a href=\"{0}\"",
+                                    HttpUtility.HtmlAttributeEncode(this.BuildLinkUrl(this.ModuleId, "EventDetail", Dnn.Events.Utility.GetEventParameters(currentEvent))));
+
+                            string detailLinkCssClass = tag.GetAttributeValue("CssClass");
+                            if (Engage.Utility.HasValue(detailLinkCssClass))
                             {
-                                detailLink.Text = "Read More...";
+                                detailLinkBuilder.AppendFormat(
+                                        CultureInfo.InvariantCulture, 
+                                        "class=\"{0}\"", 
+                                        HttpUtility.HtmlAttributeEncode(detailLinkCssClass));
                             }
 
-                            detailLink.CssClass = tag.GetAttributeValue("CssClass");
-                            detailLink.NavigateUrl = this.BuildLinkUrl(this.ModuleId, "EventDetail", Dnn.Events.Utility.GetEventParameters(currentEvent));
+                            detailLinkBuilder.Append(">");
 
-                            container.Controls.Add(detailLink);
+                            if (!tag.HasChildTags)
+                            {
+                                string detailLinkText = Localization.GetString(tag.GetAttributeValue("ResourceKey"), resourceFile);
+                                if (string.IsNullOrEmpty(detailLinkText))
+                                {
+                                    detailLinkText = tag.GetAttributeValue("Text");
+                                    if (string.IsNullOrEmpty(detailLinkText))
+                                    {
+                                        detailLinkText = "Read More...";
+                                    }
+                                }
+
+                                detailLinkBuilder.Append(detailLinkText)
+                                    .Append("</a>");
+                            }
+
+                            container.Controls.Add(new LiteralControl(detailLinkBuilder.ToString()));
                         }
 
                         break;
@@ -439,9 +462,16 @@ namespace Engage.Dnn.Events.Display
             }
             else if (tag.TagType == TagType.Close)
             {
-                if (tag.LocalName.Equals("EVENTWRAPPER", StringComparison.OrdinalIgnoreCase))
+                switch (tag.LocalName.ToUpperInvariant())
                 {
-                    container.Controls.Add(new LiteralControl("</div>"));
+                    case "EVENTWRAPPER":
+                        container.Controls.Add(new LiteralControl("</div>"));
+                        break;
+                    case "READMORE":
+                        container.Controls.Add(new LiteralControl("</a>"));
+                        break;
+                    default:
+                        break;
                 }
             }
         }
