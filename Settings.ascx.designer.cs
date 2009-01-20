@@ -57,5 +57,23 @@ namespace Engage.Dnn.Events {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox FeaturedCheckBox;
+        
+        /// <summary>
+        /// DetailsDisplayModuleGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView DetailsDisplayModuleGrid;
+        
+        /// <summary>
+        /// DetailsDisplayModuleValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator DetailsDisplayModuleValidator;
     }
 }

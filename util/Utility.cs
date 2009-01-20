@@ -30,7 +30,12 @@ namespace Engage.Dnn.Events
         /// The friendly name of this module.
         /// </summary>
         public const string DesktopModuleName = "Engage: Events";
-        
+
+        /// <summary>
+        /// The friendly name of this module's definition.
+        /// </summary>
+        public const string ModuleDefinitionFriendlyName = "Engage: Events";
+
         /// <summary>
         /// The host setting key base for whether this module have been configured
         /// </summary>

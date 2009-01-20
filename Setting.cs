@@ -53,6 +53,16 @@ namespace Engage.Dnn.Events
         public static readonly Setting UnsubscribeUrl = new Setting("unsubscribeUrl", "Specify the URL for unsubscribing.");
 
         /// <summary>
+        /// The ModuleID on which to display event details for the given module
+        /// </summary>
+        public static readonly Setting DetailsDisplayModuleId = new Setting("DetailsDisplayModuleId", "The ModuleID on which to display event details");
+
+        /// <summary>
+        /// The TabID on which to display event details for the given module
+        /// </summary>
+        public static readonly Setting DetailsDisplayTabId = new Setting("DetailsDisplayTabId", "The TabID on which to display event details");
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Setting"/> class.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
