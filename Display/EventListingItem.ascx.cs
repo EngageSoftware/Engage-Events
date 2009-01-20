@@ -17,11 +17,11 @@ namespace Engage.Dnn.Events.Display
     using System.Text;
     using System.Web;
     using System.Web.UI;
-    using System.Web.UI.WebControls;
+
+    using DotNetNuke.Entities.Modules;
     using DotNetNuke.Services.Localization;
     using Engage.Events;
     using Framework.Templating;
-    using Licensing;
     using Templating;
 
     /// <summary>
@@ -64,15 +64,6 @@ namespace Engage.Dnn.Events.Display
         public EventListingItem()
         {
             this.ActionsControlsFolder = "~" + this.DesktopModuleFolderName + "Actions/";
-        }
-
-        /// <summary>
-        /// Gets the name of the this module's desktop module record in DNN.
-        /// </summary>
-        /// <value>The name of this module's desktop module record in DNN.</value>
-        public override string DesktopModuleName
-        {
-            get { return Utility.DesktopModuleName; }
         }
 
         /// <summary>
@@ -164,6 +155,24 @@ namespace Engage.Dnn.Events.Display
         private int RecordsPerPage
         {
             get { return Dnn.Utility.GetIntSetting(this.Settings, Framework.Setting.RecordsPerPage.PropertyName, 1); }
+        }
+
+        /// <summary>
+        /// Gets the Tab ID to use when displaying module details.
+        /// </summary>
+        /// <value>The Tab ID to use when displaying module details.</value>
+        private int DetailsTabId
+        {
+            get { return Dnn.Utility.GetIntSetting(this.Settings, Setting.DetailsDisplayTabId.PropertyName, this.TabId); }
+        }
+
+        /// <summary>
+        /// Gets the Module ID to use when displaying module details.
+        /// </summary>
+        /// <value>The Module ID to use when displaying module details.</value>
+        private int DetailsModuleId
+        {
+            get { return Dnn.Utility.GetIntSetting(this.Settings, Setting.DetailsDisplayModuleId.PropertyName, this.ModuleId); }
         }
 
         /// <summary>
@@ -403,7 +412,7 @@ namespace Engage.Dnn.Events.Display
                             detailLinkBuilder.AppendFormat(
                                     CultureInfo.InvariantCulture,
                                     "<a href=\"{0}\"",
-                                    HttpUtility.HtmlAttributeEncode(this.BuildLinkUrl(this.ModuleId, "EventDetail", Dnn.Events.Utility.GetEventParameters(currentEvent))));
+                                    HttpUtility.HtmlAttributeEncode(this.BuildLinkUrl(this.DetailsTabId, this.DetailsModuleId, "EventDetail", Dnn.Events.Utility.GetEventParameters(currentEvent))));
 
                             string detailLinkCssClass = tag.GetAttributeValue("CssClass");
                             if (Engage.Utility.HasValue(detailLinkCssClass))
