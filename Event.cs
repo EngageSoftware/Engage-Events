@@ -157,10 +157,17 @@ namespace Engage.Events
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private TimeSpan timeZoneOffset;
 
-        /////// <summary>
-        /////// Indicates whether the license for this assembly has yet been loaded.
-        /////// </summary>
-        ////private bool aspnetEmailLicenseLoaded;
+        /// <summary>
+        /// Backing field for <see cref="Capacity"/>.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private int? capacity;
+
+        /// <summary>
+        /// Backing field for <see cref="InDaylightTime"/>.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private bool inDaylightTime;
 
         /// <summary>
         /// Prevents a default instance of the Event class from being created.
@@ -185,8 +192,10 @@ namespace Engage.Events
         /// <param name="isFeatured">if set to <c>true</c> this event is featured.</param>
         /// <param name="allowRegistrations">if set to <c>true</c> this event allows users to register for it.</param>
         /// <param name="recurrenceRule">The recurrence rule.</param>
-        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule)
-            : this(portalId, moduleId, organizerEmail, title, overview, description, eventStart, eventEnd, timeZoneOffset, location, isFeatured, allowRegistrations, recurrenceRule, false)
+        /// <param name="capacity">The maximum number of registrants for this event, or <c>null</c> if there is no maximum.</param>
+        /// <param name="inDaylightTime">if set to <c>true</c> this event occurs in Daylight Time.</param>
+        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule, int? capacity, bool inDaylightTime)
+            : this(portalId, moduleId, organizerEmail, title, overview, description, eventStart, eventEnd, timeZoneOffset, location, isFeatured, allowRegistrations, recurrenceRule, false, capacity, inDaylightTime)
         {
         }
 
@@ -207,7 +216,9 @@ namespace Engage.Events
         /// <param name="allowRegistrations">if set to <c>true</c> this event allows users to register for it.</param>
         /// <param name="recurrenceRule">The recurrence rule.</param>
         /// <param name="canceled">if set to <c>true</c> this event is canceled.</param>
-        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule, bool canceled)
+        /// <param name="capacity">The maximum number of registrants for this event, or <c>null</c> if there is no maximum.</param>
+        /// <param name="inDaylightTime">if set to <c>true</c> this event occurs in Daylight Time.</param>
+        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule, bool canceled, int? capacity, bool inDaylightTime)
         {
             this.portalId = portalId;
             this.moduleId = moduleId;
@@ -223,6 +234,8 @@ namespace Engage.Events
             this.allowRegistrations = allowRegistrations;
             this.recurrenceRule = recurrenceRule;
             this.canceled = canceled;
+            this.capacity = capacity;
+            this.inDaylightTime = inDaylightTime;
         }
 
         #region INotifyPropertyChanged Members
@@ -507,6 +520,36 @@ namespace Engage.Events
         }
 
         /// <summary>
+        /// Gets or sets the maximum number of attending registrants this event can have, or <c>null</c> if there is no maximum.
+        /// </summary>
+        /// <value>The the maximum number of attending registrants this event can have, or <c>null</c> if there is no maximum.</value>
+        [XmlElement(Order = 15)]
+        public int? Capacity
+        {
+            [DebuggerStepThrough]
+            get { return this.capacity; }
+            [DebuggerStepThrough]
+            set { this.capacity = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this event occurs during Daylight Time.
+        /// </summary>
+        /// <remarks>
+        /// This property is mainly needed to determine whether to check the Daylight Time check box on the event's edit page.
+        /// The <see cref="TimeZoneOffset"/> property is already adjusted based on that same check box.
+        /// </remarks>
+        /// <value><c>true</c> if this event occurs during Daylight Time; otherwise, <c>false</c>.</value>
+        [XmlElement(Order = 16)]
+        public bool InDaylightTime
+        {
+            [DebuggerStepThrough]
+            get { return this.inDaylightTime; }
+            [DebuggerStepThrough]
+            set { this.inDaylightTime = value; }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether this instance is recurring.
         /// </summary>
         /// <value>
@@ -604,10 +647,12 @@ namespace Engage.Events
         /// <param name="isFeatured">if set to <c>true</c> the event should be listed in featured displays.</param>
         /// <param name="allowRegistrations">if set to <c>true</c> this event allows users to register for it.</param>
         /// <param name="recurrenceRule">The recurrence rule.</param>
+        /// <param name="capacity">The maximum number of registrants for this event, or <c>null</c> if there is no maximum.</param>
+        /// <param name="inDaylightTime">if set to <c>true</c> this event occurs in Daylight Time.</param>
         /// <returns>A new event object.</returns>
-        public static Event Create(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule)
+        public static Event Create(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule, int? capacity, bool inDaylightTime)
         {
-            return new Event(portalId, moduleId, organizerEmail, title, overview, description, eventStart, eventEnd, timeZoneOffset, location, isFeatured, allowRegistrations, recurrenceRule);
+            return new Event(portalId, moduleId, organizerEmail, title, overview, description, eventStart, eventEnd, timeZoneOffset, location, isFeatured, allowRegistrations, recurrenceRule, capacity, inDaylightTime);
         }
 
         /// <summary>
@@ -636,7 +681,7 @@ namespace Engage.Events
         /// <returns>An occurrence of this <see cref="Event"/></returns>
         public Event CreateOccurrence(DateTime occurrenceStart)
         {
-            Event occurrence = new Event(this.portalId, this.moduleId, this.organizerEmail, this.title, this.overview, this.description, occurrenceStart, occurrenceStart + this.Duration, this.TimeZoneOffset, this.location, this.isFeatured, this.allowRegistrations, this.recurrenceRule, this.canceled);
+            Event occurrence = new Event(this.portalId, this.moduleId, this.organizerEmail, this.title, this.overview, this.description, occurrenceStart, occurrenceStart + this.Duration, this.TimeZoneOffset, this.location, this.isFeatured, this.allowRegistrations, this.recurrenceRule, this.canceled, this.capacity, this.inDaylightTime);
             occurrence.recurrenceParentId = this.id;
             occurrence.id = this.id;
             return occurrence;
@@ -721,6 +766,8 @@ namespace Engage.Events
             e.invitationUrl = eventRecord["InvitationUrl"].ToString();
             e.recapUrl = eventRecord["RecapUrl"].ToString();
             e.recurrenceParentId = eventRecord["RecurrenceParentId"] as int?;
+            e.capacity = eventRecord["Capacity"] as int?;
+            e.inDaylightTime = (bool)eventRecord["InDaylightTime"];
             
             RecurrenceRule rule;
             if (RecurrenceRule.TryParse(eventRecord["RecurrenceRule"].ToString(), out rule))
@@ -743,29 +790,31 @@ namespace Engage.Events
             try
             {
                 this.id = dp.ExecuteNonQuery(
-                    CommandType.StoredProcedure,
-                    dp.NamePrefix + "spInsertEvent",
-                    Utility.CreateIntegerParam("@PortalId", this.portalId),
-                    Utility.CreateIntegerParam("@ModuleId", this.moduleId),
-                    Utility.CreateVarcharParam("@Title", this.title),
-                    Utility.CreateTextParam("@Overview", this.overview),
-                    Utility.CreateTextParam("@Description", this.description),
-                    Utility.CreateDateTimeParam("@EventStart", this.eventStart),
-                    Utility.CreateDateTimeParam("@EventEnd", this.eventEnd),
-                    Utility.CreateIntegerParam("@TimeZoneOffset", (int)this.timeZoneOffset.TotalMinutes),
-                    Utility.CreateVarcharParam("@Organizer", this.organizer),
-                    Utility.CreateVarcharParam("@OrganizerEmail", this.organizerEmail),
-                    Utility.CreateVarcharParam("@Location", this.location),
-                    Utility.CreateVarcharParam("@LocationUrl", this.locationUrl),
-                    Utility.CreateVarcharParam("@InvitationUrl", this.invitationUrl),
-                    Utility.CreateVarcharParam("@RecapUrl", this.recapUrl),
-                    Utility.CreateIntegerParam("@RecurrenceParentId", this.recurrenceParentId),
-                    Utility.CreateVarcharParam("@RecurrenceRule", this.recurrenceRule != null ? this.recurrenceRule.ToString() : null),
-                    Utility.CreateBitParam("@AllowRegistrations", this.allowRegistrations),
-                    Utility.CreateBitParam("@isFeatured", this.isFeatured),
-                    Utility.CreateIntegerParam("@CreatedBy", revisingUser),
-                    Utility.CreateDateTimeParam("@FinalRecurringEndDate", this.FinalRecurringEndDate),
-                    Utility.CreateBitParam("@IsDeleted", this.isDeleted));
+                        CommandType.StoredProcedure,
+                        dp.NamePrefix + "spInsertEvent",
+                        Utility.CreateIntegerParam("@PortalId", this.portalId),
+                        Utility.CreateIntegerParam("@ModuleId", this.moduleId),
+                        Utility.CreateVarcharParam("@Title", this.title),
+                        Utility.CreateTextParam("@Overview", this.overview),
+                        Utility.CreateTextParam("@Description", this.description),
+                        Utility.CreateDateTimeParam("@EventStart", this.eventStart),
+                        Utility.CreateDateTimeParam("@EventEnd", this.eventEnd),
+                        Utility.CreateIntegerParam("@TimeZoneOffset", (int)this.timeZoneOffset.TotalMinutes),
+                        Utility.CreateVarcharParam("@Organizer", this.organizer),
+                        Utility.CreateVarcharParam("@OrganizerEmail", this.organizerEmail),
+                        Utility.CreateVarcharParam("@Location", this.location),
+                        Utility.CreateVarcharParam("@LocationUrl", this.locationUrl),
+                        Utility.CreateVarcharParam("@InvitationUrl", this.invitationUrl),
+                        Utility.CreateVarcharParam("@RecapUrl", this.recapUrl),
+                        Utility.CreateIntegerParam("@RecurrenceParentId", this.recurrenceParentId),
+                        Utility.CreateVarcharParam("@RecurrenceRule", this.recurrenceRule != null ? this.recurrenceRule.ToString() : null),
+                        Utility.CreateBitParam("@AllowRegistrations", this.allowRegistrations),
+                        Utility.CreateBitParam("@isFeatured", this.isFeatured),
+                        Utility.CreateIntegerParam("@CreatedBy", revisingUser),
+                        Utility.CreateDateTimeParam("@FinalRecurringEndDate", this.FinalRecurringEndDate),
+                        Utility.CreateIntegerParam("@Capacity", this.capacity),
+                        Utility.CreateBitParam("@InDaylightTime", this.inDaylightTime),
+                        Utility.CreateBitParam("@IsDeleted", this.isDeleted));
             }
             catch (SystemException de)
             {
@@ -785,29 +834,31 @@ namespace Engage.Events
             try
             {
                 dp.ExecuteNonQuery(
-                    CommandType.StoredProcedure,
-                    dp.NamePrefix + "spUpdateEvent",
-                    Utility.CreateIntegerParam("@EventId", this.id),
-                    Utility.CreateVarcharParam("@Title", this.title),
-                    Utility.CreateTextParam("@Overview", this.overview),
-                    Utility.CreateTextParam("@Description", this.description),
-                    Utility.CreateDateTimeParam("@EventStart", this.eventStart),
-                    Utility.CreateDateTimeParam("@EventEnd", this.eventEnd),
-                    Utility.CreateIntegerParam("@TimeZoneOffset", (int)this.timeZoneOffset.TotalMinutes),
-                    Utility.CreateVarcharParam("@Organizer", this.organizer),
-                    Utility.CreateVarcharParam("@OrganizerEmail", this.organizerEmail),
-                    Utility.CreateVarcharParam("@Location", this.location),
-                    Utility.CreateVarcharParam("@LocationUrl", this.locationUrl),
-                    Utility.CreateVarcharParam("@InvitationUrl", this.invitationUrl),
-                    Utility.CreateVarcharParam("@RecapUrl", this.recapUrl),
-                    Utility.CreateTextParam("@RecurrenceRule", this.recurrenceRule != null ? this.recurrenceRule.ToString() : null),
-                    Utility.CreateIntegerParam("@RecurrenceParentId", this.recurrenceParentId),
-                    Utility.CreateBitParam("@AllowRegistrations", this.allowRegistrations),
-                    Utility.CreateBitParam("@Canceled", this.canceled),
-                    Utility.CreateBitParam("@isFeatured", this.isFeatured),
-                    Utility.CreateIntegerParam("@RevisingUser", revisingUser),
-                    Utility.CreateDateTimeParam("@FinalRecurringEndDate", this.FinalRecurringEndDate),
-                    Utility.CreateBitParam("@IsDeleted", this.isDeleted));
+                        CommandType.StoredProcedure,
+                        dp.NamePrefix + "spUpdateEvent",
+                        Utility.CreateIntegerParam("@EventId", this.id),
+                        Utility.CreateVarcharParam("@Title", this.title),
+                        Utility.CreateTextParam("@Overview", this.overview),
+                        Utility.CreateTextParam("@Description", this.description),
+                        Utility.CreateDateTimeParam("@EventStart", this.eventStart),
+                        Utility.CreateDateTimeParam("@EventEnd", this.eventEnd),
+                        Utility.CreateIntegerParam("@TimeZoneOffset", (int)this.timeZoneOffset.TotalMinutes),
+                        Utility.CreateVarcharParam("@Organizer", this.organizer),
+                        Utility.CreateVarcharParam("@OrganizerEmail", this.organizerEmail),
+                        Utility.CreateVarcharParam("@Location", this.location),
+                        Utility.CreateVarcharParam("@LocationUrl", this.locationUrl),
+                        Utility.CreateVarcharParam("@InvitationUrl", this.invitationUrl),
+                        Utility.CreateVarcharParam("@RecapUrl", this.recapUrl),
+                        Utility.CreateTextParam("@RecurrenceRule", this.recurrenceRule != null ? this.recurrenceRule.ToString() : null),
+                        Utility.CreateIntegerParam("@RecurrenceParentId", this.recurrenceParentId),
+                        Utility.CreateBitParam("@AllowRegistrations", this.allowRegistrations),
+                        Utility.CreateBitParam("@Canceled", this.canceled),
+                        Utility.CreateBitParam("@isFeatured", this.isFeatured),
+                        Utility.CreateIntegerParam("@RevisingUser", revisingUser),
+                        Utility.CreateDateTimeParam("@FinalRecurringEndDate", this.FinalRecurringEndDate),
+                        Utility.CreateIntegerParam("@Capacity", this.capacity),
+                        Utility.CreateBitParam("@InDaylightTime", this.inDaylightTime),
+                        Utility.CreateBitParam("@IsDeleted", this.isDeleted));
             }
             catch (SystemException de)
             {
