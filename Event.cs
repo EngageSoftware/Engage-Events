@@ -170,6 +170,12 @@ namespace Engage.Events
         private bool inDaylightTime;
 
         /// <summary>
+        /// Backing field for <see cref="CapacityMetMessage"/>.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private string capacityMetMessage;
+
+        /// <summary>
         /// Prevents a default instance of the Event class from being created.
         /// </summary>
         private Event()
@@ -194,8 +200,13 @@ namespace Engage.Events
         /// <param name="recurrenceRule">The recurrence rule.</param>
         /// <param name="capacity">The maximum number of registrants for this event, or <c>null</c> if there is no maximum.</param>
         /// <param name="inDaylightTime">if set to <c>true</c> this event occurs in Daylight Time.</param>
-        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule, int? capacity, bool inDaylightTime)
-            : this(portalId, moduleId, organizerEmail, title, overview, description, eventStart, eventEnd, timeZoneOffset, location, isFeatured, allowRegistrations, recurrenceRule, false, capacity, inDaylightTime)
+        /// <param name="capacityMetMessage">
+        /// The the message to display to a user who wants to register for this
+        /// event when the <see cref="Capacity"/> for this event has been met,  or 
+        /// <c>null</c> or <see cref="string.Empty"/> to display a generic message.
+        /// </param>
+        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule, int? capacity, bool inDaylightTime, string capacityMetMessage)
+            : this(portalId, moduleId, organizerEmail, title, overview, description, eventStart, eventEnd, timeZoneOffset, location, isFeatured, allowRegistrations, recurrenceRule, false, capacity, inDaylightTime, capacityMetMessage)
         {
         }
 
@@ -218,7 +229,12 @@ namespace Engage.Events
         /// <param name="canceled">if set to <c>true</c> this event is canceled.</param>
         /// <param name="capacity">The maximum number of registrants for this event, or <c>null</c> if there is no maximum.</param>
         /// <param name="inDaylightTime">if set to <c>true</c> this event occurs in Daylight Time.</param>
-        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule, bool canceled, int? capacity, bool inDaylightTime)
+        /// <param name="capacityMetMessage">
+        /// The the message to display to a user who wants to register for this
+        /// event when the <see cref="Capacity"/> for this event has been met,  or 
+        /// <c>null</c> or <see cref="string.Empty"/> to display a generic message.
+        /// </param>
+        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule, bool canceled, int? capacity, bool inDaylightTime, string capacityMetMessage)
         {
             this.portalId = portalId;
             this.moduleId = moduleId;
@@ -236,6 +252,7 @@ namespace Engage.Events
             this.canceled = canceled;
             this.capacity = capacity;
             this.inDaylightTime = inDaylightTime;
+            this.capacityMetMessage = capacityMetMessage;
         }
 
         #region INotifyPropertyChanged Members
@@ -550,6 +567,24 @@ namespace Engage.Events
         }
 
         /// <summary>
+        /// Gets or sets the message to display to a user who wants to register for this
+        /// event when the <see cref="Capacity"/> for this event has been met.
+        /// </summary>
+        /// <value>
+        /// The the message to display to a user who wants to register for this
+        /// event when the <see cref="Capacity"/> for this event has been met,  or 
+        /// <c>null</c> or <see cref="string.Empty"/> to display a generic message.
+        /// </value>
+        [XmlElement(Order = 17)]
+        public string CapacityMetMessage
+        {
+            [DebuggerStepThrough]
+            get { return this.capacityMetMessage; }
+            [DebuggerStepThrough]
+            set { this.capacityMetMessage = value; }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether this instance is recurring.
         /// </summary>
         /// <value>
@@ -649,10 +684,15 @@ namespace Engage.Events
         /// <param name="recurrenceRule">The recurrence rule.</param>
         /// <param name="capacity">The maximum number of registrants for this event, or <c>null</c> if there is no maximum.</param>
         /// <param name="inDaylightTime">if set to <c>true</c> this event occurs in Daylight Time.</param>
+        /// <param name="capacityMetMessage">
+        /// The the message to display to a user who wants to register for this
+        /// event when the <see cref="Capacity"/> for this event has been met,  or 
+        /// <c>null</c> or <see cref="string.Empty"/> to display a generic message.
+        /// </param>
         /// <returns>A new event object.</returns>
-        public static Event Create(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule, int? capacity, bool inDaylightTime)
+        public static Event Create(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule, int? capacity, bool inDaylightTime, string capacityMetMessage)
         {
-            return new Event(portalId, moduleId, organizerEmail, title, overview, description, eventStart, eventEnd, timeZoneOffset, location, isFeatured, allowRegistrations, recurrenceRule, capacity, inDaylightTime);
+            return new Event(portalId, moduleId, organizerEmail, title, overview, description, eventStart, eventEnd, timeZoneOffset, location, isFeatured, allowRegistrations, recurrenceRule, capacity, inDaylightTime, capacityMetMessage);
         }
 
         /// <summary>
@@ -681,7 +721,7 @@ namespace Engage.Events
         /// <returns>An occurrence of this <see cref="Event"/></returns>
         public Event CreateOccurrence(DateTime occurrenceStart)
         {
-            Event occurrence = new Event(this.portalId, this.moduleId, this.organizerEmail, this.title, this.overview, this.description, occurrenceStart, occurrenceStart + this.Duration, this.TimeZoneOffset, this.location, this.isFeatured, this.allowRegistrations, this.recurrenceRule, this.canceled, this.capacity, this.inDaylightTime);
+            Event occurrence = new Event(this.portalId, this.moduleId, this.organizerEmail, this.title, this.overview, this.description, occurrenceStart, occurrenceStart + this.Duration, this.TimeZoneOffset, this.location, this.isFeatured, this.allowRegistrations, this.recurrenceRule, this.canceled, this.capacity, this.inDaylightTime, this.capacityMetMessage);
             occurrence.recurrenceParentId = this.id;
             occurrence.id = this.id;
             return occurrence;
@@ -768,6 +808,7 @@ namespace Engage.Events
             e.recurrenceParentId = eventRecord["RecurrenceParentId"] as int?;
             e.capacity = eventRecord["Capacity"] as int?;
             e.inDaylightTime = (bool)eventRecord["InDaylightTime"];
+            e.capacityMetMessage = eventRecord["CapacityMetMessage"].ToString();
             
             RecurrenceRule rule;
             if (RecurrenceRule.TryParse(eventRecord["RecurrenceRule"].ToString(), out rule))
@@ -814,6 +855,7 @@ namespace Engage.Events
                         Utility.CreateDateTimeParam("@FinalRecurringEndDate", this.FinalRecurringEndDate),
                         Utility.CreateIntegerParam("@Capacity", this.capacity),
                         Utility.CreateBitParam("@InDaylightTime", this.inDaylightTime),
+                        Utility.CreateTextParam("@CapacityMetMessage", this.capacityMetMessage),
                         Utility.CreateBitParam("@IsDeleted", this.isDeleted));
             }
             catch (SystemException de)
@@ -858,6 +900,7 @@ namespace Engage.Events
                         Utility.CreateDateTimeParam("@FinalRecurringEndDate", this.FinalRecurringEndDate),
                         Utility.CreateIntegerParam("@Capacity", this.capacity),
                         Utility.CreateBitParam("@InDaylightTime", this.inDaylightTime),
+                        Utility.CreateTextParam("@CapacityMetMessage", this.capacityMetMessage),
                         Utility.CreateBitParam("@IsDeleted", this.isDeleted));
             }
             catch (SystemException de)
