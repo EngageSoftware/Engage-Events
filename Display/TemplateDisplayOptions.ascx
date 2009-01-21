@@ -35,4 +35,5 @@
             <NumberFormat AllowRounding="True" DecimalDigits="0"/>
         </telerik:radnumerictextbox>
     </span>
+    <asp:RequiredFieldValidator runat="server" ControlToValidate="RecordsPerPageTextBox" ResourceKey="RecordsPerPageRequiredValidator" CssClass="NormalRed" Display="None" />
 </div>

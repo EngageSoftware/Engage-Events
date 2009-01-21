@@ -1,0 +1,122 @@
+﻿IF NOT EXISTS (SELECT * FROM dbo.syscolumns where id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Event]') and name = 'InDaylightTime')
+ALTER TABLE  {databaseOwner}[{objectQualifier}Engage_Event] ADD InDaylightTime bit not null DEFAULT 0
+GO
+IF NOT EXISTS (SELECT * FROM dbo.syscolumns where id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Event]') and name = 'Capacity')
+ALTER TABLE  {databaseOwner}[{objectQualifier}Engage_Event] ADD Capacity int null
+GO
+IF NOT EXISTS (SELECT * FROM dbo.syscolumns where id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Event]') and name = 'CapacityMetMessage')
+ALTER TABLE  {databaseOwner}[{objectQualifier}Engage_Event] ADD CapacityMetMessage ntext null
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertEvent]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertEvent]
+GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertEvent] 
+(
+@PortalId int,
+@ModuleId int,
+@Title nvarchar(500),
+@Overview ntext,
+@Description nText,
+@EventStart DateTime,
+@EventEnd DateTime,
+@TimeZoneOffset int,
+@Organizer nvarchar(100),
+@OrganizerEmail nvarchar(100),
+@Location nvarchar(1000),
+@LocationUrl nvarchar(1000),
+@InvitationUrl nvarchar(1000),
+@RecapUrl nvarchar(1000),
+@RecurrenceRule nvarchar(256),
+@RecurrenceParentId int,
+@AllowRegistrations int,
+@IsFeatured bit,
+@CreatedBy int,
+@FinalRecurringEndDate datetime,
+@Capacity int,
+@InDaylightTime bit,
+@CapacityMetMessage ntext,
+@IsDeleted bit = 0
+)
+AS
+BEGIN
+	
+	Insert into {databaseOwner}[{objectQualifier}Engage_Event] 
+	(
+		[PortalId], [ModuleId], [Title], [Overview], [Description], [EventStart], [EventEnd], [TimeZoneOffset], [Organizer], [OrganizerEmail],
+		[Location], [LocationUrl], [InvitationUrl], [RecapUrl], [RecurrenceRule], [AllowRegistrations], [IsFeatured], [CreatedBy], 
+		[RevisingUser], [FinalRecurringEndDate], [IsDeleted], [RecurrenceParentId], [Capacity], [InDaylightTime], [CapacityMetMessage]
+	)
+	Values
+	(
+		@PortalId, @ModuleId, @Title, @Overview, @Description, @EventStart, @EventEnd, @TimeZoneOffset, @Organizer, @OrganizerEmail,
+		@Location, @LocationUrl, @InvitationUrl,  @RecapUrl, @RecurrenceRule, @AllowRegistrations, @IsFeatured, @CreatedBy, 
+		@CreatedBy, @FinalRecurringEndDate, @IsDeleted, @RecurrenceParentId, @Capacity, @InDaylightTime, @CapacityMetMessage
+	)
+
+	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_spUpdateEvent]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE {databaseOwner}[{objectQualifier}Engage_spUpdateEvent]
+GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spUpdateEvent] 
+(
+@EventId int,
+@Title nvarchar(500),
+@Overview ntext,
+@EventStart DateTime,
+@EventEnd DateTime,
+@TimeZoneOffset int,
+@Organizer nvarchar(100),
+@Description nText,
+@OrganizerEmail nvarchar(100),
+@Location nvarchar(1000),
+@LocationUrl nvarchar(1000),
+@InvitationUrl nvarchar(1000),
+@RecapUrl nvarchar(1000),
+@RecurrenceRule nvarchar(256),
+@RecurrenceParentId int,
+@AllowRegistrations bit,
+@Canceled bit,
+@IsFeatured bit,
+@RevisingUser int,
+@FinalRecurringEndDate datetime,
+@Capacity int,
+@InDaylightTime bit,
+@CapacityMetMessage ntext,
+@IsDeleted bit
+)
+AS
+BEGIN
+
+	UPDATE {databaseOwner}[{objectQualifier}Engage_Event] 
+	SET [Title] = @Title, 
+		[Overview] = @Overview, 
+		[Description] = @Description,
+		[EventStart] = @EventStart, 
+		[EventEnd] = @EventEnd, 
+		[TimeZoneOffset] = @TimeZoneOffset,
+		[Organizer] = @Organizer, 
+		[OrganizerEmail] = @OrganizerEmail,
+		[Location] = @Location, 
+		[LocationUrl] = @LocationUrl, 
+		[InvitationUrl] = @InvitationUrl, 
+		[RecapUrl] = @RecapUrl, 
+		[RecurrenceRule] = @RecurrenceRule,
+		[RecurrenceParentId] = @RecurrenceParentId, 
+		[AllowRegistrations] = @AllowRegistrations, 
+		[Canceled]  = @Canceled,
+		[IsFeatured] = @IsFeatured,
+		[RevisingUser] = @RevisingUser, 
+		[RevisionDate] = GETDATE(),
+		[FinalRecurringEndDate] = @FinalRecurringEndDate,
+		[Capacity] = @Capacity,
+		[InDaylightTime] = @InDaylightTime,
+		[CapacityMetMessage] = @CapacityMetMessage,
+		[IsDeleted] = IsDeleted
+	WHERE EventId = @EventId
+END
+GO
