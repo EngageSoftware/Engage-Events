@@ -808,7 +808,9 @@ namespace Engage.Events
             e.recurrenceParentId = eventRecord["RecurrenceParentId"] as int?;
             e.capacity = eventRecord["Capacity"] as int?;
             e.inDaylightTime = (bool)eventRecord["InDaylightTime"];
-            e.capacityMetMessage = eventRecord["CapacityMetMessage"].ToString();
+
+            int columnIndex = eventRecord.GetOrdinal("CapacityMetMessage");
+            e.capacityMetMessage = eventRecord.IsDBNull(eventRecord.GetOrdinal("CapacityMetMessage")) ? null : eventRecord.GetString(columnIndex);
             
             RecurrenceRule rule;
             if (RecurrenceRule.TryParse(eventRecord["RecurrenceRule"].ToString(), out rule))
