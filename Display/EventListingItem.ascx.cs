@@ -496,11 +496,11 @@ namespace Engage.Dnn.Events.Display
 
             this.TemplateProvider = new RepeaterTemplateProvider(
                 Utility.DesktopModuleName,
-                TemplateEngine.GetTemplate(this.PhysicialTemplatesFolderName, headerTemplateName),
+                TemplateEngine.GetTemplate(this.PhysicalTemplatesFolderName, headerTemplateName),
                 this.HeaderPlaceholder,
-                TemplateEngine.GetTemplate(this.PhysicialTemplatesFolderName, itemTemplateName),
+                TemplateEngine.GetTemplate(this.PhysicalTemplatesFolderName, itemTemplateName),
                 this.ItemPlaceholder,
-                TemplateEngine.GetTemplate(this.PhysicialTemplatesFolderName, footerTemplateName),
+                TemplateEngine.GetTemplate(this.PhysicalTemplatesFolderName, footerTemplateName),
                 this.FooterPlaceholder,
                 this.GetPageUrlTemplate(this.SortExpression, this.Status),
                 new ItemPagingState(this.CurrentPageIndex, this.TotalNumberOfEvents, this.RecordsPerPage), 

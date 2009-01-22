@@ -185,7 +185,7 @@ namespace Engage.Dnn.Events.Display
                 this.EventsCalendarDisplay.Skin = this.EventsCalendarToolTipManager.Skin = skinSetting;
             }
 
-            this.EventsCalendarDisplay.MonthVisibleAppointmentsPerDay = Utility.GetIntSetting(this.Settings, Setting.EventsPerDay.PropertyName, 3);
+            this.EventsCalendarDisplay.MonthView.VisibleAppointmentsPerDay = Utility.GetIntSetting(this.Settings, Setting.EventsPerDay.PropertyName, 3);
         }
     }
 }

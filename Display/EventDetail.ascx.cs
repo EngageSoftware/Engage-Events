@@ -63,7 +63,7 @@ namespace Engage.Dnn.Events.Display
                 Event ev = Event.Load(eventId.Value);
                 string templateName = Utility.GetStringSetting(this.Settings, Framework.Setting.DetailTemplate.PropertyName, "Detail.Item.html");
 
-                Template template = TemplateEngine.GetTemplate(PhysicialTemplatesFolderName, templateName);
+                Template template = TemplateEngine.GetTemplate(PhysicalTemplatesFolderName, templateName);
                 TemplateEngine.ProcessTags(this.DetailPlaceholder, template.ChildTags, ev, TemplateResourceFile, ProcessTag);
 
                 this.BackHyperlink.NavigateUrl = Globals.NavigateURL();

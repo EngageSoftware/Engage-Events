@@ -29,7 +29,7 @@ namespace Engage.Dnn.Events.Display
             string displayTemplateName = Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.DisplayTemplate.PropertyName);
             this.TemplateProvider = new TemplateListingProvider(
                 Utility.DesktopModuleName, 
-                TemplateEngine.GetTemplate(this.PhysicialTemplatesFolderName, displayTemplateName), 
+                TemplateEngine.GetTemplate(this.PhysicalTemplatesFolderName, displayTemplateName), 
                 this, 
                 this.ProcessTag);
 
@@ -61,17 +61,17 @@ namespace Engage.Dnn.Events.Display
 
                         if (tag.HasAttribute("HeaderTemplate"))
                         {
-                            listingCurrent.TemplateProvider.HeaderTemplate = TemplateEngine.GetTemplate(this.PhysicialTemplatesFolderName, tag.GetAttributeValue("HeaderTemplate"));
+                            listingCurrent.TemplateProvider.HeaderTemplate = TemplateEngine.GetTemplate(this.PhysicalTemplatesFolderName, tag.GetAttributeValue("HeaderTemplate"));
                         }
 
                         if (tag.HasAttribute("ItemTemplate"))
                         {
-                            listingCurrent.TemplateProvider.ItemTemplate = TemplateEngine.GetTemplate(this.PhysicialTemplatesFolderName, tag.GetAttributeValue("ItemTemplate"));
+                            listingCurrent.TemplateProvider.ItemTemplate = TemplateEngine.GetTemplate(this.PhysicalTemplatesFolderName, tag.GetAttributeValue("ItemTemplate"));
                         }
 
                         if (tag.HasAttribute("FooterTemplate"))
                         {
-                            listingCurrent.TemplateProvider.FooterTemplate = TemplateEngine.GetTemplate(this.PhysicialTemplatesFolderName, tag.GetAttributeValue("FooterTemplate"));
+                            listingCurrent.TemplateProvider.FooterTemplate = TemplateEngine.GetTemplate(this.PhysicalTemplatesFolderName, tag.GetAttributeValue("FooterTemplate"));
                         }
 
                         listingCurrent.IsFeatured = Dnn.Utility.GetBoolSetting(this.Settings, Setting.FeaturedOnly.PropertyName, false);

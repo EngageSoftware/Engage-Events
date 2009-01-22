@@ -30,19 +30,6 @@ namespace Engage.Dnn.Events
     public class ModuleBase : Framework.ModuleBase, IActionable
     {
         /// <summary>
-        /// A resource file for shared resources in this module.
-        /// </summary>
-        protected internal readonly string LocalSharedResourceFile;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ModuleBase"/> class.
-        /// </summary>
-        public ModuleBase()
-        {
-            this.LocalSharedResourceFile = Utility.LocalSharedResourceFile;
-        }
-
-        /// <summary>
         /// Gets the name of the this module's desktop module record in DNN.
         /// </summary>
         /// <value>The name of this module's desktop module record in DNN.</value>
