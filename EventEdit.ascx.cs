@@ -18,6 +18,8 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Framework;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
+    using DotNetNuke.UI.UserControls;
+
     using Engage.Events;
 
     /// <summary>
@@ -48,8 +50,41 @@ namespace Engage.Dnn.Events
             this.SaveEventButton.Click += this.SaveEventButton_OnClick;
             this.SaveAndCreateNewEventButton.Click += this.SaveAndCreateNewEventButton_OnClick;
             this.RecurringCheckBox.CheckedChanged += this.RecurringCheckbox_CheckedChanged;
+            this.AllowRegistrationsCheckBox.CheckedChanged += this.AllowRegistrationsCheckBox_CheckedChanged;
+            this.LimitRegistrationsCheckBox.CheckedChanged += this.LimitRegistrationsCheckBox_CheckedChanged;
+            this.CapacityMetMessageRadioButtonList.SelectedIndexChanged += this.CapacityMetMessageRadioButtonList_SelectedIndexChanged;
             this.RecurrenceEditorValidator.ServerValidate += this.RecurrenceEditorValidator_ServerValidate;
             this.EventDescriptionTextEditorValidator.ServerValidate += this.EventDescriptionTextEditorValidator_ServerValidate;
+        }
+
+        /// <summary>
+        /// Handles the CheckedChanged event of the AllowRegistrationsCheckBox control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void AllowRegistrationsCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            this.LimitRegistrationsPanel.Visible = this.AllowRegistrationsCheckBox.Checked;
+        }
+
+        /// <summary>
+        /// Handles the CheckedChanged event of the LimitRegistrationsCheckBox control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void LimitRegistrationsCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            this.RegistrationLimitPanel.Visible = this.LimitRegistrationsCheckBox.Checked;
+        }
+
+        /// <summary>
+        /// Handles the SelectedIndexChanged event of the CapacityMetMessageRadioButtonList control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void CapacityMetMessageRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.CustomCapacityMetMessagePanel.Visible = bool.Parse(this.CapacityMetMessageRadioButtonList.SelectedValue);
         }
 
         /// <summary>
@@ -130,11 +165,7 @@ namespace Engage.Dnn.Events
         /// <param name="args">The <see cref="System.Web.UI.WebControls.ServerValidateEventArgs"/> instance containing the event data.</param>
         private void EventDescriptionTextEditorValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
-#if DEBUG
-            args.IsValid = Engage.Utility.HasValue(this.EventDescriptionTextEditor.Text) && !this.EventDescriptionTextEditor.Text.Equals(Localization.GetString("DefaultEmptyText.Text", this.LocalResourceFile).Replace("[L]", string.Empty), StringComparison.OrdinalIgnoreCase);
-#else
-            args.IsValid = Engage.Utility.HasValue(this.EventDescriptionTextEditor.Text) && !this.EventDescriptionTextEditor.Text.Equals(Localization.GetString("DefaultEmptyText.Text", this.LocalResourceFile), StringComparison.OrdinalIgnoreCase);
-#endif
+            args.IsValid = this.TextEditorHasValue(this.EventDescriptionTextEditor);
         }
 
         /// <summary>
@@ -155,6 +186,38 @@ namespace Engage.Dnn.Events
         private void RecurringCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             this.RecurrenceEditor.Visible = this.RecurringCheckBox.Checked;
+        }
+
+        /// <summary>
+        /// Determines whether the given <paramref name="textEditor"/> has a meaningful value, checking for empty HTML (based on the "DefaultEmptyText" resource key).
+        /// </summary>
+        /// <param name="textEditor">The text editor to check.</param>
+        /// <returns><c>true</c> if the given <paramref name="textEditor"/> has any meaningful value, otherwise <c>false</c></returns>
+        private bool TextEditorHasValue(TextEditor textEditor)
+        {
+            string defaultEmptyText = Localization.GetString("DefaultEmptyText.Text", this.LocalResourceFile);
+#if DEBUG
+            defaultEmptyText = defaultEmptyText.Replace("[L]", string.Empty);
+#endif
+            return Engage.Utility.HasValue(textEditor.Text) && !textEditor.Text.Equals(defaultEmptyText, StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// Gets the custom capacity met message entered for this event.
+        /// </summary>
+        /// <returns>The capacity met message to use for this event, or <c>null</c> if the default message is to be used</returns>
+        private string GetCustomCapacityMetMessage()
+        {
+            return this.CapacityMetMessageRadioButtonList.Visible && bool.Parse(this.CapacityMetMessageRadioButtonList.SelectedValue) ? this.CustomCapacityMetMessageTextEditor.Text : null;
+        }
+
+        /// <summary>
+        /// Gets the capacity for this event.
+        /// </summary>
+        /// <returns>This event's capacity</returns>
+        private int? GetEventCapacity()
+        {
+            return this.LimitRegistrationsCheckBox.Checked && this.LimitRegistrationsCheckBox.Visible ? (int?)this.RegistrationLimitTextBox.Value : null;
         }
 
         /// <summary>
@@ -186,7 +249,7 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// This method will update the form with any localized values that cannot be localized by using the DotNetNuke ResourceKey attribute in the control's markup.
+        /// This method will update the form with any localized values that cannot be localized by using the ResourceKey attribute in the control's markup.
         /// </summary>
         private void LocalizeControl()
         {
@@ -216,22 +279,31 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void Update()
         {
-            int timeZoneOffset;
+            int timeZoneOffsetMinutes;
             int? eventId = this.EventId;
             if (eventId.HasValue
-                && int.TryParse(this.TimeZoneDropDownList.SelectedValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out timeZoneOffset))
+                && int.TryParse(this.TimeZoneDropDownList.SelectedValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out timeZoneOffsetMinutes))
             {
+                TimeSpan timeZoneOffset = new TimeSpan(0, timeZoneOffsetMinutes, 0);
+                if (this.InDaylightTimeCheckBox.Checked)
+                {
+                    timeZoneOffset = timeZoneOffset.Add(new TimeSpan(1, 0, 0));
+                }
+
                 Event e = Event.Load(eventId.Value);
                 e.EventStart = this.StartDateTimePicker.SelectedDate.Value;
                 e.EventEnd = this.EndDateTimePicker.SelectedDate.Value;
-                e.TimeZoneOffset = new TimeSpan(0, timeZoneOffset, 0);
+                e.TimeZoneOffset = timeZoneOffset;
+                e.InDaylightTime = this.InDaylightTimeCheckBox.Checked;
                 e.Location = this.EventLocationTextBox.Text;
                 e.Title = this.EventTitleTextBox.Text;
                 e.Overview = this.EventOverviewTextEditor.Text;
                 e.Description = this.EventDescriptionTextEditor.Text;
                 e.IsFeatured = this.FeaturedCheckBox.Checked;
                 e.AllowRegistrations = this.AllowRegistrationsCheckBox.Checked;
+                e.Capacity = this.GetEventCapacity();
                 e.RecurrenceRule = this.RecurrenceEditor.GetRecurrenceRule(e.EventStart, e.EventEnd);
+                e.CapacityMetMessage = this.GetCustomCapacityMetMessage();
                 e.Save(this.UserId);
             }
         }
@@ -241,32 +313,41 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void Insert()
         {
-            int timeZoneOffset;
-            if (int.TryParse(this.TimeZoneDropDownList.SelectedValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out timeZoneOffset))
+            int timeZoneOffsetMinutes;
+            if (int.TryParse(this.TimeZoneDropDownList.SelectedValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out timeZoneOffsetMinutes))
             {
+                TimeSpan timeZoneOffset = new TimeSpan(0, timeZoneOffsetMinutes, 0);
+                if (this.InDaylightTimeCheckBox.Checked)
+                {
+                    timeZoneOffset = timeZoneOffset.Add(new TimeSpan(1, 0, 0));
+                }
+
                 DateTime eventStart = this.StartDateTimePicker.SelectedDate.Value;
                 DateTime eventEnd = this.EndDateTimePicker.SelectedDate.Value;
                 Event e = Event.Create(
-                    this.PortalId,
-                    this.ModuleId,
-                    this.UserInfo.Email,
-                    this.EventTitleTextBox.Text,
-                    this.EventOverviewTextEditor.Text,
-                    this.EventDescriptionTextEditor.Text,
-                    eventStart,
-                    eventEnd,
-                    new TimeSpan(0, timeZoneOffset, 0), 
-                    this.EventLocationTextBox.Text,
-                    this.FeaturedCheckBox.Checked,
-                    this.AllowRegistrationsCheckBox.Checked,
-                    this.RecurrenceEditor.GetRecurrenceRule(eventStart, eventEnd));
-
+                        this.PortalId,
+                        this.ModuleId,
+                        this.UserInfo.Email,
+                        this.EventTitleTextBox.Text,
+                        this.EventOverviewTextEditor.Text,
+                        this.EventDescriptionTextEditor.Text,
+                        eventStart,
+                        eventEnd,
+                        timeZoneOffset,
+                        this.EventLocationTextBox.Text,
+                        this.FeaturedCheckBox.Checked,
+                        this.AllowRegistrationsCheckBox.Checked,
+                        this.RecurrenceEditor.GetRecurrenceRule(eventStart, eventEnd),
+                        this.LimitRegistrationsCheckBox.Checked && this.LimitRegistrationsCheckBox.Visible ? (int?)this.RegistrationLimitTextBox.Value : null,
+                        this.InDaylightTimeCheckBox.Checked,
+                        this.GetCustomCapacityMetMessage());
+                
                 e.Save(this.UserId);
             }
         }
 
         /// <summary>
-        /// Based on an EventId, this method populates the EventEdit user control with the Event's details.
+        /// Based on an EventId, this method populates the <see cref="EventEdit"/> user control with the Event's details.
         /// </summary>
         private void BindData()
         {
@@ -280,12 +361,31 @@ namespace Engage.Dnn.Events
                 this.EventDescriptionTextEditor.Text = e.Description;
                 this.StartDateTimePicker.SelectedDate = e.EventStart;
                 this.EndDateTimePicker.SelectedDate = e.EventEnd;
-                this.TimeZoneDropDownList.SelectedValue = ((int)e.TimeZoneOffset.TotalMinutes).ToString(CultureInfo.InvariantCulture);
                 this.FeaturedCheckBox.Checked = e.IsFeatured;
-                this.AllowRegistrationsCheckBox.Checked = e.AllowRegistrations;
                 this.RecurringCheckBox.Checked = e.IsRecurring;
                 this.RecurrenceEditor.Visible = this.RecurringCheckBox.Checked;
                 this.RecurrenceEditor.SetRecurrenceRule(e.RecurrenceRule);
+
+                this.AllowRegistrationsCheckBox.Checked = this.LimitRegistrationsPanel.Visible = e.AllowRegistrations;
+                this.LimitRegistrationsCheckBox.Checked = this.RegistrationLimitPanel.Visible = e.Capacity.HasValue;
+                if (e.Capacity.HasValue)
+                {
+                    this.RegistrationLimitTextBox.Value = e.Capacity.Value;
+                }
+
+                bool hasCustomCapacityMetMessage = e.CapacityMetMessage != null;
+                this.CustomCapacityMetMessagePanel.Visible = hasCustomCapacityMetMessage;
+                this.CapacityMetMessageRadioButtonList.SelectedValue = hasCustomCapacityMetMessage.ToString(CultureInfo.InvariantCulture);
+                this.CustomCapacityMetMessageTextEditor.Text = e.CapacityMetMessage;
+
+                this.InDaylightTimeCheckBox.Checked = e.InDaylightTime;
+                TimeSpan timeZoneOffset = e.TimeZoneOffset;
+                if (e.InDaylightTime)
+                {
+                    timeZoneOffset = timeZoneOffset.Subtract(new TimeSpan(1, 0, 0));
+                }
+
+                this.TimeZoneDropDownList.SelectedValue = ((int)timeZoneOffset.TotalMinutes).ToString(CultureInfo.InvariantCulture);
             }
         }
     }

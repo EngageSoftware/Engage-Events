@@ -53,7 +53,7 @@
         <asp:Label runat="server" ResourceKey="EventTimeZoneLabel" CssClass="NormalBold" AssociatedControlID="TimeZoneDropDownList" />
         <div class="timezone_display">
         	<asp:DropDownList runat="server" ID="TimeZoneDropDownList" />
-	        <div><asp:Label runat="server" ResourceKey="EventTimeZoneLabel.Help" CssClass="Help" /></div>
+	        <div class="Normal"><asp:CheckBox runat="server" ID="InDaylightTimeCheckBox" ResourceKey="EventTimeZoneCheckBox" /></div>
         </div>
     </div>
     
@@ -79,8 +79,38 @@
         <asp:CheckBox ID="FeaturedCheckBox" runat="server" />        
     </div>
     <div class="AEEventRegister">
-        <asp:Label runat="server" ResourceKey="AllowRegistrationsLabel" CssClass="NormalBold" AssociatedControlID="AllowRegistrationsCheckBox"/>
-        <asp:CheckBox ID="AllowRegistrationsCheckBox" runat="server" Checked="true" />
+        <asp:UpdatePanel runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+            <Triggers>
+                <asp:AsyncPostBackTrigger ControlID="AllowRegistrationsCheckBox" />
+                <asp:AsyncPostBackTrigger ControlID="LimitRegistrationsCheckBox" />
+                <asp:AsyncPostBackTrigger ControlID="CapacityMetMessageRadioButtonList" />
+            </Triggers>
+            <ContentTemplate>
+                <asp:Label runat="server" ResourceKey="AllowRegistrationsLabel" CssClass="NormalBold MainLabel" AssociatedControlID="AllowRegistrationsCheckBox" AutoPostBack="true"/>
+                <asp:CheckBox ID="AllowRegistrationsCheckBox" runat="server" Checked="true" AutoPostBack="true" />
+                <asp:Panel ID="LimitRegistrationsPanel" runat="server">
+                    <asp:CheckBox ID="LimitRegistrationsCheckBox" runat="server" ResourceKey="LimitRegistrationsLabel" CssClass="NormalBold" AutoPostBack="true" />
+                    <asp:Panel ID="RegistrationLimitPanel" runat="server" Visible="false">
+                        <asp:Label runat="server" ResourceKey="RegistrationLimitLabel" CssClass="NormalBold" AssociatedControlID="LimitRegistrationsCheckBox" />
+                        <telerik:RadNumericTextBox ID="RegistrationLimitTextBox" runat="server" Value="25" MinValue="1" ShowSpinButtons="True"> 
+                            <NumberFormat AllowRounding="True" DecimalDigits="0"/>
+                        </telerik:RadNumericTextBox>
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="RegistrationLimitTextBox" ResourceKey="RegistrationLimitRequiredValidator" CssClass="NormalRed" Display="None" />
+                        <div>
+                            <asp:Label runat="server" ResourceKey="CapacityMetMessageLabel" CssClass="NormalBold" AssociatedControlID="CapacityMetMessageRadioButtonList" />
+                            <asp:RadioButtonList ID="CapacityMetMessageRadioButtonList" runat="server" ResourceKey="CapacityMetMessageRadioButtonList" CssClass="NormalBold" AutoPostBack="true">
+                                <asp:ListItem ResourceKey="DefaultMessage" Value="False" Selected="True"/>
+                                <asp:ListItem ResourceKey="CustomMessage" Value="True"/>
+                            </asp:RadioButtonList>
+                        </div>
+                        <asp:Panel ID="CustomCapacityMetMessagePanel" runat="server" Visible="false">
+                            <asp:Label runat="server" ResourceKey="CustomCapacityMetMessageLabel" CssClass="NormalBold" AssociatedControlID="CustomCapacityMetMessageTextEditor" />
+                            <dnn:TextEditor ID="CustomCapacityMetMessageTextEditor" runat="server" Width="400" TextRenderMode="Raw" HtmlEncode="False" DefaultMode="Rich" Height="350" ChooseMode="True" ChooseRender="False" />
+                        </asp:Panel>
+                    </asp:Panel>
+                </asp:Panel>
+            </ContentTemplate>
+        </asp:UpdatePanel>
     </div>
     <div class="AEEventRecur">
         <asp:UpdatePanel runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">

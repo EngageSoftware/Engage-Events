@@ -77,6 +77,15 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.DropDownList TimeZoneDropDownList;
         
         /// <summary>
+        /// InDaylightTimeCheckBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox InDaylightTimeCheckBox;
+        
+        /// <summary>
         /// EventLocationTextBox control.
         /// </summary>
         /// <remarks>
@@ -129,6 +138,69 @@ namespace Engage.Dnn.Events {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox AllowRegistrationsCheckBox;
+        
+        /// <summary>
+        /// LimitRegistrationsPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel LimitRegistrationsPanel;
+        
+        /// <summary>
+        /// LimitRegistrationsCheckBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox LimitRegistrationsCheckBox;
+        
+        /// <summary>
+        /// RegistrationLimitPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel RegistrationLimitPanel;
+        
+        /// <summary>
+        /// RegistrationLimitTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadNumericTextBox RegistrationLimitTextBox;
+        
+        /// <summary>
+        /// CapacityMetMessageRadioButtonList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList CapacityMetMessageRadioButtonList;
+        
+        /// <summary>
+        /// CustomCapacityMetMessagePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel CustomCapacityMetMessagePanel;
+        
+        /// <summary>
+        /// CustomCapacityMetMessageTextEditor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DotNetNuke.UI.UserControls.TextEditor CustomCapacityMetMessageTextEditor;
         
         /// <summary>
         /// RecurringEventLabel control.

@@ -132,11 +132,23 @@
   <data name="CancelGoHomeLink.Alt" xml:space="preserve">
     <value>Cancel &amp; Go Home</value>
   </data>
+  <data name="CapacityMetMessageLabel.Text" xml:space="preserve">
+    <value>When Registration Cap Is Met, Show a</value>
+  </data>
   <data name="CreateAnother.Alt" xml:space="preserve">
     <value>Create Another Event</value>
   </data>
+  <data name="CustomCapacityMetMessageLabel.Text" xml:space="preserve">
+    <value>Custom Message to Display When The Registation Cap Is Met</value>
+  </data>
+  <data name="CustomMessage.Text" xml:space="preserve">
+    <value>Custom Message</value>
+  </data>
   <data name="DefaultEmptyText.Text" xml:space="preserve">
     <value>&lt;p&gt;&amp;#160;&lt;/p&gt;</value>
+  </data>
+  <data name="DefaultMessage.Text" xml:space="preserve">
+    <value>Default Message</value>
   </data>
   <data name="EditEvent.Text" xml:space="preserve">
     <value>Edit an Event</value>
@@ -198,8 +210,14 @@
   <data name="InvalidRecurrence.Text" xml:space="preserve">
     <value>The selected recurrence pattern is invalid.  Please make sure all fields are filled in correctly.</value>
   </data>
+  <data name="LimitRegistrationsLabel.Text" xml:space="preserve">
+    <value>Set a Registration Cap</value>
+  </data>
   <data name="RecurringEventLabel.Text" xml:space="preserve">
     <value>Recurring Event</value>
+  </data>
+  <data name="RegistrationLimitLabel.Text" xml:space="preserve">
+    <value>Maximum Number of Registrants</value>
   </data>
   <data name="Save.Alt" xml:space="preserve">
     <value>Save</value>

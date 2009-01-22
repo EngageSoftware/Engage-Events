@@ -162,6 +162,9 @@
   <data name="Past.Text" xml:space="preserve">
     <value>Past</value>
   </data>
+  <data name="RecordsPerPageRequiredValidator.Text" xml:space="preserve">
+    <value>You must supply the number of events to display per page</value>
+  </data>
   <data name="TemplateSettingsSectionHead.Text" xml:space="preserve">
     <value>Templates</value>
   </data>

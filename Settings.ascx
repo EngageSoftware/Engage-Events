@@ -44,7 +44,8 @@
                 <AlternatingRowStyle BackColor="#eeeeee" />
                 <RowStyle BackColor="#f8f8f8" ForeColor="Black" />
             </asp:GridView>
-            <asp:CustomValidator ID="DetailsDisplayModuleValidator" runat="server" CssClass="Normal" ResourceKey="DetailsDisplayModuleValidator" />
+            <asp:CustomValidator ID="DetailsDisplayModuleValidator" runat="server" CssClass="NormalRed" ResourceKey="DetailsDisplayModuleValidator" Display="None" />
         </div>
+        <asp:ValidationSummary runat="server" ShowMessageBox="false" ShowSummary="true" CssClass="NormalRed" />
     </ContentTemplate>
 </asp:UpdatePanel>
