@@ -140,6 +140,13 @@
     <Compile Include="Actions\CancelAction.ascx.designer.cs">
       <DependentUpon>CancelAction.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Actions\RegisterAction.ascx.cs">
+      <DependentUpon>RegisterAction.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Actions\RegisterAction.ascx.designer.cs">
+      <DependentUpon>RegisterAction.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Actions\DeleteAction.ascx.cs">
       <DependentUpon>DeleteAction.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -609,6 +616,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="01.00.00.txt" />
+    <Content Include="Actions\RegisterAction.ascx" />
     <Content Include="Admin\LicenseError.ascx" />
     <Content Include="Controls\App_LocalResources\EditTypeDialog.aspx.resx">
       <SubType>Designer</SubType>
@@ -618,32 +626,33 @@
     <Content Include="Images\no_response_icon.gif" />
     <Content Include="Images\recurring_icon.gif" />
     <Content Include="Images\rsRecurrence.gif" />
-    <Content Include="JavaScript\fancy.css" />
-    <Content Include="JavaScript\fancy_closebox.png" />
-    <Content Include="JavaScript\fancy_left.gif" />
-    <Content Include="JavaScript\fancy_progress.png" />
-    <Content Include="JavaScript\fancy_right.gif" />
-    <Content Include="JavaScript\fancy_shadow_e.png" />
-    <Content Include="JavaScript\fancy_shadow_n.png" />
-    <Content Include="JavaScript\fancy_shadow_ne.png" />
-    <Content Include="JavaScript\fancy_shadow_nw.png" />
-    <Content Include="JavaScript\fancy_shadow_s.png" />
-    <Content Include="JavaScript\fancy_shadow_se.png" />
-    <Content Include="JavaScript\fancy_shadow_sw.png" />
-    <Content Include="JavaScript\fancy_shadow_w.png" />
-    <Content Include="JavaScript\fancy_title_left.png" />
-    <Content Include="JavaScript\fancy_title_main.png" />
-    <Content Include="JavaScript\fancy_title_right.png" />
+    <Content Include="Images\fancy_closebox.png" />
+    <Content Include="Images\fancy_left.gif" />
+    <Content Include="Images\fancy_progress.png" />
+    <Content Include="Images\fancy_right.gif" />
+    <Content Include="Images\fancy_shadow_e.png" />
+    <Content Include="Images\fancy_shadow_n.png" />
+    <Content Include="Images\fancy_shadow_ne.png" />
+    <Content Include="Images\fancy_shadow_nw.png" />
+    <Content Include="Images\fancy_shadow_s.png" />
+    <Content Include="Images\fancy_shadow_se.png" />
+    <Content Include="Images\fancy_shadow_sw.png" />
+    <Content Include="Images\fancy_shadow_w.png" />
+    <Content Include="Images\fancy_title_left.png" />
+    <Content Include="Images\fancy_title_main.png" />
+    <Content Include="Images\fancy_title_right.png" />
     <None Include="JavaScript\jquery-1.2.6.min.debug.js" />
-    <Content Include="JavaScript\jquery-1.2.6.min.js" />
-    <Content Include="JavaScript\jquery.fancybox-1.0.0.js" />
-    <Content Include="JavaScript\jquery.pngFix.pack.js" />
+    <EmbeddedResource Include="JavaScript\jquery.fancybox-1.0.0.js" />
+    <EmbeddedResource Include="JavaScript\jquery.fancybox-1.0.0.debug.js" />
+    <EmbeddedResource Include="JavaScript\EngageEvents.EditTypeDialog.debug.js" />
     <Content Include="References\DotNetNuke.dll" />
     <Content Include="References\DotNetNuke.WebUtility.dll" />
     <Content Include="References\Engage.Dnn.Framework.dll" />
+    <Content Include="References\Engage.Dnn.Framework.pdb" />
     <Content Include="References\Engage.Dnn.Framework.XmlSerializers.dll" />
     <Content Include="References\Engage.Events.dll" />
     <Content Include="References\Engage.Framework.dll" />
+    <Content Include="References\Engage.Framework.pdb" />
     <Content Include="References\Engage.Framework.XmlSerializers.dll" />
     <Content Include="References\Microsoft.ApplicationBlocks.Data.dll" />
     <Content Include="References\Telerik.Web.UI.dll" />

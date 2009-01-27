@@ -1,6 +1,6 @@
 // <copyright file="EventListingItem.ascx.cs" company="Engage Software">
 // Engage: Events - http://www.engagemodules.com
-// Copyright (c) 2004-2008
+// Copyright (c) 2004-2009
 // by Engage Software ( http://www.engagesoftware.com )
 // </copyright>
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
@@ -350,14 +350,14 @@ namespace Engage.Dnn.Events.Display
                         responsesEventAction.Visible = this.IsAdmin;
                         break;
                     case "REGISTERBUTTON":
-                        ButtonAction registerEventAction = (ButtonAction)this.LoadControl(this.ActionsControlsFolder + "ButtonAction.ascx");
+                        RegisterAction registerEventAction = (RegisterAction)this.LoadControl(this.ActionsControlsFolder + "RegisterAction.ascx");
                         registerEventAction.CurrentEvent = currentEvent;
                         registerEventAction.ModuleConfiguration = this.ModuleConfiguration;
-                        registerEventAction.Href = this.BuildLinkUrl(this.ModuleId, "Register", Dnn.Events.Utility.GetEventParameters(currentEvent));
                         registerEventAction.Text = Localization.GetString("RegisterButton", resourceFile);
                         container.Controls.Add(registerEventAction);
 
                         // to register must be an event that allows registrations, be active, and have not ended
+                        // TODO: add message when event is cancelled, rather than hiding registration button
                         registerEventAction.Visible = currentEvent.AllowRegistrations && !currentEvent.Canceled && currentEvent.EventEnd > DateTime.Now;
 
                         break;
