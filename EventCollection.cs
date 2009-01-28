@@ -207,6 +207,7 @@ namespace Engage.Events
             // After all events have been added (and recurring events outside of the date range have been removed),
             // we need to get the total count before we remove events from the list for paging
             int totalRecords = events.Count;
+
             // We don't need to sort or page if we are never ending, they should be sorted from the database in that case
             if (processCollection && endIndex.HasValue)
             {
@@ -246,7 +247,6 @@ namespace Engage.Events
         /// <param name="endIndex">The index of the event which should end the list.</param>
         /// <param name="sortExpression">The name of the property on which the events should be sorted.</param>
         /// <param name="events">The events collection to sort and page.</param>
-        /// <returns>The total number of records represented by the list of events</returns>
         private static void ProcessCollection(int? beginIndex, int? endIndex, string sortExpression, List<Event> events)
         {
             // TODO: we may need to remove this GenericComparer if performance becomes an issue
@@ -261,7 +261,7 @@ namespace Engage.Events
 
             if (beginIndex > 0)
             {
-                events.RemoveRange(0, beginIndex.Value);
+                events.RemoveRange(0, Math.Min(beginIndex.Value, events.Count));
             }
         }
     }
