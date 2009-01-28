@@ -648,11 +648,9 @@
     <Content Include="References\DotNetNuke.dll" />
     <Content Include="References\DotNetNuke.WebUtility.dll" />
     <Content Include="References\Engage.Dnn.Framework.dll" />
-    <Content Include="References\Engage.Dnn.Framework.pdb" />
     <Content Include="References\Engage.Dnn.Framework.XmlSerializers.dll" />
     <Content Include="References\Engage.Events.dll" />
     <Content Include="References\Engage.Framework.dll" />
-    <Content Include="References\Engage.Framework.pdb" />
     <Content Include="References\Engage.Framework.XmlSerializers.dll" />
     <Content Include="References\Microsoft.ApplicationBlocks.Data.dll" />
     <Content Include="References\Telerik.Web.UI.dll" />

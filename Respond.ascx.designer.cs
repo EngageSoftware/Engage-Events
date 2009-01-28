@@ -23,13 +23,13 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.MultiView ResponseMultiview;
         
         /// <summary>
-        /// View1 control.
+        /// ResponseView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.View View1;
+        protected global::System.Web.UI.WebControls.View ResponseView;
         
         /// <summary>
         /// Label1 control.
@@ -68,13 +68,13 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.Button SubmitButton;
         
         /// <summary>
-        /// View2 control.
+        /// ThankYouView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.View View2;
+        protected global::System.Web.UI.WebControls.View ThankYouView;
         
         /// <summary>
         /// ThankYouMessage control.
@@ -102,5 +102,32 @@ namespace Engage.Dnn.Events {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BackToEventsButton;
+        
+        /// <summary>
+        /// EventFullView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.View EventFullView;
+        
+        /// <summary>
+        /// EventFullMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Engage.Dnn.Events.Controls.ModuleMessage EventFullMessage;
+        
+        /// <summary>
+        /// BackToEventsButton2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BackToEventsButton2;
     }
 }

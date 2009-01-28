@@ -84,20 +84,27 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetupFancyBox()
         {
-            const string FancyboxWireupScriptFormat = 
-                @"jQuery(function($) {{ 
-                    $('#{0}').fancybox(); 
-                    $('#{1}').click(function(event) {{
-                        event.preventDefault();
-                        $('#{0}').click();
-                    }});
-                }});";
+            const string FancyboxWireupScript =
+                @"jQuery(function() {{
+                     InitializeBehaviors();
 
-            string fancyboxWireupScript = string.Format(CultureInfo.InvariantCulture, FancyboxWireupScriptFormat, this.PopupTriggerLink.ClientID, this.RegisterButton.ClientID);
+                     var scriptManager = Sys.WebForms.PageRequestManager.getInstance();
+                     if (scriptManager) {
+                        scriptManager.add_endRequest(InitializeBehaviors);
+                     }
+                }});      
+
+                function InitializeBehaviors() {{          
+                    jQuery('a.PopupTriggerLink').fancybox(); 
+                    jQuery('input.RegisterButton').click(function(event) {{
+                        event.preventDefault();
+                        jQuery(this).siblings('a.PopupTriggerLink').click();
+                    }});
+                }}";
 
             this.AddJQueryReference();
             this.Page.ClientScript.RegisterClientScriptResource(typeof(RegisterAction), "Engage.Dnn.Events.JavaScript.jquery.fancybox-1.0.0.js");
-            this.Page.ClientScript.RegisterStartupScript(typeof(RegisterAction), "FancyBox wire-up", fancyboxWireupScript, true);
+            this.Page.ClientScript.RegisterStartupScript(typeof(RegisterAction), "FancyBox wire-up", FancyboxWireupScript, true);
 
             // We're simulating DNN Print Mode to eliminate the other modules on the page while still loading the correct skin/container stuff
             string containerSrc = this.ModuleConfiguration.ContainerSrc;

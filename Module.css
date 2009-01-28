@@ -453,4 +453,9 @@ div.fancy_bg_nw {
 	height: 18px;
 	background: transparent url(Images/fancy_shadow_nw.png) no-repeat;
 }
+
+a.PopupTriggerLink 
+{
+	visibility: hidden;
+}
 /*========================= End Fancy Box ===============================*/

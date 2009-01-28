@@ -129,14 +129,34 @@ namespace Engage.Dnn.Events
             if (eventId.HasValue)
             {
                 Event e = Event.Load(eventId.Value);
+                e = e.CreateOccurrence(this.EventStart);
 
-                this.EventNameLabel.Text = string.Format(CultureInfo.CurrentCulture, Localization.GetString("EventNameLabel.Text", LocalResourceFile), e.Title);
-                this.AddToCalendarButton.Enabled = true;
+                if (e.Capacity.HasValue && Engage.Events.Response.Load(eventId.Value, this.EventStart, this.UserInfo.Email) == null && e.Capacity <= ResponseCollection.Load(e.Id, e.EventStart, ResponseStatus.Attending.ToString(), "ResponseId", 1, 0).TotalRecords)
+                {
+                    this.ResponseMultiview.SetActiveView(this.EventFullView);
+                    if (string.IsNullOrEmpty(e.CapacityMetMessage))
+                    {
+                        this.EventFullMessage.TextResourceKey = "EventFullMessage.Text";
+                    }
+                    else
+                    {
+                        this.EventFullMessage.Text = e.CapacityMetMessage;
+                    }
+                }
+                else
+                {
+                    this.EventNameLabel.Text = string.Format(CultureInfo.CurrentCulture, Localization.GetString("EventNameLabel.Text", LocalResourceFile), e.Title);
+                    this.AddToCalendarButton.Enabled = true;
 
-                this.ResponseStatusRadioButtons.Items.Clear();
-                this.ResponseStatusRadioButtons.Items.Add(new ListItem(Localization.GetString(ResponseStatus.Attending.ToString(), LocalResourceFile), ResponseStatus.Attending.ToString()));
-                this.ResponseStatusRadioButtons.Items.Add(new ListItem(Localization.GetString(ResponseStatus.NotAttending.ToString(), LocalResourceFile), ResponseStatus.NotAttending.ToString()));
-                this.ResponseStatusRadioButtons.Items[0].Selected = true;
+                    this.ResponseStatusRadioButtons.Items.Clear();
+                    this.ResponseStatusRadioButtons.Items.Add(new ListItem(
+                        Localization.GetString(ResponseStatus.Attending.ToString(), LocalResourceFile),
+                        ResponseStatus.Attending.ToString()));
+                    this.ResponseStatusRadioButtons.Items.Add(new ListItem(
+                        Localization.GetString(ResponseStatus.NotAttending.ToString(), LocalResourceFile),
+                        ResponseStatus.NotAttending.ToString()));
+                    this.ResponseStatusRadioButtons.Items[0].Selected = true;
+                }
             }
         }
     }

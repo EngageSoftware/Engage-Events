@@ -142,4 +142,7 @@
     <value>Back To Events</value>
     <comment>.</comment>
   </data>
+  <data name="EventFullMessage.Text" xml:space="preserve">
+    <value>Sorry, this event is full.</value>
+  </data>
 </root>

@@ -57,12 +57,6 @@ namespace Engage.Dnn.Events.Controls
         private string textResourceKey = string.Empty;
 
         /// <summary>
-        /// The backing field for <see cref="TitleResourceKey"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string titleResourceKey = string.Empty;
-
-        /// <summary>
         /// The backing field for <see cref="CssClass"/>.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -94,28 +88,6 @@ namespace Engage.Dnn.Events.Controls
         {
             get { return this.messageLabel.Text; }
             set { this.messageLabel.Text = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the resource key to be used to get the message title.
-        /// </summary>
-        /// <value>The title resource key.</value>
-        public string TitleResourceKey
-        {
-            [DebuggerStepThrough]
-            get { return this.titleResourceKey; }
-            [DebuggerStepThrough]
-            set { this.titleResourceKey = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the title text.
-        /// </summary>
-        /// <value>The title.</value>
-        public string Title
-        {
-            get { return this.titleLabel.Text; }
-            set { this.titleLabel.Text = value; }
         }
 
         /// <summary>
@@ -194,7 +166,7 @@ namespace Engage.Dnn.Events.Controls
         /// <returns>Localized text for the given <paramref name="key"/></returns>
         /// <history>
         /// [cnurse] 9/8/2004  Created
-        /// [bdukes] 6/13/2008 Adapted for new ModuleMessage control
+        /// [bdukes] 6/13/2008 Adapted for new <see cref="ModuleMessage"/> control
         /// </history>
         protected static string GetLocalizedText(string key, Control control)
         {
@@ -206,20 +178,16 @@ namespace Engage.Dnn.Events.Controls
                 // Get Resource File Root from Parents LocalResourceFile Property
                 return Localization.GetString(key, parentControl.LocalResourceFile);
             }
-            else
+            
+            System.Reflection.PropertyInfo pi = control.Parent.GetType().GetProperty("LocalResourceFile");
+            if (pi != null && pi.PropertyType.Equals(typeof(string)))
             {
-                System.Reflection.PropertyInfo pi = control.Parent.GetType().GetProperty("LocalResourceFile");
-                if (pi != null && pi.PropertyType.Equals(typeof(string)))
-                {
-                    // If control has a LocalResourceFile property use this
-                    return Localization.GetString(key, (string)pi.GetValue(control.Parent, null));
-                }
-                else
-                {
-                    // Drill up to the next level 
-                    return GetLocalizedText(key, control.Parent);
-                }
+                // If control has a LocalResourceFile property use this
+                return Localization.GetString(key, (string)pi.GetValue(control.Parent, null));
             }
+            
+            // Drill up to the next level 
+            return GetLocalizedText(key, control.Parent);
         }
 
         /// <summary>
@@ -243,11 +211,6 @@ namespace Engage.Dnn.Events.Controls
             if (!string.IsNullOrEmpty(this.TextResourceKey))
             {
                 this.messageLabel.Text = GetLocalizedText(this.TextResourceKey, this);
-            }
-
-            if (!string.IsNullOrEmpty(this.TitleResourceKey))
-            {
-                this.titleLabel.Text = GetLocalizedText(this.TitleResourceKey, this);
             }
         }
     }
