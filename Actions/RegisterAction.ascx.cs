@@ -28,18 +28,13 @@ namespace Engage.Dnn.Events
     public partial class RegisterAction : ActionControlBase
     {
         /// <summary>
-        /// Backing field for <see cref="Text"/>
-        /// </summary>
-        private string text;
-
-        /// <summary>
         /// Gets or sets the text to display on this button.
         /// </summary>
         /// <value>The text to display on this button</value>
         public string Text
         {
-            get { return this.text; }
-            set { this.text = value; }
+            get { return this.RegisterButton.Text; }
+            set { this.RegisterButton.Text = value; }
         }
 
         /// <summary>
@@ -75,7 +70,6 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Page_Load(object sender, EventArgs e)
         {
-            this.RegisterButton.Text = this.text;
             this.SetupFancyBox();
         }
 

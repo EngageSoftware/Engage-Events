@@ -24,7 +24,7 @@ namespace Engage.Dnn.Events.Navigation
     /// </summary>
     /// <remarks>
     /// This control's behavior changed from using LinkButtons to standard buttons. Something to do with a postback
-    /// not occurring on the container form. Not sure why? Anyhow, it stores the EventID in <c>ViewState</c> and uses it if needed.hk
+    /// not occurring on the container form. Not sure why? Anyhow, it stores the EventID in <c>ViewState</c> and uses it if needed. hk
     /// </remarks>
     public partial class EventAdminActions : ModuleBase
     {
@@ -61,7 +61,7 @@ namespace Engage.Dnn.Events.Navigation
 
             set
             {
-                this.currentEvent = value;
+                this.currentEvent = this.RegisterButton.CurrentEvent = value;
                 this.CurrentEventId = this.currentEvent.Id;
                 this.BindData();
             }
@@ -105,11 +105,10 @@ namespace Engage.Dnn.Events.Navigation
 
             // since the global navigation control is not loaded using DNN mechanisms we need to set it here so that calls to 
             // module related information will appear the same as the actual control this navigation is sitting on.hk
-            this.ModuleConfiguration = Engage.Utility.FindParentControl<PortalModuleBase>(this).ModuleConfiguration;
+            this.ModuleConfiguration = this.RegisterButton.ModuleConfiguration = Engage.Utility.FindParentControl<PortalModuleBase>(this).ModuleConfiguration;
 
             this.EditEventButton.Click += this.EditEventButton_Click;
             this.ResponsesButton.Click += this.ResponsesButton_Click;
-            this.RegisterButton.Click += this.RegisterButton_Click;
             this.AddToCalendarButton.Click += this.AddToCalendarButton_Click;
             this.DeleteEventButton.Click += this.DeleteEventButton_Click;
             this.CancelButton.Click += this.CancelButton_Click;
@@ -173,13 +172,13 @@ namespace Engage.Dnn.Events.Navigation
         /// </summary>
         private void LocalizeControls()
         {
+            this.RegisterButton.Text = Localization.GetString("RegisterButton", this.TemplateResourceFile);
             this.CancelButton.Text = this.CurrentEvent.Canceled
                                          ? Localization.GetString("UnCancel", this.LocalResourceFile)
                                          : Localization.GetString("Cancel", this.LocalResourceFile);
 
             ClientAPI.AddButtonConfirm(this.DeleteEventButton, Localization.GetString("ConfirmDelete", this.LocalResourceFile));
-            ClientAPI.AddButtonConfirm(
-                this.CancelButton, Localization.GetString(this.CurrentEvent.Canceled ? "ConfirmUnCancel" : "ConfirmCancel", this.LocalResourceFile));
+            ClientAPI.AddButtonConfirm(this.CancelButton, Localization.GetString(this.CurrentEvent.Canceled ? "ConfirmUnCancel" : "ConfirmCancel", this.LocalResourceFile));
         }
 
         /// <summary>
@@ -191,17 +190,6 @@ namespace Engage.Dnn.Events.Navigation
         {
             this.Response.Redirect(
                 this.BuildLinkUrl(this.ModuleId, "EventEdit", Dnn.Events.Utility.GetEventParameters(this.CurrentEvent)), true);
-        }
-
-        /// <summary>
-        /// Handles the OnClick event of the RegisterButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void RegisterButton_Click(object sender, EventArgs e)
-        {
-            this.Response.Redirect(
-                this.BuildLinkUrl(this.ModuleId, "Register", Dnn.Events.Utility.GetEventParameters(this.CurrentEvent)), true);
         }
 
         /// <summary>

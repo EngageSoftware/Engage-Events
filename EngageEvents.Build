@@ -31,7 +31,7 @@
     <property name="config" value="debug" if="${debug}" />
     <property name="config" value="release" unless="${debug}" />
 
-    <sysinfo />
+    <!--<sysinfo />-->
 
     <if test="${verbose}">
       <echo message="solutionName: ${subproject.name}" />
@@ -42,7 +42,7 @@
   </target>
 
   <target name="Compile" depends="init">
-    <exec program="${sys.env.windir}\Microsoft.NET\Framework\v2.0.50727\msbuild.exe" failonerror="true">
+    <exec program="${environment::get-variable('WINDIR')}\Microsoft.NET\Framework\v2.0.50727\msbuild.exe" failonerror="true">
       <arg value="${subproject.name}.sln" />
       <arg value="/p:Configuration=Release" />
       <arg value="/p:Platform=&quot;Any CPU&quot;" />

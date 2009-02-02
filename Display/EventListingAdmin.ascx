@@ -41,7 +41,7 @@
                 <p class="NormalBold"><asp:Label runat="server" ResourceKey="Overview"/></p>
                 <div class="Normal"><%# Eval("Overview")  %></div>
             </div>
-            <div><engage:actions ID="EventActions" runat="server" OnCancel="EventActions_Cancel" OnDelete="EventActions_Delete" /></div><%-- Cancel and Delete must be wired-up here, rather than in the code behind.  Otherwise they get wired-up too late in the page lifecycle. --%>
+            <engage:actions ID="EventActions" runat="server" OnCancel="EventActions_Cancel" OnDelete="EventActions_Delete" /><%-- Cancel and Delete must be wired-up here, rather than in the code behind.  Otherwise they get wired-up too late in the page lifecycle. --%>
 		</div>
     </ItemTemplate>
 </asp:Repeater>

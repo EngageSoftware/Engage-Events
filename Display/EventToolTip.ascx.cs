@@ -13,14 +13,10 @@ namespace Engage.Dnn.Events.Display
 {
     using System;
     using System.Diagnostics;
-    using System.Globalization;
-    using System.IO;
-    using System.Text;
+    using System.Web.UI;
     using DotNetNuke.Framework;
     using DotNetNuke.Services.Localization;
     using Engage.Events;
-    using ModuleBase = Events.ModuleBase;
-    using Utility = Dnn.Utility;
 
     /// <summary>
     /// Used to display a "tool tip" for an appointment.
@@ -50,15 +46,18 @@ namespace Engage.Dnn.Events.Display
         {
             base.OnInit(e);
             this.PreRender += this.Page_PreRender;
-            this.RegisterButton.Click += this.RegisterButton_Click;
             this.AddToCalendarButton.Click += this.AddToCalendarButton_Click;
             this.EditButton.Click += this.EditButton_Click;
+
+            this.RegisterButton.CurrentEvent = this.currentEvent;
+            this.RegisterButton.ModuleConfiguration = this.ModuleConfiguration;
+            this.RegisterButton.Text = Localization.GetString("RegisterButton.Text", this.LocalResourceFile);
 
             AJAX.RegisterPostBackControl(this.AddToCalendarButton);
         }
 
         /// <summary>
-        /// Handles the PreRender event of the Page control.
+        /// Handles the <see cref="Control.PreRender"/> event of the Page control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
@@ -71,16 +70,6 @@ namespace Engage.Dnn.Events.Display
             ////this.AddToCalendarButton.Visible = Engage.Utility.IsLoggedIn;
             this.RegisterButton.Visible = this.currentEvent.AllowRegistrations;
             this.EditButton.Visible = this.IsAdmin;
-        }
-
-        /// <summary>
-        /// Handles the Click event of the RegisterButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void RegisterButton_Click(object sender, EventArgs e)
-        {
-            this.Response.Redirect(this.BuildLinkUrl(this.ModuleId, "Register", Dnn.Events.Utility.GetEventParameters(this.currentEvent)), true);
         }
 
         /// <summary>
