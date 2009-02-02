@@ -5,7 +5,7 @@
     	<h3><asp:Label ID="TitleLabel" runat="server" /></h3>
 	    <p><asp:Label ID="DateLabel" CssClass="Normal" runat="server" /></p>
     </div>
-    <div class="ResponseEventStats">
+    <div class="ResponseEventStats Normal">
         <p class="ResponseAtt"><asp:HyperLink ID="AttendingLink" runat="server" /></p>
         <p class="ResponseNotAtt"><asp:HyperLink ID="NotAttendingLink" runat="server" /></p>
         <%--<asp:HyperLink runat="server" NavigateUrl='<%# GetDetailUrl(Eval( "EventId"), "NoResponse", Eval("NoResponse")) %>' Text='<%# Eval("NoResponse") %>' />--%>

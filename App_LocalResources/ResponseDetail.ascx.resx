@@ -132,6 +132,17 @@
   <data name="Events.Text" xml:space="preserve">
     <value>Events</value>
   </data>
+  <data name="Export Filename.Text" xml:space="preserve">
+    <value>{0} Responses Export {1:yyyy-MM-dd}</value>
+    <comment>{0} is replaced by the event title
+{1} is replaced by the event start date</comment>
+  </data>
+  <data name="Export To CSV.Alt" xml:space="preserve">
+    <value>Export To CSV</value>
+  </data>
+  <data name="Export To Excel.Alt" xml:space="preserve">
+    <value>Export to Excel</value>
+  </data>
   <data name="FirstName.Text" xml:space="preserve">
     <value>First Name</value>
   </data>

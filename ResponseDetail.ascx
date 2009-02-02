@@ -1,6 +1,7 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.ResponseDetail" CodeBehind="ResponseDetail.ascx.cs" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
 <%@ Register TagPrefix="engage" TagName="ResponseDisplay" Src="Display/ResponseDisplay.ascx" %>
+<%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 
 <div class="ResponsesSummary">
     <div class="ResponseHeader">
@@ -29,37 +30,31 @@
         </div>
     </div>
     <engage:ResponseDisplay ID="responseDisplay" runat="server" />
-    <asp:GridView ID="ResponseDetailGrid" runat="server" AutoGenerateColumns="False" Width="100%" AllowSorting="False" PageSize="10" GridLines="None" CssClass="Normal">
+    <telerik:RadGrid ID="ResponseDetailGrid" runat="server" AutoGenerateColumns="False" AllowSorting="False" PageSize="10" GridLines="None" CssClass="Normal ResponseDetailGrid" Skin="" EnableViewState="false">
+        <ExportSettings ExportOnlyData="true"/>
         <HeaderStyle CssClass="ResponseDetailHeader" />
-        <SelectedRowStyle CssClass="ResponseDetailItemSelect" />
-        <AlternatingRowStyle CssClass="ResponseDetailAltItem" />
-        <RowStyle CssClass="ResponseDetailItem" />
-        <Columns>
-            <asp:BoundField DataField="Name" HeaderText="Name" ItemStyle-CssClass="ResponseMemberName">
+        <SelectedItemStyle CssClass="ResponseDetailItemSelect" />
+        <AlternatingItemStyle CssClass="ResponseDetailAltItem" />
+        <ItemStyle CssClass="ResponseDetailItem" />
+        <MasterTableView><Columns>
+            <telerik:GridBoundColumn HeaderText="Name" DataField="Name" ItemStyle-CssClass="ResponseMemberName">
                 <HeaderStyle Wrap="False"/>
                 <FooterStyle Wrap="False"/>
-            </asp:BoundField>
-            <asp:BoundField DataField="CreationDate" HeaderText="Date">
+            </telerik:GridBoundColumn>
+            <telerik:GridBoundColumn HeaderText="Date" DataField="CreationDate">
                 <HeaderStyle Wrap="False"/>
                 <FooterStyle Wrap="False"/>
-            </asp:BoundField>
-            <asp:TemplateField HeaderText="Attending">
+            </telerik:GridBoundColumn>
+            <telerik:GridTemplateColumn HeaderText="Attending" UniqueName="Status">
                 <ItemTemplate>
-                    <asp:Image CssClass="Normal" runat="server" ImageUrl='<%# GetStatusIcon(Eval("Status")) %>'/>
+                    <asp:Image CssClass="Normal" runat="server" ImageUrl='<%# GetStatusIcon(Eval("Status")) %>' AlternateText='<%#Localize(Eval("Status").ToString()) %>'/>
                 </ItemTemplate>
-            </asp:TemplateField>
-            <%-- <asp:TemplateField HeaderText ="Not Attending">
-	        <ItemTemplate>
-		        <asp:HyperLink CssClass="Normal"  runat="server" NavigateUrl ='<%# GetDetailUrl(Eval("EventId")) %>' Text ='<%# DataBinder.Eval(Container.DataItem,"NotAttending") %>'></asp:HyperLink>
-	        </ItemTemplate>
-        </asp:TemplateField>
-        <asp:TemplateField HeaderText ="NoResponse">
-	        <ItemTemplate>
-		        <asp:HyperLink CssClass="Normal"  runat="server" NavigateUrl ='<%# GetDetailUrl(Eval("EventId")) %>' Text ='<%# DataBinder.Eval(Container.DataItem,"NoResponse") %>'></asp:HyperLink>
-	        </ItemTemplate>
-        </asp:TemplateField>--%>
-        </Columns>
-    </asp:GridView>
+            </telerik:GridTemplateColumn>
+            <telerik:GridBoundColumn HeaderText="Attending" UniqueName="ExportStatus" DataField="Status" Visible="false" />
+        </Columns></MasterTableView>
+    </telerik:RadGrid>
     <dnn:PagingControl ID="pager" runat="server"/>
-    <asp:HyperLink ID="CancelGoHomeLink" runat="server" ImageUrl="~/DesktopModules/EngageEvents/Images/cancel_go_home.gif" />
+    <asp:HyperLink ID="CancelGoHomeLink" runat="server" ImageUrl="~/DesktopModules/EngageEvents/Images/cancel_go_home.gif" ResourceKey="CancelGoHomeLink.Alt" />
+    <asp:ImageButton ID="ExportToCsvButton" runat="server" ImageUrl="Images/export_to_csv.gif" />
+    <asp:ImageButton ID="ExportToExcelButton" runat="server" ImageUrl="Images/export_to_excel.gif" />
 </div>

@@ -38,7 +38,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView ResponseDetailGrid;
+        protected global::Telerik.Web.UI.RadGrid ResponseDetailGrid;
         
         /// <summary>
         /// pager control.
@@ -57,5 +57,23 @@ namespace Engage.Dnn.Events {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink CancelGoHomeLink;
+        
+        /// <summary>
+        /// ExportToCsvButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton ExportToCsvButton;
+        
+        /// <summary>
+        /// ExportToExcelButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton ExportToExcelButton;
     }
 }

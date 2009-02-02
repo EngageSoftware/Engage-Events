@@ -158,7 +158,7 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 .ResponsesSummary ol{margin: 0 0 0 1.675em; padding:0;}
 	.ResponsesSummary ol li .ResponseDisplay {padding: 0; margin: 12px 0 8px;}
 	.ResponsesSummary ol li {}
-
+.ResponseDetailGrid table {width:100%;}
 
 /*========================================================
 

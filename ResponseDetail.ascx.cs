@@ -12,10 +12,14 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.Globalization;
+    using System.Web.UI;
     using DotNetNuke.Common;
+    using DotNetNuke.Framework;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
     using Engage.Events;
+    using Telerik.Web.UI;
 
     /// <summary>
     /// Lists details for user event registrations
@@ -23,22 +27,14 @@ namespace Engage.Dnn.Events
     public partial class ResponseDetail : ModuleBase
     {
         /// <summary>
-        /// Gets the status.
+        /// Gets the status of responses to display, or <see cref="string.Empty"/> for all statuses.
         /// </summary>
-        /// <value>The status.</value>
+        /// <value>The status of responses to display.</value>
         private string Status
         {
             get
             {
-                string status = string.Empty;
-
-                // Get the currentpage index from the url parameter
-                if (this.Request.QueryString["status"] != null)
-                {
-                    status = this.Request.QueryString["status"];
-                }
-
-                return status;
+                return this.Request.QueryString["status"] ?? string.Empty;
             }
         }
 
@@ -71,8 +67,13 @@ namespace Engage.Dnn.Events
         /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
         protected override void OnInit(EventArgs e)
         {
+            AJAX.RegisterPostBackControl(this.ExportToCsvButton);
+            AJAX.RegisterPostBackControl(this.ExportToExcelButton);
+
             base.OnInit(e);
             this.Load += this.Page_Load;
+            this.ExportToCsvButton.Click += this.ExportToCsvButton_Click;
+            this.ExportToExcelButton.Click += this.ExportToExcelButton_Click;
             this.SortRadioButtonList.SelectedIndexChanged += this.SortRadioButtonList_SelectedIndexChanged;
         }
 
@@ -87,10 +88,10 @@ namespace Engage.Dnn.Events
             {
                 if (!this.IsPostBack)
                 {
-                    Dnn.Utility.LocalizeGridView(ref this.ResponseDetailGrid, this.LocalResourceFile);
                     this.SetupControl();
-                    this.BindData();
                 }
+
+                this.BindData();
             }
             catch (Exception exc)
             {
@@ -99,7 +100,43 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Handles the SelectedIndexChanged event of the RbSort control.
+        /// Handles the Click event of the <see cref="ExportToCsvButton"/> control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Web.UI.ImageClickEventArgs"/> instance containing the event data.</param>
+        private void ExportToCsvButton_Click(object sender, ImageClickEventArgs e)
+        {
+            try
+            {
+                this.PrepareForExport();
+                this.ResponseDetailGrid.MasterTableView.ExportToCSV();
+            }
+            catch (Exception exc)
+            {
+                Exceptions.ProcessModuleLoadException(this, exc);
+            }
+        }
+
+        /// <summary>
+        /// Handles the Click event of the <see cref="ExportToExcelButton"/> control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Web.UI.ImageClickEventArgs"/> instance containing the event data.</param>
+        private void ExportToExcelButton_Click(object sender, ImageClickEventArgs e)
+        {
+            try
+            {
+                this.PrepareForExport();
+                this.ResponseDetailGrid.MasterTableView.ExportToExcel();
+            }
+            catch (Exception exc)
+            {
+                Exceptions.ProcessModuleLoadException(this, exc);
+            }
+        }
+
+        /// <summary>
+        /// Handles the SelectedIndexChanged event of the <see cref="SortRadioButtonList"/> control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
@@ -109,12 +146,32 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Sets up this control.  Sets localization and sets the NavigateUrl for the Cancel and Go Home button.
+        /// Sets up this control.  Sets localization and sets the NavigateUrl for the <see cref="CancelGoHomeLink"/>.
         /// </summary>
         private void SetupControl()
         {
-            this.CancelGoHomeLink.Text = Localization.GetString("CancelGoHomeLink.Alt", this.LocalResourceFile);
+            this.LocalizeGridHeaders();
             this.CancelGoHomeLink.NavigateUrl = Globals.NavigateURL();
+            this.ExportToCsvButton.AlternateText = Localization.GetString("Export To CSV.Alt", this.LocalResourceFile);
+            this.ExportToExcelButton.AlternateText = Localization.GetString("Export To Excel.Alt", this.LocalResourceFile);
+        }
+
+        /// <summary>
+        /// Localizes the header text for each column in the <see cref="ResponseDetailGrid"/>.
+        /// </summary>
+        private void LocalizeGridHeaders()
+        {
+            foreach (GridColumn column in this.ResponseDetailGrid.Columns)
+            {
+                if (!string.IsNullOrEmpty(column.HeaderText))
+                {
+                    string localizedHeaderText = Localization.GetString(column.HeaderText + ".Header", this.LocalResourceFile);
+                    if (!string.IsNullOrEmpty(localizedHeaderText))
+                    {
+                        column.HeaderText = localizedHeaderText;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -145,6 +202,22 @@ namespace Engage.Dnn.Events
                 this.responseDisplay.SetResponseSummary(Engage.Events.ResponseSummary.Load(eventId.Value, this.EventStart));
                 this.responseDisplay.ModuleConfiguration = this.ModuleConfiguration;
             }
+        }
+
+        /// <summary>
+        /// Prepares the grid to be exported to a file.
+        /// </summary>
+        private void PrepareForExport()
+        {
+            this.ResponseDetailGrid.Columns.FindByUniqueName("Status").Visible = false;
+            this.ResponseDetailGrid.Columns.FindByUniqueName("ExportStatus").Visible = true;
+
+            Event currentEvent = this.EventId.HasValue ? Event.Load(this.EventId.Value) : null;
+            this.ResponseDetailGrid.ExportSettings.FileName = string.Format(
+                CultureInfo.CurrentCulture,
+                Localization.GetString("Export Filename.Text", this.LocalResourceFile),
+                currentEvent == null ? null : currentEvent.Title,
+                this.EventStart);
         }
     }
 }
