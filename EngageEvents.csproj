@@ -622,6 +622,8 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Images\attending_icon.gif" />
+    <Content Include="Images\export_to_csv.gif" />
+    <Content Include="Images\export_to_excel.gif" />
     <Content Include="Images\not_attending_icon.gif" />
     <Content Include="Images\no_response_icon.gif" />
     <Content Include="Images\recurring_icon.gif" />
