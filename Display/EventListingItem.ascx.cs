@@ -17,8 +17,6 @@ namespace Engage.Dnn.Events.Display
     using System.Text;
     using System.Web;
     using System.Web.UI;
-
-    using DotNetNuke.Entities.Modules;
     using DotNetNuke.Services.Localization;
     using Engage.Events;
     using Framework.Templating;
@@ -33,6 +31,16 @@ namespace Engage.Dnn.Events.Display
         /// Relative path to the folder where the action controls are located in this module
         /// </summary>
         private readonly string ActionsControlsFolder;
+
+        /// <summary>
+        /// Keeps track of the last event processed in <see cref="ProcessTag"/> to enable alternating behavior
+        /// </summary>
+        private Event lastEventProcessed;
+
+        /// <summary>
+        /// Keeps track of whether the current event being processed in <see cref="ProcessTag"/> is an alternating (even number) event
+        /// </summary>
+        private bool isAlternatingEvent = true;
 
         /// <summary>
         /// Backing field for <see cref="SortAction"/>
@@ -284,7 +292,7 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Handles the SortChanged event of the SortAction and StatusFilterAction controls.
+        /// Handles the SortChanged event of the <see cref="SortAction"/> and <see cref="StatusFilterAction"/> controls.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
@@ -295,7 +303,7 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Handles the Cancel event of the CancelAction control.
+        /// Handles the Cancel event of the <see cref="CancelAction"/> control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
@@ -305,7 +313,7 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Handles the Delete event of the DeleteAction control.
+        /// Handles the Delete event of the <see cref="DeleteAction"/> control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
@@ -315,8 +323,8 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Method used to process a token. This method is invoked from the TemplateEngine class. Since this control knows
-        /// best on how to contruct the page. ListingHeader, ListingItem and Listing Footer templates are processed here.
+        /// Method used to process a token. This method is invoked from the <see cref="TemplateEngine"/> class. Since this control knows
+        /// best on how to construct the page. ListingHeader, ListingItem and Listing Footer templates are processed here.
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="tag">The tag being processed.</param>
@@ -326,6 +334,11 @@ namespace Engage.Dnn.Events.Display
         private void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)
         {
             Event currentEvent = (Event)engageObject;
+            if (currentEvent != null && currentEvent != this.lastEventProcessed)
+            {
+                this.isAlternatingEvent = !this.isAlternatingEvent;
+                this.lastEventProcessed = currentEvent;
+            }
 
             if (tag.TagType == TagType.Open)
             {
@@ -458,6 +471,11 @@ namespace Engage.Dnn.Events.Display
                         if (currentEvent.IsFeatured)
                         {
                             AppendCssClassAttribute(tag, cssClass, "FeaturedEventCssClass");
+                        }
+
+                        if (this.isAlternatingEvent)
+                        {
+                            AppendCssClassAttribute(tag, cssClass, "AlternatingCssClass");
                         }
 
                         container.Controls.Add(new LiteralControl(string.Format(CultureInfo.InvariantCulture, "<div class=\"{0}\">", cssClass.ToString())));
