@@ -223,4 +223,7 @@
   <data name="Back.Text" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="LoginToRegisterButton.Text" xml:space="preserve">
+    <value>Login to Register</value>
+  </data>
 </root>

@@ -123,9 +123,6 @@
   <data name="EditButton.Text" xml:space="preserve">
     <value>Edit</value>
   </data>
-  <data name="RegisterButton.Text" xml:space="preserve">
-    <value>Register</value>
-  </data>
   <data name="Timespan.Text" xml:space="preserve">
     <value>{0:hh:mmtt} - {1:hh:mmtt}</value>
   </data>

@@ -172,7 +172,6 @@ namespace Engage.Dnn.Events.Navigation
         /// </summary>
         private void LocalizeControls()
         {
-            this.RegisterButton.Text = Localization.GetString("RegisterButton", this.TemplateResourceFile);
             this.CancelButton.Text = this.CurrentEvent.Canceled
                                          ? Localization.GetString("UnCancel", this.LocalResourceFile)
                                          : Localization.GetString("Cancel", this.LocalResourceFile);

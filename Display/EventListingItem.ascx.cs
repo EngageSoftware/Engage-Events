@@ -366,7 +366,6 @@ namespace Engage.Dnn.Events.Display
                         RegisterAction registerEventAction = (RegisterAction)this.LoadControl(this.ActionsControlsFolder + "RegisterAction.ascx");
                         registerEventAction.CurrentEvent = currentEvent;
                         registerEventAction.ModuleConfiguration = this.ModuleConfiguration;
-                        registerEventAction.Text = Localization.GetString("RegisterButton", resourceFile);
                         container.Controls.Add(registerEventAction);
 
                         // to register must be an event that allows registrations, be active, and have not ended

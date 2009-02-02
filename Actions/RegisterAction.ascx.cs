@@ -15,6 +15,7 @@ namespace Engage.Dnn.Events
     using System.Globalization;
     using System.Web;
     using DotNetNuke.Common;
+    using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.Skins;
 
     /// <summary>
@@ -28,21 +29,11 @@ namespace Engage.Dnn.Events
     public partial class RegisterAction : ActionControlBase
     {
         /// <summary>
-        /// Gets or sets the text to display on this button.
-        /// </summary>
-        /// <value>The text to display on this button</value>
-        public string Text
-        {
-            get { return this.RegisterButton.Text; }
-            set { this.RegisterButton.Text = value; }
-        }
-
-        /// <summary>
         /// Performs all necessary operations to display the control's data correctly.
         /// </summary>
         protected override void BindData()
         {
-            LocalizeControls();
+            this.LocalizeControls();
         }
 
         /// <summary>
@@ -54,13 +45,7 @@ namespace Engage.Dnn.Events
             base.OnInit(e);
             this.LocalResourceFile = TemplateResourceFile;
             this.Load += this.Page_Load;
-        }
-
-        /// <summary>
-        /// Localizes this control's child controls.
-        /// </summary>
-        private static void LocalizeControls()
-        {
+            this.RegisterButton.Click += this.RegisterButton_Click;
         }
 
         /// <summary>
@@ -70,7 +55,29 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Page_Load(object sender, EventArgs e)
         {
-            this.SetupFancyBox();
+            if (IsLoggedIn)
+            {
+                this.SetupFancyBox();
+            }
+        }
+
+        /// <summary>
+        /// Handles the Click event of the <see cref="RegisterButton"/> control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void RegisterButton_Click(object sender, EventArgs e)
+        {
+            this.Response.Redirect(Dnn.Utility.GetLoginUrl(this.PortalSettings, this.Request));
+        }
+
+        /// <summary>
+        /// Localizes this control's child controls.
+        /// </summary>
+        private void LocalizeControls()
+        {
+            string resourceKey = IsLoggedIn ? "RegisterButton.Text" : "LoginToRegisterButton.Text";
+            this.RegisterButton.Text = Localization.GetString(resourceKey, this.TemplateResourceFile);
         }
 
         /// <summary>
