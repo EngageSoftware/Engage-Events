@@ -276,12 +276,6 @@ namespace Engage.Dnn.Events
             ModuleController mc = new ModuleController();
             ModuleInfo mi = mc.GetModule(this.ModuleId, this.TabId);
             settingsControl.ModuleConfiguration = mi;
-
-            // SEE LINE BELOW remove the following two lines for 4.6 because 4.6 no longer supports setting the moduleid, you have to get it through the module configuration.
-            // the following appears to work fine in 4.6.2 now
-            settingsControl.ModuleId = this.ModuleId;
-            settingsControl.TabModuleId = this.TabModuleId;
-
             settingsControl.ID = Path.GetFileNameWithoutExtension(controlName);
             settingsControl.LoadSettings();
 
