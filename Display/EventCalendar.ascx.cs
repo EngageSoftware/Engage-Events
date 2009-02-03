@@ -70,6 +70,7 @@ namespace Engage.Dnn.Events.Display
         {
             try
             {
+                this.AddJQueryReference();
                 this.LocalizeCalendar();
                 this.BindData();
             }

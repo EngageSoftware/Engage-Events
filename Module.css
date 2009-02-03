@@ -339,6 +339,8 @@ div#fancy_outer {
     overflow: hidden;
     background: transparent;
     display: none;
+    width: 600px;
+    height: 450px;
 }
 
 div#fancy_inner {

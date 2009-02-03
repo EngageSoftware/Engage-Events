@@ -13,6 +13,7 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Globalization;
+    using System.Web.UI;
     using DotNetNuke.Services.Localization;
 
     /// <summary>
@@ -82,29 +83,19 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetupFancyBox()
         {
-            const string FancyboxWireupScript =
-                @"jQuery(function() {{
-                     InitializeBehaviors();
-
-                     var scriptManager = Sys.WebForms.PageRequestManager.getInstance();
-                     if (scriptManager) {
-                        scriptManager.add_endRequest(InitializeBehaviors);
-                     }
-                }});      
-
-                function InitializeBehaviors() {{          
-                    jQuery('a.PopupTriggerLink').fancybox(); 
-                    jQuery('input.RegisterButton').click(function(event) {{
-                        event.preventDefault();
-                        jQuery(this).siblings('a.PopupTriggerLink').click();
-                    }});
-                }}";
-
             this.AddJQueryReference();
-            this.Page.ClientScript.RegisterClientScriptResource(typeof(RegisterAction), "Engage.Dnn.Events.JavaScript.jquery.fancybox-1.0.0.js");
-            this.Page.ClientScript.RegisterStartupScript(typeof(RegisterAction), "FancyBox wire-up", FancyboxWireupScript, true);
+            ScriptManager.RegisterClientScriptResource(this, typeof(RegisterAction), "Engage.Dnn.Events.JavaScript.jquery.fancybox-1.0.0.js");
 
-            this.PopupTriggerLink.NavigateUrl = string.Format(CultureInfo.InvariantCulture, "../RespondPage.aspx?{0}&{1}", Utility.GetEventParameters(this.CurrentEvent));
+            string[] parameters = Utility.GetEventParameters(
+                    this.CurrentEvent.Id,
+                    this.CurrentEvent.EventStart,
+                    "ModuleId=" + this.ModuleId.ToString(CultureInfo.InvariantCulture),
+                    "TabId=" + this.TabId.ToString(CultureInfo.InvariantCulture));
+
+            this.PopupTriggerLink.NavigateUrl = string.Format(
+                    CultureInfo.InvariantCulture,
+                    "../RespondPage.aspx?{0}&{1}&{2}&{3}",
+                    parameters);
         }
     }
 }

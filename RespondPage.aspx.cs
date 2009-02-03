@@ -13,10 +13,12 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Collections;
+    using System.Globalization;
     using System.IO;
     using System.Web.Hosting;
     using System.Web.UI;
     using System.Web.UI.HtmlControls;
+    using DotNetNuke.Entities.Modules;
     using DotNetNuke.Framework;
     using DotNetNuke.UI.Utilities;
     using Globals = DotNetNuke.Common.Globals;
@@ -26,6 +28,42 @@ namespace Engage.Dnn.Events
     /// </summary>
     public partial class RespondPage : PageBase
     {
+        /// <summary>
+        /// Gets the tab ID of the module calling this page.
+        /// </summary>
+        /// <value>The tab ID of the calling module.</value>
+        private int TabId
+        {
+            get
+            {
+                int tabId;
+                if (int.TryParse(this.Request.QueryString["TabId"], NumberStyles.Integer, CultureInfo.InvariantCulture, out tabId))
+                {
+                    return tabId;
+                }
+
+                return new ModuleController().GetModuleByDefinition(this.PortalSettings.PortalId, Utility.DesktopModuleName).TabID;
+            }
+        }
+
+        /// <summary>
+        /// Gets the module ID of the module calling this page.
+        /// </summary>
+        /// <value>The module ID of the calling module.</value>
+        private int ModuleId
+        {
+            get
+            {
+                int moduleId;
+                if (int.TryParse(this.Request.QueryString["ModuleId"], NumberStyles.Integer, CultureInfo.InvariantCulture, out moduleId))
+                {
+                    return moduleId;
+                }
+
+                return new ModuleController().GetModuleByDefinition(this.PortalSettings.PortalId, Utility.DesktopModuleName).ModuleID;
+            }
+        }
+
         /// <summary>
         /// Raises the <see cref="Control.Init"/> event.
         /// </summary>
@@ -43,6 +81,7 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Page_Load(object sender, EventArgs e)
         {
+            this.RespondControl.ModuleConfiguration = new ModuleController().GetModule(this.ModuleId, this.TabId);
             this.LoadStylesheets();
         }
 
@@ -51,14 +90,69 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <remarks>
         /// Based on the method of the same name in <see cref="DotNetNuke.Framework.CDefault"/> (version 4.8.2),
+        /// combined with similar code in InjectSkin,
         /// translated through http://www.codechanger.com/.
         /// </remarks>
         private void LoadStylesheets()
         {
+            string id;
             Hashtable stylesheetCache = DataCache.GetCache("CSS") as Hashtable ?? new Hashtable();
 
+            // module stylesheet
+            bool saveCache = false;
+            ModuleInfo moduleConfiguration = this.RespondControl.ModuleConfiguration;
+            if (moduleConfiguration.ControlSrc.ToLower().EndsWith(".ascx"))
+            {
+                // Get module.css from Path to control
+                id = Globals.CreateValidID(Globals.ApplicationPath + "/" + moduleConfiguration.ControlSrc.Substring(0, moduleConfiguration.ControlSrc.LastIndexOf("/")));
+                if (!stylesheetCache.ContainsKey(id))
+                {
+                    string moduleControlStylesheetPath = Globals.ApplicationPath + "/" + moduleConfiguration.ControlSrc.Substring(0, moduleConfiguration.ControlSrc.LastIndexOf("/") + 1);
+                    if (File.Exists(Server.MapPath(moduleControlStylesheetPath) + "module.css"))
+                    {
+                        stylesheetCache[id] = moduleControlStylesheetPath + "module.css";
+                    }
+                    else
+                    {
+                        stylesheetCache[id] = string.Empty;
+                    }
+
+                    saveCache = true;
+                }
+            }
+            else
+            {
+                // Get module.css from Folder
+                id = Globals.CreateValidID(Globals.ApplicationPath + "/" + moduleConfiguration.FolderName);
+                if (!stylesheetCache.ContainsKey(id))
+                {
+                    string moduleStylesheetPath = Globals.ApplicationPath + "/" + moduleConfiguration.FolderName + "/module.css";
+                    if (File.Exists(HostingEnvironment.MapPath(moduleStylesheetPath)))
+                    {
+                        stylesheetCache[id] = moduleStylesheetPath;
+                    }
+                    else
+                    {
+                        stylesheetCache[id] = string.Empty;
+                    }
+
+                    saveCache = true;
+                }
+            }
+
+            if (saveCache && Globals.PerformanceSetting != Globals.PerformanceSettings.NoCaching)
+            {
+                DataCache.SetCache("CSS", stylesheetCache);
+            }
+
+            if (!string.IsNullOrEmpty(stylesheetCache[id].ToString()))
+            {
+                // Add it to beginning of style list
+                this.AddStylesheet(id, stylesheetCache[id].ToString());
+            }
+            
             // default style sheet ( required )
-            string id = Globals.CreateValidID(Globals.HostPath);
+            id = Globals.CreateValidID(Globals.HostPath);
             this.AddStylesheet(id, Globals.HostPath + "default.css");
 
             // skin package style sheet

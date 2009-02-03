@@ -8,6 +8,7 @@
 </head>
 <body>
     <form runat="server">
+        <asp:ScriptManager runat="server" />
         <engage:Respond ID="RespondControl" runat="server" />
     </form>
 </body>

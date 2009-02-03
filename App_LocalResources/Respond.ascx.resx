@@ -132,7 +132,7 @@
   <data name="titleLabel.Text" xml:space="preserve">
     <value>Event Registration</value>
   </data>
-  <data name="GreenSuccess.Text" xml:space="preserve">
+  <data name="Success.Text" xml:space="preserve">
     <value>Success Icon</value>
   </data>
   <data name="ThankYou.Text" xml:space="preserve">
