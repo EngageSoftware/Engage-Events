@@ -150,9 +150,9 @@
     function StartDateTimePicker_DateSelected(sender, eventArgs) {
         var EndDateTimePicker = $find("<%= EndDateTimePicker.ClientID %>");
         // don't update end date if there's already an end date but not an old start date
-        if (EndDateTimePicker.isEmpty() || eventArgs.get_oldDate()) {
+        if (EndDateTimePicker.isEmpty() || eventArgs.get_oldDate() || EndDateTimePicker.get_selectedDate() <= eventArgs.get_newDate()) {
             var selectedDateSpan = 1800000; // 30 minutes
-            if (!EndDateTimePicker.isEmpty()) {
+            if (!EndDateTimePicker.isEmpty() && EndDateTimePicker.get_selectedDate() > eventArgs.get_newDate()) {
                 selectedDateSpan = EndDateTimePicker.get_selectedDate() - eventArgs.get_oldDate();
             }
 
