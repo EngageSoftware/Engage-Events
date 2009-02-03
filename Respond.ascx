@@ -5,8 +5,8 @@
 <asp:MultiView ID="ResponseMultiview" ActiveViewIndex="0" runat="server">
     <asp:View ID="ResponseView" runat="server">
         <div id="Description">
-            <h2 class="Head"><asp:Label ID="Label1" ResourceKey="titleLabel" runat="server"/></p>
-            <h3 class="SubHead"><asp:Label id="EventNameLabel" runat="server"/></p>
+            <h2 class="Head"><asp:Label ResourceKey="titleLabel" runat="server"/></h2>
+            <h3 class="SubHead"><asp:Label id="EventNameLabel" runat="server"/></h3>
         </div>
         <div id="rbOptions">
             <asp:RadioButtonList ID="ResponseStatusRadioButtons" CssClass="Normal" runat="server" />

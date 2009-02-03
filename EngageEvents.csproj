@@ -203,6 +203,13 @@
     <Compile Include="Display\EventDetail.ascx.designer.cs">
       <DependentUpon>EventDetail.ascx</DependentUpon>
     </Compile>
+    <Compile Include="RespondPage.aspx.cs">
+      <DependentUpon>RespondPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RespondPage.aspx.designer.cs">
+      <DependentUpon>RespondPage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Util\TelerikSkin.cs" />
     <Compile Include="Display\TemplateDisplayOptions.ascx.cs">
       <DependentUpon>TemplateDisplayOptions.ascx</DependentUpon>
@@ -658,6 +665,7 @@
     <Content Include="References\Telerik.Web.UI.dll" />
     <Content Include="Display\App_LocalResources\CalendarDisplayOptions.ascx.resx">
     </Content>
+    <Content Include="RespondPage.aspx" />
     <Content Include="Templates\App_LocalResources\Template.resx">
       <SubType>Designer</SubType>
     </Content>

@@ -13,10 +13,7 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Globalization;
-    using System.Web;
-    using DotNetNuke.Common;
     using DotNetNuke.Services.Localization;
-    using DotNetNuke.UI.Skins;
 
     /// <summary>
     /// Displays the actions that users can perform on an event instance.
@@ -107,15 +104,7 @@ namespace Engage.Dnn.Events
             this.Page.ClientScript.RegisterClientScriptResource(typeof(RegisterAction), "Engage.Dnn.Events.JavaScript.jquery.fancybox-1.0.0.js");
             this.Page.ClientScript.RegisterStartupScript(typeof(RegisterAction), "FancyBox wire-up", FancyboxWireupScript, true);
 
-            // We're simulating DNN Print Mode to eliminate the other modules on the page while still loading the correct skin/container stuff
-            string containerSrc = this.ModuleConfiguration.ContainerSrc;
-            if (containerSrc.EndsWith(".ASCX", StringComparison.OrdinalIgnoreCase))
-            {
-                containerSrc = containerSrc.Substring(0, containerSrc.Length - 5);
-            }
-
-            // TODO: handle case when used is not logged in
-            this.PopupTriggerLink.NavigateUrl = this.BuildLinkUrl(this.ModuleId, "Response", Utility.GetEventParameters(this.CurrentEvent.Id, this.CurrentEvent.EventStart, "mid=" + this.ModuleId.ToString(CultureInfo.InvariantCulture), "SkinSrc=" + HttpUtility.UrlEncode("[G]" + SkinInfo.RootSkin + "/" + Globals.glbHostSkinFolder + "/" + "No Skin"), "ContainerSrc=" + HttpUtility.UrlEncode(containerSrc), "dnnprintmode=true"));
+            this.PopupTriggerLink.NavigateUrl = string.Format(CultureInfo.InvariantCulture, "../RespondPage.aspx?{0}&{1}", Utility.GetEventParameters(this.CurrentEvent));
         }
     }
 }
