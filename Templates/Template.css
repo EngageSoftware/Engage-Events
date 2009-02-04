@@ -58,5 +58,31 @@
 	.MiniList .EventItem:hover {background:#ccc;}
 	.MiniList .EventItem a:hover {color:#000; text-decoration:none;}
 			
-	.calendarlink
+	.MiniList .calendarlink
+	{padding: 5px; text-align: right; text-decoration:underline;}
+	
+/*==================== Narrow List Stuff ==================== */	
+	
+	.Narrow
+	{overflow:hidden;border-color:#ccc;border-width:1px;border-style:dashed;}
+	.Narrow .EventItem {padding:5px;}
+	.Narrow .EventItem:hover {background:#eee;}
+	.Narrow .EventItem a:hover {color:#666; text-decoration:none;}
+	
+	.Narrow	.EventTitle{overflow: hidden;}
+		.Narrow .EventTitle h3.SubHead{font-size: 120%; padding: 0 0 5px 18%; margin: 0;}
+		.Narrow .EventTitle h2.NormalBold {padding: 0 0 5px 18%; margin: 0; Color:#666;}
+	
+	.Narrow .EventLocation{overflow: hidden;width:100%;}
+		.Narrow .EventLocation .NormalBold {float:left; width: 30%; text-align: right;}
+		.Narrow .EventLocation .Normal{float:right; width: 60%; text-align: left;}
+
+	
+	.Narrow .EventDate{overflow: hidden;width:100%;}
+		.Narrow .EventDate .NormalBold {float:left; width: 30%; text-align: right;}
+		.Narrow .EventDate .Normal{float:right; width: 60%; text-align: left;}
+		.Narrow .RecurrenceSummary .NormalBold {float: none; width: auto; text-align: left;}
+		
+			
+	.Narrow .calendarlink
 	{padding: 5px; text-align: right; text-decoration:underline;}

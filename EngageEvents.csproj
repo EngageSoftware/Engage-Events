@@ -673,8 +673,11 @@
     <Content Include="Navigation\App_LocalResources\EventAdminActions.ascx.resx">
     </Content>
     <Content Include="Templates\Footer.MiniList.html" />
+    <Content Include="Templates\Footer.Narrow.html" />
     <Content Include="Templates\Header.MiniList.html" />
+    <Content Include="Templates\Header.Narrow.html" />
     <Content Include="Templates\Item.MiniList.html" />
+    <Content Include="Templates\Item.Narrow.html" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(Configuration)'=='Debug'">
