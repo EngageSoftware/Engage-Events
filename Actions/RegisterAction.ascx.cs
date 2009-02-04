@@ -1,5 +1,5 @@
 // <copyright file="RegisterAction.ascx.cs" company="Engage Software">
-// Engage: Events - http://www.engagemodules.com
+// Engage: Events - http://www.EngageSoftware.com
 // Copyright (c) 2004-2009
 // by Engage Software ( http://www.engagesoftware.com )
 // </copyright>
@@ -84,7 +84,12 @@ namespace Engage.Dnn.Events
         private void SetupFancyBox()
         {
             this.AddJQueryReference();
+
+#if DEBUG
+            ScriptManager.RegisterClientScriptResource(this, typeof(RegisterAction), "Engage.Dnn.Events.JavaScript.jquery.fancybox-1.0.0.debug.js");
+#else
             ScriptManager.RegisterClientScriptResource(this, typeof(RegisterAction), "Engage.Dnn.Events.JavaScript.jquery.fancybox-1.0.0.js");
+#endif
 
             string[] parameters = Utility.GetEventParameters(
                     this.CurrentEvent.Id,

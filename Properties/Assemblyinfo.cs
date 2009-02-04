@@ -1,5 +1,5 @@
 // <copyright file="Assemblyinfo.cs" company="Engage Software">
-// Engage: Events - http://www.engagemodules.com
+// Engage: Events - http://www.EngageSoftware.com
 // Copyright (c) 2004-2009
 // by Engage Software ( http://www.engagesoftware.com )
 // </copyright>
@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 using System.Web.UI;
 
 [assembly: AssemblyTitle("Engage: Events")]
-[assembly: AssemblyDescription("The DotNetNuke Events module by Engage Software (www.engagemodules.com)")]
+[assembly: AssemblyDescription("The DotNetNuke Events module by Engage Software (www.engagesoftware.com)")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Engage Software, Inc.")]
 [assembly: AssemblyProduct("")]
@@ -31,3 +31,6 @@ using System.Web.UI;
 [assembly: AssemblyKeyName("")]
 
 [assembly: WebResource("Engage.Dnn.Events.JavaScript.jquery.fancybox-1.0.0.js", "text/javascript")]
+#if DEBUG
+[assembly: WebResource("Engage.Dnn.Events.JavaScript.jquery.fancybox-1.0.0.debug.js", "text/javascript")]
+#endif

@@ -1,5 +1,5 @@
 // <copyright file="ResponseDetail.ascx.cs" company="Engage Software">
-// Engage: Events - http://www.engagemodules.com
+// Engage: Events - http://www.EngageSoftware.com
 // Copyright (c) 2004-2009
 // by Engage Software ( http://www.engagesoftware.com )
 // </copyright>

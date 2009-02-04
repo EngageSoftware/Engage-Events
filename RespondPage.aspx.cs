@@ -1,5 +1,5 @@
 ﻿// <copyright file="RespondPage.aspx.cs" company="Engage Software">
-// Engage: Events - http://www.engagemodules.com
+// Engage: Events - http://www.EngageSoftware.com
 // Copyright (c) 2004-2009
 // by Engage Software ( http://www.engagesoftware.com )
 // </copyright>
@@ -93,6 +93,9 @@ namespace Engage.Dnn.Events
         /// combined with similar code in InjectSkin,
         /// translated through http://www.codechanger.com/.
         /// </remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1307:SpecifyStringComparison", MessageId = "System.String.LastIndexOf(System.String)", Justification = "Mimicking the behavior of DNN core"),
+        System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1307:SpecifyStringComparison", MessageId = "System.String.EndsWith(System.String)", Justification = "Mimicking the behavior of DNN core"),
+        System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "System.String.ToLower", Justification = "Mimicking the behavior of DNN core")]
         private void LoadStylesheets()
         {
             string id;
@@ -108,7 +111,7 @@ namespace Engage.Dnn.Events
                 if (!stylesheetCache.ContainsKey(id))
                 {
                     string moduleControlStylesheetPath = Globals.ApplicationPath + "/" + moduleConfiguration.ControlSrc.Substring(0, moduleConfiguration.ControlSrc.LastIndexOf("/") + 1);
-                    if (File.Exists(Server.MapPath(moduleControlStylesheetPath) + "module.css"))
+                    if (File.Exists(HostingEnvironment.MapPath(moduleControlStylesheetPath) + "module.css"))
                     {
                         stylesheetCache[id] = moduleControlStylesheetPath + "module.css";
                     }

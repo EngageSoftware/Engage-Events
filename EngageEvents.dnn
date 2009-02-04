@@ -5,7 +5,7 @@
       <friendlyname>Engage: Events</friendlyname>
       <foldername>EngageEvents</foldername>
       <modulename>Engage: Events</modulename>
-      <description>The DotNetNuke Events module by Engage Software (www.engagemodules.com)</description>
+      <description>The DotNetNuke Events module by Engage Software (www.EngageSoftware.com)</description>
       <version>01.01.00</version>
       <businesscontrollerclass>Engage.Dnn.Events.Components.FeaturesController</businesscontrollerclass>
       <resourcefile>Resources.zip</resourcefile>
@@ -18,14 +18,14 @@
               <src>DesktopModules/EngageEvents/MainContainer.ascx</src>
               <type>View</type>
               <supportspartialrendering>true</supportspartialrendering>
-              <helpurl>http://www.engagemodules.com/Support.aspx</helpurl>
+              <helpurl>http://www.EngageSoftware.com/Support.aspx</helpurl>
             </control>
             <control>
               <key>Settings</key>
               <title>Engage: Events Settings</title>
               <src>DesktopModules/EngageEvents/Settings.ascx</src>
               <type>Edit</type>
-              <helpurl>http://www.engagemodules.com/Support.aspx</helpurl>
+              <helpurl>http://www.EngageSoftware.com/Support.aspx</helpurl>
             </control>
           </controls>
         </module>
