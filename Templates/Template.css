@@ -49,3 +49,14 @@
 	.RecurringEventItem{background: transparent url(../images/recurring_icon.gif) no-repeat 0 16px;}
 	
 	
+/*==================== Mini List Template ==================== */	
+	
+	.MiniList
+	{overflow:hidden;border-color:#ccc;border-width:1px;border-style:dashed;}
+	.MiniList .AlternatingEventItem {background:#9c9;}
+	.MiniList .EventItem {padding:2px 0;}
+	.MiniList .EventItem:hover {background:#ccc;}
+	.MiniList .EventItem a:hover {color:#000; text-decoration:none;}
+			
+	.calendarlink
+	{padding: 5px; text-align: right; text-decoration:underline;}
