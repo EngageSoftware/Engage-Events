@@ -1,7 +1,12 @@
-<Engage:EventWrapper CssClass="EventItem" RecurringEventCssClass="RecurringEventItem" FeaturedEventCssClass="FeaturedEventItem" AlternatingCssClass="AlternatingEventItem">
-
-<Engage:ReadMore><span class="item">
-		<p class="Normal"><Engage:DateEntity PropertyName="EventStart" Format="MM.dd.yyyy"/><span class="RecurrenceSummary"><Engage:RecurrenceSummary /></span></p>
-        <h2 class="NormalBold"><Engage:DataEntity PropertyName="Title" /></h2>
-       	</span></Engage:ReadMore>
+<Engage:EventWrapper cssclass="EventItem" recurringeventcssclass="RecurringEventItem" featuredeventcssclass="FeaturedEventItem" alternatingcssclass="AlternatingEventItem">
+	<p class="Normal">
+	    <Engage:ReadMore CssClass="EventLink">
+	        <Engage:DateEntity PropertyName="EventStart" Format="MM.dd.yyyy"/>
+	    </Engage:ReadMore>
+	</p>
+    <h2 class="NormalBold">
+        <Engage:ReadMore CssClass="EventLink">
+            <Engage:DataEntity PropertyName="Title" />
+        </Engage:ReadMore>
+    </h2>
 </Engage:EventWrapper>

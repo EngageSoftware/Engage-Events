@@ -226,4 +226,7 @@
   <data name="LoginToRegisterButton.Text" xml:space="preserve">
     <value>Login to Register</value>
   </data>
+  <data name="ViewCalendar.Text" xml:space="preserve">
+    <value>View Calendar</value>
+  </data>
 </root>

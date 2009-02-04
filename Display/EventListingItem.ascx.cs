@@ -17,6 +17,7 @@ namespace Engage.Dnn.Events.Display
     using System.Text;
     using System.Web;
     using System.Web.UI;
+    using DotNetNuke.Common;
     using DotNetNuke.Services.Localization;
     using Engage.Events;
     using Framework.Templating;
@@ -418,13 +419,23 @@ namespace Engage.Dnn.Events.Display
                         container.Controls.Add(this.statusFilterAction);
                         break;
                     case "READMORE":
-                        if (Engage.Utility.HasValue(currentEvent.Description))
+                        if (currentEvent == null || Engage.Utility.HasValue(currentEvent.Description))
                         {
                             StringBuilder detailLinkBuilder = new StringBuilder();
+                            string linkUrl;
+                            if (currentEvent != null)
+                            {
+                                linkUrl = this.BuildLinkUrl(this.DetailsTabId, this.DetailsModuleId, "EventDetail", Dnn.Events.Utility.GetEventParameters(currentEvent));
+                            }
+                            else
+                            {
+                                linkUrl = Globals.NavigateURL(this.DetailsTabId);
+                            }
+
                             detailLinkBuilder.AppendFormat(
                                     CultureInfo.InvariantCulture,
                                     "<a href=\"{0}\"",
-                                    HttpUtility.HtmlAttributeEncode(this.BuildLinkUrl(this.DetailsTabId, this.DetailsModuleId, "EventDetail", Dnn.Events.Utility.GetEventParameters(currentEvent))));
+                                    HttpUtility.HtmlAttributeEncode(linkUrl));
 
                             string detailLinkCssClass = tag.GetAttributeValue("CssClass");
                             if (Engage.Utility.HasValue(detailLinkCssClass))

@@ -58,8 +58,8 @@
 	.MiniList .EventItem:hover {background:#ccc;}
 	.MiniList .EventItem a:hover {color:#000; text-decoration:none;}
 			
-	.MiniList .calendarlink
-	{padding: 5px; text-align: right; text-decoration:underline;}
+	.MiniList .calendarLink
+	{padding: 5px; text-align: right;}
 	
 /*==================== Narrow List Stuff ==================== */	
 	
@@ -67,7 +67,7 @@
 	{overflow:hidden;border-color:#ccc;border-width:1px;border-style:dashed;}
 	.Narrow .EventItem {padding:5px;}
 	.Narrow .EventItem:hover {background:#eee;}
-	.Narrow .EventItem a:hover {color:#666; text-decoration:none;}
+	.Narrow .EventItem:hover a {color:#666; text-decoration:none;}
 	
 	.Narrow	.EventTitle{overflow: hidden;}
 		.Narrow .EventTitle h3.SubHead{font-size: 120%; padding: 0 0 5px 18%; margin: 0;}
@@ -83,6 +83,7 @@
 		.Narrow .EventDate .Normal{float:right; width: 60%; text-align: left;}
 		.Narrow .RecurrenceSummary .NormalBold {float: none; width: auto; text-align: left;}
 		
+	.Narrow .EventLink{display:block;padding:5px;margin:-5px;}
 			
-	.Narrow .calendarlink
+	.Narrow .calendarLink
 	{padding: 5px; text-align: right; text-decoration:underline;}
