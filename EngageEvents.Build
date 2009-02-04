@@ -316,6 +316,8 @@
 
     <!--Delete temp directory -->
     <delete dir="temp" failonerror="false" />
+    <delete file="${package.dir}/${ModuleName}_Enterprise_${shortVersion}${binZip}.zip" failonerror="false" />
+    <delete file="${package.dir}/${ModuleName}_Enterprise_${shortVersion}${srcZip}.zip" failonerror="false" />
   </target>
   <!-- End area for Enterprise zip -->
 
