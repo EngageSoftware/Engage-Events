@@ -401,11 +401,13 @@ function GetFancyboxOptions() {
     /// This overrides the default height and width of the box, using the height and width of the element as set in CSS.
     /// </summary>
     /// <returns mayBeNull="false">An object with overriding fancybox options for frameHeight and frameWidth.</returns>
-    var fancyboxOuterWrapper = jQuery('<div id="fancy_outer"/>');
-    return {
-        frameWidth: parseInt(fancyboxOuterWrapper.css('width'), 10),
-        frameHeight: parseInt(fancyboxOuterWrapper.css('height'), 10)
+    var fancyboxOuterWrapper = jQuery('<div id="fancy_outer"/>').appendTo(document.body);
+    var opts = {
+        frameWidth: fancyboxOuterWrapper.width(),
+        frameHeight: fancyboxOuterWrapper.height()
     };
+    fancyboxOuterWrapper.remove();
+    return opts;
 }
 
 function RegisterBehaviorWithPageManager() {
