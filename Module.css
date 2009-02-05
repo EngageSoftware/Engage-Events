@@ -106,8 +106,33 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 		.MEStatus .NormalBold {display: block; float: left; padding-top: 4px;}
 		.MEStatus table{ display: inline;}
 
-#MEEventItem {padding-bottom: 2em;}
-#MEEventItem .EventDate p, #MEEventItem .EventLocation p, #MEEventItem .EventDescription p {margin-top: 0;}
+.MEEventItem {padding-bottom: 2em;}
+.MEEventItem .EventDate p, .MEEventItem .EventLocation p, .MEEventItem .EventDescription p {margin-top: 0;}
+
+.MEEventItem .EventTitle{overflow: hidden;}
+	.MEEventItem .EventTitle h3.SubHead{font-size: 120%; padding: 0 0 5px 18%; margin: 0;}
+	.MEEventItem .EventTitle h2.Head {padding: 0 0 5px 18%; margin: 0;}
+
+.MEEventItem .EventLocation{overflow: hidden;}
+	.MEEventItem .EventLocation .NormalBold {float:left; width: 15%; text-align: right;}
+	.MEEventItem .EventLocation .Normal{float:right; width: 82%; text-align: left;}
+
+.MEEventItem .EventDate{overflow: hidden;}
+	.MEEventItem .EventDate .NormalBold {float:left; width: 15%; text-align: right;}
+	.MEEventItem .EventDate .Normal{float:right; width: 82%; text-align: left;}
+	.MEEventItem .RecurrenceSummary .NormalBold {float: none; width: auto; text-align: left;}
+	
+.MEEventItem .EventOverview{overflow: hidden;}
+	.MEEventItem .EventOverview .NormalBold {float:left; width: 15%; text-align: right;}
+	.MEEventItem .EventOverview .Normal{float:right; width: 82%; text-align: left;}
+
+.MEEventItem .EventDescription{overflow: hidden; clear: both;}
+	.MEEventItem .EventDescription .NormalBold {float:left; width: 15%; text-align: right;}
+	.MEEventItem .EventDescription .Normal{float:right; width: 82%; text-align: left;}
+		.MEEventItem .EventDescription .Normal > p {margin-top: 0;}
+	
+.MEEventItem .RecurringEventItem{background: transparent url(../images/recurring_icon.gif) no-repeat 0 16px;}
+
 
 /* ============================ end manage events page ============================ */
 

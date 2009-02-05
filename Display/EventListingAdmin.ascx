@@ -25,7 +25,7 @@
 <asp:Repeater runat="server" ID="EventListingRepeater" >
     <ItemTemplate>
         <asp:Label ID="IdLabel" Visible="False" runat="server" Text='<%# Eval("Id")  %>'/>
-		<div id="MEEventItem">
+		<div class="MEEventItem">
             <div class="EventTitle">
                 <h2 class="Head"><%# Eval("Title")  %></h2>
             </div>
