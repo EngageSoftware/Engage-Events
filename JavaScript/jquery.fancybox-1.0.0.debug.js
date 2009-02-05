@@ -404,7 +404,8 @@ function GetFancyboxOptions() {
     var fancyboxOuterWrapper = jQuery('<div id="fancy_outer"/>').appendTo(document.body);
     var opts = {
         frameWidth: fancyboxOuterWrapper.width(),
-        frameHeight: fancyboxOuterWrapper.height()
+        frameHeight: fancyboxOuterWrapper.height(),
+        overlayShow: true
     };
     fancyboxOuterWrapper.remove();
     return opts;
