@@ -43,6 +43,80 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Determines whether the given event can accept new registrations
+        /// </summary>
+        /// <param name="eventBeingRespondedTo">The event being responded to.</param>
+        /// <returns>
+        /// <c>true</c> if the given event can accept new registrations; otherwise, <c>false</c>.
+        /// </returns>
+        private static bool CanRegisterFor(Event eventBeingRespondedTo)
+        {
+            return !eventBeingRespondedTo.Capacity.HasValue || eventBeingRespondedTo.Capacity > ResponseCollection.Load(eventBeingRespondedTo.Id, eventBeingRespondedTo.EventStart, ResponseStatus.Attending.ToString(), "ResponseId", 1, 0).TotalRecords;
+        }
+
+        /// <summary>
+        /// Determines whether the current user has already registered for the event with the given <paramref name="eventId"/>, and can therefore unregister from the event.
+        /// </summary>
+        /// <param name="eventId">The ID of the event being responded to.</param>
+        /// <returns>
+        /// <c>true</c> if the current user can unregistered for this event; otherwise, <c>false</c>.
+        /// </returns>
+        private bool CanUnregisterFrom(int? eventId)
+        {
+            Response response = Engage.Events.Response.Load(eventId.Value, this.EventStart, this.UserInfo.Email);
+            return response != null && response.Status == ResponseStatus.Attending;
+        }
+
+        /// <summary>
+        /// Shows the <see cref="EventFullView"/>.
+        /// </summary>
+        /// <param name="eventBeingRespondedTo">The event being responded to.</param>
+        private void ShowEventFullView(Event eventBeingRespondedTo)
+        {
+            this.ResponseMultiview.SetActiveView(this.EventFullView);
+            if (string.IsNullOrEmpty(eventBeingRespondedTo.CapacityMetMessage))
+            {
+                this.EventFullMessage.TextResourceKey = "EventFullMessage.Text";
+            }
+            else
+            {
+                this.EventFullMessage.Text = eventBeingRespondedTo.CapacityMetMessage;
+            }
+        }
+
+        /// <summary>
+        /// Binds the data for this control.  Sets up values for the specific <see cref="Event"/> that this <see cref="Response"/> is for.
+        /// </summary>
+        private void BindData()
+        {
+            int? eventId = this.EventId;
+            if (eventId.HasValue)
+            {
+                Event eventBeingRespondedTo = Event.Load(eventId.Value);
+                eventBeingRespondedTo = eventBeingRespondedTo.CreateOccurrence(this.EventStart);
+
+                if (!CanRegisterFor(eventBeingRespondedTo) && !this.CanUnregisterFrom(eventBeingRespondedTo.Id))
+                {
+                    this.ShowEventFullView(eventBeingRespondedTo);
+                }
+                else
+                {
+                    this.EventNameLabel.Text = string.Format(CultureInfo.CurrentCulture, Localization.GetString("EventNameLabel.Text", this.LocalResourceFile), eventBeingRespondedTo.Title);
+                    this.AddToCalendarButton.Enabled = true;
+
+                    this.ResponseStatusRadioButtons.Items.Clear();
+                    this.ResponseStatusRadioButtons.Items.Add(new ListItem(
+                                                                      Localization.GetString(ResponseStatus.Attending.ToString(), this.LocalResourceFile),
+                                                                      ResponseStatus.Attending.ToString()));
+                    this.ResponseStatusRadioButtons.Items.Add(new ListItem(
+                                                                      Localization.GetString(ResponseStatus.NotAttending.ToString(), this.LocalResourceFile),
+                                                                      ResponseStatus.NotAttending.ToString()));
+                    this.ResponseStatusRadioButtons.Items[0].Selected = true;
+                }
+            }
+        }
+
+        /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -79,14 +153,29 @@ namespace Engage.Dnn.Events
                 int? eventId = this.EventId;
                 if (eventId.HasValue)
                 {
-                    Response response = Engage.Events.Response.Load(eventId.Value, this.EventStart, this.UserInfo.Email)
-                                        ??
-                                        Engage.Events.Response.Create(eventId.Value, this.EventStart, this.UserInfo.FirstName, this.UserInfo.LastName, this.UserInfo.Email);
+                    Event eventBeingRespondedTo = Event.Load(eventId.Value);
+                    ResponseStatus responseStatus = (ResponseStatus)Enum.Parse(typeof(ResponseStatus), this.ResponseStatusRadioButtons.SelectedValue);
+                    if (responseStatus != ResponseStatus.Attending || CanRegisterFor(eventBeingRespondedTo))
+                    {
+                        Response response =
+                                Engage.Events.Response.Load(eventId.Value, this.EventStart, this.UserInfo.Email)
+                                ??
+                                Engage.Events.Response.Create(
+                                        eventId.Value,
+                                        this.EventStart,
+                                        this.UserInfo.FirstName,
+                                        this.UserInfo.LastName,
+                                        this.UserInfo.Email);
 
-                    response.Status = (ResponseStatus)Enum.Parse(typeof(ResponseStatus), this.ResponseStatusRadioButtons.SelectedValue);
-                    response.Save(UserId);
+                        response.Status = responseStatus;
+                        response.Save(UserId);
 
-                    this.ResponseMultiview.ActiveViewIndex = 1;
+                        this.ResponseMultiview.SetActiveView(this.ThankYouView);
+                    }
+                    else
+                    {
+                        this.ShowEventFullView(eventBeingRespondedTo);
+                    }
                 }
             }
             catch (Exception exc)
@@ -118,46 +207,6 @@ namespace Engage.Dnn.Events
         private void BackToEventsButton_Click(object sender, EventArgs e)
         {
             Response.Redirect(Globals.NavigateURL(), true);
-        }
-
-        /// <summary>
-        /// Binds the data for this control.  Sets up values for the specific <see cref="Event"/> that this <see cref="Response"/> is for.
-        /// </summary>
-        private void BindData()
-        {
-            int? eventId = this.EventId;
-            if (eventId.HasValue)
-            {
-                Event e = Event.Load(eventId.Value);
-                e = e.CreateOccurrence(this.EventStart);
-
-                if (e.Capacity.HasValue && Engage.Events.Response.Load(eventId.Value, this.EventStart, this.UserInfo.Email) == null && e.Capacity <= ResponseCollection.Load(e.Id, e.EventStart, ResponseStatus.Attending.ToString(), "ResponseId", 1, 0).TotalRecords)
-                {
-                    this.ResponseMultiview.SetActiveView(this.EventFullView);
-                    if (string.IsNullOrEmpty(e.CapacityMetMessage))
-                    {
-                        this.EventFullMessage.TextResourceKey = "EventFullMessage.Text";
-                    }
-                    else
-                    {
-                        this.EventFullMessage.Text = e.CapacityMetMessage;
-                    }
-                }
-                else
-                {
-                    this.EventNameLabel.Text = string.Format(CultureInfo.CurrentCulture, Localization.GetString("EventNameLabel.Text", LocalResourceFile), e.Title);
-                    this.AddToCalendarButton.Enabled = true;
-
-                    this.ResponseStatusRadioButtons.Items.Clear();
-                    this.ResponseStatusRadioButtons.Items.Add(new ListItem(
-                        Localization.GetString(ResponseStatus.Attending.ToString(), LocalResourceFile),
-                        ResponseStatus.Attending.ToString()));
-                    this.ResponseStatusRadioButtons.Items.Add(new ListItem(
-                        Localization.GetString(ResponseStatus.NotAttending.ToString(), LocalResourceFile),
-                        ResponseStatus.NotAttending.ToString()));
-                    this.ResponseStatusRadioButtons.Items[0].Selected = true;
-                }
-            }
         }
     }
 }
