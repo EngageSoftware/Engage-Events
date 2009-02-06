@@ -145,4 +145,7 @@
   <data name="EventFullMessage.Text" xml:space="preserve">
     <value>Sorry, this event is full.</value>
   </data>
+  <data name="Warning.Test" xml:space="preserve">
+    <value>Warning</value>
+  </data>
 </root>
