@@ -27,6 +27,11 @@ namespace Engage.Dnn.Events
     public partial class ResponseDetail : ModuleBase
     {
         /// <summary>
+        /// The default column on which to sort results
+        /// </summary>
+        private const string DefaultSortColumn = "CreationDate";
+
+        /// <summary>
         /// Gets the status of responses to display, or <see cref="string.Empty"/> for all statuses.
         /// </summary>
         /// <value>The status of responses to display.</value>
@@ -89,9 +94,8 @@ namespace Engage.Dnn.Events
                 if (!this.IsPostBack)
                 {
                     this.SetupControl();
+                    this.BindData();
                 }
-
-                this.BindData();
             }
             catch (Exception exc)
             {
@@ -179,7 +183,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void BindData()
         {
-            this.BindData("CreationDate");
+            this.BindData(DefaultSortColumn);
         }
 
         /// <summary>
@@ -188,10 +192,31 @@ namespace Engage.Dnn.Events
         /// <param name="sortColumn">The sort column.</param>
         private void BindData(string sortColumn)
         {
+            this.BindData(sortColumn, false);
+        }
+
+        /// <summary>
+        /// Binds the data.
+        /// </summary>
+        /// <param name="getAll">if set to <c>true</c> gets all responses, regardless of page size or number; otherwise only gets one page of responses.</param>
+        private void BindData(bool getAll)
+        {
+            this.BindData(DefaultSortColumn, getAll);
+        }
+
+        /// <summary>
+        /// Binds the data.
+        /// </summary>
+        /// <param name="sortColumn">The sort column.</param>
+        /// <param name="getAll">if set to <c>true</c> gets all responses, regardless of page size or number; otherwise only gets one page of responses.</param>
+        private void BindData(string sortColumn, bool getAll)
+        {
             int? eventId = this.EventId;
             if (eventId.HasValue)
             {
-                ResponseCollection responses = ResponseCollection.Load(eventId.Value, this.EventStart, this.Status, sortColumn, this.CurrentPageIndex - 1, this.ResponseDetailGrid.PageSize);
+                int pageIndex = getAll ? 0 : this.CurrentPageIndex - 1;
+                int pageSize = getAll ? 0 : this.ResponseDetailGrid.PageSize;
+                ResponseCollection responses = ResponseCollection.Load(eventId.Value, this.EventStart, this.Status, sortColumn, pageIndex, pageSize);
                 this.ResponseDetailGrid.DataSource = responses;
                 this.ResponseDetailGrid.DataBind();
                 ////this.ResponseDetailGrid.Attributes.Add("SortColumn", sortColumn);
@@ -209,6 +234,8 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void PrepareForExport()
         {
+            this.BindData(true);
+
             this.ResponseDetailGrid.Columns.FindByUniqueName("Status").Visible = false;
             this.ResponseDetailGrid.Columns.FindByUniqueName("ExportStatus").Visible = true;
 
