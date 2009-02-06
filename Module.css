@@ -37,6 +37,9 @@
 .rsCell{padding: 0 2px !important;}
 
 
+.respond-wrap{padding:15px;}
+	.respond-wrap h2.Head, .respond-wrap h3.SubHead{margin:0;}
+
 /* event edit page */
 
 .AdminButtons{text-align: left;}
@@ -361,8 +364,8 @@ div#fancy_outer {
     overflow: hidden;
     background: transparent;
     display: none;
-    width: 600px;
-    height: 450px;
+    width: 550px;
+    height: 200px;
 }
 
 div#fancy_inner {
