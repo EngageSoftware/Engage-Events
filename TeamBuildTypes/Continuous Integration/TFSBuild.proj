@@ -223,6 +223,6 @@
   </ItemGroup>
   <Target Name="AfterCompile">
     <Exec Command="D:\Tools\NAnt\bin\Nant.exe" WorkingDirectory="..\Sources" />
-    <Copy SourceFiles="..\Sources\package\*.zip" DestinationFolder="$(DropLocation)\$(BuildNumber)\"/>
+    <Copy SourceFiles="..\Sources\package\*.zip" DestinationFolder="..\Binaries\Release\"/>
   </Target>
 </Project>
