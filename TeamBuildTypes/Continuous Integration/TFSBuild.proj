@@ -221,4 +221,7 @@
          <AdditionalReferencePath Include="C:\MyFolder2\" />
     -->
   </ItemGroup>
+  <Target Name="AfterCompile">
+    <Exec Command="Nant.exe" ToolPath="C:\Tools\NAnt\bin\" />
+  </Target>
 </Project>
