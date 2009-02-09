@@ -222,6 +222,6 @@
     -->
   </ItemGroup>
   <Target Name="AfterCompile">
-    <Exec Command="C:\Tools\NAnt\bin\Nant.exe" />
+    <Exec Command="D:\Tools\NAnt\bin\Nant.exe" />
   </Target>
 </Project>
