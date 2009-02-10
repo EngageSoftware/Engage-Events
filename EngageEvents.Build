@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" name="Engage: Events" basedir="." default="package">
-  <property name="build" value="true"/>
-  <property name="bin.directory" value="../../bin"/>
+  <property name="build" value="true" overwrite="false"/>
+  <property name="bin.directory" value="..\..\bin" overwrite="false"/>
   <property name="project.config" value="release"/>
   <property name="project.name" value="Events"/>
   <property name="solution.file" value="Engage${project.name}.sln"/>
   <property name="references.directory" value="References"/>
-  <property name="project.dll" value="${bin.directory}/Engage${project.name}.dll"/>
+  <property name="project.dll" value="${bin.directory}\Engage${project.name}.dll"/>
   <property name="msBuildArgs" dynamic="true" value="/nologo
      /v:m
      /p:Configuration=${project.config} 
