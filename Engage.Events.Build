@@ -1,89 +1,54 @@
-<?xml version="1.0"?>
-<!-- targets to be executed, when omitted from command line default is run -->
-<!--EXTERNAL_PROPERTIES: sys.env.windir-->
-<project name="Engage.Events" default="BuildAndZip">
-  <target name="init">
-    <property name="nant.settings.currentframework" value="net-2.0" />
+<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" name="Engage: Framework" basedir="." default="package">
+  <target name="package">
+    <property name="package.directory" value="..\package"/>
+    <property name="package.name" value="Engage.Events_Source.zip"/>
 
-    <!-- This is where your packaged zips will build to from within the module folder -->
-    <property name="package.dir" value="package" overwrite="false" />
-    <property name="verbose" value="false" overwrite="false" />
-
-    <property name="subproject.name" value="Engage.Events"/>
-
-    <property name="debug" value="false" overwrite="false" />
-    <property name="config" value="debug" if="${debug}" />
-    <property name="config" value="release" unless="${debug}" />
-
-    <sysinfo />
-
-    <if test="${verbose}">
-      <echo message="solutionName: ${subproject.name}" />
-      <echo message="debug:        ${debug}" />
-      <echo message="config:       ${config}" />
-    </if>
-
+    <call target="zip-resources"/>
   </target>
-
-  <target name="CleanPackage" depends="init">
-    <delete file="${package.dir}/${subproject.name}_Source.zip" if="${file::exists('${package.dir}/${subproject.name}_Source.zip')}" />
-  </target>
-
-  <target name="CleanPackageAll" depends="init">
-    <delete dir="${package.dir}" if="${directory::exists(package.dir)}" />
-  </target>
-
-  <target name="CreateSourceZip" depends="CleanPackage">
-    <!-- create a flat directory to zip for install -->
-    <mkdir dir="temp" unless="${directory::exists('temp')}" />
-    <!-- DO NOT flatten this as we want to retain folder structure in this and ONLY this zip -->
-    <copy todir="temp" flatten="false">
+  <target name="zip-resources">
+    <mkdir dir="${package.directory}" unless="${directory::exists(package.directory)}"/>
+    <mkdir dir="${package.directory}/temp" unless="${directory::exists(package.directory + '/temp')}"/>
+    <copy todir="${package.directory}/temp" flatten="false">
       <fileset>
-        <!-- Tell nant what files to grab -->
         <include name="**/*.ascx" />
         <include name="**/*.aspx" />
-        <include name="**/*.resx" />
         <include name="**/*.asmx" />
-        <include name="**/*.xsd" />
-        <include name="**/*.dtd" />
-        <include name="**/*.tdf" />
+        <include name="**/*.resx" />
+        <include name="**/*.html" />
+        <include name="**/*.htm" />
         <include name="**/*.css" />
-        <include name="**/*.cs" />
-        <include name="**/*.vb" />
-        <include name="**/*.sln" />
-        <include name="**/*.js" />
-        <include name="**/*.csproj" />
-        <include name="**/*.build" />
+        <include name="**/*.jpg" />
+        <include name="**/*.gif" />
+        <include name="**/*.png" />
+        <include name="**/*.pdf" />
+        <include name="**/*.dtd" />
+        <include name="**/*.xsd" />
         <include name="**/*.xml" />
-        <include name="**/*.map" />
-        <include name="**/*.disco" />
-        <include name="**/*.wsdl" />
-        <include name="**/*.config" />
-        <include name="**/*.lic" />
-        <exclude name="**/DNNDebug.aspx" />
-        <exclude name="**/Install/**/*" />
-        <exclude name="**/_sgbak/*" />
-        <exclude name="**/thumbs.db" />
-        <exclude name="**/*.zip" />
-        <exclude name="**/04.03.02.txt" />
-        <exclude name="**/ReadMe.txt" />
-        <exclude name="**/SourceAnalysisViolations.xml" />
-        <exclude name="**/ReflectionCache.xml" />
+        <include name="**/*.js"/>
+        <include name="**/*.cs"/>
+        <include name="**/*.vb"/>
+        <include name="**/*.sln"/>
+        <include name="**/*.csproj"/>
+        <include name="**/*.vbproj"/>
+        <include name="**/*.build"/>
+        <include name="**/*.dnn"/>
+        <include name="**/*.docx"/>
+        <include name="**/*.wsdl"/>
+        <include name="**/*.map"/>
+        <include name="**/*.disco"/>
+        <include name="**/*.config"/>
+        <include name="**/*.lic"/>
+        <exclude name="obj/**"/>
+        <exclude name="_ReSharper.**"/>
+        <exclude name="SourceAnalysisViolations.xml"/>
       </fileset>
     </copy>
-
-    <mkdir dir="${package.dir}" unless="${directory::exists(package.dir)}" />
-    <zip zipfile="${package.dir}/${subproject.name}_Source.zip">
-      <fileset basedir="temp">
-        <include name="**/*" />
-        <exclude name="**/*.dll" />
+    <zip zipfile="${package.directory}/${package.name}">
+      <fileset basedir="${package.directory}/temp">
+        <include name="**/*"/>
       </fileset>
     </zip>
-
-    <!--Delete temp directory -->
-    <delete dir="temp" failonerror="false" />
+    <delete dir="${package.directory}/temp" failonerror="false"/>
   </target>
-
-  <!--  SYNTHETIC TASKS  -->
-  <target name="BuildAndZip" depends="CreateSourceZip" description="Creates a zip of all source code for this project" />
 </project>
