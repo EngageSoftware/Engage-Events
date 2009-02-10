@@ -100,6 +100,7 @@
         <include name="${references.directory}/*.dll"/>
         <include name="Licenses/EULA-${package.license}.txt"/>
         <include name="??.??.??.txt" />
+        <include name="ReadMe.txt" />
         <include name="**/*.SqlDataProvider"/>
         <include name="**/*.dnn"/>
         <exclude name="${references.directory}/DotNetNuke.dll"/>
