@@ -223,6 +223,10 @@
   </ItemGroup>
   <Target Name="AfterCompile">
     <Exec Command="D:\Tools\NAnt\bin\Nant.exe" WorkingDirectory="..\Sources" />
-    <Copy SourceFiles="..\Sources\package\*.zip" DestinationFolder="..\Binaries\Release\"/>
+
+    <CreateItem Include="..\Sources\package\*.zip">
+      <Output TaskParameter="Include" ItemName="Packages"/>
+    </CreateItem>
+    <Copy SourceFiles="@(Packages)" DestinationFolder="..\Binaries\Release\"/>
   </Target>
 </Project>
