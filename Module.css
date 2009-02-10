@@ -76,8 +76,10 @@
 	
 	
 	.rsAdvancedEdit fieldset, fieldset.range_of_recurrence{border: 1px #ccc solid;}
-		fieldset.range_of_recurrence, fieldset.recurrence_fs {margin-left: 10%; margin-top: 15px; background: #fefefe; padding: 5px 10px;}
-	.rsAdvancedEdit legend, legend.rsAdvRecurrenceRange{font-weight: bold; padding: 0 10px;}
+		fieldset.range_of_recurrence, fieldset.recurrence_fs, fieldset.registration_fs {margin-left: 10%; margin-top: 15px; background: #fefefe; padding: 5px 10px;}
+	.rsAdvancedEdit legend, legend.rsAdvRecurrenceRange, legend.registrationoptions {font-weight: bold; padding: 0 10px;}
+	
+	.NormalBold.RegCap{padding: 5px 0; display: inline-block;  }
 	
 	
 	
