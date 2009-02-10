@@ -222,7 +222,7 @@
     -->
   </ItemGroup>
   <Target Name="AfterCompile">
-    <Exec Command="D:\Tools\NAnt\bin\Nant.exe -D:build=false -D:bin.directory='$(TeamBuildOutDir)'" WorkingDirectory="..\Sources" />
+    <Exec Command="D:\Tools\NAnt\bin\Nant.exe -D:build=false -D:bin.directory='$(OutDir)'" WorkingDirectory="..\Sources" />
 
     <CreateItem Include="..\Sources\package\*.zip">
       <Output TaskParameter="Include" ItemName="Packages"/>
