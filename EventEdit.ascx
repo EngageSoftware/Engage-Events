@@ -89,32 +89,30 @@
                 <asp:Label runat="server" ResourceKey="AllowRegistrationsLabel" CssClass="NormalBold MainLabel" AssociatedControlID="AllowRegistrationsCheckBox"/>
                 <asp:CheckBox ID="AllowRegistrationsCheckBox" runat="server" Checked="true" AutoPostBack="true" />
                 <fieldset class="registration_fs">
-                    <legend class="registrationoptions SubHead">Registration Options:
-                        <asp:Panel ID="LimitRegistrationsPanel" runat="server">
-                            <asp:Label ID="LimitRegistationsLabel" runat="server" ResourceKey="LimitRegistrationsLabel" CssClass="NormalBold RegCap" AssociatedControlID="LimitRegistrationsCheckBox" />
-                            <asp:CheckBox ID="LimitRegistrationsCheckBox" runat="server" CssClass="NormalBold" AutoPostBack="true" />
-                                <asp:Panel ID="RegistrationLimitPanel" runat="server" Visible="false">
-                                    <asp:Label runat="server" ResourceKey="RegistrationLimitLabel" CssClass="NormalBold RegCap" AssociatedControlID="LimitRegistrationsCheckBox" />
-                                    <telerik:RadNumericTextBox ID="RegistrationLimitTextBox" runat="server" Value="25" MinValue="1" ShowSpinButtons="True"> 
-                                        <NumberFormat AllowRounding="True" DecimalDigits="0"/>
-                                    </telerik:RadNumericTextBox>
-                                    <asp:RequiredFieldValidator runat="server" ControlToValidate="RegistrationLimitTextBox" ResourceKey="RegistrationLimitRequiredValidator" CssClass="NormalRed" Display="None" />
-                                    <div>
-                                        <asp:Label runat="server" ResourceKey="CapacityMetMessageLabel" CssClass="NormalBold RegCap" AssociatedControlID="CapacityMetMessageRadioButtonList" />
-                                        <asp:RadioButtonList ID="CapacityMetMessageRadioButtonList" runat="server" ResourceKey="CapacityMetMessageRadioButtonList" CssClass="NormalBold" AutoPostBack="true">
-                                            <asp:ListItem ResourceKey="DefaultMessage" Value="False" Selected="True"/>
-                                            <asp:ListItem ResourceKey="CustomMessage" Value="True"/>
-                                        </asp:RadioButtonList>
-                                    </div>
-                                    <asp:Panel ID="CustomCapacityMetMessagePanel" runat="server" Visible="false">
-                                        <asp:Label runat="server" ResourceKey="CustomCapacityMetMessageLabel" CssClass="NormalBold RegCap" AssociatedControlID="CustomCapacityMetMessageTextEditor" />
-                                        <dnn:TextEditor ID="CustomCapacityMetMessageTextEditor" runat="server" Width="400" TextRenderMode="Raw" HtmlEncode="False" DefaultMode="Rich" Height="350" ChooseMode="True" ChooseRender="False" />
-                                    </asp:Panel>
-                                </asp:Panel>
-                        </asp:Panel>                
-                    </legend>
+                    <legend class="registrationoptions SubHead"><%=Localize("Registration Options:") %></legend>
+                    <asp:Panel ID="LimitRegistrationsPanel" runat="server">
+                        <asp:Label ID="LimitRegistationsLabel" runat="server" ResourceKey="LimitRegistrationsLabel" CssClass="NormalBold RegCap" AssociatedControlID="LimitRegistrationsCheckBox" />
+                        <asp:CheckBox ID="LimitRegistrationsCheckBox" runat="server" CssClass="NormalBold" AutoPostBack="true" />
+                        <asp:Panel ID="RegistrationLimitPanel" runat="server" Visible="false">
+                            <asp:Label runat="server" ResourceKey="RegistrationLimitLabel" CssClass="NormalBold RegCap" AssociatedControlID="LimitRegistrationsCheckBox" />
+                            <telerik:RadNumericTextBox ID="RegistrationLimitTextBox" runat="server" Value="25" MinValue="1" ShowSpinButtons="True"> 
+                                <NumberFormat AllowRounding="True" DecimalDigits="0"/>
+                            </telerik:RadNumericTextBox>
+                            <asp:RequiredFieldValidator runat="server" ControlToValidate="RegistrationLimitTextBox" ResourceKey="RegistrationLimitRequiredValidator" CssClass="NormalRed" Display="None" />
+                            <div>
+                                <asp:Label runat="server" ResourceKey="CapacityMetMessageLabel" CssClass="NormalBold RegCap" AssociatedControlID="CapacityMetMessageRadioButtonList" />
+                                <asp:RadioButtonList ID="CapacityMetMessageRadioButtonList" runat="server" ResourceKey="CapacityMetMessageRadioButtonList" CssClass="NormalBold" AutoPostBack="true">
+                                    <asp:ListItem ResourceKey="DefaultMessage" Value="False" Selected="True"/>
+                                    <asp:ListItem ResourceKey="CustomMessage" Value="True"/>
+                                </asp:RadioButtonList>
+                            </div>
+                            <asp:Panel ID="CustomCapacityMetMessagePanel" runat="server" Visible="false">
+                                <asp:Label runat="server" ResourceKey="CustomCapacityMetMessageLabel" CssClass="NormalBold RegCap" AssociatedControlID="CustomCapacityMetMessageTextEditor" />
+                                <dnn:TextEditor ID="CustomCapacityMetMessageTextEditor" runat="server" Width="400" TextRenderMode="Raw" HtmlEncode="False" DefaultMode="Rich" Height="350" ChooseMode="True" ChooseRender="False" />
+                            </asp:Panel>
+                        </asp:Panel>
+                    </asp:Panel>                
                 </fieldset>
-
             </ContentTemplate>
         </asp:UpdatePanel>
     </div>

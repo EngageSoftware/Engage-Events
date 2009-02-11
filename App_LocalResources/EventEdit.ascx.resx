@@ -216,6 +216,9 @@
   <data name="RecurringEventLabel.Text" xml:space="preserve">
     <value>Recurring Event</value>
   </data>
+  <data name="Registration Options:.Text" xml:space="preserve">
+    <value>Registration Options:</value>
+  </data>
   <data name="RegistrationLimitLabel.Text" xml:space="preserve">
     <value>Maximum Number of Registrants</value>
   </data>
