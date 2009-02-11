@@ -19,9 +19,8 @@
 	.ItemListing{border-bottom: 1px #ccc dotted; overflow: hidden; padding: 10px 0; width: 100%;}
 		.ItemListing p{margin-top: 0; margin-bottom: 6px;}
 
-	.ItemListing .EventTitle{overflow: hidden;}
-		.ItemListing .EventTitle h3.SubHead{font-size: 120%; padding: 0 0 5px 18%; margin: 0;}
-		.ItemListing .EventTitle h2.Head {padding: 0 0 5px 18%; margin: 0;}
+	.ItemListing .EventTitle{overflow: hidden; width:100%;}
+		.ItemListing .EventTitle h2.Head {float:right; width:82%; padding: 0 0 5px; margin: 0;}
 	
 	.ItemListing .EventLocation{overflow: hidden;}
 		.ItemListing .EventLocation .NormalBold {float:left; width: 15%; text-align: right;}
