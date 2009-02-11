@@ -2,7 +2,6 @@
 	.eventNav{}
 
 /*==================== Header.ListingAll ==================== */
-
 	.ItemListingHeader{}
 		.ItemListingHeader p{margin: 0; padding: 0;}
 	.ItemListingHeader h2.Head{clear: both; overflow: hidden; width: 100%; border-bottom: 1px #ccc solid; padding-bottom: 5px; margin: 5px 0;}
@@ -13,32 +12,30 @@
 		.ItemListingHeaderStatus{overflow: hidden; width: 40%; float: left;}
 			.ItemListingHeaderStatus .NormalBold {display: block; float: left; padding-top: 4px;}
 			.ItemListingHeaderStatus table{ display: inline;}
+/*==================== Item.Listing and/or Detail.Item ==================== */
+	.ItemListing, .ItemDetails{border-bottom: 1px #ccc dotted; overflow: hidden; padding: 10px 0; width: 100%;}
+		.ItemListing p, .ItemDetails p{margin-top: 0; margin-bottom: 6px;}
 
-
-/*==================== Item.Listing ==================== */
-	.ItemListing{border-bottom: 1px #ccc dotted; overflow: hidden; padding: 10px 0; width: 100%;}
-		.ItemListing p{margin-top: 0; margin-bottom: 6px;}
-
-	.ItemListing .EventTitle{overflow: hidden; width:100%;}
-		.ItemListing .EventTitle h2.Head {float:right; width:82%; padding: 0 0 5px; margin: 0;}
+	.ItemListing .EventTitle, .ItemDetails .EventTitle{overflow: hidden; width:100%;}
+		.ItemListing .EventTitle h2.Head, .ItemDetails .EventTitle h2.Head {float:right; width:82%; padding: 0 0 5px; margin: 0;}
 	
-	.ItemListing .EventLocation{overflow: hidden;}
-		.ItemListing .EventLocation .NormalBold {float:left; width: 15%; text-align: right;}
-		.ItemListing .EventLocation .Normal{float:right; width: 82%; text-align: left;}
+	.ItemListing .EventLocation, .ItemDetails .EventLocation{overflow: hidden;}
+		.ItemListing .EventLocation .NormalBold, .ItemDetails .EventLocation .NormalBold {float:left; width: 15%; text-align: right;}
+		.ItemListing .EventLocation .Normal, .ItemDetails .EventLocation .Normal{float:right; width: 82%; text-align: left;}
 	
-	.ItemListing .EventDate{overflow: hidden;}
-		.ItemListing .EventDate .NormalBold {float:left; width: 15%; text-align: right;}
-		.ItemListing .EventDate .Normal{float:right; width: 82%; text-align: left;}
-		.ItemListing .RecurrenceSummary .NormalBold {float: none; width: auto; text-align: left;}
+	.ItemListing .EventDate, .ItemDetails .EventDate{overflow: hidden;}
+		.ItemListing .EventDate .NormalBold, .ItemDetails .EventDate .NormalBold {float:left; width: 15%; text-align: right;}
+		.ItemListing .EventDate .Normal, .ItemDetails .EventDate .Normal{float:right; width: 82%; text-align: left;}
+		.ItemListing .RecurrenceSummary .NormalBold, .ItemDetails .RecurrenceSummary .NormalBold {float: none; width: auto; text-align: left;}
 		
-	.ItemListing .EventOverview{overflow: hidden;}
-		.ItemListing .EventOverview .NormalBold {float:left; width: 15%; text-align: right;}
-		.ItemListing .EventOverview .Normal{float:right; width: 82%; text-align: left;}
+	.ItemListing .EventOverview, .ItemDetails .EventOverview{overflow: hidden;}
+		.ItemListing .EventOverview .NormalBold, .ItemDetails .EventOverview .NormalBold {float:left; width: 15%; text-align: right;}
+		.ItemListing .EventOverview .Normal, .ItemDetails .EventOverview .Normal{float:right; width: 82%; text-align: left;}
 
-	.ItemListing .EventDescription{overflow: hidden; clear: both;}
-		.ItemListing .EventDescription .NormalBold {float:left; width: 15%; text-align: right;}
-		.ItemListing .EventDescription .Normal{float:right; width: 82%; text-align: left;}
-			.ItemListing .EventDescription .Normal > p {margin-top: 0;}
+	.ItemListing .EventDescription, .ItemDetails .EventDescription{overflow: hidden; clear: both;}
+		.ItemListing .EventDescription .NormalBold, .ItemDetails .EventDescription .NormalBold {float:left; width: 15%; text-align: right;}
+		.ItemListing .EventDescription .Normal, .ItemDetails .EventDescription .Normal{float:right; width: 82%; text-align: left;}
+			.ItemListing .EventDescription .Normal > p, .ItemDetails .EventDescription .Normal > p {margin-top: 0;}
 	
 	.ItemListing .EventButtons{float:right; width: 82%;}
 		.ItemListing .EventButtons input {margin-bottom: 0.675em;}
@@ -85,3 +82,7 @@
 			
 	.Narrow .calendarLink
 	{padding: 5px; text-align: right; }
+
+/*==================== Narrow List Stuff ==================== */		
+	ul.EventsQuickView{margin:0;padding:0 0 15px 0;}
+	.EventsQuickView li{list-style:none;}

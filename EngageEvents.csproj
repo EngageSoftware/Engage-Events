@@ -673,10 +673,13 @@
     <EmbeddedResource Include="JavaScript\EngageEvents.EditTypeDialog.js" />
     <Content Include="Navigation\App_LocalResources\EventAdminActions.ascx.resx">
     </Content>
+    <Content Include="Templates\Footer.ListingShort.html" />
     <Content Include="Templates\Footer.MiniList.html" />
     <Content Include="Templates\Footer.Narrow.html" />
+    <Content Include="Templates\Header.ListingShort.html" />
     <Content Include="Templates\Header.MiniList.html" />
     <Content Include="Templates\Header.Narrow.html" />
+    <Content Include="Templates\Item.ListingShort.html" />
     <Content Include="Templates\Item.MiniList.html" />
     <Content Include="Templates\Item.Narrow.html" />
   </ItemGroup>
