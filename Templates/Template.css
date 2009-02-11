@@ -40,9 +40,10 @@
 		.ItemListing .EventDescription .Normal{float:right; width: 82%; text-align: left;}
 			.ItemListing .EventDescription .Normal > p {margin-top: 0;}
 	
-	.ItemListing .eventButtons{padding-left: 18%;}
-		.ItemListing .eventButtons input {margin-bottom: 0.675em;}
+	.ItemListing .EventButtons{float:right; width: 82%;}
+		.ItemListing .EventButtons input {margin-bottom: 0.675em;}
 		
+	.ItemListing .RecurrenceSummary{padding-left: 15px;}
 	.ItemListing.RecurringEventItem{background: transparent url(../images/recurring_icon.gif) no-repeat 0 16px;}
 	
 	

@@ -21,11 +21,6 @@
 .ResponsesSummary {padding: 25px 0;}
 .PagingTable { margin: 10px 0; }
 		
-		.EventButtons{margin-top: 10px; overflow:hidden; padding-left: 18%; clear: both;}
-		.EventStats{font-weight:bold;}	
-		
-	.RecurrenceSummary {padding-left: 15px;}
-
 /* event calendar display page */
 
 .EventCalendar li { list-style-type: none; }
@@ -81,22 +76,9 @@
 	
 	.NormalBold.RegCap{padding: 5px 0; display: inline-block;  }
 	
-	
-	
-	
-	
-	
-	
 	.EventToolTip{padding: 10px; padding-bottom: 0;}
 	h2.EventTitleToolTip{margin: 0;}
 	.tooltip_buttons{padding: 10px 0;}	
-	
-	
-	
-	
-	
-	
-	
 	
 /* ============================ manage events page ============================ */
 
@@ -135,6 +117,8 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 	.MEEventItem .EventDescription .Normal{float:right; width: 82%; text-align: left;}
 		.MEEventItem .EventDescription .Normal > p {margin-top: 0;}
 	
+.MEEventItem .EventButtons{margin-top: 10px; overflow:hidden; float:right; width: 82%; clear: both;}
+.MEEventItem .RecurrenceSummary{padding-left: 15px;}
 .MEEventItem .RecurringEventItem{background: transparent url(../images/recurring_icon.gif) no-repeat 0 16px;}
 
 
