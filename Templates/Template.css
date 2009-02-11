@@ -44,7 +44,7 @@
 	.ItemListing .eventButtons{padding-left: 18%;}
 		.ItemListing .eventButtons input {margin-bottom: 0.675em;}
 		
-	.ItemListing .RecurringEventItem{background: transparent url(../images/recurring_icon.gif) no-repeat 0 16px;}
+	.ItemListing.RecurringEventItem{background: transparent url(../images/recurring_icon.gif) no-repeat 0 16px;}
 	
 	
 /*==================== Mini List Template ==================== */	

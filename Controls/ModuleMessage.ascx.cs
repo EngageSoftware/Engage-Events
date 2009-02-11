@@ -35,14 +35,19 @@ namespace Engage.Dnn.Events.Controls
         Error,
 
         /// <summary>
-        /// Used to present informational messages or warnings about potential problems.
+        /// Used to present warnings about potential problems.
         /// </summary>
         Warning,
 
         /// <summary>
         /// Used to indicate success of an operation.
         /// </summary>
-        Success
+        Success,
+
+        /// <summary>
+        /// Used to present information messages.
+        /// </summary>
+        Information
     }
 
     /// <summary>

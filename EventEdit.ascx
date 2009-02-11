@@ -91,7 +91,7 @@
                 <fieldset class="registration_fs">
                     <legend class="registrationoptions SubHead"><%=Localize("Registration Options:") %></legend>
                     <asp:Panel ID="LimitRegistrationsPanel" runat="server">
-                        <asp:Label ID="LimitRegistationsLabel" runat="server" ResourceKey="LimitRegistrationsLabel" CssClass="NormalBold RegCap" AssociatedControlID="LimitRegistrationsCheckBox" />
+                        <asp:Label ID="LimitRegistrationsLabel" runat="server" ResourceKey="LimitRegistrationsLabel" CssClass="NormalBold RegCap" AssociatedControlID="LimitRegistrationsCheckBox" />
                         <asp:CheckBox ID="LimitRegistrationsCheckBox" runat="server" CssClass="NormalBold" AutoPostBack="true" />
                         <asp:Panel ID="RegistrationLimitPanel" runat="server" Visible="false">
                             <asp:Label runat="server" ResourceKey="RegistrationLimitLabel" CssClass="NormalBold RegCap" AssociatedControlID="LimitRegistrationsCheckBox" />

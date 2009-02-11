@@ -21,7 +21,7 @@
             </div>
         </asp:View>
         <asp:View ID="EventFullView" runat="server">
-            <engage:ModuleMessage ID="EventFullMessage" runat="server" MessageType="Warning" />
+            <engage:ModuleMessage ID="EventFullMessage" runat="server" MessageType="Information" />
             <div class="registerMessage Normal">
                 <asp:Button ID="BackToEventsButton2" runat="server" OnClientClick="parent.jQuery.fn.fancybox.close();return false;" ResourceKey="backToEventsButton" />
             </div>      

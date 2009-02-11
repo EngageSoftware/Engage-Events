@@ -202,6 +202,8 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 .TemplatesSection{margin: 1em;}
 .EventsSetting{clear: both;padding: 0 0 2em;}
 
+.timezone_display{float: left; width: 70%;}
+
 /*========================================================
 
 		3. Validation
@@ -210,7 +212,7 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 .ModuleMessage{width:60%; padding-top: 1em; margin: 0 auto;}
 .mmTop{height: 5px; line-height: 0; background-color:transparent; background-repeat: no-repeat; background-attachment:scroll; background-position:left bottom;}
 .mmBody{height: 100%; padding: 0.675em 0.675em 1em;  margin:0 auto; overflow: hidden; border-bottom: solid 1px #000;}
-.mmBody .mmIcon{float:left; width: 10%; height:32px; text-indent:-9999px;}
+.mmBody .mmIcon{float:left; width: 32px; height:32px; text-indent:-9999px;}
 .mmText{float: right; text-align: left; width: 88%;}
 .mmText{margin: 0; padding: 0;}
 .mmText > p{margin-top: 4px; font-weight: bold; color: #000;}
@@ -236,17 +238,18 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 .SuccessBody {background:#f2fff3; border: 2px #5cd800 solid;}
 .SuccessBody .SuccessIcon{background:url(images/successSmallIcon.png) no-repeat;}
 
-/*========================= Notification ===============================*/
+/*========================= Warning ===============================*/
 
-.WarningTop{background-image:url(images/blueTop.gif);}
+/*.WarningTop{background-image:url(images/blueTop.gif);}
 .WarningBody {background-image:url(images/blueBody.gif);}
-.WarningBody .WarningIcon{background-image:url(images/successSmallIcon.png);}
-.WarningBt{background-image:url(images/blueBt.gif);}
+.WarningBt{background-image:url(images/blueBt.gif);}*/
+
+/*========================= Information ===============================*/
+.InformationBody {background:#e5f8ff; border: 2px #288abc solid;}
+.InformationBody .InformationIcon{background-image:url(images/info.png);}
 
 
 
-
-.timezone_display{float: left; width: 70%;}
 
 /*========================= Fancy Box ===============================*/
 div#fancy_overlay {

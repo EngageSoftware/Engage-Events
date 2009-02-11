@@ -146,6 +146,9 @@
     <value>Sorry, this event is full.</value>
   </data>
   <data name="Warning.Test" xml:space="preserve">
-    <value>Warning</value>
+    <value>Warning Icon</value>
+  </data>
+  <data name="Information.Text" xml:space="preserve">
+    <value>Information Icon</value>
   </data>
 </root>
