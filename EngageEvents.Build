@@ -7,10 +7,6 @@
   <property name="solution.file" value="Engage${project.name}.sln"/>
   <property name="references.directory" value="References"/>
   <property name="project.dll" value="${bin.directory}\Engage${project.name}.dll"/>
-  <property name="msBuildArgs" dynamic="true" value="/nologo
-     /v:m
-     /p:Configuration=${project.config} 
-     ${solution.file}" />
 
   <target name="build" description="rebuilds the solution" if="${build}">
     <solution configuration="${project.config}" solutionfile="${solution.file}">
