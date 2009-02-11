@@ -114,9 +114,8 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 .MEEventItem {padding-bottom: 2em;}
 .MEEventItem .EventDate p, .MEEventItem .EventLocation p, .MEEventItem .EventDescription p {margin-top: 0;}
 
-.MEEventItem .EventTitle{overflow: hidden;}
-	.MEEventItem .EventTitle h3.SubHead{font-size: 120%; padding: 0 0 5px 200px; margin: 0;}
-	.MEEventItem .EventTitle h2.Head {padding: 0 0 5px 200px; margin: 0;}
+.MEEventItem .EventTitle{overflow: hidden; width:100%;}
+	.MEEventItem .EventTitle h2.Head {float:right; width:82%; padding: 0 0 5px; margin: 0;}
 
 .MEEventItem .EventLocation{overflow: hidden;}
 	.MEEventItem .EventLocation .NormalBold {float:left; width: 15%; text-align: right;}
