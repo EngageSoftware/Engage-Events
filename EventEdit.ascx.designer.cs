@@ -149,6 +149,15 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.Panel LimitRegistrationsPanel;
         
         /// <summary>
+        /// LimitRegistationsLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LimitRegistationsLabel;
+        
+        /// <summary>
         /// LimitRegistrationsCheckBox control.
         /// </summary>
         /// <remarks>
