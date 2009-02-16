@@ -141,6 +141,7 @@
 
     <xmlpoke file="${package.directory}/temp/package/Engage${project.name}.5.dnn" value="${releaseNotes.file}" xpath="dotnetnuke/packages/package/releaseNotes/@src"/>
     <xmlpoke file="${package.directory}/temp/package/Engage${project.name}.5.dnn" value="${project.version}" xpath="dotnetnuke/packages/package/@version"/>
+    <xmlpoke file="${package.directory}/temp/package/Engage${project.name}.4.dnn" value="${project.version}" xpath="dotnetnuke/folders/folder/version"/>
   </target>
   <target name="create-packages" description="For the given license and type, creates packages for DNN 4 and DNN 5">
     <property name="license.file" value="EULA-${package.license}.htm"/>
