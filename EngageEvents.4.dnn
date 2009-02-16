@@ -49,7 +49,7 @@
         </file>
         <file>
           <path>Providers\DataProviders\SqlDataProvider</path>
-          <name>01.01.00.SqlDataProvider</name>
+          <name>1.1.0.SqlDataProvider</name>
         </file>
         <file>
           <name>01.00.00.txt</name>
