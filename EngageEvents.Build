@@ -13,13 +13,16 @@
     <include name="**/*.aspx" />
     <include name="**/*.asmx" />
     <include name="**/*.resx" />
-    <!--include name="**/*.html" />
-    <include name="**/*.htm" /-->
+    <include name="**/*.html" />
+    <include name="**/*.htm" />
     <include name="**/*.css" />
     <include name="**/*.jpg" />
     <include name="**/*.gif" />
     <include name="**/*.png" />
     <include name="**/*.pdf" />
+    <exclude name="Licenses/EULA-*.htm"/>
+    <exclude name="ReleaseNotes_*.htm"/>
+    <exclude name="??.??.??.txt" />
   </patternset>
   <patternset id="source.fileset">
     <include name="**/*.js"/>
