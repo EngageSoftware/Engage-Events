@@ -369,8 +369,7 @@
     <Compile Include="Util\Utility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="EngageEvents.dnn" />
-    <None Include="EngageEvents.Build" />
+    <None Include="EngageEvents.4.dnn" />
     <None Include="Providers\DataProviders\SqlDataProvider\00.00.01.SqlDataProvider" />
     <None Include="Providers\DataProviders\SqlDataProvider\00.00.04.SqlDataProvider" />
     <None Include="Providers\DataProviders\SqlDataProvider\00.00.06.SqlDataProvider" />
@@ -417,9 +416,9 @@
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Licenses\EULA-Enterprise.txt" />
-    <Content Include="Licenses\EULA-Professional.txt" />
-    <Content Include="Licenses\EULA-Standard.txt" />
+    <Content Include="Licenses\EULA-Enterprise.htm" />
+    <Content Include="Licenses\EULA-Professional.htm" />
+    <Content Include="Licenses\EULA-Standard.htm" />
     <Content Include="Util\App_LocalResources\BreadCrumb.cs.resx">
       <SubType>Designer</SubType>
     </Content>
@@ -664,6 +663,7 @@
     <Content Include="References\Telerik.Web.UI.dll" />
     <Content Include="Display\App_LocalResources\CalendarDisplayOptions.ascx.resx">
     </Content>
+    <Content Include="ReleaseNotes_1.1.0.htm" />
     <Content Include="RespondPage.aspx" />
     <Content Include="Templates\App_LocalResources\Template.resx">
       <SubType>Designer</SubType>
@@ -692,6 +692,8 @@
     </When>
     <Otherwise>
       <ItemGroup>
+        <None Include="EngageEvents.5.dnn" />
+        <None Include="EngageEvents.Build" />
         <None Include="JavaScript\jquery.fancybox-1.0.0.debug.js" />
         <None Include="JavaScript\EngageEvents.EditTypeDialog.debug.js" />
       </ItemGroup>

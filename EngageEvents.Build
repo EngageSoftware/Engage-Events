@@ -8,116 +8,182 @@
   <property name="references.directory" value="References"/>
   <property name="project.dll" value="${bin.directory}\Engage${project.name}.dll"/>
 
-  <target name="build" description="rebuilds the solution" if="${build}">
+  <patternset id="content.fileset">
+    <include name="**/*.ascx" />
+    <include name="**/*.aspx" />
+    <include name="**/*.asmx" />
+    <include name="**/*.resx" />
+    <!--include name="**/*.html" />
+    <include name="**/*.htm" /-->
+    <include name="**/*.css" />
+    <include name="**/*.jpg" />
+    <include name="**/*.gif" />
+    <include name="**/*.png" />
+    <include name="**/*.pdf" />
+  </patternset>
+  <patternset id="source.fileset">
+    <include name="**/*.js"/>
+    <include name="**/*.cs"/>
+    <include name="**/*.vb"/>
+    <include name="**/*.sln"/>
+    <include name="**/*.csproj"/>
+    <include name="**/*.vbproj"/>
+    <include name="**/*.build"/>
+    <include name="**/*.dnn"/>
+    <include name="**/*.docx"/>
+  </patternset>
+
+  <target name="build" description="Builds the solution" if="${build}">
     <solution configuration="${project.config}" solutionfile="${solution.file}">
       <assemblyfolders>
         <include name="${references.directory}"/>
       </assemblyfolders>
     </solution>
   </target>
-  <target name="get-version" depends="build">
+  <target name="get-version" depends="build" description="Sets the project.version property to the first three numbers from the version of the main assembly for this module">
     <property name="version" value="${assemblyname::get-version(assembly::get-name(assembly::load-from-file(project.dll)))}" />
     <property name="project.version" value="${string::substring(version,0,string::last-index-of(version,'.'))}" />
   </target>
-  <target name="package" depends="get-version">
+  <target name="package" depends="get-version" description="Creates packages for this module, one for each three licenses and version of DNN (4 and 5)">
     <property name="package.directory" value="package"/>
     <property name="package.name" value="Resources.zip"/>
     <property name="package.license" value="Standard"/>
     <property name="includeSource" value="false"/>
 
-    <call target="zip-resources"/>
-    <call target="zip-package"/>
+    <call target="setup-package-files"/>
+    <call target="create-resources-zip"/>
+    <call target="create-packages"/>
 
     <property name="package.license" value="Professional"/>
-    <call target="zip-package"/>
+    <call target="create-packages"/>
 
     <property name="package.license" value="Enterprise"/>
-    <call target="zip-package"/>
+    <call target="create-packages"/>
 
     <property name="includeSource" value="true"/>
-    <call target="zip-resources"/>
-    <call target="zip-package"/>
+    <call target="add-sources-to-resource-zip"/>
+    <call target="create-packages"/>
 
-    <zip zipfile="${package.directory}/${project.name}_${package.license}_${project.version}.zip">
-      <fileset basedir="${package.directory}">
-        <include name="${project.name}_${package.license}_${project.version}_Install.zip"/>
-        <include name="${project.name}_${package.license}_${project.version}_Source.zip"/>
-      </fileset>
-    </zip>
+    <delete file="${package.directory}\${package.name}" failonerror="false"/>
+    <delete dir="${package.directory}\temp" failonerror="false"/>
 
-    <delete file="${package.directory}/${project.name}_${package.license}_${project.version}_Install.zip" failonerror="false"/>
-    <delete file="${package.directory}/${project.name}_${package.license}_${project.version}_Source.zip" failonerror="false"/>
-    <delete file="${package.directory}/${package.name}" failonerror="false"/>
-
+    <property name="dnn.version" value="4"/>
+    <call target="combine-enterprise"/>
+    <property name="dnn.version" value="5"/>
+    <call target="combine-enterprise"/>
+    
     <call target="project-specific-tasks"/>
   </target>
-  <target name="zip-resources">
-    <mkdir dir="${package.directory}" unless="${directory::exists(package.directory)}"/>
-    <mkdir dir="${package.directory}/temp" unless="${directory::exists(package.directory + '/temp')}"/>
-    <copy todir="${package.directory}/temp" flatten="false">
+  <target name="create-resources-zip" description="Creates the Resources.zip file for content (Install package) files">
+    <mkdir dir="${package.directory}" failonerror="false"/>
+    <mkdir dir="${package.directory}/temp" failonerror="false" />
+    <mkdir dir="${package.directory}/temp/resources" failonerror="false" />
+    <copy todir="${package.directory}/temp/resources" flatten="false">
       <fileset>
-        <include name="**/*.ascx" />
-        <include name="**/*.aspx" />
-        <include name="**/*.asmx" />
-        <include name="**/*.resx" />
-        <include name="**/*.html" />
-        <include name="**/*.htm" />
-        <include name="**/*.css" />
-        <include name="**/*.jpg" />
-        <include name="**/*.gif" />
-        <include name="**/*.png" />
-        <include name="**/*.pdf" />
-        <include name="**/*.js" if="${includeSource}"/>
-        <include name="**/*.cs" if="${includeSource}"/>
-        <include name="**/*.vb" if="${includeSource}"/>
-        <include name="**/*.sln" if="${includeSource}"/>
-        <include name="**/*.csproj" if="${includeSource}"/>
-        <include name="**/*.vbproj" if="${includeSource}"/>
-        <include name="**/*.build" if="${includeSource}"/>
-        <include name="**/*.dnn" if="${includeSource}"/>
-        <include name="**/*.docx" if="${includeSource}"/>
+        <patternset refid="content.fileset"/>
         <exclude name="obj/**"/>
+        <exclude name="${package.directory}/**"/>
       </fileset>
     </copy>
-    <zip zipfile="${package.directory}/${package.name}">
-      <fileset basedir="${package.directory}/temp">
+
+    <zip zipfile="${package.directory}/temp/package/${package.name}">
+      <fileset basedir="${package.directory}/temp/resources">
         <include name="**/*"/>
       </fileset>
     </zip>
-    <delete dir="${package.directory}/temp" failonerror="false"/>
   </target>
-  <target name="zip-package">
-    <mkdir dir="${package.directory}" unless="${directory::exists(package.directory)}"/>
-    <mkdir dir="${package.directory}/temp" unless="${directory::exists(package.directory + '/temp')}"/>
-    <copy todir="${package.directory}/temp" flatten="true">
+  <target name="add-sources-to-resource-zip" description="Adds the files for the Source package to the Resources.zip file">
+    <copy todir="${package.directory}/temp/resources" flatten="false">
       <fileset>
-        <include name="${package.directory}/${package.name}"/>
-        <include name="${project.dll}"/>
-        <include name="${references.directory}/*.dll"/>
-        <include name="Licenses/EULA-${package.license}.txt"/>
+        <patternset refid="source.fileset"/>
+        <exclude name="obj/**"/>
+        <exclude name="${package.directory}/**"/>
+      </fileset>
+    </copy>
+
+    <zip zipfile="${package.directory}/temp/package/${package.name}">
+      <fileset basedir="${package.directory}/temp/resources">
+        <include name="**/*"/>
+      </fileset>
+    </zip>
+  </target>
+  <target name="setup-package-files" description="Copies common package files to the temp/package directory, and sets version-dependent attributes in the DNN 5 manifest file">
+    <property name="releaseNotes.file" value="ReleaseNotes_${project.version}.htm"/>
+    <mkdir dir="${package.directory}/temp/package" failonerror="false"/>
+    <copy todir="${package.directory}/temp/package" flatten="true">
+      <fileset>
+        <include name="${releaseNotes.file}"/>
         <include name="??.??.??.txt" />
         <include name="ReadMe.txt" />
         <include name="**/*.SqlDataProvider"/>
-        <include name="**/*.dnn"/>
+        <include name="**/*.4.dnn"/>
+        <include name="**/*.5.dnn"/>
+      </fileset>
+    </copy>
+    <copy todir="${package.directory}/temp/package/bin" flatten="true">
+      <fileset>
+        <include name="${project.dll}"/>
+        <include name="${references.directory}/*.dll"/>
         <exclude name="${references.directory}/DotNetNuke.dll"/>
         <exclude name="${references.directory}/DotNetNuke.WebUtility.dll"/>
         <exclude name="${references.directory}/Microsoft.ApplicationBlocks.Data.dll"/>
       </fileset>
     </copy>
 
+    <xmlpoke file="${package.directory}/temp/package/Engage${project.name}.5.dnn" value="${releaseNotes.file}" xpath="dotnetnuke/packages/package/releaseNotes/@src"/>
+    <xmlpoke file="${package.directory}/temp/package/Engage${project.name}.5.dnn" value="${project.version}" xpath="dotnetnuke/packages/package/@version"/>
+  </target>
+  <target name="create-packages" description="For the given license and type, creates packages for DNN 4 and DNN 5">
+    <property name="license.file" value="EULA-${package.license}.htm"/>
+    <call target="switch-license"/>
+    
+    <property name="dnn.version" value="4"/>
+    <call target="zip-package"/>
+
+    <property name="dnn.version" value="5"/>
+    <call target="zip-package"/>
+  </target>
+  <target name="switch-license" description="Switches out the license file and updates the reference to it in the DNN 5 manifest file">
+    <delete>
+      <fileset>
+        <include name="${package.directory}/temp/package/EULA-*.htm"/>
+      </fileset>
+    </delete>
+    <copy todir="${package.directory}/temp/package" flatten="true">
+      <fileset>
+        <include name="Licenses/${license.file}"/>
+      </fileset>
+    </copy>
+
+    <xmlpoke file="${package.directory}/temp/package/Engage${project.name}.5.dnn" value="${license.file}" xpath="dotnetnuke/packages/package/license/@src"/>
+  </target>
+  <target name="zip-package" description="Zips up the files in the temp/package directory, getting the correct manifest file and using the correct naming convention">
     <property name="package.type" value="Install"/>
     <if test="${includeSource}">
       <property name="package.type" value="Source"/>
     </if>
-    <zip zipfile="${package.directory}/${project.name}_${package.license}_${project.version}_${package.type}.zip">
-      <fileset basedir="${package.directory}/temp">
+    <zip zipfile="${package.directory}/${project.name}_${package.license}_${project.version}_${package.type}_${dnn.version}.zip">
+      <fileset basedir="${package.directory}/temp/package">
         <include name="**/*"/>
+        <exclude name="**/*.4.dnn" if="${dnn.version=='5'}"/>
+        <exclude name="**/*.5.dnn" if="${dnn.version=='4'}"/>
       </fileset>
     </zip>
-    <delete dir="${package.directory}/temp" failonerror="false"/>
+  </target>
+  <target name="combine-enterprise" description="Combines the Install and Source enterprise packages into one .zip file">
+    <zip zipfile="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}.zip">
+      <fileset basedir="${package.directory}">
+        <include name="${project.name}_${package.license}_${project.version}_Install_${dnn.version}.zip"/>
+        <include name="${project.name}_${package.license}_${project.version}_Source_${dnn.version}.zip"/>
+      </fileset>
+    </zip>
+
+    <delete file="${package.directory}/${project.name}_${package.license}_${project.version}_Install_${dnn.version}.zip" failonerror="false"/>
+    <delete file="${package.directory}/${project.name}_${package.license}_${project.version}_Source_${dnn.version}.zip" failonerror="false"/>
   </target>
   <target name="project-specific-tasks" description="Place tasks specific to the current project in this task">
-    
+    <!-- TODO: Get latest source .zips of the three Engage Framework dependencies, zip them all up -->
+    <!-- TODO: Unzip enterprise package? -->
   </target>
   <!--<target name="BuildContentPackage" description="Builds a resources zip file from the content items in the VS project">
     <loadfile file="${solution.file}" property="solution.text"/>
@@ -131,4 +197,5 @@
     </xmlpeek>
     <echo message="${content.filegroup}"/>
   </target>-->
+
 </project>

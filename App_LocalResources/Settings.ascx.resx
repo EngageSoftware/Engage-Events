@@ -154,7 +154,7 @@
     <value>Page Title</value>
   </data>
   <data name="Select.Header" xml:space="preserve">
-    <value />
+    <value> </value>
   </data>
   <data name="Tab ID.Header" xml:space="preserve">
     <value>Tab ID</value>

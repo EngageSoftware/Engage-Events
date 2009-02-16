@@ -1,0 +1,117 @@
+﻿<dotnetnuke type="Package" version="5.0">
+  <packages>
+    <package name="Engage: Events" type="Module" version="REPLACED BY NANT">
+      <friendlyName>Engage: Events</friendlyName>
+      <description>The DotNetNuke Events module by Engage Software (www.EngageSoftware.com)</description>
+      <owner>
+        <name>Engage Software</name>
+        <organization>Engage Software</organization>
+        <url><![CDATA[<a href="http://www.engagesoftware.com/">http://www.engagesoftware.com/</a>]]></url>
+        <email><![CDATA[<a href="mailto:support@engagemodules.com">support@engagemodules.com</a>]]></email>
+      </owner>
+      <license src="REPLACED BY NANT"/>
+      <releaseNotes src="REPLACED BY NANT" />
+      <components>
+        <component type="ResourceFile">
+          <resourceFiles>
+            <basePath>DesktopModules/EngageEvents</basePath>
+            <resourceFile>
+              <name>Resources.zip</name>
+            </resourceFile>
+          </resourceFiles>
+        </component>
+        <component type="Script">
+          <scripts>
+            <basePath>DesktopModules\EngageEvents</basePath>
+            <script type="Install">
+              <name>00.00.01.SqlDataProvider</name>
+              <version>00.00.01</version>
+            </script>
+            <script type="Install">
+              <name>00.00.04.SqlDataProvider</name>
+              <version>00.00.04</version>
+            </script>
+            <script type="Install">
+              <name>00.00.06.SqlDataProvider</name>
+              <version>00.00.06</version>
+            </script>
+            <script type="Install">
+              <name>01.00.00.SqlDataProvider</name>
+              <version>01.00.00</version>
+            </script>
+            <script type="Install">
+              <name>01.01.00.SqlDataProvider</name>
+              <version>01.01.00</version>
+            </script>
+            <script type="UnInstall">
+              <name>Uninstall.SqlDataProvider</name>
+              <version>1.1.0</version>
+            </script>
+          </scripts>
+        </component>
+        <component type="Cleanup" file="01.00.00.txt" version="01.00.00" />
+        <component type="Module">
+          <desktopModule>
+            <moduleName>Engage: Events</moduleName>
+            <foldername>EngageEvents</foldername>
+            <businessControllerClass>Engage.Dnn.Events.Components.FeaturesController</businessControllerClass>
+            <moduleDefinitions>
+              <moduleDefinition>
+                <friendlyName>Engage: Events</friendlyName>
+                <defaultCacheTime>0</defaultCacheTime>
+                <moduleControls>
+                  <moduleControl>
+                    <controlKey/>
+                    <controlSrc>DesktopModules/EngageEvents/MainContainer.ascx</controlSrc>
+                    <supportsPartialRendering>True</supportsPartialRendering>
+                    <controlType>View</controlType>
+                    <helpUrl>http://www.EngageSoftware.com/Support.aspx</helpUrl>
+                  </moduleControl>
+                  <moduleControl>
+                    <controlKey>Settings</controlKey>
+                    <controlSrc>DesktopModules/EngageEvents/Settings.ascx</controlSrc>
+                    <controlTitle>Engage: Events Settings</controlTitle>
+                    <controlType>Edit</controlType>
+                    <helpUrl>http://www.EngageSoftware.com/Support.aspx</helpUrl>
+                  </moduleControl>
+                </moduleControls>
+              </moduleDefinition>
+            </moduleDefinitions>
+          </desktopModule>
+        </component>
+        <component type="Assembly">
+          <assemblies>
+            <assembly>
+              <name>EngageEvents.dll</name>
+              <version>1.1.0</version>
+            </assembly>
+            <assembly>
+              <name>Engage.Events.dll</name>
+              <version>1.1.0</version>
+            </assembly>
+            <assembly>
+              <name>Engage.Framework.dll</name>
+              <version>2.0.6</version>
+            </assembly>
+            <assembly>
+              <name>Engage.Dnn.Framework.dll</name>
+              <version>1.1.0</version>
+            </assembly>
+            <assembly>
+              <name>Engage.Framework.XmlSerializers.dll</name>
+              <version>2.0.6</version>
+            </assembly>
+            <assembly>
+              <name>Engage.Dnn.Framework.XmlSerializers.dll</name>
+              <version>1.1.0</version>
+            </assembly>
+            <assembly>
+              <name>Telerik.Web.UI.dll</name>
+              <version>2008.2.826</version>
+            </assembly>
+          </assemblies>
+        </component>
+      </components>
+    </package>
+  </packages>
+</dotnetnuke>

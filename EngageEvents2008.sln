@@ -5,6 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngageEvents", "EngageEvent
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9A7429F0-BB4E-4881-8994-25F2DC070C75}"
 	ProjectSection(SolutionItems) = preProject
+		EngageEvents.Build = EngageEvents.Build
 		EngageEvents.sln = EngageEvents.sln
 	EndProjectSection
 EndProject
@@ -12,7 +13,7 @@ Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 2
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://etg40:8080/
+		SccTeamFoundationServer = http://tfs2008.etg-inc.net:8080/
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = EngageEvents.csproj
 		SccLocalPath1 = .
