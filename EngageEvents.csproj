@@ -693,6 +693,7 @@
     <Otherwise>
       <ItemGroup>
         <None Include="EngageEvents.5.dnn" />
+        <None Include="EngageEvents.5.dnn" />
         <None Include="EngageEvents.Build" />
         <None Include="JavaScript\jquery.fancybox-1.0.0.debug.js" />
         <None Include="JavaScript\EngageEvents.EditTypeDialog.debug.js" />

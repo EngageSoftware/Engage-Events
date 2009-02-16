@@ -130,6 +130,12 @@
       </fileset>
     </copy>
 
+    <attrib readonly="false">
+      <fileset basedir="${package.directory}/temp/package">
+        <include name="**"/>
+      </fileset>
+    </attrib>
+
     <xmlpoke file="${package.directory}/temp/package/Engage${project.name}.5.dnn" value="${releaseNotes.file}" xpath="dotnetnuke/packages/package/releaseNotes/@src"/>
     <xmlpoke file="${package.directory}/temp/package/Engage${project.name}.5.dnn" value="${project.version}" xpath="dotnetnuke/packages/package/@version"/>
   </target>
