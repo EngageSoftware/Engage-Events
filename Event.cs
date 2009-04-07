@@ -15,15 +15,17 @@ namespace Engage.Events
     using System.ComponentModel;
     using System.Data;
     using System.Diagnostics;
+    using System.Globalization;
     using System.Xml.Serialization;
     using Data;
+    using Dnn.Framework.Templating;
     using Telerik.Web.UI;
 
     /// <summary>
     /// An event, with a title, description, location, and start and end date.
     /// </summary>
     [XmlRoot(ElementName = "event", IsNullable = false)]
-    public class Event : IEditableObject, INotifyPropertyChanged
+    public class Event : IEditableObject, INotifyPropertyChanged, ITemplateable
     {
         /// <summary>
         /// Backing field for <see cref="Canceled"/>.
@@ -777,6 +779,69 @@ namespace Engage.Events
         }
 
         #endregion
+
+        /// <summary>
+        /// Gets the value of the property with the given <paramref name="propertyName"/>, or <see cref="string.Empty"/> if a property with that name does not exist on this object or is <c>null</c>.
+        /// </summary>
+        /// <remarks>
+        /// To avoid conflicts with template syntax, avoid using the following symbols in the property name
+        /// <list type="bullet">
+        ///     <item><description>:</description></item>
+        ///     <item><description>%</description></item>
+        ///     <item><description>$</description></item>
+        ///     <item><description>#</description></item>
+        ///     <item><description>&gt;</description></item>
+        ///     <item><description>&lt;</description></item>
+        ///     <item><description>"</description></item>
+        ///     <item><description>'</description></item>
+        /// </list>
+        /// </remarks>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns>The string representation of the value of this instance.</returns>
+        public string GetValue(string propertyName)
+        {
+            return this.GetValue(propertyName, null);
+        }
+
+        /// <summary>
+        /// Gets the value of the property with the given <paramref name="propertyName"/>, or <see cref="string.Empty"/> if a property with that name does not exist on this object or is <c>null</c>.
+        /// </summary>
+        /// <remarks>
+        /// To avoid conflicts with template syntax, avoid using the following symbols in the property name
+        /// <list type="bullet">
+        ///     <item><description>:</description></item>
+        ///     <item><description>%</description></item>
+        ///     <item><description>$</description></item>
+        ///     <item><description>#</description></item>
+        ///     <item><description>&gt;</description></item>
+        ///     <item><description>&lt;</description></item>
+        ///     <item><description>"</description></item>
+        ///     <item><description>'</description></item>
+        /// </list>
+        /// </remarks>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <param name="format">A numeric or DateTime format string, or <c>null</c> or <see cref="string.Empty"/> to apply the default format.</param>
+        /// <returns>The string representation of the value of this instance as specified by <paramref name="format"/>.</returns>
+        public string GetValue(string propertyName, string format)
+        {
+            switch (propertyName.ToUpperInvariant())
+            {
+                case "ID":
+                    return this.Id.ToString(format, CultureInfo.CurrentCulture);
+                case "TITLE":
+                    return this.Title;
+                case "OVERVIEW":
+                    return this.Overview;
+                case "DESCRIPTION":
+                    return this.Description;
+                case "EVENTSTART":
+                    return this.EventStart.ToString(format, CultureInfo.CurrentCulture);
+                case "EVENTEND":
+                    return this.EventEnd.ToString(format, CultureInfo.CurrentCulture);
+            }
+
+            return string.Empty;
+        }
 
         /// <summary>
         /// Fills an Event with the data in the specified <paramref name="eventRecord"/>.
