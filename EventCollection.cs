@@ -18,20 +18,21 @@ namespace Engage.Events
     using System.Diagnostics;
     using System.Web.UI.WebControls;
     using Data;
+    using Dnn.Framework.Templating;
 
     /// <summary>
     /// A strongly-typed collection of <see cref="Event"/> objects.
     /// </summary>
     /// <remarks>
-    /// This class inherits from BindingList for future support.
+    /// This class inherits from <see cref="BindingList{T}"/> for future support.
     /// </remarks>
-    public class EventCollection : BindingList<Event>
+    public class EventCollection : BindingList<Event>, IEnumerable<ITemplateable>
     {
         /// <summary>
         /// Backing field for <see cref="TotalRecords"/>.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int totalRecords;
+        private readonly int totalRecords;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventCollection"/> class with the specified list.
@@ -87,6 +88,20 @@ namespace Engage.Events
         public static EventCollection Load(int portalId, ListingMode listingMode, string sortExpression, int pageIndex, int pageSize, bool showAll, bool featuredOnly)
         {
             return Load(portalId, listingMode, sortExpression, pageIndex, pageSize, showAll, featuredOnly, true);
+        }
+
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+        /// </returns>
+        IEnumerator<ITemplateable> IEnumerable<ITemplateable>.GetEnumerator()
+        {
+            foreach (Event @event in this)
+            {
+                yield return @event;
+            }
         }
 
         /// <summary>
@@ -218,7 +233,7 @@ namespace Engage.Events
         }
 
         /// <summary>
-        /// Adds an occurence of <paramref name="masterEvent"/> that fits within the given time span to <paramref name="events"/>.
+        /// Adds an occurrence of <paramref name="masterEvent"/> that fits within the given time span to <paramref name="events"/>.
         /// </summary>
         /// <param name="masterEvent">The master event.</param>
         /// <param name="startDate">The start date.</param>
