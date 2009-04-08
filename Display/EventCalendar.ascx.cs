@@ -12,7 +12,6 @@
 namespace Engage.Dnn.Events.Display
 {
     using System;
-    using System.Diagnostics;
     using System.Globalization;
     using System.Web.UI;
     using DotNetNuke.Services.Exceptions;
@@ -27,26 +26,6 @@ namespace Engage.Dnn.Events.Display
     /// </summary>
     public partial class EventCalendar : ModuleBase
     {
-        /// <summary>
-        /// Backing field for <see cref="IsFeatured"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private bool isFeatured;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is displaying only featured events.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if this instance is displaying only featured events; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsFeatured
-        {
-            [DebuggerStepThrough]
-            set { this.isFeatured = value; }
-            [DebuggerStepThrough]
-            get { return this.isFeatured; }
-        }
-
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
         /// </summary>
@@ -171,7 +150,7 @@ namespace Engage.Dnn.Events.Display
         private void BindData()
         {
             this.EventsCalendarDisplay.Culture = CultureInfo.CurrentCulture;
-            this.EventsCalendarDisplay.DataSource = EventCollection.Load(this.PortalId, ListingMode.All, false, this.isFeatured);
+            this.EventsCalendarDisplay.DataSource = EventCollection.Load(this.PortalId, ListingMode.All, false, this.IsFeatured);
             this.EventsCalendarDisplay.DataEndField = "EventEnd";
             this.EventsCalendarDisplay.DataKeyField = "Id";
             this.EventsCalendarDisplay.DataRecurrenceField = "RecurrenceRule";

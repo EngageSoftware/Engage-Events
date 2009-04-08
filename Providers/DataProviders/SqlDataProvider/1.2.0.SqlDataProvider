@@ -1,0 +1,9 @@
+﻿UPDATE {databaseOwner}{objectQualifier}TabModuleSettings
+SET SettingValue = 'LIST'
+WHERE SettingValue = 'Display.Listing.html'
+ AND SettingName = 'DisplayType'
+ 
+UPDATE {databaseOwner}{objectQualifier}TabModuleSettings
+SET SettingValue = 'CALENDAR'
+WHERE SettingValue = 'Display.Calendar.html'
+ AND SettingName = 'DisplayType'

@@ -147,6 +147,17 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Gets a value indicating whether this instance should display only featured events.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance should only display featured events; otherwise, <c>false</c>.
+        /// </value>
+        protected bool IsFeatured
+        {
+            get { return Dnn.Utility.GetBoolSetting(this.Settings, "FeaturedOnly", false); }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether this instance is configured.
         /// </summary>
         /// <value>

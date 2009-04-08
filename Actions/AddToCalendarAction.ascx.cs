@@ -35,10 +35,6 @@ namespace Engage.Dnn.Events
         {
             base.OnInit(e);
 
-            // since the global navigation control is not loaded using DNN mechanisms we need to set it here so that calls to 
-            // module related information will appear the same as the actual control this navigation is sitting on.hk
-            this.LocalResourceFile = this.TemplateResourceFile;
-
             this.Load += this.Page_Load;
             this.AddToCalendarButton.Click += this.AddToCalendarButton_Click;
 

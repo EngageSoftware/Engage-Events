@@ -65,7 +65,6 @@ namespace Engage.Dnn.Events
                 this.SetInitialValue();
             }
 
-            this.LocalResourceFile = TemplateResourceFile;
             this.SortRadioButtonList.SelectedIndexChanged += this.SortAction_SortChanged;
         }
 

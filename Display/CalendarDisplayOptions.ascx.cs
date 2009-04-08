@@ -28,15 +28,15 @@ namespace Engage.Dnn.Events
         /// <value>The Skin to use for the calendar display</value>
         internal TelerikSkin SkinOption
         {
+            get
+            {
+                return Dnn.Utility.GetEnumSetting(this.Settings, Setting.SkinSelection.PropertyName, TelerikSkin.Default);
+            }
+
             set
             {
                 ModuleController modules = new ModuleController();
                 modules.UpdateTabModuleSetting(this.TabModuleId, Setting.SkinSelection.PropertyName, value.ToString());
-            }
-
-            get
-            {
-                return Dnn.Utility.GetEnumSetting(this.Settings, Setting.SkinSelection.PropertyName, TelerikSkin.Default);
             }
         }
 
@@ -46,15 +46,15 @@ namespace Engage.Dnn.Events
         /// <value>The number of events to display on a single day in the calendar's month view</value>
         internal int EventsPerDay
         {
+            get
+            {
+                return Dnn.Utility.GetIntSetting(this.Settings, Setting.EventsPerDay.PropertyName, 3);
+            }
+
             set
             {
                 ModuleController modules = new ModuleController();
                 modules.UpdateTabModuleSetting(this.TabModuleId, Setting.EventsPerDay.PropertyName, value.ToString(CultureInfo.InvariantCulture));
-            }
-
-            get
-            {
-                return Dnn.Utility.GetIntSetting(this.Settings, Setting.EventsPerDay.PropertyName, 3);
             }
         }
 

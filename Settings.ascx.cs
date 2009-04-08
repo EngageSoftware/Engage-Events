@@ -39,8 +39,8 @@ namespace Engage.Dnn.Events
             {
                 if (!this.IsPostBack)
                 {
-                    this.DropDownChooseDisplay.Items.Add(new ListItem(Localization.GetString("EventListingTemplate", this.LocalResourceFile), "Display.Listing.html"));
-                    this.DropDownChooseDisplay.Items.Add(new ListItem(Localization.GetString("EventCalendar", this.LocalResourceFile), "Display.Calendar.html"));
+                    this.DropDownChooseDisplay.Items.Add(new ListItem(Localization.GetString("EventListingTemplate", this.LocalResourceFile), "LIST"));
+                    this.DropDownChooseDisplay.Items.Add(new ListItem(Localization.GetString("EventCalendar", this.LocalResourceFile), "CALENDAR"));
 
                     Dnn.Utility.LocalizeGridView(ref this.DetailsDisplayModuleGrid, this.LocalResourceFile);
                     this.DetailsDisplayModuleGrid.DataSource = new ModuleController().GetModulesByDefinition(this.PortalId, Utility.ModuleDefinitionFriendlyName);
@@ -65,10 +65,10 @@ namespace Engage.Dnn.Events
                 try
                 {
                     ModuleController modules = new ModuleController();
-                    modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.DisplayTemplate.PropertyName, this.DropDownChooseDisplay.SelectedValue);
-                    modules.UpdateTabModuleSetting(this.TabModuleId, Setting.FeaturedOnly.PropertyName, this.FeaturedCheckBox.Checked.ToString());
-                    modules.UpdateTabModuleSetting(this.TabModuleId, Setting.DetailsDisplayTabId.PropertyName, this.GetSelectedDetailsDisplayTabId().ToString(CultureInfo.InvariantCulture));
-                    modules.UpdateTabModuleSetting(this.TabModuleId, Setting.DetailsDisplayModuleId.PropertyName, this.GetSelectedDetailsDisplayModuleId().ToString(CultureInfo.InvariantCulture));
+                    modules.UpdateTabModuleSetting(this.TabModuleId, "DisplayType", this.DropDownChooseDisplay.SelectedValue);
+                    modules.UpdateTabModuleSetting(this.TabModuleId, "FeaturedOnly", this.FeaturedCheckBox.Checked.ToString(CultureInfo.InvariantCulture));
+                    modules.UpdateTabModuleSetting(this.TabModuleId, "DetailsDisplayTabId", this.GetSelectedDetailsDisplayTabId().ToString(CultureInfo.InvariantCulture));
+                    modules.UpdateTabModuleSetting(this.TabModuleId, "DetailsDisplayModuleId", this.GetSelectedDetailsDisplayModuleId().ToString(CultureInfo.InvariantCulture));
 
                     this.currentSettingsBase.UpdateSettings();
                 }
@@ -93,7 +93,7 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Handles the CheckedChanged event of the DetailsDisplayModuleRadioButton control.
+        /// Handles the <see cref="CheckBox.CheckedChanged"/> event of the <c>DetailsDisplayModuleRadioButton</c> control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
@@ -144,7 +144,7 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Handles the ServerValidate event of the DetailsDisplayModuleValidator control.
+        /// Handles the <see cref="CustomValidator.ServerValidate"/> event of the <see cref="DetailsDisplayModuleValidator"/> control.
         /// </summary>
         /// <param name="source">The source of the event.</param>
         /// <param name="args">The <see cref="System.Web.UI.WebControls.ServerValidateEventArgs"/> instance containing the event data.</param>
@@ -168,7 +168,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetOptions()
         {
-            string displayType = Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.DisplayTemplate.PropertyName);
+            string displayType = Dnn.Utility.GetStringSetting(this.Settings, "DisplayType").ToUpperInvariant();
 
             ListItem li = this.DropDownChooseDisplay.Items.FindByValue(displayType);
             if (li != null)
@@ -176,8 +176,8 @@ namespace Engage.Dnn.Events
                 li.Selected = true;
             }
 
-            this.FeaturedCheckBox.Checked = Dnn.Utility.GetBoolSetting(this.Settings, Setting.FeaturedOnly.PropertyName, false);
-            this.SetDetailsDisplayModuleGridSelection(Dnn.Utility.GetIntSetting(this.Settings, Setting.DetailsDisplayTabId.PropertyName, this.TabId), Dnn.Utility.GetIntSetting(this.Settings, Setting.DetailsDisplayModuleId.PropertyName, this.ModuleId));
+            this.FeaturedCheckBox.Checked = Dnn.Utility.GetBoolSetting(this.Settings, "FeaturedOnly", false);
+            this.SetDetailsDisplayModuleGridSelection(Dnn.Utility.GetIntSetting(this.Settings, "DetailsDisplayTabId", this.TabId), Dnn.Utility.GetIntSetting(this.Settings, "DetailsDisplayModuleId", this.ModuleId));
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Gets the selected Tab ID for the <see cref="Setting.DetailsDisplayTabId"/> setting.
+        /// Gets the selected Tab ID for the DetailsDisplayTabId setting.
         /// </summary>
         /// <returns>The TabID that was selected for the Details Display TabID setting</returns>
         /// <exception cref="InvalidOperationException">This method cannot be called until validation has run, ensuring that a Tab ID has been selected</exception>
@@ -215,7 +215,7 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Gets the selected Module ID for the <see cref="Setting.DetailsDisplayModuleId"/> setting.
+        /// Gets the selected Module ID for the DetailsDisplayModuleId setting.
         /// </summary>
         /// <returns>The ModuleID that was selected for the Details Display ModuleID setting</returns>
         /// <exception cref="InvalidOperationException">This method cannot be called until validation has run, ensuring that a Module ID has been selected</exception>
@@ -239,12 +239,12 @@ namespace Engage.Dnn.Events
         private void DisplaySettingsControl()
         {
             string selectedDisplayType = this.DropDownChooseDisplay.SelectedValue;
-            switch (selectedDisplayType)
+            switch (selectedDisplayType.ToUpperInvariant())
             {
-                case "Display.Listing.html":
+                case "LIST":
                     this.LoadSettingsControl("Display/TemplateDisplayOptions.ascx");
                     break;
-                case "Display.Calendar.html":
+                case "CALENDAR":
                     this.LoadSettingsControl("Display/CalendarDisplayOptions.ascx");
                     break;
                 default:

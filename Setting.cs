@@ -23,11 +23,6 @@ namespace Engage.Dnn.Events
         public static readonly Setting DisplayModeOption = new Setting("DisplayModeOption", "What data to display.");
 
         /// <summary>
-        /// Whether only featured events should be displayed by this module
-        /// </summary>
-        public static readonly Setting FeaturedOnly = new Setting("FeaturedOnly", "Whether or not to display Featured Events.");
-
-        /// <summary>
         /// The URL to navigate to in order to indicate that an email has been opened
         /// </summary>
         public static readonly Setting OpenLinkUrl = new Setting("openLinkUrl", "Specify the URL for your Open Link to track opens.");
@@ -51,16 +46,6 @@ namespace Engage.Dnn.Events
         /// The unsubscribe URL to use in emails
         /// </summary>
         public static readonly Setting UnsubscribeUrl = new Setting("unsubscribeUrl", "Specify the URL for unsubscribing.");
-
-        /// <summary>
-        /// The ModuleID on which to display event details for the given module
-        /// </summary>
-        public static readonly Setting DetailsDisplayModuleId = new Setting("DetailsDisplayModuleId", "The ModuleID on which to display event details");
-
-        /// <summary>
-        /// The TabID on which to display event details for the given module
-        /// </summary>
-        public static readonly Setting DetailsDisplayTabId = new Setting("DetailsDisplayTabId", "The TabID on which to display event details");
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Setting"/> class.

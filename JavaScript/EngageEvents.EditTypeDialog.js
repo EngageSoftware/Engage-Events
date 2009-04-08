@@ -1,1 +1,45 @@
-﻿function EngageEvents() { } EngageEvents.occurrenceUrl = null; EngageEvents.seriesUrl = null; EngageEvents.occurrence = 1; EngageEvents.series = 2; EngageEvents.GetRadWindow = function() { var a = null; if (window.radWindow) { a = window.radWindow } else if (window.frameElement.radWindow) { a = window.frameElement.radWindow } return a }; EngageEvents.OK_Clicked = function(a) { var b = document.getElementById(a), oWindow = EngageEvents.GetRadWindow(); oWindow.close(b.checked ? EngageEvents.occurrence : EngageEvents.series) }; EngageEvents.Cancel_Clicked = function() { var a = EngageEvents.GetRadWindow(); a.close() }; EngageEvents.showEditTypeDialog = function(a, b) { window.radopen(null, "EditTypeDialogWindow"); EngageEvents.occurrenceUrl = a; EngageEvents.seriesUrl = b }; EngageEvents.EditTypeDialogWindow_Callback = function(a, b) { if (b) { var c = b === EngageEvents.occurrence ? EngageEvents.occurrenceUrl : EngageEvents.seriesUrl; if (c.substring(0, 4) === 'http') { window.location.href = c } else { eval(c) } } };
+﻿function EngageEvents() { }
+EngageEvents.occurrenceUrl = null;
+EngageEvents.seriesUrl = null;
+EngageEvents.occurrence = 1;
+EngageEvents.series = 2;
+
+EngageEvents.GetRadWindow = function() {
+    var oWindow = null;
+    if (window.radWindow) {
+        oWindow = window.radWindow;
+    }
+    else if (window.frameElement.radWindow) {
+        oWindow = window.frameElement.radWindow;
+    }
+    return oWindow;
+};
+
+EngageEvents.OK_Clicked = function(occurrenceRadioButtonId) {
+    var occurrenceRadioButton = document.getElementById(occurrenceRadioButtonId),
+        oWindow = EngageEvents.GetRadWindow();
+    oWindow.close(occurrenceRadioButton.checked ? EngageEvents.occurrence : EngageEvents.series);
+};
+
+EngageEvents.Cancel_Clicked = function() {
+    var oWindow = EngageEvents.GetRadWindow();
+    oWindow.close();
+};
+
+EngageEvents.showEditTypeDialog = function(occurrenceUrl, seriesUrl) {
+    window.radopen(null, "EditTypeDialogWindow");
+    EngageEvents.occurrenceUrl = occurrenceUrl;
+    EngageEvents.seriesUrl = seriesUrl;
+};
+
+EngageEvents.EditTypeDialogWindow_Callback = function(radWindow, returnValue) {
+    if (returnValue) {
+        var navigateUrl = returnValue === EngageEvents.occurrence ? EngageEvents.occurrenceUrl : EngageEvents.seriesUrl;
+        if (navigateUrl.substring(0, 4) === 'http') {
+            window.location.href = navigateUrl;
+        }
+        else {
+            eval(navigateUrl);
+        }
+    }
+};

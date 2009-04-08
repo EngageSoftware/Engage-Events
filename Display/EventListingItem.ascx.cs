@@ -12,6 +12,7 @@
 namespace Engage.Dnn.Events.Display
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Globalization;
     using System.Text;
@@ -62,12 +63,6 @@ namespace Engage.Dnn.Events.Display
         private ListingMode listingMode;
 
         /// <summary>
-        /// Backing field for <see cref="IsFeatured"/>
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private bool isFeatured;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="EventListingItem"/> class.
         /// </summary>
         public EventListingItem()
@@ -112,25 +107,11 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance should display only featured events.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if this instance should only display featured events; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsFeatured
-        {
-            [DebuggerStepThrough]
-            get { return this.isFeatured; }
-            [DebuggerStepThrough]
-            set { this.isFeatured = value; }
-        }
-
-        /// <summary>
         /// Gets or sets the template provider to use for providing templating functionality within this control.
         /// </summary>
         /// <value>The template provider to use for providing templating functionality within this control</value>
         /// <exception cref="ArgumentNullException"><c>value</c> is null.</exception>
-        public new RepeaterTemplateProvider TemplateProvider
+        private new RepeaterTemplateProvider TemplateProvider
         {
             get { return (RepeaterTemplateProvider)base.TemplateProvider; }
             set { base.TemplateProvider = value; }
@@ -172,7 +153,7 @@ namespace Engage.Dnn.Events.Display
         /// <value>The Tab ID to use when displaying module details.</value>
         private int DetailsTabId
         {
-            get { return Dnn.Utility.GetIntSetting(this.Settings, Setting.DetailsDisplayTabId.PropertyName, this.TabId); }
+            get { return Dnn.Utility.GetIntSetting(this.Settings, "DetailsDisplayTabId", this.TabId); }
         }
 
         /// <summary>
@@ -181,7 +162,7 @@ namespace Engage.Dnn.Events.Display
         /// <value>The Module ID to use when displaying module details.</value>
         private int DetailsModuleId
         {
-            get { return Dnn.Utility.GetIntSetting(this.Settings, Setting.DetailsDisplayModuleId.PropertyName, this.ModuleId); }
+            get { return Dnn.Utility.GetIntSetting(this.Settings, "DetailsDisplayModuleId", this.ModuleId); }
         }
 
         /// <summary>
@@ -240,30 +221,14 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Binds the data for this control.
-        /// </summary>
-        public void BindData()
-        {
-            EventCollection events = EventCollection.Load(this.PortalId, this.listingMode, this.SortExpression, this.CurrentPageIndex - 1, this.RecordsPerPage, this.Status.Equals("All", StringComparison.Ordinal), this.IsFeatured);
-
-            this.TotalNumberOfEvents = events.TotalRecords;
-            this.TemplateProvider.ItemPagingState = new ItemPagingState(this.CurrentPageIndex, events.TotalRecords, this.RecordsPerPage);
-            this.TemplateProvider.DataSource = events;
-            this.TemplateProvider.DataBind();
-        }
-
-        /// <summary>
         /// Raises the <see cref="EventArgs"/> event.
         /// </summary>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected override void OnInit(EventArgs e)
         {
+            this.listingMode = Dnn.Utility.GetEnumSetting(this.Settings, "DisplayModeOption", ListingMode.All);
             this.SetupTemplateProvider();
-
-            base.OnInit(e);
-            this.listingMode = Dnn.Utility.GetEnumSetting(this.Settings, Setting.DisplayModeOption.PropertyName, ListingMode.All);
-
-            this.Load += this.Page_Load;
+            base.OnInit(e);            
         }
 
         /// <summary>
@@ -283,16 +248,6 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Handles the Load event of the Page control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void Page_Load(object sender, EventArgs e)
-        {
-            this.BindData();
-        }
-
-        /// <summary>
         /// Handles the SortChanged event of the <see cref="SortAction"/> and <see cref="StatusFilterAction"/> controls.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -304,37 +259,18 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Handles the Cancel event of the <see cref="CancelAction"/> control.
+        /// Method used to process a token. This method is invoked from the <see cref="TemplateEngine"/> class. Since this control knows best on how to construct
+        /// the page.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void CancelAction_Cancel(object sender, EventArgs e)
-        {
-            this.BindData();
-        }
-
-        /// <summary>
-        /// Handles the Delete event of the <see cref="DeleteAction"/> control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void DeleteAction_Delete(object sender, EventArgs e)
-        {
-            this.BindData();
-        }
-
-        /// <summary>
-        /// Method used to process a token. This method is invoked from the <see cref="TemplateEngine"/> class. Since this control knows
-        /// best on how to construct the page. ListingHeader, ListingItem and Listing Footer templates are processed here.
-        /// </summary>
-        /// <param name="container">The container.</param>
-        /// <param name="tag">The tag being processed.</param>
-        /// <param name="engageObject">The engage object.</param>
+        /// <param name="container">The container into which created controls should be added</param>
+        /// <param name="tag">The tag to process</param>
+        /// <param name="templateItem">The object to query for data to implement the given tag</param>
         /// <param name="resourceFile">The resource file to use to find get localized text.</param>
+        /// <returns>Whether to process the tag's ChildTags collection</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "The complexity cannot easily be reduced and the method is easy to understand, test, and maintain")]
-        private void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)
+        private bool ProcessTag(Control container, Tag tag, ITemplateable templateItem, string resourceFile)
         {
-            Event currentEvent = (Event)engageObject;
+            Event currentEvent = (Event)templateItem;
             if (currentEvent != null && currentEvent != this.lastEventProcessed)
             {
                 this.isAlternatingEvent = !this.isAlternatingEvent;
@@ -387,14 +323,12 @@ namespace Engage.Dnn.Events.Display
                         DeleteAction deleteAction = (DeleteAction)this.LoadControl(this.ActionsControlsFolder + "DeleteAction.ascx");
                         deleteAction.CurrentEvent = currentEvent;
                         deleteAction.ModuleConfiguration = this.ModuleConfiguration;
-                        deleteAction.Delete += this.DeleteAction_Delete;
                         container.Controls.Add(deleteAction);
                         break;
                     case "CANCELBUTTON":
                         CancelAction cancelAction = (CancelAction)this.LoadControl(this.ActionsControlsFolder + "CancelAction.ascx");
                         cancelAction.CurrentEvent = currentEvent;
                         cancelAction.ModuleConfiguration = this.ModuleConfiguration;
-                        cancelAction.Cancel += this.CancelAction_Cancel;
                         container.Controls.Add(cancelAction);
                         break;
                     case "EDITEMAILBUTTON":
@@ -437,7 +371,7 @@ namespace Engage.Dnn.Events.Display
                                     "<a href=\"{0}\"",
                                     HttpUtility.HtmlAttributeEncode(linkUrl));
 
-                            string detailLinkCssClass = tag.GetAttributeValue("CssClass");
+                            string detailLinkCssClass = TemplateEngine.GetAttributeValue(tag, templateItem, resourceFile, "CssClass", "class");
                             if (Engage.Utility.HasValue(detailLinkCssClass))
                             {
                                 detailLinkBuilder.AppendFormat(
@@ -450,29 +384,20 @@ namespace Engage.Dnn.Events.Display
 
                             if (!tag.HasChildTags)
                             {
-                                string detailLinkText = Localization.GetString(tag.GetAttributeValue("ResourceKey"), resourceFile);
-                                if (string.IsNullOrEmpty(detailLinkText))
-                                {
-                                    detailLinkText = tag.GetAttributeValue("Text");
-                                    if (string.IsNullOrEmpty(detailLinkText))
-                                    {
-                                        detailLinkText = "Read More...";
-                                    }
-                                }
-
-                                detailLinkBuilder.Append(detailLinkText)
+                                detailLinkBuilder
+                                    .Append(TemplateEngine.GetAttributeValue(tag, templateItem, resourceFile, "Text"))
                                     .Append("</a>");
                             }
 
                             container.Controls.Add(new LiteralControl(detailLinkBuilder.ToString()));
                         }
 
-                        break;
+                        return true;
                     case "RECURRENCESUMMARY":
                         container.Controls.Add(new LiteralControl(Dnn.Events.Utility.GetRecurrenceSummary(currentEvent.RecurrenceRule)));
                         break;
                     case "EVENTWRAPPER":
-                        StringBuilder cssClass = new StringBuilder(tag.GetAttributeValue("CssClass"));
+                        StringBuilder cssClass = new StringBuilder(TemplateEngine.GetAttributeValue(tag, templateItem, resourceFile, "CssClass", "class"));
                         if (currentEvent.IsRecurring)
                         {
                             AppendCssClassAttribute(tag, cssClass, "RecurringEventCssClass");
@@ -489,7 +414,7 @@ namespace Engage.Dnn.Events.Display
                         }
 
                         container.Controls.Add(new LiteralControl(string.Format(CultureInfo.InvariantCulture, "<div class=\"{0}\">", cssClass.ToString())));
-                        break;
+                        return true;
                     case "DURATION":
                         container.Controls.Add(new LiteralControl(HttpUtility.HtmlEncode(Dnn.Events.Utility.GetFormattedEventDate(currentEvent.EventStart, currentEvent.EventEnd))));
                         break;
@@ -511,6 +436,8 @@ namespace Engage.Dnn.Events.Display
                         break;
                 }
             }
+
+            return false;
         }
 
         /// <summary>
@@ -518,21 +445,40 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         private void SetupTemplateProvider()
         {
-            string headerTemplateName = Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.HeaderTemplate.PropertyName);
-            string itemTemplateName = Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.ItemTemplate.PropertyName);
-            string footerTemplateName = Dnn.Utility.GetStringSetting(this.Settings, Framework.Setting.FooterTemplate.PropertyName);
-
             this.TemplateProvider = new RepeaterTemplateProvider(
-                Utility.DesktopModuleName,
-                TemplateEngine.GetTemplate(this.PhysicalTemplatesFolderName, headerTemplateName),
-                this.HeaderPlaceholder,
-                TemplateEngine.GetTemplate(this.PhysicalTemplatesFolderName, itemTemplateName),
+                this.GetTemplate(Dnn.Utility.GetStringSetting(this.Settings, "Template")),
                 this.ItemPlaceholder,
-                TemplateEngine.GetTemplate(this.PhysicalTemplatesFolderName, footerTemplateName),
-                this.FooterPlaceholder,
                 this.GetPageUrlTemplate(this.SortExpression, this.Status),
                 new ItemPagingState(this.CurrentPageIndex, this.TotalNumberOfEvents, this.RecordsPerPage), 
-                this.ProcessTag);
+                this.ProcessTag,
+                this.GetEvents);
+        }
+
+        /// <summary>
+        /// Gets a list of the <see cref="Event"/>s for this module.  Does not take the <paramref name="listTag"/> or <paramref name="context"/> into account,
+        /// effectively only supporting one data source.
+        /// </summary>
+        /// <remarks>
+        /// The <paramref name="context"/> parameter should always be <c>null</c> unless the Engage:List tag is nested inside of another Engage:List.
+        /// </remarks>
+        /// <param name="listTag">The Engage:List <see cref="Tag"/> for which to return a data source</param>
+        /// <param name="context">The current <see cref="Event"/> being processed, or <c>null</c> if no list is currently being processed</param>
+        /// <returns>A list of the <see cref="Event"/>s over which the given <paramref name="listTag"/> should be processed</returns>
+        private IEnumerable<ITemplateable> GetEvents(Tag listTag, ITemplateable context)
+        {
+            EventCollection events = EventCollection.Load(
+                    this.PortalId,
+                    this.listingMode,
+                    this.SortExpression,
+                    this.CurrentPageIndex - 1,
+                    this.RecordsPerPage,
+                    this.Status.Equals("All", StringComparison.Ordinal),
+                    this.IsFeatured);
+
+            this.TotalNumberOfEvents = events.TotalRecords;
+            this.TemplateProvider.ItemPagingState = new ItemPagingState(this.CurrentPageIndex, events.TotalRecords, this.RecordsPerPage);
+
+            return events;
         }
 
         /// <summary>

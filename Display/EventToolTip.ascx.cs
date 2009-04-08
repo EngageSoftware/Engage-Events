@@ -51,6 +51,7 @@ namespace Engage.Dnn.Events.Display
 
             this.RegisterButton.CurrentEvent = this.currentEvent;
             this.RegisterButton.ModuleConfiguration = this.ModuleConfiguration;
+            this.RegisterButton.LocalResourceFile = this.LocalResourceFile;
 
             AJAX.RegisterPostBackControl(this.AddToCalendarButton);
         }

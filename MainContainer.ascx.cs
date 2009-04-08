@@ -30,7 +30,7 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// The default sub-control to load
         /// </summary>
-        private static readonly SubControlInfo DefaultSubControl = new SubControlInfo("Display/EventListingTemplate.ascx", false);
+        private static readonly SubControlInfo DefaultSubControl = new SubControlInfo("Display/EventDisplay.ascx", false);
 
         /// <summary>
         /// The default sub-control to load

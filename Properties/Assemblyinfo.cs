@@ -25,12 +25,9 @@ using System.Web.UI;
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
 
-[assembly: AssemblyVersion("01.01.00.*")]
+[assembly: AssemblyVersion("01.02.00.*")]
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]
 
 [assembly: WebResource("Engage.Dnn.Events.JavaScript.jquery.fancybox-1.0.0.js", "text/javascript")]
-#if DEBUG
-[assembly: WebResource("Engage.Dnn.Events.JavaScript.jquery.fancybox-1.0.0.debug.js", "text/javascript")]
-#endif

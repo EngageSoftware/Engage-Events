@@ -34,33 +34,15 @@ namespace Engage.Dnn.Events.Display
         /// <value>The <see cref="ListingMode"/> for this listing</value>
         internal string DisplayModeOption
         {
-            set
-            {
-                ModuleController modules = new ModuleController();
-                modules.UpdateTabModuleSetting(this.TabModuleId, Setting.DisplayModeOption.PropertyName, value.ToString(CultureInfo.InvariantCulture));
-            }
-
             get
             {
                 return Utility.GetStringSetting(this.Settings, Setting.DisplayModeOption.PropertyName, string.Empty);
             }
-        }
 
-        /// <summary>
-        /// Gets or sets the template used to display the header of the event listing.
-        /// </summary>
-        /// <value>The template used to display the header of the event listing.</value>
-        internal string HeaderTemplate
-        {
             set
             {
                 ModuleController modules = new ModuleController();
-                modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.HeaderTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
-            }
-
-            get
-            {
-                return Utility.GetStringSetting(this.Settings, Framework.Setting.HeaderTemplate.PropertyName, string.Empty);
+                modules.UpdateTabModuleSetting(this.TabModuleId, Setting.DisplayModeOption.PropertyName, value.ToString(CultureInfo.InvariantCulture));
             }
         }
 
@@ -70,33 +52,15 @@ namespace Engage.Dnn.Events.Display
         /// <value>The template used to display each event in the event listing.</value>
         internal string ItemTemplate
         {
-            set
-            {
-                ModuleController modules = new ModuleController();
-                modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.ItemTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
-            }
-
             get
             {
                 return Utility.GetStringSetting(this.Settings, Framework.Setting.ItemTemplate.PropertyName, string.Empty);
             }
-        }
 
-        /// <summary>
-        /// Gets or sets the template used to display the footer of the event listing.
-        /// </summary>
-        /// <value>The template used to display the footer of the event listing</value>
-        internal string FooterTemplate
-        {
             set
             {
                 ModuleController modules = new ModuleController();
-                modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.FooterTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
-            }
-
-            get
-            {
-                return Utility.GetStringSetting(this.Settings, Framework.Setting.FooterTemplate.PropertyName, string.Empty);
+                modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.ItemTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
             }
         }
 
@@ -106,15 +70,15 @@ namespace Engage.Dnn.Events.Display
         /// <value>The template used to display event details</value>
         internal string DetailTemplate
         {
+            get
+            {
+                return Utility.GetStringSetting(this.Settings, Framework.Setting.DetailTemplate.PropertyName, string.Empty);
+            }
+
             set
             {
                 ModuleController modules = new ModuleController();
                 modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.DetailTemplate.PropertyName, value.ToString(CultureInfo.InvariantCulture));
-            }
-
-            get
-            {
-                return Utility.GetStringSetting(this.Settings, Framework.Setting.DetailTemplate.PropertyName, string.Empty);
             }
         }
 
@@ -124,16 +88,16 @@ namespace Engage.Dnn.Events.Display
         /// <value>The number of records per page.</value>
         internal int RecordsPerPage
         {
-            set
-            {
-                ModuleController modules = new ModuleController();
-                modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.RecordsPerPage.PropertyName, value.ToString(CultureInfo.InvariantCulture));
-            }
-
             get
             {
                 int recordsPerPage = Utility.GetIntSetting(this.Settings, Framework.Setting.RecordsPerPage.PropertyName, 10);
                 return recordsPerPage > 0 ? recordsPerPage : 10;
+            }
+
+            set
+            {
+                ModuleController modules = new ModuleController();
+                modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.RecordsPerPage.PropertyName, value.ToString(CultureInfo.InvariantCulture));
             }
         }
 
@@ -148,10 +112,8 @@ namespace Engage.Dnn.Events.Display
                 Utility.LocalizeListControl(this.DisplayModeDropDown, this.LocalResourceFile);
                 SelectListValue(this.DisplayModeDropDown, this.DisplayModeOption);
 
-                SetupTemplateList(this.HeaderDropDownList, TemplateEngine.GetHeaderTemplates(Framework.Utility.GetPhysicalTemplatesFolderName(Dnn.Events.Utility.DesktopModuleName)), this.HeaderTemplate);
-                SetupTemplateList(this.ItemDropDownList, TemplateEngine.GetItemTemplates(Framework.Utility.GetPhysicalTemplatesFolderName(Dnn.Events.Utility.DesktopModuleName)), this.ItemTemplate);
-                SetupTemplateList(this.FooterDropDownList, TemplateEngine.GetFooterTemplates(Framework.Utility.GetPhysicalTemplatesFolderName(Dnn.Events.Utility.DesktopModuleName)), this.FooterTemplate);
-                SetupTemplateList(this.DetailDropDownList, TemplateEngine.GetDetailTemplates(Framework.Utility.GetPhysicalTemplatesFolderName(Dnn.Events.Utility.DesktopModuleName)), this.DetailTemplate);
+                SetupTemplateList(this.ItemDropDownList, TemplateInfo.GetTemplates(new FileBasedTemplateProvider(Dnn.Events.Utility.DesktopModuleName)), this.ItemTemplate);
+                SetupTemplateList(this.DetailDropDownList, TemplateInfo.GetTemplates(new FileBasedTemplateProvider(Dnn.Events.Utility.DesktopModuleName)), this.DetailTemplate);
 
                 this.RecordsPerPageTextBox.Value = this.RecordsPerPage;
             }
@@ -171,9 +133,7 @@ namespace Engage.Dnn.Events.Display
             if (this.Page.IsValid)
             {
                 this.DisplayModeOption = this.DisplayModeDropDown.SelectedValue;
-                this.HeaderTemplate = this.HeaderDropDownList.SelectedValue;
                 this.ItemTemplate = this.ItemDropDownList.SelectedValue;
-                this.FooterTemplate = this.FooterDropDownList.SelectedValue;
                 this.DetailTemplate = this.DetailDropDownList.SelectedValue;
                 this.RecordsPerPage = (int)this.RecordsPerPageTextBox.Value.Value;
             }

@@ -2,4 +2,3 @@
 <%@ Register src="EventListingItem.ascx" tagname="EventListingItem" tagprefix="uc1" %>
 
 <asp:PlaceHolder ID="DetailPlaceholder" runat="server"></asp:PlaceHolder>
-<asp:HyperLink ID="BackHyperlink" runat="server"></asp:HyperLink>

@@ -550,7 +550,7 @@ namespace Engage.Dnn.Events.Controls
         private void SetupDailyRecurrence(RecurrencePattern pattern)
         {
             this.RepeatFrequencyDaily.Checked = true;
-            this.RepeatEveryWeekday.Checked = (pattern.DaysOfWeekMask == RecurrenceDay.WeekDays);
+            this.RepeatEveryWeekday.Checked = pattern.DaysOfWeekMask == RecurrenceDay.WeekDays;
             this.RepeatEveryNthDay.Checked = !this.RepeatEveryWeekday.Checked;
             if (this.RepeatEveryNthDay.Checked)
             {

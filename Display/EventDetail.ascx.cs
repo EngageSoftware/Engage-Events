@@ -28,28 +28,26 @@ namespace Engage.Dnn.Events.Display
     public partial class EventDetail : ModuleBase
     {
         /// <summary>
-        /// Method used to process a tag. This method is invoked from the <see cref="TemplateEngine"/> class. Since this control knows
-        /// best on how to construct the control. ListingItem templates are used here.
+        /// Processes a tag for a template
         /// </summary>
-        /// <param name="container">The container.</param>
-        /// <param name="tag">The tag that is being processed.</param>
-        /// <param name="engageObject">The engage object.</param>
+        /// <param name="container">The container into which created controls should be added</param>
+        /// <param name="tag">The tag to process</param>
+        /// <param name="templateItem">The object to query for data to implement the given tag</param>
         /// <param name="resourceFile">The resource file to use to find get localized text.</param>
-        internal static void ProcessTag(Control container, Tag tag, object engageObject, string resourceFile)
+        /// <returns>Whether to process the tag's ChildTags collection</returns>
+        internal static bool ProcessTag(Control container, Tag tag, ITemplateable templateItem, string resourceFile)
         {
-            if (tag.TagType == TagType.Open && tag.LocalName.Equals("BackHyperlink", StringComparison.OrdinalIgnoreCase))
+            if (tag.TagType == TagType.Open && tag.LocalName.Equals("BACKHYPERLINK", StringComparison.OrdinalIgnoreCase))
             {
                 HyperLink backHyperlink = new HyperLink();
                 backHyperlink.NavigateUrl = Globals.NavigateURL();
-                backHyperlink.CssClass = tag.GetAttributeValue("CssClass");
-                backHyperlink.Text = Localization.GetString(tag.GetAttributeValue("ResourceKey"), resourceFile);
-                if (string.IsNullOrEmpty(backHyperlink.Text))
-                {
-                    backHyperlink.Text = tag.GetAttributeValue("Text");
-                }
-
+                backHyperlink.CssClass = TemplateEngine.GetAttributeValue(tag, templateItem, resourceFile, "CssClass", "class");
+                backHyperlink.Text = TemplateEngine.GetAttributeValue(tag, templateItem, resourceFile, "Text");
+                
                 container.Controls.Add(backHyperlink);
             }
+
+            return true;
         }
 
         /// <summary>
@@ -57,17 +55,15 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         internal void BindData()
         {
-            int? eventId = this.EventId;
-            if (eventId.HasValue)
-            {
-                Event ev = Event.Load(eventId.Value);
-                string templateName = Utility.GetStringSetting(this.Settings, Framework.Setting.DetailTemplate.PropertyName, "Detail.Item.html");
+            ////int? eventId = this.EventId;
+            ////if (eventId.HasValue)
+            ////{
+            ////    Event ev = Event.Load(eventId.Value);
+            ////    string templateName = Utility.GetStringSetting(this.Settings, Framework.Setting.DetailTemplate.PropertyName, "Detail.Item.html");
 
-                Template template = TemplateEngine.GetTemplate(PhysicalTemplatesFolderName, templateName);
-                TemplateEngine.ProcessTags(this.DetailPlaceholder, template.ChildTags, ev, TemplateResourceFile, ProcessTag);
-
-                this.BackHyperlink.NavigateUrl = Globals.NavigateURL();
-            }
+            ////    Template template = TemplateEngine.GetTemplate(PhysicalTemplatesFolderName, templateName);
+            ////    TemplateEngine.ProcessTags(this.DetailPlaceholder, template.ChildTags, ev, TemplateResourceFile, ProcessTag);
+            ////}
         }
 
         /// <summary>

@@ -31,7 +31,6 @@ namespace Engage.Dnn.Events
         /// </summary>
         protected override void BindData()
         {
-            this.LocalizeControls();
         }
 
         /// <summary>
@@ -41,7 +40,6 @@ namespace Engage.Dnn.Events
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
-            this.LocalResourceFile = TemplateResourceFile;
             this.Load += this.Page_Load;
             this.RegisterButton.Click += this.RegisterButton_Click;
         }
@@ -53,6 +51,7 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Page_Load(object sender, EventArgs e)
         {
+            this.LocalizeControls();
             if (IsLoggedIn)
             {
                 this.SetupFancyBox();
@@ -75,7 +74,7 @@ namespace Engage.Dnn.Events
         private void LocalizeControls()
         {
             string resourceKey = IsLoggedIn ? "RegisterButton.Text" : "LoginToRegisterButton.Text";
-            this.RegisterButton.Text = Localization.GetString(resourceKey, this.TemplateResourceFile);
+            this.RegisterButton.Text = Localization.GetString(resourceKey, this.LocalResourceFile);
         }
 
         /// <summary>
@@ -84,12 +83,7 @@ namespace Engage.Dnn.Events
         private void SetupFancyBox()
         {
             this.AddJQueryReference();
-
-#if DEBUG
-            ScriptManager.RegisterClientScriptResource(this, typeof(RegisterAction), "Engage.Dnn.Events.JavaScript.jquery.fancybox-1.0.0.debug.js");
-#else
             ScriptManager.RegisterClientScriptResource(this, typeof(RegisterAction), "Engage.Dnn.Events.JavaScript.jquery.fancybox-1.0.0.js");
-#endif
 
             string[] parameters = Utility.GetEventParameters(
                     this.CurrentEvent.Id,

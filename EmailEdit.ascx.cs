@@ -164,7 +164,7 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void EmailTypeRadioButtons_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.ReminderOnlyDiv.Visible = (this.EmailTypeRadioButtons.SelectedValue == EmailEventType.Reminder.Description);
+            this.ReminderOnlyDiv.Visible = this.EmailTypeRadioButtons.SelectedValue == EmailEventType.Reminder.Description;
         }
 
         /// <summary>

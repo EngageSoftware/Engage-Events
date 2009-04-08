@@ -8,6 +8,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		EngageEvents.sln = EngageEvents.sln
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{37A69CBB-5A04-4D74-A16C-765FDE6BF9F3}"
+	ProjectSection(SolutionItems) = preProject
+		MSBuild\EcmaScript.NET.modified.dll = MSBuild\EcmaScript.NET.modified.dll
+		MSBuild\Iesi.Collections.dll = MSBuild\Iesi.Collections.dll
+		MSBuild\Yahoo.Yui.Compressor.NET20.dll = MSBuild\Yahoo.Yui.Compressor.NET20.dll
+		MSBuild\Yui.Compressor.targets = MSBuild\Yui.Compressor.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 2
@@ -16,9 +24,6 @@ Global
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = EngageEvents.csproj
 		SccLocalPath1 = .
-	EndGlobalSection
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = Engage Framework 3.0.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,5 +37,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{37A69CBB-5A04-4D74-A16C-765FDE6BF9F3} = {9A7429F0-BB4E-4881-8994-25F2DC070C75}
 	EndGlobalSection
 EndGlobal

@@ -68,7 +68,6 @@ namespace Engage.Dnn.Events
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
-            this.LocalResourceFile = TemplateResourceFile;
             this.Load += this.Page_Load;
             this.Button.Click += this.Button_Click;
         }

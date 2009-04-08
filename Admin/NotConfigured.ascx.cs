@@ -45,15 +45,14 @@ namespace Engage.Dnn.Events
         private void SetupDefaultSettings()
         {
             ModuleController modules = new ModuleController();
-            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.DisplayTemplate.PropertyName, "Display.Listing.html");
-            modules.UpdateTabModuleSetting(this.TabModuleId, Setting.DisplayModeOption.PropertyName, ListingMode.All.ToString());
+            modules.UpdateTabModuleSetting(this.TabModuleId, "DisplayType", "Display.Listing.html");
+            modules.UpdateTabModuleSetting(this.TabModuleId, "DisplayModeOption", ListingMode.All.ToString());
 
-            // TODO: add error handling if a folder doesn't have any documents of a particular type
-            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.HeaderTemplate.PropertyName, TemplateEngine.GetHeaderTemplates(this.PhysicalTemplatesFolderName)[0].DocumentName);
-            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.ItemTemplate.PropertyName, TemplateEngine.GetItemTemplates(this.PhysicalTemplatesFolderName)[0].DocumentName);
-            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.FooterTemplate.PropertyName, TemplateEngine.GetFooterTemplates(this.PhysicalTemplatesFolderName)[0].DocumentName);
-            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.DetailTemplate.PropertyName, TemplateEngine.GetDetailTemplates(this.PhysicalTemplatesFolderName)[0].DocumentName);
-            modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.RecordsPerPage.PropertyName, 10.ToString(CultureInfo.InvariantCulture));
+            // TODO: add error handling if no templates exist?
+            TemplateInfo defaultTemplate = this.GetTemplates()[0];
+            modules.UpdateTabModuleSetting(this.TabModuleId, "Template", defaultTemplate.FolderName);
+            modules.UpdateTabModuleSetting(this.TabModuleId, "DetailTemplate", defaultTemplate.Settings["DetailTemplate"]);
+            modules.UpdateTabModuleSetting(this.TabModuleId, "RecordsPerPage", 10.ToString(CultureInfo.InvariantCulture));
         }
     }
 }
