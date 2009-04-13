@@ -1,0 +1,11 @@
+<Engage:List>
+<Engage:EventWrapper CssClass="EventItem ListingShort" RecurringEventCssClass="RecurringEventItem" FeaturedEventCssClass="FeaturedEventItem">
+    <ul class="EventsQuickView">
+	    <li class="eqv_date"><Engage:Literal Text="%#EventStart:MMM.dd.yyyy"/><span class="RecurrenceSummary"><Engage:RecurrenceSummary /></span></li>
+        <li class="eqv_title"><Engage:ReadMore><Engage:Literal Text="%#Title%" /></Engage:ReadMore></li>
+    </ul>
+    <div class="EventButtons">
+        <Engage:EditEventButton /> <Engage:ViewResponsesButton /> <Engage:RegisterButton /> <Engage:AddToCalendarButton /> <Engage:DeleteButton /> <Engage:CancelButton />
+    </div>
+</Engage:EventWrapper>
+</Engage:List>

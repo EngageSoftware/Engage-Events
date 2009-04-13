@@ -112,8 +112,8 @@ namespace Engage.Dnn.Events.Display
                 Utility.LocalizeListControl(this.DisplayModeDropDown, this.LocalResourceFile);
                 SelectListValue(this.DisplayModeDropDown, this.DisplayModeOption);
 
-                SetupTemplateList(this.ItemDropDownList, TemplateInfo.GetTemplates(new FileBasedTemplateProvider(Dnn.Events.Utility.DesktopModuleName)), this.ItemTemplate);
-                SetupTemplateList(this.DetailDropDownList, TemplateInfo.GetTemplates(new FileBasedTemplateProvider(Dnn.Events.Utility.DesktopModuleName)), this.DetailTemplate);
+                SetupTemplateList(this.ItemDropDownList, TemplateInfo.GetTemplates(new FileBasedTemplateProvider(Dnn.Events.Utility.DesktopModuleName), TemplateType.List), this.ItemTemplate);
+                SetupTemplateList(this.DetailDropDownList, TemplateInfo.GetTemplates(new FileBasedTemplateProvider(Dnn.Events.Utility.DesktopModuleName), TemplateType.Single), this.DetailTemplate);
 
                 this.RecordsPerPageTextBox.Value = this.RecordsPerPage;
             }

@@ -45,14 +45,25 @@ namespace Engage.Dnn.Events
         private void SetupDefaultSettings()
         {
             ModuleController modules = new ModuleController();
-            modules.UpdateTabModuleSetting(this.TabModuleId, "DisplayType", "Display.Listing.html");
+            modules.UpdateTabModuleSetting(this.TabModuleId, "DisplayType", "LIST");
             modules.UpdateTabModuleSetting(this.TabModuleId, "DisplayModeOption", ListingMode.All.ToString());
+            modules.UpdateTabModuleSetting(this.TabModuleId, "RecordsPerPage", 10.ToString(CultureInfo.InvariantCulture));
 
             // TODO: add error handling if no templates exist?
-            TemplateInfo defaultTemplate = this.GetTemplates()[0];
+            TemplateInfo defaultTemplate = this.GetTemplates(TemplateType.List)[0];
             modules.UpdateTabModuleSetting(this.TabModuleId, "Template", defaultTemplate.FolderName);
-            modules.UpdateTabModuleSetting(this.TabModuleId, "DetailTemplate", defaultTemplate.Settings["DetailTemplate"]);
-            modules.UpdateTabModuleSetting(this.TabModuleId, "RecordsPerPage", 10.ToString(CultureInfo.InvariantCulture));
+
+            string detailTemplateFolderName;
+            if (defaultTemplate.Settings.ContainsKey("DetailTemplate"))
+            {
+                detailTemplateFolderName = defaultTemplate.Settings["DetailTemplate"];
+            }
+            else
+            {
+                detailTemplateFolderName = this.GetTemplates(TemplateType.Single)[0].FolderName;
+            }
+
+            modules.UpdateTabModuleSetting(this.TabModuleId, "DetailTemplate", detailTemplateFolderName);
         }
     }
 }

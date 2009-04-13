@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<EngageManifest Module="Events" Type="List" xmlns="http://www.engagesoftware.com/Schemas/EngageManifest">
+  <Title>Short Listing</Title>
+  <Description>
+    A short listing of events, displaying date (with recurrence summary) and title, along with Register and Add to Calendar buttons.
+  </Description>
+  <Stylesheet>Template.css</Stylesheet>
+  <Template>Item.ListingShort.html</Template>
+</EngageManifest>

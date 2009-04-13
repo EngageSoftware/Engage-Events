@@ -1,0 +1,29 @@
+<div class="EventItem ItemDetails">
+	<div class="EventTitle">
+        <h2 class="Head"><Engage:Literal Text-PropertyName="Title" /></h2>
+    </div>
+    <div class="EventLocation">
+        <p class="NormalBold"><Engage:Label Text-ResourceKey="Where" /></p>
+        <p class="Normal"><Engage:Literal Text-PropertyName="Location" /></p>
+    </div>
+    <div class="EventDate">
+        <p class="NormalBold"><Engage:Label Text-ResourceKey="When" /></p>
+        <p class="Normal"><Engage:Literal Text-PropertyName = "EventStart" Text-Format="MM.dd.yyyy"/></p>
+        <p class="NormalBold"><Engage:Label Text-ResourceKey="Time" /></p>
+        <p class="Normal"><Engage:Literal Text-PropertyName = "EventStart" Text-Format="%h:mm tt" /></p>
+    </div>
+    <div class="EventOverview">
+        <p class="NormalBold"><Engage:Label Text-ResourceKey="Overview" /></p>
+        <div class="Normal">
+            <div><Engage:Literal Text-PropertyName="Overview" /></div>
+            <p><Engage:ReadMore Text-ResourceKey="ReadMore" /></p>
+        </div>
+    </div>
+    <div class="EventDescription">
+        <p class="NormalBold"><Engage:Label Text-ResourceKey="Description" /></p>
+        <div class="Normal">
+            <div><Engage:Literal Text-PropertyName="Description" /></div>
+        </div>
+    </div>
+    <Engage:BackHyperlink Text-ResourceKey="Back" />
+</div>

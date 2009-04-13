@@ -581,18 +581,12 @@
     </Content>
     <Content Include="Display\EventDisplay.ascx" />
     <Content Include="Display\EventListingItem.ascx" />
-    <Content Include="Templates\Header.ListingThisMonth.html" />
-    <Content Include="Templates\Item.Listing.html" />
-    <Content Include="Templates\Header.ListingFuture.html" />
-    <Content Include="Templates\Template.css" />
+    <Content Include="Templates\Default\Item.Listing.html" />
+    <Content Include="Templates\Default\Template.css" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Display\TemplateDisplayOptions.ascx" />
-    <Content Include="Templates\Display.Calendar.html" />
-    <Content Include="Templates\Detail.Item.html" />
-    <Content Include="Templates\Display.Listing.html" />
-    <Content Include="Templates\Footer.Listing.html" />
-    <Content Include="Templates\Header.ListingAll.html" />
+    <Content Include="Templates\Default-Single\Detail.Item.html" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Actions\AddToCalendarAction.ascx" />
@@ -612,7 +606,6 @@
     <Content Include="Controls\App_LocalResources\RecurrenceEditor.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Templates\Header.Featured.html" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_LocalResources\SharedResources.resx">
@@ -653,6 +646,18 @@
     <None Include="JavaScript\jquery-1.2.6.min.debug.js" />
     <None Include="JavaScript\EngageEvents.EditTypeDialog.js" />
     <EmbeddedResource Include="JavaScript\jquery.fancybox-1.0.0.js" />
+    <Content Include="Templates\Default\Manifest.xml" />
+    <Content Include="Templates\ListingShort\Manifest.xml" />
+    <Content Include="Templates\ListingShort\Template.css" />
+    <Content Include="Templates\Narrow\App_LocalResources\Template.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Templates\MiniList\App_LocalResources\Template.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Templates\Default-Single\App_LocalResources\Template.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="References\DotNetNuke.dll" />
     <Content Include="References\DotNetNuke.WebUtility.dll" />
     <Content Include="References\Engage.Dnn.Framework.dll" />
@@ -666,22 +671,22 @@
     </Content>
     <Content Include="ReleaseNotes_1.1.0.htm" />
     <Content Include="RespondPage.aspx" />
-    <Content Include="Templates\App_LocalResources\Template.resx">
+    <Content Include="Templates\Default\App_LocalResources\Template.resx">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Admin\App_LocalResources\LicenseError.ascx.resx">
     </Content>
     <Content Include="Navigation\App_LocalResources\EventAdminActions.ascx.resx">
     </Content>
-    <Content Include="Templates\Footer.ListingShort.html" />
-    <Content Include="Templates\Footer.MiniList.html" />
-    <Content Include="Templates\Footer.Narrow.html" />
-    <Content Include="Templates\Header.ListingShort.html" />
-    <Content Include="Templates\Header.MiniList.html" />
-    <Content Include="Templates\Header.Narrow.html" />
-    <Content Include="Templates\Item.ListingShort.html" />
-    <Content Include="Templates\Item.MiniList.html" />
-    <Content Include="Templates\Item.Narrow.html" />
+    <Content Include="Templates\Default-Single\Manifest.xml" />
+    <Content Include="Templates\Default-Single\Template.css" />
+    <Content Include="Templates\ListingShort\Item.ListingShort.html" />
+    <Content Include="Templates\MiniList\MiniList.htm" />
+    <Content Include="Templates\Narrow\Narrow.htm" />
+    <Content Include="Templates\MiniList\Manifest.xml" />
+    <Content Include="Templates\MiniList\Template.css" />
+    <Content Include="Templates\Narrow\Manifest.xml" />
+    <Content Include="Templates\Narrow\Template.css" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(Configuration)'=='Debug'">
@@ -692,6 +697,8 @@
         <None Include="EngageEvents.5.dnn" />
         <None Include="EngageEvents.5.dnn" />
         <None Include="EngageEvents.5.dnn" />
+        <None Include="EngageEvents.5.dnn" />
+        <None Include="EngageEvents.Build" />
         <None Include="EngageEvents.Build" />
         <None Include="EngageEvents.Build" />
         <None Include="EngageEvents.Build" />

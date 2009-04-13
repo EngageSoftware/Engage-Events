@@ -1,0 +1,22 @@
+	.Narrow {overflow:hidden;border-color:#ccc;border-width:1px;border-style:dashed;}
+	.Narrow .EventItem {border-bottom: 1px #ccc dotted; overflow: hidden; padding:5px; width: 100%;}
+	.Narrow .EventItem:hover {background:#eee;}
+	.Narrow .EventItem:hover a {color:#666; text-decoration:none;}
+	
+	.Narrow	.EventTitle{overflow: hidden;}
+		.Narrow .EventTitle h3.SubHead{font-size: 120%; padding: 0 0 5px 18%; margin: 0;}
+		.Narrow .EventTitle h2.NormalBold {padding: 0 0 5px 18%; margin: 0; Color:#666;}
+	
+	.Narrow .EventLocation{overflow: hidden;width:100%;}
+		.Narrow .EventLocation .NormalBold {float:left; width: 30%; text-align: right;}
+		.Narrow .EventLocation .Normal{float:right; width: 60%; text-align: left;}
+
+	.Narrow .EventDate{overflow: hidden;width:100%;}
+		.Narrow .EventDate .NormalBold {float:left; width: 30%; text-align: right;}
+		.Narrow .EventDate .Normal{float:right; width: 60%; text-align: left;}
+		.Narrow .RecurrenceSummary .NormalBold {float: none; width: auto; text-align: left;}
+		
+	.Narrow .EventLink{display:block;padding:10px 0 10px 10px;margin:-10px 0 -10px -10px;}
+	.Narrow .EventItem p.Normal, .Narrow .EventItem h2.NormalBold {margin: 5px;}
+			
+	.Narrow .calendarLink {padding: 5px; text-align: right; }

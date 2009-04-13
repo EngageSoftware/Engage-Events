@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<EngageManifest Module="Events" Type="List" xmlns="http://www.engagesoftware.com/Schemas/EngageManifest">
+  <Title>Mini List</Title>
+  <Description>
+    A compact list of events, displaying just date and title.  
+    Contains a link to the module's details display module, labeled "View Calendar" 
+    (so, make sure that the module's details display module is a calendar display, or that the link's text is changed in the DNN Language Editor).
+  </Description>
+  <Stylesheet>Template.css</Stylesheet>
+  <ResourceFile>App_LocalResources/Template.resx</ResourceFile>
+  <Template>MiniList.htm</Template>
+</EngageManifest>
