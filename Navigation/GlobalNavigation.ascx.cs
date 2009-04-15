@@ -73,6 +73,7 @@ namespace Engage.Dnn.Events.Navigation
         {
             this.HomeLink.NavigateUrl = Globals.NavigateURL();
             this.SettingsLink.NavigateUrl = this.EditUrl("ModuleId", this.ModuleId.ToString(CultureInfo.InvariantCulture), "Module");
+            this.ChooseDisplayLink.NavigateUrl = this.BuildLinkUrl(this.ModuleId, "ChooseDisplay");
             this.AddAnEventLink.NavigateUrl = this.BuildLinkUrl(this.ModuleId, "EventEdit");
             this.ResponsesLink.NavigateUrl = this.BuildLinkUrl(this.ModuleId, "ResponseSummary");
             this.ManageEventsLink.NavigateUrl = this.BuildLinkUrl(this.ModuleId, "EventListingAdmin");

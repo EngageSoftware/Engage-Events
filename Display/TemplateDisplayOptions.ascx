@@ -8,26 +8,6 @@
     <asp:DropDownList ID="DisplayModeDropDown" runat="server" />
 </div>
 
-<dnn:sectionhead ID="TemplateSettingsSectionHead" CssClass="Head SectionHead" runat="server" Text="Templates" Section="TemplatesSection" ResourceKey="TemplateSettingsSectionHead" IsExpanded="True" />
-<div id="TemplatesSection" runat="server" class="TemplatesSection">
-    <div class="EventsSetting">
-        <dnn:label ID="HeaderLabel" runat="server" ControlName="HeaderDropdownlist" Text="Select an Header Template:" ResourceKey="HeaderLabel" CssClass="SubHead" />
-        <asp:DropDownList ID="HeaderDropDownList" runat="server" />
-    </div>
-    <div class="EventsSetting">
-        <dnn:label ID="ItemLabel" runat="server" ControlName="ItemDropdownlist" Text="Select an Item Template:" ResourceKey="ItemLabel" CssClass="SubHead" />
-        <asp:DropDownList ID="ItemDropDownList" runat="server" />
-    </div>
-    <div class="EventsSetting">
-        <dnn:label ID="FooterLabel" runat="server" ControlName="FooterDropdownlist" Text="Select an Footer Template:" ResourceKey="FooterLabel" CssClass="SubHead" />
-        <asp:DropDownList ID="FooterDropDownList" runat="server" />
-    </div>
-    <div class="EventsSetting">
-        <dnn:label ID="DetailLabel" runat="server" ControlName="DetailDropdownlist" Text="Select an Detail Template:" ResourceKey="DetailLabel" CssClass="SubHead" />
-        <asp:DropDownList ID="DetailDropDownList" runat="server" />
-    </div>
-</div>
-
 <div class="EventsSetting">
     <dnn:label ID="PagingLabel" runat="server" ControlName="RecordsPerPageTextBox" Text="Enter number of records to display per page:" ResourceKey="PagingLabel" CssClass="SubHead" />
     <span class="NumericTextBoxWrapper">

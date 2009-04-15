@@ -123,38 +123,14 @@
   <data name="CurrentMonth.Text" xml:space="preserve">
     <value>Current Month</value>
   </data>
-  <data name="DetailLabel.Help" xml:space="preserve">
-    <value>The Detail template will be used when you have included the ReadMore entity. This will redirect to a new page using this template for fields to display.</value>
-  </data>
-  <data name="DetailLabel.Text" xml:space="preserve">
-    <value>Select a Detail Template</value>
-  </data>
   <data name="DisplayModeLabel.Help" xml:space="preserve">
     <value>Select which set of events you want to be displayed in this module</value>
   </data>
   <data name="DisplayModeLabel.Text" xml:space="preserve">
     <value>Select a Display Mode</value>
   </data>
-  <data name="FooterLabel.Help" xml:space="preserve">
-    <value>The Footer template displays at the bottom of the list of events.  Either the footer or header typically holds the paging elements.</value>
-  </data>
-  <data name="FooterLabel.Text" xml:space="preserve">
-    <value>Select a Footer Template</value>
-  </data>
   <data name="Future.Text" xml:space="preserve">
     <value>Future</value>
-  </data>
-  <data name="HeaderLabel.Help" xml:space="preserve">
-    <value>The Header template typically contains information like a title, sorting and status filter.  Either the footer or header typically holds the paging elements.</value>
-  </data>
-  <data name="HeaderLabel.Text" xml:space="preserve">
-    <value>Select a Header Template</value>
-  </data>
-  <data name="ItemLabel.Help" xml:space="preserve">
-    <value>The Item template represents a single event and any information displayed. This is repeated for all events listed.</value>
-  </data>
-  <data name="ItemLabel.Text" xml:space="preserve">
-    <value>Select a Item Template</value>
   </data>
   <data name="PagingLabel.Help" xml:space="preserve">
     <value>Specify how many records you want to display per page.</value>
@@ -167,8 +143,5 @@
   </data>
   <data name="RecordsPerPageRequiredValidator.Text" xml:space="preserve">
     <value>You must supply the number of events to display per page</value>
-  </data>
-  <data name="TemplateSettingsSectionHead.Text" xml:space="preserve">
-    <value>Templates</value>
   </data>
 </root>

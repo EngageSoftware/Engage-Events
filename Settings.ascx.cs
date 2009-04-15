@@ -17,7 +17,6 @@ namespace Engage.Dnn.Events
     using System.Web.UI.WebControls;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Services.Exceptions;
-    using DotNetNuke.Services.Localization;
 
     /// <summary>
     /// This is the settings code behind for Event related Settings.
@@ -39,9 +38,6 @@ namespace Engage.Dnn.Events
             {
                 if (!this.IsPostBack)
                 {
-                    this.DropDownChooseDisplay.Items.Add(new ListItem(Localization.GetString("EventListingTemplate", this.LocalResourceFile), "LIST"));
-                    this.DropDownChooseDisplay.Items.Add(new ListItem(Localization.GetString("EventCalendar", this.LocalResourceFile), "CALENDAR"));
-
                     Dnn.Utility.LocalizeGridView(ref this.DetailsDisplayModuleGrid, this.LocalResourceFile);
                     this.DetailsDisplayModuleGrid.DataSource = new ModuleController().GetModulesByDefinition(this.PortalId, Utility.ModuleDefinitionFriendlyName);
                     this.DetailsDisplayModuleGrid.DataBind();
@@ -65,7 +61,6 @@ namespace Engage.Dnn.Events
                 try
                 {
                     ModuleController modules = new ModuleController();
-                    modules.UpdateTabModuleSetting(this.TabModuleId, "DisplayType", this.DropDownChooseDisplay.SelectedValue);
                     modules.UpdateTabModuleSetting(this.TabModuleId, "FeaturedOnly", this.FeaturedCheckBox.Checked.ToString(CultureInfo.InvariantCulture));
                     modules.UpdateTabModuleSetting(this.TabModuleId, "DetailsDisplayTabId", this.GetSelectedDetailsDisplayTabId().ToString(CultureInfo.InvariantCulture));
                     modules.UpdateTabModuleSetting(this.TabModuleId, "DetailsDisplayModuleId", this.GetSelectedDetailsDisplayModuleId().ToString(CultureInfo.InvariantCulture));
@@ -88,7 +83,6 @@ namespace Engage.Dnn.Events
             base.OnInit(e);
 
             this.Load += this.Page_Load;
-            this.DropDownChooseDisplay.SelectedIndexChanged += this.DropDownChooseDisplay_SelectedIndexChanged;
             this.DetailsDisplayModuleValidator.ServerValidate += this.DetailsDisplayModuleValidator_ServerValidate;
         }
 
@@ -134,16 +128,6 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Handles the SelectedIndexChanged event of the DropDownChooseDisplay control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void DropDownChooseDisplay_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.DisplaySettingsControl();
-        }
-
-        /// <summary>
         /// Handles the <see cref="CustomValidator.ServerValidate"/> event of the <see cref="DetailsDisplayModuleValidator"/> control.
         /// </summary>
         /// <param name="source">The source of the event.</param>
@@ -168,14 +152,6 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetOptions()
         {
-            string displayType = Dnn.Utility.GetStringSetting(this.Settings, "DisplayType").ToUpperInvariant();
-
-            ListItem li = this.DropDownChooseDisplay.Items.FindByValue(displayType);
-            if (li != null)
-            {
-                li.Selected = true;
-            }
-
             this.FeaturedCheckBox.Checked = Dnn.Utility.GetBoolSetting(this.Settings, "FeaturedOnly", false);
             this.SetDetailsDisplayModuleGridSelection(Dnn.Utility.GetIntSetting(this.Settings, "DetailsDisplayTabId", this.TabId), Dnn.Utility.GetIntSetting(this.Settings, "DetailsDisplayModuleId", this.ModuleId));
         }
@@ -238,8 +214,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void DisplaySettingsControl()
         {
-            string selectedDisplayType = this.DropDownChooseDisplay.SelectedValue;
-            switch (selectedDisplayType.ToUpperInvariant())
+            switch (Dnn.Utility.GetStringSetting(this.Settings, "DisplayType").ToUpperInvariant())
             {
                 case "LIST":
                     this.LoadSettingsControl("Display/TemplateDisplayOptions.ascx");

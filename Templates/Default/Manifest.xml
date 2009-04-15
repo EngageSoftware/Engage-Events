@@ -6,5 +6,11 @@
   </Description>
   <Stylesheet>Template.css</Stylesheet>
   <ResourceFile>App_LocalResources/Template.resx</ResourceFile>
-  <Template>MiniList.htm</Template>
+  <Template>Item.Listing.html</Template>
+  <Settings>
+    <Setting>
+      <Name>DetailTemplate</Name>
+      <Value>Default-Single</Value>
+    </Setting>
+  </Settings>
 </EngageManifest>

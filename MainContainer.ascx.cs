@@ -92,6 +92,7 @@ namespace Engage.Dnn.Events
             keyDictionary.Add("EmailAFriend", new SubControlInfo("EmailAFriend.ascx", false));
             keyDictionary.Add("Register", new SubControlInfo("Register.ascx", false));
             keyDictionary.Add("EventDetail", new SubControlInfo("Display/EventDetail.ascx", false));
+            keyDictionary.Add("ChooseDisplay", new SubControlInfo("ChooseDisplay.ascx", false));
 
             return keyDictionary;
         }

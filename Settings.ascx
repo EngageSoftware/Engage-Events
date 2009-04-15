@@ -1,7 +1,6 @@
 <%@ Import Namespace="System.Globalization"%>
-<%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.Settings" CodeBehind="Settings.ascx.cs" %>
 <%@ Import Namespace="DotNetNuke.Entities.Tabs"%>
-<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.Settings" CodeBehind="Settings.ascx.cs" %>
 <%@ Register TagPrefix="dnn" TagName="label" Src="~/controls/labelControl.ascx" %>
 
 <style type="text/css">
@@ -9,12 +8,7 @@
 </style>
 
 <asp:UpdatePanel runat="server" UpdateMode="Conditional">
-    <ContentTemplate>
-        <div class="EventsSetting">
-            <dnn:label ID="LabelChooseDisplayType" ResourceKey="LabelChooseDisplayType" runat="server" CssClass="SubHead" ControlName="DropDownChooseDisplay" />
-            <asp:DropDownList ID="DropDownChooseDisplay" CssClass="NormalTextBox" runat="server" AutoPostBack="True" />
-        </div>
-        
+    <ContentTemplate>        
         <asp:PlaceHolder ID="ControlsPlaceholder" runat="server"/>
         
         <div class="EventsSetting">

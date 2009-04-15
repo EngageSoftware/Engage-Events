@@ -126,23 +126,11 @@
   <data name="DetailsDisplayModuleValidator.Text" xml:space="preserve">
     <value>You must select an Event Details Display Module</value>
   </data>
-  <data name="EventCalendar.Text" xml:space="preserve">
-    <value>Calendar Display</value>
-  </data>
-  <data name="EventListingTemplate.Text" xml:space="preserve">
-    <value>Listing</value>
-  </data>
   <data name="FeaturedEventLabel.Help" xml:space="preserve">
     <value>Choose whether this module should display only events marked as featured</value>
   </data>
   <data name="FeaturedEventLabel.Text" xml:space="preserve">
     <value>Display Featured Events Only</value>
-  </data>
-  <data name="LabelChooseDisplayType.Help" xml:space="preserve">
-    <value>Choose whether to display events as a templated list, or in a calendar</value>
-  </data>
-  <data name="LabelChooseDisplayType.Text" xml:space="preserve">
-    <value>Select a display for events</value>
   </data>
   <data name="Module ID.Header" xml:space="preserve">
     <value>Module ID</value>

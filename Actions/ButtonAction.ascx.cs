@@ -12,6 +12,7 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using DotNetNuke.Services.Localization;
 
     /// <summary>
     /// Displays the actions that users can perform on an event instance.
@@ -29,9 +30,9 @@ namespace Engage.Dnn.Events
         private string href;
 
         /// <summary>
-        /// Backing field for <see cref="Text"/>
+        /// Backing field for <see cref="ResourceKey"/>
         /// </summary>
-        private string text;
+        private string resourceKey;
 
         /// <summary>
         /// Gets or sets the URL to navigate to when this button is clicked.
@@ -44,13 +45,13 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Gets or sets the text to display on this button.
+        /// Gets or sets the localization resource key whose value is the text to display on this button.
         /// </summary>
-        /// <value>The text to display on this button</value>
-        public string Text
+        /// <value>The resource key for this button's text</value>
+        public string ResourceKey
         {
-            get { return this.text; }
-            set { this.text = value; }
+            get { return this.resourceKey; }
+            set { this.resourceKey = value; }
         }
 
         /// <summary>
@@ -86,7 +87,7 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Page_Load(object sender, EventArgs e)
         {
-            this.Button.Text = this.text;
+            this.Button.Text = Localization.GetString(this.resourceKey, this.LocalResourceFile);
         }
 
         /// <summary>

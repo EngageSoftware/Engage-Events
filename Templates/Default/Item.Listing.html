@@ -11,7 +11,7 @@
         </div>
 	</div>
 </div>
-<Event:List>
+<Engage:List>
 <Engage:EventWrapper CssClass="EventItem ItemListing" RecurringEventCssClass="RecurringEventItem" FeaturedEventCssClass="FeaturedEventItem" AlternatingCssClass="AlternatingEventItem">
   <div class="EventTitle">
         <h2 class="Head"><Engage:Literal Text="%#Title%" /></h2>
@@ -28,16 +28,16 @@
         <p class="NormalBold"><Engage:Literal Text="%$Overview%" /></p>
         <div class="Normal">
             <div><Engage:Literal Text="%#Overview%" /></div>
-            <p><Engage:Literal Text="%$ReadMore%" /></p>
+            <p><Engage:ReadMore Text="%$ReadMore%" /></p>
         </div>
     </div>
     <div class="EventButtons">
         <Engage:EditEventButton /> <Engage:ViewResponsesButton /> <Engage:RegisterButton /> <Engage:AddToCalendarButton /> <Engage:DeleteButton /> <Engage:CancelButton />
     </div>
 </Engage:EventWrapper>
-</Event:List>
+</Engage:List>
 <div class="Pager Normal">
-    <Engage:PreviousPage Tooltip="%$PreviousTip%" /> 
+    <Engage:PreviousPage Text="%$Previous%" Tooltip="%$PreviousTip%" /> 
     <Engage:PageXOfY Text="%$PageXOfY%" />
-    <Engage:NextPage Tooltip="%$NextTip%" />
+    <Engage:NextPage Text="%$Next%" Tooltip="%$NextTip%" />
 </div>

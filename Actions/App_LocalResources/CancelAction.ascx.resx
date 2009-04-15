@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,22 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add Event.Text" xml:space="preserve">
-    <value>Add Event</value>
+  <data name="Cancel.Text" xml:space="preserve">
+    <value>Cancel this Event</value>
   </data>
-  <data name="Choose Display.Text" xml:space="preserve">
-    <value>Choose Display</value>
+  <data name="ConfirmCancel.Text" xml:space="preserve">
+    <value>Are you sure you want to cancel this event?</value>
   </data>
-  <data name="Home.Text" xml:space="preserve">
-    <value>Home</value>
+  <data name="ConfirmUnCancel.Text" xml:space="preserve">
+    <value>Are you sure you want to revive this event?</value>
   </data>
-  <data name="Manage Events.Text" xml:space="preserve">
-    <value>Manage Events</value>
-  </data>
-  <data name="Responses.Text" xml:space="preserve">
-    <value>Responses</value>
-  </data>
-  <data name="Settings.Text" xml:space="preserve">
-    <value>Settings</value>
+  <data name="UnCancel.Text" xml:space="preserve">
+    <value>Revive this Event</value>
   </data>
 </root>

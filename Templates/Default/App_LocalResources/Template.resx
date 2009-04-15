@@ -117,43 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ActiveListItem.Text" xml:space="preserve">
-    <value>Active</value>
-  </data>
-  <data name="AddToCalendarButton.Text" xml:space="preserve">
-    <value>Add to Calendar</value>
-  </data>
-  <data name="AllListItem.Text" xml:space="preserve">
-    <value>All</value>
-  </data>
-  <data name="Cancel.Text" xml:space="preserve">
-    <value>Cancel this Event</value>
-  </data>
-  <data name="ConfirmCancel.Text" xml:space="preserve">
-    <value>Are you sure you want to cancel this event?</value>
-  </data>
-  <data name="ConfirmDelete.Text" xml:space="preserve">
-    <value>Are you sure you want to delete this event?</value>
-  </data>
-  <data name="ConfirmUnCancel.Text" xml:space="preserve">
-    <value>Are you sure you want to revive this event?</value>
-  </data>
-  <data name="DateListItem.Text" xml:space="preserve">
-    <value>Date</value>
-  </data>
-  <data name="DeleteEventButton.Text" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="EditEventButton.Text" xml:space="preserve">
-    <value>Edit Event</value>
-  </data>
   <data name="ListingAllTitle.Text" xml:space="preserve">
     <value>My Events</value>
   </data>
-  <data name="LoginToRegisterButton.Text" xml:space="preserve">
-    <value>Login to Register</value>
-  </data>
-  <data name="NextButton.Text" xml:space="preserve">
+  <data name="Next.Text" xml:space="preserve">
     <value>Next</value>
   </data>
   <data name="NextTip.Text" xml:space="preserve">
@@ -166,7 +133,7 @@
     <value>Page {0} of {1}</value>
     <comment>{0} is replaced by current page number, {1} is replaced by total number of pages</comment>
   </data>
-  <data name="PreviousButton.Text" xml:space="preserve">
+  <data name="Previous.Text" xml:space="preserve">
     <value>Previous</value>
   </data>
   <data name="PreviousTip.Text" xml:space="preserve">
@@ -175,23 +142,11 @@
   <data name="ReadMore.Text" xml:space="preserve">
     <value>Read More...</value>
   </data>
-  <data name="RegisterButton.Text" xml:space="preserve">
-    <value>Register</value>
-  </data>
-  <data name="ResponsesButton.Text" xml:space="preserve">
-    <value>View Responses</value>
-  </data>
   <data name="SortBy.Text" xml:space="preserve">
     <value>Sort By</value>
   </data>
   <data name="Status.Text" xml:space="preserve">
     <value>Status</value>
-  </data>
-  <data name="TitleListItem.Text" xml:space="preserve">
-    <value>Title</value>
-  </data>
-  <data name="UnCancel.Text" xml:space="preserve">
-    <value>Revive this Event</value>
   </data>
   <data name="When.Text" xml:space="preserve">
     <value>When</value>

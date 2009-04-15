@@ -8,63 +8,72 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Engage.Dnn.Events.Navigation {
+namespace Engage.Dnn.Events {
     
     
-    public partial class GlobalNavigation {
+    public partial class TemplatePicker {
         
         /// <summary>
-        /// HomeLink control.
+        /// TemplatesDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink HomeLink;
+        protected global::System.Web.UI.WebControls.DropDownList TemplatesDropDownList;
         
         /// <summary>
-        /// SettingsLink control.
+        /// TemplateDescriptionPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink SettingsLink;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TemplateDescriptionPanel;
         
         /// <summary>
-        /// ChooseDisplayLink control.
+        /// TemplateDescriptionLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink ChooseDisplayLink;
+        protected global::System.Web.UI.WebControls.Label TemplateDescriptionLabel;
         
         /// <summary>
-        /// ManageEventsLink control.
+        /// TemplatePreviewImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink ManageEventsLink;
+        protected global::System.Web.UI.WebControls.Image TemplatePreviewImage;
         
         /// <summary>
-        /// AddAnEventLink control.
+        /// SettingsExplanationLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink AddAnEventLink;
+        protected global::System.Web.UI.WebControls.Label SettingsExplanationLabel;
         
         /// <summary>
-        /// ResponsesLink control.
+        /// SettingsGrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink ResponsesLink;
+        protected global::System.Web.UI.WebControls.GridView SettingsGrid;
+        
+        /// <summary>
+        /// ManifestValidationErrorsLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ManifestValidationErrorsLabel;
     }
 }

@@ -117,22 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add Event.Text" xml:space="preserve">
-    <value>Add Event</value>
+  <data name="Cancel.Text" xml:space="preserve">
+    <value>Cancel</value>
   </data>
-  <data name="Choose Display.Text" xml:space="preserve">
-    <value>Choose Display</value>
+  <data name="ChooseDisplayType.Text" xml:space="preserve">
+    <value>Choose Display Type</value>
   </data>
-  <data name="Home.Text" xml:space="preserve">
-    <value>Home</value>
+  <data name="Detail Template.Text" xml:space="preserve">
+    <value>Choose a Detail Template</value>
   </data>
-  <data name="Manage Events.Text" xml:space="preserve">
-    <value>Manage Events</value>
+  <data name="EventCalendar.Text" xml:space="preserve">
+    <value>Calendar</value>
   </data>
-  <data name="Responses.Text" xml:space="preserve">
-    <value>Responses</value>
+  <data name="EventListingTemplate.Text" xml:space="preserve">
+    <value>List</value>
   </data>
-  <data name="Settings.Text" xml:space="preserve">
-    <value>Settings</value>
+  <data name="List Template.Text" xml:space="preserve">
+    <value>Choose a List Template</value>
+  </data>
+  <data name="Submit.Text" xml:space="preserve">
+    <value>Submit</value>
   </data>
 </root>
