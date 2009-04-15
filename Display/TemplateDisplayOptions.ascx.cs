@@ -90,6 +90,7 @@ namespace Engage.Dnn.Events.Display
 
             if (this.Page.IsValid)
             {
+                this.DisplayModeOption = this.DisplayModeDropDown.SelectedValue;
                 this.RecordsPerPage = (int)this.RecordsPerPageTextBox.Value.Value;
             }
         }

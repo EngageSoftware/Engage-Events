@@ -15,12 +15,9 @@ namespace Engage.Dnn.Events.Display
     using System.Web.UI;
     using System.Web.UI.WebControls;
     using DotNetNuke.Common;
-    using DotNetNuke.Services.Exceptions;
-    using DotNetNuke.Services.Localization;
     using Engage.Events;
     using Framework.Templating;
     using Templating;
-    using Utility = Dnn.Utility;
 
     /// <summary>
     /// Event Detail view.
@@ -51,45 +48,31 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Binds the data.
-        /// </summary>
-        internal void BindData()
-        {
-            ////int? eventId = this.EventId;
-            ////if (eventId.HasValue)
-            ////{
-            ////    Event ev = Event.Load(eventId.Value);
-            ////    string templateName = Utility.GetStringSetting(this.Settings, Framework.Setting.DetailTemplate.PropertyName, "Detail.Item.html");
-
-            ////    Template template = TemplateEngine.GetTemplate(PhysicalTemplatesFolderName, templateName);
-            ////    TemplateEngine.ProcessTags(this.DetailPlaceholder, template.ChildTags, ev, TemplateResourceFile, ProcessTag);
-            ////}
-        }
-
-        /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
         protected override void OnInit(EventArgs e)
         {
+            this.SetupTemplateProvider();
             base.OnInit(e);
-            this.Load += this.Page_Load;
         }
 
         /// <summary>
-        /// Handles the Load event of the Page control.
+        /// Sets up the <see cref="Dnn.Framework.ModuleBase.TemplateProvider"/> for this control.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void Page_Load(object sender, EventArgs e)
+        private void SetupTemplateProvider()
         {
-            try
+            int? eventId = this.EventId;
+            if (eventId.HasValue)
             {
-                this.BindData();
-            }
-            catch (Exception exc)
-            {
-                Exceptions.ProcessModuleLoadException(this, exc);
+                Event ev = Event.Load(eventId.Value);
+
+                this.TemplateProvider = new SingleItemTemplateProvider(
+                    this.GetTemplate(Dnn.Utility.GetStringSetting(this.Settings, "DetailTemplate")),
+                    this,
+                    ProcessTag,
+                    null,
+                    ev);
             }
         }
     }

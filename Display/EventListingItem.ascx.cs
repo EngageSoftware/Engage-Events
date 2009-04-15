@@ -19,7 +19,6 @@ namespace Engage.Dnn.Events.Display
     using System.Web;
     using System.Web.UI;
     using DotNetNuke.Common;
-    using DotNetNuke.Services.Localization;
     using Engage.Events;
     using Framework.Templating;
     using Templating;
@@ -111,9 +110,9 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         /// <value>The template provider to use for providing templating functionality within this control</value>
         /// <exception cref="ArgumentNullException"><c>value</c> is null.</exception>
-        private new RepeaterTemplateProvider TemplateProvider
+        private new PagingTemplateProvider TemplateProvider
         {
-            get { return (RepeaterTemplateProvider)base.TemplateProvider; }
+            get { return (PagingTemplateProvider)base.TemplateProvider; }
             set { base.TemplateProvider = value; }
         }
 
@@ -508,9 +507,9 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         private void SetupTemplateProvider()
         {
-            this.TemplateProvider = new RepeaterTemplateProvider(
+            this.TemplateProvider = new PagingTemplateProvider(
                 this.GetTemplate(Dnn.Utility.GetStringSetting(this.Settings, "Template")),
-                this.ItemPlaceholder,
+                this,
                 this.GetPageUrlTemplate(this.SortExpression, this.Status),
                 new ItemPagingState(this.CurrentPageIndex, this.TotalNumberOfEvents, this.RecordsPerPage), 
                 this.ProcessTag,
