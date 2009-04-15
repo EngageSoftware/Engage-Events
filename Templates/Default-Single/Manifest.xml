@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<EngageManifest Module="Events" Type="Single" xmlns="http://www.engagesoftware.com/Schemas/EngageManifest">
+<EngageManifest Module="Events" Type="SingleItem" xmlns="http://www.engagesoftware.com/Schemas/EngageManifest">
   <Title>Default</Title>
   <Description>
     Event details displayed in two columns, with labels in the left column, and the actual event details in the right column.

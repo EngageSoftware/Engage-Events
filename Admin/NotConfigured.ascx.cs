@@ -60,7 +60,7 @@ namespace Engage.Dnn.Events
             }
             else
             {
-                detailTemplateFolderName = this.GetTemplates(TemplateType.Single)[0].FolderName;
+                detailTemplateFolderName = this.GetTemplates(TemplateType.SingleItem)[0].FolderName;
             }
 
             modules.UpdateTabModuleSetting(this.TabModuleId, "DetailTemplate", detailTemplateFolderName);
