@@ -838,6 +838,8 @@ namespace Engage.Events
                     return this.EventStart.ToString(format, CultureInfo.CurrentCulture);
                 case "EVENTEND":
                     return this.EventEnd.ToString(format, CultureInfo.CurrentCulture);
+                case "LOCATION":
+                    return this.Location;
             }
 
             return string.Empty;
