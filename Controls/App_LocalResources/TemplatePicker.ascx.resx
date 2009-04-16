@@ -120,8 +120,11 @@
   <data name="Description.Text" xml:space="preserve">
     <value>Description</value>
   </data>
-  <data name="DetailTemplate.Text" xml:space="preserve">
-    <value>Detail Template</value>
+  <data name="DisplayModeOption.Text" xml:space="preserve">
+    <value>Display Mode</value>
+  </data>
+  <data name="FeaturedOnly.Text" xml:space="preserve">
+    <value>Featured Events Only</value>
   </data>
   <data name="Key.Header" xml:space="preserve">
     <value>Setting Name</value>
@@ -132,10 +135,19 @@
   <data name="OriginalValue.Header" xml:space="preserve">
     <value>Current Value</value>
   </data>
+  <data name="RecordsPerPage.Text" xml:space="preserve">
+    <value>Events per Page</value>
+  </data>
   <data name="SettingsExplanation.Text" xml:space="preserve">
     <value>By applying the selected template, the following settings will be changed: </value>
   </data>
+  <data name="SingleItemTemplate.Text" xml:space="preserve">
+    <value>Single Item Template</value>
+  </data>
   <data name="Template.Text" xml:space="preserve">
+    <value>List Template</value>
+  </data>
+  <data name="TemplateLabel.Text" xml:space="preserve">
     <value>Template</value>
   </data>
   <data name="Value.Header" xml:space="preserve">

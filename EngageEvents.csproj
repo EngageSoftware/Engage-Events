@@ -666,6 +666,9 @@
     <Content Include="Actions\App_LocalResources\ButtonAction.ascx.resx">
     </Content>
     <EmbeddedResource Include="JavaScript\jquery.fancybox-1.0.0.js" />
+    <Content Include="Templates\Legacy-ListingAll\App_LocalResources\Template.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Templates\Default\Manifest.xml" />
     <Content Include="Templates\ListingShort\Manifest.xml" />
     <Content Include="Templates\ListingShort\Template.css" />
@@ -719,6 +722,9 @@
     </Content>
     <Content Include="Actions\App_LocalResources\CancelAction.ascx.resx">
     </Content>
+    <Content Include="Templates\Legacy-ListingAll\Item.Listing.html" />
+    <Content Include="Templates\Legacy-ListingAll\Manifest.xml" />
+    <Content Include="Templates\Legacy-ListingAll\Template.css" />
     <None Include="EngageEvents.5.dnn" />
     <None Include="EngageEvents.Build" />
     <None Include="Providers\DataProviders\SqlDataProvider\1.2.0.SqlDataProvider" />

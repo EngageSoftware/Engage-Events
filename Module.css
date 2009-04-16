@@ -1,25 +1,20 @@
-@import url(Templates/Template.css);
-
 /*==============================================
 
 		1. Event Custom Listing Page
 
 ==============================================*/
 
-#EventListingCurrent, #EventListingUpcoming{width: 100%;}
-#EventListingUpcoming {padding-top: 1.5em;}
-		.EventHeader, .ResponseHeader, .ResponseRow{clear: both; width: 100%; overflow: hidden;  border-bottom: dotted 1px #ccc;}
-			.EventHeader h4, .ResponseHeader h4 {text-transform: uppercase; font-weight: bold; margin-bottom: 0.4em; margin-top: 0; font-size: 100%;}
-			.EventHeader .Normal{float:left;width: 15%; margin-right: 3%; text-align: right; color: #666;}
-			.EventHeader .NormalBold{float: left; width: 81%; color: #000;}
-			.ResponseHeader h4, .ResponseHeader h3, .ResponseRow h3 {display:inline;}
-			.ResponseHeader .SortByHeader{width: 49%; float:left;}
-			.ResponseHeader .StatusHeader{width: 49%; float:right; text-align: center;}
-			.ResponseHeader .StatusTypeHeaders > span{padding-right: 10%;}
-			.ResponseRow .EventStats{float:right; width:30%;}
-			.ResponseRow .EventStats > a {padding-right: 50%;}
+.EventHeader, .ResponseHeader, .ResponseRow{clear: both; width: 100%; overflow: hidden;  border-bottom: dotted 1px #ccc;}
+	.EventHeader h4, .ResponseHeader h4 {text-transform: uppercase; font-weight: bold; margin-bottom: 0.4em; margin-top: 0; font-size: 100%;}
+	.EventHeader .Normal{float:left;width: 15%; margin-right: 3%; text-align: right; color: #666;}
+	.EventHeader .NormalBold{float: left; width: 81%; color: #000;}
+	.ResponseHeader h4, .ResponseHeader h3, .ResponseRow h3 {display:inline;}
+	.ResponseHeader .SortByHeader{width: 49%; float:left;}
+	.ResponseHeader .StatusHeader{width: 49%; float:right; text-align: center;}
+	.ResponseHeader .StatusTypeHeaders > span{padding-right: 10%;}
+	.ResponseRow .EventStats{float:right; width:30%;}
+	.ResponseRow .EventStats > a {padding-right: 50%;}
 .ResponsesSummary {padding: 25px 0;}
-.PagingTable { margin: 10px 0; }
 		
 /* event calendar display page */
 
@@ -30,7 +25,6 @@
 .RadScheduler .rsMonthView .rsWrap {height: 18px !important; width: 100%; overflow: hidden; white-space:nowrap;}
 .rsAptContent{padding-left: 2px;}
 .rsCell{padding: 0 2px !important;}
-
 
 .respond-wrap{padding:15px;}
 	.respond-wrap h2.Head, .respond-wrap h3.SubHead{margin:0;}
@@ -156,7 +150,6 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 .ResponseDetailItemSelect{}
 
 .ResponseHeader .SortByHeader p, .ResponseHeader .StatusHeader p{display:inline; text-transform: uppercase; font-weight: bold; font-size: 90%;}
-.ResponsesSummary .PagingTable{border: none; border-bottom: 1px #000 solid; border-top: 1px #999 solid; padding: 12px 0 6px;}
 .ResponseMemberName{font-weight: bold;}
 .ResponseDisplay{padding: 8px 0;}
 	.ResponseEventDisplay{float: left; width: 49%;}

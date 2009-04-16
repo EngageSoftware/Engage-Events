@@ -1,6 +1,6 @@
 <%@ Control Language="c#" Codebehind="TemplatePicker.ascx.cs" Inherits="Engage.Dnn.Events.TemplatePicker" AutoEventWireup="false" %>
 <div class="Normal">
-    <asp:Label ResourceKey="Template" runat="server" EnableViewState="false" />
+    <asp:Label ResourceKey="TemplateLabel" runat="server" EnableViewState="false" />
     <asp:DropDownList ID="TemplatesDropDownList" runat="server" AutoPostBack="true" />
     <fieldset id="TemplateDescriptionPanel" runat="server">
         <legend><asp:Label runat="server" resourcekey="Description" /></legend>

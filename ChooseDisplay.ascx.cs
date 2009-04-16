@@ -39,14 +39,14 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Gets the template used to display event details.
+        /// Gets the template used to display a single event.
         /// </summary>
-        /// <value>The template used to display event details</value>
-        private string DetailTemplateSetting
+        /// <value>The template used to display a single event</value>
+        private string SingleItemTemplateSetting
         {
             get
             {
-                return Dnn.Utility.GetStringSetting(this.Settings, "DetailTemplate", string.Empty);
+                return Dnn.Utility.GetStringSetting(this.Settings, "SingleItemTemplate", string.Empty);
             }
         }
 
@@ -104,7 +104,7 @@ namespace Engage.Dnn.Events
 
                     this.SetDisplayTypeOptions();
                     this.ListTemplatePicker.SelectedTemplateFolderName = this.TemplateSetting;
-                    this.DetailTemplatePicker.SelectedTemplateFolderName = this.DetailTemplateSetting;
+                    this.SingleItemTemplatePicker.SelectedTemplateFolderName = this.SingleItemTemplateSetting;
                 }
             }
             catch (Exception exc)
@@ -136,16 +136,10 @@ namespace Engage.Dnn.Events
                 if (this.TemplatePickersSection.Visible)
                 {
                     modules.UpdateTabModuleSetting(this.TabModuleId, "Template", this.ListTemplatePicker.SelectedTemplateFolderName);
-                    modules.UpdateTabModuleSetting(this.TabModuleId, "DetailTemplate", this.DetailTemplatePicker.SelectedTemplateFolderName);
+                    this.ApplyTemplateSettings(this.ListTemplatePicker.SelectedTemplateFolderName);
 
-                    TemplateInfo manifest = this.GetTemplate(this.ListTemplatePicker.SelectedTemplateFolderName);
-                    if (manifest.Settings != null)
-                    {
-                        foreach (KeyValuePair<string, string> setting in manifest.Settings)
-                        {
-                            modules.UpdateTabModuleSetting(this.TabModuleId, setting.Key, setting.Value);
-                        }
-                    }
+                    modules.UpdateTabModuleSetting(this.TabModuleId, "SingleItemTemplate", this.SingleItemTemplatePicker.SelectedTemplateFolderName);
+                    this.ApplyTemplateSettings(this.SingleItemTemplatePicker.SelectedTemplateFolderName);
                 }
 
                 modules.UpdateTabModuleSetting(this.TabModuleId, "DisplayType", this.ChooseDisplayDropDown.SelectedValue);
@@ -158,6 +152,22 @@ namespace Engage.Dnn.Events
             catch (Exception exc)
             {
                 Exceptions.ProcessModuleLoadException(this, exc);
+            }
+        }
+
+        /// <summary>
+        /// Applies the settings for the given template.
+        /// </summary>
+        /// <param name="templateFolderName">Name of the template folder for the selected template.</param>
+        private void ApplyTemplateSettings(string templateFolderName)
+        {
+            TemplateInfo manifest = this.GetTemplate(templateFolderName);
+            if (manifest.Settings != null)
+            {
+                foreach (KeyValuePair<string, string> setting in manifest.Settings)
+                {
+                    new ModuleController().UpdateTabModuleSetting(this.TabModuleId, setting.Key, setting.Value);
+                }
             }
         }
     }

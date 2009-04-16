@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,25 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cancel.Text" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="ListingAllTitle.Text" xml:space="preserve">
+    <value>My Events</value>
   </data>
-  <data name="ChooseDisplayType.Text" xml:space="preserve">
-    <value>Choose Display Type</value>
+  <data name="Next.Text" xml:space="preserve">
+    <value>Next</value>
   </data>
-  <data name="EventCalendar.Text" xml:space="preserve">
-    <value>Calendar</value>
+  <data name="NextTip.Text" xml:space="preserve">
+    <value>Click here to go to the next page.</value>
   </data>
-  <data name="EventListingTemplate.Text" xml:space="preserve">
-    <value>List</value>
+  <data name="Overview.Text" xml:space="preserve">
+    <value>Overview</value>
   </data>
-  <data name="List Template.Text" xml:space="preserve">
-    <value>Choose a List Template</value>
+  <data name="PageXOfY.Text" xml:space="preserve">
+    <value>Page {0} of {1}</value>
+    <comment>{0} is replaced by current page number, {1} is replaced by total number of pages</comment>
   </data>
-  <data name="Single Item Template.Text" xml:space="preserve">
-    <value>Choose a Single Item Template</value>
+  <data name="Previous.Text" xml:space="preserve">
+    <value>Previous</value>
   </data>
-  <data name="Submit.Text" xml:space="preserve">
-    <value>Submit</value>
+  <data name="PreviousTip.Text" xml:space="preserve">
+    <value>Click here to go to the previous page.</value>
+  </data>
+  <data name="ReadMore.Text" xml:space="preserve">
+    <value>Read More...</value>
+  </data>
+  <data name="SortBy.Text" xml:space="preserve">
+    <value>Sort By</value>
+  </data>
+  <data name="Status.Text" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="When.Text" xml:space="preserve">
+    <value>When</value>
+  </data>
+  <data name="Where.Text" xml:space="preserve">
+    <value>Where</value>
   </data>
 </root>

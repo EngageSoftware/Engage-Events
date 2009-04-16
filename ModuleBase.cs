@@ -165,7 +165,7 @@ namespace Engage.Dnn.Events
         /// </value>
         protected override bool IsConfigured
         {
-            get { return Engage.Utility.HasValue(Dnn.Utility.GetStringSetting(this.Settings, "Template")) && Engage.Utility.HasValue(Dnn.Utility.GetStringSetting(this.Settings, "DetailTemplate")); }
+            get { return Engage.Utility.HasValue(Dnn.Utility.GetStringSetting(this.Settings, "Template")) && Engage.Utility.HasValue(Dnn.Utility.GetStringSetting(this.Settings, "SingleItemTemplate")); }
         }
 
         /// <summary>

@@ -110,7 +110,7 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         /// <value>The template provider to use for providing templating functionality within this control</value>
         /// <exception cref="ArgumentNullException"><c>value</c> is null.</exception>
-        private new PagingTemplateProvider TemplateProvider
+        public new PagingTemplateProvider TemplateProvider
         {
             get { return (PagingTemplateProvider)base.TemplateProvider; }
             set { base.TemplateProvider = value; }

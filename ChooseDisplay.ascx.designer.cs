@@ -41,13 +41,13 @@ namespace Engage.Dnn.Events {
         protected global::Engage.Dnn.Events.TemplatePicker ListTemplatePicker;
         
         /// <summary>
-        /// DetailTemplatePicker control.
+        /// SingleItemTemplatePicker control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Engage.Dnn.Events.TemplatePicker DetailTemplatePicker;
+        protected global::Engage.Dnn.Events.TemplatePicker SingleItemTemplatePicker;
         
         /// <summary>
         /// SubmitButton control.

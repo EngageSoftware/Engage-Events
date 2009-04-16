@@ -53,17 +53,17 @@ namespace Engage.Dnn.Events
             TemplateInfo defaultTemplate = this.GetTemplates(TemplateType.List)[0];
             modules.UpdateTabModuleSetting(this.TabModuleId, "Template", defaultTemplate.FolderName);
 
-            string detailTemplateFolderName;
-            if (defaultTemplate.Settings.ContainsKey("DetailTemplate"))
+            string singleItemTemplateFolderName;
+            if (defaultTemplate.Settings.ContainsKey("SingleItemTemplate"))
             {
-                detailTemplateFolderName = defaultTemplate.Settings["DetailTemplate"];
+                singleItemTemplateFolderName = defaultTemplate.Settings["SingleItemTemplate"];
             }
             else
             {
-                detailTemplateFolderName = this.GetTemplates(TemplateType.SingleItem)[0].FolderName;
+                singleItemTemplateFolderName = this.GetTemplates(TemplateType.SingleItem)[0].FolderName;
             }
 
-            modules.UpdateTabModuleSetting(this.TabModuleId, "DetailTemplate", detailTemplateFolderName);
+            modules.UpdateTabModuleSetting(this.TabModuleId, "SingleItemTemplate", singleItemTemplateFolderName);
         }
     }
 }

@@ -18,11 +18,6 @@ namespace Engage.Dnn.Events
     internal class Setting : Framework.Setting
     {
         /// <summary>
-        /// What set of data to display in this module: All, Past, Future, or Current Month
-        /// </summary>
-        public static readonly Setting DisplayModeOption = new Setting("DisplayModeOption", "What data to display.");
-
-        /// <summary>
         /// The URL to navigate to in order to indicate that an email has been opened
         /// </summary>
         public static readonly Setting OpenLinkUrl = new Setting("openLinkUrl", "Specify the URL for your Open Link to track opens.");

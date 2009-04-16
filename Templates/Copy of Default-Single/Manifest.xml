@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<EngageManifest Module="Events" Type="SingleItem" xmlns="http://www.engagesoftware.com/Schemas/EngageManifest">
+  <Title>Test</Title>
+  <Description>
+    TEST
+  </Description>
+  <Stylesheet>Template.css</Stylesheet>
+  <ResourceFile>App_LocalResources/Template.resx</ResourceFile>
+  <Template>Detail.Item.html</Template>
+</EngageManifest>

@@ -68,7 +68,7 @@ namespace Engage.Dnn.Events.Display
                 Event ev = Event.Load(eventId.Value);
 
                 this.TemplateProvider = new SingleItemTemplateProvider(
-                    this.GetTemplate(Dnn.Utility.GetStringSetting(this.Settings, "DetailTemplate")),
+                    this.GetTemplate(Dnn.Utility.GetStringSetting(this.Settings, "SingleItemTemplate")),
                     this,
                     ProcessTag,
                     null,
