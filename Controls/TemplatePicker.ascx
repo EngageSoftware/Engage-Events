@@ -22,5 +22,5 @@
         </asp:GridView>
     </div>
 
-    <asp:Label ID="ManifestValidationErrorsLabel" ResourceKey="ManifestValidation" runat="server" CssClass="NormalRed" Visible="false" EnableViewState="false"/>
+    <asp:Label ID="ManifestValidationErrorsLabel" runat="server" CssClass="NormalRed" Visible="false" EnableViewState="false"/>
 </div>

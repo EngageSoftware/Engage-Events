@@ -13,8 +13,10 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Collections.Generic;
-    using System.Web.UI;
+    using System.Text;
+    using System.Web;
     using System.Web.UI.WebControls;
+    using System.Xml;
     using System.Xml.Schema;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
@@ -138,10 +140,21 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void FillTemplatesList()
         {
-            this.TemplatesDropDownList.DataSource = this.GetTemplates(this.TemplateType);
-            this.TemplatesDropDownList.DataTextField = "Title";
-            this.TemplatesDropDownList.DataValueField = "FolderName";
-            this.TemplatesDropDownList.DataBind();
+            try
+            {
+                this.TemplatesDropDownList.DataSource = this.GetTemplates(this.TemplateType);
+                this.TemplatesDropDownList.DataTextField = "Title";
+                this.TemplatesDropDownList.DataValueField = "FolderName";
+                this.TemplatesDropDownList.DataBind();
+            }
+            catch (XmlException exc)
+            {
+                this.ShowManifestValidationErrorMessage(exc);
+            }
+            catch (XmlSchemaValidationException exc)
+            {
+                this.ShowManifestValidationErrorMessage(exc);
+            }
         }
 
         /// <summary>
@@ -170,9 +183,13 @@ namespace Engage.Dnn.Events
                     this.TemplatePreviewImage.Visible = false;
                 }
             }
-            catch (XmlSchemaValidationException)
+            catch (XmlException exc)
             {
-                this.ShowManifestValidationErrorMessage();
+                this.ShowManifestValidationErrorMessage(exc);
+            }
+            catch (XmlSchemaValidationException exc)
+            {
+                this.ShowManifestValidationErrorMessage(exc);
             }
         }
 
@@ -218,8 +235,22 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// Displays the error message that the selected template's manifest does not pass validation
         /// </summary>
-        private void ShowManifestValidationErrorMessage()
+        /// <param name="exc">The <see cref="Exception"/> created from the validation error.</param>
+        private void ShowManifestValidationErrorMessage(Exception exc)
         {
+            StringBuilder validationMessage = new StringBuilder("<ul>");
+            validationMessage.AppendFormat("<li>{0}</li>", Localization.GetString("ManifestValidation", this.LocalResourceFile));
+            if (exc != null)
+            {
+                validationMessage.AppendFormat("<li>{0}</li>", HttpUtility.HtmlEncode(exc.Message));
+                if (exc.InnerException != null)
+                {
+                    validationMessage.AppendFormat("<li>{0}</li>", HttpUtility.HtmlEncode(exc.InnerException.Message));
+                }
+            }
+
+            validationMessage.Append("</ul>");
+            this.ManifestValidationErrorsLabel.Text = validationMessage.ToString();
             this.ManifestValidationErrorsLabel.Visible = true;
             this.TemplateDescriptionPanel.Visible = false;
             this.TemplatePreviewImage.Visible = false;
