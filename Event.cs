@@ -835,8 +835,10 @@ namespace Engage.Events
                 case "DESCRIPTION":
                     return this.Description;
                 case "EVENTSTART":
+                case "EVENT START":
                     return this.EventStart.ToString(format, CultureInfo.CurrentCulture);
                 case "EVENTEND":
+                case "EVENT END":
                     return this.EventEnd.ToString(format, CultureInfo.CurrentCulture);
                 case "LOCATION":
                     return this.Location;
