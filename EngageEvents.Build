@@ -20,9 +20,12 @@
     <include name="**/*.gif" />
     <include name="**/*.png" />
     <include name="**/*.pdf" />
+    <include name="**/*.xml" />
+    <include name="**/*.xsd" />
     <exclude name="Licenses/EULA-*.htm"/>
     <exclude name="ReleaseNotes_*.htm"/>
     <exclude name="??.??.??.txt" />
+    <exclude name="_ReSharper.*/**"/>
   </patternset>
   <patternset id="source.fileset">
     <include name="**/*.js"/>
@@ -34,6 +37,8 @@
     <include name="**/*.build"/>
     <include name="**/*.dnn"/>
     <include name="**/*.docx"/>
+    <include name="MSBuild/*.dll"/>
+    <include name="MSBuild/*.targets"/>
   </patternset>
 
   <target name="build" description="Builds the solution" if="${build}">

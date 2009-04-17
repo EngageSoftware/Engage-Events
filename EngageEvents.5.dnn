@@ -50,6 +50,7 @@
           </scripts>
         </component>
         <component type="Cleanup" file="01.00.00.txt" version="01.00.00" />
+        <component type="Cleanup" file="01.02.00.txt" version="1.2.0" />
         <component type="Module">
           <desktopModule>
             <moduleName>Engage: Events</moduleName>
@@ -87,23 +88,15 @@
             </assembly>
             <assembly>
               <name>Engage.Events.dll</name>
-              <version>1.1.0</version>
+              <version>3.1.0</version>
             </assembly>
             <assembly>
               <name>Engage.Framework.dll</name>
-              <version>2.0.6</version>
+              <version>3.1.0</version>
             </assembly>
             <assembly>
               <name>Engage.Dnn.Framework.dll</name>
-              <version>1.1.0</version>
-            </assembly>
-            <assembly>
-              <name>Engage.Framework.XmlSerializers.dll</name>
-              <version>2.0.6</version>
-            </assembly>
-            <assembly>
-              <name>Engage.Dnn.Framework.XmlSerializers.dll</name>
-              <version>1.1.0</version>
+              <version>3.1.0</version>
             </assembly>
             <assembly>
               <name>Telerik.Web.UI.dll</name>

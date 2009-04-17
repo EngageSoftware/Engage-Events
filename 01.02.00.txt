@@ -1,0 +1,2 @@
+﻿bin/Engage.Dnn.Framework.XmlSerializers.dll
+bin/Engage.Framework.XmlSerializers.dll
