@@ -18,7 +18,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Engage Software")]
 [assembly: AssemblyProduct("http://www.engagesoftware.com")]
-[assembly: AssemblyCopyright("Copyright © Engage Software 2008")]
+[assembly: AssemblyCopyright("Copyright © Engage Software 2009")]
 [assembly: AssemblyTrademark("Engage Software")]
 [assembly: AssemblyCulture("")]
 
@@ -26,5 +26,5 @@ using System.Runtime.InteropServices;
 [assembly: Guid("3c3a937d-8a8e-4f12-bfd6-8f0d9453e505")]
 [assembly: CLSCompliant(true)]
 
-[assembly: AssemblyVersion("1.1.0.*")]
-[assembly: AssemblyFileVersion("1.1.0.0")]
+[assembly: AssemblyVersion("3.1.0.*")]
+[assembly: AssemblyFileVersion("3.1.0.0")]
