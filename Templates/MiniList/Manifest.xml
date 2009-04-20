@@ -9,4 +9,5 @@
   <Stylesheet>Template.css</Stylesheet>
   <ResourceFile>App_LocalResources/Template.resx</ResourceFile>
   <Template>MiniList.htm</Template>
+  <PreviewImage>minilist.jpg</PreviewImage>
 </EngageManifest>

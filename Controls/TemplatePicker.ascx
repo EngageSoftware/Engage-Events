@@ -9,7 +9,7 @@
             <div class="cd-list-description cd-single-item-description">
                 <fieldset id="TemplateDescriptionPanel" runat="server">
                     <legend><asp:Label runat="server" resourcekey="Description" /></legend>
-                    <asp:Label ID="TemplateTitleLabel" runat="server" />
+                    <asp:Label ID="TemplateTitleLabel" runat="server" CssClass="cd-template-title" />
                     <asp:Label ID="TemplateDescriptionLabel" runat="server" />
                  </fieldset>
             </div>

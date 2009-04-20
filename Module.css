@@ -187,6 +187,7 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 	.cd-type{width:100%;padding:10px 0;}
 		.cd-type h4{font-size:14px;color:#333;}
 		.cd-type .NormalTextBox{display:inline;}
+	.cd-template-title{display:block;}
 	.cd-list{width:100%;}
 		.cd-list h4{font-size:14px;color:#333;}
 		.cd-list-description{width:48%; float:left;padding:10px 0;}

@@ -9,4 +9,5 @@
   <Stylesheet>Template.css</Stylesheet>
   <ResourceFile>App_LocalResources/Template.resx</ResourceFile>
   <Template>Narrow.htm</Template>
+  <PreviewImage>narrow.jpg</PreviewImage>
 </EngageManifest>

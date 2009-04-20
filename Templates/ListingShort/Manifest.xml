@@ -6,4 +6,5 @@
   </Description>
   <Stylesheet>Template.css</Stylesheet>
   <Template>Item.ListingShort.html</Template>
+  <PreviewImage>short-listing.jpg</PreviewImage>
 </EngageManifest>

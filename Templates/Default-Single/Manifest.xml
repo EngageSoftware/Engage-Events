@@ -8,4 +8,5 @@
   <Stylesheet>Template.css</Stylesheet>
   <ResourceFile>App_LocalResources/Template.resx</ResourceFile>
   <Template>Detail.Item.html</Template>
+  <PreviewImage>single-item-default.jpg</PreviewImage>
 </EngageManifest>
