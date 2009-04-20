@@ -43,6 +43,10 @@
               <name>1.1.0.SqlDataProvider</name>
               <version>1.1.0</version>
             </script>
+            <script type="Install">
+              <name>1.2.0.SqlDataProvider</name>
+              <version>1.2.0</version>
+            </script>
             <script type="UnInstall">
               <name>Uninstall.SqlDataProvider</name>
               <version>REPLACED BY NANT</version>
@@ -50,7 +54,7 @@
           </scripts>
         </component>
         <component type="Cleanup" file="01.00.00.txt" version="01.00.00" />
-        <component type="Cleanup" file="01.02.00.txt" version="1.2.0" />
+        <component type="Cleanup" file="1.2.0.txt" version="1.2.0" />
         <component type="Module">
           <desktopModule>
             <moduleName>Engage: Events</moduleName>
