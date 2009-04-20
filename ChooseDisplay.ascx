@@ -8,10 +8,14 @@
     </div>
 
     <asp:PlaceHolder ID="TemplatePickersSection" runat="server">
+        <div>
         <h4><asp:Label runat="server" resourcekey="List Template.Text" /></h4>
         <engage:TemplatePicker ID="ListTemplatePicker" runat="server" TemplateType="List" />
+        </div>
+        <div>
         <h4><asp:Label runat="server" resourcekey="Single Item Template.Text" /></h4>
         <engage:TemplatePicker ID="SingleItemTemplatePicker" runat="server" TemplateType="SingleItem" />
+        </div>
     </asp:PlaceHolder>
     
     <asp:Button ID="SubmitButton" runat="server" resourcekey="Submit" EnableViewState="false" />&nbsp;

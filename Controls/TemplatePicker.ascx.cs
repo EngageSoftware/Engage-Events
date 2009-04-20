@@ -167,10 +167,11 @@ namespace Engage.Dnn.Events
                 TemplateInfo manifest = this.GetTemplate(this.TemplatesDropDownList.SelectedValue);
                 if (manifest != null)
                 {
+                    this.TemplateTitleLabel.Text = manifest.Title;
                     this.TemplateDescriptionLabel.Text = manifest.Description;
                     this.TemplatePreviewImage.ImageUrl = manifest.GetRelativePath(manifest.PreviewImage, true);
                     this.TemplateDescriptionPanel.Visible = Engage.Utility.HasValue(manifest.Description);
-                    this.TemplatePreviewImage.Visible = Engage.Utility.HasValue(manifest.PreviewImage);
+                    this.TemplatePreviewImagePanel.Visible = Engage.Utility.HasValue(manifest.PreviewImage);
 
                     this.SettingsGrid.DataSource = this.GetChangedSettings(manifest.Settings);
                     this.SettingsGrid.DataBind();
@@ -180,7 +181,7 @@ namespace Engage.Dnn.Events
                 else
                 {
                     this.TemplateDescriptionPanel.Visible = false;
-                    this.TemplatePreviewImage.Visible = false;
+                    this.TemplatePreviewImagePanel.Visible = false;
                 }
             }
             catch (XmlException exc)

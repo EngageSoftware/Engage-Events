@@ -135,6 +135,9 @@
   <data name="OriginalValue.Header" xml:space="preserve">
     <value>Current Value</value>
   </data>
+  <data name="Preview.Text" xml:space="preserve">
+    <value>Preview</value>
+  </data>
   <data name="RecordsPerPage.Text" xml:space="preserve">
     <value>Events per Page</value>
   </data>
@@ -148,7 +151,7 @@
     <value>List Template</value>
   </data>
   <data name="TemplateLabel.Text" xml:space="preserve">
-    <value>Template</value>
+    <value>Select a Template</value>
   </data>
   <data name="Value.Header" xml:space="preserve">
     <value>New Value</value>

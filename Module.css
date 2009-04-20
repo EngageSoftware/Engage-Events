@@ -180,6 +180,27 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 
 .timezone_display{float: left; width: 70%;}
 
+
+/*================Templates Picker==================*/
+.template-slection-wrap{width:750px;}
+	.ts-select-template{float:left;font-size:14px;width:750px;}
+	.ts-template-info{clear:both;}
+		.ts-leftcol{width:260px;float:left;padding:15px 25px 15px 0;}
+			.ts-description{font-size:12px;padding:10px 0;border-bottom:dashed 1px #666;}
+				.ts-description fieldset{border:none;padding:0;margin:0;}
+				.ts-description legend{font-size:18px;padding:0;}
+			.settings-table{padding:15px 0;}
+				.settings-table table{border-bottom:dashed 1px #666;}
+				.settings-table .SubSubHead {font-size:11px;font-weight:normal;padding:5px;font-style:italic;}
+				.DataGrid_Header th{font-size:12px;color:#333;text-align:left;padding:5px 0;}
+				.DataGrid_Item td,.DataGrid_AlternatingItem td{text-align:left;padding:0 5px;color:#000;}
+				.DataGrid_AlternatingItem td{color:#333;}
+			.ts-buttons{float:left;padding:10px;}
+		.ts-rightcol{width:450px;float:right;padding:25px 0 15px 0;}
+			.ts-preview span{font-size:18px;padding:10px 0;}
+				.ts-preview img{padding:10px 0;}
+
+
 /*========================================================
 
 		3. Validation

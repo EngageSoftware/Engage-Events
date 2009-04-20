@@ -26,3 +26,4 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dnn", Scope = "namespace", Target = "Engage.Dnn.Events.Controls", Justification = "Dnn is an appropriate acronym")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dnn", Scope = "namespace", Target = "Engage.Dnn.Events.Display", Justification = "Dnn is an appropriate acronym")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dnn", Scope = "namespace", Target = "Engage.Dnn.Events.Navigation", Justification = "Dnn is an appropriate acronym")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA2210:AssembliesShouldHaveValidStrongNames", Justification = "Does not work for Medium Trust modules")]
