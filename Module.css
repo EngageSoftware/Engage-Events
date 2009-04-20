@@ -176,31 +176,38 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 .EventsSetting .NumericTextBoxWrapper div, .EventsSetting .NumericTextBoxWrapper div table{text-align: right;width: 5em !important;}
 .EventsSetting .NumericTextBoxWrapper td.spinImgCell  a.spinbutton{text-align: left;}
 .TemplatesSection{margin: 1em;}
-.EventsSetting{clear: both;padding: 0 0 2em;}
+.EventsSetting{clear:both;padding: 0 0 2em;}
 
-.timezone_display{float: left; width: 70%;}
+.timezone_display{float:left; width:70%;}
 
+/*================ New Templates Picker==================*/
 
-/*================Templates Picker==================*/
-.template-slection-wrap{width:750px;}
-	.ts-select-template{float:left;font-size:14px;width:750px;}
-	.ts-template-info{clear:both;}
-		.ts-leftcol{width:260px;float:left;padding:15px 25px 15px 0;}
-			.ts-description{font-size:12px;padding:10px 0;border-bottom:dashed 1px #666;}
-				.ts-description fieldset{border:none;padding:0;margin:0;}
-				.ts-description legend{font-size:18px;padding:0;}
-			.settings-table{padding:15px 0;}
-				.settings-table table{border-bottom:dashed 1px #666;}
-				.settings-table .SubSubHead {font-size:11px;font-weight:normal;padding:5px;font-style:italic;}
-				.DataGrid_Header th{font-size:12px;color:#333;text-align:left;padding:5px 0;}
+.events-choose-display-wrap{width:100%;height:auto;}
+	.GlobalNavigation{text-align:left;}
+	.cd-type{width:100%;padding:10px 0;}
+		.cd-type h4{font-size:14px;color:#333;}
+		.cd-type .NormalTextBox{display:inline;}
+	.cd-list{width:100%;}
+		.cd-list h4{font-size:14px;color:#333;}
+		.cd-list-description{width:48%; float:left;padding:10px 0;}
+			.cd-list-description fieldset{border:none;padding:0;margin:0;}
+			.cd-list-description legend{font-size:16px;padding:0;}
+		.cd-list-preview{width:48%; float:right;overflow:hidden;padding:10px 0;}
+			.cd-list-preview span{font-size:16px;}
+		.settings-table{float:left;width:48%;clear:both;padding:10px 0;}
+		.DataGrid_Header th{font-size:12px;color:#333;text-align:left;padding:5px 0;}
 				.DataGrid_Item td,.DataGrid_AlternatingItem td{text-align:left;padding:0 5px;color:#000;}
 				.DataGrid_AlternatingItem td{color:#333;}
-			.ts-buttons{float:left;padding:10px;}
-		.ts-rightcol{width:450px;float:right;padding:25px 0 15px 0;}
-			.ts-preview span{font-size:18px;padding:10px 0;}
-				.ts-preview img{padding:10px 0;}
-
-
+	.cd-single-item{width:100%;clear:both;padding-top:20px;}
+		.cd-single-item h4{font-size:14px;color:#333;}
+		.cd-single-item-description{width:48%; float:left;padding:10px 0;}
+			.cd-list-description fieldset{border:none;padding:0;margin:0;}
+			.cd-list-description legend{font-size:16px;padding:0;}
+		.cd-single-item-preview{width:48%; float:right;overflow:hidden;padding:10px 0;}
+		.cd-single-item-preview span{font-size:16px;}
+		.settings-table{float:left;width:48%;clear:both;}
+	.cd-buttons{float:left;clear:both;padding:15px 0;}
+				
 /*========================================================
 
 		3. Validation
