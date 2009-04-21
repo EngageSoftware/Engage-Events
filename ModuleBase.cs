@@ -16,6 +16,7 @@ namespace Engage.Dnn.Events
     using System.IO;
     using System.Text;
     using System.Web;
+    using System.Web.UI;
     using DotNetNuke.Common;
     using DotNetNuke.Entities.Host;
     using DotNetNuke.Entities.Modules;
@@ -167,7 +168,7 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                return Dnn.Utility.GetStringSetting(this.Settings, "DisplayType").Equals("CALENDAR", StringComparison.OrdinalIgnoreCase)
+                return "CALENDAR".Equals(Dnn.Utility.GetStringSetting(this.Settings, "DisplayType"), StringComparison.OrdinalIgnoreCase)
                        ||
                        (Engage.Utility.HasValue(Dnn.Utility.GetStringSetting(this.Settings, "Template"))
                         && Engage.Utility.HasValue(Dnn.Utility.GetStringSetting(this.Settings, "SingleItemTemplate")));
@@ -268,7 +269,7 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Raises the <see cref="E:Init"/> event.
+        /// Raises the <see cref="Control.Init"/> event.
         /// </summary>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected override void OnInit(EventArgs e)

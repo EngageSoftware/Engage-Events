@@ -31,10 +31,6 @@ namespace Engage.Dnn.Events
         {
             base.OnInit(e);
 
-            ////ConfigureLink.Text = Localization.GetString("UnableToFindAction", LocalResourceFile);
-            ////ConfigureLink.NavigateUrl = EditUrl("ModuleId", ModuleId.ToString(CultureInfo.InvariantCulture), "Module");
-            ////ConfigureLink.Visible = true;
-
             this.SetupDefaultSettings();
             this.Response.Redirect(Globals.NavigateURL(), true);
         }
