@@ -1,0 +1,45 @@
+<div class="MEEventHeader">
+    <h2 class="MEvents SubHead"><engage:Label Text="%$MyEventsLabel%" /></h2>
+	<div class="METop">
+        <div class="MESorting">
+            <engage:Label CssClass="NormalBold" Text="%$SortByLabel%" />
+            <engage:EventSort />
+        </div>        
+        <div class="MEStatus">
+            <engage:Label CssClass="NormalBold" Text="%$StatusLabel%" />
+            <engage:StatusFilter />
+        </div>
+	</div>
+</div>
+<engage:List>
+	<div class="MEEventItem">
+        <div class="EventTitle">
+            <h2 class="Head"><Engage:Literal Text="%#Title%"></h2>
+        </div>
+        <div class="EventDate">
+            <p class="NormalBold"><engage:Label Text="%$When%"/></p>
+            <p class="Normal"><engage:literal Text="%#EventStart:d%"><span class="RecurrenceSummary"><engage:RecurrenceSummary /></span></p>
+        </div>
+        <div class="EventLocation">
+            <p class="NormalBold"><engage:Label Text="%$Where%"/></p>
+            <p class="Normal"><engage:literal text="%#Location%"></p>
+        </div>
+        <div class="EventDescription">
+            <p class="NormalBold"><engage:Label Text="%$Overview%"/></p>
+            <div class="Normal"><engage:literal text="%#Overview%"></div>
+        </div>
+        <div class="EventButtons Normal">
+            <engage:EditEventButton/>
+            <Engage:ViewResponsesButton />
+            <Engage:RegisterButton />
+            <Engage:AddToCalendarButton />
+            <Engage:DeleteButton />
+            <Engage:CancelButton />
+        </div>
+	</div>
+</engage:List>
+<div class="Pager Normal">
+    <Engage:PreviousPage Text="%$Previous%" Tooltip="%$PreviousTip%" />&nbsp; 
+    <Engage:PageXOfY Text="%$PageXOfY%" />&nbsp; 
+    <Engage:NextPage Text="%$Next%" Tooltip="%$NextTip%" />
+</div>

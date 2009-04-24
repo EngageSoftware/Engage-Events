@@ -201,6 +201,20 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
+        /// Gets a value indicating whether this instance is displaying the Manage Events page, rather than a public-facing list.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is displaying Manage Events; otherwise, <c>false</c>.
+        /// </value>
+        private bool IsManageEvents
+        {
+            get
+            {
+                return "EVENTLISTINGADMIN".Equals(this.GetCurrentControlKey(), StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        /// <summary>
         /// Sets the listing mode used for this display.
         /// </summary>
         /// <param name="listingModeValue">The listing mode used for this display.</param>
@@ -507,8 +521,9 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         private void SetupTemplateProvider()
         {
+            string templateFolderName = this.IsManageEvents ? "Admin/ManageEvents" : Dnn.Utility.GetStringSetting(this.Settings, "Template");
             this.TemplateProvider = new PagingTemplateProvider(
-                this.GetTemplate(Dnn.Utility.GetStringSetting(this.Settings, "Template")),
+                this.GetTemplate(templateFolderName),
                 this,
                 this.GetPageUrlTemplate(this.SortExpression, this.Status),
                 new ItemPagingState(this.CurrentPageIndex, this.TotalNumberOfEvents, this.RecordsPerPage), 
@@ -530,12 +545,12 @@ namespace Engage.Dnn.Events.Display
         {
             EventCollection events = EventCollection.Load(
                     this.PortalId,
-                    this.listingMode,
+                    this.IsManageEvents ? ListingMode.All : this.listingMode,
                     this.SortExpression,
                     this.CurrentPageIndex - 1,
                     this.RecordsPerPage,
                     this.Status.Equals("All", StringComparison.Ordinal),
-                    this.IsFeatured);
+                    this.IsManageEvents ? false : this.IsFeatured);
 
             this.TotalNumberOfEvents = events.TotalRecords;
             this.TemplateProvider.ItemPagingState = new ItemPagingState(this.CurrentPageIndex, events.TotalRecords, this.RecordsPerPage);
@@ -569,7 +584,7 @@ namespace Engage.Dnn.Events.Display
         {
             // We can't just send {0} to BuildLinkUrl, because it will get "special treatment" by the friendly URL provider for its special characters
             const string UniqueReplaceableTemplateValue = "__--0--__";
-            return this.BuildLinkUrl(this.ModuleId, "EventListing", "sort=" + sortExpression, "status=" + status, "currentPage=" + UniqueReplaceableTemplateValue).Replace(UniqueReplaceableTemplateValue, "{0}");
+            return this.BuildLinkUrl(this.ModuleId, this.GetCurrentControlKey(), "sort=" + sortExpression, "status=" + status, "currentPage=" + UniqueReplaceableTemplateValue).Replace(UniqueReplaceableTemplateValue, "{0}");
         }
     }
 }

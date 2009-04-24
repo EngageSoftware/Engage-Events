@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<EngageManifest Module="Events" Type="List" xmlns="http://www.engagesoftware.com/Schemas/EngageManifest">
+  <Title>Admin - Manage Events</Title>
+  <Description>
+    Displays all events in a managerial interface
+  </Description>
+  <Stylesheet>Template.css</Stylesheet>
+  <ResourceFile>App_LocalResources/Template.resx</ResourceFile>
+  <Template>Item.Listing.html</Template>
+</EngageManifest>

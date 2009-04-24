@@ -37,4 +37,4 @@
 		.ItemListing .EventButtons input {margin-bottom: 0.675em;}
 		
 	.ItemListing .RecurrenceSummary{padding-left: 15px;}
-	.ItemListing.RecurringEventItem{background: transparent url(../images/recurring_icon.gif) no-repeat 0 16px;}
+	.ItemListing.RecurringEventItem{background: transparent url(../../images/recurring_icon.gif) no-repeat 0 16px;}

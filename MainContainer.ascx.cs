@@ -85,7 +85,7 @@ namespace Engage.Dnn.Events
             keyDictionary.Add("EmailEdit", new SubControlInfo("EmailEdit.ascx", true));
             keyDictionary.Add("EventEdit", new SubControlInfo("EventEdit.ascx", true));
             keyDictionary.Add("EventListing", DefaultSubControl);
-            keyDictionary.Add("EventListingAdmin", new SubControlInfo("Display/EventListingAdmin.ascx", true));
+            keyDictionary.Add("EventListingAdmin", new SubControlInfo("Display/EventListingItem.ascx", true));
             keyDictionary.Add("ResponseSummary", new SubControlInfo("ResponseSummaryDisplay.ascx", true));
             keyDictionary.Add("ResponseDetail", new SubControlInfo("ResponseDetail.ascx", true));
             keyDictionary.Add("Response", new SubControlInfo("Respond.ascx", false));
