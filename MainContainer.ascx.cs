@@ -28,12 +28,17 @@ namespace Engage.Dnn.Events
     public partial class MainContainer : ModuleBase
     {
         /// <summary>
-        /// The default sub-control to load
+        /// The control key for the <see cref="DefaultSubControl"/>
+        /// </summary>
+        protected internal const string DefaultControlKey = "EventListing";
+
+        /// <summary>
+        /// The default sub-control to load when no control key is provided
         /// </summary>
         private static readonly SubControlInfo DefaultSubControl = new SubControlInfo("Display/EventDisplay.ascx", false);
 
         /// <summary>
-        /// The default sub-control to load
+        /// The sub-control to load when there is an error with the license
         /// </summary>
         private static readonly SubControlInfo LicenseErrorControl = new SubControlInfo("Admin/LicenseError.ascx", false);
 
@@ -84,7 +89,7 @@ namespace Engage.Dnn.Events
 
             keyDictionary.Add("EmailEdit", new SubControlInfo("EmailEdit.ascx", true));
             keyDictionary.Add("EventEdit", new SubControlInfo("EventEdit.ascx", true));
-            keyDictionary.Add("EventListing", DefaultSubControl);
+            keyDictionary.Add(DefaultControlKey, DefaultSubControl);
             keyDictionary.Add("EventListingAdmin", new SubControlInfo("Display/EventListingItem.ascx", true));
             keyDictionary.Add("ResponseSummary", new SubControlInfo("ResponseSummaryDisplay.ascx", true));
             keyDictionary.Add("ResponseDetail", new SubControlInfo("ResponseDetail.ascx", true));

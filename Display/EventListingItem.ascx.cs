@@ -584,7 +584,13 @@ namespace Engage.Dnn.Events.Display
         {
             // We can't just send {0} to BuildLinkUrl, because it will get "special treatment" by the friendly URL provider for its special characters
             const string UniqueReplaceableTemplateValue = "__--0--__";
-            return this.BuildLinkUrl(this.ModuleId, this.GetCurrentControlKey(), "sort=" + sortExpression, "status=" + status, "currentPage=" + UniqueReplaceableTemplateValue).Replace(UniqueReplaceableTemplateValue, "{0}");
+            string controlKey = this.GetCurrentControlKey();
+            if (!Engage.Utility.HasValue(controlKey))
+            {
+                controlKey = MainContainer.DefaultControlKey;
+            }
+
+            return this.BuildLinkUrl(this.ModuleId, controlKey, "sort=" + sortExpression, "status=" + status, "currentPage=" + UniqueReplaceableTemplateValue).Replace(UniqueReplaceableTemplateValue, "{0}");
         }
     }
 }
