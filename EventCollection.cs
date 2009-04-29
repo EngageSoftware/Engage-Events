@@ -176,12 +176,12 @@ namespace Engage.Events
         }
 
         /// <summary>
-        /// Gets the last day of this month.
+        /// Gets the end of the last day of this month.
         /// </summary>
-        /// <returns>The last day of this month</returns>
+        /// <returns>The just before midnight of the last day of this month</returns>
         private static DateTime GetLastDayOfThisMonth()
         {
-            return GetFirstDayOfNextMonth().AddDays(-1);
+            return GetFirstDayOfNextMonth().AddTicks(-1);
         }
 
         /// <summary>
