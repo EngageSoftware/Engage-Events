@@ -623,17 +623,18 @@ namespace Engage.Events
                     return null;
                 }
 
-                // TODO: Calculate FinalRecurringEndDate efficiently
-                int originalMaxOccurrences = this.recurrenceRule.Range.MaxOccurrences;
-                this.recurrenceRule.Range.MaxOccurrences = int.MaxValue;
+                // Does anyone remember why we were doing this?  It caused bug EVT-536.
+                ////int originalMaxOccurrences = this.recurrenceRule.Range.MaxOccurrences;
+                ////this.recurrenceRule.Range.MaxOccurrences = int.MaxValue;
 
+                // TODO: Calculate FinalRecurringEndDate efficiently
                 DateTime lastOccurrence = this.eventStart;
                 foreach (DateTime occurrence in this.recurrenceRule.Occurrences)
                 {
                     lastOccurrence = occurrence;
                 }
 
-                this.recurrenceRule.Range.MaxOccurrences = originalMaxOccurrences;
+                ////this.recurrenceRule.Range.MaxOccurrences = originalMaxOccurrences;
 
                 return lastOccurrence + this.recurrenceRule.Range.EventDuration;
             }

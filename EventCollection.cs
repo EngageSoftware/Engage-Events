@@ -243,8 +243,9 @@ namespace Engage.Events
         {
             masterEvent.RecurrenceRule.SetEffectiveRange(startDate ?? DateTime.MinValue, endDate ?? DateTime.MaxValue);
 
-            int originalMaxOccurrences = masterEvent.RecurrenceRule.Range.MaxOccurrences;
-            masterEvent.RecurrenceRule.Range.MaxOccurrences = int.MaxValue;
+            // Does anyone remember why we were doing this?  It caused bug EVT-536.
+            ////int originalMaxOccurrences = masterEvent.RecurrenceRule.Range.MaxOccurrences;
+            ////masterEvent.RecurrenceRule.Range.MaxOccurrences = int.MaxValue;
 
             foreach (DateTime eventStart in masterEvent.RecurrenceRule.Occurrences)
             {
@@ -252,7 +253,7 @@ namespace Engage.Events
                 break;
             }
 
-            masterEvent.RecurrenceRule.Range.MaxOccurrences = originalMaxOccurrences;
+            ////masterEvent.RecurrenceRule.Range.MaxOccurrences = originalMaxOccurrences;
         }
 
         /// <summary>
