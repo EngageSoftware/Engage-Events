@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" name="Engage: Events" basedir="." default="package">
-  <property name="build" value="true" overwrite="false"/>
+  <property name="build" value="true" overwrite="false"/> <!-- build is true if building from Visual Studio, false from Team Build (CI) -->
   <property name="bin.directory" value="..\..\bin" overwrite="false"/>
   <property name="project.config" value="release"/>
+  <property name="project.config" value="Debug" if="${build}"/>
+  <property name="ziplevel" value="9"/>
+  <property name="ziplevel" value="1" if="${build}"/>
   <property name="project.name" value="Events"/>
   <property name="solution.file" value="Engage${project.name}.sln"/>
   <property name="references.directory" value="References"/>
@@ -49,7 +52,7 @@
     </solution>
   </target>
   <target name="get-version" depends="build" description="Sets the project.version property to the first three numbers from the version of the main assembly for this module">
-    <property name="version" value="${assemblyname::get-version(assembly::get-name(assembly::load-from-file(project.dll)))}" />
+    <property name="version" value="${fileversioninfo::get-file-version(fileversioninfo::get-version-info(project.dll))}" />
     <property name="project.version" value="${string::substring(version,0,string::last-index-of(version,'.'))}" />
   </target>
   <target name="package" depends="get-version" description="Creates packages for this module, one for each three licenses and version of DNN (4 and 5)">
@@ -72,15 +75,15 @@
     <call target="add-sources-to-resource-zip"/>
     <call target="create-packages"/>
 
-    <delete file="${package.directory}\${package.name}" failonerror="false"/>
-    <delete dir="${package.directory}\temp" failonerror="false"/>
-
     <property name="dnn.version" value="4"/>
     <call target="combine-enterprise"/>
     <property name="dnn.version" value="5"/>
     <call target="combine-enterprise"/>
     
     <call target="project-specific-tasks"/>
+
+    <delete file="${package.directory}\${package.name}" failonerror="false"/>
+    <delete dir="${package.directory}\temp" failonerror="false"/>
   </target>
   <target name="create-resources-zip" description="Creates the Resources.zip file for content (Install package) files">
     <mkdir dir="${package.directory}" failonerror="false"/>
@@ -94,7 +97,7 @@
       </fileset>
     </copy>
 
-    <zip zipfile="${package.directory}/temp/package/${package.name}">
+    <zip zipfile="${package.directory}/temp/package/${package.name}" ziplevel="${ziplevel}">
       <fileset basedir="${package.directory}/temp/resources">
         <include name="**/*"/>
       </fileset>
@@ -109,7 +112,7 @@
       </fileset>
     </copy>
 
-    <zip zipfile="${package.directory}/temp/package/${package.name}">
+    <zip zipfile="${package.directory}/temp/package/${package.name}" ziplevel="${ziplevel}">
       <fileset basedir="${package.directory}/temp/resources">
         <include name="**/*"/>
       </fileset>
@@ -179,7 +182,7 @@
     <if test="${includeSource}">
       <property name="package.type" value="Source"/>
     </if>
-    <zip zipfile="${package.directory}/${project.name}_${package.license}_${project.version}_${package.type}_${dnn.version}.zip">
+    <zip zipfile="${package.directory}/${project.name}_${package.license}_${project.version}_${package.type}_${dnn.version}.zip" ziplevel="${ziplevel}">
       <fileset basedir="${package.directory}/temp/package">
         <include name="**/*"/>
         <exclude name="**/*.4.dnn" if="${dnn.version=='5'}"/>
@@ -188,7 +191,7 @@
     </zip>
   </target>
   <target name="combine-enterprise" description="Combines the Install and Source enterprise packages into one .zip file">
-    <zip zipfile="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}.zip">
+    <zip zipfile="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}.zip" ziplevel="${ziplevel}">
       <fileset basedir="${package.directory}">
         <include name="${project.name}_${package.license}_${project.version}_Install_${dnn.version}.zip"/>
         <include name="${project.name}_${package.license}_${project.version}_Source_${dnn.version}.zip"/>
@@ -199,20 +202,125 @@
     <delete file="${package.directory}/${project.name}_${package.license}_${project.version}_Source_${dnn.version}.zip" failonerror="false"/>
   </target>
   <target name="project-specific-tasks" description="Place tasks specific to the current project in this task">
-    <!-- TODO: Get latest source .zips of the three Engage Framework dependencies, zip them all up -->
-    <!-- TODO: Unzip enterprise package? -->
+    <call target="get-dependency-source"/>
+    
+    <property name="dnn.version" value="4"/>
+    <call target="unzip-enterprise-packages"/>
+    <property name="dnn.version" value="5"/>
+    <call target="unzip-enterprise-packages"/>
   </target>
-  <!--<target name="BuildContentPackage" description="Builds a resources zip file from the content items in the VS project">
-    <loadfile file="${solution.file}" property="solution.text"/>
-    <echo message="${solution.text}"/>
-    <regex pattern="Project\(&quot;{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}}&quot;\)\s?=\s?&quot;[^&quot;]*&quot;,\s?&quot;(?&lt;projectfile&gt;[^&quot;]*\.[^&quot;]*)" input="${solution.text}"/>
-    <echo message="${projectfile}"/>
-    <xmlpeek file="${projectfile}" property="content.filegroup" xpath="/n:Project/n:ItemGroup/n:Content">
-      <namespaces>
-        <namespace prefix="n" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
-      </namespaces>
-    </xmlpeek>
-    <echo message="${content.filegroup}"/>
-  </target>-->
+  <target name="get-dependency-source" description="Gets the latest source packages for the Engage Framework dependencies for this module">
+    <property name="build.directory" value="_0.0"/>
+    <foreach item="Folder" in="\\etg19\qa\Engage\Engage 3.0\Builds\" property="foldername" verbose="true">
+      <property name="build.directory" value="${foldername}" if="${build-directory::is-greater-than(foldername, build.directory) and file::exists(path::combine(foldername, 'Release\Engage.Framework_Source.zip'))}"/>
+    </foreach>
 
+    <copy todir="${package.directory}/temp/dependencies">
+      <fileset basedir="${path::combine(build.directory, 'Release\')}">
+        <include name="*_Source.zip"/>
+      </fileset>
+    </copy>
+
+    <property name="dnn.version" value="4"/>
+    <zip zipfile="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}/${project.name}_${package.license}_${project.version}_DependencySource.zip" ziplevel="${ziplevel}">
+      <fileset basedir="${package.directory}/temp/dependencies">
+        <include name="*_Source.zip"/>
+      </fileset>
+    </zip>
+    
+    <property name="${dnn.version}" value="5"/>
+    <copy file="${package.directory}/${project.name}_${package.license}_${project.version}_4/${project.name}_${package.license}_${project.version}_DependencySource.zip" 
+          tofile="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}/${project.name}_${package.license}_${project.version}_DependencySource.zip"/>
+  </target>
+  <target name="unzip-enterprise-packages" description="The enterprise packages for Events are too big, so they need to be unzipped">
+    <unzip zipfile="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}.zip" todir="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}/"/>
+    <delete file="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}.zip"/>
+  </target>
+  <script language="C#" prefix="build-directory" >
+    <imports>
+      <import namespace="System"/>
+      <import namespace="System.Globalization"/>
+      <import namespace="System.Text.RegularExpressions"/>
+    </imports>
+    <code>
+      <![CDATA[
+              [Function("is-greater-than")]
+              public static bool IsGreaterThan(string lhs, string rhs) {
+                  
+                  return new BuildDirectory(lhs) > new BuildDirectory(rhs);
+              }
+              
+              private struct BuildDirectory
+              {
+                  private static readonly Regex buildDirectoryRegex = new Regex(@".*_(\d+\.\d+)", RegexOptions.Compiled | RegexOptions.CultureInvariant);
+                  private Version buildNumber;
+
+                  public BuildDirectory(string directoryName)
+                  {
+                      this.buildNumber = new Version(buildDirectoryRegex.Match(directoryName).Groups[1].Value);
+                  }
+
+			            public Version BuildNumber
+			            {
+				              get { return this.buildNumber; }
+			            }
+
+			            public static bool operator ==(BuildDirectory left, BuildDirectory right)
+			            {
+				              return left.Equals(right);
+			            }
+
+			            public static bool operator !=(BuildDirectory left, BuildDirectory right)
+			            {
+				              return !left.Equals(right);
+			            }
+
+			            public static bool operator <(BuildDirectory left, BuildDirectory right)
+			            {
+				              return left.buildNumber < right.buildNumber;
+			            }
+
+			            public static bool operator <=(BuildDirectory left, BuildDirectory right)
+			            {
+				              return left < right || left.Equals(right);
+			            }
+
+			            public static bool operator >(BuildDirectory left, BuildDirectory right)
+			            {
+				              return !(left <= right);
+			            }
+
+			            public static bool operator >=(BuildDirectory left, BuildDirectory right)
+			            {
+				              return !(left < right);
+			            }
+
+			            public bool Equals(BuildDirectory other)
+			            {
+				              return other.buildNumber == this.buildNumber;
+			            }
+
+			            public override bool Equals(object obj)
+			            {
+				              if (ReferenceEquals(null, obj))
+				              {
+					                return false;
+				              }
+
+				              if (obj.GetType() != typeof(BuildDirectory))
+				              {
+					                return false;
+				              }
+
+				              return this.Equals((BuildDirectory)obj);
+			            }
+
+			            public override int GetHashCode()
+			            {
+					            return this.buildNumber.GetHashCode();
+			            }
+	            }
+            ]]>
+    </code>
+  </script>
 </project>
