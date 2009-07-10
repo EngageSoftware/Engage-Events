@@ -74,11 +74,6 @@
     <property name="includeSource" value="true"/>
     <call target="add-sources-to-resource-zip"/>
     <call target="create-packages"/>
-
-    <property name="dnn.version" value="4"/>
-    <call target="combine-enterprise"/>
-    <property name="dnn.version" value="5"/>
-    <call target="combine-enterprise"/>
     
     <call target="project-specific-tasks"/>
 
@@ -190,24 +185,13 @@
       </fileset>
     </zip>
   </target>
-  <target name="combine-enterprise" description="Combines the Install and Source enterprise packages into one .zip file">
-    <zip zipfile="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}.zip" ziplevel="${ziplevel}">
-      <fileset basedir="${package.directory}">
-        <include name="${project.name}_${package.license}_${project.version}_Install_${dnn.version}.zip"/>
-        <include name="${project.name}_${package.license}_${project.version}_Source_${dnn.version}.zip"/>
-      </fileset>
-    </zip>
-
-    <delete file="${package.directory}/${project.name}_${package.license}_${project.version}_Install_${dnn.version}.zip" failonerror="false"/>
-    <delete file="${package.directory}/${project.name}_${package.license}_${project.version}_Source_${dnn.version}.zip" failonerror="false"/>
-  </target>
   <target name="project-specific-tasks" description="Place tasks specific to the current project in this task">
     <call target="get-dependency-source"/>
     
     <property name="dnn.version" value="4"/>
-    <call target="unzip-enterprise-packages"/>
+    <call target="move-enterprise-packages"/>
     <property name="dnn.version" value="5"/>
-    <call target="unzip-enterprise-packages"/>
+    <call target="move-enterprise-packages"/>
   </target>
   <target name="get-dependency-source" description="Gets the latest source packages for the Engage Framework dependencies for this module">
     <property name="build.directory" value="_0.0"/>
@@ -222,19 +206,22 @@
     </copy>
 
     <property name="dnn.version" value="4"/>
+    <mkdir dir="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}" failonerror="false"/>
     <zip zipfile="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}/${project.name}_${package.license}_${project.version}_DependencySource.zip" ziplevel="${ziplevel}">
       <fileset basedir="${package.directory}/temp/dependencies">
         <include name="*_Source.zip"/>
       </fileset>
     </zip>
-    
-    <property name="${dnn.version}" value="5"/>
+
+    <property name="dnn.version" value="5"/>
+    <echo message="before mkdir ${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}"/>
+    <mkdir dir="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}" failonerror="false"/>
     <copy file="${package.directory}/${project.name}_${package.license}_${project.version}_4/${project.name}_${package.license}_${project.version}_DependencySource.zip" 
           tofile="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}/${project.name}_${package.license}_${project.version}_DependencySource.zip"/>
   </target>
-  <target name="unzip-enterprise-packages" description="The enterprise packages for Events are too big, so they need to be unzipped">
-    <unzip zipfile="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}.zip" todir="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}/"/>
-    <delete file="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}.zip"/>
+  <target name="move-enterprise-packages" description="The enterprise packages for Events are too big, so they need to be unzipped">
+    <move file="${package.directory}/${project.name}_${package.license}_${project.version}_Install_${dnn.version}.zip" todir="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}/" overwrite="true"/>
+    <move file="${package.directory}/${project.name}_${package.license}_${project.version}_Source_${dnn.version}.zip" todir="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}/" overwrite="true"/>
   </target>
   <script language="C#" prefix="build-directory" >
     <imports>

@@ -206,6 +206,3 @@ GO
 if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetResponseSummaries]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
 drop procedure {databaseOwner}[{objectQualifier}Engage_spGetResponseSummaries]
 GO
-
-delete {databaseOwner}[{objectQualifier}Schedule] where TypeFullName = 'Engage.Dnn.Events.Components.EmailScheduler'
-GO

@@ -1,0 +1,2 @@
+﻿delete {databaseOwner}[{objectQualifier}Schedule] where TypeFullName = 'Engage.Dnn.Events.Components.EmailScheduler'
+GO

@@ -1226,8 +1226,9 @@ ALTER TABLE {databaseOwner}[{objectQualifier}Engage_EventMessage] ADD
 	)
 GO
 
-INSERT INTO {databaseOwner}[{objectQualifier}Schedule] VALUES ('Engage.Dnn.Events.Components.EmailScheduler', 5, 'm',	60,	's', 25, '', 0,	1, '', NULL)
-GO
+--Schedule table changed in DNN 5.1, install fails
+--INSERT INTO {databaseOwner}[{objectQualifier}Schedule] VALUES ('Engage.Dnn.Events.Components.EmailScheduler', 5, 'm',	60,	's', 25, '', 0,	1, '', NULL)
+--GO
 
 if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertApproval]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
 drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertApproval]

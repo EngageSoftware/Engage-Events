@@ -718,6 +718,7 @@
     <None Include="EngageEvents.5.dnn" />
     <None Include="EngageEvents.Build" />
     <None Include="Providers\DataProviders\SqlDataProvider\1.2.0.SqlDataProvider" />
+    <None Include="Providers\DataProviders\SqlDataProvider\1.2.1.SqlDataProvider" />
     <None Include="Templates\EngageManifest.xsd" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
