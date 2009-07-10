@@ -700,6 +700,7 @@
     <Content Include="Actions\App_LocalResources\CancelAction.ascx.resx">
     </Content>
     <Content Include="1.2.0.txt" />
+    <Content Include="ReleaseNotes_1.2.1.htm" />
     <Content Include="Images\choose_display.gif" />
     <Content Include="ReleaseNotes_1.2.0.htm" />
     <Content Include="Templates\Admin\ManageEvents\default.jpg" />
