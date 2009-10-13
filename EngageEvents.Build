@@ -212,7 +212,9 @@
     <mkdir dir="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}" failonerror="false"/>
     <zip zipfile="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}/${project.name}_${package.license}_${project.version}_DependencySource.zip" ziplevel="${ziplevel}">
       <fileset basedir="${package.directory}/temp/dependencies">
-        <include name="*_Source.zip"/>
+        <include name="Engage.Framework_Source.zip"/>
+        <include name="Engage.Dnn.Framework_Source.zip"/>
+        <include name="Engage.Events_Source.zip"/>
       </fileset>
     </zip>
 
