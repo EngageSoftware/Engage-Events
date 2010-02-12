@@ -220,9 +220,6 @@
     <Compile Include="Display\EventDetail.ascx.designer.cs">
       <DependentUpon>EventDetail.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Display\EventTemplateDisplayBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="RespondPage.aspx.cs">
       <DependentUpon>RespondPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
