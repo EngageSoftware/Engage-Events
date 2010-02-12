@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="References\Telerik.Web.UI.dll" />
+    <Content Include="References\Telerik.Web.UI.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engage.Events.Build" />
