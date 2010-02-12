@@ -15,7 +15,6 @@ namespace Engage.Dnn.Events.Display
     using System.Diagnostics;
     using System.Web.UI;
     using DotNetNuke.Framework;
-    using DotNetNuke.Services.Localization;
     using Engage.Events;
 
     /// <summary>
@@ -36,6 +35,15 @@ namespace Engage.Dnn.Events.Display
         public void SetEvent(Event tooltipEvent)
         {
             this.currentEvent = tooltipEvent;
+        }
+
+        public void ShowEvent()
+        {
+            this.EventDate.Text = Dnn.Events.Utility.GetFormattedEventDate(this.currentEvent.EventStart, this.currentEvent.EventEnd, this.LocalResourceFile);
+            this.EventOverview.Text = this.currentEvent.Overview;
+            this.EventTitle.Text = this.currentEvent.Title;
+
+            this.RegisterButton.Visible = this.currentEvent.AllowRegistrations;
         }
 
         /// <summary>
@@ -63,12 +71,8 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Page_PreRender(object sender, EventArgs e)
         {
-            this.EventDate.Text = Dnn.Events.Utility.GetFormattedEventDate(this.currentEvent.EventStart, this.currentEvent.EventEnd, this.LocalResourceFile);
-            this.EventOverview.Text = this.currentEvent.Overview;
-            this.EventTitle.Text = this.currentEvent.Title;
-
+            ////this.ShowEvent();
             ////this.AddToCalendarButton.Visible = Engage.Utility.IsLoggedIn;
-            this.RegisterButton.Visible = this.currentEvent.AllowRegistrations;
             this.EditButton.Visible = this.IsAdmin;
         }
 

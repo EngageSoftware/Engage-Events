@@ -24,7 +24,6 @@ namespace Engage.Dnn.Events
         /// </summary>
         protected override void BindData()
         {
-            LocalizeControls();
         }
 
         /// <summary>
@@ -39,13 +38,6 @@ namespace Engage.Dnn.Events
             this.AddToCalendarButton.Click += this.AddToCalendarButton_Click;
 
             AJAX.RegisterPostBackControl(this.AddToCalendarButton);
-        }
-
-        /// <summary>
-        /// Localizes this control's child controls.
-        /// </summary>
-        private static void LocalizeControls()
-        {
         }
 
         /// <summary>

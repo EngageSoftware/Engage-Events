@@ -220,6 +220,9 @@
     <Compile Include="Display\EventDetail.ascx.designer.cs">
       <DependentUpon>EventDetail.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Display\EventTemplateDisplayBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="RespondPage.aspx.cs">
       <DependentUpon>RespondPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -648,6 +651,9 @@
     <Content Include="Actions\App_LocalResources\ButtonAction.ascx.resx">
     </Content>
     <EmbeddedResource Include="JavaScript\jquery.fancybox-1.0.0.js" />
+    <Content Include="Templates\ToolTip\App_LocalResources\Template.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Templates\Admin\ManageEvents\App_LocalResources\Template.resx" />
     <Content Include="Templates\Legacy-ListingAll\App_LocalResources\Template.resx">
       <SubType>Designer</SubType>
@@ -702,6 +708,9 @@
     <Content Include="Actions\App_LocalResources\CancelAction.ascx.resx">
     </Content>
     <Content Include="1.2.0.txt" />
+    <Content Include="References\Engage.Dnn.Framework.xml" />
+    <Content Include="References\Engage.Events.XML" />
+    <Content Include="References\Engage.Framework.xml" />
     <Content Include="ReleaseNotes_1.2.2.htm" />
     <Content Include="References\system.web.extensions.dll" />
     <Content Include="References\Telerik.Web.Design.dll" />
@@ -713,6 +722,9 @@
     <Content Include="Templates\Admin\ManageEvents\Item.Listing.html" />
     <Content Include="Templates\Admin\ManageEvents\Manifest.xml" />
     <Content Include="Templates\Admin\ManageEvents\Template.css" />
+    <Content Include="Templates\ToolTip\ToolTip.html" />
+    <Content Include="Templates\ToolTip\Manifest.xml" />
+    <Content Include="Templates\ToolTip\Template.css" />
     <Content Include="Templates\Default-Single\single-item-default.jpg" />
     <Content Include="Templates\Default\default.jpg" />
     <Content Include="Templates\Legacy-ListingAll\Item.Listing.html" />

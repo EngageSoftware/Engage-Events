@@ -27,6 +27,23 @@ namespace Engage.Dnn.Events.Display
     public partial class EventCalendar : ModuleBase
     {
         /// <summary>
+        /// Gets or sets the ID of the <see cref="Event"/> last displayed in the tool-tip.
+        /// </summary>
+        /// <value>The ID of the event in the tool-tip.</value>
+        private int? ToolTipEventId
+        {
+            get
+            {
+                return this.ViewState["ToolTipEventId"] as int?;
+            }
+
+            set
+            {
+                this.ViewState["ToolTipEventId"] = value;
+            }
+        }
+
+        /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
@@ -85,7 +102,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="Telerik.Web.UI.AppointmentCreatedEventArgs"/> instance containing the event data.</param>
         private void EventsCalendarDisplay_AppointmentCreated(object sender, AppointmentCreatedEventArgs e)
         {
-            if (e.Appointment.Visible && !this.IsAppointmentRegisteredForTooltip(e.Appointment))
+            if (e.Appointment.Visible && !this.IsAppointmentRegisteredForToolTip(e.Appointment))
             {
                 foreach (AppointmentControl appointmentControl in e.Appointment.AppointmentControls)
                 {
@@ -115,23 +132,40 @@ namespace Engage.Dnn.Events.Display
             int eventId;
             if (int.TryParse(e.Value.Split('_')[0], NumberStyles.Integer, CultureInfo.InvariantCulture, out eventId))
             {
-                Event ev = Event.Load(eventId);
-                EventToolTip toolTip = (EventToolTip)this.LoadControl("EventToolTip.ascx");
-
-                toolTip.ModuleConfiguration = this.ModuleConfiguration;
-                toolTip.SetEvent(ev);
-                e.UpdatePanel.ContentTemplateContainer.Controls.Add(toolTip);
+                this.ToolTipEventId = eventId;
+                this.ShowToolTip(eventId, e.UpdatePanel);
             }
         }
 
         /// <summary>
-        /// Determines whether the specified appointment is registered with the tooltip manager.
+        /// Sets up the <see cref="EventToolTip"/> control and displays it
+        /// </summary>
+        /// <param name="eventId">The ID of the <see cref="Event"/> to display within the tool-tip.</param>
+        /// <param name="panel">The panel in which the tool-tip is displayed.</param>
+        private void ShowToolTip(int eventId, UpdatePanel panel)
+        {
+            Event ev = Event.Load(eventId);
+            var toolTip = (EventToolTip)(panel.ContentTemplateContainer.FindControl("EventToolTip") ?? this.LoadControl("EventToolTip.ascx"));
+
+            toolTip.ID = "EventToolTip";
+            toolTip.ModuleConfiguration = this.ModuleConfiguration;
+            toolTip.SetEvent(ev);
+            toolTip.ShowEvent();
+
+            if (!panel.ContentTemplateContainer.Controls.Contains(toolTip))
+            {
+                panel.ContentTemplateContainer.Controls.Add(toolTip);
+            }
+        }
+
+        /// <summary>
+        /// Determines whether the specified appointment is registered with the tool-tip manager.
         /// </summary>
         /// <param name="apt">The appointment</param>
         /// <returns>
-        /// <c>true</c> if the specified appointment is registered with the tooltip manager; otherwise, <c>false</c>.
+        /// <c>true</c> if the specified appointment is registered with the tool-tip manager; otherwise, <c>false</c>.
         /// </returns>
-        private bool IsAppointmentRegisteredForTooltip(Appointment apt)
+        private bool IsAppointmentRegisteredForToolTip(Appointment apt)
         {
             foreach (ToolTipTargetControl targetControl in this.EventsCalendarToolTipManager.TargetControls)
             {
@@ -163,6 +197,12 @@ namespace Engage.Dnn.Events.Display
             this.EventsCalendarDisplay.Skin = this.EventsCalendarToolTipManager.Skin = skinSetting.ToString();
 
             this.EventsCalendarDisplay.MonthView.VisibleAppointmentsPerDay = Utility.GetIntSetting(this.Settings, Setting.EventsPerDay.PropertyName, 3);
+
+            if (this.ToolTipEventId.HasValue)
+            {
+                this.ShowToolTip(this.ToolTipEventId.Value, this.EventsCalendarToolTipManager.UpdatePanel);
+                this.ToolTipEventId = null;
+            }
         }
     }
 }

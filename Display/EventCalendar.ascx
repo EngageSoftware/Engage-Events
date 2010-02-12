@@ -32,8 +32,8 @@
     </h2>
 </div>
 <div class="EventCalendar">
-    <asp:UpdatePanel runat="server" UpdateMode="Conditional">
-        <ContentTemplate>
+<%--    <asp:UpdatePanel runat="server" UpdateMode="Conditional">
+        <ContentTemplate>--%>
             <telerik:radscheduler id="EventsCalendarDisplay" runat="server" selectedview="MonthView"
                 enableembeddedskins="True" allowdelete="False" allowedit="False" allowinsert="False"
                 overflowbehavior="Expand" ReadOnly="true" ShowFullTime="true">
@@ -41,6 +41,6 @@
             </telerik:radscheduler>
             <telerik:radtooltipmanager runat="server" id="EventsCalendarToolTipManager" width="300" height="150"
                 animation="None" position="BottomRight" sticky="true" text="Loading..." AutoTooltipify="false" />
-        </ContentTemplate>
-    </asp:UpdatePanel>
+<%--        </ContentTemplate>
+    </asp:UpdatePanel>--%>
 </div>
