@@ -128,6 +128,7 @@
 .EventsSetting label, .EventsSetting .Help{float:left;width: 49%;}
 .EventsSetting br /*dnn label renders a br tag*/ {	display: none;}
 .EventsSetting input, .EventsSetting select, .EventsSetting .NumericTextBoxWrapper{float:right;width:49%;}
+.EventsSetting table input {float:none; width:auto;}
 .EventsSetting .NumericTextBoxWrapper{text-align: center;}
 .EventsSetting .NumericTextBoxWrapper div, .EventsSetting .NumericTextBoxWrapper div table{text-align: right;width: 5em !important;}
 .EventsSetting .NumericTextBoxWrapper td.spinImgCell  a.spinbutton{text-align: left;}
