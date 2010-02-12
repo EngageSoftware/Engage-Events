@@ -81,7 +81,7 @@
     <Reference Include="System.Web.Mobile" />
     <Reference Include="Telerik.Web.UI, Version=2008.1.515.20, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
