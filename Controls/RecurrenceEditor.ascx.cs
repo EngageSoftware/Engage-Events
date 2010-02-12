@@ -1,6 +1,6 @@
 // <copyright file="RecurrenceEditor.ascx.cs" company="Engage Software">
 // Engage: Events - http://www.EngageSoftware.com
-// Copyright (c) 2004-2009
+// Copyright (c) 2004-2010
 // by Engage Software ( http://www.engagesoftware.com )
 // </copyright>
 
