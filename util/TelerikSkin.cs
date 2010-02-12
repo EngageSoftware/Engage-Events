@@ -11,10 +11,12 @@
 
 namespace Engage.Dnn.Events
 {
+    using System.Diagnostics.CodeAnalysis;
+
     /// <summary>
     /// Skins embedded into the Telerik assembly for use in styling Telerik controls.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Telerik", Justification = "Telerik is spelled correctly")]
+    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Telerik", Justification = "Telerik is spelled correctly")]
     public enum TelerikSkin
     {
         /// <summary>
@@ -28,20 +30,14 @@ namespace Engage.Dnn.Events
         Default,
 
         /// <summary>
-        /// A skin called Gray
+        /// A skin called Forest
         /// </summary>
-        Gray,
+        Forest,
 
         /// <summary>
         /// A skin called Hay
         /// </summary>
         Hay,
-
-        /// <summary>
-        /// A skin called Inox
-        /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Inox", Justification = "Inox is the name of the skin and is correctly spelled")]
-        Inox,
 
         /// <summary>
         /// A skin called Office2007
@@ -54,6 +50,17 @@ namespace Engage.Dnn.Events
         Outlook,
 
         /// <summary>
+        /// A skin called Simple
+        /// </summary>
+        Simple,
+
+        /// <summary>
+        /// A skin called Sitefinity
+        /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sitefinity", Justification = "Sitefinity is spelled correctly")]
+        Sitefinity,
+
+        /// <summary>
         /// A skin called Sunset
         /// </summary>
         Sunset,
@@ -61,7 +68,7 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// A skin called Telerik
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Telerik", Justification = "Telerik is spelled correctly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Telerik", Justification = "Telerik is spelled correctly")]
         Telerik,
 
         /// <summary>

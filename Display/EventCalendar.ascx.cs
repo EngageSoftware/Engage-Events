@@ -159,11 +159,8 @@ namespace Engage.Dnn.Events.Display
             this.EventsCalendarDisplay.DataSubjectField = "Title";
             this.EventsCalendarDisplay.DataBind();
 
-            string skinSetting = Utility.GetStringSetting(this.Settings, Setting.SkinSelection.PropertyName);
-            if (skinSetting != null)
-            {
-                this.EventsCalendarDisplay.Skin = this.EventsCalendarToolTipManager.Skin = skinSetting;
-            }
+            TelerikSkin skinSetting = Utility.GetEnumSetting(this.Settings, Setting.SkinSelection.PropertyName, TelerikSkin.Default);
+            this.EventsCalendarDisplay.Skin = this.EventsCalendarToolTipManager.Skin = skinSetting.ToString();
 
             this.EventsCalendarDisplay.MonthView.VisibleAppointmentsPerDay = Utility.GetIntSetting(this.Settings, Setting.EventsPerDay.PropertyName, 3);
         }

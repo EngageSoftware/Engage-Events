@@ -129,20 +129,23 @@
   <data name="EventsPerDayLabel.Text" xml:space="preserve">
     <value>Events Per Day</value>
   </data>
-  <data name="Gray.Text" xml:space="preserve">
-    <value>Gray</value>
+  <data name="Forest.Text" xml:space="preserve">
+    <value>Forest</value>
   </data>
   <data name="Hay.Text" xml:space="preserve">
     <value>Hay</value>
-  </data>
-  <data name="Inox.Text" xml:space="preserve">
-    <value>Inox</value>
   </data>
   <data name="Office2007.Text" xml:space="preserve">
     <value>Office 2007</value>
   </data>
   <data name="Outlook.Text" xml:space="preserve">
     <value>Outlook</value>
+  </data>
+  <data name="Simple.Text" xml:space="preserve">
+    <value>Simple</value>
+  </data>
+  <data name="Sitefinity.Text" xml:space="preserve">
+    <value>Sitefinity</value>
   </data>
   <data name="SkinLabel.Help" xml:space="preserve">
     <value>A skin determines the look of the calendar.  It will effect the colors (and, to a smaller degree, the layout) of the calendar, the event popup, and the date picker.</value>
