@@ -46,11 +46,13 @@
   </patternset>
 
   <target name="build" description="Builds the solution" if="${build}">
-    <solution configuration="${project.config}" solutionfile="${solution.file}">
-      <assemblyfolders>
-        <include name="${references.directory}"/>
-      </assemblyfolders>
-    </solution>
+    <exec program="${framework::get-framework-directory(framework::get-target-framework())}\msbuild.exe" failonerror="true">
+      <arg value="${solution.file}" />
+      <arg value="/p:Configuration=${project.config}" />
+      <arg value="/p:Platform=&quot;Any CPU&quot;" />
+      <arg value="/m" />
+      <!-- multicore -->
+    </exec>
   </target>
   <target name="get-version" depends="build" description="Sets the project.version property to the first three numbers from the version of the main assembly for this module">
     <property name="version" value="${fileversioninfo::get-file-version(fileversioninfo::get-version-info(project.dll))}" />
@@ -150,8 +152,12 @@
     <xmlpoke file="${package.directory}/temp/package/Engage${project.name}.5.dnn" value="${project.version}" xpath="dotnetnuke/packages/package/components/component[@type='Script']/scripts/script[@type='UnInstall']/version"/>
     <xmlpoke file="${package.directory}/temp/package/Engage${project.name}.5.dnn" value="${project.version}" xpath="dotnetnuke/packages/package/components/component[@type='Assembly']/assemblies/assembly[version='REPLACED BY NANT']/version"/>
     <xmlpoke file="${package.directory}/temp/package/Engage${project.name}.4.dnn" value="${project.version}" xpath="dotnetnuke/folders/folder/version"/>
+
+    <copy file="${package.directory}/temp/package/Engage${project.name}.5.dnn" tofile="${package.directory}/temp/package/Engage${project.name}.5.2.dnn"/>
+    <xmlpoke file="${package.directory}/temp/package/Engage${project.name}.5.2.dnn" value="" xpath="dotnetnuke/packages/package/components/component[@type='Assembly']/assemblies/assembly[name='Telerik.Web.UI.dll']"/>
   </target>
   <target name="create-packages" description="For the given license and type, creates packages for DNN 4 and DNN 5">
+    <property name="exclude.telerik" value="false"/>
     <property name="license.file" value="EULA-${package.license}.htm"/>
     <call target="switch-license"/>
     
@@ -159,6 +165,9 @@
     <call target="zip-package"/>
 
     <property name="dnn.version" value="5"/>
+    <call target="zip-package"/>
+
+    <property name="exclude.telerik" value="true"/>
     <call target="zip-package"/>
   </target>
   <target name="switch-license" description="Switches out the license file and updates the reference to it in the DNN 5 manifest file">
@@ -180,20 +189,34 @@
     <if test="${includeSource}">
       <property name="package.type" value="Source"/>
     </if>
-    <zip zipfile="${package.directory}/${project.name}_${package.license}_${project.version}_${package.type}_${dnn.version}.zip" ziplevel="${ziplevel}">
+
+    <property name="dnn.version.minor" value=""/>
+    <if test="${exclude.telerik}">
+      <property name="dnn.version.minor" value=".2+"/>
+    </if>
+    
+    <zip zipfile="${package.directory}/${project.name}_${package.license}_${project.version}_${package.type}_${dnn.version}${dnn.version.minor}.zip" ziplevel="${ziplevel}">
       <fileset basedir="${package.directory}/temp/package">
         <include name="**/*"/>
-        <exclude name="**/*.4.dnn" if="${dnn.version=='5'}"/>
-        <exclude name="**/*.5.dnn" if="${dnn.version=='4'}"/>
+        <exclude name="**/*.4.dnn" if="${dnn.version != '4'}"/>
+        <exclude name="**/*.5.dnn" if="${dnn.version != '5' or exclude.telerik}"/>
+        <exclude name="**/*.5.2.dnn" if="${dnn.version != '5' or not exclude.telerik}"/>
+        <exclude name="**/Telerik.Web.UI.dll" if="${exclude.telerik}"/>
       </fileset>
     </zip>
   </target>
   <target name="project-specific-tasks" description="Place tasks specific to the current project in this task">
     <call target="get-dependency-source"/>
-    
+
     <property name="dnn.version" value="4"/>
+    <property name="dnn.version.minor" value=""/>
     <call target="move-enterprise-packages"/>
+
     <property name="dnn.version" value="5"/>
+    <call target="move-enterprise-packages"/>
+
+    <property name="dnn.version" value="5"/>
+    <property name="dnn.version.minor" value=".2+"/>
     <call target="move-enterprise-packages"/>
   </target>
   <target name="get-dependency-source" description="Gets the latest source packages for the Engage Framework dependencies for this module">
@@ -220,13 +243,17 @@
 
     <property name="dnn.version" value="5"/>
     <echo message="before mkdir ${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}"/>
-    <mkdir dir="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}" failonerror="false"/>
-    <copy file="${package.directory}/${project.name}_${package.license}_${project.version}_4/${project.name}_${package.license}_${project.version}_DependencySource.zip" 
-          tofile="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}/${project.name}_${package.license}_${project.version}_DependencySource.zip"/>
+    <mkdir dir="${package.directory}/${project.name}_${package.license}_${project.version}_5" failonerror="false"/>
+    <copy file="${package.directory}/${project.name}_${package.license}_${project.version}_4/${project.name}_${package.license}_${project.version}_DependencySource.zip"
+          tofile="${package.directory}/${project.name}_${package.license}_${project.version}_5/${project.name}_${package.license}_${project.version}_DependencySource.zip"/>
+
+    <mkdir dir="${package.directory}/${project.name}_${package.license}_${project.version}_5.2+" failonerror="false"/>
+    <copy file="${package.directory}/${project.name}_${package.license}_${project.version}_4/${project.name}_${package.license}_${project.version}_DependencySource.zip"
+          tofile="${package.directory}/${project.name}_${package.license}_${project.version}_5.2+/${project.name}_${package.license}_${project.version}_DependencySource.zip"/>
   </target>
   <target name="move-enterprise-packages" description="The enterprise packages for Events are too big, so they need to be unzipped">
-    <move file="${package.directory}/${project.name}_${package.license}_${project.version}_Install_${dnn.version}.zip" todir="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}/" overwrite="true"/>
-    <move file="${package.directory}/${project.name}_${package.license}_${project.version}_Source_${dnn.version}.zip" todir="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}/" overwrite="true"/>
+    <move file="${package.directory}/${project.name}_${package.license}_${project.version}_Install_${dnn.version}${dnn.version.minor}.zip" todir="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}${dnn.version.minor}/" overwrite="true"/>
+    <move file="${package.directory}/${project.name}_${package.license}_${project.version}_Source_${dnn.version}${dnn.version.minor}.zip" todir="${package.directory}/${project.name}_${package.license}_${project.version}_${dnn.version}${dnn.version.minor}/" overwrite="true"/>
   </target>
   <script language="C#" prefix="build-directory" >
     <imports>
