@@ -183,6 +183,7 @@
     </copy>
 
     <xmlpoke file="${package.directory}/temp/package/Engage${project.name}.5.dnn" value="${license.file}" xpath="dotnetnuke/packages/package/license/@src"/>
+    <xmlpoke file="${package.directory}/temp/package/Engage${project.name}.5.2.dnn" value="${license.file}" xpath="dotnetnuke/packages/package/license/@src"/>
   </target>
   <target name="zip-package" description="Zips up the files in the temp/package directory, getting the correct manifest file and using the correct naming convention">
     <property name="package.type" value="Install"/>

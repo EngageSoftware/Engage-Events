@@ -705,6 +705,7 @@
     <Content Include="Actions\App_LocalResources\CancelAction.ascx.resx">
     </Content>
     <Content Include="1.2.0.txt" />
+    <Content Include="ReleaseNotes_1.3.0.htm" />
     <Content Include="References\Engage.Dnn.Framework.xml" />
     <Content Include="References\Engage.Events.XML" />
     <Content Include="References\Engage.Framework.xml" />
