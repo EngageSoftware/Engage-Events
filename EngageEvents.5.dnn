@@ -1,16 +1,16 @@
 ﻿<dotnetnuke type="Package" version="5.0">
   <packages>
-    <package name="Engage: Events" type="Module" version="REPLACED BY NANT">
+    <package name="Engage: Events" type="Module" version="1.2.0">
       <friendlyName>Engage: Events</friendlyName>
       <description>The DotNetNuke Events module by Engage Software (www.EngageSoftware.com)</description>
       <owner>
         <name>Engage Software</name>
         <organization>Engage Software</organization>
-        <url><![CDATA[<a href="http://www.engagesoftware.com/">http://www.engagesoftware.com/</a>]]></url>
-        <email><![CDATA[<a href="mailto:support@engagemodules.com">support@engagemodules.com</a>]]></email>
+        <url>http://www.engagesoftware.com/</url>
+        <email>support@engagemodules.com</email>
       </owner>
-      <license src="REPLACED BY NANT"/>
-      <releaseNotes src="REPLACED BY NANT" />
+      <license src="Licenses/EULA-Standard.htm"/>
+      <releaseNotes src="ReleaseNotes_1.2.0.htm" />
       <components>
         <component type="ResourceFile">
           <resourceFiles>
@@ -49,7 +49,7 @@
             </script>
             <script type="UnInstall">
               <name>Uninstall.SqlDataProvider</name>
-              <version>REPLACED BY NANT</version>
+              <version latestVersion="latestVersion">1.2.0</version>
             </script>
           </scripts>
         </component>
@@ -88,7 +88,7 @@
           <assemblies>
             <assembly>
               <name>EngageEvents.dll</name>
-              <version>REPLACED BY NANT</version>
+              <version latestVersion="latestVersion">1.2.0</version>
             </assembly>
             <assembly>
               <name>Engage.Events.dll</name>

@@ -25,6 +25,11 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.WebControls;
 
+#if TRIAL
+    using Engage.Dnn.Events.Components;
+    using Engage.Licensing;
+#endif
+
     /// <summary>
     /// This class extends the framework version in order for developers to add on any specific methods/behavior.
     /// </summary>
@@ -47,20 +52,26 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                ModuleActionCollection actions = new ModuleActionCollection();
+                var actions = new ModuleActionCollection();
 
                 if (HostSettings.GetHostSetting("EnableModuleOnLineHelp") == "Y" && Engage.Utility.HasValue(this.ModuleConfiguration.HelpUrl))
                 {
-                    ModuleAction helpAction = new ModuleAction(this.GetNextActionID());
-                    helpAction.Title = Localization.GetString(ModuleActionType.OnlineHelp, Localization.GlobalResourceFile);
-                    helpAction.CommandName = ModuleActionType.OnlineHelp;
-                    helpAction.CommandArgument = string.Empty;
-                    helpAction.Icon = "action_help.gif";
-                    helpAction.Url = Globals.FormatHelpUrl(this.ModuleConfiguration.HelpUrl, this.PortalSettings, this.ModuleConfiguration.FriendlyName);
-                    helpAction.Secure = SecurityAccessLevel.Edit;
-                    helpAction.UseActionEvent = true;
-                    helpAction.Visible = true;
-                    helpAction.NewWindow = true;
+                    var helpAction = new ModuleAction(this.GetNextActionID())
+                        {
+                            Title = Localization.GetString(ModuleActionType.OnlineHelp, Localization.GlobalResourceFile),
+                            CommandName = ModuleActionType.OnlineHelp,
+                            CommandArgument = string.Empty,
+                            Icon = "action_help.gif",
+                            Url =
+                                Globals.FormatHelpUrl(
+                                    this.ModuleConfiguration.HelpUrl,
+                                    this.PortalSettings,
+                                    this.ModuleConfiguration.FriendlyName),
+                            Secure = SecurityAccessLevel.Edit,
+                            UseActionEvent = true,
+                            Visible = true,
+                            NewWindow = true
+                        };
                     actions.Add(helpAction);
                 }
 
@@ -226,7 +237,7 @@ namespace Engage.Dnn.Events
         /// </returns>
         protected static string GenerateQueryStringParameters(HttpRequest request, params string[] queryStringKeys)
         {
-            StringBuilder queryString = new StringBuilder(64);
+            var queryString = new StringBuilder(64);
             foreach (string key in queryStringKeys)
             {
                 if (Engage.Utility.HasValue(request.QueryString[key]))
@@ -259,21 +270,15 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Gets localized text for the given resource key using this control's <see cref="DotNetNuke.Entities.Modules.PortalModuleBase.LocalResourceFile"/>.
-        /// </summary>
-        /// <param name="resourceKey">The resource key.</param>
-        /// <returns>Localized text for the given resource key</returns>
-        protected string Localize(string resourceKey)
-        {
-            return Localization.GetString(resourceKey, this.LocalResourceFile);
-        }
-
-        /// <summary>
         /// Raises the <see cref="Control.Init"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected override void OnInit(EventArgs e)
         {
+#if TRIAL
+            this.LicenseProvider = new TrialLicenseProvider(FeaturesController.ModuleLicenseKey);
+#endif
+
             base.OnInit(e);
             this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
         }
