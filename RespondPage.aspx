@@ -8,7 +8,7 @@
 </head>
 <body>
     <form runat="server">
-        <asp:ScriptManager runat="server" />
+        <asp:PlaceHolder ID="ScriptManagerPlaceholder" runat="server" />
         <engage:Respond ID="RespondControl" runat="server" />
     </form>
 </body>

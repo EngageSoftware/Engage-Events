@@ -1,4 +1,4 @@
-﻿// <copyright file="RespondPage.aspx.cs" company="Engage Software">
+﻿ // <copyright file="RespondPage.aspx.cs" company="Engage Software">
 // Engage: Events - http://www.EngageSoftware.com
 // Copyright (c) 2004-2010
 // by Engage Software ( http://www.engagesoftware.com )
@@ -71,6 +71,14 @@ namespace Engage.Dnn.Events
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
+
+            // PageBase in DNN 5.3 or 5.4 started adding its own ScriptManager in OnInit
+            // so we only need to add one to the page if it didn't get added by the framework in the above base.OnInit call
+            if (ScriptManager.GetCurrent(this.Page) == null)
+            {
+                this.ScriptManagerPlaceholder.Controls.Add(new ScriptManager());
+            }
+
             this.Load += this.Page_Load;
         }
 
