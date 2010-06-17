@@ -31,7 +31,7 @@
     </div>
     <asp:Label ID="NoResponsesMessageLabel" runat="server" resourcekey="NoResponsesMessageLabel" />
     <asp:Repeater runat="server" ID="SummaryRepeater">
-        <HeaderTemplate><ol></HeaderTemplate>
+        <HeaderTemplate><ol start="<%=StartIndex %>"></HeaderTemplate>
         <ItemTemplate>
             <li>
                 <engage:ResponseDisplay ID="ResponseDisplay" runat="server" />
