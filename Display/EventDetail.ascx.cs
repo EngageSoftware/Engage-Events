@@ -22,7 +22,7 @@ namespace Engage.Dnn.Events.Display
     /// <summary>
     /// Event Detail view.
     /// </summary>
-    public partial class EventDetail : ModuleBase
+    public partial class EventDetail : TemplatedDisplayModuleBase
     {
         /// <summary>
         /// Processes a tag for a template
@@ -32,16 +32,22 @@ namespace Engage.Dnn.Events.Display
         /// <param name="templateItem">The object to query for data to implement the given tag</param>
         /// <param name="resourceFile">The resource file to use to find get localized text.</param>
         /// <returns>Whether to process the tag's ChildTags collection</returns>
-        internal static bool ProcessTag(Control container, Tag tag, ITemplateable templateItem, string resourceFile)
+        internal bool ProcessTag(Control container, Tag tag, ITemplateable templateItem, string resourceFile)
         {
             if (tag.TagType == TagType.Open && tag.LocalName.Equals("BACKHYPERLINK", StringComparison.OrdinalIgnoreCase))
             {
-                HyperLink backHyperlink = new HyperLink();
-                backHyperlink.NavigateUrl = Globals.NavigateURL();
-                backHyperlink.CssClass = TemplateEngine.GetAttributeValue(tag, templateItem, resourceFile, "CssClass", "class");
-                backHyperlink.Text = TemplateEngine.GetAttributeValue(tag, templateItem, resourceFile, "Text");
-                
+                var backHyperlink = new HyperLink
+                    {
+                        NavigateUrl = Globals.NavigateURL(),
+                        CssClass = TemplateEngine.GetAttributeValue(tag, templateItem, resourceFile, "CssClass", "class"),
+                        Text = TemplateEngine.GetAttributeValue(tag, templateItem, resourceFile, "Text")
+                    };
+
                 container.Controls.Add(backHyperlink);
+            }
+            else
+            {
+                return this.ProcessCommonTag(container, tag, (Event)templateItem, resourceFile);
             }
 
             return true;
@@ -55,6 +61,35 @@ namespace Engage.Dnn.Events.Display
         {
             this.SetupTemplateProvider();
             base.OnInit(e);
+        }
+
+        /// <summary>
+        /// Handles the <see cref="DeleteAction.Delete"/> and <see cref="CancelAction.Cancel"/> events,
+        /// reloading this page to reflect the changes made by those controls
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected override void ReloadPage(object sender, EventArgs args)
+        {
+            if (this.EventId.HasValue)
+            {
+                this.Response.Redirect(this.BuildLinkUrl(this.TabId, this.ModuleId, "EventDetail", Dnn.Events.Utility.GetEventParameters(this.EventId.Value, this.EventStart)));
+            }
+            else
+            {
+                this.ReturnToList(sender, args);
+            }
+        }
+
+        /// <summary>
+        /// Handles the <see cref="DeleteAction.Delete"/> event,
+        /// reloading the list of events to reflect the changes made by those controls
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected override void ReturnToList(object sender, EventArgs args)
+        {
+            this.Response.Redirect(Globals.NavigateURL(), true);
         }
 
         /// <summary>

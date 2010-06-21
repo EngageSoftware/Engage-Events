@@ -246,6 +246,9 @@
     <Compile Include="RespondPage.aspx.designer.cs">
       <DependentUpon>RespondPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="TemplatedDisplayModuleBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Util\TelerikSkin.cs" />
     <Compile Include="Display\TemplateDisplayOptions.ascx.cs">
       <DependentUpon>TemplateDisplayOptions.ascx</DependentUpon>

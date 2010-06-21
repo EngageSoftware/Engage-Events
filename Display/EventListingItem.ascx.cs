@@ -26,23 +26,8 @@ namespace Engage.Dnn.Events.Display
     /// <summary>
     /// Custom event listing item
     /// </summary>
-    public partial class EventListingItem : ModuleBase
+    public partial class EventListingItem : TemplatedDisplayModuleBase
     {
-        /// <summary>
-        /// Relative path to the folder where the action controls are located in this module
-        /// </summary>
-        private readonly string ActionsControlsFolder;
-
-        /// <summary>
-        /// Keeps track of the last event processed in <see cref="ProcessTag"/> to enable alternating behavior
-        /// </summary>
-        private Event lastEventProcessed;
-
-        /// <summary>
-        /// Keeps track of whether the current event being processed in <see cref="ProcessTag"/> is an alternating (even number) event
-        /// </summary>
-        private bool isAlternatingEvent = true;
-
         /// <summary>
         /// Backing field for <see cref="SortAction"/>
         /// </summary>
@@ -60,14 +45,6 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ListingMode listingMode;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EventListingItem"/> class.
-        /// </summary>
-        public EventListingItem()
-        {
-            this.ActionsControlsFolder = "~" + this.DesktopModuleFolderName + "Actions/";
-        }
 
         /// <summary>
         /// Gets the listing mode used for this display.
@@ -245,22 +222,6 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Appends the given attribute to <paramref name="cssClassBuilder"/>, adding a space beforehand if necessary.
-        /// </summary>
-        /// <param name="tag">The tag whose attribute we are appending.</param>
-        /// <param name="cssClassBuilder">The <see cref="StringBuilder"/> which will contain the appended CSS class.</param>
-        /// <param name="attributeName">Name of the attribute being appended.</param>
-        private static void AppendCssClassAttribute(Tag tag, StringBuilder cssClassBuilder, string attributeName)
-        {
-            if (cssClassBuilder.Length > 0)
-            {
-                cssClassBuilder.Append(" ");
-            }
-
-            cssClassBuilder.Append(tag.GetAttributeValue(attributeName));
-        }
-
-        /// <summary>
         /// Handles the <see cref="Events.SortAction.SortChanged"/> event of the <see cref="SortAction"/> control and the 
         /// <see cref="Events.StatusFilterAction.SortChanged"/> of the <see cref="StatusFilterAction"/> control.
         /// </summary>
@@ -273,12 +234,23 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Handles the <see cref="DeleteAction.Delete"/> and <see cref="CancelAction.Cancel"/> events, 
+        /// Handles the <see cref="DeleteAction.Delete"/> and <see cref="CancelAction.Cancel"/> events,
         /// reloading the list of events to reflect the changes made by those controls
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void ShowUpdatedEvents(object sender, EventArgs args)
+        /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected override void ReloadPage(object sender, EventArgs args)
+        {
+            this.ReloadPage(this.CurrentPageIndex);
+        }
+
+        /// <summary>
+        /// Handles the <see cref="DeleteAction.Delete"/> event,
+        /// reloading the list of events to reflect the changes made by those controls
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected override void ReturnToList(object sender, EventArgs args)
         {
             this.ReloadPage(this.CurrentPageIndex);
         }
@@ -287,9 +259,44 @@ namespace Engage.Dnn.Events.Display
         /// Reloads the page.
         /// </summary>
         /// <param name="pageNumber">The page number.</param>
-        private void ReloadPage(int pageNumber)
+        protected void ReloadPage(int pageNumber)
         {
             this.Response.Redirect(this.GetPageUrl(pageNumber, this.SortAction.SelectedValue, this.StatusFilterAction.SelectedValue), true);
+        }
+
+        /// <summary>
+        /// Gets the URL to use for this page, for a listing with the given <paramref name="pageNumber"/>, <paramref name="sortExpression"/>, and <paramref name="status"/>.
+        /// </summary>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="sortExpression">The field on which to sort the event list.</param>
+        /// <param name="status">The status of events to retrieve.</param>
+        /// <returns>
+        /// The URL to use for this page, for a listing with the given <paramref name="pageNumber"/>, <paramref name="sortExpression"/>, and <paramref name="status"/>.
+        /// </returns>
+        private string GetPageUrl(int pageNumber, string sortExpression, string status)
+        {
+            return string.Format(CultureInfo.InvariantCulture, this.GetPageUrlTemplate(sortExpression, status), pageNumber);
+        }
+
+        /// <summary>
+        /// Gets the URL to use for the paging buttons, with the page number templated out for use with <see cref="string.Format(IFormatProvider,string,object[])"/> (that is, "{0}")
+        /// </summary>
+        /// <param name="sortExpression">The field on which to sort the event list.</param>
+        /// <param name="status">The status of events to retrieve.</param>
+        /// <returns>
+        /// The URL to use for the paging buttons, with the page number templated out for use with <see cref="string.Format(IFormatProvider,string,object[])"/> (that is, "{0}")
+        /// </returns>
+        protected string GetPageUrlTemplate(string sortExpression, string status)
+        {
+            // We can't just send {0} to BuildLinkUrl, because it will get "special treatment" by the friendly URL provider for its special characters
+            const string UniqueReplaceableTemplateValue = "__--0--__";
+            string controlKey = this.GetCurrentControlKey();
+            if (!Engage.Utility.HasValue(controlKey))
+            {
+                controlKey = MainContainer.DefaultControlKey;
+            }
+
+            return this.BuildLinkUrl(this.ModuleId, controlKey, "sort=" + sortExpression, "status=" + status, "currentPage=" + UniqueReplaceableTemplateValue).Replace(UniqueReplaceableTemplateValue, "{0}");
         }
 
         /// <summary>
@@ -305,98 +312,10 @@ namespace Engage.Dnn.Events.Display
         private bool ProcessTag(Control container, Tag tag, ITemplateable templateItem, string resourceFile)
         {
             Event currentEvent = (Event)templateItem;
-            if (currentEvent != null && currentEvent != this.lastEventProcessed)
-            {
-                this.isAlternatingEvent = !this.isAlternatingEvent;
-                this.lastEventProcessed = currentEvent;
-            }
-
             if (tag.TagType == TagType.Open)
             {
                 switch (tag.LocalName.ToUpperInvariant())
                 {
-                    case "EDITEVENTBUTTON":
-                        if (this.IsAdmin)
-                        {
-                            ButtonAction editEventAction = (ButtonAction)this.LoadControl(this.ActionsControlsFolder + "ButtonAction.ascx");
-                            editEventAction.CurrentEvent = currentEvent;
-                            editEventAction.ModuleConfiguration = this.ModuleConfiguration;
-                            editEventAction.Href = this.BuildLinkUrl(this.ModuleId, "EventEdit", Dnn.Events.Utility.GetEventParameters(currentEvent));
-                            editEventAction.ResourceKey = "EditEventButton";
-                            container.Controls.Add(editEventAction);
-                        }
-
-                        break;
-                    case "VIEWRESPONSESBUTTON":
-                        if (this.IsAdmin)
-                        {
-                            ButtonAction responsesEventAction = (ButtonAction)this.LoadControl(this.ActionsControlsFolder + "ButtonAction.ascx");
-                            responsesEventAction.CurrentEvent = currentEvent;
-                            responsesEventAction.ModuleConfiguration = this.ModuleConfiguration;
-                            responsesEventAction.Href = this.BuildLinkUrl(
-                                    this.ModuleId, "ResponseDetail", Dnn.Events.Utility.GetEventParameters(currentEvent));
-                            responsesEventAction.ResourceKey = "ResponsesButton";
-                            container.Controls.Add(responsesEventAction);
-                        }
-
-                        break;
-                    case "REGISTERBUTTON":
-                        // to register must be an event that allows registrations, be active, and have not ended
-                        // TODO: add message when event is cancelled, rather than hiding registration button
-                        if (currentEvent != null && currentEvent.AllowRegistrations && !currentEvent.Canceled && currentEvent.EventEnd > DateTime.Now)
-                        {
-                            RegisterAction registerEventAction = (RegisterAction)this.LoadControl(this.ActionsControlsFolder + "RegisterAction.ascx");
-                            registerEventAction.CurrentEvent = currentEvent;
-                            registerEventAction.ModuleConfiguration = this.ModuleConfiguration;
-                            registerEventAction.LocalResourceFile = resourceFile;
-
-                            container.Controls.Add(registerEventAction);
-                        }
-
-                        break;
-                    case "ADDTOCALENDARBUTTON":
-                        // must be an active event and has not ended
-                        if (currentEvent != null && !currentEvent.Canceled && currentEvent.EventEnd > DateTime.Now)
-                        {
-                            AddToCalendarAction addToCalendarAction = (AddToCalendarAction)this.LoadControl(this.ActionsControlsFolder + "AddToCalendarAction.ascx");
-                            addToCalendarAction.CurrentEvent = currentEvent;
-                            addToCalendarAction.ModuleConfiguration = this.ModuleConfiguration;
-                            addToCalendarAction.LocalResourceFile = resourceFile;
-
-                            container.Controls.Add(addToCalendarAction);
-                        }
-
-                        break;
-                    case "DELETEBUTTON":
-                        DeleteAction deleteAction = (DeleteAction)this.LoadControl(this.ActionsControlsFolder + "DeleteAction.ascx");
-                        deleteAction.CurrentEvent = currentEvent;
-                        deleteAction.ModuleConfiguration = this.ModuleConfiguration;
-                        deleteAction.LocalResourceFile = resourceFile;
-                        deleteAction.Delete += this.ShowUpdatedEvents;
-
-                        container.Controls.Add(deleteAction);
-                        break;
-                    case "CANCELBUTTON":
-                        CancelAction cancelAction = (CancelAction)this.LoadControl(this.ActionsControlsFolder + "CancelAction.ascx");
-                        cancelAction.CurrentEvent = currentEvent;
-                        cancelAction.ModuleConfiguration = this.ModuleConfiguration;
-                        cancelAction.LocalResourceFile = resourceFile;
-                        cancelAction.Cancel += this.ShowUpdatedEvents;
-                        
-                        container.Controls.Add(cancelAction);
-                        break;
-                    case "EDITEMAILBUTTON":
-                        if (this.IsAdmin)
-                        {
-                            ButtonAction editEmailAction = (ButtonAction)this.LoadControl(this.ActionsControlsFolder + "ButtonAction.ascx");
-                            editEmailAction.CurrentEvent = currentEvent;
-                            editEmailAction.ModuleConfiguration = this.ModuleConfiguration;
-                            editEmailAction.Href = this.BuildLinkUrl(this.ModuleId, "EmailEdit", Dnn.Events.Utility.GetEventParameters(currentEvent));
-                            editEmailAction.ResourceKey = "EditEmailButton";
-                            container.Controls.Add(editEmailAction);
-                        }
-
-                        break;
                     case "EVENTSORT":
                         this.sortAction = (SortAction)this.LoadControl(this.ActionsControlsFolder + "SortAction.ascx");
                         this.sortAction.ModuleConfiguration = this.ModuleConfiguration;
@@ -452,64 +371,20 @@ namespace Engage.Dnn.Events.Display
 
                             container.Controls.Add(new LiteralControl(detailLinkBuilder.ToString()));
                         }
-
                         return true;
-                    case "RECURRENCESUMMARY":
-                        if (currentEvent != null)
-                        {
-                            container.Controls.Add(new LiteralControl(Dnn.Events.Utility.GetRecurrenceSummary(currentEvent.RecurrenceRule)));
-                        }
-
-                        break;
-                    case "EVENTWRAPPER":
-                        if (currentEvent != null)
-                        {
-                            StringBuilder cssClass = new StringBuilder(TemplateEngine.GetAttributeValue(tag, templateItem, resourceFile, "CssClass", "class"));
-                            if (currentEvent.IsRecurring)
-                            {
-                                AppendCssClassAttribute(tag, cssClass, "RecurringEventCssClass");
-                            }
-
-                            if (currentEvent.IsFeatured)
-                            {
-                                AppendCssClassAttribute(tag, cssClass, "FeaturedEventCssClass");
-                            }
-
-                            if (this.isAlternatingEvent)
-                            {
-                                AppendCssClassAttribute(tag, cssClass, "AlternatingCssClass");
-                            }
-
-                            container.Controls.Add(new LiteralControl(string.Format(CultureInfo.InvariantCulture, "<div class=\"{0}\">", cssClass.ToString())));
-                        }
-
-                        return true;
-                    case "DURATION":
-                        if (currentEvent != null)
-                        {
-                            container.Controls.Add(
-                                    new LiteralControl(
-                                            HttpUtility.HtmlEncode(
-                                                    Dnn.Events.Utility.GetFormattedEventDate(currentEvent.EventStart, currentEvent.EventEnd))));
-                        }
-
-                        break;
                     default:
-                        break;
+                        return this.ProcessCommonTag(container, tag, currentEvent, resourceFile);
                 }
             }
             else if (tag.TagType == TagType.Close)
             {
                 switch (tag.LocalName.ToUpperInvariant())
                 {
-                    case "EVENTWRAPPER":
-                        container.Controls.Add(new LiteralControl("</div>"));
-                        break;
                     case "READMORE":
                         container.Controls.Add(new LiteralControl("</a>"));
                         break;
                     default:
-                        break;
+                        return this.ProcessCommonTag(container, tag, currentEvent, resourceFile);
                 }
             }
 
@@ -556,41 +431,6 @@ namespace Engage.Dnn.Events.Display
             this.TemplateProvider.ItemPagingState = new ItemPagingState(this.CurrentPageIndex, events.TotalRecords, this.RecordsPerPage);
 
             return events;
-        }
-
-        /// <summary>
-        /// Gets the URL to use for this page, for a listing with the given <paramref name="pageNumber"/>, <paramref name="sortExpression"/>, and <paramref name="status"/>.
-        /// </summary>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="sortExpression">The field on which to sort the event list.</param>
-        /// <param name="status">The status of events to retrieve.</param>
-        /// <returns>
-        /// The URL to use for this page, for a listing with the given <paramref name="pageNumber"/>, <paramref name="sortExpression"/>, and <paramref name="status"/>.
-        /// </returns>
-        private string GetPageUrl(int pageNumber, string sortExpression, string status)
-        {
-            return string.Format(CultureInfo.InvariantCulture, this.GetPageUrlTemplate(sortExpression, status), pageNumber);
-        }
-
-        /// <summary>
-        /// Gets the URL to use for the paging buttons, with the page number templated out for use with <see cref="string.Format(IFormatProvider,string,object[])"/> (that is, "{0}")
-        /// </summary>
-        /// <param name="sortExpression">The field on which to sort the event list.</param>
-        /// <param name="status">The status of events to retrieve.</param>
-        /// <returns>
-        /// The URL to use for the paging buttons, with the page number templated out for use with <see cref="string.Format(IFormatProvider,string,object[])"/> (that is, "{0}")
-        /// </returns>
-        private string GetPageUrlTemplate(string sortExpression, string status)
-        {
-            // We can't just send {0} to BuildLinkUrl, because it will get "special treatment" by the friendly URL provider for its special characters
-            const string UniqueReplaceableTemplateValue = "__--0--__";
-            string controlKey = this.GetCurrentControlKey();
-            if (!Engage.Utility.HasValue(controlKey))
-            {
-                controlKey = MainContainer.DefaultControlKey;
-            }
-
-            return this.BuildLinkUrl(this.ModuleId, controlKey, "sort=" + sortExpression, "status=" + status, "currentPage=" + UniqueReplaceableTemplateValue).Replace(UniqueReplaceableTemplateValue, "{0}");
         }
     }
 }
