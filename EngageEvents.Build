@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd" name="Engage Build Script" basedir="." default="package">
+<project xmlns="http://nant.sf.net/release/0.90/nant.xsd" name="Engage Build Script" basedir="." default="package">
   <property name="projectName" value="Events"/>
   <property name="createTrialPackage" value="true"/>
   <property name="trialPackageLicenseName" value="Trial"/>
@@ -38,6 +38,7 @@
   <property name="referencesDirectory" value="References"/>
   <property name="packageDirectory" value="package"/>
   <property name="packageName" value="Resources.zip"/>
+  <property name="nant.settings.currentframework" value="net-3.5" />
 
   <target name="package" description="Creates packages for this module, one for each value in the licenses and versions properties">
 
@@ -99,6 +100,7 @@
         <arg value="/p:Platform=&quot;Any CPU&quot;" />
         <arg value="/p:OutputPath=&quot;${currentBinDirectory}&quot;" />
         <arg value="/m" /> <!-- multicore -->
+        <arg value="/noconsolelogger" />
       </exec>
     </if>
   </target>
@@ -276,6 +278,9 @@
   </target>
   <script language="C#" prefix="xml">
     <!-- Based on http://stackoverflow.com/questions/537988/how-can-i-use-nants-xmlpoke-target-to-remove-a-node -->
+    <references>
+      <include name="System.Xml.dll" />
+    </references>
     <imports>
       <import namespace="System"/>
       <import namespace="System.IO"/>
@@ -343,6 +348,9 @@
     </code>
   </script>
   <script language="C#" prefix="build-directory" >
+    <references>
+      <include name="System.dll" />
+    </references>
     <imports>
       <import namespace="System"/>
       <import namespace="System.Globalization"/>
