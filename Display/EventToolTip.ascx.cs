@@ -37,6 +37,9 @@ namespace Engage.Dnn.Events.Display
             this.currentEvent = tooltipEvent;
         }
 
+        /// <summary>
+        /// Shows the event.
+        /// </summary>
         public void ShowEvent()
         {
             this.EventDate.Text = Dnn.Events.Utility.GetFormattedEventDate(this.currentEvent.EventStart, this.currentEvent.EventEnd, this.LocalResourceFile);

@@ -24,14 +24,14 @@ namespace Engage.Dnn.Events
     public partial class ResponseSummaryDisplay : ModuleBase
     {
         /// <summary>
-        /// Gets or sets the index at which the list of responses should start (based on page number).
+        /// Gets the index at which the list of responses should start (based on page number).
         /// </summary>
         /// <value>The start index of the responses list.</value>
         protected int StartIndex
         {
             get 
             {
-                return (this.CurrentPageIndex - 1) * this.SummaryPager.PageSize + 1;
+                return ((this.CurrentPageIndex - 1) * this.SummaryPager.PageSize) + 1;
             }
         }
 

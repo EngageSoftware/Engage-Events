@@ -13,6 +13,7 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Collections;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.IO;
     using System.Web.Hosting;
@@ -223,6 +224,7 @@ namespace Engage.Dnn.Events
         /// </remarks>
         /// <param name="id">The id to use for the stylesheet link.</param>
         /// <param name="path">The path to the stylesheet.</param>
+        [SuppressMessage("Microsoft.Reliability", "CA2000", Justification = "stylesheetLink is passed to the Page Controls collection and does not need to be manually disposed")]
         private void AddStylesheet(string id, string path)
         {
             // First see if we have already added the <LINK> control

@@ -50,6 +50,11 @@ namespace Engage.Dnn.Events
         /// <returns>the url to the icon for the corresponding registration status</returns>
         protected string GetStatusIcon(object responseStatus)
         {
+            if (responseStatus == null)
+            {
+                throw new ArgumentNullException("responseStatus", "responseStatus must not be null");
+            }
+
             string url = string.Empty;
             ResponseStatus status = (ResponseStatus)Enum.Parse(typeof(ResponseStatus), responseStatus.ToString());
 

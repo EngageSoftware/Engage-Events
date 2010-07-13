@@ -175,6 +175,11 @@ namespace Engage.Dnn.Events.Controls
         /// </history>
         protected static string GetLocalizedText(string key, Control control)
         {
+            if (control == null)
+            {
+                throw new ArgumentNullException("control", "control must not be null");
+            }
+
             // We need to find the parent module
             PortalModuleBase parentControl = control.Parent as PortalModuleBase;
             if (parentControl != null)

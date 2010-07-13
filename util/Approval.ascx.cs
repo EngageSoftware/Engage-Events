@@ -11,6 +11,9 @@
 
 namespace Engage.Dnn.Events
 {
+    /// <summary>
+    /// Approval class; inherits from ModuleBase
+    /// </summary>
     public partial class Approval : ModuleBase
     {
     }

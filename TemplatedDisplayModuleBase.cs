@@ -1,4 +1,15 @@
-﻿namespace Engage.Dnn.Events
+﻿// <copyright file="TemplatedDisplayModuleBase.cs" company="Engage Software">
+// Engage: Events - http://www.EngageSoftware.com
+// Copyright (c) 2004-2010
+// by Engage Software ( http://www.engagesoftware.com )
+// </copyright>
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
+// TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
+// CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// DEALINGS IN THE SOFTWARE.
+
+namespace Engage.Dnn.Events
 {
     using System;
     using System.Globalization;
@@ -50,6 +61,16 @@
         /// </returns>
         protected bool ProcessCommonTag(Control container, Tag tag, Event currentEvent, string resourceFile)
         {
+            if (container == null)
+            {
+                throw new ArgumentNullException("container", "container must not be null");
+            }
+
+            if (tag == null)
+            {
+                throw new ArgumentNullException("tag", "tag must not be null");
+            }
+
             if (currentEvent != null && currentEvent != this.lastEventProcessed)
             {
                 this.isAlternatingEvent = !this.isAlternatingEvent;

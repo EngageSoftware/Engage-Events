@@ -12,6 +12,7 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.IO;
     using System.Text;
@@ -105,6 +106,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <value>The date when the event occurs.</value>
         /// <exception cref="InvalidOperationException">EventStart is not present on QueryString</exception>
+        [SuppressMessage("Microsoft.Naming", "CA2204:LiteralsShouldBeSpelledCorrectly", Justification = "EventStart and QueryString aren't part of the dictionary, surprisingly.")]
         protected DateTime EventStart
         {
             get
@@ -126,6 +128,7 @@ namespace Engage.Dnn.Events
         /// Gets the register URL.
         /// </summary>
         /// <value>The register URL.</value>
+        [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Justification = "Backwards compatability")]
         protected string RegisterUrl
         {
             get
@@ -144,6 +147,7 @@ namespace Engage.Dnn.Events
         /// Gets the Response URL.
         /// </summary>
         /// <value>The Response URL.</value>
+        [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Justification = "Backwards compatability")]
         protected string ResponseUrl
         {
             get
@@ -212,6 +216,11 @@ namespace Engage.Dnn.Events
         /// <param name="name">The name of the file.</param>
         protected static void SendICalendarToClient(HttpResponse response, string content, string name)
         {
+            if (response == null)
+            {
+                throw new ArgumentNullException("response", "response must not be null");
+            }
+
             response.Clear();
 
             // Stream The ICalendar 
@@ -237,6 +246,16 @@ namespace Engage.Dnn.Events
         /// </returns>
         protected static string GenerateQueryStringParameters(HttpRequest request, params string[] queryStringKeys)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException("request", "request must not be null");
+            }
+
+            if (queryStringKeys == null)
+            {
+                throw new ArgumentNullException("queryStringKeys", "queryStringKeys must not be null");
+            }
+
             var queryString = new StringBuilder(64);
             foreach (string key in queryStringKeys)
             {
@@ -262,6 +281,11 @@ namespace Engage.Dnn.Events
         /// <param name="queryStringKeys">The QueryString keys which should be persisted when the paging links are clicked.</param>
         protected void SetupPagingControl(PagingControl pagingControl, int totalRecords, params string[] queryStringKeys)
         {
+            if (pagingControl == null)
+            {
+                throw new ArgumentNullException("pagingControl", "pagingControl must not be null");
+            }
+
             pagingControl.Visible = totalRecords != 0;
             pagingControl.TotalRecords = totalRecords;
             pagingControl.CurrentPage = this.CurrentPageIndex;

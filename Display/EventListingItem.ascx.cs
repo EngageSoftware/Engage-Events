@@ -14,6 +14,7 @@ namespace Engage.Dnn.Events.Display
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Text;
     using System.Web;
@@ -222,18 +223,6 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Handles the <see cref="Events.SortAction.SortChanged"/> event of the <see cref="SortAction"/> control and the 
-        /// <see cref="Events.StatusFilterAction.SortChanged"/> of the <see cref="StatusFilterAction"/> control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void SortActions_SortChanged(object sender, EventArgs e)
-        {
-            const int PageNumber = 1;
-            this.ReloadPage(PageNumber);
-        }
-
-        /// <summary>
         /// Handles the <see cref="DeleteAction.Delete"/> and <see cref="CancelAction.Cancel"/> events,
         /// reloading the list of events to reflect the changes made by those controls
         /// </summary>
@@ -265,20 +254,6 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Gets the URL to use for this page, for a listing with the given <paramref name="pageNumber"/>, <paramref name="sortExpression"/>, and <paramref name="status"/>.
-        /// </summary>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="sortExpression">The field on which to sort the event list.</param>
-        /// <param name="status">The status of events to retrieve.</param>
-        /// <returns>
-        /// The URL to use for this page, for a listing with the given <paramref name="pageNumber"/>, <paramref name="sortExpression"/>, and <paramref name="status"/>.
-        /// </returns>
-        private string GetPageUrl(int pageNumber, string sortExpression, string status)
-        {
-            return string.Format(CultureInfo.InvariantCulture, this.GetPageUrlTemplate(sortExpression, status), pageNumber);
-        }
-
-        /// <summary>
         /// Gets the URL to use for the paging buttons, with the page number templated out for use with <see cref="string.Format(IFormatProvider,string,object[])"/> (that is, "{0}")
         /// </summary>
         /// <param name="sortExpression">The field on which to sort the event list.</param>
@@ -286,6 +261,7 @@ namespace Engage.Dnn.Events.Display
         /// <returns>
         /// The URL to use for the paging buttons, with the page number templated out for use with <see cref="string.Format(IFormatProvider,string,object[])"/> (that is, "{0}")
         /// </returns>
+        [SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings", Justification = "Backwards compatability")]
         protected string GetPageUrlTemplate(string sortExpression, string status)
         {
             // We can't just send {0} to BuildLinkUrl, because it will get "special treatment" by the friendly URL provider for its special characters
@@ -297,6 +273,32 @@ namespace Engage.Dnn.Events.Display
             }
 
             return this.BuildLinkUrl(this.ModuleId, controlKey, "sort=" + sortExpression, "status=" + status, "currentPage=" + UniqueReplaceableTemplateValue).Replace(UniqueReplaceableTemplateValue, "{0}");
+        }
+
+        /// <summary>
+        /// Handles the <see cref="Events.SortAction.SortChanged"/> event of the <see cref="SortAction"/> control and the 
+        /// <see cref="Events.StatusFilterAction.SortChanged"/> of the <see cref="StatusFilterAction"/> control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void SortActions_SortChanged(object sender, EventArgs e)
+        {
+            const int PageNumber = 1;
+            this.ReloadPage(PageNumber);
+        }
+
+        /// <summary>
+        /// Gets the URL to use for this page, for a listing with the given <paramref name="pageNumber"/>, <paramref name="sortExpression"/>, and <paramref name="status"/>.
+        /// </summary>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="sortExpression">The field on which to sort the event list.</param>
+        /// <param name="status">The status of events to retrieve.</param>
+        /// <returns>
+        /// The URL to use for this page, for a listing with the given <paramref name="pageNumber"/>, <paramref name="sortExpression"/>, and <paramref name="status"/>.
+        /// </returns>
+        private string GetPageUrl(int pageNumber, string sortExpression, string status)
+        {
+            return string.Format(CultureInfo.InvariantCulture, this.GetPageUrlTemplate(sortExpression, status), pageNumber);
         }
 
         /// <summary>
@@ -371,6 +373,7 @@ namespace Engage.Dnn.Events.Display
 
                             container.Controls.Add(new LiteralControl(detailLinkBuilder.ToString()));
                         }
+
                         return true;
                     default:
                         return this.ProcessCommonTag(container, tag, currentEvent, resourceFile);

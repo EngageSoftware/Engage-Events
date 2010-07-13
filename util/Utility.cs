@@ -128,6 +128,11 @@ namespace Engage.Dnn.Events
         /// <returns>A list of <c>QueryString</c> parameters that represent <paramref name="selectedEvent"/></returns>
         public static string[] GetEventParameters(Event selectedEvent)
         {
+            if (selectedEvent == null)
+            {
+                throw new ArgumentNullException("selectedEvent", "Event must not be null");
+            }
+
             return GetEventParameters(selectedEvent.Id, selectedEvent.EventStart);
         }
 
@@ -151,6 +156,11 @@ namespace Engage.Dnn.Events
         /// <returns>A list of <c>QueryString</c> parameters that represent the given event information</returns>
         public static string[] GetEventParameters(int eventId, DateTime eventStart, params string[] additionalParameters)
         {
+            if (additionalParameters == null)
+            {
+                throw new ArgumentNullException("additionalParameters", "additionalParameters must not be null");
+            }
+
             Array.Resize(ref additionalParameters, additionalParameters.Length + 2);
             additionalParameters[additionalParameters.Length - 1] = "eventid=" + eventId.ToString(CultureInfo.InvariantCulture);
             additionalParameters[additionalParameters.Length - 2] = "start=" + eventStart.Ticks.ToString(CultureInfo.InvariantCulture);

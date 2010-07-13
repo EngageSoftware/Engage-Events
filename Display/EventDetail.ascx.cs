@@ -12,6 +12,7 @@
 namespace Engage.Dnn.Events.Display
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Web.UI;
     using System.Web.UI.WebControls;
     using DotNetNuke.Common;
@@ -32,6 +33,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="templateItem">The object to query for data to implement the given tag</param>
         /// <param name="resourceFile">The resource file to use to find get localized text.</param>
         /// <returns>Whether to process the tag's ChildTags collection</returns>
+        [SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope", Justification = "backHyperlink passed to controls collection and we do not need to manually dispose")]
         internal bool ProcessTag(Control container, Tag tag, ITemplateable templateItem, string resourceFile)
         {
             if (tag.TagType == TagType.Open && tag.LocalName.Equals("BACKHYPERLINK", StringComparison.OrdinalIgnoreCase))
@@ -105,7 +107,7 @@ namespace Engage.Dnn.Events.Display
                 this.TemplateProvider = new SingleItemTemplateProvider(
                     this.GetTemplate(Dnn.Utility.GetStringSetting(this.Settings, "SingleItemTemplate")),
                     this,
-                    ProcessTag,
+                    this.ProcessTag,
                     null,
                     ev);
             }
