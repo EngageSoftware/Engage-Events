@@ -12,11 +12,11 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
-    using System.Text;
+    using System.Text; 
     using System.Web;
     using System.Web.UI;
-
     using Engage.Dnn.Framework.Templating;
     using Engage.Events;
     using Engage.Templating;
@@ -30,6 +30,190 @@ namespace Engage.Dnn.Events
         /// Relative path to the folder where the action controls are located in this module
         /// </summary>
         protected readonly string ActionsControlsFolder;
+
+        /// <summary>
+        /// Holds tag names and their corresponding logic
+        /// </summary> 
+        private static readonly Dictionary<string, TokenProcessor> TokenImplementations = new Dictionary<string, TokenProcessor>
+                {
+                    {
+                        "EDITEVENTBUTTON", 
+                        (@this, container, tag, currentEvent, resourceFile) => 
+                        {
+                            if (@this.IsAdmin)
+                            {
+                                    ButtonAction editEventAction = (ButtonAction)@this.LoadControl(@this.ActionsControlsFolder + "ButtonAction.ascx");
+                                    editEventAction.CurrentEvent = currentEvent;
+                                    editEventAction.ModuleConfiguration = @this.ModuleConfiguration;
+                                    editEventAction.Href = @this.BuildLinkUrl(@this.ModuleId, "EventEdit", Utility.GetEventParameters(currentEvent));
+                                    editEventAction.ResourceKey = "EditEventButton";
+                                    container.Controls.Add(editEventAction);
+                            }
+
+                            return false;
+                        }
+                    },
+                    {
+                        "VIEWRESPONSESBUTTON", 
+                        (@this, container, tag, currentEvent, resourceFile) => 
+                        {
+                            if (@this.IsAdmin)
+                            {
+                                    ButtonAction responsesEventAction = (ButtonAction)@this.LoadControl(@this.ActionsControlsFolder + "ButtonAction.ascx");
+                                    responsesEventAction.CurrentEvent = currentEvent;
+                                    responsesEventAction.ModuleConfiguration = @this.ModuleConfiguration;
+                                    responsesEventAction.Href = @this.BuildLinkUrl(@this.ModuleId, "ResponseDetail", Utility.GetEventParameters(currentEvent));
+                                    responsesEventAction.ResourceKey = "ResponsesButton";
+                                    container.Controls.Add(responsesEventAction);
+                            }
+
+                            return false;
+                        }
+                    },
+                    {
+                        "REGISTERBUTTON", 
+                        (@this, container, tag, currentEvent, resourceFile) => 
+                        {
+                            // must be an active event and has not ended
+                            if (currentEvent != null && currentEvent.AllowRegistrations && !currentEvent.Canceled && currentEvent.EventEnd > DateTime.Now)
+                            {
+                                    RegisterAction registerEventAction = (RegisterAction)@this.LoadControl(@this.ActionsControlsFolder + "RegisterAction.ascx");
+                                    registerEventAction.CurrentEvent = currentEvent;
+                                    registerEventAction.ModuleConfiguration = @this.ModuleConfiguration;
+                                    registerEventAction.LocalResourceFile = resourceFile;
+
+                                    container.Controls.Add(registerEventAction);
+                            }
+
+                            return false;
+                        }
+                    },
+                    {
+                        "ADDTOCALENDARBUTTON", 
+                        (@this, container, tag, currentEvent, resourceFile) => 
+                        {
+                            // must be an active event and has not ended
+                            if (currentEvent != null && !currentEvent.Canceled && currentEvent.EventEnd > DateTime.Now)
+                            {
+                                    AddToCalendarAction addToCalendarAction =
+                                    (AddToCalendarAction)@this.LoadControl(@this.ActionsControlsFolder + "AddToCalendarAction.ascx");
+                                    addToCalendarAction.CurrentEvent = currentEvent;
+                                    addToCalendarAction.ModuleConfiguration = @this.ModuleConfiguration;
+                                    addToCalendarAction.LocalResourceFile = resourceFile;
+
+                                    container.Controls.Add(addToCalendarAction);
+                            }
+
+                            return false;
+                        }
+                    },
+                    {
+                        "DELETEBUTTON", 
+                        (@this, container, tag, currentEvent, resourceFile) => 
+                        {
+                                DeleteAction deleteAction = (DeleteAction)@this.LoadControl(@this.ActionsControlsFolder + "DeleteAction.ascx");
+                                deleteAction.CurrentEvent = currentEvent;
+                                deleteAction.ModuleConfiguration = @this.ModuleConfiguration;
+                                deleteAction.LocalResourceFile = resourceFile;
+                                deleteAction.Delete += @this.ReturnToList;
+
+                                container.Controls.Add(deleteAction);
+
+                                return false;
+                        }
+                    },
+                    {
+                        "CANCELBUTTON", 
+                        (@this, container, tag, currentEvent, resourceFile) => 
+                        {
+                                CancelAction cancelAction = (CancelAction)@this.LoadControl(@this.ActionsControlsFolder + "CancelAction.ascx");
+                                cancelAction.CurrentEvent = currentEvent;
+                                cancelAction.ModuleConfiguration = @this.ModuleConfiguration;
+                                cancelAction.LocalResourceFile = resourceFile;
+                                cancelAction.Cancel += @this.ReloadPage;
+
+                                container.Controls.Add(cancelAction);
+
+                                return false;
+                        }
+                    },
+                    {
+                        "EDITEMAILBUTTON", 
+                        (@this, container, tag, currentEvent, resourceFile) => 
+                        {
+                            if (@this.IsAdmin)
+                            {
+                                ButtonAction editEmailAction = (ButtonAction)@this.LoadControl(@this.ActionsControlsFolder + "ButtonAction.ascx");
+                                editEmailAction.CurrentEvent = currentEvent;
+                                editEmailAction.ModuleConfiguration = @this.ModuleConfiguration;
+                                editEmailAction.Href = @this.BuildLinkUrl(@this.ModuleId, "EmailEdit", Utility.GetEventParameters(currentEvent));
+                                editEmailAction.ResourceKey = "EditEmailButton";
+                                container.Controls.Add(editEmailAction);
+                            }
+
+                            return false;
+                        }
+                    },
+                    {
+                        "RECURRENCESUMMARY", 
+                        (@this, container, tag, currentEvent, resourceFile) => 
+                        {
+                            if (currentEvent != null)
+                            {
+                                container.Controls.Add(new LiteralControl(Utility.GetRecurrenceSummary(currentEvent.RecurrenceRule)));
+                            }
+
+                            return false;
+                        }
+                    },
+                    {
+                        "EVENTWRAPPER", 
+                        (@this, container, tag, currentEvent, resourceFile) => 
+                        {
+                            if (currentEvent != null)
+                            {
+                                var cssClass = new StringBuilder(TemplateEngine.GetAttributeValue(tag, currentEvent, resourceFile, "CssClass", "class"));
+                                if (currentEvent.IsRecurring)
+                                {
+                                    AppendCssClassAttribute(tag, cssClass, "RecurringEventCssClass");
+                                }
+
+                                if (currentEvent.IsFeatured)
+                                {
+                                    AppendCssClassAttribute(tag, cssClass, "FeaturedEventCssClass");
+                                }
+
+                                if (currentEvent.Canceled)
+                                {
+                                    AppendCssClassAttribute(tag, cssClass, "CanceledEventCssClass");
+                                }
+
+                                if (@this.isAlternatingEvent)
+                                {
+                                    AppendCssClassAttribute(tag, cssClass, "AlternatingCssClass");
+                                }
+
+                                container.Controls.Add(new LiteralControl(string.Format(CultureInfo.InvariantCulture, "<div class=\"{0}\">", cssClass)));
+                            }
+
+                            return true;
+                        }
+                    },
+                    { 
+                        "DURATION", 
+                        (@this, container, tag, currentEvent, resourceFile) => 
+                        {
+                            if (currentEvent != null)
+                            {
+                                container.Controls.Add(
+                                    new LiteralControl(
+                                        HttpUtility.HtmlEncode(Utility.GetFormattedEventDate(currentEvent.EventStart, currentEvent.EventEnd))));
+                            }
+
+                            return false;
+                        }
+                    }
+                };
 
         /// <summary>
         /// Keeps track of whether the current event being processed in <see cref="ProcessCommonTag"/> is an alternating (even number) event
@@ -48,6 +232,17 @@ namespace Engage.Dnn.Events
         {
             this.ActionsControlsFolder = "~" + this.DesktopModuleFolderName + "Actions/";
         }
+
+        /// <summary>
+        /// A delegate that processes a single template token
+        /// </summary>
+        /// <param name="this">The current instance of this class</param>
+        /// <param name="container">The container control</param>
+        /// <param name="tag">The template tag to process</param>
+        /// <param name="currentEvent">The current event</param>
+        /// <param name="resourceFile">A resource file with localized settings</param>
+        /// <returns>Whether to process the tag's ChildTags collection</returns>
+        private delegate bool TokenProcessor(TemplatedDisplayModuleBase @this, Control container, Tag tag, Event currentEvent, string resourceFile);
 
         /// <summary>
         /// Processes the tokens that are common between the listing and details views
@@ -79,150 +274,17 @@ namespace Engage.Dnn.Events
 
             if (tag.TagType == TagType.Open)
             {
-                switch (tag.LocalName.ToUpperInvariant())
+                TokenProcessor process;
+                if (TokenImplementations.TryGetValue(tag.LocalName.ToUpperInvariant(), out process))
                 {
-                    case "EDITEVENTBUTTON":
-                        if (this.IsAdmin)
-                        {
-                            ButtonAction editEventAction = (ButtonAction)this.LoadControl(this.ActionsControlsFolder + "ButtonAction.ascx");
-                            editEventAction.CurrentEvent = currentEvent;
-                            editEventAction.ModuleConfiguration = this.ModuleConfiguration;
-                            editEventAction.Href = this.BuildLinkUrl(this.ModuleId, "EventEdit", Utility.GetEventParameters(currentEvent));
-                            editEventAction.ResourceKey = "EditEventButton";
-                            container.Controls.Add(editEventAction);
-                        }
-
-                        break;
-                    case "VIEWRESPONSESBUTTON":
-                        if (this.IsAdmin)
-                        {
-                            ButtonAction responsesEventAction = (ButtonAction)this.LoadControl(this.ActionsControlsFolder + "ButtonAction.ascx");
-                            responsesEventAction.CurrentEvent = currentEvent;
-                            responsesEventAction.ModuleConfiguration = this.ModuleConfiguration;
-                            responsesEventAction.Href = this.BuildLinkUrl(this.ModuleId, "ResponseDetail", Utility.GetEventParameters(currentEvent));
-                            responsesEventAction.ResourceKey = "ResponsesButton";
-                            container.Controls.Add(responsesEventAction);
-                        }
-
-                        break;
-                    case "REGISTERBUTTON":
-
-                        // to register must be an event that allows registrations, be active, and have not ended
-                        // TODO: add message when event is cancelled, rather than hiding registration button
-                        if (currentEvent != null && currentEvent.AllowRegistrations && !currentEvent.Canceled && currentEvent.EventEnd > DateTime.Now)
-                        {
-                            RegisterAction registerEventAction = (RegisterAction)this.LoadControl(this.ActionsControlsFolder + "RegisterAction.ascx");
-                            registerEventAction.CurrentEvent = currentEvent;
-                            registerEventAction.ModuleConfiguration = this.ModuleConfiguration;
-                            registerEventAction.LocalResourceFile = resourceFile;
-
-                            container.Controls.Add(registerEventAction);
-                        }
-
-                        break;
-                    case "ADDTOCALENDARBUTTON":
-
-                        // must be an active event and has not ended
-                        if (currentEvent != null && !currentEvent.Canceled && currentEvent.EventEnd > DateTime.Now)
-                        {
-                            AddToCalendarAction addToCalendarAction =
-                                (AddToCalendarAction)this.LoadControl(this.ActionsControlsFolder + "AddToCalendarAction.ascx");
-                            addToCalendarAction.CurrentEvent = currentEvent;
-                            addToCalendarAction.ModuleConfiguration = this.ModuleConfiguration;
-                            addToCalendarAction.LocalResourceFile = resourceFile;
-
-                            container.Controls.Add(addToCalendarAction);
-                        }
-
-                        break;
-                    case "DELETEBUTTON":
-                        DeleteAction deleteAction = (DeleteAction)this.LoadControl(this.ActionsControlsFolder + "DeleteAction.ascx");
-                        deleteAction.CurrentEvent = currentEvent;
-                        deleteAction.ModuleConfiguration = this.ModuleConfiguration;
-                        deleteAction.LocalResourceFile = resourceFile;
-                        deleteAction.Delete += this.ReturnToList;
-
-                        container.Controls.Add(deleteAction);
-                        break;
-                    case "CANCELBUTTON":
-                        CancelAction cancelAction = (CancelAction)this.LoadControl(this.ActionsControlsFolder + "CancelAction.ascx");
-                        cancelAction.CurrentEvent = currentEvent;
-                        cancelAction.ModuleConfiguration = this.ModuleConfiguration;
-                        cancelAction.LocalResourceFile = resourceFile;
-                        cancelAction.Cancel += this.ReloadPage;
-
-                        container.Controls.Add(cancelAction);
-                        break;
-                    case "EDITEMAILBUTTON":
-                        if (this.IsAdmin)
-                        {
-                            ButtonAction editEmailAction = (ButtonAction)this.LoadControl(this.ActionsControlsFolder + "ButtonAction.ascx");
-                            editEmailAction.CurrentEvent = currentEvent;
-                            editEmailAction.ModuleConfiguration = this.ModuleConfiguration;
-                            editEmailAction.Href = this.BuildLinkUrl(this.ModuleId, "EmailEdit", Utility.GetEventParameters(currentEvent));
-                            editEmailAction.ResourceKey = "EditEmailButton";
-                            container.Controls.Add(editEmailAction);
-                        }
-
-                        break;
-                    case "RECURRENCESUMMARY":
-                        if (currentEvent != null)
-                        {
-                            container.Controls.Add(new LiteralControl(Utility.GetRecurrenceSummary(currentEvent.RecurrenceRule)));
-                        }
-
-                        break;
-                    case "EVENTWRAPPER":
-                        if (currentEvent != null)
-                        {
-                            var cssClass = new StringBuilder(TemplateEngine.GetAttributeValue(tag, currentEvent, resourceFile, "CssClass", "class"));
-                            if (currentEvent.IsRecurring)
-                            {
-                                AppendCssClassAttribute(tag, cssClass, "RecurringEventCssClass");
-                            }
-
-                            if (currentEvent.IsFeatured)
-                            {
-                                AppendCssClassAttribute(tag, cssClass, "FeaturedEventCssClass");
-                            }
-
-                            if (currentEvent.Canceled)
-                            {
-                                AppendCssClassAttribute(tag, cssClass, "CanceledEventCssClass");
-                            }
-
-                            if (this.isAlternatingEvent)
-                            {
-                                AppendCssClassAttribute(tag, cssClass, "AlternatingCssClass");
-                            }
-
-                            container.Controls.Add(new LiteralControl(string.Format(CultureInfo.InvariantCulture, "<div class=\"{0}\">", cssClass)));
-                        }
-
-                        return true;
-                    case "DURATION":
-                        if (currentEvent != null)
-                        {
-                            container.Controls.Add(
-                                new LiteralControl(
-                                    HttpUtility.HtmlEncode(Utility.GetFormattedEventDate(currentEvent.EventStart, currentEvent.EventEnd))));
-                        }
-
-                        break;
-                    default:
-                        break;
+                    return process(this, container, tag, currentEvent, resourceFile);
                 }
+
+                return false;
             }
-            else if (tag.TagType == TagType.Close)
+            else if (tag.TagType == TagType.Close && tag.LocalName.Equals("EVENTWRAPPER", StringComparison.OrdinalIgnoreCase))
             {
-                switch (tag.LocalName.ToUpperInvariant())
-                {
-                    case "EVENTWRAPPER":
-                        container.Controls.Add(new LiteralControl("</div>"));
-                        break;
-                    default:
-                        break;
-                }
+                container.Controls.Add(new LiteralControl("</div>"));
             }
 
             return false;
