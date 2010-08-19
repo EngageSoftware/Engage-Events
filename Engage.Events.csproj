@@ -86,7 +86,6 @@
     <Compile Include="ResponseStatus.cs" />
     <Compile Include="ResponseSummary.cs" />
     <Compile Include="ResponseSummaryCollection.cs" />
-    <Compile Include="Util\EmailEventType.cs" />
     <Compile Include="Util\ICalUtil.cs" />
   </ItemGroup>
   <ItemGroup>
