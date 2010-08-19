@@ -1,0 +1,228 @@
+﻿if exists (select * from dbo.sysobjects where id = object_id(N'[{objectQualifier}FK_Engage_EventMessage_Engage_Event]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_EventMessage] DROP CONSTRAINT [{objectQualifier}FK_Engage_EventMessage_Engage_Event] 
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[{objectQualifier}FK_Engage_Recurrence_Engage_RecurrenceType]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Recurrence] DROP CONSTRAINT [{objectQualifier}FK_Engage_Recurrence_Engage_RecurrenceType] 
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[{objectQualifier}FK_Engage_lkpClassType_Engage_lkpClass]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_lkpClass] DROP CONSTRAINT [{objectQualifier}FK_Engage_lkpClassType_Engage_lkpClass] 
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[{objectQualifier}FK_Engage_lkpClass_Engage_lkpRoutingEventType]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_lkpRoutingEventType] DROP CONSTRAINT [{objectQualifier}FK_Engage_lkpClass_Engage_lkpRoutingEventType] 
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[{objectQualifier}FK_Engage_RoutingEvent_Engage_EmailEvent]') and OBJECTPROPERTY(id, N'IsForeignKey') = 1)
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_RoutingEvent] DROP CONSTRAINT [{objectQualifier}FK_Engage_RoutingEvent_Engage_EmailEvent]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[{objectQualifier}FK_Engage_RoutingEvent_Engage_lkpRoutingEventType]') and OBJECTPROPERTY(id, N'IsForeignKey') = 1)
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_RoutingEvent] DROP CONSTRAINT [{objectQualifier}FK_Engage_RoutingEvent_Engage_lkpRoutingEventType]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[{objectQualifier}FK_Engage_RoutingTransaction_Engage_RoutingEvent]') and OBJECTPROPERTY(id, N'IsForeignKey') = 1)
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_RoutingTransaction] DROP CONSTRAINT [{objectQualifier}FK_Engage_RoutingTransaction_Engage_RoutingEvent]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[{objectQualifier}FK_Engage_RoutingTransactionDetail_Engage_RoutingTransaction]') and OBJECTPROPERTY(id, N'IsForeignKey') = 1)
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_RoutingTransactionDetail] DROP CONSTRAINT [{objectQualifier}FK_Engage_RoutingTransactionDetail_Engage_RoutingTransaction]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[{objectQualifier}PK_Engage_Approval]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Approval] DROP CONSTRAINT [{objectQualifier}PK_Engage_Approval] 
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[{objectQualifier}FK_Engage_RoutingEvent_Engage_Approval]'))
+ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Approval] DROP CONSTRAINT [{objectQualifier}FK_Engage_RoutingEvent_Engage_Approval]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_lkpRoutingEventType]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table {databaseOwner}[{objectQualifier}Engage_lkpRoutingEventType]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_RoutingTransaction]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table {databaseOwner}[{objectQualifier}Engage_RoutingTransaction]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_RecurrenceType]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table {databaseOwner}[{objectQualifier}Engage_RecurrenceType]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_Recurrence]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table {databaseOwner}[{objectQualifier}Engage_Recurrence]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_RoutingTransactionDetail]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table {databaseOwner}[{objectQualifier}Engage_RoutingTransactionDetail]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_Contact]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table {databaseOwner}[{objectQualifier}Engage_Contact]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_EventMessage]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table {databaseOwner}[{objectQualifier}Engage_EventMessage]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_lkpClassType]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table {databaseOwner}[{objectQualifier}Engage_lkpClassType]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_lkpClass]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table {databaseOwner}[{objectQualifier}Engage_lkpClass]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_Approval]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table {databaseOwner}[{objectQualifier}Engage_Approval]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_EmailEvent]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table {databaseOwner}[{objectQualifier}Engage_EmailEvent]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_RoutingEvent]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table {databaseOwner}[{objectQualifier}Engage_RoutingEvent]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertEmailEvent]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertEmailEvent]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertRoutingEvent]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertRoutingEvent]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetPendingTransactions]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spGetPendingTransactions]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetEmailEvent]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spGetEmailEvent]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spCompleteTransaction]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spCompleteTransaction]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertTransactionDetail]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertTransactionDetail]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spDeleteTransactionDetails]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spDeleteTransactionDetails]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetTransactionDetails]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spGetTransactionDetails]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spGetUndeliverable]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spGetUndeliverable]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertRoutingTransaction]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertRoutingTransaction]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spWriteMessageId]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spWriteMessageId]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spInsertApproval]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spInsertApproval]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}Engage_spDeleteEvent]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}Engage_spDeleteEvent]
+GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spDeleteEvent] (@EventId int)
+AS
+
+BEGIN TRANSACTION
+
+DELETE {databaseOwner}[{objectQualifier}Engage_Rsvp] 
+WHERE EventID = @EventId
+
+DELETE {databaseOwner}[{objectQualifier}Engage_Event] 
+WHERE EventID = @EventId
+
+COMMIT TRANSACTION
+
+GO
+
+IF OBJECT_ID(N'{databaseOwner}{objectQualifier}Engage_EventCategory', N'U') IS NULL
+CREATE TABLE {databaseOwner}{objectQualifier}Engage_EventCategory
+	(
+	CategoryId int NOT NULL IDENTITY (1, 1),
+	PortalId int NOT NULL,
+	Name nvarchar(250) NOT NULL,
+	CreatedBy int NOT NULL,
+	CreationDate datetime NOT NULL DEFAULT GETDATE(),
+	RevisingUser int NOT NULL,
+	RevisionDate datetime NOT NULL DEFAULT GETDATE(),
+	CONSTRAINT {objectQualifier}PK_Engage_EventCategory PRIMARY KEY CLUSTERED (CategoryId),
+	CONSTRAINT {objectQualifier}IX_Engage_EventCategory_Name UNIQUE (PortalId, Name)
+	)
+GO
+
+IF NOT EXISTS (SELECT NULL FROM syscolumns WHERE name = 'CategoryId' AND id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Event]', N'U'))
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Event] 
+		ADD CategoryId int NULL 
+			CONSTRAINT {objectQualifier}FK_Engage_EventCategory_Engage_Event FOREIGN KEY (CategoryId) REFERENCES {databaseOwner}[{objectQualifier}Engage_EventCategory] (CategoryId)
+
+	INSERT INTO {databaseOwner}{objectQualifier}Engage_EventCategory (Name, PortalId, CreatedBy, RevisingUser)
+	SELECT '', PortalID, -1, -1
+	FROM {databaseOwner}{objectQualifier}vw_Portals
+	GROUP BY PortalID
+
+	ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Event] 
+		ALTER COLUMN CategoryId int NOT NULL
+END
+
+IF OBJECT_ID(N'{databaseOwner}{objectQualifier}Engage_spGetEventCategory', N'P') IS NOT NULL
+DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategory
+GO
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategory (@CategoryId int)
+AS
+	SELECT CategoryId, Name
+	FROM {databaseOwner}{objectQualifier}Engage_EventCategory
+	WHERE CategoryId = @CategoryId
+GO
+
+IF OBJECT_ID(N'{databaseOwner}{objectQualifier}Engage_spDeleteEventCategory', N'P') IS NOT NULL
+DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spDeleteEventCategory
+GO
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spDeleteEventCategory (@CategoryId int)
+AS
+	DELETE {databaseOwner}[{objectQualifier}Engage_Event] 
+	WHERE CategoryId = @CategoryId
+
+	DELETE {databaseOwner}{objectQualifier}Engage_EventCategory
+	WHERE CategoryId = @CategoryId
+GO
+
+IF OBJECT_ID(N'{databaseOwner}{objectQualifier}Engage_spInsertEventCategory', N'P') IS NOT NULL
+DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spInsertEventCategory
+GO
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spInsertEventCategory (@PortalId int, @Name nvarchar(250), @CreatedBy int)
+AS
+	INSERT INTO {databaseOwner}{objectQualifier}Engage_EventCategory (PortalId, Name, CreatedBy, RevisingUser)
+	VALUES (@PortalId, @Name, @CreatedBy, @CreatedBy)
+	
+	SELECT SCOPE_IDENTITY()  
+GO
+
+IF OBJECT_ID(N'{databaseOwner}{objectQualifier}Engage_spUpdateEventCategory', N'P') IS NOT NULL
+DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spUpdateEventCategory
+GO
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spInsertEventCategory (@CategoryId int, @Name nvarchar(250), @RevisingUser int)
+AS
+	UPDATE {databaseOwner}{objectQualifier}Engage_EventCategory 
+	SET PortalId = @PortalId, 
+		Name = @Name, 
+		RevisingUser = @RevisingUser
+	WHERE CategoryId = @CategoryId
+GO
