@@ -35,7 +35,7 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRules>
     </CodeAnalysisRules>
-    <CodeAnalysisRuleSet>ModifiedMicrosoftAll.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>Migrated rules for EngageEvents.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -342,13 +342,6 @@
       <DependentUpon>Respond.ascx</DependentUpon>
     </Compile>
     <Compile Include="Setting.cs" />
-    <Compile Include="Util\Approval.ascx.cs">
-      <DependentUpon>Approval.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Util\Approval.ascx.designer.cs">
-      <DependentUpon>Approval.ascx</DependentUpon>
-    </Compile>
     <Compile Include="ResponseDetail.ascx.cs">
       <DependentUpon>ResponseDetail.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -362,13 +355,6 @@
     </Compile>
     <Compile Include="ResponseSummaryDisplay.ascx.designer.cs">
       <DependentUpon>ResponseSummaryDisplay.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="EmailEdit.ascx.cs">
-      <DependentUpon>EmailEdit.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="EmailEdit.ascx.designer.cs">
-      <DependentUpon>EmailEdit.ascx</DependentUpon>
     </Compile>
     <Compile Include="EventEdit.ascx.cs">
       <DependentUpon>EventEdit.ascx</DependentUpon>
@@ -463,9 +449,7 @@
     <Content Include="Admin\App_LocalResources\NotConfigured.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Util\Approval.ascx" />
     <Content Include="ResponseSummaryDisplay.ascx" />
-    <Content Include="EmailEdit.ascx" />
     <Content Include="EventEdit.ascx" />
     <Content Include="Samples\AttendingReminder.htm" />
     <Content Include="Samples\NoResponseReminder.htm" />

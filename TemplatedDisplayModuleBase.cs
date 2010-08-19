@@ -138,23 +138,6 @@ namespace Engage.Dnn.Events
                         }
                     },
                     {
-                        "EDITEMAILBUTTON", 
-                        (@this, container, tag, currentEvent, resourceFile) => 
-                        {
-                            if (@this.IsAdmin)
-                            {
-                                ButtonAction editEmailAction = (ButtonAction)@this.LoadControl(@this.ActionsControlsFolder + "ButtonAction.ascx");
-                                editEmailAction.CurrentEvent = currentEvent;
-                                editEmailAction.ModuleConfiguration = @this.ModuleConfiguration;
-                                editEmailAction.Href = @this.BuildLinkUrl(@this.ModuleId, "EmailEdit", Utility.GetEventParameters(currentEvent));
-                                editEmailAction.ResourceKey = "EditEmailButton";
-                                container.Controls.Add(editEmailAction);
-                            }
-
-                            return false;
-                        }
-                    },
-                    {
                         "RECURRENCESUMMARY", 
                         (@this, container, tag, currentEvent, resourceFile) => 
                         {

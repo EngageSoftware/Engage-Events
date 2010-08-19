@@ -18,16 +18,6 @@ namespace Engage.Dnn.Events
     internal class Setting : Framework.Setting
     {
         /// <summary>
-        /// The URL to navigate to in order to indicate that an email has been opened
-        /// </summary>
-        public static readonly Setting OpenLinkUrl = new Setting("openLinkUrl", "Specify the URL for your Open Link to track opens.");
-
-        /// <summary>
-        /// The privacy policy URL to use in emails
-        /// </summary>
-        public static readonly Setting PrivacyPolicyUrl = new Setting("upnlRating", "Specify the URL for your Privacy Policy.");
-
-        /// <summary>
         /// The skin used for the Calendar display
         /// </summary>
         public static readonly Setting SkinSelection = new Setting("SkinSelection", "The skin used for Calendar Display.");
@@ -36,11 +26,6 @@ namespace Engage.Dnn.Events
         /// The number of events to display on a single day in the calendar's month view
         /// </summary>
         public static readonly Setting EventsPerDay = new Setting("EventsPerDay", "The number of events to display on a single day in the calendar's month view");
-
-        /// <summary>
-        /// The unsubscribe URL to use in emails
-        /// </summary>
-        public static readonly Setting UnsubscribeUrl = new Setting("unsubscribeUrl", "Specify the URL for unsubscribing.");
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Setting"/> class.
