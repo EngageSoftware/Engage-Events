@@ -64,11 +64,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="system.web.extensions, Version=1.0.61025.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\system.web.extensions.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Telerik.Web.UI, Version=2009.3.1103.20, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -100,7 +95,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="References\system.web.extensions.dll" />
     <Content Include="References\Telerik.Web.UI.dll" />
     <Content Include="References\Telerik.Web.UI.xml" />
   </ItemGroup>
