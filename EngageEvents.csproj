@@ -725,7 +725,6 @@
     <Content Include="1.2.0.txt" />
     <Content Include="ReleaseNotes_1.3.0.htm" />
     <Content Include="ReleaseNotes_1.2.2.htm" />
-    <Content Include="References\system.web.extensions.dll" />
     <Content Include="References\Telerik.Web.Design.dll" />
     <Content Include="References\Telerik.Web.UI.XML" />
     <Content Include="ReleaseNotes_1.2.1.htm" />

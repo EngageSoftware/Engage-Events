@@ -9,8 +9,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{37A69CBB-5A04-4D74-A16C-765FDE6BF9F3}"
 	ProjectSection(SolutionItems) = preProject
 		MSBuild\EcmaScript.NET.modified.dll = MSBuild\EcmaScript.NET.modified.dll
-		MSBuild\Iesi.Collections.dll = MSBuild\Iesi.Collections.dll
-		MSBuild\Yahoo.Yui.Compressor.NET20.dll = MSBuild\Yahoo.Yui.Compressor.NET20.dll
+		MSBuild\Yahoo.Yui.Compressor.dll = MSBuild\Yahoo.Yui.Compressor.dll
 		MSBuild\Yui.Compressor.targets = MSBuild\Yui.Compressor.targets
 	EndProjectSection
 EndProject
@@ -20,7 +19,7 @@ Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 2
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://tfs2008.etg-inc.net:8080/
+		SccTeamFoundationServer = http://tfs2010.etg-inc.net:8080/tfs/engage%20tfs%202010
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = EngageEvents.csproj
 		SccLocalPath1 = .
