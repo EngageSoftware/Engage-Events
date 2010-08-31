@@ -91,6 +91,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions, Version=1.0.61025.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -267,7 +268,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Properties\Assemblyinfo.cs" />
-    <Compile Include="Components\EmailScheduler.cs" />
     <Compile Include="Components\FeaturesController.cs" />
     <Compile Include="Display\EventDisplay.ascx.cs">
       <DependentUpon>EventDisplay.ascx</DependentUpon>
