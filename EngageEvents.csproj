@@ -23,7 +23,8 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -70,15 +71,17 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Engage.Dnn.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Engage.Dnn.Framework, Version=3.1.6.22017, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
+      <HintPath>References\Framework\Engage.Dnn.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Engage.Events, Version=1.0.0.24403, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Engage.Events, Version=3.1.3.22019, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Framework\Engage.Events.dll</HintPath>
     </Reference>
-    <Reference Include="Engage.Framework, Version=2.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Engage.Framework, Version=3.1.4.22015, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Framework\Engage.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral">
       <HintPath>..\..\bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
@@ -87,10 +90,11 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
-    <Reference Include="system.web.extensions, Version=1.0.61025.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>False</Private>
+    <Reference Include="System.Web.Extensions, Version=1.0.61025.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -98,6 +102,7 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="Telerik.Web.UI, Version=2008.1.515.20, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
@@ -391,6 +396,16 @@
     <None Include="Templates\Engage Events Templates.docx" />
     <None Include="Templates\Engage Events Templates.pdf" />
     <None Include="Uninstall.SqlDataProvider" />
+    <Content Include="web.config" />
+    <Content Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </Content>
+    <Content Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </Content>
+    <Content Include="web.Trial.config">
+      <DependentUpon>web.config</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_LocalResources\ItemPreview.ascx.resx">
@@ -413,6 +428,9 @@
     <Content Include="Licenses\EULA-Trial.htm" />
     <Content Include="Licenses\EULA-Trial.txt" />
     <Content Include="MainContainer.ascx" />
+    <Content Include="References\Framework\Engage.Dnn.Framework.dll" />
+    <Content Include="References\Framework\Engage.Events.dll" />
+    <Content Include="References\Framework\Engage.Framework.dll" />
     <Content Include="Settings.ascx" />
     <Content Include="Module.css" />
   </ItemGroup>
@@ -682,9 +700,6 @@
     </Content>
     <Content Include="References\DotNetNuke.dll" />
     <Content Include="References\DotNetNuke.WebUtility.dll" />
-    <Content Include="References\Engage.Dnn.Framework.dll" />
-    <Content Include="References\Engage.Events.dll" />
-    <Content Include="References\Engage.Framework.dll" />
     <Content Include="References\Microsoft.ApplicationBlocks.Data.dll" />
     <Content Include="References\Telerik.Web.UI.dll" />
     <Content Include="Display\App_LocalResources\CalendarDisplayOptions.ascx.resx">
@@ -719,9 +734,6 @@
     </Content>
     <Content Include="1.2.0.txt" />
     <Content Include="ReleaseNotes_1.3.0.htm" />
-    <Content Include="References\Engage.Dnn.Framework.xml" />
-    <Content Include="References\Engage.Events.XML" />
-    <Content Include="References\Engage.Framework.xml" />
     <Content Include="ReleaseNotes_1.2.2.htm" />
     <Content Include="References\system.web.extensions.dll" />
     <Content Include="References\Telerik.Web.Design.dll" />
