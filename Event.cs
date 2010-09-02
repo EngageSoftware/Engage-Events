@@ -14,7 +14,6 @@ namespace Engage.Events
     using System;
     using System.ComponentModel;
     using System.Data;
-    using System.Diagnostics;
     using System.Globalization;
     using System.Xml.Serialization;
     using Data;
@@ -28,160 +27,24 @@ namespace Engage.Events
     public class Event : IEditableObject, INotifyPropertyChanged, ITemplateable
     {
         /// <summary>
-        /// Backing field for <see cref="Canceled"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private bool canceled;
-
-        /// <summary>
-        /// Backing field for <see cref="IsFeatured"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private bool isFeatured;
-
-        /// <summary>
-        /// Backing field for <see cref="IsDeleted"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private bool isDeleted;
-
-        /// <summary>
-        /// Backing field for <see cref="CreatedBy"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int createdBy = -1;
-
-        /// <summary>
-        /// Backing field for <see cref="EventEnd"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DateTime eventEnd;
-
-        /// <summary>
-        /// Backing field for <see cref="EventStart"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private DateTime eventStart;
-
-        /// <summary>
-        /// Backing field for <see cref="Id"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int id = -1;
-
-        /// <summary>
-        /// Backing field for <see cref="InvitationUrl"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string invitationUrl = string.Empty;
-
-        /// <summary>
-        /// Backing field for <see cref="Location"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string location = string.Empty;
-
-        /// <summary>
-        /// Backing field for <see cref="LocationUrl"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string locationUrl = string.Empty;
-
-        /// <summary>
-        /// Backing field for <see cref="ModuleId"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int moduleId = -1;
-
-        /// <summary>
-        /// Backing field for <see cref="Organizer"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string organizer = string.Empty;
-
-        /// <summary>
-        /// Backing field for <see cref="OrganizerEmail"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string organizerEmail = string.Empty;
-
-        /// <summary>
-        /// Backing field for <see cref="Overview"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string overview = string.Empty;
-
-        /// <summary>
-        /// Backing field for <see cref="Overview"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string description = string.Empty;
-
-        /// <summary>
-        /// Backing field for <see cref="PortalId"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int portalId = -1;
-
-        /// <summary>
-        /// Backing field for <see cref="RecapUrl"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string recapUrl = string.Empty;
-
-        /// <summary>
-        /// Backing field for <see cref="RecurrenceParentId"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int? recurrenceParentId;
-
-        /// <summary>
-        /// Backing field for <see cref="RecurrenceRule"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private RecurrenceRule recurrenceRule;
-
-        /// <summary>
-        /// Backing field for <see cref="Title"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string title = string.Empty;
-
-        /// <summary>
-        /// Backing field for <see cref="AllowRegistrations"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private bool allowRegistrations = true;
-
-        /// <summary>
-        /// Backing field for <see cref="TimeZoneOffset"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private TimeSpan timeZoneOffset;
-
-        /// <summary>
-        /// Backing field for <see cref="Capacity"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private int? capacity;
-
-        /// <summary>
-        /// Backing field for <see cref="InDaylightTime"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private bool inDaylightTime;
-
-        /// <summary>
-        /// Backing field for <see cref="CapacityMetMessage"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string capacityMetMessage;
-
-        /// <summary>
         /// Prevents a default instance of the Event class from being created.
         /// </summary>
         private Event()
         {
+            this.Id = -1;
+            this.PortalId = -1;
+            this.ModuleId = -1;
+            this.CreatedBy = -1;
+            this.OrganizerEmail = string.Empty;
+            this.Title = string.Empty;
+            this.Location = string.Empty;
+            this.LocationUrl = string.Empty;
+            this.InvitationUrl = string.Empty;
+            this.RecapUrl = string.Empty;
+            this.Overview = string.Empty;
+            this.Description = string.Empty;
+            this.AllowRegistrations = true;
+            this.Organizer = string.Empty;
         }
 
         /// <summary>
@@ -238,23 +101,29 @@ namespace Engage.Events
         /// </param>
         private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule, bool canceled, int? capacity, bool inDaylightTime, string capacityMetMessage)
         {
-            this.portalId = portalId;
-            this.moduleId = moduleId;
-            this.organizerEmail = organizerEmail ?? string.Empty;
-            this.title = title;
-            this.overview = overview;
-            this.description = description;
-            this.eventStart = eventStart;
-            this.eventEnd = eventEnd;
-            this.timeZoneOffset = timeZoneOffset;
-            this.location = location;
-            this.isFeatured = isFeatured;
-            this.allowRegistrations = allowRegistrations;
-            this.recurrenceRule = recurrenceRule;
-            this.canceled = canceled;
-            this.capacity = capacity;
-            this.inDaylightTime = inDaylightTime;
-            this.capacityMetMessage = capacityMetMessage;
+            this.Id = -1;
+            this.CreatedBy = -1;
+            this.LocationUrl = string.Empty;
+            this.InvitationUrl = string.Empty;
+            this.RecapUrl = string.Empty;
+            this.Organizer = string.Empty;
+            this.PortalId = portalId;
+            this.ModuleId = moduleId;
+            this.OrganizerEmail = organizerEmail ?? string.Empty;
+            this.Title = title;
+            this.Overview = overview;
+            this.Description = description;
+            this.EventStart = eventStart;
+            this.EventEnd = eventEnd;
+            this.TimeZoneOffset = timeZoneOffset;
+            this.Location = location;
+            this.IsFeatured = isFeatured;
+            this.AllowRegistrations = allowRegistrations;
+            this.RecurrenceRule = recurrenceRule;
+            this.Canceled = canceled;
+            this.Capacity = capacity;
+            this.InDaylightTime = inDaylightTime;
+            this.CapacityMetMessage = capacityMetMessage;
         }
 
         #region INotifyPropertyChanged Members
@@ -271,203 +140,111 @@ namespace Engage.Events
         /// </summary>
         /// <value>This <see cref="Event"/>'s id.</value>
         [XmlElement(Order = 1)]
-        public int Id
-        {
-            [DebuggerStepThrough]
-            get { return this.id; }
-        }
+        public int Id { get; private set; }
 
         /// <summary>
         /// Gets the portal id.
         /// </summary>
         /// <value>The portal id.</value>
-        public int PortalId
-        {
-            [DebuggerStepThrough]
-            get { return this.portalId; }
-        }
+        public int PortalId { get; private set; }
 
         /// <summary>
         /// Gets the module id.
         /// </summary>
         /// <value>The module id.</value>
-        public int ModuleId
-        {
-            [DebuggerStepThrough]
-            get { return this.moduleId; }
-        }
+        public int ModuleId { get; private set; }
 
         /// <summary>
         /// Gets the ID of the user who created this event.
         /// </summary>
         /// <value>The ID of the user that created this event.</value>
-        public int CreatedBy
-        {
-            [DebuggerStepThrough]
-            get { return this.createdBy; }
-        }
+        public int CreatedBy { get; private set; }
 
         /// <summary>
         /// Gets the email address of the organizer of this event.
         /// </summary>
         /// <value>The organizer's email.</value>
         [XmlElement(Order = 5)]
-        public string OrganizerEmail
-        {
-            [DebuggerStepThrough]
-            get { return this.organizerEmail; }
-        }
+        public string OrganizerEmail { get; private set; }
 
         /// <summary>
         /// Gets or sets the title.
         /// </summary>
         /// <value>The title of this event.</value>
         [XmlElement(Order = 2)]
-        public string Title
-        {
-            [DebuggerStepThrough]
-            get { return this.title; }
-            [DebuggerStepThrough]
-            set { this.title = value; }
-        }
+        public string Title { get; set; }
 
         /// <summary>
         /// Gets or sets the location.
         /// </summary>
         /// <value>The location of this event.</value>
         [XmlElement(Order = 6)]
-        public string Location
-        {
-            [DebuggerStepThrough]
-            get { return this.location; }
-            [DebuggerStepThrough]
-            set { this.location = value; }
-        }
+        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets the URL for this event's <see cref="Location"/>.
         /// </summary>
         /// <value>The URL for this event's <see cref="Location"/>.</value>
         [XmlElement(Order = 7)]
-        public string LocationUrl
-        {
-            [DebuggerStepThrough]
-            get { return this.locationUrl; }
-            [DebuggerStepThrough]
-            set { this.locationUrl = value; }
-        }
+        public string LocationUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the URL where the invitation HTML message is.
         /// </summary>
         /// <value>The URL for the invitation HTML message.</value>
-        public string InvitationUrl
-        {
-            [DebuggerStepThrough]
-            get { return this.invitationUrl; }
-            [DebuggerStepThrough]
-            set { this.invitationUrl = value; }
-        }
+        public string InvitationUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the URL where the recap HTML message is.
         /// </summary>
         /// <value>The URL for the recap HTML message.</value>
-        public string RecapUrl
-        {
-            [DebuggerStepThrough]
-            get { return this.recapUrl; }
-            [DebuggerStepThrough]
-            set { this.recapUrl = value; }
-        }
+        public string RecapUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the overview.
         /// </summary>
         /// <value>The overview.</value>
         [XmlElement(Order = 3)]
-        public string Overview
-        {
-            [DebuggerStepThrough]
-            get { return this.overview; }
-            [DebuggerStepThrough]
-            set { this.overview = value; }
-        }
+        public string Overview { get; set; }
 
         /// <summary>
         /// Gets or sets the Description.
         /// </summary>
         /// <value>The Description.</value>
         [XmlElement(Order = 8)]
-        public string Description
-        {
-            [DebuggerStepThrough]
-            get { return this.description; }
-            [DebuggerStepThrough]
-            set { this.description = value; }
-        }
+        public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets when the event starts.
         /// </summary>
         /// <value>The event's start date and time.</value>
         [XmlElement(Order = 9)]
-        public DateTime EventStart
-        {
-            [DebuggerStepThrough]
-            get { return this.eventStart; }
-            [DebuggerStepThrough]
-            set { this.eventStart = value; }
-        }
+        public DateTime EventStart { get; set; }
 
         /// <summary>
         /// Gets or sets when this event ends.
         /// </summary>
         /// <value>The event's end date and time.</value>
         [XmlElement(Order = 10)]
-        public DateTime EventEnd
-        {
-            [DebuggerStepThrough]
-            get { return this.eventEnd; }
-            [DebuggerStepThrough]
-            set { this.eventEnd = value; }
-        }
+        public DateTime EventEnd { get; set; }
 
         /// <summary>
         /// Gets or sets the ID of the parent event if this event is overriding a recurring event.
         /// </summary>
         /// <value>The recurrence id.</value>
-        public int? RecurrenceParentId
-        {
-            [DebuggerStepThrough]
-            get { return this.recurrenceParentId; }
-            [DebuggerStepThrough]
-            set { this.recurrenceParentId = value; }
-        }
+        public int? RecurrenceParentId { get; set; }
 
         /// <summary>
         /// Gets or sets the recurrence rule.
         /// </summary>
         /// <value>The recurrence rule.</value>
-        public RecurrenceRule RecurrenceRule
-        {
-            [DebuggerStepThrough]
-            get { return this.recurrenceRule; }
-            [DebuggerStepThrough]
-            set { this.recurrenceRule = value; }
-        }
+        public RecurrenceRule RecurrenceRule { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="Event"/> is canceled.
         /// </summary>
         /// <value><c>true</c> if canceled; otherwise, <c>false</c>.</value>
-        public bool Canceled
-        {
-            [DebuggerStepThrough]
-            get { return this.canceled; }
-            [DebuggerStepThrough]
-            set { this.canceled = value; }
-        }
+        public bool Canceled { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is featured.
@@ -476,13 +253,7 @@ namespace Engage.Events
         /// <c>true</c> if this instance is featured; otherwise, <c>false</c>.
         /// </value>
         [XmlElement(Order = 11)]
-        public bool IsFeatured
-        {
-            [DebuggerStepThrough]
-            get { return this.isFeatured; }
-            [DebuggerStepThrough]
-            set { this.isFeatured = value; }
-        }
+        public bool IsFeatured { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is deleted.
@@ -491,65 +262,35 @@ namespace Engage.Events
         /// <c>true</c> if this instance is deleted; otherwise, <c>false</c>.
         /// </value>
         [XmlElement(Order = 12)]
-        public bool IsDeleted
-        {
-            [DebuggerStepThrough]
-            get { return this.isDeleted; }
-            [DebuggerStepThrough]
-            set { this.isDeleted = value; }
-        }
+        public bool IsDeleted { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the organizer of this event.
         /// </summary>
         /// <value>The event's organizer.</value>
         [XmlElement(Order = 4)]
-        public string Organizer
-        {
-            [DebuggerStepThrough]
-            get { return this.organizer; }
-            [DebuggerStepThrough]
-            set { this.organizer = value; }
-        }
+        public string Organizer { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether users can register to attend this event.
         /// </summary>
         /// <value><c>true</c> if users can register to attend this event; otherwise, <c>false</c>.</value>
         [XmlElement(Order = 13)]
-        public bool AllowRegistrations
-        {
-            [DebuggerStepThrough]
-            get { return this.allowRegistrations; }
-            [DebuggerStepThrough]
-            set { this.allowRegistrations = value; }
-        }
+        public bool AllowRegistrations { get; set; }
 
         /// <summary>
         /// Gets or sets the time zone offset for this event.
         /// </summary>
         /// <value>The time zone offset for this event.</value>
         [XmlElement(Order = 14)]
-        public TimeSpan TimeZoneOffset
-        {
-            [DebuggerStepThrough]
-            get { return this.timeZoneOffset; }
-            [DebuggerStepThrough]
-            set { this.timeZoneOffset = value; }
-        }
+        public TimeSpan TimeZoneOffset { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of attending registrants this event can have, or <c>null</c> if there is no maximum.
         /// </summary>
         /// <value>The the maximum number of attending registrants this event can have, or <c>null</c> if there is no maximum.</value>
         [XmlElement(Order = 15)]
-        public int? Capacity
-        {
-            [DebuggerStepThrough]
-            get { return this.capacity; }
-            [DebuggerStepThrough]
-            set { this.capacity = value; }
-        }
+        public int? Capacity { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this event occurs during Daylight Time.
@@ -560,13 +301,7 @@ namespace Engage.Events
         /// </remarks>
         /// <value><c>true</c> if this event occurs during Daylight Time; otherwise, <c>false</c>.</value>
         [XmlElement(Order = 16)]
-        public bool InDaylightTime
-        {
-            [DebuggerStepThrough]
-            get { return this.inDaylightTime; }
-            [DebuggerStepThrough]
-            set { this.inDaylightTime = value; }
-        }
+        public bool InDaylightTime { get; set; }
 
         /// <summary>
         /// Gets or sets the message to display to a user who wants to register for this
@@ -578,13 +313,7 @@ namespace Engage.Events
         /// <c>null</c> or <see cref="string.Empty"/> to display a generic message.
         /// </value>
         [XmlElement(Order = 17)]
-        public string CapacityMetMessage
-        {
-            [DebuggerStepThrough]
-            get { return this.capacityMetMessage; }
-            [DebuggerStepThrough]
-            set { this.capacityMetMessage = value; }
-        }
+        public string CapacityMetMessage { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether this instance is recurring.
@@ -605,7 +334,7 @@ namespace Engage.Events
         [XmlIgnore]
         public TimeSpan Duration
         {
-            get { return this.eventEnd - this.eventStart; }
+            get { return this.EventEnd - this.EventStart; }
         }
 
         /// <summary>
@@ -617,8 +346,8 @@ namespace Engage.Events
         {
             get
             {
-                if (this.recurrenceRule == null 
-                    || (0 == this.recurrenceRule.Range.MaxOccurrences && this.recurrenceRule.Range.RecursUntil == DateTime.MaxValue))
+                if (this.RecurrenceRule == null 
+                    || (0 == this.RecurrenceRule.Range.MaxOccurrences && this.RecurrenceRule.Range.RecursUntil == DateTime.MaxValue))
                 {
                     return null;
                 }
@@ -628,15 +357,15 @@ namespace Engage.Events
                 ////this.recurrenceRule.Range.MaxOccurrences = int.MaxValue;
 
                 // TODO: Calculate FinalRecurringEndDate efficiently
-                DateTime lastOccurrence = this.eventStart;
-                foreach (DateTime occurrence in this.recurrenceRule.Occurrences)
+                DateTime lastOccurrence = this.EventStart;
+                foreach (DateTime occurrence in this.RecurrenceRule.Occurrences)
                 {
                     lastOccurrence = occurrence;
                 }
 
                 ////this.recurrenceRule.Range.MaxOccurrences = originalMaxOccurrences;
 
-                return lastOccurrence + this.recurrenceRule.Range.EventDuration;
+                return lastOccurrence + this.RecurrenceRule.Range.EventDuration;
             }
         }
 
@@ -724,10 +453,11 @@ namespace Engage.Events
         /// <returns>An occurrence of this <see cref="Event"/></returns>
         public Event CreateOccurrence(DateTime occurrenceStart)
         {
-            Event occurrence = new Event(this.portalId, this.moduleId, this.organizerEmail, this.title, this.overview, this.description, occurrenceStart, occurrenceStart + this.Duration, this.TimeZoneOffset, this.location, this.isFeatured, this.allowRegistrations, this.recurrenceRule, this.canceled, this.capacity, this.inDaylightTime, this.capacityMetMessage);
-            occurrence.recurrenceParentId = this.id;
-            occurrence.id = this.id;
-            return occurrence;
+            return new Event(this.PortalId, this.ModuleId, this.OrganizerEmail, this.Title, this.Overview, this.Description, occurrenceStart, occurrenceStart + this.Duration, this.TimeZoneOffset, this.Location, this.IsFeatured, this.AllowRegistrations, this.RecurrenceRule, this.Canceled, this.Capacity, this.InDaylightTime, this.CapacityMetMessage)
+                {
+                    RecurrenceParentId = this.Id,
+                    Id = this.Id
+                };
         }
 
         /// <summary>
@@ -736,7 +466,7 @@ namespace Engage.Events
         /// <param name="revisingUser">The user who is saving this event.</param>
         public void Save(int revisingUser)
         {
-            if (this.id < 0)
+            if (this.Id < 0)
             {
                 this.Insert(revisingUser);
             }
@@ -753,7 +483,7 @@ namespace Engage.Events
         public string ToICal()
         {
             string rule = this.RecurrenceRule != null ? this.RecurrenceRule.ToString() : null;
-            return Util.ICalUtil.Export(this.overview, this.location, new Appointment(this.Id, this.EventStart, this.EventEnd, this.Title, rule), true, this.TimeZoneOffset);
+            return Util.ICalUtil.Export(this.Overview, this.Location, new Appointment(this.Id, this.EventStart, this.EventEnd, this.Title, rule), true, this.TimeZoneOffset);
         }
 
         #region IEditableObject Members
@@ -855,39 +585,40 @@ namespace Engage.Events
         /// <returns>An instantiated Event object.</returns>
         internal static Event Fill(IDataRecord eventRecord)
         {
-            Event e = new Event();
+            var e = new Event 
+            {
+                Id = (int)eventRecord["EventId"],
+                ModuleId = (int)eventRecord["ModuleId"],
+                Title = eventRecord["Title"].ToString(),
+                Overview = eventRecord["OverView"].ToString(),
+                Description = eventRecord["Description"].ToString(),
+                EventStart = (DateTime)eventRecord["EventStart"],
+                EventEnd = (DateTime)eventRecord["EventEnd"],
+                TimeZoneOffset = new TimeSpan(0, (int)eventRecord["TimeZoneOffset"], 0),
+                CreatedBy = (int)eventRecord["CreatedBy"],
+                Canceled = (bool)eventRecord["Canceled"],
+                IsFeatured = (bool)eventRecord["IsFeatured"],
+                IsDeleted = (bool)eventRecord["IsDeleted"],
+                AllowRegistrations = (bool)eventRecord["AllowRegistrations"],
+                Organizer = eventRecord["Organizer"].ToString(),
+                OrganizerEmail = eventRecord["OrganizerEmail"].ToString(),
+                Location = eventRecord["Location"].ToString(),
+                InvitationUrl = eventRecord["InvitationUrl"].ToString(),
+                RecapUrl = eventRecord["RecapUrl"].ToString(),
+                RecurrenceParentId = eventRecord["RecurrenceParentId"] as int?,
+                Capacity = eventRecord["Capacity"] as int?,
+                InDaylightTime = (bool)eventRecord["InDaylightTime"]
+            };
 
-            e.id = (int)eventRecord["EventId"];
-            e.moduleId = (int)eventRecord["ModuleId"];
-            e.title = eventRecord["Title"].ToString();
-            e.overview = eventRecord["OverView"].ToString();
-            e.description = eventRecord["Description"].ToString();
-            e.eventStart = (DateTime)eventRecord["EventStart"];
-            e.eventEnd = (DateTime)eventRecord["EventEnd"];
-            e.timeZoneOffset = new TimeSpan(0, (int)eventRecord["TimeZoneOffset"], 0);
-            e.createdBy = (int)eventRecord["CreatedBy"];
-            e.canceled = (bool)eventRecord["Canceled"];
-            e.isFeatured = (bool)eventRecord["IsFeatured"];
-            e.isDeleted = (bool)eventRecord["IsDeleted"];
-            e.allowRegistrations = (bool)eventRecord["AllowRegistrations"];
-            e.organizer = eventRecord["Organizer"].ToString();
-            e.organizerEmail = eventRecord["OrganizerEmail"].ToString();
-            e.location = eventRecord["Location"].ToString();
-            e.invitationUrl = eventRecord["InvitationUrl"].ToString();
-            e.recapUrl = eventRecord["RecapUrl"].ToString();
-            e.recurrenceParentId = eventRecord["RecurrenceParentId"] as int?;
-            e.capacity = eventRecord["Capacity"] as int?;
-            e.inDaylightTime = (bool)eventRecord["InDaylightTime"];
+            var capacityMetMessageColumnIndex = eventRecord.GetOrdinal("CapacityMetMessage");
+            e.CapacityMetMessage = eventRecord.IsDBNull(capacityMetMessageColumnIndex) ? null : eventRecord.GetString(capacityMetMessageColumnIndex);
 
-            int columnIndex = eventRecord.GetOrdinal("CapacityMetMessage");
-            e.capacityMetMessage = eventRecord.IsDBNull(eventRecord.GetOrdinal("CapacityMetMessage")) ? null : eventRecord.GetString(columnIndex);
-            
             RecurrenceRule rule;
             if (RecurrenceRule.TryParse(eventRecord["RecurrenceRule"].ToString(), out rule))
             {
-                e.recurrenceRule = rule;
+                e.RecurrenceRule = rule;
             }
-            
+
             return e;
         }
 
@@ -902,33 +633,33 @@ namespace Engage.Events
 
             try
             {
-                this.id = dp.ExecuteNonQuery(
+                this.Id = dp.ExecuteNonQuery(
                         CommandType.StoredProcedure,
                         dp.NamePrefix + "spInsertEvent",
-                        Utility.CreateIntegerParam("@PortalId", this.portalId),
-                        Utility.CreateIntegerParam("@ModuleId", this.moduleId),
-                        Utility.CreateVarcharParam("@Title", this.title),
-                        Utility.CreateTextParam("@Overview", this.overview),
-                        Utility.CreateTextParam("@Description", this.description),
-                        Utility.CreateDateTimeParam("@EventStart", this.eventStart),
-                        Utility.CreateDateTimeParam("@EventEnd", this.eventEnd),
-                        Utility.CreateIntegerParam("@TimeZoneOffset", (int)this.timeZoneOffset.TotalMinutes),
-                        Utility.CreateVarcharParam("@Organizer", this.organizer),
-                        Utility.CreateVarcharParam("@OrganizerEmail", this.organizerEmail),
-                        Utility.CreateVarcharParam("@Location", this.location),
-                        Utility.CreateVarcharParam("@LocationUrl", this.locationUrl),
-                        Utility.CreateVarcharParam("@InvitationUrl", this.invitationUrl),
-                        Utility.CreateVarcharParam("@RecapUrl", this.recapUrl),
-                        Utility.CreateIntegerParam("@RecurrenceParentId", this.recurrenceParentId),
-                        Utility.CreateVarcharParam("@RecurrenceRule", this.recurrenceRule != null ? this.recurrenceRule.ToString() : null),
-                        Utility.CreateBitParam("@AllowRegistrations", this.allowRegistrations),
-                        Utility.CreateBitParam("@isFeatured", this.isFeatured),
+                        Utility.CreateIntegerParam("@PortalId", this.PortalId),
+                        Utility.CreateIntegerParam("@ModuleId", this.ModuleId),
+                        Utility.CreateVarcharParam("@Title", this.Title),
+                        Utility.CreateTextParam("@Overview", this.Overview),
+                        Utility.CreateTextParam("@Description", this.Description),
+                        Utility.CreateDateTimeParam("@EventStart", this.EventStart),
+                        Utility.CreateDateTimeParam("@EventEnd", this.EventEnd),
+                        Utility.CreateIntegerParam("@TimeZoneOffset", (int)this.TimeZoneOffset.TotalMinutes),
+                        Utility.CreateVarcharParam("@Organizer", this.Organizer),
+                        Utility.CreateVarcharParam("@OrganizerEmail", this.OrganizerEmail),
+                        Utility.CreateVarcharParam("@Location", this.Location),
+                        Utility.CreateVarcharParam("@LocationUrl", this.LocationUrl),
+                        Utility.CreateVarcharParam("@InvitationUrl", this.InvitationUrl),
+                        Utility.CreateVarcharParam("@RecapUrl", this.RecapUrl),
+                        Utility.CreateIntegerParam("@RecurrenceParentId", this.RecurrenceParentId),
+                        Utility.CreateVarcharParam("@RecurrenceRule", this.RecurrenceRule != null ? this.RecurrenceRule.ToString() : null),
+                        Utility.CreateBitParam("@AllowRegistrations", this.AllowRegistrations),
+                        Utility.CreateBitParam("@isFeatured", this.IsFeatured),
                         Utility.CreateIntegerParam("@CreatedBy", revisingUser),
                         Utility.CreateDateTimeParam("@FinalRecurringEndDate", this.FinalRecurringEndDate),
-                        Utility.CreateIntegerParam("@Capacity", this.capacity),
-                        Utility.CreateBitParam("@InDaylightTime", this.inDaylightTime),
-                        Utility.CreateTextParam("@CapacityMetMessage", this.capacityMetMessage),
-                        Utility.CreateBitParam("@IsDeleted", this.isDeleted));
+                        Utility.CreateIntegerParam("@Capacity", this.Capacity),
+                        Utility.CreateBitParam("@InDaylightTime", this.InDaylightTime),
+                        Utility.CreateTextParam("@CapacityMetMessage", this.CapacityMetMessage),
+                        Utility.CreateBitParam("@IsDeleted", this.IsDeleted));
             }
             catch (SystemException de)
             {
@@ -950,30 +681,30 @@ namespace Engage.Events
                 dp.ExecuteNonQuery(
                         CommandType.StoredProcedure,
                         dp.NamePrefix + "spUpdateEvent",
-                        Utility.CreateIntegerParam("@EventId", this.id),
-                        Utility.CreateVarcharParam("@Title", this.title),
-                        Utility.CreateTextParam("@Overview", this.overview),
-                        Utility.CreateTextParam("@Description", this.description),
-                        Utility.CreateDateTimeParam("@EventStart", this.eventStart),
-                        Utility.CreateDateTimeParam("@EventEnd", this.eventEnd),
-                        Utility.CreateIntegerParam("@TimeZoneOffset", (int)this.timeZoneOffset.TotalMinutes),
-                        Utility.CreateVarcharParam("@Organizer", this.organizer),
-                        Utility.CreateVarcharParam("@OrganizerEmail", this.organizerEmail),
-                        Utility.CreateVarcharParam("@Location", this.location),
-                        Utility.CreateVarcharParam("@LocationUrl", this.locationUrl),
-                        Utility.CreateVarcharParam("@InvitationUrl", this.invitationUrl),
-                        Utility.CreateVarcharParam("@RecapUrl", this.recapUrl),
-                        Utility.CreateTextParam("@RecurrenceRule", this.recurrenceRule != null ? this.recurrenceRule.ToString() : null),
-                        Utility.CreateIntegerParam("@RecurrenceParentId", this.recurrenceParentId),
-                        Utility.CreateBitParam("@AllowRegistrations", this.allowRegistrations),
-                        Utility.CreateBitParam("@Canceled", this.canceled),
-                        Utility.CreateBitParam("@isFeatured", this.isFeatured),
+                        Utility.CreateIntegerParam("@EventId", this.Id),
+                        Utility.CreateVarcharParam("@Title", this.Title),
+                        Utility.CreateTextParam("@Overview", this.Overview),
+                        Utility.CreateTextParam("@Description", this.Description),
+                        Utility.CreateDateTimeParam("@EventStart", this.EventStart),
+                        Utility.CreateDateTimeParam("@EventEnd", this.EventEnd),
+                        Utility.CreateIntegerParam("@TimeZoneOffset", (int)this.TimeZoneOffset.TotalMinutes),
+                        Utility.CreateVarcharParam("@Organizer", this.Organizer),
+                        Utility.CreateVarcharParam("@OrganizerEmail", this.OrganizerEmail),
+                        Utility.CreateVarcharParam("@Location", this.Location),
+                        Utility.CreateVarcharParam("@LocationUrl", this.LocationUrl),
+                        Utility.CreateVarcharParam("@InvitationUrl", this.InvitationUrl),
+                        Utility.CreateVarcharParam("@RecapUrl", this.RecapUrl),
+                        Utility.CreateTextParam("@RecurrenceRule", this.RecurrenceRule != null ? this.RecurrenceRule.ToString() : null),
+                        Utility.CreateIntegerParam("@RecurrenceParentId", this.RecurrenceParentId),
+                        Utility.CreateBitParam("@AllowRegistrations", this.AllowRegistrations),
+                        Utility.CreateBitParam("@Canceled", this.Canceled),
+                        Utility.CreateBitParam("@isFeatured", this.IsFeatured),
                         Utility.CreateIntegerParam("@RevisingUser", revisingUser),
                         Utility.CreateDateTimeParam("@FinalRecurringEndDate", this.FinalRecurringEndDate),
-                        Utility.CreateIntegerParam("@Capacity", this.capacity),
-                        Utility.CreateBitParam("@InDaylightTime", this.inDaylightTime),
-                        Utility.CreateTextParam("@CapacityMetMessage", this.capacityMetMessage),
-                        Utility.CreateBitParam("@IsDeleted", this.isDeleted));
+                        Utility.CreateIntegerParam("@Capacity", this.Capacity),
+                        Utility.CreateBitParam("@InDaylightTime", this.InDaylightTime),
+                        Utility.CreateTextParam("@CapacityMetMessage", this.CapacityMetMessage),
+                        Utility.CreateBitParam("@IsDeleted", this.IsDeleted));
             }
             catch (SystemException de)
             {
