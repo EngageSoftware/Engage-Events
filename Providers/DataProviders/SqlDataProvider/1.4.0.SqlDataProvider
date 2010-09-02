@@ -174,13 +174,19 @@ BEGIN
 			CONSTRAINT {objectQualifier}FK_Engage_EventCategory_Engage_Event FOREIGN KEY (CategoryId) REFERENCES {databaseOwner}[{objectQualifier}Engage_EventCategory] (CategoryId)
 
 	INSERT INTO {databaseOwner}{objectQualifier}Engage_EventCategory (Name, PortalId, CreatedBy, RevisingUser)
-	SELECT '', PortalID, -1, -1
-	FROM {databaseOwner}{objectQualifier}vw_Portals
-	GROUP BY PortalID
+	SELECT '', PortalId, -1, -1
+	FROM {databaseOwner}[{objectQualifier}Engage_Event]
+	GROUP BY PortalId
+
+	EXEC sp_executesql N'UPDATE {databaseOwner}[{objectQualifier}Engage_Event]
+						 SET CategoryId = c.CategoryId
+					     FROM {databaseOwner}[{objectQualifier}Engage_Event] e
+						 JOIN {databaseOwner}[{objectQualifier}Engage_EventCategory] c ON (e.PortalId = c.PortalId)'
 
 	ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Event] 
 		ALTER COLUMN CategoryId int NOT NULL
 END
+GO
 
 IF OBJECT_ID(N'{databaseOwner}{objectQualifier}Engage_spGetEventCategory', N'P') IS NOT NULL
 DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategory
@@ -218,11 +224,22 @@ GO
 IF OBJECT_ID(N'{databaseOwner}{objectQualifier}Engage_spUpdateEventCategory', N'P') IS NOT NULL
 DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spUpdateEventCategory
 GO
-CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spInsertEventCategory (@CategoryId int, @Name nvarchar(250), @RevisingUser int)
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spUpdateEventCategory (@CategoryId int, @Name nvarchar(250), @RevisingUser int)
 AS
 	UPDATE {databaseOwner}{objectQualifier}Engage_EventCategory 
-	SET PortalId = @PortalId, 
-		Name = @Name, 
-		RevisingUser = @RevisingUser
+	SET Name = @Name, 
+		RevisingUser = @RevisingUser,
+		RevisionDate = GETDATE()
 	WHERE CategoryId = @CategoryId
+GO
+
+IF OBJECT_ID(N'{databaseOwner}{objectQualifier}Engage_spGetEventCategories', N'P') IS NOT NULL
+DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategories
+GO
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategories (@PortalId int)
+AS
+	SELECT CategoryId, Name
+	FROM {databaseOwner}{objectQualifier}Engage_EventCategory
+	WHERE PortalId = @PortalId
+	ORDER BY Name
 GO
