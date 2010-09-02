@@ -1,6 +1,9 @@
 ﻿/**********************************************************************/
 /*               Delete unused routing/framework tables               */
 /**********************************************************************/
+DELETE {databaseOwner}[{objectQualifier}Schedule] WHERE TypeFullName = 'Engage.Dnn.Events.Components.EmailScheduler'
+GO
+
 if exists (select * from dbo.sysobjects where id = object_id(N'[{objectQualifier}FK_Engage_EventMessage_Engage_Event]'))
 ALTER TABLE {databaseOwner}[{objectQualifier}Engage_EventMessage] DROP CONSTRAINT [{objectQualifier}FK_Engage_EventMessage_Engage_Event] 
 GO

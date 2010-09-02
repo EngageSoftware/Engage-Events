@@ -47,6 +47,10 @@
               <name>1.2.0.SqlDataProvider</name>
               <version>1.2.0</version>
             </script>
+            <script type="Install">
+              <name>1.4.0.SqlDataProvider</name>
+              <version>1.4.0</version>
+            </script>
             <script type="UnInstall">
               <name>Uninstall.SqlDataProvider</name>
               <version latestVersion="latestVersion">1.2.0</version>
