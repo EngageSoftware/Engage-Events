@@ -75,11 +75,11 @@
 	.tooltip_buttons{padding: 10px 0;}	
 
 
-	.AEEventTitle, .AEEventStartDate, .AEEventEndDate, .AEEventLocationAdd, .AEEventEditor, .AEEventFeature, .AEEventRecur, .AEEventRegister, .AEEventTimeZone {clear: both; overflow: hidden; padding-bottom: 0.675em;}
+	.AEEventTitle, .AEEventStartDate, .AEEventEndDate, .AEEventLocationAdd, .AEEventEditor, .AEEventFeature, .AEEventRecur, .AEEventRegister, .AEEventTimeZone, .AEEventCategory {clear: both; overflow: hidden; padding-bottom: 0.675em;}
 		.AEEventEditor .NormalBold, .AEEventTitle .NormalBold, .AEEventStartDate .NormalBold, .AEEventLocationAdd .NormalBold, .AEEventEndDate .NormalBold, 
-		.AEEventFeature .NormalBold, .AEEventRecur .NormalBold, .AEEventRegister .MainLabel, .AEEventTimeZone .NormalBold
+		.AEEventFeature .NormalBold, .AEEventRecur .NormalBold, .AEEventRegister .MainLabel, .AEEventTimeZone .NormalBold, .AEEventCategory .NormalBold
 		{float:left; width: 20%; margin-right: 3%; text-align: right;}
-		.AEEventEditor .Normal, .AEEventTitle .Normal, .AEEventStartDate .Normal, .AEEventLocationAdd .Normal, .AEEventEndDate .Normal, .AEEventFeature .Normal  {float: left; width: 81%;}
+		.AEEventEditor .Normal, .AEEventTitle .Normal, .AEEventStartDate .Normal, .AEEventLocationAdd .Normal, .AEEventEndDate .Normal, .AEEventFeature .Normal, .AEEventCategory .Normal  {float: left; width: 81%;}
 /*		.AEEventRecur .Normal, .AEEventRegister .Normal, .AEEventTimeZone .Normal */
 
 		

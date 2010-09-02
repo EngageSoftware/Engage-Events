@@ -162,6 +162,12 @@
   <data name="EndDateTimePickerRequired.Text" xml:space="preserve">
     <value>You must specify when your event ends</value>
   </data>
+  <data name="EventCategoryLabel.Text" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="EventCategoryRequired.Text" xml:space="preserve">
+    <value>You must select a category for your event</value>
+  </data>
   <data name="EventDescriptionLabel.Text" xml:space="preserve">
     <value>Description</value>
   </data>

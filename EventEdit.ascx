@@ -20,6 +20,12 @@
         <asp:RequiredFieldValidator runat="server" ControlToValidate="EventTitleTextBox" ResourceKey="EventTitleTextBoxRequired" Display="None" EnableClientScript="false"/>
     </div>
     
+    <div class="AEEventCategory">
+        <asp:Label runat="server" ResourceKey="EventCategoryLabel" CssClass="NormalBold" AssociatedControlID="CategoryComboBox"/>
+        <telerik:RadComboBox ID="CategoryComboBox" runat="server" skin="WebBlue" AllowCustomText="true"  />
+        <asp:RequiredFieldValidator runat="server" ControlToValidate="CategoryComboBox" ResourceKey="EventCategoryRequired" Display="None" EnableClientScript="false"/>
+    </div>
+    
     <div class="AEEventStartDate">
         <asp:Label runat="server" ResourceKey="EventStartDateLabel" CssClass="NormalBold" AssociatedControlID="StartDateTimePicker"/>
         <telerik:raddatetimepicker runat="server" id="StartDateTimePicker" skin="WebBlue">

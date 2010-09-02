@@ -98,7 +98,7 @@ namespace Engage.Dnn.Events
             {
                 if (!this.IsPostBack)
                 {
-                    this.FillDropDownWithDefaultValue();
+                    this.FillLists();
 
                     if (this.EventId.HasValue)
                     {
@@ -212,6 +212,23 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Gets the ID of the selected category (create a new category if no existing category was selected).
+        /// </summary>
+        /// <returns>The ID of the category</returns>
+        private int GetSelectedCategoryId()
+        {
+            int categoryId;
+            if (int.TryParse(this.CategoryComboBox.SelectedValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out categoryId))
+            {
+                return categoryId;
+            }
+
+            var category = Category.Create(this.PortalId, this.CategoryComboBox.Text);
+            category.Save(this.UserId);
+            return category.Id;
+        }
+
+        /// <summary>
         /// Gets the capacity for this event.
         /// </summary>
         /// <returns>This event's capacity</returns>
@@ -221,12 +238,22 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Fills the TimeZoneDropDownList control and selected the user's time zone as a default.
+        /// Fills the <see cref="TimeZoneDropDownList"/> and <see cref="CategoryComboBox"/>.
         /// </summary>
-        private void FillDropDownWithDefaultValue()
+        private void FillLists()
         {
-            // TODO: Once we support .NET 3.5, replace this with TimeZoneInfo.GetSystemTimeZones
+            // TODO: Now that we support .NET 3.5, replace this with TimeZoneInfo.GetSystemTimeZones
             Localization.LoadTimeZoneDropDownList(this.TimeZoneDropDownList, CultureInfo.CurrentCulture.Name, ((int)Dnn.Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings).TotalMinutes).ToString(CultureInfo.InvariantCulture));
+
+            this.CategoryComboBox.DataTextField = "Name";
+            this.CategoryComboBox.DataValueField = "Id";
+            this.CategoryComboBox.DataSource = CategoryCollection.Load(this.PortalId);
+            this.CategoryComboBox.DataBind();
+            var defaultCategoryItem = this.CategoryComboBox.Items.FindItemByText(string.Empty);
+            if (defaultCategoryItem != null)
+            {
+                defaultCategoryItem.Text = this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile);
+            }
         }
 
         /// <summary>
@@ -284,7 +311,7 @@ namespace Engage.Dnn.Events
             if (eventId.HasValue
                 && int.TryParse(this.TimeZoneDropDownList.SelectedValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out timeZoneOffsetMinutes))
             {
-                TimeSpan timeZoneOffset = new TimeSpan(0, timeZoneOffsetMinutes, 0);
+                var timeZoneOffset = new TimeSpan(0, timeZoneOffsetMinutes, 0);
                 if (this.InDaylightTimeCheckBox.Checked)
                 {
                     timeZoneOffset = timeZoneOffset.Add(new TimeSpan(1, 0, 0));
@@ -304,6 +331,7 @@ namespace Engage.Dnn.Events
                 e.Capacity = this.GetEventCapacity();
                 e.RecurrenceRule = this.RecurrenceEditor.GetRecurrenceRule(e.EventStart, e.EventEnd);
                 e.CapacityMetMessage = this.GetCustomCapacityMetMessage();
+                e.CategoryId = this.GetSelectedCategoryId();
                 e.Save(this.UserId);
             }
         }
@@ -356,6 +384,7 @@ namespace Engage.Dnn.Events
             {
                 Event e = Event.Load(eventId.Value);
                 this.EventTitleTextBox.Text = e.Title;
+                this.CategoryComboBox.SelectedValue = e.CategoryId.ToString(CultureInfo.InvariantCulture);
                 this.EventLocationTextBox.Text = e.Location;
                 this.EventOverviewTextEditor.Text = e.Overview;
                 this.EventDescriptionTextEditor.Text = e.Description;

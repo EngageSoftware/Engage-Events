@@ -587,9 +587,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_LocalResources\EmailEdit.ascx.resx">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Display\EventDisplay.ascx" />
     <Content Include="Display\EventListingItem.ascx" />
     <Content Include="Templates\Default\Item.Listing.html" />

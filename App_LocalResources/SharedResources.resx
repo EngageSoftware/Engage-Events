@@ -124,6 +124,9 @@
   <data name="DailyRecurrenceWeekdays.Text" xml:space="preserve">
     <value>&lt;span class="NormalBold"&gt;Occurs&lt;/span&gt; every weekday</value>
   </data>
+  <data name="DefaultCategory.Text" xml:space="preserve">
+    <value>Uncategorized</value>
+  </data>
   <data name="EveryDay.Text" xml:space="preserve">
     <value>day</value>
   </data>
