@@ -208,7 +208,7 @@ namespace Engage.Events
         {
             return new Category 
                 {
-                    Id = (int)eventRecord["CategoyId"],
+                    Id = (int)eventRecord["CategoryId"],
                     Name = eventRecord["Name"].ToString()
                 };
         }

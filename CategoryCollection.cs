@@ -25,22 +25,6 @@ namespace Engage.Events
     public class CategoryCollection : BindingList<Category>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CategoryCollection"/> class.
-        /// </summary>
-        /// <param name="totalRecords">The total number of records returned by the query that filled this collection.</param>
-        private CategoryCollection(int totalRecords)
-        {
-            this.TotalRecords = totalRecords;
-        }
-
-        /// <summary>
-        /// Gets the total number of categories represented by the query that returned this list 
-        /// (i.e. the number of categories that would come back if there was no paging)
-        /// </summary>
-        /// <value>The total number of records.</value>
-        public int TotalRecords { get; private set; }
-
-        /// <summary>
         /// Loads the collection of <see cref="Category"/> objects for the specified portal, ordered by name.
         /// </summary>
         /// <param name="portalId">The portal ID.</param>
@@ -76,22 +60,13 @@ namespace Engage.Events
         /// <exception cref="DBException">Data reader did not have the expected structure.  An error must have occurred in the query.</exception>
         private static CategoryCollection FillCategories(IDataReader dataReader)
         {
-            if (dataReader.Read())
+            var categories = new CategoryCollection();
+            while (dataReader.Read())
             {
-                var categories = new CategoryCollection((int)dataReader["TotalRecords"]);
-
-                if (dataReader.NextResult())
-                {
-                    while (dataReader.Read())
-                    {
-                        categories.Add(Category.Fill(dataReader));
-                    }
-                }
-
-                return categories;
+                categories.Add(Category.Fill(dataReader));
             }
 
-            throw new DBException("Data reader did not have the expected structure.  An error must have occurred in the query.");
+            return categories;
         }
     }
 }
