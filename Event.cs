@@ -27,6 +27,11 @@ namespace Engage.Events
     public class Event : IEditableObject, INotifyPropertyChanged, ITemplateable
     {
         /// <summary>
+        /// Backing field for <see cref="Category"/>
+        /// </summary>
+        private Category category;
+
+        /// <summary>
         /// Prevents a default instance of the Event class from being created.
         /// </summary>
         private Event()
@@ -316,6 +321,13 @@ namespace Engage.Events
         public string CapacityMetMessage { get; set; }
 
         /// <summary>
+        /// Gets the ID of this event's category.
+        /// </summary>
+        /// <value>This <see cref="Event"/>'s category ID.</value>
+        [XmlElement(Order = 18)]
+        public int CategoryId { get; private set; }
+
+        /// <summary>
         /// Gets a value indicating whether this instance is recurring.
         /// </summary>
         /// <value>
@@ -335,6 +347,24 @@ namespace Engage.Events
         public TimeSpan Duration
         {
             get { return this.EventEnd - this.EventStart; }
+        }
+
+        /// <summary>
+        /// Gets this event's category.
+        /// </summary>
+        /// <value>The category in which this event lives.</value>
+        [XmlIgnore]
+        public Category Category 
+        {
+            get 
+            { 
+                if (this.category == null)
+                {
+                    this.category = Category.Load(this.CategoryId);
+                }
+
+                return this.category;
+            }
         }
 
         /// <summary>
@@ -607,7 +637,8 @@ namespace Engage.Events
                 RecapUrl = eventRecord["RecapUrl"].ToString(),
                 RecurrenceParentId = eventRecord["RecurrenceParentId"] as int?,
                 Capacity = eventRecord["Capacity"] as int?,
-                InDaylightTime = (bool)eventRecord["InDaylightTime"]
+                InDaylightTime = (bool)eventRecord["InDaylightTime"],
+                CategoryId = (int)eventRecord["CategoryId"]
             };
 
             var capacityMetMessageColumnIndex = eventRecord.GetOrdinal("CapacityMetMessage");
