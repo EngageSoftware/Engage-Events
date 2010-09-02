@@ -321,11 +321,11 @@ namespace Engage.Events
         public string CapacityMetMessage { get; set; }
 
         /// <summary>
-        /// Gets the ID of this event's category.
+        /// Gets or sets the ID of this event's category.
         /// </summary>
         /// <value>This <see cref="Event"/>'s category ID.</value>
         [XmlElement(Order = 18)]
-        public int CategoryId { get; private set; }
+        public int CategoryId { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether this instance is recurring.
@@ -690,7 +690,8 @@ namespace Engage.Events
                         Utility.CreateIntegerParam("@Capacity", this.Capacity),
                         Utility.CreateBitParam("@InDaylightTime", this.InDaylightTime),
                         Utility.CreateTextParam("@CapacityMetMessage", this.CapacityMetMessage),
-                        Utility.CreateBitParam("@IsDeleted", this.IsDeleted));
+                        Utility.CreateBitParam("@IsDeleted", this.IsDeleted),
+                        Utility.CreateIntegerParam("@CategoryId", this.CategoryId));
             }
             catch (SystemException de)
             {
@@ -735,7 +736,8 @@ namespace Engage.Events
                         Utility.CreateIntegerParam("@Capacity", this.Capacity),
                         Utility.CreateBitParam("@InDaylightTime", this.InDaylightTime),
                         Utility.CreateTextParam("@CapacityMetMessage", this.CapacityMetMessage),
-                        Utility.CreateBitParam("@IsDeleted", this.IsDeleted));
+                        Utility.CreateBitParam("@IsDeleted", this.IsDeleted),
+                        Utility.CreateIntegerParam("@CategoryId", this.CategoryId));
             }
             catch (SystemException de)
             {

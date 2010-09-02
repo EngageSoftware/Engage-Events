@@ -29,6 +29,7 @@ namespace Engage.Events
         /// </summary>
         private Category()
         {
+            this.Id = -1;
         }
 
         /// <summary>
@@ -36,7 +37,7 @@ namespace Engage.Events
         /// </summary>
         /// <param name="portalId">The portal ID.</param>
         /// <param name="name">The name of the category.</param>
-        private Category(int portalId, string name)
+        private Category(int portalId, string name) : this()
         {
             this.PortalId = portalId;
             this.Name = name;
