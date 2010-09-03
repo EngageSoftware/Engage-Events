@@ -98,6 +98,7 @@ namespace Engage.Dnn.Events
             keyDictionary.Add("Register", new SubControlInfo("Register.ascx", false));
             keyDictionary.Add("EventDetail", new SubControlInfo("Display/EventDetail.ascx", false));
             keyDictionary.Add("ChooseDisplay", new SubControlInfo("ChooseDisplay.ascx", true));
+            keyDictionary.Add("ManageCategories", new SubControlInfo("ManageCategories.ascx", true));
 
             return keyDictionary;
         }
