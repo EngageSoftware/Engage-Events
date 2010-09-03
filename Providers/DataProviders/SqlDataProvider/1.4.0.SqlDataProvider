@@ -202,8 +202,12 @@ DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategory
 GO
 CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategory (@CategoryId int)
 AS
-    SELECT CategoryId, Name
-    FROM {databaseOwner}{objectQualifier}Engage_EventCategory
+    SELECT CategoryId, Name, (
+		SELECT COUNT(*)
+		FROM {databaseOwner}{objectQualifier}Engage_Event e
+		WHERE e.CategoryId = c.CategoryId
+		) AS EventCount
+    FROM {databaseOwner}{objectQualifier}Engage_EventCategory c
     WHERE CategoryId = @CategoryId
 GO
 
@@ -247,12 +251,15 @@ DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategories
 GO
 CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategories (@PortalId int)
 AS
-    SELECT CategoryId, Name
-    FROM {databaseOwner}{objectQualifier}Engage_EventCategory
+    SELECT CategoryId, Name, (
+		SELECT COUNT(*)
+		FROM {databaseOwner}{objectQualifier}Engage_Event e
+		WHERE e.CategoryId = c.CategoryId
+		) AS EventCount
+    FROM {databaseOwner}{objectQualifier}Engage_EventCategory c
     WHERE PortalId = @PortalId
     ORDER BY Name
 GO
-
 
 if OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_spInsertEvent]', N'P') IS NOT NULL
 DROP PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertEvent]

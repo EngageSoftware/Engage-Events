@@ -8,7 +8,7 @@
 <telerik:RadGrid ID="CategoriesGrid" runat="server" AutoGenerateColumns="false" AllowMultiRowEdit="true" ValidationSettings-ValidationGroup="ManageCategories">
     <MasterTableView DataKeyNames="Id" EditMode="InPlace" CommandItemDisplay="Top">
         <Columns>
-            <telerik:GridEditCommandColumn UniqueName="Buttons" ItemStyle-CssClass="buttons-col" />
+            <telerik:GridEditCommandColumn UniqueName="EditButtons" ItemStyle-CssClass="buttons-col" />
             <telerik:GridTemplateColumn UniqueName="Name" ItemStyle-CssClass="name-col">
                 <ItemTemplate>
                     <asp:Label runat="server" Text='<%# string.IsNullOrEmpty((string)Eval("Name")) ? this.GetDefaultCategoryName() : Eval("Name") %>' />
@@ -21,6 +21,7 @@
                         ResourceKey="NameUnique" ForeColor="" CssClass="NormalRed" Display="None" OnServerValidate="UniqueNameValidator_ServerValidate" />
                 </EditItemTemplate>
             </telerik:GridTemplateColumn>
+            <telerik:GridButtonColumn UniqueName="Delete" ItemStyle-CssClass="delete-col" CommandName="Delete" />
         </Columns>
     </MasterTableView>
 </telerik:RadGrid>

@@ -37,6 +37,7 @@ namespace Engage.Dnn.Events
             base.OnInit(e);
 
             this.Load += this.Page_Load;
+            this.CategoriesGrid.DeleteCommand += CategoriesGrid_DeleteCommand;
             this.CategoriesGrid.ItemCreated += CategoriesGrid_ItemCreated;
             this.CategoriesGrid.NeedDataSource += this.CategoriesGrid_NeedDataSource;
             this.CategoriesGrid.InsertCommand += this.CategoriesGrid_InsertCommand;
@@ -63,6 +64,17 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Handles the <see cref="RadGrid.DeleteCommand"/> event of the <see cref="CategoriesGrid"/> control.
+        /// </summary>
+        /// <param name="source">The source of the event.</param>
+        /// <param name="e">The <see cref="GridCommandEventArgs"/> instance containing the event data.</param>
+        private static void CategoriesGrid_DeleteCommand(object source, GridCommandEventArgs e)
+        {
+            var categoryId = (int)e.Item.OwnerTableView.DataKeyValues[e.Item.ItemIndex]["Id"];
+            Category.Delete(categoryId);
+        }
+
+        /// <summary>
         /// Handles the <see cref="RadGrid.ItemCreated"/> event of the <see cref="CategoriesGrid"/> control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -76,16 +88,25 @@ namespace Engage.Dnn.Events
                 commandItem.FindControl("RefreshButton").Visible = false;
                 commandItem.FindControl("RebindGridButton").Visible = false;
             }
-            else if (e.Item.IsInEditMode)
+            else
             {
                 var editableItem = e.Item as GridEditableItem;
-                if (editableItem != null)
+                if (editableItem != null && e.Item.IsInEditMode)
                 {
                     const int EnterKey = 13;
                     ClientAPI.RegisterKeyCapture(
-                        editableItem["Name"].Controls.OfType<TextBox>().Single(), 
-                        editableItem["Buttons"].Controls[0], 
+                        editableItem["Name"].Controls.OfType<TextBox>().Single(),
+                        editableItem["EditButtons"].Controls[0],
                         EnterKey);
+                }
+                else
+                {
+                    var normalItem = e.Item as GridDataItem;
+                    if (normalItem != null && e.Item.DataItem != null)
+                    {
+                        var category = (Category)e.Item.DataItem;
+                        normalItem["Delete"].Controls.OfType<LinkButton>().Single().Visible = category.EventCount == 0;
+                    }
                 }
             }
         }
@@ -181,8 +202,18 @@ namespace Engage.Dnn.Events
         {
             this.CategoriesGrid.MasterTableView.CommandItemSettings.AddNewRecordText = this.Localize("AddCategory.Text");
 
+            var editColumn = (GridEditCommandColumn)this.CategoriesGrid.Columns.FindByUniqueName("EditButtons");
+            editColumn.EditText = this.Localize("EditCategory.Text");
+            editColumn.CancelText = this.Localize("CancelEdit.Text");
+            editColumn.UpdateText = this.Localize("UpdateCategory.Text");
+            editColumn.InsertText = this.Localize("CreateCategory.Text");
+
             var categoryNameColumn = (GridTemplateColumn)this.CategoriesGrid.Columns.FindByUniqueName("Name");
             categoryNameColumn.HeaderText = this.Localize("Name.Header");
+
+            var deleteColumn = (GridButtonColumn)this.CategoriesGrid.Columns.FindByUniqueName("Delete");
+            deleteColumn.Text = this.Localize("DeleteCategory.Text");
+            deleteColumn.ConfirmText = this.Localize("DeleteConfirmation.Text");
         }
     }
 }
