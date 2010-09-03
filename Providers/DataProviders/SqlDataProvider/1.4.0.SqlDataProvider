@@ -163,37 +163,37 @@ GO
 /**********************************************************************/
 IF OBJECT_ID(N'{databaseOwner}{objectQualifier}Engage_EventCategory', N'U') IS NULL
 CREATE TABLE {databaseOwner}{objectQualifier}Engage_EventCategory
-	(
-	CategoryId int NOT NULL IDENTITY (1, 1),
-	PortalId int NOT NULL,
-	Name nvarchar(250) NOT NULL,
-	CreatedBy int NOT NULL,
-	CreationDate datetime NOT NULL DEFAULT GETDATE(),
-	RevisingUser int NOT NULL,
-	RevisionDate datetime NOT NULL DEFAULT GETDATE(),
-	CONSTRAINT {objectQualifier}PK_Engage_EventCategory PRIMARY KEY CLUSTERED (CategoryId),
-	CONSTRAINT {objectQualifier}IX_Engage_EventCategory_Name UNIQUE (PortalId, Name)
-	)
+    (
+    CategoryId int NOT NULL IDENTITY (1, 1),
+    PortalId int NOT NULL,
+    Name nvarchar(250) NOT NULL,
+    CreatedBy int NOT NULL,
+    CreationDate datetime NOT NULL DEFAULT GETDATE(),
+    RevisingUser int NOT NULL,
+    RevisionDate datetime NOT NULL DEFAULT GETDATE(),
+    CONSTRAINT {objectQualifier}PK_Engage_EventCategory PRIMARY KEY CLUSTERED (CategoryId),
+    CONSTRAINT {objectQualifier}IX_Engage_EventCategory_Name UNIQUE (PortalId, Name)
+    )
 GO
 
 IF NOT EXISTS (SELECT NULL FROM syscolumns WHERE name = 'CategoryId' AND id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Event]', N'U'))
 BEGIN
-	ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Event] 
-		ADD CategoryId int NULL 
-			CONSTRAINT {objectQualifier}FK_Engage_EventCategory_Engage_Event FOREIGN KEY (CategoryId) REFERENCES {databaseOwner}[{objectQualifier}Engage_EventCategory] (CategoryId)
+    ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Event] 
+        ADD CategoryId int NULL 
+            CONSTRAINT {objectQualifier}FK_Engage_EventCategory_Engage_Event FOREIGN KEY (CategoryId) REFERENCES {databaseOwner}[{objectQualifier}Engage_EventCategory] (CategoryId)
 
-	INSERT INTO {databaseOwner}{objectQualifier}Engage_EventCategory (Name, PortalId, CreatedBy, RevisingUser)
-	SELECT '', PortalId, -1, -1
-	FROM {databaseOwner}[{objectQualifier}Engage_Event]
-	GROUP BY PortalId
+    INSERT INTO {databaseOwner}{objectQualifier}Engage_EventCategory (Name, PortalId, CreatedBy, RevisingUser)
+    SELECT '', PortalId, -1, -1
+    FROM {databaseOwner}[{objectQualifier}Engage_Event]
+    GROUP BY PortalId
 
-	EXEC sp_executesql N'UPDATE {databaseOwner}[{objectQualifier}Engage_Event]
-						 SET CategoryId = c.CategoryId
-					     FROM {databaseOwner}[{objectQualifier}Engage_Event] e
-						 JOIN {databaseOwner}[{objectQualifier}Engage_EventCategory] c ON (e.PortalId = c.PortalId)'
+    EXEC sp_executesql N'UPDATE {databaseOwner}[{objectQualifier}Engage_Event]
+                         SET CategoryId = c.CategoryId
+                         FROM {databaseOwner}[{objectQualifier}Engage_Event] e
+                         JOIN {databaseOwner}[{objectQualifier}Engage_EventCategory] c ON (e.PortalId = c.PortalId)'
 
-	ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Event] 
-		ALTER COLUMN CategoryId int NOT NULL
+    ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Event] 
+        ALTER COLUMN CategoryId int NOT NULL
 END
 GO
 
@@ -202,9 +202,9 @@ DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategory
 GO
 CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategory (@CategoryId int)
 AS
-	SELECT CategoryId, Name
-	FROM {databaseOwner}{objectQualifier}Engage_EventCategory
-	WHERE CategoryId = @CategoryId
+    SELECT CategoryId, Name
+    FROM {databaseOwner}{objectQualifier}Engage_EventCategory
+    WHERE CategoryId = @CategoryId
 GO
 
 IF OBJECT_ID(N'{databaseOwner}{objectQualifier}Engage_spDeleteEventCategory', N'P') IS NOT NULL
@@ -212,11 +212,11 @@ DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spDeleteEventCategory
 GO
 CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spDeleteEventCategory (@CategoryId int)
 AS
-	DELETE {databaseOwner}[{objectQualifier}Engage_Event] 
-	WHERE CategoryId = @CategoryId
+    DELETE {databaseOwner}[{objectQualifier}Engage_Event] 
+    WHERE CategoryId = @CategoryId
 
-	DELETE {databaseOwner}{objectQualifier}Engage_EventCategory
-	WHERE CategoryId = @CategoryId
+    DELETE {databaseOwner}{objectQualifier}Engage_EventCategory
+    WHERE CategoryId = @CategoryId
 GO
 
 IF OBJECT_ID(N'{databaseOwner}{objectQualifier}Engage_spInsertEventCategory', N'P') IS NOT NULL
@@ -224,10 +224,10 @@ DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spInsertEventCategory
 GO
 CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spInsertEventCategory (@PortalId int, @Name nvarchar(250), @CreatedBy int)
 AS
-	INSERT INTO {databaseOwner}{objectQualifier}Engage_EventCategory (PortalId, Name, CreatedBy, RevisingUser)
-	VALUES (@PortalId, @Name, @CreatedBy, @CreatedBy)
-	
-	SELECT SCOPE_IDENTITY()  
+    INSERT INTO {databaseOwner}{objectQualifier}Engage_EventCategory (PortalId, Name, CreatedBy, RevisingUser)
+    VALUES (@PortalId, @Name, @CreatedBy, @CreatedBy)
+    
+    SELECT SCOPE_IDENTITY()  
 GO
 
 IF OBJECT_ID(N'{databaseOwner}{objectQualifier}Engage_spUpdateEventCategory', N'P') IS NOT NULL
@@ -235,11 +235,11 @@ DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spUpdateEventCategory
 GO
 CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spUpdateEventCategory (@CategoryId int, @Name nvarchar(250), @RevisingUser int)
 AS
-	UPDATE {databaseOwner}{objectQualifier}Engage_EventCategory 
-	SET Name = @Name, 
-		RevisingUser = @RevisingUser,
-		RevisionDate = GETDATE()
-	WHERE CategoryId = @CategoryId
+    UPDATE {databaseOwner}{objectQualifier}Engage_EventCategory 
+    SET Name = @Name, 
+        RevisingUser = @RevisingUser,
+        RevisionDate = GETDATE()
+    WHERE CategoryId = @CategoryId
 GO
 
 IF OBJECT_ID(N'{databaseOwner}{objectQualifier}Engage_spGetEventCategories', N'P') IS NOT NULL
@@ -247,10 +247,10 @@ DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategories
 GO
 CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategories (@PortalId int)
 AS
-	SELECT CategoryId, Name
-	FROM {databaseOwner}{objectQualifier}Engage_EventCategory
-	WHERE PortalId = @PortalId
-	ORDER BY Name
+    SELECT CategoryId, Name
+    FROM {databaseOwner}{objectQualifier}Engage_EventCategory
+    WHERE PortalId = @PortalId
+    ORDER BY Name
 GO
 
 
@@ -287,21 +287,21 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spInsertEvent]
 )
 AS
 BEGIN
-	
-	INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event] 
-	(
-		[PortalId], [ModuleId], [Title], [Overview], [Description], [EventStart], [EventEnd], [TimeZoneOffset], [Organizer], [OrganizerEmail],
-		[Location], [LocationUrl], [InvitationUrl], [RecapUrl], [RecurrenceRule], [AllowRegistrations], [IsFeatured], [CreatedBy], 
-		[RevisingUser], [FinalRecurringEndDate], [IsDeleted], [RecurrenceParentId], [Capacity], [InDaylightTime], [CapacityMetMessage], [CategoryId]
-	)
-	VALUES
-	(
-		@PortalId, @ModuleId, @Title, @Overview, @Description, @EventStart, @EventEnd, @TimeZoneOffset, @Organizer, @OrganizerEmail,
-		@Location, @LocationUrl, @InvitationUrl,  @RecapUrl, @RecurrenceRule, @AllowRegistrations, @IsFeatured, @CreatedBy, 
-		@CreatedBy, @FinalRecurringEndDate, @IsDeleted, @RecurrenceParentId, @Capacity, @InDaylightTime, @CapacityMetMessage, @CategoryId
-	)
+    
+    INSERT INTO {databaseOwner}[{objectQualifier}Engage_Event] 
+    (
+        [PortalId], [ModuleId], [Title], [Overview], [Description], [EventStart], [EventEnd], [TimeZoneOffset], [Organizer], [OrganizerEmail],
+        [Location], [LocationUrl], [InvitationUrl], [RecapUrl], [RecurrenceRule], [AllowRegistrations], [IsFeatured], [CreatedBy], 
+        [RevisingUser], [FinalRecurringEndDate], [IsDeleted], [RecurrenceParentId], [Capacity], [InDaylightTime], [CapacityMetMessage], [CategoryId]
+    )
+    VALUES
+    (
+        @PortalId, @ModuleId, @Title, @Overview, @Description, @EventStart, @EventEnd, @TimeZoneOffset, @Organizer, @OrganizerEmail,
+        @Location, @LocationUrl, @InvitationUrl,  @RecapUrl, @RecurrenceRule, @AllowRegistrations, @IsFeatured, @CreatedBy, 
+        @CreatedBy, @FinalRecurringEndDate, @IsDeleted, @RecurrenceParentId, @Capacity, @InDaylightTime, @CapacityMetMessage, @CategoryId
+    )
 
-	SELECT SCOPE_IDENTITY()
+    SELECT SCOPE_IDENTITY()
 
 END
 GO
@@ -340,32 +340,32 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spUpdateEvent]
 AS
 BEGIN
 
-	UPDATE {databaseOwner}[{objectQualifier}Engage_Event] 
-	SET [Title] = @Title, 
-		[Overview] = @Overview, 
-		[Description] = @Description,
-		[EventStart] = @EventStart, 
-		[EventEnd] = @EventEnd, 
-		[TimeZoneOffset] = @TimeZoneOffset,
-		[Organizer] = @Organizer, 
-		[OrganizerEmail] = @OrganizerEmail,
-		[Location] = @Location, 
-		[LocationUrl] = @LocationUrl, 
-		[InvitationUrl] = @InvitationUrl, 
-		[RecapUrl] = @RecapUrl, 
-		[RecurrenceRule] = @RecurrenceRule,
-		[RecurrenceParentId] = @RecurrenceParentId, 
-		[AllowRegistrations] = @AllowRegistrations, 
-		[Canceled]  = @Canceled,
-		[IsFeatured] = @IsFeatured,
-		[RevisingUser] = @RevisingUser, 
-		[RevisionDate] = GETDATE(),
-		[FinalRecurringEndDate] = @FinalRecurringEndDate,
-		[Capacity] = @Capacity,
-		[InDaylightTime] = @InDaylightTime,
-		[CapacityMetMessage] = @CapacityMetMessage,
-		[IsDeleted] = @IsDeleted,
+    UPDATE {databaseOwner}[{objectQualifier}Engage_Event] 
+    SET [Title] = @Title, 
+        [Overview] = @Overview, 
+        [Description] = @Description,
+        [EventStart] = @EventStart, 
+        [EventEnd] = @EventEnd, 
+        [TimeZoneOffset] = @TimeZoneOffset,
+        [Organizer] = @Organizer, 
+        [OrganizerEmail] = @OrganizerEmail,
+        [Location] = @Location, 
+        [LocationUrl] = @LocationUrl, 
+        [InvitationUrl] = @InvitationUrl, 
+        [RecapUrl] = @RecapUrl, 
+        [RecurrenceRule] = @RecurrenceRule,
+        [RecurrenceParentId] = @RecurrenceParentId, 
+        [AllowRegistrations] = @AllowRegistrations, 
+        [Canceled]  = @Canceled,
+        [IsFeatured] = @IsFeatured,
+        [RevisingUser] = @RevisingUser, 
+        [RevisionDate] = GETDATE(),
+        [FinalRecurringEndDate] = @FinalRecurringEndDate,
+        [Capacity] = @Capacity,
+        [InDaylightTime] = @InDaylightTime,
+        [CapacityMetMessage] = @CapacityMetMessage,
+        [IsDeleted] = @IsDeleted,
         [CategoryId] = @CategoryId
-	WHERE EventId = @EventId
+    WHERE EventId = @EventId
 END
 GO
