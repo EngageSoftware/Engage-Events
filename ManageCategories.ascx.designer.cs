@@ -13,13 +13,13 @@ namespace Engage.Dnn.Events {
     public partial class ManageCategories {
         
         /// <summary>
-        /// UpdateSuccessModuleMessage control.
+        /// SuccessModuleMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Engage.Dnn.Events.Controls.ModuleMessage UpdateSuccessModuleMessage;
+        protected global::Engage.Dnn.Events.Controls.ModuleMessage SuccessModuleMessage;
         
         /// <summary>
         /// CategoriesGrid control.

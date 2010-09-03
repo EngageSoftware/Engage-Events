@@ -17,6 +17,7 @@ namespace Engage.Dnn.Events
     using System.Web.UI.WebControls;
 
     using DotNetNuke.Services.Exceptions;
+    using DotNetNuke.UI.Utilities;
 
     using Engage.Events;
 
@@ -36,7 +37,9 @@ namespace Engage.Dnn.Events
             base.OnInit(e);
 
             this.Load += this.Page_Load;
+            this.CategoriesGrid.ItemCreated += CategoriesGrid_ItemCreated;
             this.CategoriesGrid.NeedDataSource += this.CategoriesGrid_NeedDataSource;
+            this.CategoriesGrid.InsertCommand += this.CategoriesGrid_InsertCommand;
             this.CategoriesGrid.UpdateCommand += this.CategoriesGrid_UpdateCommand;
         }
 
@@ -60,6 +63,34 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Handles the <see cref="RadGrid.ItemCreated"/> event of the <see cref="CategoriesGrid"/> control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="GridItemEventArgs"/> instance containing the event data.</param>
+        private static void CategoriesGrid_ItemCreated(object sender, GridItemEventArgs e)
+        {
+            var commandItem = e.Item as GridCommandItem;
+            if (commandItem != null)
+            {
+                // control names from http://www.telerik.com/help/aspnet-ajax/grddefaultbehavior.html
+                commandItem.FindControl("RefreshButton").Visible = false;
+                commandItem.FindControl("RebindGridButton").Visible = false;
+            }
+            else if (e.Item.IsInEditMode)
+            {
+                var editableItem = e.Item as GridEditableItem;
+                if (editableItem != null)
+                {
+                    const int EnterKey = 13;
+                    ClientAPI.RegisterKeyCapture(
+                        editableItem["Name"].Controls.OfType<TextBox>().Single(), 
+                        editableItem["Buttons"].Controls[0], 
+                        EnterKey);
+                }
+            }
+        }
+
+        /// <summary>
         /// Handles the <see cref="RadGrid.NeedDataSource"/> event of the <see cref="CategoriesGrid"/> control.
         /// </summary>
         /// <param name="source">The source of the event.</param>
@@ -67,6 +98,28 @@ namespace Engage.Dnn.Events
         private void CategoriesGrid_NeedDataSource(object source, GridNeedDataSourceEventArgs e)
         {
             this.CategoriesGrid.DataSource = CategoryCollection.Load(this.PortalId);
+        }
+
+        /// <summary>
+        /// Handles the <see cref="RadGrid.InsertCommand"/> event of the <see cref="CategoriesGrid"/> control.
+        /// </summary>
+        /// <param name="source">The source of the event.</param>
+        /// <param name="e">The <see cref="GridCommandEventArgs"/> instance containing the event data.</param>
+        private void CategoriesGrid_InsertCommand(object source, GridCommandEventArgs e)
+        {
+            if (!this.Page.IsValid)
+            {
+                e.Canceled = true;
+                return;
+            }
+
+            var newValues = new Dictionary<string, string>(1);
+            e.Item.OwnerTableView.ExtractValuesFromItem(newValues, (GridEditableItem)e.Item);
+            var category = Category.Create(this.PortalId, newValues["Name"]);
+            category.Save(this.UserId);
+
+            this.SuccessModuleMessage.Visible = true;
+            this.SuccessModuleMessage.Text = this.Localize("CategoryInsertSuccess");
         }
 
         /// <summary>
@@ -95,7 +148,8 @@ namespace Engage.Dnn.Events
             category.Name = newValues["Name"];
             category.Save(this.UserId);
 
-            this.UpdateSuccessModuleMessage.Visible = true;
+            this.SuccessModuleMessage.Visible = true;
+            this.SuccessModuleMessage.Text = this.Localize("CategoryUpdateSuccess");
         }
 
         /// <summary>
@@ -109,16 +163,26 @@ namespace Engage.Dnn.Events
             {
                 if (!this.IsPostBack)
                 {
-                    var categoryNameColumn = (GridTemplateColumn)this.CategoriesGrid.Columns.FindByUniqueName("Name");
-                    categoryNameColumn.HeaderText = this.Localize("Name.Header");
+                    this.LocalizeGrid();
                 }
 
-                this.UpdateSuccessModuleMessage.Visible = false;
+                this.SuccessModuleMessage.Visible = false;
             }
             catch (Exception exc)
             {
                 Exceptions.ProcessModuleLoadException(this, exc);
             }
+        }
+
+        /// <summary>
+        /// Localizes the <see cref="CategoriesGrid"/>.
+        /// </summary>
+        private void LocalizeGrid()
+        {
+            this.CategoriesGrid.MasterTableView.CommandItemSettings.AddNewRecordText = this.Localize("AddCategory.Text");
+
+            var categoryNameColumn = (GridTemplateColumn)this.CategoriesGrid.Columns.FindByUniqueName("Name");
+            categoryNameColumn.HeaderText = this.Localize("Name.Header");
         }
     }
 }

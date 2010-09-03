@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddCategory.Text" xml:space="preserve">
+    <value>Add new category</value>
+  </data>
+  <data name="CategoryInsertSuccess.Text" xml:space="preserve">
+    <value>The new category has been successfully added!</value>
+  </data>
   <data name="CategoryUpdateSuccess.Text" xml:space="preserve">
     <value>The category has been successfully renamed!</value>
   </data>

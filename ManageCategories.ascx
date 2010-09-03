@@ -3,18 +3,18 @@
 <%@ Register TagPrefix="engage" TagName="ModuleMessage" Src="Controls/ModuleMessage.ascx" %>
 <%@ Register TagPrefix="engage" Namespace="Engage.Controls" Assembly="Engage.Framework" %>
 
-<engage:ModuleMessage runat="server" ID="UpdateSuccessModuleMessage" MessageType="Success" TextResourceKey="CategoryUpdateSuccess" CssClass="CategorySaveSuccessMessage"/>
+<engage:ModuleMessage runat="server" ID="SuccessModuleMessage" MessageType="Success" CssClass="CategorySaveSuccessMessage"/>
 
 <telerik:RadGrid ID="CategoriesGrid" runat="server" AutoGenerateColumns="false" AllowMultiRowEdit="true" ValidationSettings-ValidationGroup="ManageCategories">
-    <MasterTableView DataKeyNames="Id" EditMode="InPlace">
+    <MasterTableView DataKeyNames="Id" EditMode="InPlace" CommandItemDisplay="Top">
         <Columns>
-            <telerik:GridEditCommandColumn />
+            <telerik:GridEditCommandColumn UniqueName="Buttons" ItemStyle-CssClass="buttons-col" />
             <telerik:GridTemplateColumn UniqueName="Name" ItemStyle-CssClass="name-col">
                 <ItemTemplate>
                     <asp:Label runat="server" Text='<%# string.IsNullOrEmpty((string)Eval("Name")) ? this.GetDefaultCategoryName() : Eval("Name") %>' />
                 </ItemTemplate>
                 <EditItemTemplate>
-                    <asp:TextBox ID="NameTextBox" runat="server" Text='<%# Bind("Name") %>' />
+                    <asp:TextBox ID="NameTextBox" runat="server" Text='<%# Bind("Name") %>' MaxLength="250" />
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="NameTextBox" ValidationGroup="ManageCategories" 
                         ResourceKey="NameRequired" ForeColor="" CssClass="NormalRed" Display="None" />
                     <asp:CustomValidator runat="server" ControlToValidate="NameTextBox" ValidationGroup="ManageCategories"
