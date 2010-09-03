@@ -65,6 +65,13 @@ namespace Engage.Events
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the number of events in this category.
+        /// </summary>
+        /// <value>The number of events in this category.</value>
+        [XmlIgnore]
+        public int EventCount { get; set; }
+
+        /// <summary>
         /// Loads the specified category.
         /// </summary>
         /// <param name="id">The id of a category to load.</param>
@@ -201,16 +208,17 @@ namespace Engage.Events
         }
 
         /// <summary>
-        /// Fills an Event with the data in the specified <paramref name="eventRecord"/>.
+        /// Fills a <see cref="Category"/> with the data in the specified <paramref name="categoryRecord"/>.
         /// </summary>
-        /// <param name="eventRecord">A pre-initialized data record that represents an Event instance.</param>
-        /// <returns>An instantiated Event object.</returns>
-        internal static Category Fill(IDataRecord eventRecord)
+        /// <param name="categoryRecord">A pre-initialized data record that represents a Category instance.</param>
+        /// <returns>An instantiated Category object.</returns>
+        internal static Category Fill(IDataRecord categoryRecord)
         {
             return new Category 
                 {
-                    Id = (int)eventRecord["CategoryId"],
-                    Name = eventRecord["Name"].ToString()
+                    Id = (int)categoryRecord["CategoryId"],
+                    Name = categoryRecord["Name"].ToString(),
+                    EventCount = (int)categoryRecord["EventCount"]
                 };
         }
 
@@ -218,7 +226,7 @@ namespace Engage.Events
         /// Inserts this category.
         /// </summary>
         /// <param name="revisingUser">The user who is inserting this category.</param>
-        /// <exception cref="DBException">If an error occurs while going to the database to insert the event</exception>
+        /// <exception cref="DBException">If an error occurs while going to the database to insert the category</exception>
         private void Insert(int revisingUser)
         {
             IDataProvider dp = DataProvider.Instance;
@@ -242,7 +250,7 @@ namespace Engage.Events
         /// Updates this category.
         /// </summary>
         /// <param name="revisingUser">The user responsible for updating this category.</param>
-        /// <exception cref="DBException">If an error occurs while going to the database to update the event</exception>
+        /// <exception cref="DBException">If an error occurs while going to the database to update the category</exception>
         private void Update(int revisingUser)
         {
             IDataProvider dp = DataProvider.Instance;
