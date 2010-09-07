@@ -126,11 +126,20 @@
   <data name="Home.Text" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="Manage Categories.Text" xml:space="preserve">
+    <value>Manage Categories</value>
+  </data>
   <data name="Manage Events.Text" xml:space="preserve">
     <value>Manage Events</value>
   </data>
+  <data name="Manage.Text" xml:space="preserve">
+    <value>Manage</value>
+  </data>
+  <data name="Module Settings.Text" xml:space="preserve">
+    <value>Module Settings</value>
+  </data>
   <data name="Responses.Text" xml:space="preserve">
-    <value>Responses</value>
+    <value>Manage Responses</value>
   </data>
   <data name="Settings.Text" xml:space="preserve">
     <value>Settings</value>

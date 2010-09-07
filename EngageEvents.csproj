@@ -413,6 +413,15 @@
     <Content Include="Licenses\EULA-Trial.htm" />
     <Content Include="Licenses\EULA-Trial.txt" />
     <Content Include="MainContainer.ascx" />
+    <Content Include="Menu\add-icon.png" />
+    <Content Include="Menu\Default.gif" />
+    <Content Include="Menu\home-icon.png" />
+    <Content Include="Menu\manage-icon.png" />
+    <Content Include="Menu\radmenu-bg.png" />
+    <Content Include="Menu\radmenu-hover_active-bg.png" />
+    <Content Include="Menu\rmSprite.png" />
+    <Content Include="Menu\rmVSprite.png" />
+    <Content Include="Menu\settings-icon.png" />
     <Content Include="References\Framework\Engage.Dnn.Framework.dll" />
     <Content Include="References\Framework\Engage.Events.dll" />
     <Content Include="References\Framework\Engage.Framework.dll" />

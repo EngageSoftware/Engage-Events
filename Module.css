@@ -139,7 +139,7 @@
 
 /*================ New Templates Picker==================*/
 
-.events-choose-display-wrap{width:100%;height:auto;}
+.events-choose-display-wrap{width:100%;height:auto;clear:both;}
 	.GlobalNavigation{text-align:left;}
 	.cd-type{width:100%;padding:10px 0;}
 		.cd-type h4{font-size:14px;color:#333;}
@@ -453,3 +453,97 @@ a.PopupTriggerLink
 	visibility: hidden;
 }
 /*========================= End Fancy Box ===============================*/
+
+/*========================= RadMenu =====================================*/
+
+.RadMenu_Engage .rmHorizontal 
+{
+    border:1px solid #dddddd;
+    background:url("Menu/radmenu-bg.png") repeat-x;
+    padding: 0 25px !important;
+}
+
+.RadMenu_Engage .rmHorizontal .rmLink 
+{
+    color:#60605f;display:block; padding:6px 9px 6px 44px;margin:0 5px 0 0;border-right: 1px solid transparent; border-left:1px solid transparent;
+}
+
+.RadMenu_Engage .rmHorizontal .rmLink:hover 
+{
+    color:#d4730c;
+    cursor:pointer;
+    display:block; 
+    height:100%;
+    text-decoration:none;
+    border-right: 1px solid #aaa9a9; 
+    border-left:1px solid #aaa9a9; 
+    background-color:#dcdbdb;
+}
+
+.RadMenu_Engage .rmHorizontal .rmFocused
+{
+    color:#60605f;
+    cursor:pointer;
+    display:block; 
+    height:100%;
+    text-decoration:none;
+    border-right: 1px solid #aaa9a9; 
+    border-left:1px solid #aaa9a9; 
+    background-color:#dcdbdb;
+}
+
+.RadMenu_Engage .RAD-home 
+{
+    background:url("Menu/home-icon.png") no-repeat 12px 2px;
+}
+
+.RadMenu_Engage .RAD-home:hover 
+{
+    background-position:12px -23px;
+}
+
+.RadMenu_Engage .RAD-settings 
+{
+    background:url("Menu/settings-icon.png") no-repeat 10px 2px;
+}
+
+.RadMenu_Engage .RAD-settings:hover 
+{
+    background-position:10px -27px;
+}
+
+.RadMenu_Engage .RAD-add 
+{
+    background:url("Menu/add-icon.png") no-repeat 8px 3px;
+}
+    
+.RadMenu_Engage .RAD-add:hover 
+{
+    background-position:8px -23px;
+}
+
+.RadMenu_Engage .RAD-manage 
+{
+    background:url("Menu/manage-icon.png") no-repeat 9px 3px;
+}
+
+.RadMenu_Engage .RAD-manage:hover 
+{
+    background-position:9px -23px;
+}
+    
+.RadMenu_Engage .rmVertical 
+{
+    background:#f8f8f8; 
+    border-right:1px solid #efefef; 
+    border-bottom:1px solid #efefef; 
+    border-left:1px solid #efefef;
+}
+
+.RadMenu_Engage .rmVertical .rmLink .rmText 
+{
+    padding: 10px 0;
+}
+
+
+/*========================= End of RadMenu ==============================*/

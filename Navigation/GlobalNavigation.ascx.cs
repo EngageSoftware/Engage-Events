@@ -56,8 +56,11 @@ namespace Engage.Dnn.Events.Navigation
         {
             try
             {
+                ////this.BasePage.AddStyleSheet("Engage-Global-Nav", this.ResolveUrl("EngageSkin/Menu.Engage.css"));
                 this.SetupLinks();
                 this.SetVisibility();
+                this.LocalizeMenu();
+                this.SetCurrentlySelectedMenu();
                 ////this.SetDisabledImages();
             }
             catch (Exception exc)
@@ -66,17 +69,58 @@ namespace Engage.Dnn.Events.Navigation
             }
         }
 
+        private void SetCurrentlySelectedMenu()
+        {
+            var controlKey = this.GetCurrentControlKey();
+            var currentItem = NavigationMenu.FindItemByValue(controlKey);
+            if (controlKey != "" && currentItem != null)
+            {
+                //Highlight the current item and his parents
+                currentItem.HighlightPath();
+            }
+            else
+            {
+                NavigationMenu.Items[0].HighlightPath();
+            }
+        }
+
+        private void LocalizeMenu()
+        {
+            this.HomeItem.Text = this.Localize("Home");
+            this.AddEventItem.Text = this.Localize("Add Event");
+            this.ManageItem.Text = this.Localize("Manage");
+            this.ManageEventsItem.Text = this.Localize("Manage Events");
+            this.ManageResponsesItem.Text = this.Localize("Responses");
+            this.ManageCategoriesItem.Text = this.Localize("Manage Categories");
+            this.SettingsItem.Text = this.Localize("Settings");
+            this.ModuleSettingsItem.Text = this.Localize("Module Settings");
+            this.ChooseDisplayItem.Text = this.Localize("Choose Display");
+        }
+
         /// <summary>
         /// Sets up the URLs for each of the links.
         /// </summary>
         private void SetupLinks()
         {
-            this.HomeLink.NavigateUrl = Globals.NavigateURL();
-            this.SettingsLink.NavigateUrl = this.EditUrl("ModuleId", this.ModuleId.ToString(CultureInfo.InvariantCulture), "Module");
-            this.ChooseDisplayLink.NavigateUrl = this.BuildLinkUrl(this.ModuleId, "ChooseDisplay");
-            this.AddAnEventLink.NavigateUrl = this.BuildLinkUrl(this.ModuleId, "EventEdit");
-            this.ResponsesLink.NavigateUrl = this.BuildLinkUrl(this.ModuleId, "ResponseSummary");
-            this.ManageEventsLink.NavigateUrl = this.BuildLinkUrl(this.ModuleId, "EventListingAdmin");
+            this.HomeItem.NavigateUrl = Globals.NavigateURL();
+
+            this.ModuleSettingsItem.NavigateUrl = this.EditUrl("ModuleId", this.ModuleId.ToString(CultureInfo.InvariantCulture), "Module");
+
+            this.ChooseDisplayItem.Value = "ChooseDisplay";
+            this.ChooseDisplayItem.NavigateUrl = this.BuildLinkUrl(this.ModuleId, this.ChooseDisplayItem.Value);
+
+            this.AddEventItem.Value = "EventEdit";
+            this.AddEventItem.NavigateUrl = this.BuildLinkUrl(this.ModuleId, this.AddEventItem.Value);
+
+            this.ManageResponsesItem.Value = "ResponseSummary";
+            this.ManageResponsesItem.NavigateUrl = this.BuildLinkUrl(this.ModuleId, this.ManageResponsesItem.Value);
+
+            this.ManageEventsItem.Value = "EventListingAdmin";
+            this.ManageEventsItem.NavigateUrl = this.BuildLinkUrl(this.ModuleId, this.ManageEventsItem.Value);
+
+            this.ManageCategoriesItem.Value = "ManageCategories";
+            this.ManageCategoriesItem.NavigateUrl = this.BuildLinkUrl(this.ModuleId, this.ManageCategoriesItem.Value);
+            
         }
 
         /// <summary>
@@ -85,7 +129,7 @@ namespace Engage.Dnn.Events.Navigation
         private void SetVisibility()
         {
             this.Visible = this.IsAdmin;
-            this.SettingsLink.Visible = TabPermissionController.HasTabPermission("EDIT");
+            this.ModuleSettingsItem.Visible = TabPermissionController.HasTabPermission("EDIT");
         }
     }
 }

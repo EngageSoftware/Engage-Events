@@ -1,10 +1,24 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.Navigation.GlobalNavigation" Codebehind="GlobalNavigation.ascx.cs" %>
+<%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 
-<div id="divAdminButtons" class="AdminButtons">
-    <asp:HyperLink ID="HomeLink" runat="server" CausesValidation="false" ImageUrl="~/DesktopModules/EngageEvents/Images/home.gif" ResourceKey="Home"/>
-    <asp:HyperLink ID="SettingsLink" runat="server" CausesValidation="false" ImageUrl="~/DesktopModules/EngageEvents/Images/settings.gif" ResourceKey="Settings"/>
-    <asp:HyperLink ID="ChooseDisplayLink" runat="server" CausesValidation="false" ImageUrl="~/DesktopModules/EngageEvents/Images/choose_display.gif" ResourceKey="Choose Display"/>
-    <asp:HyperLink ID="ManageEventsLink" runat="server" CausesValidation="false" ImageUrl="~/DesktopModules/EngageEvents/Images/manage_events.gif" ResourceKey="Manage Events"/>
-    <asp:HyperLink ID="AddAnEventLink" runat="server" CausesValidation="false" ImageUrl="~/DesktopModules/EngageEvents/Images/add_event.gif" ResourceKey="Add Event"/>
-    <asp:HyperLink ID="ResponsesLink" runat="server" CausesValidation="false" ImageUrl="~/DesktopModules/EngageEvents/Images/responses.gif" ResourceKey="Responses"/>
+<div class="wrapper">
+<telerik:RadMenu ID="NavigationMenu" runat="server" EnableEmbeddedSkins="false" Skin="Engage" EnableSelection="true">
+  <Items>
+     <telerik:RadMenuItem ID="HomeItem" runat="server" CssClass="RAD-home" Value="H" />
+     <telerik:RadMenuItem ID="AddEventItem" runat="server" CssClass="RAD-add" Value="A" />
+     <telerik:RadMenuITem ID="ManageItem" runat="server" CssClass="RAD-manage" Value="M">
+       <Items>
+         <telerik:RadMenuItem ID="ManageEventsItem" runat="server"/>
+         <telerik:RadMenuItem ID="ManageResponsesItem" runat="server"/>
+         <telerik:RadMenuItem ID="ManageCategoriesItem" runat="server"/>
+       </Items>
+     </telerik:RadMenuITem>
+     <telerik:RadMenuItem ID="SettingsItem" runat="server" CssClass="RAD-settings" Text="Settings" Value="S">
+       <Items>
+         <telerik:RadMenuItem ID="ModuleSettingsItem" runat="server"/>
+         <telerik:RadMenuItem ID="ChooseDisplayItem" runat="server"/>
+       </Items>
+     </telerik:RadMenuItem>
+  </Items>
+</telerik:RadMenu>
 </div>
