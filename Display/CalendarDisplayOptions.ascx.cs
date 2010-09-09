@@ -12,50 +12,15 @@
 namespace Engage.Dnn.Events
 {
     using System;
-    using System.Globalization;
     using System.Web.UI.WebControls;
-    using DotNetNuke.Entities.Modules;
+
     using DotNetNuke.Services.Exceptions;
 
     /// <summary>
     /// The settings page for the calendar display mode.
     /// </summary>
-    public partial class CalendarDisplayOptions : ModuleSettingsBase
+    public partial class CalendarDisplayOptions : SettingsBase
     {
-        /// <summary>
-        /// Gets or sets which Skin to use for the calendar display.
-        /// </summary>
-        /// <value>The Skin to use for the calendar display</value>
-        internal TelerikSkin SkinOption
-        {
-            get
-            {
-                return Dnn.Utility.GetEnumSetting(this.Settings, Setting.SkinSelection.PropertyName, TelerikSkin.Default);
-            }
-
-            set
-            {
-                new ModuleController().UpdateTabModuleSetting(this.TabModuleId, Setting.SkinSelection.PropertyName, value.ToString());
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the number of events to display on a single day in the calendar's month view.
-        /// </summary>
-        /// <value>The number of events to display on a single day in the calendar's month view</value>
-        internal int EventsPerDay
-        {
-            get
-            {
-                return Dnn.Utility.GetIntSetting(this.Settings, Setting.EventsPerDay.PropertyName, 3);
-            }
-
-            set
-            {
-                new ModuleController().UpdateTabModuleSetting(this.TabModuleId, Setting.EventsPerDay.PropertyName, value.ToString(CultureInfo.InvariantCulture));
-            }
-        }
-
         /// <summary>
         /// Sets up this control.
         /// </summary>
@@ -66,14 +31,15 @@ namespace Engage.Dnn.Events
                 this.SkinDropDownList.DataSource = Enum.GetNames(typeof(TelerikSkin));
                 this.SkinDropDownList.DataBind();
                 Dnn.Utility.LocalizeListControl(this.SkinDropDownList, this.LocalResourceFile);
-                
-                ListItem li = this.SkinDropDownList.Items.FindByValue(this.SkinOption.ToString());
+
+                var telerikSkin = Dnn.Events.ModuleSettings.SkinSelection.GetValueAsEnumFor<TelerikSkin>(this).Value;
+                ListItem li = this.SkinDropDownList.Items.FindByValue(telerikSkin.ToString());
                 if (li != null)
                 {
                     li.Selected = true;
                 }
 
-                this.EventsPerDayTextBox.Value = this.EventsPerDay;
+                this.EventsPerDayTextBox.Value = Dnn.Events.ModuleSettings.EventsPerDay.GetValueAsInt32For(this);
             }
             catch (Exception exc)
             {
@@ -90,11 +56,11 @@ namespace Engage.Dnn.Events
 
             if (this.Page.IsValid)
             {
-                this.SkinOption = (TelerikSkin)Enum.Parse(typeof(TelerikSkin), this.SkinDropDownList.SelectedValue);
+                Dnn.Events.ModuleSettings.SkinSelection.Set(this, this.SkinDropDownList.SelectedValue);
 
                 if (this.EventsPerDayTextBox.Value.HasValue)
                 {
-                    this.EventsPerDay = (int)this.EventsPerDayTextBox.Value.Value;
+                    Dnn.Events.ModuleSettings.EventsPerDay.Set(this, (int)this.EventsPerDayTextBox.Value.Value);
                 }
             }
         }

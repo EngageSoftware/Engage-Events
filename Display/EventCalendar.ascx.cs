@@ -18,8 +18,6 @@ namespace Engage.Dnn.Events.Display
     using DotNetNuke.Services.Localization;
     using Engage.Events;
     using Telerik.Web.UI;
-    using Setting = Events.Setting;
-    using Utility = Dnn.Utility;
 
     /// <summary>
     /// Control to display the events calendar view
@@ -193,10 +191,10 @@ namespace Engage.Dnn.Events.Display
             this.EventsCalendarDisplay.DataSubjectField = "Title";
             this.EventsCalendarDisplay.DataBind();
 
-            TelerikSkin skinSetting = Utility.GetEnumSetting(this.Settings, Setting.SkinSelection.PropertyName, TelerikSkin.Default);
+            var skinSetting = ModuleSettings.SkinSelection.GetValueAsEnumFor<TelerikSkin>(this).Value;
             this.EventsCalendarDisplay.Skin = this.EventsCalendarToolTipManager.Skin = skinSetting.ToString();
 
-            this.EventsCalendarDisplay.MonthView.VisibleAppointmentsPerDay = Utility.GetIntSetting(this.Settings, Setting.EventsPerDay.PropertyName, 3);
+            this.EventsCalendarDisplay.MonthView.VisibleAppointmentsPerDay = ModuleSettings.EventsPerDay.GetValueAsInt32For(this).Value;
 
             if (this.ToolTipEventId.HasValue)
             {

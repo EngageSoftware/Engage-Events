@@ -170,7 +170,7 @@ namespace Engage.Dnn.Events
         /// </value>
         protected bool IsFeatured
         {
-            get { return Dnn.Utility.GetBoolSetting(this.Settings, "FeaturedOnly", false); }
+            get { return ModuleSettings.FeaturedOnly.GetValueAsBooleanFor(this).Value; }
         }
 
         /// <summary>
@@ -183,10 +183,9 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                return "CALENDAR".Equals(Dnn.Utility.GetStringSetting(this.Settings, "DisplayType"), StringComparison.OrdinalIgnoreCase)
-                       ||
-                       (Engage.Utility.HasValue(Dnn.Utility.GetStringSetting(this.Settings, "Template"))
-                        && Engage.Utility.HasValue(Dnn.Utility.GetStringSetting(this.Settings, "SingleItemTemplate")));
+                return "CALENDAR".Equals(ModuleSettings.DisplayType.GetValueAsStringFor(this), StringComparison.OrdinalIgnoreCase) ||
+                       (Engage.Utility.HasValue(ModuleSettings.Template.GetValueAsStringFor(this)) &&
+                        Engage.Utility.HasValue(ModuleSettings.SingleItemTemplate.GetValueAsStringFor(this)));
             }
         }
 

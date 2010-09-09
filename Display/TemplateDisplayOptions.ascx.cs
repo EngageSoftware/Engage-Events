@@ -13,9 +13,8 @@ namespace Engage.Dnn.Events.Display
 {
     using System;
     using System.Collections;
-    using System.Globalization;
     using System.Web.UI.WebControls;
-    using DotNetNuke.Entities.Modules;
+
     using DotNetNuke.Services.Exceptions;
     using Engage.Events;
     using Utility = Dnn.Utility;
@@ -23,42 +22,18 @@ namespace Engage.Dnn.Events.Display
     /// <summary>
     /// The settings for a template
     /// </summary>
-    public partial class TemplateDisplayOptions : ModuleSettingsBase
+    public partial class TemplateDisplayOptions : SettingsBase
     {
         /// <summary>
-        /// Gets or sets the <see cref="ListingMode"/> for this listing.
+        /// Gets the number of events to display per page.
         /// </summary>
-        /// <value>The <see cref="ListingMode"/> for this listing</value>
-        internal string DisplayModeOption
-        {
-            get
-            {
-                return Utility.GetStringSetting(this.Settings, "DisplayModeOption", string.Empty);
-            }
-
-            set
-            {
-                ModuleController modules = new ModuleController();
-                modules.UpdateTabModuleSetting(this.TabModuleId, "DisplayModeOption", value.ToString(CultureInfo.InvariantCulture));
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the number of records per page.
-        /// </summary>
-        /// <value>The number of records per page.</value>
+        /// <value>The number of events to display per page.</value>
         internal int RecordsPerPage
         {
             get
             {
-                int recordsPerPage = Utility.GetIntSetting(this.Settings, Framework.Setting.RecordsPerPage.PropertyName, 10);
-                return recordsPerPage > 0 ? recordsPerPage : 10;
-            }
-
-            set
-            {
-                ModuleController modules = new ModuleController();
-                modules.UpdateTabModuleSetting(this.TabModuleId, Framework.Setting.RecordsPerPage.PropertyName, value.ToString(CultureInfo.InvariantCulture));
+                int? recordsPerPage = Dnn.Events.ModuleSettings.RecordsPerPage.GetValueAsInt32For(this);
+                return recordsPerPage.HasValue && recordsPerPage.Value > 0 ? recordsPerPage.Value : Dnn.Events.ModuleSettings.RecordsPerPage.DefaultValue;
             }
         }
 
@@ -71,7 +46,7 @@ namespace Engage.Dnn.Events.Display
             {
                 FillListControl(this.DisplayModeDropDown, Enum.GetNames(typeof(ListingMode)), string.Empty, string.Empty);
                 Utility.LocalizeListControl(this.DisplayModeDropDown, this.LocalResourceFile);
-                SelectListValue(this.DisplayModeDropDown, this.DisplayModeOption);
+                SelectListValue(this.DisplayModeDropDown, Dnn.Events.ModuleSettings.DisplayModeOption.GetValueAsStringFor(this));
 
                 this.RecordsPerPageTextBox.Value = this.RecordsPerPage;
             }
@@ -90,8 +65,8 @@ namespace Engage.Dnn.Events.Display
 
             if (this.Page.IsValid)
             {
-                this.DisplayModeOption = this.DisplayModeDropDown.SelectedValue;
-                this.RecordsPerPage = (int)this.RecordsPerPageTextBox.Value.Value;
+                Dnn.Events.ModuleSettings.DisplayModeOption.Set(this, this.DisplayModeDropDown.SelectedValue);
+                Dnn.Events.ModuleSettings.RecordsPerPage.Set(this, (int)this.RecordsPerPageTextBox.Value.Value);
             }
         }
 

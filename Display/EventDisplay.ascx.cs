@@ -39,7 +39,7 @@ namespace Engage.Dnn.Events.Display
         private void Page_Load(object sender, EventArgs e)
         {
             ModuleBase displayControl;
-            if (Dnn.Utility.GetStringSetting(this.Settings, "DisplayType", "LIST").Equals("LIST", StringComparison.OrdinalIgnoreCase))
+            if (ModuleSettings.DisplayType.GetValueAsStringFor(this).Equals("LIST", StringComparison.OrdinalIgnoreCase))
             {
                 displayControl = (ModuleBase)this.LoadControl("~" + this.DesktopModuleFolderName + "Display/EventListingItem.ascx");
             }

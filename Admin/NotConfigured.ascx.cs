@@ -12,10 +12,9 @@
 namespace Engage.Dnn.Events
 {
     using System;
-    using System.Globalization;
+
     using DotNetNuke.Common;
-    using DotNetNuke.Entities.Modules;
-    using Engage.Events;
+
     using Framework.Templating;
 
     /// <summary>
@@ -40,26 +39,21 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetupDefaultSettings()
         {
-            ModuleController modules = new ModuleController();
-            modules.UpdateTabModuleSetting(this.TabModuleId, "DisplayType", "LIST");
-            modules.UpdateTabModuleSetting(this.TabModuleId, "DisplayModeOption", ListingMode.All.ToString());
-            modules.UpdateTabModuleSetting(this.TabModuleId, "RecordsPerPage", 10.ToString(CultureInfo.InvariantCulture));
+            ModuleSettings.DisplayType.Set(this, ModuleSettings.DisplayType.DefaultValue);
+            ModuleSettings.DisplayModeOption.Set(this, ModuleSettings.DisplayModeOption.DefaultValue);
+            ModuleSettings.RecordsPerPage.Set(this, ModuleSettings.RecordsPerPage.DefaultValue);
 
             // TODO: add error handling if no templates exist?
             TemplateInfo defaultTemplate = this.GetTemplates(TemplateType.List)[0];
-            modules.UpdateTabModuleSetting(this.TabModuleId, "Template", defaultTemplate.FolderName);
+            ModuleSettings.Template.Set(this, defaultTemplate.FolderName);
 
             string singleItemTemplateFolderName;
-            if (defaultTemplate.Settings.ContainsKey("SingleItemTemplate"))
-            {
-                singleItemTemplateFolderName = defaultTemplate.Settings["SingleItemTemplate"];
-            }
-            else
+            if (!defaultTemplate.Settings.TryGetValue("SingleItemTemplate", out singleItemTemplateFolderName))
             {
                 singleItemTemplateFolderName = this.GetTemplates(TemplateType.SingleItem)[0].FolderName;
             }
 
-            modules.UpdateTabModuleSetting(this.TabModuleId, "SingleItemTemplate", singleItemTemplateFolderName);
+            ModuleSettings.SingleItemTemplate.Set(this, singleItemTemplateFolderName);
         }
     }
 }

@@ -206,8 +206,8 @@ namespace Engage.Dnn.Events
         /// </returns>
         private IDictionary<string, Pair<string, string>> GetChangedSettings(ICollection<KeyValuePair<string, string>> settings)
         {
-            IDictionary<string, Pair<string, string>> changedSettings = new Dictionary<string, Pair<string, string>>(settings.Count);
-            foreach (KeyValuePair<string, string> settingPair in settings)
+            var changedSettings = new Dictionary<string, Pair<string, string>>(settings.Count);
+            foreach (var settingPair in settings)
             {
                 // TODO: We need to take default settings into account, in case they haven't changed any of the settings yet
                 string currentSetting = Dnn.Utility.GetStringSetting(this.Settings, settingPair.Key);

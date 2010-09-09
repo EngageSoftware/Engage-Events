@@ -74,10 +74,9 @@ namespace Engage.Dnn.Events
             {
                 try
                 {
-                    var moduleController = new ModuleController();
-                    moduleController.UpdateTabModuleSetting(this.TabModuleId, "FeaturedOnly", this.FeaturedCheckBox.Checked.ToString(CultureInfo.InvariantCulture));
-                    moduleController.UpdateTabModuleSetting(this.TabModuleId, "DetailsDisplayTabId", this.GetSelectedDetailsDisplayTabId().ToString(CultureInfo.InvariantCulture));
-                    moduleController.UpdateTabModuleSetting(this.TabModuleId, "DetailsDisplayModuleId", this.GetSelectedDetailsDisplayModuleId().ToString(CultureInfo.InvariantCulture));
+                    Dnn.Events.ModuleSettings.FeaturedOnly.Set(this, this.FeaturedCheckBox.Checked);
+                    Dnn.Events.ModuleSettings.DetailsDisplayTabId.Set(this, this.GetSelectedDetailsDisplayTabId());
+                    Dnn.Events.ModuleSettings.DetailsDisplayModuleId.Set(this, this.GetSelectedDetailsDisplayModuleId());
 
                     string categories;
                     if (this.AllCategoriesCheckBox.Checked)
@@ -90,7 +89,7 @@ namespace Engage.Dnn.Events
                         categories = string.Join(",", selectedCategoryIds.ToArray());
                     }
 
-                    moduleController.UpdateTabModuleSetting(this.TabModuleId, "Categories", categories);
+                    Dnn.Events.ModuleSettings.Categories.Set(this, categories);
 
                     this.currentSettingsBase.UpdateSettings();
                 }
@@ -207,10 +206,10 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetOptions()
         {
-            this.FeaturedCheckBox.Checked = Dnn.Utility.GetBoolSetting(this.Settings, "FeaturedOnly", false);
-            this.SetDetailsDisplayModuleGridSelection(Dnn.Utility.GetIntSetting(this.Settings, "DetailsDisplayTabId", this.TabId), Dnn.Utility.GetIntSetting(this.Settings, "DetailsDisplayModuleId", this.ModuleId));
+            this.FeaturedCheckBox.Checked = Dnn.Events.ModuleSettings.FeaturedOnly.GetValueAsBooleanFor(this).Value;
+            this.SetDetailsDisplayModuleGridSelection(Dnn.Events.ModuleSettings.DetailsDisplayTabId.GetValueAsInt32For(this) ?? this.TabId, Dnn.Events.ModuleSettings.DetailsDisplayModuleId.GetValueAsInt32For(this) ?? this.ModuleId);
 
-            var categoriesSettingValue = Dnn.Utility.GetStringSetting(this.Settings, "Categories", string.Empty);
+            var categoriesSettingValue = Dnn.Events.ModuleSettings.Categories.GetValueAsStringFor(this);
             if (string.IsNullOrEmpty(categoriesSettingValue))
             {
                 this.AllCategoriesCheckBox.Checked = true;
@@ -285,7 +284,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void DisplaySettingsControl()
         {
-            switch (Dnn.Utility.GetStringSetting(this.Settings, "DisplayType").ToUpperInvariant())
+            switch (Dnn.Events.ModuleSettings.DisplayType.GetValueAsStringFor(this).ToUpperInvariant())
             {
                 case "LIST":
                     this.LoadSettingsControl("Display/TemplateDisplayOptions.ascx");
@@ -319,8 +318,7 @@ namespace Engage.Dnn.Events
         private ModuleSettingsBase CreateSettingsControl(string controlName)
         {
             var settingsControl = (ModuleSettingsBase)this.LoadControl(controlName);
-            var mc = new ModuleController();
-            ModuleInfo mi = mc.GetModule(this.ModuleId, this.TabId);
+            ModuleInfo mi = new ModuleController().GetModule(this.ModuleId, this.TabId);
             settingsControl.ModuleConfiguration = mi;
             settingsControl.ID = Path.GetFileNameWithoutExtension(controlName);
             settingsControl.LoadSettings();

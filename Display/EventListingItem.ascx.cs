@@ -121,7 +121,7 @@ namespace Engage.Dnn.Events.Display
         /// <value>The number of events per page.</value>
         private int RecordsPerPage
         {
-            get { return Dnn.Utility.GetIntSetting(this.Settings, Framework.Setting.RecordsPerPage.PropertyName, 1); }
+            get { return ModuleSettings.RecordsPerPage.GetValueAsInt32For(this).Value; }
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Engage.Dnn.Events.Display
         /// <value>The Tab ID to use when displaying module details.</value>
         private int DetailsTabId
         {
-            get { return Dnn.Utility.GetIntSetting(this.Settings, "DetailsDisplayTabId", this.TabId); }
+            get { return ModuleSettings.DetailsDisplayTabId.GetValueAsInt32For(this) ?? this.TabId; }
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Engage.Dnn.Events.Display
         /// <value>The Module ID to use when displaying module details.</value>
         private int DetailsModuleId
         {
-            get { return Dnn.Utility.GetIntSetting(this.Settings, "DetailsDisplayModuleId", this.ModuleId); }
+            get { return ModuleSettings.DetailsDisplayModuleId.GetValueAsInt32For(this) ?? this.ModuleId; }
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected override void OnInit(EventArgs e)
         {
-            this.listingMode = Dnn.Utility.GetEnumSetting(this.Settings, "DisplayModeOption", ListingMode.All);
+            this.listingMode = ModuleSettings.DisplayModeOption.GetValueAsEnumFor<ListingMode>(this).Value;
             this.SetupTemplateProvider();
             base.OnInit(e);            
         }
@@ -399,7 +399,7 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         private void SetupTemplateProvider()
         {
-            string templateFolderName = this.IsManageEvents ? "Admin/ManageEvents" : Dnn.Utility.GetStringSetting(this.Settings, "Template");
+            string templateFolderName = this.IsManageEvents ? "Admin/ManageEvents" : ModuleSettings.Template.GetValueAsStringFor(this);
             this.TemplateProvider = new PagingTemplateProvider(
                 this.GetTemplate(templateFolderName),
                 this,

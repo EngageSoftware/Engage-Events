@@ -225,6 +225,7 @@
     <Compile Include="ChooseDisplay.ascx.designer.cs">
       <DependentUpon>ChooseDisplay.ascx</DependentUpon>
     </Compile>
+    <Compile Include="ModuleSettings.cs" />
     <Compile Include="SettingsBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -343,7 +344,6 @@
     <Compile Include="Respond.ascx.designer.cs">
       <DependentUpon>Respond.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Setting.cs" />
     <Compile Include="ResponseDetail.ascx.cs">
       <DependentUpon>ResponseDetail.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

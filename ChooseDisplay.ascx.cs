@@ -34,7 +34,7 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                return Dnn.Utility.GetStringSetting(this.Settings, "Template", string.Empty);
+                return ModuleSettings.Template.GetValueAsStringFor(this);
             }
         }
 
@@ -46,7 +46,7 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                return Dnn.Utility.GetStringSetting(this.Settings, "SingleItemTemplate", string.Empty);
+                return ModuleSettings.SingleItemTemplate.GetValueAsStringFor(this);
             }
         }
 
@@ -95,7 +95,7 @@ namespace Engage.Dnn.Events
                     this.ChooseDisplayDropDown.Items.Add(new ListItem(Localization.GetString("EventListingTemplate", this.LocalResourceFile), "LIST"));
                     this.ChooseDisplayDropDown.Items.Add(new ListItem(Localization.GetString("EventCalendar", this.LocalResourceFile), "CALENDAR"));
 
-                    string displayType = Dnn.Utility.GetStringSetting(this.Settings, "DisplayType").ToUpperInvariant();
+                    string displayType = ModuleSettings.DisplayType.GetValueAsStringFor(this).ToUpperInvariant();
                     ListItem li = this.ChooseDisplayDropDown.Items.FindByValue(displayType);
                     if (li != null)
                     {
@@ -132,17 +132,16 @@ namespace Engage.Dnn.Events
         {
             try
             {
-                ModuleController modules = new ModuleController();
                 if (this.TemplatePickersSection.Visible)
                 {
-                    modules.UpdateTabModuleSetting(this.TabModuleId, "Template", this.ListTemplatePicker.SelectedTemplateFolderName);
+                    ModuleSettings.Template.Set(this, this.ListTemplatePicker.SelectedTemplateFolderName);
                     this.ApplyTemplateSettings(this.ListTemplatePicker.SelectedTemplateFolderName);
 
-                    modules.UpdateTabModuleSetting(this.TabModuleId, "SingleItemTemplate", this.SingleItemTemplatePicker.SelectedTemplateFolderName);
+                    ModuleSettings.SingleItemTemplate.Set(this, this.SingleItemTemplatePicker.SelectedTemplateFolderName);
                     this.ApplyTemplateSettings(this.SingleItemTemplatePicker.SelectedTemplateFolderName);
                 }
 
-                modules.UpdateTabModuleSetting(this.TabModuleId, "DisplayType", this.ChooseDisplayDropDown.SelectedValue);
+                ModuleSettings.DisplayType.Set(this, this.ChooseDisplayDropDown.SelectedValue);
 
                 this.Response.Redirect(Globals.NavigateURL(this.TabId));
             }
