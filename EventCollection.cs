@@ -204,7 +204,7 @@ namespace Engage.Events
         {
             int? beginIndex = processCollection && pageIndex.HasValue && pageSize.HasValue ? pageIndex * pageSize : null;
             int? endIndex = beginIndex.HasValue ? (pageIndex + 1) * pageSize : null;
-            List<Event> events = new List<Event>(pageSize ?? 0);
+            var events = new List<Event>(pageSize ?? 0);
 
             while (reader.Read())
             {
@@ -226,7 +226,7 @@ namespace Engage.Events
             // We don't need to sort or page if we are never ending, they should be sorted from the database in that case
             if (processCollection && endIndex.HasValue)
             {
-                ProcessCollection(beginIndex, endIndex, sortExpression, events);
+                ProcessCollection(beginIndex.Value, endIndex.Value, sortExpression, events);
             }
 
             return new EventCollection(events, totalRecords);
@@ -243,17 +243,11 @@ namespace Engage.Events
         {
             masterEvent.RecurrenceRule.SetEffectiveRange(startDate ?? DateTime.MinValue, endDate ?? DateTime.MaxValue);
 
-            // Does anyone remember why we were doing this?  It caused bug EVT-536.
-            ////int originalMaxOccurrences = masterEvent.RecurrenceRule.Range.MaxOccurrences;
-            ////masterEvent.RecurrenceRule.Range.MaxOccurrences = int.MaxValue;
-
             foreach (DateTime eventStart in masterEvent.RecurrenceRule.Occurrences)
             {
                 events.Add(masterEvent.CreateOccurrence(eventStart));
                 break;
             }
-
-            ////masterEvent.RecurrenceRule.Range.MaxOccurrences = originalMaxOccurrences;
         }
 
         /// <summary>
@@ -263,21 +257,21 @@ namespace Engage.Events
         /// <param name="endIndex">The index of the event which should end the list.</param>
         /// <param name="sortExpression">The name of the property on which the events should be sorted.</param>
         /// <param name="events">The events collection to sort and page.</param>
-        private static void ProcessCollection(int? beginIndex, int? endIndex, string sortExpression, List<Event> events)
+        private static void ProcessCollection(int beginIndex, int endIndex, string sortExpression, List<Event> events)
         {
             // TODO: we may need to remove this GenericComparer if performance becomes an issue
-            GenericComparer<Event> eventComparer = new GenericComparer<Event>(sortExpression, SortDirection.Ascending);
+            var eventComparer = new GenericComparer<Event>(sortExpression, SortDirection.Ascending);
             events.Sort(eventComparer);
 
-            int endCount = events.Count - endIndex.Value;
+            int endCount = events.Count - endIndex;
             if (endCount > 0)
             {
-                events.RemoveRange(endIndex.Value, endCount);
+                events.RemoveRange(endIndex, endCount);
             }
 
             if (beginIndex > 0)
             {
-                events.RemoveRange(0, Math.Min(beginIndex.Value, events.Count));
+                events.RemoveRange(0, Math.Min(beginIndex, events.Count));
             }
         }
     }
