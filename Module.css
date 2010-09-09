@@ -21,11 +21,6 @@
 .EventCalendar li { list-style-type: none; }
 .RadScheduler_Telerik div.rsHeader p { width:110px; }
 
-.RadScheduler .rsWrap {margin-bottom: 2px;}
-.RadScheduler .rsMonthView .rsWrap {height: 18px !important; width: 100%; overflow: hidden; white-space:nowrap;}
-.rsAptContent{padding-left: 2px;}
-.rsCell{padding: 0 2px !important;}
-
 .respond-wrap{padding:15px;}
 	.respond-wrap h2.Head, .respond-wrap h3.SubHead{margin:0;}
 
