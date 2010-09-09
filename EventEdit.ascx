@@ -94,9 +94,9 @@
             <ContentTemplate>
                 <asp:Label runat="server" ResourceKey="AllowRegistrationsLabel" CssClass="NormalBold MainLabel" AssociatedControlID="AllowRegistrationsCheckBox"/>
                 <asp:CheckBox ID="AllowRegistrationsCheckBox" runat="server" Checked="true" AutoPostBack="true" />
-                <fieldset class="registration_fs">
-                    <legend class="registrationoptions SubHead"><%=Localize("Registration Options:") %></legend>
-                    <asp:Panel ID="LimitRegistrationsPanel" runat="server">
+                <asp:Panel ID="LimitRegistrationsPanel" runat="server">
+                    <fieldset class="registration_fs">
+                        <legend class="registrationoptions SubHead"><%=Localize("Registration Options:") %></legend>
                         <asp:Label ID="LimitRegistrationsLabel" runat="server" ResourceKey="LimitRegistrationsLabel" CssClass="NormalBold RegCap" AssociatedControlID="LimitRegistrationsCheckBox" />
                         <asp:CheckBox ID="LimitRegistrationsCheckBox" runat="server" CssClass="NormalBold" AutoPostBack="true" />
                         <asp:Panel ID="RegistrationLimitPanel" runat="server" Visible="false">
@@ -117,8 +117,8 @@
                                 <dnn:TextEditor ID="CustomCapacityMetMessageTextEditor" runat="server" Width="400" TextRenderMode="Raw" HtmlEncode="False" DefaultMode="Rich" Height="350" ChooseMode="True" ChooseRender="False" />
                             </asp:Panel>
                         </asp:Panel>
-                    </asp:Panel>                
-                </fieldset>
+                    </fieldset>
+                </asp:Panel>                
             </ContentTemplate>
         </asp:UpdatePanel>
     </div>
