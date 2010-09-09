@@ -622,7 +622,7 @@ namespace Engage.Events
                 Id = (int)eventRecord["EventId"],
                 ModuleId = (int)eventRecord["ModuleId"],
                 Title = eventRecord["Title"].ToString(),
-                Overview = eventRecord["OverView"].ToString(),
+                Overview = eventRecord["Overview"].ToString(),
                 Description = eventRecord["Description"].ToString(),
                 EventStart = (DateTime)eventRecord["EventStart"],
                 EventEnd = (DateTime)eventRecord["EventEnd"],

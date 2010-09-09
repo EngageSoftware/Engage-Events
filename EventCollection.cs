@@ -16,6 +16,8 @@ namespace Engage.Events
     using System.ComponentModel;
     using System.Data;
     using System.Diagnostics;
+    using System.Globalization;
+    using System.Linq;
     using System.Web.UI.WebControls;
     using Data;
     using Dnn.Framework.Templating;
@@ -62,13 +64,14 @@ namespace Engage.Events
         /// <param name="listingMode">The listing mode.</param>
         /// <param name="showAll">if set to <c>true</c> included canceled events.</param>
         /// <param name="featuredOnly">if set to <c>true</c> only include events that are featured.</param>
+        /// <param name="categoryIds">A sequence of IDs for the category/ies that events must be in in order to be retrieved, or an empty/<c>null</c> sequence to get events regardless of category.</param>
         /// <returns>
         /// A page of events based on the given <paramref name="listingMode"/>.
         /// </returns>
         /// <exception cref="DBException">if there's an error while going to the database to retrieve the events</exception>
-        public static EventCollection Load(int portalId, ListingMode listingMode, bool showAll, bool featuredOnly)
+        public static EventCollection Load(int portalId, ListingMode listingMode, bool showAll, bool featuredOnly, IEnumerable<int> categoryIds)
         {
-            return Load(portalId, listingMode, null, null, null, showAll, featuredOnly, false);
+            return Load(portalId, listingMode, null, null, null, showAll, featuredOnly, categoryIds, false);
         }
 
         /// <summary>
@@ -81,13 +84,14 @@ namespace Engage.Events
         /// <param name="pageSize">Size of the page of events.</param>
         /// <param name="showAll">if set to <c>true</c> included canceled events.</param>
         /// <param name="featuredOnly">if set to <c>true</c> only include events that are featured.</param>
+        /// <param name="categoryIds">A sequence of IDs for the category/ies that events must be in in order to be retrieved, or an empty/<c>null</c> sequence to get events regardless of category.</param>
         /// <returns>
         /// A page of events based on the given <paramref name="listingMode"/>.
         /// </returns>
         /// <exception cref="DBException">if there's an error while going to the database to retrieve the events</exception>
-        public static EventCollection Load(int portalId, ListingMode listingMode, string sortExpression, int pageIndex, int pageSize, bool showAll, bool featuredOnly)
+        public static EventCollection Load(int portalId, ListingMode listingMode, string sortExpression, int pageIndex, int pageSize, bool showAll, bool featuredOnly, IEnumerable<int> categoryIds)
         {
-            return Load(portalId, listingMode, sortExpression, pageIndex, pageSize, showAll, featuredOnly, true);
+            return Load(portalId, listingMode, sortExpression, pageIndex, pageSize, showAll, featuredOnly, categoryIds, true);
         }
 
         /// <summary>
@@ -114,12 +118,13 @@ namespace Engage.Events
         /// <param name="pageSize">Size of the page of events.</param>
         /// <param name="showAll">if set to <c>true</c> included canceled events.</param>
         /// <param name="featuredOnly">if set to <c>true</c> only include events that are featured.</param>
+        /// <param name="categoryIds">A sequence of IDs for the category/ies that events must be in in order to be retrieved, or an empty/<c>null</c> sequence to get events regardless of category.</param>
         /// <param name="processCollection">if set to <c>true</c> the collection should be sorted and paged, and each recurring event should be replaced by its earliest occurrence.</param>
         /// <returns>
         /// A page of events based on the given <paramref name="listingMode"/>.
         /// </returns>
         /// <exception cref="DBException">if there's an error while going to the database to retrieve the events</exception>
-        private static EventCollection Load(int portalId, ListingMode listingMode, string sortExpression, int? pageIndex, int? pageSize, bool showAll, bool featuredOnly, bool processCollection)
+        private static EventCollection Load(int portalId, ListingMode listingMode, string sortExpression, int? pageIndex, int? pageSize, bool showAll, bool featuredOnly, IEnumerable<int> categoryIds, bool processCollection)
         {
             IDataProvider dp = DataProvider.Instance;
             try
@@ -147,6 +152,9 @@ namespace Engage.Events
                         break;
                 }
 
+                var categoryIdsValue = categoryIds != null && categoryIds.Any()
+                                           ? string.Join(",", categoryIds.Select(id => id.ToString(CultureInfo.InvariantCulture)).ToArray())
+                                           : null;
                 using (
                     IDataReader reader = dp.ExecuteReader(
                         CommandType.StoredProcedure,
@@ -155,7 +163,8 @@ namespace Engage.Events
                         Utility.CreateDateTimeParam("@startDate", startDate),
                         Utility.CreateDateTimeParam("@endDate", endDate),
                         Utility.CreateBitParam("@showAll", showAll),
-                        Utility.CreateBitParam("@featured", featuredOnly)))
+                        Utility.CreateBitParam("@featured", featuredOnly),
+                        Utility.CreateVarcharParam("@categoryIds", categoryIdsValue)))
                 {
                     return FillEvents(reader, processCollection, pageIndex, pageSize, sortExpression, startDate, endDate);
                 }
