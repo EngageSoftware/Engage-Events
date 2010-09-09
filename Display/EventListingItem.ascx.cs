@@ -428,7 +428,8 @@ namespace Engage.Dnn.Events.Display
                     this.CurrentPageIndex - 1,
                     this.RecordsPerPage,
                     this.Status.Equals("All", StringComparison.Ordinal),
-                    this.IsManageEvents ? false : this.IsFeatured);
+                    this.IsManageEvents ? false : this.IsFeatured,
+                    this.CategoryIds);
 
             this.TotalNumberOfEvents = events.TotalRecords;
             this.TemplateProvider.ItemPagingState = new ItemPagingState(this.CurrentPageIndex, events.TotalRecords, this.RecordsPerPage);

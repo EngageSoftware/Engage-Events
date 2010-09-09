@@ -182,7 +182,7 @@ namespace Engage.Dnn.Events.Display
         private void BindData()
         {
             this.EventsCalendarDisplay.Culture = CultureInfo.CurrentCulture;
-            this.EventsCalendarDisplay.DataSource = EventCollection.Load(this.PortalId, ListingMode.All, false, this.IsFeatured);
+            this.EventsCalendarDisplay.DataSource = EventCollection.Load(this.PortalId, ListingMode.All, false, this.IsFeatured, this.CategoryIds);
             this.EventsCalendarDisplay.DataEndField = "EventEnd";
             this.EventsCalendarDisplay.DataKeyField = "Id";
             this.EventsCalendarDisplay.DataRecurrenceField = "RecurrenceRule";

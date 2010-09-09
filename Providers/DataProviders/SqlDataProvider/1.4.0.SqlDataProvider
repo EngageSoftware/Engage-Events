@@ -376,3 +376,45 @@ BEGIN
     WHERE EventId = @EventId
 END
 GO
+
+IF OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_spGetEvents]', N'P') IS NOT NULL
+  DROP PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEvents]
+GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEvents](
+	@portalId int, 
+	@showAll bit,
+	@featured bit,
+	@startDate datetime,
+	@endDate datetime,
+    @categoryIds nvarchar(4000)
+)
+AS
+BEGIN
+    DECLARE @sql nvarchar(MAX)
+    SET @sql = N'
+	 SELECT EventId, ModuleId, Title, Overview, EventStart, EventEnd, Organizer, OrganizerEmail, Location, 
+            RecapUrl, InvitationUrl, AllowRegistrations, Canceled, CreatedBy, Description, IsDeleted, 
+            IsFeatured, RecurrenceRule, RecurrenceParentId, TimeZoneOffset, InDaylightTime, Capacity, 
+            CapacityMetMessage, CategoryId
+	 FROM  {databaseOwner}[{objectQualifier}Engage_Event]
+	 WHERE PortalId = @portalId
+	   AND (@featured = 0 OR IsFeatured = @featured)
+	   AND (@showAll = 1 OR Canceled = @showAll)
+	   AND (EventStart <= @endDate OR @endDate IS NULL)
+	   AND (
+			(RecurrenceRule IS NULL AND (EventEnd >= @startDate OR @startDate IS NULL))
+			OR 
+			(RecurrenceRule IS NOT NULL AND (FinalRecurringEndDate IS NULL OR FinalRecurringEndDate >= @startDate OR @startDate IS NULL))
+		  )'
+
+    IF @categoryIds IS NOT NULL
+    BEGIN
+        SET @sql = @sql + 'AND CategoryId IN (' + @categoryIds + N')'
+    END
+
+    EXEC sp_executesql @sql,
+       N'@portalId int, @showAll bit, @featured bit, @startDate datetime, @endDate datetime, @categoryIds nvarchar(4000)',
+       @portalId=@portalId, @showAll=@showAll, @featured=@featured, @startDate=@startDate, @endDate=@endDate, @categoryIds=@categoryIds
+END
+GO
+

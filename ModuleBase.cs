@@ -12,9 +12,11 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.IO;
+    using System.Linq;
     using System.Text;
     using System.Web;
     using System.Web.UI;
@@ -159,6 +161,24 @@ namespace Engage.Dnn.Events
                 }
 
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the list of category IDs by which this display should filter its events list.
+        /// </summary>
+        /// <value>The category IDs.</value>
+        protected IEnumerable<int> CategoryIds 
+        { 
+            get 
+            { 
+                var categoriesSettingValue = ModuleSettings.Categories.GetValueAsStringFor(this);
+                if (string.IsNullOrEmpty(categoriesSettingValue))
+                {
+                    return Enumerable.Empty<int>();
+                }
+
+                return categoriesSettingValue.Split(',').Select(id => int.Parse(id, CultureInfo.InvariantCulture));
             }
         }
 
