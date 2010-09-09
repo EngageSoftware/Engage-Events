@@ -344,10 +344,10 @@ namespace Engage.Dnn.Events
             int timeZoneOffsetMinutes;
             if (int.TryParse(this.TimeZoneDropDownList.SelectedValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out timeZoneOffsetMinutes))
             {
-                TimeSpan timeZoneOffset = new TimeSpan(0, timeZoneOffsetMinutes, 0);
+                var timeZoneOffset = TimeSpan.FromMinutes(timeZoneOffsetMinutes);
                 if (this.InDaylightTimeCheckBox.Checked)
                 {
-                    timeZoneOffset = timeZoneOffset.Add(new TimeSpan(1, 0, 0));
+                    timeZoneOffset = timeZoneOffset.Add(TimeSpan.FromHours(1));
                 }
 
                 DateTime eventStart = this.StartDateTimePicker.SelectedDate.Value;
@@ -368,7 +368,8 @@ namespace Engage.Dnn.Events
                         this.RecurrenceEditor.GetRecurrenceRule(eventStart, eventEnd),
                         this.LimitRegistrationsCheckBox.Checked && this.LimitRegistrationsCheckBox.Visible ? (int?)this.RegistrationLimitTextBox.Value : null,
                         this.InDaylightTimeCheckBox.Checked,
-                        this.GetCustomCapacityMetMessage());
+                        this.GetCustomCapacityMetMessage(),
+                        this.GetSelectedCategoryId());
                 
                 e.Save(this.UserId);
             }
