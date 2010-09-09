@@ -14,14 +14,18 @@ namespace Engage.Dnn.Events
     using System;
     using System.Globalization;
     using System.IO;
+    using System.Linq;
     using System.Web.UI.WebControls;
+
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Services.Exceptions;
+
+    using Engage.Events;
 
     /// <summary>
     /// This is the settings code behind for Event related Settings.
     /// </summary>
-    public partial class Settings : ModuleSettingsBase
+    public partial class Settings : SettingsBase
     {
         /// <summary>
         /// Backing field for the current module settings base selected.
@@ -42,6 +46,16 @@ namespace Engage.Dnn.Events
                     this.DetailsDisplayModuleGrid.DataSource = new ModuleController().GetModulesByDefinition(this.PortalId, Utility.ModuleDefinitionFriendlyName);
                     this.DetailsDisplayModuleGrid.DataBind();
 
+                    this.CategoriesCheckBoxList.DataTextField = "Name";
+                    this.CategoriesCheckBoxList.DataValueField = "Id";
+                    this.CategoriesCheckBoxList.DataSource = from category in CategoryCollection.Load(this.PortalId)
+                                                             select new
+                                                                 {
+                                                                     Name = string.IsNullOrEmpty(category.Name) ? this.Localize("DefaultCategory", this.LocalSharedResourceFile) : category.Name,
+                                                                     Id = category.Id.ToString(CultureInfo.InvariantCulture)
+                                                                 };
+                    this.CategoriesCheckBoxList.DataBind();
+
                     this.SetOptions();
                 }
             }
@@ -60,10 +74,23 @@ namespace Engage.Dnn.Events
             {
                 try
                 {
-                    ModuleController modules = new ModuleController();
-                    modules.UpdateTabModuleSetting(this.TabModuleId, "FeaturedOnly", this.FeaturedCheckBox.Checked.ToString(CultureInfo.InvariantCulture));
-                    modules.UpdateTabModuleSetting(this.TabModuleId, "DetailsDisplayTabId", this.GetSelectedDetailsDisplayTabId().ToString(CultureInfo.InvariantCulture));
-                    modules.UpdateTabModuleSetting(this.TabModuleId, "DetailsDisplayModuleId", this.GetSelectedDetailsDisplayModuleId().ToString(CultureInfo.InvariantCulture));
+                    var moduleController = new ModuleController();
+                    moduleController.UpdateTabModuleSetting(this.TabModuleId, "FeaturedOnly", this.FeaturedCheckBox.Checked.ToString(CultureInfo.InvariantCulture));
+                    moduleController.UpdateTabModuleSetting(this.TabModuleId, "DetailsDisplayTabId", this.GetSelectedDetailsDisplayTabId().ToString(CultureInfo.InvariantCulture));
+                    moduleController.UpdateTabModuleSetting(this.TabModuleId, "DetailsDisplayModuleId", this.GetSelectedDetailsDisplayModuleId().ToString(CultureInfo.InvariantCulture));
+
+                    string categories;
+                    if (this.AllCategoriesCheckBox.Checked)
+                    {
+                        categories = string.Empty;
+                    }
+                    else
+                    {
+                        var selectedCategoryIds = this.CategoriesCheckBoxList.Items.Cast<ListItem>().Where(item => item.Selected).Select(item => item.Value);
+                        categories = string.Join(",", selectedCategoryIds.ToArray());
+                    }
+
+                    moduleController.UpdateTabModuleSetting(this.TabModuleId, "Categories", categories);
 
                     this.currentSettingsBase.UpdateSettings();
                 }
@@ -83,6 +110,8 @@ namespace Engage.Dnn.Events
             base.OnInit(e);
 
             this.Load += this.Page_Load;
+            this.AllCategoriesCheckBox.CheckedChanged += this.AllCategoriesCheckBox_CheckedChanged;
+            this.CategoriesListValidator.ServerValidate += this.CategoriesListValidator_ServerValidate;
             this.DetailsDisplayModuleValidator.ServerValidate += this.DetailsDisplayModuleValidator_ServerValidate;
         }
 
@@ -93,7 +122,7 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void DetailsDisplayModuleRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            TableRow selectedRow = Engage.Utility.FindParentControl<TableRow>((RadioButton)sender);            
+            var selectedRow = Engage.Utility.FindParentControl<TableRow>((RadioButton)sender);            
             this.SetDetailsDisplayModuleGridSelection(GetTabIdFromRow(selectedRow), GetModuleIdFromRow(selectedRow));
         }
 
@@ -118,13 +147,29 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Handles the Load event of the Page control.
+        /// Handles the <see cref="CheckBox.CheckedChanged"/> event of the <see cref="AllCategoriesCheckBox"/> control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void Page_Load(object sender, EventArgs e)
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void AllCategoriesCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            this.DisplaySettingsControl();
+            this.CategoriesCheckBoxList.Enabled = !this.AllCategoriesCheckBox.Checked;
+        }
+
+        /// <summary>
+        /// Handles the <see cref="CustomValidator.ServerValidate"/> event of the <see cref="CategoriesListValidator"/> control.
+        /// </summary>
+        /// <param name="source">The source of the event.</param>
+        /// <param name="args">The <see cref="ServerValidateEventArgs"/> instance containing the event data.</param>
+        private void CategoriesListValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            if (this.AllCategoriesCheckBox.Checked)
+            {
+                args.IsValid = true;
+                return;
+            }
+
+            args.IsValid = this.CategoriesCheckBoxList.Items.Cast<ListItem>().Any(categoryItem => categoryItem.Selected);
         }
 
         /// <summary>
@@ -137,7 +182,7 @@ namespace Engage.Dnn.Events
             int checkedCount = 0;
             foreach (GridViewRow row in this.DetailsDisplayModuleGrid.Rows)
             {
-                RadioButton detailsDisplayModuleRadioButton = (RadioButton)row.FindControl("DetailsDisplayModuleRadioButton");
+                var detailsDisplayModuleRadioButton = (RadioButton)row.FindControl("DetailsDisplayModuleRadioButton");
                 if (detailsDisplayModuleRadioButton.Checked)
                 {
                     checkedCount++;
@@ -148,12 +193,38 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void Page_Load(object sender, EventArgs e)
+        {
+            this.DisplaySettingsControl();
+        }
+
+        /// <summary>
         /// Sets the options.
         /// </summary>
         private void SetOptions()
         {
             this.FeaturedCheckBox.Checked = Dnn.Utility.GetBoolSetting(this.Settings, "FeaturedOnly", false);
             this.SetDetailsDisplayModuleGridSelection(Dnn.Utility.GetIntSetting(this.Settings, "DetailsDisplayTabId", this.TabId), Dnn.Utility.GetIntSetting(this.Settings, "DetailsDisplayModuleId", this.ModuleId));
+
+            var categoriesSettingValue = Dnn.Utility.GetStringSetting(this.Settings, "Categories", string.Empty);
+            if (string.IsNullOrEmpty(categoriesSettingValue))
+            {
+                this.AllCategoriesCheckBox.Checked = true;
+                this.CategoriesCheckBoxList.Enabled = false;
+            }
+            else
+            {
+                var categories = categoriesSettingValue.Split(',');
+                var categoryItemsToSelect = this.CategoriesCheckBoxList.Items.Cast<ListItem>().Where(categoryItem => categories.Contains(categoryItem.Value));
+                foreach (var categoryItem in categoryItemsToSelect)
+                {
+                    categoryItem.Selected = true;
+                }
+            }
         }
 
         /// <summary>
@@ -165,7 +236,7 @@ namespace Engage.Dnn.Events
         {
             foreach (GridViewRow row in this.DetailsDisplayModuleGrid.Rows)
             {
-                RadioButton detailsDisplayModuleRadioButton = (RadioButton)row.FindControl("DetailsDisplayModuleRadioButton");
+                var detailsDisplayModuleRadioButton = (RadioButton)row.FindControl("DetailsDisplayModuleRadioButton");
 
                 detailsDisplayModuleRadioButton.Checked = GetTabIdFromRow(row) == selectedTabId && GetModuleIdFromRow(row) == selectedModuleId;
             }
@@ -180,7 +251,7 @@ namespace Engage.Dnn.Events
         {
             foreach (GridViewRow row in this.DetailsDisplayModuleGrid.Rows)
             {
-                RadioButton detailsDisplayModuleRadioButton = (RadioButton)row.FindControl("DetailsDisplayModuleRadioButton");
+                var detailsDisplayModuleRadioButton = (RadioButton)row.FindControl("DetailsDisplayModuleRadioButton");
                 if (detailsDisplayModuleRadioButton.Checked)
                 {
                     return GetTabIdFromRow(row);
@@ -199,7 +270,7 @@ namespace Engage.Dnn.Events
         {
             foreach (GridViewRow row in this.DetailsDisplayModuleGrid.Rows)
             {
-                RadioButton detailsDisplayModuleRadioButton = (RadioButton)row.FindControl("DetailsDisplayModuleRadioButton");
+                var detailsDisplayModuleRadioButton = (RadioButton)row.FindControl("DetailsDisplayModuleRadioButton");
                 if (detailsDisplayModuleRadioButton.Checked)
                 {
                     return GetModuleIdFromRow(row);
@@ -247,8 +318,8 @@ namespace Engage.Dnn.Events
         /// <returns>Module Settings Base</returns>
         private ModuleSettingsBase CreateSettingsControl(string controlName)
         {
-            ModuleSettingsBase settingsControl = (ModuleSettingsBase)this.LoadControl(controlName);
-            ModuleController mc = new ModuleController();
+            var settingsControl = (ModuleSettingsBase)this.LoadControl(controlName);
+            var mc = new ModuleController();
             ModuleInfo mi = mc.GetModule(this.ModuleId, this.TabId);
             settingsControl.ModuleConfiguration = mi;
             settingsControl.ID = Path.GetFileNameWithoutExtension(controlName);

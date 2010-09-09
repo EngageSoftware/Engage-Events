@@ -16,6 +16,12 @@
             <asp:CheckBox ID="FeaturedCheckBox" runat="server" />
         </div>
         <div class="EventsSetting">
+            <dnn:label ResourceKey="CategoriesLabel" runat="server" CssClass="SubHead" />
+            <asp:CheckBox ID="AllCategoriesCheckBox" runat="server" ResourceKey="All Categories" AutoPostBack="true" />
+            <asp:CheckBoxList ID="CategoriesCheckBoxList" runat="server" />
+            <asp:CustomValidator ID="CategoriesListValidator" runat="server" CssClass="NormalRed" ResourceKey="CategoriesListValidator" Display="None" ForeColor="" />
+        </div>
+        <div class="EventsSetting">
             <dnn:label ResourceKey="DetailsDisplayModuleLabel" runat="server" CssClass="SubHead" />
             <asp:GridView ID="DetailsDisplayModuleGrid" runat="server" GridLines="None" AutoGenerateColumns="false" CssClass="Normal" UseAccessibleHeader="true">
                 <Columns>
@@ -38,7 +44,7 @@
                 <AlternatingRowStyle BackColor="#eeeeee" />
                 <RowStyle BackColor="#f8f8f8" ForeColor="Black" />
             </asp:GridView>
-            <asp:CustomValidator ID="DetailsDisplayModuleValidator" runat="server" CssClass="NormalRed" ResourceKey="DetailsDisplayModuleValidator" Display="None" />
+            <asp:CustomValidator ID="DetailsDisplayModuleValidator" runat="server" CssClass="NormalRed" ResourceKey="DetailsDisplayModuleValidator" Display="None" ForeColor="" />
         </div>
         <asp:ValidationSummary runat="server" ShowMessageBox="false" ShowSummary="true" CssClass="NormalRed" />
     </ContentTemplate>

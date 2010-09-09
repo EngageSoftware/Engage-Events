@@ -225,6 +225,9 @@
     <Compile Include="ChooseDisplay.ascx.designer.cs">
       <DependentUpon>ChooseDisplay.ascx</DependentUpon>
     </Compile>
+    <Compile Include="SettingsBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="ManageCategories.ascx.cs">
       <DependentUpon>ManageCategories.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
