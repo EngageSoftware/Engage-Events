@@ -139,7 +139,7 @@
     <value>Are you sure that you want to permanently delete this column?</value>
   </data>
   <data name="EditCategory.Text" xml:space="preserve">
-    <value>Edit</value>
+    <value>Rename</value>
   </data>
   <data name="Name.Header" xml:space="preserve">
     <value>Name</value>
