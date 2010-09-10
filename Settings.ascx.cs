@@ -51,7 +51,9 @@ namespace Engage.Dnn.Events
                     this.CategoriesCheckBoxList.DataSource = from category in CategoryCollection.Load(this.PortalId)
                                                              select new
                                                                  {
-                                                                     Name = string.IsNullOrEmpty(category.Name) ? this.Localize("DefaultCategory", this.LocalSharedResourceFile) : category.Name,
+                                                                     Name = string.IsNullOrEmpty(category.Name)
+                                                                                ? this.Localize("DefaultCategory", this.LocalSharedResourceFile)
+                                                                                : category.Name,
                                                                      Id = category.Id.ToString(CultureInfo.InvariantCulture)
                                                                  };
                     this.CategoriesCheckBoxList.DataBind();

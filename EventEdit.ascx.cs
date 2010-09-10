@@ -13,6 +13,7 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Globalization;
+    using System.Linq;
     using System.Web.UI.WebControls;
     using DotNetNuke.Common;
     using DotNetNuke.Framework;
@@ -247,13 +248,15 @@ namespace Engage.Dnn.Events
 
             this.CategoryComboBox.DataTextField = "Name";
             this.CategoryComboBox.DataValueField = "Id";
-            this.CategoryComboBox.DataSource = CategoryCollection.Load(this.PortalId);
+            this.CategoryComboBox.DataSource = from category in CategoryCollection.Load(this.PortalId)
+                                               select new
+                                                   {
+                                                       Name = string.IsNullOrEmpty(category.Name)
+                                                                ? this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile)
+                                                                : category.Name,
+                                                       Id = category.Id.ToString(CultureInfo.InvariantCulture)
+                                                   };
             this.CategoryComboBox.DataBind();
-            var defaultCategoryItem = this.CategoryComboBox.Items.FindItemByText(string.Empty);
-            if (defaultCategoryItem != null)
-            {
-                defaultCategoryItem.Text = this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile);
-            }
         }
 
         /// <summary>
