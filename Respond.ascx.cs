@@ -49,9 +49,21 @@ namespace Engage.Dnn.Events
         /// <returns>
         /// <c>true</c> if the given event can accept new registrations; otherwise, <c>false</c>.
         /// </returns>
-        private static bool CanRegisterFor(Event eventBeingRespondedTo)
+        private bool CanRegisterFor(Event eventBeingRespondedTo)
         {
-            return !eventBeingRespondedTo.Capacity.HasValue || eventBeingRespondedTo.Capacity > ResponseCollection.Load(eventBeingRespondedTo.Id, eventBeingRespondedTo.EventStart, ResponseStatus.Attending.ToString(), "ResponseId", 1, 0).TotalRecords;
+            if (!eventBeingRespondedTo.Capacity.HasValue)
+            {
+                return true;
+            }
+
+            var responses = ResponseCollection.Load(
+                eventId: eventBeingRespondedTo.Id, 
+                eventStart: eventBeingRespondedTo.EventStart, 
+                status: ResponseStatus.Attending.ToString(), 
+                sortColumn: "ResponseId", 
+                index: 1, 
+                pageSize: 0);
+            return eventBeingRespondedTo.Capacity > responses.TotalRecords;
         }
 
         /// <summary>
@@ -90,29 +102,36 @@ namespace Engage.Dnn.Events
         private void BindData()
         {
             int? eventId = this.EventId;
-            if (eventId.HasValue)
+            if (!eventId.HasValue)
             {
-                Event eventBeingRespondedTo = Event.Load(eventId.Value);
-                eventBeingRespondedTo = eventBeingRespondedTo.CreateOccurrence(this.EventStart);
+                return;
+            }
 
-                if (!CanRegisterFor(eventBeingRespondedTo) && !this.CanUnregisterFrom(eventBeingRespondedTo.Id))
-                {
-                    this.ShowEventFullView(eventBeingRespondedTo);
-                }
-                else
-                {
-                    this.EventNameLabel.Text = string.Format(CultureInfo.CurrentCulture, Localization.GetString("EventNameLabel.Text", this.LocalResourceFile), eventBeingRespondedTo.Title);
-                    this.AddToCalendarButton.Enabled = true;
+            Event eventBeingRespondedTo = Event.Load(eventId.Value);
+            if (!this.CanShowEvent(eventBeingRespondedTo))
+            {
+                return;
+            }
 
-                    this.ResponseStatusRadioButtons.Items.Clear();
-                    this.ResponseStatusRadioButtons.Items.Add(new ListItem(
-                                                                      Localization.GetString(ResponseStatus.Attending.ToString(), this.LocalResourceFile),
-                                                                      ResponseStatus.Attending.ToString()));
-                    this.ResponseStatusRadioButtons.Items.Add(new ListItem(
-                                                                      Localization.GetString(ResponseStatus.NotAttending.ToString(), this.LocalResourceFile),
-                                                                      ResponseStatus.NotAttending.ToString()));
-                    this.ResponseStatusRadioButtons.Items[0].Selected = true;
-                }
+            eventBeingRespondedTo = eventBeingRespondedTo.CreateOccurrence(this.EventStart);
+
+            if (!this.CanRegisterFor(eventBeingRespondedTo) && !this.CanUnregisterFrom(eventBeingRespondedTo.Id))
+            {
+                this.ShowEventFullView(eventBeingRespondedTo);
+            }
+            else
+            {
+                this.EventNameLabel.Text = string.Format(CultureInfo.CurrentCulture, Localization.GetString("EventNameLabel.Text", this.LocalResourceFile), eventBeingRespondedTo.Title);
+                this.AddToCalendarButton.Enabled = true;
+
+                this.ResponseStatusRadioButtons.Items.Clear();
+                this.ResponseStatusRadioButtons.Items.Add(new ListItem(
+                    Localization.GetString(ResponseStatus.Attending.ToString(), this.LocalResourceFile),
+                    ResponseStatus.Attending.ToString()));
+                this.ResponseStatusRadioButtons.Items.Add(new ListItem(
+                    Localization.GetString(ResponseStatus.NotAttending.ToString(), this.LocalResourceFile),
+                    ResponseStatus.NotAttending.ToString()));
+                this.ResponseStatusRadioButtons.Items[0].Selected = true;
             }
         }
 
@@ -151,31 +170,32 @@ namespace Engage.Dnn.Events
             try
             {
                 int? eventId = this.EventId;
-                if (eventId.HasValue)
+                if (!eventId.HasValue)
                 {
-                    Event eventBeingRespondedTo = Event.Load(eventId.Value);
-                    ResponseStatus responseStatus = (ResponseStatus)Enum.Parse(typeof(ResponseStatus), this.ResponseStatusRadioButtons.SelectedValue);
-                    if (responseStatus != ResponseStatus.Attending || CanRegisterFor(eventBeingRespondedTo))
-                    {
-                        Response response =
-                                Engage.Events.Response.Load(eventId.Value, this.EventStart, this.UserInfo.Email)
-                                ??
-                                Engage.Events.Response.Create(
-                                        eventId.Value,
-                                        this.EventStart,
-                                        this.UserInfo.FirstName,
-                                        this.UserInfo.LastName,
-                                        this.UserInfo.Email);
+                    return;
+                }
 
-                        response.Status = responseStatus;
-                        response.Save(UserId);
+                Event eventBeingRespondedTo = Event.Load(eventId.Value);
+                if (!this.CanShowEvent(eventBeingRespondedTo))
+                {
+                    return;
+                }
 
-                        this.ResponseMultiview.SetActiveView(this.ThankYouView);
-                    }
-                    else
-                    {
-                        this.ShowEventFullView(eventBeingRespondedTo);
-                    }
+                var responseStatus = (ResponseStatus)Enum.Parse(typeof(ResponseStatus), this.ResponseStatusRadioButtons.SelectedValue);
+                if (responseStatus != ResponseStatus.Attending || this.CanRegisterFor(eventBeingRespondedTo))
+                {
+                    Response response = Engage.Events.Response.Load(eventId.Value, this.EventStart, this.UserInfo.Email) ??
+                                        Engage.Events.Response.Create(
+                                            eventId.Value, this.EventStart, this.UserInfo.FirstName, this.UserInfo.LastName, this.UserInfo.Email);
+
+                    response.Status = responseStatus;
+                    response.Save(this.UserId);
+
+                    this.ResponseMultiview.SetActiveView(this.ThankYouView);
+                }
+                else
+                {
+                    this.ShowEventFullView(eventBeingRespondedTo);
                 }
             }
             catch (Exception exc)
@@ -192,11 +212,18 @@ namespace Engage.Dnn.Events
         private void AddToCalendarButton_Click(object sender, EventArgs e)
         {
             int? eventId = this.EventId;
-            if (eventId.HasValue)
+            if (!eventId.HasValue)
             {
-                Event evnt = Event.Load(eventId.Value);
-                SendICalendarToClient(HttpContext.Current.Response, evnt.ToICal(), evnt.Title);
+                return;
             }
+
+            Event evnt = Event.Load(eventId.Value);
+            if (!this.CanShowEvent(evnt))
+            {
+                return;
+            }
+
+            SendICalendarToClient(HttpContext.Current.Response, evnt.ToICal(), evnt.Title);
         }
 
         /// <summary>

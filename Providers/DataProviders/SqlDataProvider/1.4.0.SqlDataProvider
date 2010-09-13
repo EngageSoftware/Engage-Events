@@ -203,10 +203,10 @@ GO
 CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategory (@CategoryId int)
 AS
     SELECT CategoryId, Name, (
-		SELECT COUNT(*)
-		FROM {databaseOwner}{objectQualifier}Engage_Event e
-		WHERE e.CategoryId = c.CategoryId
-		) AS EventCount
+        SELECT COUNT(*)
+        FROM {databaseOwner}{objectQualifier}Engage_Event e
+        WHERE e.CategoryId = c.CategoryId
+        ) AS EventCount
     FROM {databaseOwner}{objectQualifier}Engage_EventCategory c
     WHERE CategoryId = @CategoryId
 GO
@@ -252,10 +252,10 @@ GO
 CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategories (@PortalId int)
 AS
     SELECT CategoryId, Name, (
-		SELECT COUNT(*)
-		FROM {databaseOwner}{objectQualifier}Engage_Event e
-		WHERE e.CategoryId = c.CategoryId
-		) AS EventCount
+        SELECT COUNT(*)
+        FROM {databaseOwner}{objectQualifier}Engage_Event e
+        WHERE e.CategoryId = c.CategoryId
+        ) AS EventCount
     FROM {databaseOwner}{objectQualifier}Engage_EventCategory c
     WHERE PortalId = @PortalId
     ORDER BY Name
@@ -381,35 +381,35 @@ IF OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_spGetEvents]', N'P') IS N
   DROP PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEvents]
 GO
 CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEvents](
-	@portalId int, 
-	@showAll bit,
-	@featured bit,
-	@startDate datetime,
-	@endDate datetime,
+    @portalId int, 
+    @showAll bit,
+    @featured bit,
+    @startDate datetime,
+    @endDate datetime,
     @categoryIds nvarchar(4000)
 )
 AS
 BEGIN
-    DECLARE @sql nvarchar(MAX)
+    DECLARE @sql nvarchar(4000)
     SET @sql = N'
-	 SELECT EventId, ModuleId, Title, Overview, EventStart, EventEnd, Organizer, OrganizerEmail, Location, 
+     SELECT EventId, ModuleId, Title, Overview, EventStart, EventEnd, Organizer, OrganizerEmail, Location, 
             RecapUrl, InvitationUrl, AllowRegistrations, Canceled, CreatedBy, Description, IsDeleted, 
             IsFeatured, RecurrenceRule, RecurrenceParentId, TimeZoneOffset, InDaylightTime, Capacity, 
             CapacityMetMessage, CategoryId
-	 FROM  {databaseOwner}[{objectQualifier}Engage_Event]
-	 WHERE PortalId = @portalId
-	   AND (@featured = 0 OR IsFeatured = @featured)
-	   AND (@showAll = 1 OR Canceled = @showAll)
-	   AND (EventStart <= @endDate OR @endDate IS NULL)
-	   AND (
-			(RecurrenceRule IS NULL AND (EventEnd >= @startDate OR @startDate IS NULL))
-			OR 
-			(RecurrenceRule IS NOT NULL AND (FinalRecurringEndDate IS NULL OR FinalRecurringEndDate >= @startDate OR @startDate IS NULL))
-		  )'
+     FROM  {databaseOwner}[{objectQualifier}Engage_Event]
+     WHERE PortalId = @portalId
+       AND (@featured = 0 OR IsFeatured = @featured)
+       AND (@showAll = 1 OR Canceled = @showAll)
+       AND (EventStart <= @endDate OR @endDate IS NULL)
+       AND (
+            (RecurrenceRule IS NULL AND (EventEnd >= @startDate OR @startDate IS NULL))
+            OR 
+            (RecurrenceRule IS NOT NULL AND (FinalRecurringEndDate IS NULL OR FinalRecurringEndDate >= @startDate OR @startDate IS NULL))
+          )'
 
     IF @categoryIds IS NOT NULL
     BEGIN
-        SET @sql = @sql + 'AND CategoryId IN (' + @categoryIds + N')'
+        SET @sql = @sql + N'AND CategoryId IN (' + @categoryIds + N')'
     END
 
     EXEC sp_executesql @sql,
@@ -418,3 +418,124 @@ BEGIN
 END
 GO
 
+
+IF OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_spGetResponseSummaries]', N'P') IS NOT NULL
+DROP PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetResponseSummaries]
+GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetResponseSummaries](  
+    @PortalId int,  
+    @sortColumn nvarchar(200),   
+    @index int,   
+    @pageSize int,
+    @categoryIds nvarchar(4000) 
+)  
+AS  
+BEGIN  
+  
+CREATE TABLE #results (  
+    [Id] int NOT NULL IDENTITY(1,1),  
+    [EventId] int,  
+    [EventStart] datetime,
+    [Title] [nvarchar] (100),  
+    [Attending] int,  
+    [NotAttending] int,  
+    [NoResponse] int
+)  
+  
+  
+DECLARE @sql nvarchar(4000), @Attending nvarchar(20), @NotAttending nvarchar(20), @NoResponse nvarchar(20)  
+SELECT @Attending = N'Attending'  
+SELECT @NotAttending = N'NotAttending'  
+SELECT @NoResponse = N'NoResponse' 
+ 
+IF @sortColumn = 'EventStart' 
+BEGIN
+    SET @sortColumn = 'COALESCE(r.EventStart, e.EventStart)'
+END 
+  
+SET @sql = N'
+    INSERT INTO #results ([EventId], [EventStart], [Title], [Attending], [NotAttending], [NoResponse]) 
+    SELECT DISTINCT e.EventId, COALESCE(r.EventStart, e.EventStart), e.Title, 
+    (SELECT COUNT(*) FROM {databaseOwner}[{objectQualifier}Engage_Response] WHERE EventId = e.EventId AND EventStart = r.EventStart AND Status = @Attending), 
+    (SELECT COUNT(*) FROM {databaseOwner}[{objectQualifier}Engage_Response] WHERE EventId = e.EventId AND EventStart = r.EventStart AND Status = @NotAttending), 
+    (SELECT COUNT(*) FROM {databaseOwner}[{objectQualifier}Engage_Response] WHERE EventId = e.EventId AND EventStart = r.EventStart AND Status = @NoResponse) 
+    FROM {databaseOwner}[{objectQualifier}Engage_Event] e 
+    LEFT JOIN {databaseOwner}[{objectQualifier}Engage_Response] r ON (r.EventID = e.EventId) 
+    WHERE e.PortalId = @PortalId '
+
+IF @categoryIds IS NOT NULL
+BEGIN
+    SET @sql = @sql + N' AND e.CategoryId IN (' + @categoryIds + N') '
+END
+
+SET @sql = @sql + N' ORDER BY ' + @sortColumn
+  
+--PRINT (@sql)  
+EXEC sp_executesql @sql, 
+    N'@Attending nvarchar(20), @NotAttending nvarchar(20), @NoResponse nvarchar(20), @PortalId int',
+    @Attending=@Attending, @NotAttending=@NotAttending, @NoResponse=@NoResponse, @PortalId=@PortalId
+  
+SELECT @@RowCount AS TotalRecords
+  
+IF (@PageSize = 0)  
+    BEGIN  
+        SELECT * FROM #results
+    END  
+ELSE  
+    BEGIN  
+        SELECT * FROM #results  
+        WHERE (id >= @index * @PageSize + 1) AND id < (@index * @PageSize) + @PageSize + 1  
+    END  
+END  
+GO
+
+if OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_spGetResponses]', N'P') IS NOT NULL
+DROP PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetResponses]
+GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetResponses] (
+    @EventId int,
+    @EventStart datetime,
+    @Status nvarchar(100),
+    @sortColumn nvarchar(200), 
+    @index int, 
+    @pageSize int
+)
+AS
+BEGIN
+
+CREATE TABLE #results (
+[Id] int NOT NULL IDENTITY(1,1),
+[ResponseId] [int]
+)
+    
+DECLARE @sql nvarchar(4000)
+
+SET @sql = N'
+    INSERT INTO #results ([ResponseId]) 
+    SELECT [ResponseId] 
+    FROM {databaseOwner}[{objectQualifier}Engage_Response] r
+    WHERE r.EventId = @EventId
+      AND r.EventStart = @EventStart
+      AND (r.Status = @Status OR @Status = '''')
+	ORDER BY ' + @sortColumn
+
+--PRINT (@sql)
+EXEC sp_executesql @sql,
+    N'@EventId int,	@EventStart datetime, @Status nvarchar(100)',
+    @EventId=@EventId,@EventStart=@EventStart,@Status=@Status
+
+SELECT @@RowCount AS TotalRecords
+
+IF (@PageSize = 0)
+    BEGIN
+        SELECT e.* FROM #results r
+        JOIN {databaseOwner}[{objectQualifier}Engage_Response] e ON (r.ResponseId = e.ResponseId)
+    END
+ELSE
+    BEGIN
+        SELECT e.* FROM #results r
+        JOIN {databaseOwner}[{objectQualifier}Engage_Response] e ON (r.ResponseId = e.ResponseId)
+        WHERE (id >= @index * @PageSize + 1) AND id < (@index * @PageSize) + @PageSize + 1
+    END
+END
+GO

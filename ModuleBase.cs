@@ -28,6 +28,8 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.WebControls;
 
+    using Engage.Events;
+
 #if TRIAL
     using Engage.Dnn.Events.Components;
     using Engage.Licensing;
@@ -225,6 +227,18 @@ namespace Engage.Dnn.Events
 
                 return index;
             }
+        }
+
+        /// <summary>
+        /// Determines whether this instance of the module can display the given event (based on the Categories setting).
+        /// </summary>
+        /// <param name="e">The event to check.</param>
+        /// <returns>
+        /// <c>true</c> if this instance can show the event; otherwise, <c>false</c>.
+        /// </returns>
+        protected bool CanShowEvent(Event e)
+        {
+            return !this.CategoryIds.Any() || this.CategoryIds.Contains(e.CategoryId);
         }
 
         /// <summary>

@@ -143,6 +143,11 @@ namespace Engage.Dnn.Events.Display
         private void ShowToolTip(int eventId, UpdatePanel panel)
         {
             Event ev = Event.Load(eventId);
+            if (!this.CanShowEvent(ev))
+            {
+                return;
+            }
+
             var toolTip = (EventToolTip)(panel.ContentTemplateContainer.FindControl("EventToolTip") ?? this.LoadControl("EventToolTip.ascx"));
 
             toolTip.ID = "EventToolTip";

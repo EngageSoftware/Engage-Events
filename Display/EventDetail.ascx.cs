@@ -100,17 +100,23 @@ namespace Engage.Dnn.Events.Display
         private void SetupTemplateProvider()
         {
             int? eventId = this.EventId;
-            if (eventId.HasValue)
+            if (!eventId.HasValue)
             {
-                Event ev = Event.Load(eventId.Value);
-
-                this.TemplateProvider = new SingleItemTemplateProvider(
-                    this.GetTemplate(ModuleSettings.SingleItemTemplate.GetValueAsStringFor(this)),
-                    this,
-                    this.ProcessTag,
-                    null,
-                    ev);
+                return;
             }
+
+            Event ev = Event.Load(eventId.Value);
+            if (!this.CanShowEvent(ev))
+            {
+                return;
+            }
+
+            this.TemplateProvider = new SingleItemTemplateProvider(
+                this.GetTemplate(ModuleSettings.SingleItemTemplate.GetValueAsStringFor(this)),
+                this,
+                this.ProcessTag,
+                null,
+                ev);
         }
     }
 }

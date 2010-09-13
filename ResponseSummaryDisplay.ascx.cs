@@ -116,7 +116,7 @@ namespace Engage.Dnn.Events
         /// <param name="sortColumn">The sort column.</param>
         private void BindData(string sortColumn)
         {
-            ResponseSummaryCollection responses = ResponseSummaryCollection.Load(this.PortalId, sortColumn, this.CurrentPageIndex - 1, this.SummaryPager.PageSize);
+            ResponseSummaryCollection responses = ResponseSummaryCollection.Load(this.PortalId, sortColumn, this.CurrentPageIndex - 1, this.SummaryPager.PageSize, this.CategoryIds);
             this.SummaryRepeater.DataSource = responses;
             this.SummaryRepeater.DataBind();
 

@@ -13,6 +13,8 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Globalization;
+    using System.Runtime.InteropServices;
+
     using Engage.Events;
 
     /// <summary>
@@ -34,7 +36,18 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                return this.currentEvent ?? Event.Load(this.CurrentEventId);
+                if (this.currentEvent != null)
+                {
+                    return this.currentEvent;
+                }
+
+                var e = Event.Load(this.CurrentEventId);
+                if (this.CanShowEvent(e))
+                {
+                    return e;
+                }
+
+                throw new InvalidOperationException("Event requested which this module cannot access");
             }
 
             set

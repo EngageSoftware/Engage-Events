@@ -217,21 +217,29 @@ namespace Engage.Dnn.Events
         private void BindData(string sortColumn, bool getAll)
         {
             int? eventId = this.EventId;
-            if (eventId.HasValue)
+            if (!eventId.HasValue)
             {
-                int pageIndex = getAll ? 0 : this.CurrentPageIndex - 1;
-                int pageSize = getAll ? 0 : this.ResponseDetailGrid.PageSize;
-                ResponseCollection responses = ResponseCollection.Load(eventId.Value, this.EventStart, this.Status, sortColumn, pageIndex, pageSize);
-                this.ResponseDetailGrid.DataSource = responses;
-                this.ResponseDetailGrid.DataBind();
-                ////this.ResponseDetailGrid.Attributes.Add("SortColumn", sortColumn);
-
-                this.pager.PageSize = this.ResponseDetailGrid.PageSize;
-                this.SetupPagingControl(this.pager, responses.TotalRecords, "modId", "key", "status", "eventId", "start");
-
-                this.responseDisplay.SetResponseSummary(Engage.Events.ResponseSummary.Load(eventId.Value, this.EventStart));
-                this.responseDisplay.ModuleConfiguration = this.ModuleConfiguration;
+                return;
             }
+
+            var responseSummary = Engage.Events.ResponseSummary.Load(eventId.Value, this.EventStart);
+            if (!this.CanShowEvent(responseSummary.Event))
+            {
+                return;
+            }
+
+            int pageIndex = getAll ? 0 : this.CurrentPageIndex - 1;
+            int pageSize = getAll ? 0 : this.ResponseDetailGrid.PageSize;
+            ResponseCollection responses = ResponseCollection.Load(eventId.Value, this.EventStart, this.Status, sortColumn, pageIndex, pageSize);
+            this.ResponseDetailGrid.DataSource = responses;
+            this.ResponseDetailGrid.DataBind();
+            ////this.ResponseDetailGrid.Attributes.Add("SortColumn", sortColumn);
+
+            this.pager.PageSize = this.ResponseDetailGrid.PageSize;
+            this.SetupPagingControl(this.pager, responses.TotalRecords, "modId", "key", "status", "eventId", "start");
+
+            this.responseDisplay.SetResponseSummary(responseSummary);
+            this.responseDisplay.ModuleConfiguration = this.ModuleConfiguration;
         }
 
         /// <summary>
@@ -245,6 +253,11 @@ namespace Engage.Dnn.Events
             this.ResponseDetailGrid.Columns.FindByUniqueName("ExportStatus").Visible = true;
 
             Event currentEvent = this.EventId.HasValue ? Event.Load(this.EventId.Value) : null;
+            if (currentEvent != null && !this.CanShowEvent(currentEvent))
+            {
+                currentEvent = null;
+            }
+
             this.ResponseDetailGrid.ExportSettings.FileName = string.Format(
                 CultureInfo.CurrentCulture,
                 Localization.GetString("Export Filename.Text", this.LocalResourceFile),

@@ -311,32 +311,39 @@ namespace Engage.Dnn.Events
         {
             int timeZoneOffsetMinutes;
             int? eventId = this.EventId;
-            if (eventId.HasValue
-                && int.TryParse(this.TimeZoneDropDownList.SelectedValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out timeZoneOffsetMinutes))
+            if (!eventId.HasValue ||
+                !int.TryParse(this.TimeZoneDropDownList.SelectedValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out timeZoneOffsetMinutes))
             {
-                var timeZoneOffset = new TimeSpan(0, timeZoneOffsetMinutes, 0);
-                if (this.InDaylightTimeCheckBox.Checked)
-                {
-                    timeZoneOffset = timeZoneOffset.Add(new TimeSpan(1, 0, 0));
-                }
-
-                Event e = Event.Load(eventId.Value);
-                e.EventStart = this.StartDateTimePicker.SelectedDate.Value;
-                e.EventEnd = this.EndDateTimePicker.SelectedDate.Value;
-                e.TimeZoneOffset = timeZoneOffset;
-                e.InDaylightTime = this.InDaylightTimeCheckBox.Checked;
-                e.Location = this.EventLocationTextBox.Text;
-                e.Title = this.EventTitleTextBox.Text;
-                e.Overview = this.EventOverviewTextEditor.Text;
-                e.Description = this.EventDescriptionTextEditor.Text;
-                e.IsFeatured = this.FeaturedCheckBox.Checked;
-                e.AllowRegistrations = this.AllowRegistrationsCheckBox.Checked;
-                e.Capacity = this.GetEventCapacity();
-                e.RecurrenceRule = this.RecurrenceEditor.GetRecurrenceRule(e.EventStart, e.EventEnd);
-                e.CapacityMetMessage = this.GetCustomCapacityMetMessage();
-                e.CategoryId = this.GetSelectedCategoryId();
-                e.Save(this.UserId);
+                return;
             }
+
+            Event e = Event.Load(eventId.Value);
+            if (!this.CanShowEvent(e))
+            {
+                return;
+            }
+
+            var timeZoneOffset = new TimeSpan(0, timeZoneOffsetMinutes, 0);
+            if (this.InDaylightTimeCheckBox.Checked)
+            {
+                timeZoneOffset = timeZoneOffset.Add(new TimeSpan(1, 0, 0));
+            }
+
+            e.EventStart = this.StartDateTimePicker.SelectedDate.Value;
+            e.EventEnd = this.EndDateTimePicker.SelectedDate.Value;
+            e.TimeZoneOffset = timeZoneOffset;
+            e.InDaylightTime = this.InDaylightTimeCheckBox.Checked;
+            e.Location = this.EventLocationTextBox.Text;
+            e.Title = this.EventTitleTextBox.Text;
+            e.Overview = this.EventOverviewTextEditor.Text;
+            e.Description = this.EventDescriptionTextEditor.Text;
+            e.IsFeatured = this.FeaturedCheckBox.Checked;
+            e.AllowRegistrations = this.AllowRegistrationsCheckBox.Checked;
+            e.Capacity = this.GetEventCapacity();
+            e.RecurrenceRule = this.RecurrenceEditor.GetRecurrenceRule(e.EventStart, e.EventEnd);
+            e.CapacityMetMessage = this.GetCustomCapacityMetMessage();
+            e.CategoryId = this.GetSelectedCategoryId();
+            e.Save(this.UserId);
         }
 
         /// <summary>
@@ -384,42 +391,49 @@ namespace Engage.Dnn.Events
         private void BindData()
         {
             int? eventId = this.EventId;
-            if (eventId.HasValue)
+            if (!eventId.HasValue)
             {
-                Event e = Event.Load(eventId.Value);
-                this.EventTitleTextBox.Text = e.Title;
-                this.CategoryComboBox.SelectedValue = e.CategoryId.ToString(CultureInfo.InvariantCulture);
-                this.EventLocationTextBox.Text = e.Location;
-                this.EventOverviewTextEditor.Text = e.Overview;
-                this.EventDescriptionTextEditor.Text = e.Description;
-                this.StartDateTimePicker.SelectedDate = e.EventStart;
-                this.EndDateTimePicker.SelectedDate = e.EventEnd;
-                this.FeaturedCheckBox.Checked = e.IsFeatured;
-                this.RecurringCheckBox.Checked = e.IsRecurring;
-                this.RecurrenceEditor.Visible = this.RecurringCheckBox.Checked;
-                this.RecurrenceEditor.SetRecurrenceRule(e.RecurrenceRule);
-
-                this.AllowRegistrationsCheckBox.Checked = this.LimitRegistrationsPanel.Visible = e.AllowRegistrations;
-                this.LimitRegistrationsCheckBox.Checked = this.RegistrationLimitPanel.Visible = e.Capacity.HasValue;
-                if (e.Capacity.HasValue)
-                {
-                    this.RegistrationLimitTextBox.Value = e.Capacity.Value;
-                }
-
-                bool hasCustomCapacityMetMessage = e.CapacityMetMessage != null;
-                this.CustomCapacityMetMessagePanel.Visible = hasCustomCapacityMetMessage;
-                this.CapacityMetMessageRadioButtonList.SelectedValue = hasCustomCapacityMetMessage.ToString(CultureInfo.InvariantCulture);
-                this.CustomCapacityMetMessageTextEditor.Text = e.CapacityMetMessage;
-
-                this.InDaylightTimeCheckBox.Checked = e.InDaylightTime;
-                TimeSpan timeZoneOffset = e.TimeZoneOffset;
-                if (e.InDaylightTime)
-                {
-                    timeZoneOffset = timeZoneOffset.Subtract(new TimeSpan(1, 0, 0));
-                }
-
-                this.TimeZoneDropDownList.SelectedValue = ((int)timeZoneOffset.TotalMinutes).ToString(CultureInfo.InvariantCulture);
+                return;
             }
+
+            Event e = Event.Load(eventId.Value);
+            if (!this.CanShowEvent(e))
+            {
+                return;
+            }
+
+            this.EventTitleTextBox.Text = e.Title;
+            this.CategoryComboBox.SelectedValue = e.CategoryId.ToString(CultureInfo.InvariantCulture);
+            this.EventLocationTextBox.Text = e.Location;
+            this.EventOverviewTextEditor.Text = e.Overview;
+            this.EventDescriptionTextEditor.Text = e.Description;
+            this.StartDateTimePicker.SelectedDate = e.EventStart;
+            this.EndDateTimePicker.SelectedDate = e.EventEnd;
+            this.FeaturedCheckBox.Checked = e.IsFeatured;
+            this.RecurringCheckBox.Checked = e.IsRecurring;
+            this.RecurrenceEditor.Visible = this.RecurringCheckBox.Checked;
+            this.RecurrenceEditor.SetRecurrenceRule(e.RecurrenceRule);
+
+            this.AllowRegistrationsCheckBox.Checked = this.LimitRegistrationsPanel.Visible = e.AllowRegistrations;
+            this.LimitRegistrationsCheckBox.Checked = this.RegistrationLimitPanel.Visible = e.Capacity.HasValue;
+            if (e.Capacity.HasValue)
+            {
+                this.RegistrationLimitTextBox.Value = e.Capacity.Value;
+            }
+
+            bool hasCustomCapacityMetMessage = e.CapacityMetMessage != null;
+            this.CustomCapacityMetMessagePanel.Visible = hasCustomCapacityMetMessage;
+            this.CapacityMetMessageRadioButtonList.SelectedValue = hasCustomCapacityMetMessage.ToString(CultureInfo.InvariantCulture);
+            this.CustomCapacityMetMessageTextEditor.Text = e.CapacityMetMessage;
+
+            this.InDaylightTimeCheckBox.Checked = e.InDaylightTime;
+            TimeSpan timeZoneOffset = e.TimeZoneOffset;
+            if (e.InDaylightTime)
+            {
+                timeZoneOffset = timeZoneOffset.Subtract(new TimeSpan(1, 0, 0));
+            }
+
+            this.TimeZoneDropDownList.SelectedValue = ((int)timeZoneOffset.TotalMinutes).ToString(CultureInfo.InvariantCulture);
         }
     }
 }
