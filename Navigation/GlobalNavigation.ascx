@@ -4,19 +4,19 @@
 <div class="wrapper">
 <telerik:RadMenu ID="NavigationMenu" runat="server" EnableEmbeddedSkins="false" Skin="Engage" EnableSelection="true" style="z-index:1000">
   <Items>
-     <telerik:RadMenuItem ID="HomeItem" runat="server" CssClass="RAD-home" Value="H" />
-     <telerik:RadMenuItem ID="AddEventItem" runat="server" CssClass="RAD-add" Value="A" />
-     <telerik:RadMenuITem ID="ManageItem" runat="server" CssClass="RAD-manage" Value="M">
+     <telerik:RadMenuItem ID="HomeItem" runat="server" OuterCssClass="RAD-home" AccessKey="H" />
+     <telerik:RadMenuItem ID="AddEventItem" runat="server" OuterCssClass="RAD-add" AccessKey="A" />
+     <telerik:RadMenuITem ID="ManageItem" runat="server" OuterCssClass="RAD-manage" AccessKey="M">
        <Items>
-         <telerik:RadMenuItem ID="ManageEventsItem" runat="server"/>
-         <telerik:RadMenuItem ID="ManageResponsesItem" runat="server"/>
-         <telerik:RadMenuItem ID="ManageCategoriesItem" runat="server"/>
+         <telerik:RadMenuItem ID="ManageEventsItem" runat="server" AccessKey="E" />
+         <telerik:RadMenuItem ID="ManageResponsesItem" runat="server" AccessKey="R" />
+         <telerik:RadMenuItem ID="ManageCategoriesItem" runat="server" AccessKey="C" />
        </Items>
      </telerik:RadMenuITem>
-     <telerik:RadMenuItem ID="SettingsItem" runat="server" CssClass="RAD-settings" Text="Settings" Value="S">
+     <telerik:RadMenuItem ID="SettingsItem" runat="server" OuterCssClass="RAD-settings" AccessKey="S">
        <Items>
-         <telerik:RadMenuItem ID="ModuleSettingsItem" runat="server"/>
-         <telerik:RadMenuItem ID="ChooseDisplayItem" runat="server"/>
+         <telerik:RadMenuItem ID="ModuleSettingsItem" runat="server" AccessKey="M" />
+         <telerik:RadMenuItem ID="ChooseDisplayItem" runat="server" AccessKey="C" />
        </Items>
      </telerik:RadMenuItem>
   </Items>
