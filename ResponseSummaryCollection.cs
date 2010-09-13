@@ -12,9 +12,13 @@
 namespace Engage.Events
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Data;
     using System.Diagnostics;
+    using System.Globalization;
+    using System.Linq;
+
     using Data;
 
     /// <summary>
@@ -57,20 +61,28 @@ namespace Engage.Events
         /// <param name="sortColumn">The sort column.</param>
         /// <param name="index">The page index.</param>
         /// <param name="pageSize">Size of the page.</param>
-        /// <returns>The specified collection of <see cref="ResponseSummary"/> objects.</returns>
+        /// <param name="categoryIds">A sequence of IDs for the category/ies that events must be in in order for their responses to be retrieved, or an empty/<c>null</c> sequence to get responses regardless of category.</param>
+        /// <returns>
+        /// The specified collection of <see cref="ResponseSummary"/> objects.
+        /// </returns>
         /// <exception cref="DBException">If an error occurs while retrieving the collection from the database.</exception>
-        public static ResponseSummaryCollection Load(int portalId, string sortColumn, int index, int pageSize)
+        public static ResponseSummaryCollection Load(int portalId, string sortColumn, int index, int pageSize, IEnumerable<int> categoryIds)
         {
             IDataProvider dp = DataProvider.Instance;
             try
             {
-                using (IDataReader reader = dp.ExecuteReader(
+                var categoryIdsValue = categoryIds != null && categoryIds.Any()
+                           ? string.Join(",", categoryIds.Select(id => id.ToString(CultureInfo.InvariantCulture)).ToArray())
+                           : null;
+
+                using (var reader = dp.ExecuteReader(
                     CommandType.StoredProcedure,
                     dp.NamePrefix + "spGetResponseSummaries",
                     Utility.CreateIntegerParam("@portalId", portalId),
                     Utility.CreateVarcharParam("@sortColumn", sortColumn, 200),
                     Utility.CreateIntegerParam("@index", index),
-                    Utility.CreateIntegerParam("@pageSize", pageSize)))
+                    Utility.CreateIntegerParam("@pageSize", pageSize),
+                    Utility.CreateVarcharParam("@categoryIds", categoryIdsValue)))
                 {
                     return FillResponseSummary(reader);
                 }
