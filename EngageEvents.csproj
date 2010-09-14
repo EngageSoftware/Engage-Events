@@ -403,6 +403,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ReleaseNotes_1.4.0.htm" />
     <Content Include="ManageCategories.ascx" />
     <Content Include="Images\dn.gif" />
     <Content Include="Images\lt.gif" />

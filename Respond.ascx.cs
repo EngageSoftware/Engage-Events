@@ -49,20 +49,14 @@ namespace Engage.Dnn.Events
         /// <returns>
         /// <c>true</c> if the given event can accept new registrations; otherwise, <c>false</c>.
         /// </returns>
-        private bool CanRegisterFor(Event eventBeingRespondedTo)
+        private static bool CanRegisterFor(Event eventBeingRespondedTo)
         {
             if (!eventBeingRespondedTo.Capacity.HasValue)
             {
                 return true;
             }
 
-            var responses = ResponseCollection.Load(
-                eventId: eventBeingRespondedTo.Id, 
-                eventStart: eventBeingRespondedTo.EventStart, 
-                status: ResponseStatus.Attending.ToString(), 
-                sortColumn: "ResponseId", 
-                index: 1, 
-                pageSize: 0);
+            var responses = ResponseCollection.Load(eventBeingRespondedTo.Id, eventBeingRespondedTo.EventStart, ResponseStatus.Attending.ToString(), "ResponseId", 1, 0);
             return eventBeingRespondedTo.Capacity > responses.TotalRecords;
         }
 
@@ -115,7 +109,7 @@ namespace Engage.Dnn.Events
 
             eventBeingRespondedTo = eventBeingRespondedTo.CreateOccurrence(this.EventStart);
 
-            if (!this.CanRegisterFor(eventBeingRespondedTo) && !this.CanUnregisterFrom(eventBeingRespondedTo.Id))
+            if (!CanRegisterFor(eventBeingRespondedTo) && !this.CanUnregisterFrom(eventBeingRespondedTo.Id))
             {
                 this.ShowEventFullView(eventBeingRespondedTo);
             }
@@ -182,7 +176,7 @@ namespace Engage.Dnn.Events
                 }
 
                 var responseStatus = (ResponseStatus)Enum.Parse(typeof(ResponseStatus), this.ResponseStatusRadioButtons.SelectedValue);
-                if (responseStatus != ResponseStatus.Attending || this.CanRegisterFor(eventBeingRespondedTo))
+                if (responseStatus != ResponseStatus.Attending || CanRegisterFor(eventBeingRespondedTo))
                 {
                     Response response = Engage.Events.Response.Load(eventId.Value, this.EventStart, this.UserInfo.Email) ??
                                         Engage.Events.Response.Create(

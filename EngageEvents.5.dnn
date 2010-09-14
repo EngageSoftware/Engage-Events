@@ -84,6 +84,10 @@
                     <helpUrl>http://www.EngageSoftware.com/Support.aspx</helpUrl>
                   </moduleControl>
                 </moduleControls>
+                <permissions>
+                  <permission code="ENGAGE_EVENTS" key="CREATE-CATEGORY" name="Create Category" />
+                  <permission code="ENGAGE_EVENTS" key="MANAGE-CATEGORIES" name="Manage Categories" />
+                </permissions>
               </moduleDefinition>
             </moduleDefinitions>
           </desktopModule>

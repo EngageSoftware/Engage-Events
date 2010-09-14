@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Create Category.Permission" xml:space="preserve">
+    <value>Create Category</value>
+  </data>
   <data name="DailyRecurrence.Text" xml:space="preserve">
     <value>&lt;span class="NormalBold"&gt;Occurs&lt;/span&gt; every {0} day(s)</value>
     <comment>{0} is replaced by number of days</comment>
@@ -138,6 +141,9 @@
   </data>
   <data name="Last.Text" xml:space="preserve">
     <value>last</value>
+  </data>
+  <data name="Manage Categories.Permission" xml:space="preserve">
+    <value>Manage Categories</value>
   </data>
   <data name="MonthlyRecurrenceOnDate.Text" xml:space="preserve">
     <value>&lt;span class="NormalBold"&gt;Occurs&lt;/span&gt; on day {0} of every {1} month(s)</value>
