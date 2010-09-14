@@ -118,6 +118,10 @@ namespace Engage.Dnn.Events.Display
         {
             this.EventsCalendarToolTipManager.TargetControls.Clear();
             ScriptManager.RegisterStartupScript(this, typeof(EventCalendar), "HideToolTip", "hideActiveToolTip();", true);
+
+            var category = ((Event)e.Appointment.DataItem).Category;
+            var categoryName = string.IsNullOrEmpty(category.Name) ? this.Localize("DefaultCategory", this.LocalSharedResourceFile) : category.Name;
+            e.Appointment.CssClass = "cat-" + Engage.Utility.ConvertToSlug(categoryName);
         }
 
         /// <summary>
