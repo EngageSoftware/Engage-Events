@@ -2,7 +2,7 @@
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 
 <div class="wrapper">
-<telerik:RadMenu ID="NavigationMenu" runat="server" EnableEmbeddedSkins="false" Skin="Engage" EnableSelection="true" style="z-index:1000">
+<telerik:RadMenu ID="NavigationMenu" runat="server" EnableEmbeddedSkins="false" Skin="Engage" EnableSelection="true" style="z-index:999">
   <Items>
      <telerik:RadMenuItem ID="HomeItem" runat="server" OuterCssClass="RAD-home" AccessKey="H" />
      <telerik:RadMenuItem ID="AddEventItem" runat="server" OuterCssClass="RAD-add" AccessKey="A" />
