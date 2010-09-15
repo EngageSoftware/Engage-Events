@@ -22,7 +22,7 @@
     
     <div class="AEEventCategory">
         <asp:Label runat="server" ResourceKey="EventCategoryLabel" CssClass="NormalBold" AssociatedControlID="CategoryComboBox"/>
-        <telerik:RadComboBox ID="CategoryComboBox" runat="server" skin="WebBlue" AllowCustomText="true" MarkFirstMatch="true" ShowDropDownOnTextboxClick="true" />
+        <telerik:RadComboBox ID="CategoryComboBox" runat="server" skin="WebBlue" MarkFirstMatch="true" ShowDropDownOnTextboxClick="true" />
         <asp:RequiredFieldValidator runat="server" ControlToValidate="CategoryComboBox" ResourceKey="EventCategoryRequired" Display="None" EnableClientScript="false"/>
     </div>
     

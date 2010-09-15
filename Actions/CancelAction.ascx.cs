@@ -105,7 +105,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetVisibility()
         {
-            this.CancelButton.Visible = this.IsEditable;
+            this.CancelButton.Visible = this.IsEditable || this.PermissionsService.CanManageEvents;
         }
 
         /// <summary>

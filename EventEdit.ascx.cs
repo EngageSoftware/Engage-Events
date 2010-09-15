@@ -252,6 +252,7 @@ namespace Engage.Dnn.Events
             // TODO: Now that we support .NET 3.5, replace this with TimeZoneInfo.GetSystemTimeZones
             Localization.LoadTimeZoneDropDownList(this.TimeZoneDropDownList, CultureInfo.CurrentCulture.Name, ((int)Dnn.Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings).TotalMinutes).ToString(CultureInfo.InvariantCulture));
 
+            this.CategoryComboBox.AllowCustomText = this.PermissionsService.CanManageCategories;
             this.CategoryComboBox.DataTextField = "Name";
             this.CategoryComboBox.DataValueField = "Id";
             this.CategoryComboBox.DataSource = from category in CategoryCollection.Load(this.PortalId)

@@ -40,7 +40,7 @@ namespace Engage.Dnn.Events
                         "EDITEVENTBUTTON", 
                         (@this, container, tag, currentEvent, resourceFile) => 
                         {
-                            if (@this.IsEditable)
+                            if (@this.PermissionsService.CanManageEvents)
                             {
                                     ButtonAction editEventAction = (ButtonAction)@this.LoadControl(@this.ActionsControlsFolder + "ButtonAction.ascx");
                                     editEventAction.CurrentEvent = currentEvent;
@@ -57,7 +57,7 @@ namespace Engage.Dnn.Events
                         "VIEWRESPONSESBUTTON", 
                         (@this, container, tag, currentEvent, resourceFile) => 
                         {
-                            if (@this.IsEditable)
+                            if (@this.PermissionsService.CanViewResponses)
                             {
                                     ButtonAction responsesEventAction = (ButtonAction)@this.LoadControl(@this.ActionsControlsFolder + "ButtonAction.ascx");
                                     responsesEventAction.CurrentEvent = currentEvent;

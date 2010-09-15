@@ -76,7 +76,7 @@ namespace Engage.Dnn.Events.Display
         {
             ////this.ShowEvent();
             ////this.AddToCalendarButton.Visible = Engage.Utility.IsLoggedIn;
-            this.EditButton.Visible = this.IsEditable;
+            this.EditButton.Visible = this.IsEditable || this.PermissionsService.CanManageEvents;
         }
 
         /// <summary>
