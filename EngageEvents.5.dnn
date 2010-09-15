@@ -85,8 +85,10 @@
                   </moduleControl>
                 </moduleControls>
                 <permissions>
-                  <permission code="ENGAGE_EVENTS" key="CREATE-CATEGORY" name="Create Category" />
                   <permission code="ENGAGE_EVENTS" key="MANAGE-CATEGORIES" name="Manage Categories" />
+                  <permission code="ENGAGE_EVENTS" key="MANAGE-DISPLAY" name="Manage Display" />
+                  <permission code="ENGAGE_EVENTS" key="MANAGE-EVENTS" name="Manage Events" />
+                  <permission code="ENGAGE_EVENTS" key="VIEW-RESPONSES" name="View Responses" />
                 </permissions>
               </moduleDefinition>
             </moduleDefinitions>

@@ -34,6 +34,11 @@ namespace Engage.Dnn.Events
         /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
         protected override void OnInit(EventArgs e)
         {
+            if (!this.PermissionsService.CanManageCategories)
+            {
+                this.DenyAccess();
+            }
+
             base.OnInit(e);
 
             this.Load += this.Page_Load;

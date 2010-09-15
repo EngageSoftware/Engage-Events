@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Create Category.Permission" xml:space="preserve">
-    <value>Create Category</value>
+  <data name="Manage Events.Permission" xml:space="preserve">
+    <value>Manage Events</value>
   </data>
   <data name="DailyRecurrence.Text" xml:space="preserve">
     <value>&lt;span class="NormalBold"&gt;Occurs&lt;/span&gt; every {0} day(s)</value>
@@ -142,8 +142,14 @@
   <data name="Last.Text" xml:space="preserve">
     <value>last</value>
   </data>
+  <data name="Manage Categories.Action" xml:space="preserve">
+    <value>Manage Categories</value>
+  </data>
   <data name="Manage Categories.Permission" xml:space="preserve">
     <value>Manage Categories</value>
+  </data>
+  <data name="Manage Display.Permission" xml:space="preserve">
+    <value>Choose Display</value>
   </data>
   <data name="MonthlyRecurrenceOnDate.Text" xml:space="preserve">
     <value>&lt;span class="NormalBold"&gt;Occurs&lt;/span&gt; on day {0} of every {1} month(s)</value>
@@ -171,6 +177,9 @@
   <data name="TimespanDifferentYear.Text" xml:space="preserve">
     <value>{0:dddd, MMMM d, yyyy, hh:mmtt} - {1:dddd, MMMM d, yyyy, hh:mmtt}</value>
   </data>
+  <data name="View Responses.Permission" xml:space="preserve">
+    <value>View Responses</value>
+  </data>
   <data name="WeekDays.Text" xml:space="preserve">
     <value>weekday</value>
   </data>
@@ -188,5 +197,17 @@
   <data name="YearlyRecurrenceOnGivenDay.Text" xml:space="preserve">
     <value>&lt;span class="NormalBold"&gt;Occurs&lt;/span&gt; the {0} {1} of {2:MMMM}</value>
     <comment>{0} is replaced by the ordinal (first, second, last, etc), {1} is replaced by the day {weekday, Wednesday, etc), {2:MMMM} is replaced by the month name (use %M for month number, MM for month number with leading zero, or MMM for abbreviated month name)</comment>
+  </data>
+  <data name="Manage Display.Action" xml:space="preserve">
+    <value>Choose Display</value>
+  </data>
+  <data name="Manage Events.Action" xml:space="preserve">
+    <value>Manage Events</value>
+  </data>
+  <data name="View Responses.Action" xml:space="preserve">
+    <value>View Responses</value>
+  </data>
+  <data name="Add Event.Action" xml:space="preserve">
+    <value>Add Event</value>
   </data>
 </root>

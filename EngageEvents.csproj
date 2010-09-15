@@ -197,6 +197,7 @@
     <Compile Include="Admin\NotConfigured.ascx.designer.cs">
       <DependentUpon>NotConfigured.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Components\PermissionsService.cs" />
     <Compile Include="Controls\TemplatePicker.ascx.cs">
       <DependentUpon>TemplatePicker.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

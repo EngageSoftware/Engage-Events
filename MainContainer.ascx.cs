@@ -69,13 +69,9 @@ namespace Engage.Dnn.Events
             {
                 this.LoadChildControl(controlToLoad);
             }
-            else if (Engage.Utility.IsLoggedIn)
-            {
-                this.Response.Redirect(Globals.NavigateURL(this.TabId), true);
-            }
             else
             {
-                this.Response.Redirect(Dnn.Utility.GetLoginUrl(this.PortalSettings, this.Request), true);
+                this.DenyAccess();
             }
         }
 
@@ -85,22 +81,20 @@ namespace Engage.Dnn.Events
         /// <returns>A dictionary mapping control keys to user controls.</returns>
         private static IDictionary<string, SubControlInfo> FillControlKeys()
         {
-            IDictionary<string, SubControlInfo> keyDictionary = new Dictionary<string, SubControlInfo>(11, StringComparer.OrdinalIgnoreCase);
-
-            keyDictionary.Add("EmailEdit", new SubControlInfo("EmailEdit.ascx", true));
-            keyDictionary.Add("EventEdit", new SubControlInfo("EventEdit.ascx", true));
-            keyDictionary.Add(DefaultControlKey, DefaultSubControl);
-            keyDictionary.Add("EventListingAdmin", new SubControlInfo("Display/EventListingItem.ascx", true));
-            keyDictionary.Add("ResponseSummary", new SubControlInfo("ResponseSummaryDisplay.ascx", true));
-            keyDictionary.Add("ResponseDetail", new SubControlInfo("ResponseDetail.ascx", true));
-            keyDictionary.Add("Response", new SubControlInfo("Respond.ascx", false));
-            keyDictionary.Add("EmailAFriend", new SubControlInfo("EmailAFriend.ascx", false));
-            keyDictionary.Add("Register", new SubControlInfo("Register.ascx", false));
-            keyDictionary.Add("EventDetail", new SubControlInfo("Display/EventDetail.ascx", false));
-            keyDictionary.Add("ChooseDisplay", new SubControlInfo("ChooseDisplay.ascx", true));
-            keyDictionary.Add("ManageCategories", new SubControlInfo("ManageCategories.ascx", true));
-
-            return keyDictionary;
+            return new Dictionary<string, SubControlInfo>(11, StringComparer.OrdinalIgnoreCase)
+                {
+                    { "EventEdit", new SubControlInfo("EventEdit.ascx", false) },
+                    { DefaultControlKey, DefaultSubControl },
+                    { "EventListingAdmin", new SubControlInfo("Display/EventListingItem.ascx", false) },
+                    { "ResponseSummary", new SubControlInfo("ResponseSummaryDisplay.ascx", false) },
+                    { "ResponseDetail", new SubControlInfo("ResponseDetail.ascx", false) },
+                    { "Response", new SubControlInfo("Respond.ascx", false) },
+                    { "EmailAFriend", new SubControlInfo("EmailAFriend.ascx", false) },
+                    { "Register", new SubControlInfo("Register.ascx", false) },
+                    { "EventDetail", new SubControlInfo("Display/EventDetail.ascx", false) },
+                    { "ChooseDisplay", new SubControlInfo("ChooseDisplay.ascx", false) },
+                    { "ManageCategories", new SubControlInfo("ManageCategories.ascx", false) }
+                };
         }
 
         /// <summary>
@@ -115,9 +109,10 @@ namespace Engage.Dnn.Events
             }
 
             string keyParam = this.GetCurrentControlKey();
-            if (Engage.Utility.HasValue(keyParam))
+            SubControlInfo control;
+            if (Engage.Utility.HasValue(keyParam) && ControlKeys.TryGetValue(keyParam, out control))
             {
-                return ControlKeys[keyParam];
+                return control;
             }
 
             return DefaultSubControl;

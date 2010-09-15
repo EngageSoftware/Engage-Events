@@ -11,16 +11,11 @@
 
 namespace Engage.Dnn.Events.Components
 {
-#if TRIAL
-    using System;
-#endif
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     using DotNetNuke.Entities.Modules;
-    using DotNetNuke.Entities.Modules.Definitions;
-    using DotNetNuke.Security.Permissions;
 
     /// <summary>
     /// Controls which DNN features are available for this module.
@@ -28,22 +23,6 @@ namespace Engage.Dnn.Events.Components
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Instantiated through reflection by DNN")]
     internal class FeaturesController : IUpgradeable
     {
-        /// <summary>
-        /// The permission code for all Engage: Events custom permissions
-        /// </summary>
-        public const string EngageEventsCustomPermissionsCode = "ENGAGE_EVENTS";
-
-        /// <summary>
-        /// The permission key for the custom permission to create categories
-        /// </summary>
-        public const string CreateCategoryCustomPermissionKey = "CREATE-CATEGORY";
-
-
-        /// <summary>
-        /// The permission key for the custom permission to manage categories
-        /// </summary>
-        public const string ManageCategoriesCustomPermissionKey = "MANAGE-CATEGORY";
-
 #if TRIAL
         /// <summary>
         /// The license key for this module
@@ -61,39 +40,10 @@ namespace Engage.Dnn.Events.Components
             var versionNumber = new Version(version);
             if (versionNumber.Equals(new Version(1, 4, 0)))
             {
-                // add custom permissions, based on http://www.codeproject.com/KB/aspnet/dnn_custom_permissions.aspx
-                var permissionController = new PermissionController();
-                var existingPermissions = permissionController.GetPermissionByCodeAndKey(EngageEventsCustomPermissionsCode, CreateCategoryCustomPermissionKey);
-                if (existingPermissions != null && existingPermissions.Cast<PermissionInfo>().Any())
-                {
-                    return "Engage: Events custom permissions were already created (presumably by DNN 5 manifest), no upgrade action taken";
-                }
-
-                var eventsDesktopModules = new DesktopModuleController().GetDesktopModuleByModuleName(Utility.DesktopModuleName);
-                var moduleDefinition = new ModuleDefinitionController().GetModuleDefinitionByName(
-                    eventsDesktopModules.DesktopModuleID, 
-                    Utility.ModuleDefinitionFriendlyName);
-
-                var createCategoryPermission = new PermissionInfo
-                    {
-                        PermissionCode = EngageEventsCustomPermissionsCode,
-                        PermissionKey = CreateCategoryCustomPermissionKey,
-                        PermissionName = "Create Category",
-                        ModuleDefID = moduleDefinition.ModuleDefID
-                    };
-
-                var manageCategoriesPermission = new PermissionInfo
-                    {
-                        PermissionCode = EngageEventsCustomPermissionsCode,
-                        PermissionKey = ManageCategoriesCustomPermissionKey,
-                        PermissionName = "Manage Categories",
-                        ModuleDefID = moduleDefinition.ModuleDefID
-                    };
-
-                permissionController.AddPermission(createCategoryPermission);
-                permissionController.AddPermission(manageCategoriesPermission);
-
-                return "Created custom permissions for category management in Engage: Events";
+                // this should only occur for DNN 4, the DNN 5 manifest doesn't setup the Event Queue to call UpgradeModule
+                // and if it does need to call UpgradeModule in the future, it shouldn't include 1.4.0 in the version list
+                // because we can add permissions declaratively through the DNN 5 manifest
+                return PermissionsService.CreateCustomPermissions();
             }
 
             return "No upgrade action required for version " + version + " of Engage: Events";

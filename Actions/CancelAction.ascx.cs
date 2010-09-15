@@ -12,7 +12,7 @@
 namespace Engage.Dnn.Events
 {
     using System;
-    using Display;
+
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.Utilities;
 
@@ -105,7 +105,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetVisibility()
         {
-            this.CancelButton.Visible = this.IsAdmin;
+            this.CancelButton.Visible = this.IsEditable;
         }
 
         /// <summary>

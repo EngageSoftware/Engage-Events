@@ -21,13 +21,13 @@ namespace Engage.Dnn.Events
     using System.Web;
     using System.Web.UI;
     using DotNetNuke.Common;
-    using DotNetNuke.Entities.Host;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Modules.Actions;
     using DotNetNuke.Security;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.WebControls;
 
+    using Engage.Dnn.Events.Components;
     using Engage.Events;
 
 #if TRIAL
@@ -40,6 +40,11 @@ namespace Engage.Dnn.Events
     /// </summary>
     public class ModuleBase : Framework.ModuleBase, IActionable
     {
+        /// <summary>
+        /// Backing field for <see cref="PermissionsService"/>
+        /// </summary>
+        private PermissionsService permissionsService;
+
         /// <summary>
         /// Gets the name of the this module's desktop module record in DNN.
         /// </summary>
@@ -59,25 +64,60 @@ namespace Engage.Dnn.Events
             {
                 var actions = new ModuleActionCollection();
 
-                if (HostSettings.GetHostSetting("EnableModuleOnLineHelp") == "Y" && Engage.Utility.HasValue(this.ModuleConfiguration.HelpUrl))
+                if (this.PermissionsService.CanManageEvents)
                 {
-                    var helpAction = new ModuleAction(this.GetNextActionID())
-                        {
-                            Title = Localization.GetString(ModuleActionType.OnlineHelp, Localization.GlobalResourceFile),
-                            CommandName = ModuleActionType.OnlineHelp,
-                            CommandArgument = string.Empty,
-                            Icon = "action_help.gif",
-                            Url =
-                                Globals.FormatHelpUrl(
-                                    this.ModuleConfiguration.HelpUrl,
-                                    this.PortalSettings,
-                                    this.ModuleConfiguration.FriendlyName),
-                            Secure = SecurityAccessLevel.Edit,
-                            UseActionEvent = true,
-                            Visible = true,
-                            NewWindow = true
-                        };
-                    actions.Add(helpAction);
+                    actions.Add(
+                        new ModuleAction(this.GetNextActionID())
+                            {
+                                Title = this.Localize("Add Event.Action", this.LocalSharedResourceFile),
+                                CommandName = ModuleActionType.AddContent,
+                                Url = this.BuildLinkUrl(this.ModuleId, "EventEdit"),
+                                Secure = SecurityAccessLevel.View
+                            });
+                    actions.Add(
+                        new ModuleAction(this.GetNextActionID())
+                            {
+                                Title = this.Localize("Manage Events.Action", this.LocalSharedResourceFile),
+                                CommandName = ModuleActionType.EditContent,
+                                Url = this.BuildLinkUrl(this.ModuleId, "EventListingAdmin"),
+                                Secure = SecurityAccessLevel.View
+                            });
+                }
+
+                if (this.PermissionsService.CanManageCategories)
+                {
+                    actions.Add(
+                        new ModuleAction(this.GetNextActionID())
+                            {
+                                Title = this.Localize("Manage Categories.Action", this.LocalSharedResourceFile),
+                                CommandName = ModuleActionType.EditContent,
+                                Url = this.BuildLinkUrl(this.ModuleId, "ManageCategories"),
+                                Secure = SecurityAccessLevel.View
+                            });
+                }
+
+                if (this.PermissionsService.CanViewResponses)
+                {
+                    actions.Add(
+                        new ModuleAction(this.GetNextActionID())
+                            {
+                                Title = this.Localize("View Responses.Action", this.LocalSharedResourceFile),
+                                CommandName = ModuleActionType.EditContent,
+                                Url = this.BuildLinkUrl(this.ModuleId, "ResponseSummary"),
+                                Secure = SecurityAccessLevel.View
+                            });
+                }
+
+                if (this.PermissionsService.CanManageDisplay)
+                {
+                    actions.Add(
+                        new ModuleAction(this.GetNextActionID())
+                            {
+                                Title = this.Localize("Manage Display.Action", this.LocalSharedResourceFile),
+                                CommandName = ModuleActionType.ModuleSettings,
+                                Url = this.BuildLinkUrl(this.ModuleId, "ChooseDisplay"),
+                                Secure = SecurityAccessLevel.View
+                            });
                 }
 
                 return actions;
@@ -230,15 +270,25 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Determines whether this instance of the module can display the given event (based on the Categories setting).
+        /// Gets the <see cref="Components.PermissionsService"/>.
         /// </summary>
-        /// <param name="e">The event to check.</param>
-        /// <returns>
-        /// <c>true</c> if this instance can show the event; otherwise, <c>false</c>.
-        /// </returns>
-        protected bool CanShowEvent(Event e)
+        /// <value>The permissions service.</value>
+        protected PermissionsService PermissionsService
         {
-            return !this.CategoryIds.Any() || this.CategoryIds.Contains(e.CategoryId);
+            get
+            {
+                if (this.permissionsService == null)
+                {
+                    if (this.ModuleConfiguration == null)
+                    {
+                        this.SetModuleConfiguration();
+                    }
+
+                    this.permissionsService = new PermissionsService(this.ModuleConfiguration);
+                }
+
+                return this.permissionsService;
+            }
         }
 
         /// <summary>
@@ -307,6 +357,61 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Raises the <see cref="Control.Init"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected override void OnInit(EventArgs e)
+        {
+#if TRIAL
+            this.LicenseProvider = new TrialLicenseProvider(FeaturesController.ModuleLicenseKey);
+#endif
+
+            base.OnInit(e);
+
+            this.SetModuleConfiguration();
+            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
+        }
+
+        /// <summary>
+        /// Determines whether this instance of the module can display the given event (based on the Categories setting).
+        /// </summary>
+        /// <param name="e">The event to check.</param>
+        /// <returns>
+        /// <c>true</c> if this instance can show the event; otherwise, <c>false</c>.
+        /// </returns>
+        protected bool CanShowEvent(Event e)
+        {
+            return !this.CategoryIds.Any() || this.CategoryIds.Contains(e.CategoryId);
+        }
+
+        /// <summary>
+        /// Denies the user access to this control, showing them an "Access Denied" message is they're logged in, or the login page if they aren't.
+        /// </summary>
+        protected void DenyAccess()
+        {
+            this.Response.Redirect(IsLoggedIn ? Globals.NavigateURL("Access Denied") : Dnn.Utility.GetLoginUrl(this.PortalSettings, this.Request));
+        }
+
+        /// <summary>
+        /// Sets the <see cref="PortalModuleBase.ModuleConfiguration"/> for controls not loaded by DNN (i.e. when it's <c>null</c>), 
+        /// getting it from the parent control
+        /// </summary>
+        protected void SetModuleConfiguration()
+        {
+            PortalModuleBase parentControl = this;
+            while (this.ModuleConfiguration == null)
+            {
+                parentControl = Engage.Utility.FindParentControl<PortalModuleBase>(parentControl);
+                if (parentControl == null)
+                {
+                    break;
+                }
+
+                this.ModuleConfiguration = parentControl.ModuleConfiguration;
+            }
+        }
+
+        /// <summary>
         /// Sets up a DNN <see cref="PagingControl"/>.
         /// </summary>
         /// <param name="pagingControl">The pager control.</param>
@@ -324,20 +429,6 @@ namespace Engage.Dnn.Events
             pagingControl.CurrentPage = this.CurrentPageIndex;
             pagingControl.TabID = this.TabId;
             pagingControl.QuerystringParams = GenerateQueryStringParameters(this.Request, queryStringKeys);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="Control.Init"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        protected override void OnInit(EventArgs e)
-        {
-#if TRIAL
-            this.LicenseProvider = new TrialLicenseProvider(FeaturesController.ModuleLicenseKey);
-#endif
-
-            base.OnInit(e);
-            this.LocalResourceFile = this.AppRelativeTemplateSourceDirectory + Localization.LocalResourceDirectory + "/" + Path.GetFileNameWithoutExtension(this.TemplateControl.AppRelativeVirtualPath);
         }
     }
 }

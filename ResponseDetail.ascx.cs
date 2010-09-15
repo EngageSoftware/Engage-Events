@@ -77,6 +77,11 @@ namespace Engage.Dnn.Events
         /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
         protected override void OnInit(EventArgs e)
         {
+            if (!this.PermissionsService.CanViewResponses)
+            {
+                this.DenyAccess();
+            }
+
             AJAX.RegisterPostBackControl(this.ExportToCsvButton);
             AJAX.RegisterPostBackControl(this.ExportToExcelButton);
 

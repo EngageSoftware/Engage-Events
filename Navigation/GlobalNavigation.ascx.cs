@@ -14,9 +14,9 @@ namespace Engage.Dnn.Events.Navigation
     using System;
     using System.ComponentModel;
     using System.Globalization;
+    using System.Web.UI;
+
     using DotNetNuke.Common;
-    using DotNetNuke.Entities.Modules;
-    using DotNetNuke.Security.Permissions;
     using DotNetNuke.Services.Exceptions;
 
     /// <summary>
@@ -25,18 +25,14 @@ namespace Engage.Dnn.Events.Navigation
     public partial class GlobalNavigation : ModuleBase
     {
         /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
+        /// Raises the <see cref="Control.Init"/> event.
         /// </summary>
-        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         protected override void OnInit(EventArgs e)
         {
             try
             {
                 base.OnInit(e);
-
-                // since the global navigation control is not loaded using DNN mechanisms we need to set it here so that calls to 
-                // module related information will appear the same as the actual control this navigation is sitting on.hk
-                this.ModuleConfiguration = Engage.Utility.FindParentControl<PortalModuleBase>(this).ModuleConfiguration;
 
                 this.Load += this.Page_Load;
             }
@@ -48,20 +44,18 @@ namespace Engage.Dnn.Events.Navigation
         }
 
         /// <summary>
-        /// Handles the Load event of the Page control.
+        /// Handles the <see cref="Control.Load"/> event of this control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
-                ////this.BasePage.AddStyleSheet("Engage-Global-Nav", this.ResolveUrl("EngageSkin/Menu.Engage.css"));
                 this.SetupLinks();
                 this.SetVisibility();
                 this.LocalizeMenu();
                 this.SetCurrentlySelectedMenu();
-                ////this.SetDisabledImages();
             }
             catch (Exception exc)
             {
@@ -69,29 +63,38 @@ namespace Engage.Dnn.Events.Navigation
             }
         }
 
+        /// <summary>
+        /// Highlights the path of the menu item for the current page.
+        /// </summary>
         private void SetCurrentlySelectedMenu()
         {
             var controlKey = this.GetCurrentControlKey();
-            var currentItem = NavigationMenu.FindItemByValue(controlKey);
-            if (controlKey != "" && currentItem != null)
+            var currentItem = this.NavigationMenu.FindItemByValue(controlKey);
+            if (!string.IsNullOrEmpty(controlKey) && currentItem != null)
             {
-                //Highlight the current item and his parents
+                // Highlight the current item and his parents
                 currentItem.HighlightPath();
             }
             else
             {
-                NavigationMenu.Items[0].HighlightPath();
+                this.NavigationMenu.Items[0].HighlightPath();
             }
         }
 
+        /// <summary>
+        /// Localizes the menu items.
+        /// </summary>
         private void LocalizeMenu()
         {
             this.HomeItem.Text = this.Localize("Home");
+
             this.AddEventItem.Text = this.Localize("Add Event");
+
             this.ManageItem.Text = this.Localize("Manage");
             this.ManageEventsItem.Text = this.Localize("Manage Events");
             this.ManageResponsesItem.Text = this.Localize("Responses");
             this.ManageCategoriesItem.Text = this.Localize("Manage Categories");
+
             this.SettingsItem.Text = this.Localize("Settings");
             this.ModuleSettingsItem.Text = this.Localize("Module Settings");
             this.ChooseDisplayItem.Text = this.Localize("Choose Display");
@@ -104,23 +107,22 @@ namespace Engage.Dnn.Events.Navigation
         {
             this.HomeItem.NavigateUrl = Globals.NavigateURL();
 
-            this.ModuleSettingsItem.NavigateUrl = this.EditUrl("ModuleId", this.ModuleId.ToString(CultureInfo.InvariantCulture), "Module");
-
-            this.ChooseDisplayItem.Value = "ChooseDisplay";
-            this.ChooseDisplayItem.NavigateUrl = this.BuildLinkUrl(this.ModuleId, this.ChooseDisplayItem.Value);
-
             this.AddEventItem.Value = "EventEdit";
             this.AddEventItem.NavigateUrl = this.BuildLinkUrl(this.ModuleId, this.AddEventItem.Value);
-
-            this.ManageResponsesItem.Value = "ResponseSummary";
-            this.ManageResponsesItem.NavigateUrl = this.BuildLinkUrl(this.ModuleId, this.ManageResponsesItem.Value);
 
             this.ManageEventsItem.Value = "EventListingAdmin";
             this.ManageEventsItem.NavigateUrl = this.BuildLinkUrl(this.ModuleId, this.ManageEventsItem.Value);
 
+            this.ManageResponsesItem.Value = "ResponseSummary";
+            this.ManageResponsesItem.NavigateUrl = this.BuildLinkUrl(this.ModuleId, this.ManageResponsesItem.Value);
+
             this.ManageCategoriesItem.Value = "ManageCategories";
             this.ManageCategoriesItem.NavigateUrl = this.BuildLinkUrl(this.ModuleId, this.ManageCategoriesItem.Value);
-            
+
+            this.ModuleSettingsItem.NavigateUrl = this.EditUrl("ModuleId", this.ModuleId.ToString(CultureInfo.InvariantCulture), "Module");
+
+            this.ChooseDisplayItem.Value = "ChooseDisplay";
+            this.ChooseDisplayItem.NavigateUrl = this.BuildLinkUrl(this.ModuleId, this.ChooseDisplayItem.Value);
         }
 
         /// <summary>
@@ -128,8 +130,22 @@ namespace Engage.Dnn.Events.Navigation
         /// </summary>
         private void SetVisibility()
         {
-            this.Visible = this.IsAdmin;
-            this.ModuleSettingsItem.Visible = TabPermissionController.HasTabPermission("EDIT");
+            this.Visible = this.PermissionsService.HasAnyPermission;
+            if (!this.Visible)
+            {
+                return;
+            }
+
+            this.AddEventItem.Visible = this.PermissionsService.CanManageEvents;
+            
+            this.ManageEventsItem.Visible = this.PermissionsService.CanManageEvents;
+            this.ManageResponsesItem.Visible = this.PermissionsService.CanViewResponses;
+            this.ManageCategoriesItem.Visible = this.PermissionsService.CanManageCategories;
+            this.ManageItem.Visible = this.ManageEventsItem.Visible || this.ManageResponsesItem.Visible || this.ManageCategoriesItem.Visible;
+
+            this.ModuleSettingsItem.Visible = this.PermissionsService.CanAccessModuleSettings;
+            this.ChooseDisplayItem.Visible = this.PermissionsService.CanManageDisplay;
+            this.SettingsItem.Visible = this.ModuleSettingsItem.Visible || this.ChooseDisplayItem.Visible;
         }
     }
 }

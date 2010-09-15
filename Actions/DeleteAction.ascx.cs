@@ -104,7 +104,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetVisibility()
         {
-            this.DeleteEventButton.Visible = this.IsAdmin;
+            this.DeleteEventButton.Visible = this.IsEditable;
         }
 
         /// <summary>
