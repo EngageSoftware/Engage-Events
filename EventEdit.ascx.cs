@@ -252,18 +252,23 @@ namespace Engage.Dnn.Events
             // TODO: Now that we support .NET 3.5, replace this with TimeZoneInfo.GetSystemTimeZones
             Localization.LoadTimeZoneDropDownList(this.TimeZoneDropDownList, CultureInfo.CurrentCulture.Name, ((int)Dnn.Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings).TotalMinutes).ToString(CultureInfo.InvariantCulture));
 
+            var categories = from category in CategoryCollection.Load(this.PortalId)
+                             where !this.CategoryIds.Any() || this.CategoryIds.Contains(category.Id)
+                             select new
+                                 {
+                                     Name = string.IsNullOrEmpty(category.Name)
+                                                ? this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile)
+                                                : category.Name,
+                                     Id = category.Id.ToString(CultureInfo.InvariantCulture)
+                                 };
             this.CategoryComboBox.AllowCustomText = this.PermissionsService.CanManageCategories;
             this.CategoryComboBox.DataTextField = "Name";
             this.CategoryComboBox.DataValueField = "Id";
-            this.CategoryComboBox.DataSource = from category in CategoryCollection.Load(this.PortalId)
-                                               select new
-                                                   {
-                                                       Name = string.IsNullOrEmpty(category.Name)
-                                                                ? this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile)
-                                                                : category.Name,
-                                                       Id = category.Id.ToString(CultureInfo.InvariantCulture)
-                                                   };
+            this.CategoryComboBox.DataSource = categories;
             this.CategoryComboBox.DataBind();
+
+            // don't show the categories if there's only one option
+            this.CategoryPanel.Visible = this.CategoryComboBox.AllowCustomText || categories.Count() > 1;
         }
 
         /// <summary>

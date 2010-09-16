@@ -20,11 +20,11 @@
         <asp:RequiredFieldValidator runat="server" ControlToValidate="EventTitleTextBox" ResourceKey="EventTitleTextBoxRequired" Display="None" EnableClientScript="false"/>
     </div>
     
-    <div class="AEEventCategory">
+    <asp:Panel ID="CategoryPanel" runat="server" CssClass="AEEventCategory">
         <asp:Label runat="server" ResourceKey="EventCategoryLabel" CssClass="NormalBold" AssociatedControlID="CategoryComboBox"/>
         <telerik:RadComboBox ID="CategoryComboBox" runat="server" skin="WebBlue" MarkFirstMatch="true" ShowDropDownOnTextboxClick="true" />
         <asp:RequiredFieldValidator runat="server" ControlToValidate="CategoryComboBox" ResourceKey="EventCategoryRequired" Display="None" EnableClientScript="false"/>
-    </div>
+    </asp:Panel>
     
     <div class="AEEventStartDate">
         <asp:Label runat="server" ResourceKey="EventStartDateLabel" CssClass="NormalBold" AssociatedControlID="StartDateTimePicker"/>
