@@ -232,6 +232,13 @@ namespace Engage.Dnn.Events
 
             var category = Category.Create(this.PortalId, this.CategoryComboBox.Text, null);
             category.Save(this.UserId);
+
+            // if this is a new category and the categories are restricted in the settings, make sure that this category can show up in this module
+            if (this.CategoryIds.Any())
+            {
+                ModuleSettings.Categories.Set(this, ModuleSettings.Categories.GetValueAsStringFor(this) + "," + category.Id.ToString(CultureInfo.InvariantCulture));
+            }
+
             return category.Id;
         }
 

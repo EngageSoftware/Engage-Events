@@ -392,6 +392,14 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Clears the cached value for <see cref="CategoryIds"/>.  This should be called when the setting is updated and needs to be read in the same request.
+        /// </summary>
+        protected void ClearCategoryIdsCache()
+        {
+            this.categoryIds = null;
+        }
+
+        /// <summary>
         /// Denies the user access to this control, showing them an "Access Denied" message is they're logged in, or the login page if they aren't.
         /// </summary>
         protected void DenyAccess()

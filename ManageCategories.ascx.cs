@@ -13,6 +13,7 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Web.UI;
     using System.Web.UI.WebControls;
@@ -85,7 +86,7 @@ namespace Engage.Dnn.Events
         protected void UniqueNameValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
             var gridItem = Engage.Utility.FindParentControl<GridDataItem>((CustomValidator)source);
-            var categoryId = (int)gridItem.OwnerTableView.DataKeyValues[gridItem.ItemIndex]["Id"];
+            var categoryId = gridItem.ItemIndex >= 0 ? (int)gridItem.OwnerTableView.DataKeyValues[gridItem.ItemIndex]["Id"] : -1;
             args.IsValid = !CategoryCollection.Load(this.PortalId).Any(category => category.Id != categoryId && category.Name.Equals(args.Value, StringComparison.CurrentCultureIgnoreCase));
         }
 
@@ -144,7 +145,13 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="GridNeedDataSourceEventArgs"/> instance containing the event data.</param>
         private void CategoriesGrid_NeedDataSource(object source, GridNeedDataSourceEventArgs e)
         {
-            this.CategoriesGrid.DataSource = CategoryCollection.Load(this.PortalId);
+            IEnumerable<Category> categories = CategoryCollection.Load(this.PortalId);
+            if (this.CategoryIds.Any())
+            {
+                categories = categories.Where(category => this.CategoryIds.Contains(category.Id));
+            }
+
+            this.CategoriesGrid.DataSource = categories;
         }
 
         /// <summary>
@@ -164,6 +171,13 @@ namespace Engage.Dnn.Events
             e.Item.OwnerTableView.ExtractValuesFromItem(newValues, (GridEditableItem)e.Item);
             var category = Category.Create(this.PortalId, newValues["Name"], newValues["Color"]);
             category.Save(this.UserId);
+
+            // if this is a new category and the categories are restricted in the settings, make sure that this category can show up in this module
+            if (this.CategoryIds.Any())
+            {
+                ModuleSettings.Categories.Set(this, ModuleSettings.Categories.GetValueAsStringFor(this) + "," + category.Id.ToString(CultureInfo.InvariantCulture));
+                this.ClearCategoryIdsCache();
+            }
 
             this.SuccessModuleMessage.Visible = true;
             this.SuccessModuleMessage.Text = this.Localize("CategoryInsertSuccess");
