@@ -169,7 +169,7 @@
     <value>Another category is using this name.  Categoy names must be unique.</value>
   </data>
   <data name="NoColor.Text" xml:space="preserve">
-    <value>None</value>
+    <value>Default</value>
   </data>
   <data name="Orange.Text" xml:space="preserve">
     <value>Orange</value>

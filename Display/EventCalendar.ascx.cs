@@ -12,7 +12,6 @@
 namespace Engage.Dnn.Events.Display
 {
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using System.Web.UI;
@@ -26,28 +25,6 @@ namespace Engage.Dnn.Events.Display
     /// </summary>
     public partial class EventCalendar : ModuleBase
     {
-        /// <summary>
-        /// The colors for categories built into the RadScheduler
-        /// </summary>
-        private static readonly List<string> Colors = new List<string>(10)
-            {
-                "Blue",
-                "Green",
-                "Pink",
-                "Violet",
-                "Red",
-                "DarkBlue",
-                "DarkGreen",
-                "DarkRed",
-                "Orange",
-                "Yellow"
-            };
-
-        /// <summary>
-        /// A map between a category ID and a color
-        /// </summary>
-        private readonly Dictionary<int, string> categoryColors = new Dictionary<int, string>();
-
         /// <summary>
         /// Gets or sets the ID of the <see cref="Event"/> last displayed in the tool-tip.
         /// </summary>
@@ -145,18 +122,13 @@ namespace Engage.Dnn.Events.Display
 
             var category = ((Event)e.Appointment.DataItem).Category;
             var categoryName = string.IsNullOrEmpty(category.Name) ? this.Localize("DefaultCategory", this.LocalSharedResourceFile) : category.Name;
-            
-            string color;
-            if (!this.categoryColors.TryGetValue(category.Id, out color))
-            {
-                color = "Default";
-            }
+            var color = category.Color ?? "Default";
 
             e.Appointment.CssClass = string.Format(
                 CultureInfo.InvariantCulture, 
                 "cat-{0} rsCategory{1}", 
                 Engage.Utility.ConvertToSlug(categoryName),
-                color);
+                Engage.Utility.ConvertToSlug(color));
         }
 
         /// <summary>
@@ -209,15 +181,7 @@ namespace Engage.Dnn.Events.Display
         /// </returns>
         private bool IsAppointmentRegisteredForToolTip(Appointment apt)
         {
-            foreach (ToolTipTargetControl targetControl in this.EventsCalendarToolTipManager.TargetControls)
-            {
-                if (targetControl.TargetControlID == apt.ClientID)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return this.EventsCalendarToolTipManager.TargetControls.Cast<ToolTipTargetControl>().Any(targetControl => targetControl.TargetControlID == apt.ClientID);
         }
 
         /// <summary>
@@ -225,11 +189,8 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         private void BindData()
         {
-            var events = EventCollection.Load(this.PortalId, ListingMode.All, false, this.IsFeatured, this.CategoryIds);
-            this.StyleCategories(events);
-
             this.EventsCalendarDisplay.Culture = CultureInfo.CurrentCulture;
-            this.EventsCalendarDisplay.DataSource = events;
+            this.EventsCalendarDisplay.DataSource = EventCollection.Load(this.PortalId, ListingMode.All, false, this.IsFeatured, this.CategoryIds);
             this.EventsCalendarDisplay.DataEndField = "EventEnd";
             this.EventsCalendarDisplay.DataKeyField = "Id";
             this.EventsCalendarDisplay.DataRecurrenceField = "RecurrenceRule";
@@ -247,26 +208,6 @@ namespace Engage.Dnn.Events.Display
             {
                 this.ShowToolTip(this.ToolTipEventId.Value, this.EventsCalendarToolTipManager.UpdatePanel);
                 this.ToolTipEventId = null;
-            }
-        }
-
-        /// <summary>
-        /// Sets the <see cref="EventsCalendarDisplay"/> to style each event by category.
-        /// </summary>
-        /// <param name="events">The events.</param>
-        private void StyleCategories(IEnumerable<Event> events)
-        {
-            var categoryIds = events.Select(e => e.CategoryId).Distinct();
-
-            var i = 0;
-            foreach (var categoryId in categoryIds)
-            {
-                this.categoryColors.Add(categoryId, Colors[i++]);
-
-                if (i == Colors.Count)
-                {
-                    break;
-                }
             }
         }
     }
