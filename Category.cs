@@ -37,10 +37,12 @@ namespace Engage.Events
         /// </summary>
         /// <param name="portalId">The portal ID.</param>
         /// <param name="name">The name of the category.</param>
-        private Category(int portalId, string name) : this()
+        /// <param name="color">The color of the category.</param>
+        private Category(int portalId, string name, string color) : this()
         {
             this.PortalId = portalId;
             this.Name = name;
+            this.Color = color;
         }
 
         /// <summary>
@@ -63,6 +65,13 @@ namespace Engage.Events
         /// <value>The category name.</value>
         [XmlElement(Order = 3)]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the category color.
+        /// </summary>
+        /// <value>The category color.</value>
+        [XmlElement(Order = 4)]
+        public string Color { get; set; }
 
         /// <summary>
         /// Gets or sets the number of events in this category.
@@ -105,10 +114,11 @@ namespace Engage.Events
         /// </summary>
         /// <param name="portalId">The portal ID.</param>
         /// <param name="name">The name of the category.</param>
+        /// <param name="color">The color of the category.</param>
         /// <returns>A new <see cref="Category"/> instance.</returns>
-        public static Category Create(int portalId, string name)
+        public static Category Create(int portalId, string name, string color)
         {
-            return new Category(portalId, name);
+            return new Category(portalId, name, color);
         }
 
         /// <summary>
@@ -201,7 +211,12 @@ namespace Engage.Events
                 case "SAFE NAME":
                 case "SAFETITLE":
                 case "SAFE TITLE":
-                    return Utility.InvalidCssCharactersRegex.Replace(this.Name, "-").TrimStart('-');
+                    return Utility.ConvertToSlug(this.Name);
+                case "COLOR":
+                    return this.Color;
+                case "SAFECOLOR":
+                case "SAFE COLOR":
+                    return Utility.ConvertToSlug(this.Color);
             }
 
             return string.Empty;
@@ -218,6 +233,7 @@ namespace Engage.Events
                 {
                     Id = (int)categoryRecord["CategoryId"],
                     Name = categoryRecord["Name"].ToString(),
+                    Color = categoryRecord["Color"] as string,
                     EventCount = (int)categoryRecord["EventCount"]
                 };
         }
@@ -237,7 +253,8 @@ namespace Engage.Events
                         CommandType.StoredProcedure,
                         dp.NamePrefix + "spInsertEventCategory",
                         Utility.CreateIntegerParam("@PortalId", this.PortalId),
-                        Utility.CreateVarcharParam("@Name", this.Name),
+                        Utility.CreateVarcharParam("@Name", this.Name, 250),
+                        Utility.CreateVarcharParam("@Color", this.Color, 50),
                         Utility.CreateIntegerParam("@CreatedBy", revisingUser));
             }
             catch (SystemException de)
@@ -261,7 +278,8 @@ namespace Engage.Events
                         CommandType.StoredProcedure,
                         dp.NamePrefix + "spUpdateEventCategory",
                         Utility.CreateIntegerParam("@CategoryId", this.Id),
-                        Utility.CreateVarcharParam("@Name", this.Name),
+                        Utility.CreateVarcharParam("@Name", this.Name, 250),
+                        Utility.CreateVarcharParam("@Color", this.Color, 50),
                         Utility.CreateIntegerParam("@RevisingUser", revisingUser));
             }
             catch (SystemException de)
