@@ -41,6 +41,11 @@ namespace Engage.Dnn.Events
     public class ModuleBase : Framework.ModuleBase, IActionable
     {
         /// <summary>
+        /// Backing field for <see cref="CategoryIds"/>
+        /// </summary>
+        private IEnumerable<int> categoryIds;
+
+        /// <summary>
         /// Backing field for <see cref="PermissionsService"/>
         /// </summary>
         private PermissionsService permissionsService;
@@ -213,14 +218,16 @@ namespace Engage.Dnn.Events
         protected IEnumerable<int> CategoryIds 
         { 
             get 
-            { 
-                var categoriesSettingValue = ModuleSettings.Categories.GetValueAsStringFor(this);
-                if (string.IsNullOrEmpty(categoriesSettingValue))
+            {
+                if (this.categoryIds == null)
                 {
-                    return Enumerable.Empty<int>();
+                    var categoriesSettingValue = ModuleSettings.Categories.GetValueAsStringFor(this);
+                    this.categoryIds = string.IsNullOrEmpty(categoriesSettingValue)
+                                           ? Enumerable.Empty<int>()
+                                           : categoriesSettingValue.Split(',').Select(id => int.Parse(id, CultureInfo.InvariantCulture));
                 }
 
-                return categoriesSettingValue.Split(',').Select(id => int.Parse(id, CultureInfo.InvariantCulture));
+                return this.categoryIds;
             }
         }
 
