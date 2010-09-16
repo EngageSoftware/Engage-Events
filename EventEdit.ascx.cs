@@ -230,7 +230,7 @@ namespace Engage.Dnn.Events
                 return categoryId;
             }
 
-            var category = Category.Create(this.PortalId, this.CategoryComboBox.Text);
+            var category = Category.Create(this.PortalId, this.CategoryComboBox.Text, null);
             category.Save(this.UserId);
             return category.Id;
         }

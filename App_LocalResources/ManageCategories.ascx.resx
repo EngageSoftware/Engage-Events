@@ -120,6 +120,9 @@
   <data name="AddCategory.Text" xml:space="preserve">
     <value>Add new category</value>
   </data>
+  <data name="Blue.Text" xml:space="preserve">
+    <value>Blue</value>
+  </data>
   <data name="CancelEdit.Text" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -127,19 +130,34 @@
     <value>The new category has been successfully added!</value>
   </data>
   <data name="CategoryUpdateSuccess.Text" xml:space="preserve">
-    <value>The category has been successfully renamed!</value>
+    <value>The category has been successfully updated!</value>
+  </data>
+  <data name="ColorRequired.Text" xml:space="preserve">
+    <value>Please select a color (or None)</value>
   </data>
   <data name="CreateCategory.Text" xml:space="preserve">
     <value>Create</value>
+  </data>
+  <data name="DarkBlue.Text" xml:space="preserve">
+    <value>Dark Blue</value>
+  </data>
+  <data name="DarkGreen.Text" xml:space="preserve">
+    <value>Dark Green</value>
+  </data>
+  <data name="DarkRed.Text" xml:space="preserve">
+    <value>Dark Red</value>
   </data>
   <data name="DeleteCategory.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="DeleteConfirmation.Text" xml:space="preserve">
-    <value>Are you sure that you want to permanently delete this column?</value>
+    <value>Are you sure that you want to permanently delete this category?</value>
   </data>
   <data name="EditCategory.Text" xml:space="preserve">
-    <value>Rename</value>
+    <value>Edit</value>
+  </data>
+  <data name="Green.Text" xml:space="preserve">
+    <value>Green</value>
   </data>
   <data name="Name.Header" xml:space="preserve">
     <value>Name</value>
@@ -150,7 +168,25 @@
   <data name="NameUnique.Text" xml:space="preserve">
     <value>Another category is using this name.  Categoy names must be unique.</value>
   </data>
+  <data name="NoColor.Text" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Orange.Text" xml:space="preserve">
+    <value>Orange</value>
+  </data>
+  <data name="Pink.Text" xml:space="preserve">
+    <value>Pink</value>
+  </data>
+  <data name="Red.Text" xml:space="preserve">
+    <value>Red</value>
+  </data>
   <data name="UpdateCategory.Text" xml:space="preserve">
     <value>Update</value>
+  </data>
+  <data name="Violet.Text" xml:space="preserve">
+    <value>Violet</value>
+  </data>
+  <data name="Yellow.Text" xml:space="preserve">
+    <value>Yellow</value>
   </data>
 </root>

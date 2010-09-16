@@ -14,6 +14,7 @@ namespace Engage.Dnn.Events
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Web.UI;
     using System.Web.UI.WebControls;
 
     using DotNetNuke.Services.Exceptions;
@@ -29,9 +30,9 @@ namespace Engage.Dnn.Events
     public partial class ManageCategories : ModuleBase
     {
         /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
+        /// Raises the <see cref="Control.Init"/> event.
         /// </summary>
-        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         protected override void OnInit(EventArgs e)
         {
             if (!this.PermissionsService.CanManageCategories)
@@ -50,6 +51,24 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Gets the text to display for the given color value.
+        /// </summary>
+        /// <param name="color">The value for the color to display.</param>
+        /// <returns>
+        /// The the localized version of the given color, if available
+        /// </returns>
+        protected string GetColorName(string color)
+        {
+            if (string.IsNullOrEmpty(color))
+            {
+                return this.Localize("NoColor.Text");
+            }
+
+            var localizedColorName = this.Localize(color);
+            return string.IsNullOrEmpty(localizedColorName) ? color : localizedColorName;
+        }
+
+        /// <summary>
         /// Gets the name of the default category.
         /// </summary>
         /// <returns>The default category's display name</returns>
@@ -65,7 +84,9 @@ namespace Engage.Dnn.Events
         /// <param name="args">The <see cref="ServerValidateEventArgs"/> instance containing the event data.</param>
         protected void UniqueNameValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            args.IsValid = !CategoryCollection.Load(this.PortalId).Any(category => category.Name.Equals(args.Value, StringComparison.CurrentCultureIgnoreCase));
+            var gridItem = Engage.Utility.FindParentControl<GridDataItem>((CustomValidator)source);
+            var categoryId = (int)gridItem.OwnerTableView.DataKeyValues[gridItem.ItemIndex]["Id"];
+            args.IsValid = !CategoryCollection.Load(this.PortalId).Any(category => category.Id != categoryId && category.Name.Equals(args.Value, StringComparison.CurrentCultureIgnoreCase));
         }
 
         /// <summary>
@@ -139,9 +160,9 @@ namespace Engage.Dnn.Events
                 return;
             }
 
-            var newValues = new Dictionary<string, string>(1);
+            var newValues = new Dictionary<string, string>(2);
             e.Item.OwnerTableView.ExtractValuesFromItem(newValues, (GridEditableItem)e.Item);
-            var category = Category.Create(this.PortalId, newValues["Name"]);
+            var category = Category.Create(this.PortalId, newValues["Name"], newValues["Color"]);
             category.Save(this.UserId);
 
             this.SuccessModuleMessage.Visible = true;
@@ -169,9 +190,15 @@ namespace Engage.Dnn.Events
                 return;
             }
 
-            var newValues = new Dictionary<string, string>(1);
+            var newValues = new Dictionary<string, string>(2);
             e.Item.OwnerTableView.ExtractValuesFromItem(newValues, (GridEditableItem)e.Item);
             category.Name = newValues["Name"];
+            category.Color = newValues["Color"];
+            if (string.IsNullOrEmpty(category.Color))
+            {
+                category.Color = null;
+            }
+
             category.Save(this.UserId);
 
             this.SuccessModuleMessage.Visible = true;
@@ -179,10 +206,10 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
+        /// Raises the <see cref="Control.Load"/> event.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        /// <param name="e">The <see cref="EventArgs"/> object that contains the event data.</param>
         private void Page_Load(object sender, EventArgs e)
         {
             try
@@ -215,6 +242,9 @@ namespace Engage.Dnn.Events
 
             var categoryNameColumn = (GridTemplateColumn)this.CategoriesGrid.Columns.FindByUniqueName("Name");
             categoryNameColumn.HeaderText = this.Localize("Name.Header");
+
+            var colorColumn = (GridTemplateColumn)this.CategoriesGrid.Columns.FindByUniqueName("Color");
+            colorColumn.HeaderText = this.Localize("Color.Header");
 
             var deleteColumn = (GridButtonColumn)this.CategoriesGrid.Columns.FindByUniqueName("Delete");
             deleteColumn.Text = this.Localize("DeleteCategory.Text");

@@ -21,6 +21,28 @@
                         ResourceKey="NameUnique" ForeColor="" CssClass="NormalRed" Display="None" OnServerValidate="UniqueNameValidator_ServerValidate" />
                 </EditItemTemplate>
             </telerik:GridTemplateColumn>
+            <telerik:GridTemplateColumn UniqueName="Color" ItemStyle-CssClass="color-col">
+                <ItemTemplate>
+                    <asp:Label runat="server" Text='<%# this.GetColorName((string)Eval("Color")) %>' />
+                </ItemTemplate>
+                <EditItemTemplate>
+                    <telerik:RadComboBox ID="ColorComboBox" runat="server" SelectedValue='<%#Bind("Color") %>' ShowDropDownOnTextboxClick="true" MarkFirstMatch="true">
+                        <Items>
+                            <telerik:RadComboBoxItem Text='<%#Localize("NoColor") %>' Value="" />
+                            <telerik:RadComboBoxItem Text='<%#Localize("DarkBlue") %>' Value="DarkBlue" />
+                            <telerik:RadComboBoxItem Text='<%#Localize("Blue") %>' Value="Blue" />
+                            <telerik:RadComboBoxItem Text='<%#Localize("DarkGreen") %>' Value="DarkGreen" />
+                            <telerik:RadComboBoxItem Text='<%#Localize("Green") %>' Value="Green" />
+                            <telerik:RadComboBoxItem Text='<%#Localize("DarkRed") %>' Value="DarkRed" />
+                            <telerik:RadComboBoxItem Text='<%#Localize("Red") %>' Value="Red" />
+                            <telerik:RadComboBoxItem Text='<%#Localize("Orange") %>' Value="Orange" />
+                            <telerik:RadComboBoxItem Text='<%#Localize("Pink") %>' Value="Pink" />
+                            <telerik:RadComboBoxItem Text='<%#Localize("Violet") %>' Value="Violet" />
+                            <telerik:RadComboBoxItem Text='<%#Localize("Yellow") %>' Value="Yellow" />
+                        </Items>
+                    </telerik:RadComboBox>
+                </EditItemTemplate>
+            </telerik:GridTemplateColumn>
             <telerik:GridButtonColumn UniqueName="Delete" ItemStyle-CssClass="delete-col" CommandName="Delete" />
         </Columns>
     </MasterTableView>

@@ -167,6 +167,7 @@ CREATE TABLE {databaseOwner}{objectQualifier}Engage_EventCategory
     CategoryId int NOT NULL IDENTITY (1, 1),
     PortalId int NOT NULL,
     Name nvarchar(250) NOT NULL,
+    Color nvarchar(50) NULL,
     CreatedBy int NOT NULL,
     CreationDate datetime NOT NULL DEFAULT GETDATE(),
     RevisingUser int NOT NULL,
@@ -202,7 +203,7 @@ DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategory
 GO
 CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategory (@CategoryId int)
 AS
-    SELECT CategoryId, Name, (
+    SELECT CategoryId, Name, Color, (
         SELECT COUNT(*)
         FROM {databaseOwner}{objectQualifier}Engage_Event e
         WHERE e.CategoryId = c.CategoryId
@@ -226,10 +227,10 @@ GO
 IF OBJECT_ID(N'{databaseOwner}{objectQualifier}Engage_spInsertEventCategory', N'P') IS NOT NULL
 DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spInsertEventCategory
 GO
-CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spInsertEventCategory (@PortalId int, @Name nvarchar(250), @CreatedBy int)
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spInsertEventCategory (@PortalId int, @Name nvarchar(250), @Color nvarchar(50), @CreatedBy int)
 AS
-    INSERT INTO {databaseOwner}{objectQualifier}Engage_EventCategory (PortalId, Name, CreatedBy, RevisingUser)
-    VALUES (@PortalId, @Name, @CreatedBy, @CreatedBy)
+    INSERT INTO {databaseOwner}{objectQualifier}Engage_EventCategory (PortalId, Name, Color, CreatedBy, RevisingUser)
+    VALUES (@PortalId, @Name, @Color, @CreatedBy, @CreatedBy)
     
     SELECT SCOPE_IDENTITY()  
 GO
@@ -237,10 +238,11 @@ GO
 IF OBJECT_ID(N'{databaseOwner}{objectQualifier}Engage_spUpdateEventCategory', N'P') IS NOT NULL
 DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spUpdateEventCategory
 GO
-CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spUpdateEventCategory (@CategoryId int, @Name nvarchar(250), @RevisingUser int)
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spUpdateEventCategory (@CategoryId int, @Name nvarchar(250), @Color nvarchar(50), @RevisingUser int)
 AS
     UPDATE {databaseOwner}{objectQualifier}Engage_EventCategory 
     SET Name = @Name, 
+        Color = @Color, 
         RevisingUser = @RevisingUser,
         RevisionDate = GETDATE()
     WHERE CategoryId = @CategoryId
@@ -251,7 +253,7 @@ DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategories
 GO
 CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategories (@PortalId int)
 AS
-    SELECT CategoryId, Name, (
+    SELECT CategoryId, Name, Color, (
         SELECT COUNT(*)
         FROM {databaseOwner}{objectQualifier}Engage_Event e
         WHERE e.CategoryId = c.CategoryId
