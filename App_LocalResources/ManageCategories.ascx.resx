@@ -132,6 +132,9 @@
   <data name="CategoryUpdateSuccess.Text" xml:space="preserve">
     <value>The category has been successfully updated!</value>
   </data>
+  <data name="Color.Header" xml:space="preserve">
+    <value>Color</value>
+  </data>
   <data name="ColorRequired.Text" xml:space="preserve">
     <value>Please select a color (or None)</value>
   </data>

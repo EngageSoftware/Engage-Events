@@ -165,9 +165,6 @@
   <data name="EventCategoryLabel.Text" xml:space="preserve">
     <value>Category</value>
   </data>
-  <data name="EventCategoryRequired.Text" xml:space="preserve">
-    <value>You must select a category for your event</value>
-  </data>
   <data name="EventDescriptionLabel.Text" xml:space="preserve">
     <value>Description</value>
   </data>
@@ -236,5 +233,8 @@
   </data>
   <data name="StartDateTimePickerRequired.Text" xml:space="preserve">
     <value>You must specify when your event begins</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>Your new category will be created when you save this event</value>
   </data>
 </root>
