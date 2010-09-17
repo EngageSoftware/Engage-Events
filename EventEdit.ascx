@@ -22,7 +22,9 @@
     
     <asp:Panel ID="CategoryPanel" runat="server" CssClass="AEEventCategory">
         <asp:Label runat="server" ResourceKey="EventCategoryLabel" CssClass="NormalBold" AssociatedControlID="CategoryComboBox"/>
-        <telerik:RadComboBox ID="CategoryComboBox" runat="server" skin="WebBlue" MarkFirstMatch="true" ShowDropDownOnTextboxClick="true" />
+        <telerik:RadComboBox ID="CategoryComboBox" runat="server" skin="WebBlue" MarkFirstMatch="true" ShowDropDownOnTextboxClick="true" 
+            OnClientSelectedIndexChanged="CategoryComboBox_SelectedIndexChanged" OnClientTextChange="CategoryComboBox_TextChange" />
+        <asp:Label ID="CategoryCreationPendingLabel" runat="server" ResourceKey="CategoryCreationPending" CssClass="InformationBody" style="display:none;" />
         <asp:RequiredFieldValidator runat="server" ControlToValidate="CategoryComboBox" ResourceKey="EventCategoryRequired" Display="None" EnableClientScript="false"/>
     </asp:Panel>
     
@@ -168,5 +170,11 @@
 
             EndDateTimePicker.set_selectedDate(new Date(eventArgs.get_newDate().getTime() + selectedDateSpan));
         }
+    }
+    function CategoryComboBox_SelectedIndexChanged(sender, eventArgs) {
+        $get("<%=CategoryCreationPendingLabel.ClientID %>").style.display = 'none';
+    }
+    function CategoryComboBox_TextChange(sender, eventArgs) {
+        $get("<%=CategoryCreationPendingLabel.ClientID %>").style.display = 'inline';
     }
 </script>

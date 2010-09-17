@@ -135,6 +135,9 @@
   <data name="CapacityMetMessageLabel.Text" xml:space="preserve">
     <value>When Registration Cap Is Met, Show a</value>
   </data>
+  <data name="CategoryCreationPending.Text" xml:space="preserve">
+    <value>This category will be created when you save this event</value>
+  </data>
   <data name="CreateAnother.Alt" xml:space="preserve">
     <value>Create Another Event</value>
   </data>
@@ -164,6 +167,9 @@
   </data>
   <data name="EventCategoryLabel.Text" xml:space="preserve">
     <value>Category</value>
+  </data>
+  <data name="EventCategoryRequired.Text" xml:space="preserve">
+    <value>You must supply a category for your event</value>
   </data>
   <data name="EventDescriptionLabel.Text" xml:space="preserve">
     <value>Description</value>
@@ -233,8 +239,5 @@
   </data>
   <data name="StartDateTimePickerRequired.Text" xml:space="preserve">
     <value>You must specify when your event begins</value>
-  </data>
-  <data name="String1" xml:space="preserve">
-    <value>Your new category will be created when you save this event</value>
   </data>
 </root>
