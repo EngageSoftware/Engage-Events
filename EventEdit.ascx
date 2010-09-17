@@ -26,6 +26,7 @@
             OnClientSelectedIndexChanged="CategoryComboBox_SelectedIndexChanged" OnClientTextChange="CategoryComboBox_TextChange" />
         <asp:Label ID="CategoryCreationPendingLabel" runat="server" ResourceKey="CategoryCreationPending" CssClass="InformationBody" style="display:none;" />
         <asp:RequiredFieldValidator runat="server" ControlToValidate="CategoryComboBox" ResourceKey="EventCategoryRequired" Display="None" EnableClientScript="false"/>
+        <asp:CustomValidator ID="UniqueCategoryNameValidator" runat="server" ControlToValidate="CategoryComboBox" ResourceKey="EventCategoryUnique" Display="None" EnableClientScript="false"/>
     </asp:Panel>
     
     <div class="AEEventStartDate">

@@ -62,6 +62,7 @@ namespace Engage.Dnn.Events
             this.CapacityMetMessageRadioButtonList.SelectedIndexChanged += this.CapacityMetMessageRadioButtonList_SelectedIndexChanged;
             this.RecurrenceEditorValidator.ServerValidate += this.RecurrenceEditorValidator_ServerValidate;
             this.EventDescriptionTextEditorValidator.ServerValidate += this.EventDescriptionTextEditorValidator_ServerValidate;
+            this.UniqueCategoryNameValidator.ServerValidate += this.UniqueCategoryNameValidator_ServerValidate;
         }
 
         /// <summary>
@@ -196,6 +197,18 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Handles the <see cref="CustomValidator.ServerValidate"/> event of the <see cref="UniqueCategoryNameValidator"/> control.
+        /// </summary>
+        /// <param name="source">The source of the event.</param>
+        /// <param name="args">The <see cref="ServerValidateEventArgs"/> instance containing the event data.</param>
+        private void UniqueCategoryNameValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            // they picked an existing category, or the new category name doesn't exist in the list of this portal's categories
+            args.IsValid = this.CategoryComboBox.SelectedItem != null ||
+                           !CategoryCollection.Load(this.PortalId).Any(category => category.Name.Equals(args.Value, StringComparison.CurrentCultureIgnoreCase));
+        }
+
+        /// <summary>
         /// Determines whether the given <paramref name="textEditor"/> has a meaningful value, checking for empty HTML (based on the "DefaultEmptyText" resource key).
         /// </summary>
         /// <param name="textEditor">The text editor to check.</param>
@@ -257,7 +270,10 @@ namespace Engage.Dnn.Events
         private void FillLists()
         {
             // TODO: Now that we support .NET 3.5, replace this with TimeZoneInfo.GetSystemTimeZones
-            Localization.LoadTimeZoneDropDownList(this.TimeZoneDropDownList, CultureInfo.CurrentCulture.Name, ((int)Dnn.Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings).TotalMinutes).ToString(CultureInfo.InvariantCulture));
+            Localization.LoadTimeZoneDropDownList(
+                this.TimeZoneDropDownList,
+                CultureInfo.CurrentCulture.Name,
+                ((int)Dnn.Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings).TotalMinutes).ToString(CultureInfo.InvariantCulture));
 
             var categories = from category in CategoryCollection.Load(this.PortalId)
                              where !this.CategoryIds.Any() || this.CategoryIds.Contains(category.Id)

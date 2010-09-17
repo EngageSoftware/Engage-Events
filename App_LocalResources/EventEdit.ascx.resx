@@ -171,6 +171,9 @@
   <data name="EventCategoryRequired.Text" xml:space="preserve">
     <value>You must supply a category for your event</value>
   </data>
+  <data name="EventCategoryUnique.Text" xml:space="preserve">
+    <value>A category already exists with this name.  Please choose a different category name, or ask your administrator for access to the existing category.</value>
+  </data>
   <data name="EventDescriptionLabel.Text" xml:space="preserve">
     <value>Description</value>
   </data>
