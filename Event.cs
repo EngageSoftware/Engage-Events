@@ -583,20 +583,31 @@ namespace Engage.Events
         /// </list>
         /// </remarks>
         /// <param name="propertyName">Name of the property.</param>
-        /// <param name="format">A numeric or DateTime format string, or <c>null</c> or <see cref="string.Empty"/> to apply the default format.</param>
+        /// <param name="format">
+        /// A numeric or DateTime format string, or one of the string formatting options accepted by <see cref="TemplateEngine.FormatString"/>,
+        /// or <c>null</c> or <see cref="string.Empty"/> to apply the default format.
+        /// </param>
         /// <returns>The string representation of the value of this instance as specified by <paramref name="format"/>.</returns>
         public string GetValue(string propertyName, string format)
         {
+            var subPropertyIndicatorIndex = propertyName.IndexOf('-');
+            if (subPropertyIndicatorIndex > -1 && propertyName.Substring(0, subPropertyIndicatorIndex).Equals("CATEGORY", StringComparison.OrdinalIgnoreCase))
+            {
+                return this.Category.GetValue(propertyName.Substring(subPropertyIndicatorIndex + 1), format);
+            }
+
+            format = string.IsNullOrEmpty(format) ? null : format;
+
             switch (propertyName.ToUpperInvariant())
             {
                 case "ID":
                     return this.Id.ToString(format, CultureInfo.CurrentCulture);
                 case "TITLE":
-                    return this.Title;
+                    return TemplateEngine.FormatString(this.Title, format ?? "HTML");
                 case "OVERVIEW":
-                    return this.Overview;
+                    return TemplateEngine.FormatString(this.Overview, format ?? "HTML");
                 case "DESCRIPTION":
-                    return this.Description;
+                    return TemplateEngine.FormatString(this.Description, format ?? "RAW");
                 case "EVENTSTART":
                 case "EVENT START":
                     return this.EventStart.ToString(format, CultureInfo.CurrentCulture);
@@ -604,7 +615,9 @@ namespace Engage.Events
                 case "EVENT END":
                     return this.EventEnd.ToString(format, CultureInfo.CurrentCulture);
                 case "LOCATION":
-                    return this.Location;
+                    return TemplateEngine.FormatString(this.Location, format ?? "HTML");
+                case "CATEGORY":
+                    return TemplateEngine.FormatString(this.Category.Name, format ?? "HTML");
             }
 
             return string.Empty;

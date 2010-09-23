@@ -196,27 +196,23 @@ namespace Engage.Events
         /// </list>
         /// </remarks>
         /// <param name="propertyName">Name of the property.</param>
-        /// <param name="format">A numeric or DateTime format string, or <c>null</c> or <see cref="string.Empty"/> to apply the default format.</param>
+        /// <param name="format">
+        /// A numeric or DateTime format string, or one of the string formatting options accepted by <see cref="TemplateEngine.FormatString"/>,
+        /// or <c>null</c> or <see cref="string.Empty"/> to apply the default format.
+        /// </param>
         /// <returns>The string representation of the value of this instance as specified by <paramref name="format"/>.</returns>
         public string GetValue(string propertyName, string format)
         {
+            format = string.IsNullOrEmpty(format) ? null : format;
             switch (propertyName.ToUpperInvariant())
             {
                 case "ID":
                     return this.Id.ToString(format, CultureInfo.CurrentCulture);
                 case "NAME":
                 case "TITLE":
-                    return this.Name;
-                case "SAFENAME":
-                case "SAFE NAME":
-                case "SAFETITLE":
-                case "SAFE TITLE":
-                    return Utility.ConvertToSlug(this.Name);
+                    return TemplateEngine.FormatString(this.Name, format ?? "HTML");
                 case "COLOR":
-                    return this.Color;
-                case "SAFECOLOR":
-                case "SAFE COLOR":
-                    return Utility.ConvertToSlug(this.Color);
+                    return TemplateEngine.FormatString(this.Color, format ?? "HTML");
             }
 
             return string.Empty;
