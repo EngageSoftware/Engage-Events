@@ -1,40 +1,53 @@
-	.ItemListingHeader{}
-		.ItemListingHeader p{margin: 0; padding: 0;}
-	.ItemListingHeader h2.Head{clear: both; overflow: hidden; width: 100%; border-bottom: 1px #ccc solid; padding-bottom: 5px; margin: 5px 0;}
-	.ItemListingHeaderTop{clear: both; overflow: hidden; width: 100%; border-bottom: 1px #ccc solid;}
-		.ItemListingHeaderSorting{overflow: hidden; width: 40%; float: left; padding-right: 2%;}
-			.ItemListingHeaderSorting .NormalBold {display: block; float: left; padding-top: 4px;}
-			.ItemListingHeaderSorting table{ display: inline;}
-		.ItemListingHeaderStatus{overflow: hidden; width: 40%; float: left;}
-			.ItemListingHeaderStatus .NormalBold {display: block; float: left; padding-top: 4px;}
-			.ItemListingHeaderStatus table{ display: inline;}
+.ItemListingWrap .ItemListingHeader p{margin: 0; padding: 0;}
+.ItemListingWrap .ItemListingHeader h2.Head{clear: both; overflow: hidden; width: 100%; border-bottom: 1px #ccc solid; padding-bottom: 5px; margin: 5px 0;}
+.ItemListingWrap .ItemListingHeaderTop{clear: both; overflow: hidden; width: 100%; border-bottom: 1px #ccc solid;}
+	.ItemListingWrap .ItemListingHeaderSorting{overflow: hidden; width: 40%; float: left; padding-right: 2%;}
+		.ItemListingWrap .ItemListingHeaderSorting .NormalBold {display: block; float: left; padding-top: 4px;}
+		.ItemListingWrap .ItemListingHeaderSorting table{ display: inline;}
+	.ItemListingWrap .ItemListingHeaderStatus{overflow: hidden; width: 40%; float: left;}
+		.ItemListingWrap .ItemListingHeaderStatus .NormalBold {display: block; float: left; padding-top: 4px;}
+		.ItemListingWrap .ItemListingHeaderStatus table{ display: inline;}
 
-	.ItemListing, .ItemDetails{border-bottom: 1px #ccc dotted; overflow: hidden; padding: 10px 0; width: 100%;}
-		.ItemListing p{margin-top: 0; margin-bottom: 6px;}
+.ItemListingWrap .ItemListing, .ItemListingWrap .ItemDetails{border-bottom: 1px #ccc dotted; overflow: hidden; padding: 10px 0; width: 100%;}
+	.ItemListingWrap p{margin-top: 0; margin-bottom: 6px;}
 
-	.ItemListing .EventTitle{overflow: hidden; width:100%;}
-		.ItemListing .EventTitle h2.Head{float:right; width:82%; padding: 0 0 5px; margin: 0;}
+.ItemListingWrap .EventTitle{overflow: hidden; width:100%;}
+	.ItemListingWrap .EventTitle h2.Head{float:right; width:82%; padding: 0 0 5px; margin: 0;}
 	
-	.ItemListing .EventLocation{overflow: hidden;}
-		.ItemListing .EventLocation .NormalBold{float:left; width: 15%; text-align: right;}
-		.ItemListing .EventLocation .Normal{float:right; width: 82%; text-align: left;}
+.ItemListing .EventLocation{overflow: hidden;}
+	.ItemListing .EventLocation .NormalBold{float:left; width: 15%; text-align: right;}
+	.ItemListing .EventLocation .Normal{float:right; width: 82%; text-align: left;}
 	
-	.ItemListing .EventDate{overflow: hidden;}
-		.ItemListing .EventDate .NormalBold{float:left; width: 15%; text-align: right;}
-		.ItemListing .EventDate .Normal{float:right; width: 82%; text-align: left;}
-		.ItemListing .RecurrenceSummary .NormalBold{float: none; width: auto; text-align: left;}
+.ItemListingWrap .EventDate{overflow: hidden;}
+	.ItemListingWrap .EventDate .NormalBold{float:left; width: 15%; text-align: right;}
+	.ItemListingWrap .EventDate .Normal{float:right; width: 82%; text-align: left;}
+	.ItemListingWrap .RecurrenceSummary .NormalBold{float: none; width: auto; text-align: left;}
 		
-	.ItemListing .EventOverview{overflow: hidden;}
-		.ItemListing .EventOverview .NormalBold{float:left; width: 15%; text-align: right;}
-		.ItemListing .EventOverview .Normal{float:right; width: 82%; text-align: left;}
+.ItemListingWrap .EventOverview{overflow: hidden;}
+	.ItemListingWrap .EventOverview .NormalBold{float:left; width: 15%; text-align: right;}
+	.ItemListingWrap .EventOverview .Normal{float:right; width: 82%; text-align: left;}
 
-	.ItemListing .EventDescription{overflow: hidden; clear: both;}
-		.ItemListing .EventDescription .NormalBold{float:left; width: 15%; text-align: right;}
-		.ItemListing .EventDescription .Normal{float:right; width: 82%; text-align: left;}
-			.ItemListing .EventDescription .Normal > p{margin-top: 0;}
+.ItemListingWrap .EventDescription{overflow: hidden; clear: both;}
+	.ItemListingWrap .EventDescription .NormalBold{float:left; width: 15%; text-align: right;}
+	.ItemListingWrap .EventDescription .Normal{float:right; width: 82%; text-align: left;}
+		.ItemListingWrap .EventDescription .Normal > p{margin-top: 0;}
 	
-	.ItemListing .EventButtons{float:right; width: 82%;}
-		.ItemListing .EventButtons input {margin-bottom: 0.675em;}
+.ItemListingWrap .EventButtons{float:right; width: 82%;}
+	.ItemListingWrap .EventButtons input {margin-bottom: 0.675em;}
 		
-	.ItemListing .RecurrenceSummary{padding-left: 15px;}
-	.ItemListing.RecurringEventItem{background: transparent url(../../images/recurring_icon.gif) no-repeat 0 16px;}
+.ItemListingWrap .RecurrenceSummary{padding-left: 15px;}
+.ItemListingWrap .RecurringEventItem{background: transparent url(../../images/recurring_icon.gif) no-repeat 0 16px;}
+	
+/* Category Colors */
+.ItemListingWrap .EventCategory {display:inline; padding: 2px 3px; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;}
+.ItemListingWrap .EventCategory p {display:inline;}
+.ItemListingWrap .color-Yellow .EventCategory {background-color:#fffbc7}
+.ItemListingWrap .color-Blue .EventCategory {background-color:#bbd0ec}
+.ItemListingWrap .color-Red .EventCategory {background-color:#ecbbbb}
+.ItemListingWrap .color-DarkBlue .EventCategory {background-color:#202b3f}
+.ItemListingWrap .color-DarkRed .EventCategory {background-color:#3f2020}
+.ItemListingWrap .color-Orange .EventCategory {background-color:#edd5b7}
+.ItemListingWrap .color-Pink .EventCategory {background-color:#f1dcff}
+.ItemListingWrap .color-Violet .EventCategory {background-color:#540042}
+.ItemListingWrap .color-DarkGreen .EventCategory {background-color:#2b3f20}
+.ItemListingWrap .color-Green .EventCategory {background-color:#d0ecbb}
