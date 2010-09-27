@@ -77,7 +77,8 @@ namespace Engage.Dnn.Events
                                 Title = this.Localize("Add Event.Action", this.LocalSharedResourceFile),
                                 CommandName = ModuleActionType.AddContent,
                                 Url = this.BuildLinkUrl(this.ModuleId, "EventEdit"),
-                                Secure = SecurityAccessLevel.View
+                                Secure = SecurityAccessLevel.View,
+                                Icon = "add.gif"
                             });
                     actions.Add(
                         new ModuleAction(this.GetNextActionID())
@@ -109,7 +110,8 @@ namespace Engage.Dnn.Events
                                 Title = this.Localize("View Responses.Action", this.LocalSharedResourceFile),
                                 CommandName = ModuleActionType.EditContent,
                                 Url = this.BuildLinkUrl(this.ModuleId, "ResponseSummary"),
-                                Secure = SecurityAccessLevel.View
+                                Secure = SecurityAccessLevel.View,
+                                Icon = "view.gif"
                             });
                 }
 
@@ -121,7 +123,8 @@ namespace Engage.Dnn.Events
                                 Title = this.Localize("Manage Display.Action", this.LocalSharedResourceFile),
                                 CommandName = ModuleActionType.ModuleSettings,
                                 Url = this.BuildLinkUrl(this.ModuleId, "ChooseDisplay"),
-                                Secure = SecurityAccessLevel.View
+                                Secure = SecurityAccessLevel.View,
+                                Icon = "icon_skins_16px.gif"
                             });
                 }
 
