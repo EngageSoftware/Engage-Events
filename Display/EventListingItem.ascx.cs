@@ -13,9 +13,9 @@ namespace Engage.Dnn.Events.Display
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
+    using System.Linq;
     using System.Text;
     using System.Web;
     using System.Web.UI;
@@ -30,58 +30,33 @@ namespace Engage.Dnn.Events.Display
     public partial class EventListingItem : TemplatedDisplayModuleBase
     {
         /// <summary>
-        /// Backing field for <see cref="SortAction"/>
+        /// Backing field for <see cref="CategoryId"/>
         /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SortAction sortAction;
-
-        /// <summary>
-        /// Backing field for <see cref="StatusFilterAction"/>
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private StatusFilterAction statusFilterAction;
-
-        /// <summary>
-        /// Backing field for <see cref="ListingMode"/>
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ListingMode listingMode;
+        private int? categoryId;
 
         /// <summary>
         /// Gets the listing mode used for this display.
         /// </summary>
         /// <value>The listing mode used for this display</value>
-        public ListingMode ListingMode
-        {
-            [DebuggerStepThrough]
-            get { return this.listingMode; }
-            [DebuggerStepThrough]
-            private set { this.listingMode = value; }
-        }
+        public ListingMode ListingMode { get; private set; }
 
         /// <summary>
         /// Gets or sets the sort action control.
         /// </summary>
         /// <value>The sort action control.</value>
-        public SortAction SortAction
-        {
-            [DebuggerStepThrough]
-            get { return this.sortAction; }
-            [DebuggerStepThrough]
-            set { this.sortAction = value; }
-        }
+        public SortAction SortAction { get; set; }
 
         /// <summary>
-        /// Gets or sets the sort status action control.
+        /// Gets or sets the status filter action control.
         /// </summary>
-        /// <value>The sort status action control.</value>
-        public StatusFilterAction StatusFilterAction
-        {
-            [DebuggerStepThrough]
-            get { return this.statusFilterAction; }
-            [DebuggerStepThrough]
-            set { this.statusFilterAction = value; }
-        }
+        /// <value>The status filter action control.</value>
+        public StatusFilterAction StatusFilterAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets the category filter action control.
+        /// </summary>
+        /// <value>The category filter action control.</value>
+        public CategoryFilterAction CategoryFilterAction { get; set; }
 
         /// <summary>
         /// Gets or sets the template provider to use for providing templating functionality within this control.
@@ -179,6 +154,29 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
+        /// Gets the ID of the category by which to filter events, or <c>null</c> to display all events.
+        /// </summary>
+        /// <value>The ID of the category to filter by.</value>
+        private int? CategoryId
+        {
+            get
+            {
+                if (this.categoryId == null)
+                {
+                    int parsedCategoryId;
+                    string categoryIdValue = this.Request.QueryString["catId"];
+                    if (Engage.Utility.HasValue(categoryIdValue) &&
+                        int.TryParse(categoryIdValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out parsedCategoryId))
+                    {
+                        this.categoryId = parsedCategoryId;
+                    }
+                }
+
+                return this.categoryId;
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether this instance is displaying the Manage Events page, rather than a public-facing list.
         /// </summary>
         /// <value>
@@ -217,7 +215,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected override void OnInit(EventArgs e)
         {
-            this.listingMode = ModuleSettings.DisplayModeOption.GetValueAsEnumFor<ListingMode>(this).Value;
+            this.ListingMode = ModuleSettings.DisplayModeOption.GetValueAsEnumFor<ListingMode>(this).Value;
             this.SetupTemplateProvider();
             base.OnInit(e);            
         }
@@ -250,7 +248,16 @@ namespace Engage.Dnn.Events.Display
         /// <param name="pageNumber">The page number.</param>
         protected void ReloadPage(int pageNumber)
         {
-            this.Response.Redirect(this.GetPageUrl(pageNumber, this.SortAction.SelectedValue, this.StatusFilterAction.SelectedValue), true);
+            int? selectedCategoryId = null;
+            int parsedCategoryId;
+            if (!string.IsNullOrEmpty(this.CategoryFilterAction.SelectedValue) &&
+                int.TryParse(this.CategoryFilterAction.SelectedValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out parsedCategoryId))
+            {
+                selectedCategoryId = parsedCategoryId;
+            }
+
+            this.Response.Redirect(
+                this.GetPageUrl(pageNumber, this.SortAction.SelectedValue, this.StatusFilterAction.SelectedValue, selectedCategoryId), true);
         }
 
         /// <summary>
@@ -258,11 +265,12 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         /// <param name="sortExpression">The field on which to sort the event list.</param>
         /// <param name="status">The status of events to retrieve.</param>
+        /// <param name="filterCategoryId">The ID of the category by which results should be filtered, or <c>null</c> for all results.</param>
         /// <returns>
         /// The URL to use for the paging buttons, with the page number templated out for use with <see cref="string.Format(IFormatProvider,string,object[])"/> (that is, "{0}")
         /// </returns>
         [SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings", Justification = "Backwards compatability")]
-        protected string GetPageUrlTemplate(string sortExpression, string status)
+        protected string GetPageUrlTemplate(string sortExpression, string status, int? filterCategoryId)
         {
             // We can't just send {0} to BuildLinkUrl, because it will get "special treatment" by the friendly URL provider for its special characters
             const string UniqueReplaceableTemplateValue = "__--0--__";
@@ -272,7 +280,8 @@ namespace Engage.Dnn.Events.Display
                 controlKey = MainContainer.DefaultControlKey;
             }
 
-            return this.BuildLinkUrl(this.ModuleId, controlKey, "sort=" + sortExpression, "status=" + status, "currentPage=" + UniqueReplaceableTemplateValue).Replace(UniqueReplaceableTemplateValue, "{0}");
+            var categoryIdParameter = filterCategoryId.HasValue ? "catId=" + filterCategoryId.Value.ToString(CultureInfo.InvariantCulture) : null;
+            return this.BuildLinkUrl(this.ModuleId, controlKey, "sort=" + sortExpression, "status=" + status, categoryIdParameter, "currentPage=" + UniqueReplaceableTemplateValue).Replace(UniqueReplaceableTemplateValue, "{0}");
         }
 
         /// <summary>
@@ -293,12 +302,13 @@ namespace Engage.Dnn.Events.Display
         /// <param name="pageNumber">The page number.</param>
         /// <param name="sortExpression">The field on which to sort the event list.</param>
         /// <param name="status">The status of events to retrieve.</param>
+        /// <param name="filterCategoryId">The ID of the category by which results should be filtered, or <c>null</c> for all results.</param>
         /// <returns>
         /// The URL to use for this page, for a listing with the given <paramref name="pageNumber"/>, <paramref name="sortExpression"/>, and <paramref name="status"/>.
         /// </returns>
-        private string GetPageUrl(int pageNumber, string sortExpression, string status)
+        private string GetPageUrl(int pageNumber, string sortExpression, string status, int? filterCategoryId)
         {
-            return string.Format(CultureInfo.InvariantCulture, this.GetPageUrlTemplate(sortExpression, status), pageNumber);
+            return string.Format(CultureInfo.InvariantCulture, this.GetPageUrlTemplate(sortExpression, status, filterCategoryId), pageNumber);
         }
 
         /// <summary>
@@ -310,7 +320,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="templateItem">The object to query for data to implement the given tag</param>
         /// <param name="resourceFile">The resource file to use to find get localized text.</param>
         /// <returns>Whether to process the tag's ChildTags collection</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "The complexity cannot easily be reduced and the method is easy to understand, test, and maintain")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "The complexity cannot easily be reduced and the method is easy to understand, test, and maintain")]
         private bool ProcessTag(Control container, Tag tag, ITemplateable templateItem, string resourceFile)
         {
             Event currentEvent = (Event)templateItem;
@@ -319,20 +329,28 @@ namespace Engage.Dnn.Events.Display
                 switch (tag.LocalName.ToUpperInvariant())
                 {
                     case "EVENTSORT":
-                        this.sortAction = (SortAction)this.LoadControl(this.ActionsControlsFolder + "SortAction.ascx");
-                        this.sortAction.ModuleConfiguration = this.ModuleConfiguration;
-                        this.sortAction.LocalResourceFile = resourceFile;
-                        this.sortAction.SortChanged += this.SortActions_SortChanged;
+                        this.SortAction = (SortAction)this.LoadControl(this.ActionsControlsFolder + "SortAction.ascx");
+                        this.SortAction.ModuleConfiguration = this.ModuleConfiguration;
+                        this.SortAction.LocalResourceFile = resourceFile;
+                        this.SortAction.SortChanged += this.SortActions_SortChanged;
 
-                        container.Controls.Add(this.sortAction);
+                        container.Controls.Add(this.SortAction);
                         break;
                     case "STATUSFILTER":
-                        this.statusFilterAction = (StatusFilterAction)this.LoadControl(this.ActionsControlsFolder + "StatusFilterAction.ascx");
-                        this.statusFilterAction.ModuleConfiguration = this.ModuleConfiguration;
-                        this.statusFilterAction.LocalResourceFile = resourceFile;
-                        this.statusFilterAction.SortChanged += this.SortActions_SortChanged;
+                        this.StatusFilterAction = (StatusFilterAction)this.LoadControl(this.ActionsControlsFolder + "StatusFilterAction.ascx");
+                        this.StatusFilterAction.ModuleConfiguration = this.ModuleConfiguration;
+                        this.StatusFilterAction.LocalResourceFile = resourceFile;
+                        this.StatusFilterAction.SortChanged += this.SortActions_SortChanged;
 
-                        container.Controls.Add(this.statusFilterAction);
+                        container.Controls.Add(this.StatusFilterAction);
+                        break;
+                    case "CATEGORYFILTER":
+                        this.CategoryFilterAction = (CategoryFilterAction)this.LoadControl(this.ActionsControlsFolder + "CategoryFilterAction.ascx");
+                        this.CategoryFilterAction.ModuleConfiguration = this.ModuleConfiguration;
+                        this.CategoryFilterAction.LocalResourceFile = resourceFile;
+                        this.CategoryFilterAction.CategoryChanged += this.SortActions_SortChanged;
+
+                        container.Controls.Add(this.CategoryFilterAction);
                         break;
                     case "READMORE":
                         if (currentEvent == null || Engage.Utility.HasValue(currentEvent.Description))
@@ -403,7 +421,7 @@ namespace Engage.Dnn.Events.Display
             this.TemplateProvider = new PagingTemplateProvider(
                 this.GetTemplate(templateFolderName),
                 this,
-                this.GetPageUrlTemplate(this.SortExpression, this.Status),
+                this.GetPageUrlTemplate(this.SortExpression, this.Status, this.CategoryId),
                 new ItemPagingState(this.CurrentPageIndex, this.TotalNumberOfEvents, this.RecordsPerPage), 
                 this.ProcessTag,
                 this.GetEvents);
@@ -423,13 +441,13 @@ namespace Engage.Dnn.Events.Display
         {
             EventCollection events = EventCollection.Load(
                     this.PortalId,
-                    this.IsManageEvents ? ListingMode.All : this.listingMode,
+                    this.IsManageEvents ? ListingMode.All : this.ListingMode,
                     this.SortExpression,
                     this.CurrentPageIndex - 1,
                     this.RecordsPerPage,
                     this.Status.Equals("All", StringComparison.Ordinal),
                     this.IsManageEvents ? false : this.IsFeatured,
-                    this.CategoryIds);
+                    this.CategoryId.HasValue ? new[] { this.CategoryId.Value } : this.CategoryIds);
 
             this.TotalNumberOfEvents = events.TotalRecords;
             this.TemplateProvider.ItemPagingState = new ItemPagingState(this.CurrentPageIndex, events.TotalRecords, this.RecordsPerPage);
