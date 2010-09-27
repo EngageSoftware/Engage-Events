@@ -412,6 +412,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\icon-canvas.png" />
     <Content Include="ReleaseNotes_1.4.0.htm" />
     <Content Include="ManageCategories.ascx" />
     <Content Include="Images\dn.gif" />
@@ -426,15 +427,11 @@
     <Content Include="Licenses\EULA-Trial.htm" />
     <Content Include="Licenses\EULA-Trial.txt" />
     <Content Include="MainContainer.ascx" />
-    <Content Include="Menu\add-icon.png" />
-    <Content Include="Menu\Default.gif" />
-    <Content Include="Menu\home-icon.png" />
-    <Content Include="Menu\manage-icon.png" />
-    <Content Include="Menu\radmenu-bg.png" />
-    <Content Include="Menu\radmenu-hover_active-bg.png" />
-    <Content Include="Menu\rmSprite.png" />
-    <Content Include="Menu\rmVSprite.png" />
-    <Content Include="Menu\settings-icon.png" />
+    <Content Include="Images\Default.gif" />
+    <Content Include="Images\radmenu-bg.png" />
+    <Content Include="Images\radmenu-hover_active-bg.png" />
+    <Content Include="Images\rmSprite.png" />
+    <Content Include="Images\rmVSprite.png" />
     <Content Include="References\Framework\Engage.Dnn.Framework.dll" />
     <Content Include="References\Framework\Engage.Events.dll" />
     <Content Include="References\Framework\Engage.Framework.dll" />
@@ -769,6 +766,9 @@
     <None Include="Providers\DataProviders\SqlDataProvider\1.2.0.SqlDataProvider" />
     <None Include="Providers\DataProviders\SqlDataProvider\1.2.1.SqlDataProvider" />
     <None Include="Templates\EngageManifest.xsd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Menu\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" Condition="'$(Solutions.VSVersion)' == '9.0'" />
