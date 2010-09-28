@@ -12,8 +12,11 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.Linq;
 
     using DotNetNuke.Common;
+
+    using Engage.Events;
 
     using Framework.Templating;
 
@@ -23,9 +26,9 @@ namespace Engage.Dnn.Events
     public partial class NotConfigured : ModuleBase
     {
         /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
+        /// Raises the <see cref="Control.Init"/> event.
         /// </summary>
-        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -39,6 +42,8 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetupDefaultSettings()
         {
+            this.EnsureDefaultCategoryExists();
+
             ModuleSettings.DisplayType.Set(this, ModuleSettings.DisplayType.DefaultValue);
             ModuleSettings.DisplayModeOption.Set(this, ModuleSettings.DisplayModeOption.DefaultValue);
             ModuleSettings.RecordsPerPage.Set(this, ModuleSettings.RecordsPerPage.DefaultValue);
@@ -54,6 +59,20 @@ namespace Engage.Dnn.Events
             }
 
             ModuleSettings.SingleItemTemplate.Set(this, singleItemTemplateFolderName);
+        }
+
+        /// <summary>
+        /// Ensures that there is at least one category in this portal; otherwise, creates the default category.
+        /// </summary>
+        private void EnsureDefaultCategoryExists()
+        {
+            if (CategoryCollection.Load(this.PortalId).Any())
+            {
+                return;
+            }
+
+            var defaultCategory = Category.Create(this.PortalId, string.Empty, null);
+            defaultCategory.Save(this.UserId);
         }
     }
 }
