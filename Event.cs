@@ -15,6 +15,7 @@ namespace Engage.Events
     using System.ComponentModel;
     using System.Data;
     using System.Globalization;
+    using System.Linq;
     using System.Xml.Serialization;
     using Data;
     using Dnn.Framework.Templating;
@@ -383,18 +384,18 @@ namespace Engage.Events
                     return null;
                 }
 
-                // Does anyone remember why we were doing this?  It caused bug EVT-536.
-                ////int originalMaxOccurrences = this.recurrenceRule.Range.MaxOccurrences;
-                ////this.recurrenceRule.Range.MaxOccurrences = int.MaxValue;
-
-                // TODO: Calculate FinalRecurringEndDate efficiently
-                DateTime lastOccurrence = this.EventStart;
-                foreach (DateTime occurrence in this.RecurrenceRule.Occurrences)
+                int originalMaxOccurrences = this.RecurrenceRule.Range.MaxOccurrences;
+                if (originalMaxOccurrences == 0)
                 {
-                    lastOccurrence = occurrence;
+                    // if RecursUntil is set, we need to allow that limit to be hit
+                    // otherwise, Occurrences will return nothing, since MaxOccurrences is zero
+                    this.RecurrenceRule.Range.MaxOccurrences = int.MaxValue;
                 }
 
-                ////this.recurrenceRule.Range.MaxOccurrences = originalMaxOccurrences;
+                // TODO: Calculate FinalRecurringEndDate more efficiently
+                var lastOccurrence = this.RecurrenceRule.Occurrences.Cast<DateTime?>().LastOrDefault() ?? this.EventStart;
+
+                this.RecurrenceRule.Range.MaxOccurrences = originalMaxOccurrences;
 
                 return lastOccurrence + this.RecurrenceRule.Range.EventDuration;
             }
