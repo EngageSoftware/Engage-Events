@@ -39,8 +39,8 @@
 .ItemListingWrap .RecurringEventItem{background: transparent url(../../images/recurring_icon.gif) no-repeat 0 16px;}
 	
 /* Category Colors */
-.ItemListingWrap .EventCategory {display:inline; padding: 2px 3px; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;}
-.ItemListingWrap .EventCategory p {display:inline;}
+.ItemListingWrap .EventCategory {float:right; width:82%; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;}
+.ItemListingWrap .EventCategory p {margin:0; padding: 2px 3px;}
 .ItemListingWrap .color-Yellow .EventCategory {background-color:#fffbc7}
 .ItemListingWrap .color-Blue .EventCategory {background-color:#bbd0ec}
 .ItemListingWrap .color-Red .EventCategory {background-color:#ecbbbb}
