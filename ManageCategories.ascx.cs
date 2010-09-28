@@ -246,6 +246,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void LocalizeGrid()
         {
+            this.CategoriesGrid.MasterTableView.NoMasterRecordsText = this.Localize("NoCategories.Text");
             this.CategoriesGrid.MasterTableView.CommandItemSettings.AddNewRecordText = this.Localize("AddCategory.Text");
 
             var editColumn = (GridEditCommandColumn)this.CategoriesGrid.Columns.FindByUniqueName("EditButtons");

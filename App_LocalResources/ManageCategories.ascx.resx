@@ -171,6 +171,9 @@
   <data name="NameUnique.Text" xml:space="preserve">
     <value>Another category is using this name.  Categoy names must be unique.</value>
   </data>
+  <data name="NoCategories.Text" xml:space="preserve">
+    <value>No categories to display</value>
+  </data>
   <data name="NoColor.Text" xml:space="preserve">
     <value>Default</value>
   </data>
