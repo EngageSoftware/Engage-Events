@@ -443,43 +443,44 @@ a.PopupTriggerLink
 
 /*========================= RadMenu =====================================*/
 
-.RadMenu{width:100% !important;}
+.RadMenu_Engage{width:100% !important;}
 
 .RadMenu_Engage .rmHorizontal {border:1px solid #dddddd;background:url("Images/radmenu-bg.png") repeat-x #e7e7e7;width:100%;}
 
 .RadMenu_Engage .rmHorizontal .rmLink {color:#60605f;display:block; padding:6px 9px 6px 44px;}
 
 
-.rmSlide .rmLink{border-right: 1px solid #ccc; border-left:1px solid #ccc;}
-.rmSlide .rmLast .rmLink{border-bottom:1px solid #ccc;}
+.RadMenu_Engage .rmSlide .rmLink{border-right: 1px solid #ccc; border-left:1px solid #ccc;}
+.RadMenu_Engage .rmSlide .rmLast .rmLink{border-bottom:1px solid #ccc;}
+
+.RadMenu_Engage .rmRootGroup .rmLink:hover{padding:6px 8px 6px 43px;}
+.RadMenu_Engage .rmRootGroup .rmLevel1 .rmLink:hover{padding:0;}
 
 .RadMenu_Engage .rmHorizontal .rmLink:hover{color:#d4730c;cursor:pointer;display:block;height:100%;text-decoration:none;border-right: 1px solid #aaa9a9;border-left:1px solid #aaa9a9;background-color:#dcdbdb;}
-
 
 .RadMenu_Engage .rmSlide .rmVertical .rmLast .rmLink:hover{border-bottom:1px solid #ccc;}
 
 .RadMenu_Engage .rmHorizontal .rmFocused{color:#60605f;cursor:pointer;display:block;height:100%;text-decoration:none;background-color:#dcdbdb;}
+
 .RadMenu_Engage .RAD-home #HomeItem{background:url("Images/icon-canvas.png") no-repeat 10px -73px;}
+.RadMenu_Engage .RAD-home #HomeItem:hover {background-position:8px -104px;}
 
-.RadMenu_Engage .RAD-home #HomeItem:hover {background-position:9px -104px;}
-
-.RadMenu_Engage .RAD-settings #SettingsItem {background:url("Images/icon-canvas.png") no-repeat 10px -210px;}
-
-.RadMenu_Engage .RAD-settings #SettingsItem:hover {background-position:10px -245px;}
-
-.RadMenu_Engage .RAD-add #AddEventItem{background:url("Images/icon-canvas.png") no-repeat 8px -4px;}
-    
+.RadMenu_Engage .RAD-add #AddEventItem{background:url("Images/icon-canvas.png") no-repeat 9px -4px;}
 .RadMenu_Engage .RAD-add #AddEventItem:hover {background-position:8px -39px;}
 
 .RadMenu_Engage .RAD-manage #ManageItem{background:url("Images/icon-canvas.png") no-repeat 9px -139px;}
+.RadMenu_Engage .RAD-manage #ManageItem:hover{background-position:8px -139px;}
 
-.RadMenu_Engage .RAD-manage #ManageItem:hover {background-position:9px -171px;}
-    
+.RadMenu_Engage .RAD-settings #SettingsItem {background:url("Images/icon-canvas.png") no-repeat 10px -210px;}
+.RadMenu_Engage .RAD-settings #SettingsItem:hover{background-position:9px -210px;}
+
+.RadMenu_Engage .RAD-manage #ManageItem, .RadMenu_Engage .RAD-settings #SettingsItem {cursor:default;}
+
 .RadMenu_Engage .rmVertical {background:#f8f8f8;border-right:1px solid #efefef;border-bottom:1px solid #efefef;border-left:1px solid #efefef;}
 
 .RadMenu_Engage .rmVertical .rmLink .rmText {padding: 10px 0;}
 
-.RadMenu .rmHorizontal .rmText{padding:0 7px 1 0 !important;}
+.RadMenu_Engage .rmHorizontal .rmText{padding:0 7px 1 0 !important;}
 
 .GlobalNavigation .RadMenu_Engage. rmSlide{top:114px;}
 /*========================= End of RadMenu ==============================*/
