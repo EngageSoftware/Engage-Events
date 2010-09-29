@@ -5,6 +5,6 @@
     Displays all events in a managerial interface
   </Description>
   <Stylesheet>Template.css</Stylesheet>
-  <ResourceFile>App_LocalResources/Template.resx</ResourceFile>
+  <ResourceFile>App_LocalResources/SharedResources.resx</ResourceFile>
   <Template>Item.Listing.html</Template>
 </EngageManifest>

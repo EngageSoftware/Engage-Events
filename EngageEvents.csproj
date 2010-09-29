@@ -684,23 +684,23 @@
     </Content>
     <Content Include="Actions\App_LocalResources\CategoryFilterAction.ascx.resx" />
     <EmbeddedResource Include="JavaScript\jquery.fancybox-1.0.0.js" />
-    <Content Include="Templates\ToolTip\App_LocalResources\Template.resx">
+    <Content Include="Templates\ToolTip\App_LocalResources\SharedResources.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Templates\Admin\ManageEvents\App_LocalResources\Template.resx" />
-    <Content Include="Templates\Legacy-ListingAll\App_LocalResources\Template.resx">
+    <Content Include="Templates\Admin\ManageEvents\App_LocalResources\SharedResources.resx" />
+    <Content Include="Templates\Legacy-ListingAll\App_LocalResources\SharedResources.resx">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Templates\Default\Manifest.xml" />
     <Content Include="Templates\ListingShort\Manifest.xml" />
     <Content Include="Templates\ListingShort\Template.css" />
-    <Content Include="Templates\Narrow\App_LocalResources\Template.resx">
+    <Content Include="Templates\Narrow\App_LocalResources\SharedResources.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Templates\MiniList\App_LocalResources\Template.resx">
+    <Content Include="Templates\MiniList\App_LocalResources\SharedResources.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Templates\Default-Single\App_LocalResources\Template.resx">
+    <Content Include="Templates\Default-Single\App_LocalResources\SharedResources.resx">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="References\DotNetNuke.dll" />
@@ -711,7 +711,7 @@
     </Content>
     <Content Include="ReleaseNotes_1.1.0.htm" />
     <Content Include="RespondPage.aspx" />
-    <Content Include="Templates\Default\App_LocalResources\Template.resx">
+    <Content Include="Templates\Default\App_LocalResources\SharedResources.resx">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Admin\App_LocalResources\LicenseError.ascx.resx">

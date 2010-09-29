@@ -6,7 +6,7 @@
     Displays title, time, date, location, overview, and description links
   </Description>
   <Stylesheet>Template.css</Stylesheet>
-  <ResourceFile>App_LocalResources/Template.resx</ResourceFile>
+  <ResourceFile>App_LocalResources/SharedResources.resx</ResourceFile>
   <Template>Detail.Item.html</Template>
   <PreviewImage>single-item-default.jpg</PreviewImage>
 </EngageManifest>

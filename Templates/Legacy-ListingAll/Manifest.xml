@@ -5,7 +5,7 @@
     The default template from Engage: Events 1.1, with the Header.ListingAll header template.
   </Description>
   <Stylesheet>Template.css</Stylesheet>
-  <ResourceFile>App_LocalResources/Template.resx</ResourceFile>
+  <ResourceFile>App_LocalResources/SharedResources.resx</ResourceFile>
   <Template>Item.Listing.html</Template>
   <PreviewImage>legacy.jpg</PreviewImage>
   <Settings>

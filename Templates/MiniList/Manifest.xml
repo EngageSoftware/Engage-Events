@@ -7,7 +7,7 @@
     (so, make sure that the module's details display module is a calendar display, or that the link's text is changed in the DNN Language Editor).
   </Description>
   <Stylesheet>Template.css</Stylesheet>
-  <ResourceFile>App_LocalResources/Template.resx</ResourceFile>
+  <ResourceFile>App_LocalResources/SharedResources.resx</ResourceFile>
   <Template>MiniList.htm</Template>
   <PreviewImage>minilist.jpg</PreviewImage>
 </EngageManifest>

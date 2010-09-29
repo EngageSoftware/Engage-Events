@@ -5,7 +5,7 @@
     A list of information and buttons for events.
   </Description>
   <Stylesheet>Template.css</Stylesheet>
-  <ResourceFile>App_LocalResources/Template.resx</ResourceFile>
+  <ResourceFile>App_LocalResources/SharedResources.resx</ResourceFile>
   <Template>Item.Listing.html</Template>
   <PreviewImage>default.jpg</PreviewImage>
   <Settings>
