@@ -439,7 +439,7 @@ namespace Engage.Dnn.Events.Display
         /// <returns>A list of the <see cref="Event"/>s over which the given <paramref name="listTag"/> should be processed</returns>
         private IEnumerable<ITemplateable> GetEvents(Tag listTag, ITemplateable context)
         {
-            EventCollection events = EventCollection.Load(
+            var events = EventCollection.Load(
                     this.PortalId,
                     this.IsManageEvents ? ListingMode.All : this.ListingMode,
                     this.SortExpression,
@@ -448,11 +448,19 @@ namespace Engage.Dnn.Events.Display
                     this.Status.Equals("All", StringComparison.Ordinal),
                     this.IsManageEvents ? false : this.IsFeatured,
                     this.CategoryId.HasValue ? new[] { this.CategoryId.Value } : this.CategoryIds);
-
+            
             this.TotalNumberOfEvents = events.TotalRecords;
             this.TemplateProvider.ItemPagingState = new ItemPagingState(this.CurrentPageIndex, events.TotalRecords, this.RecordsPerPage);
 
-            return events;
+            return ((IEnumerable<Event>)events).Select(e =>
+                {
+                    if (string.IsNullOrEmpty(e.Category.Name))
+                    {
+                        e.Category.Name = this.Localize("DefaultCategory", this.LocalSharedResourceFile);
+                    }
+
+                    return (ITemplateable)e;
+                });
         }
     }
 }
