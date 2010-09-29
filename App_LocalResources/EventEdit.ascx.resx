@@ -129,8 +129,8 @@
   <data name="Cancel.Alt" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="CancelGoHomeLink.Alt" xml:space="preserve">
-    <value>Cancel &amp; Go Home</value>
+  <data name="Home.Text" xml:space="preserve">
+    <value>Home</value>
   </data>
   <data name="CapacityMetMessageLabel.Text" xml:space="preserve">
     <value>When Registration Cap Is Met, Show a</value>

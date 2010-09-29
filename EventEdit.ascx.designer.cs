@@ -46,7 +46,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EventTitleTextBox;
+        protected global::Telerik.Web.UI.RadTextBox EventTitleTextBox;
         
         /// <summary>
         /// CategoryPanel control.
@@ -127,7 +127,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EventLocationTextBox;
+        protected global::Telerik.Web.UI.RadTextBox EventLocationTextBox;
         
         /// <summary>
         /// EventOverviewTextEditor control.
@@ -136,7 +136,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EventOverviewTextEditor;
+        protected global::Telerik.Web.UI.RadTextBox EventOverviewTextEditor;
         
         /// <summary>
         /// EventDescriptionTextEditor control.
@@ -307,7 +307,16 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton SaveEventButton;
+        protected global::System.Web.UI.WebControls.Button SaveEventButton;
+        
+        /// <summary>
+        /// SaveAndCreateNewEventButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SaveAndCreateNewEventButton;
         
         /// <summary>
         /// CancelEventLink control.
@@ -317,15 +326,6 @@ namespace Engage.Dnn.Events {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink CancelEventLink;
-        
-        /// <summary>
-        /// SaveAndCreateNewEventButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton SaveAndCreateNewEventButton;
         
         /// <summary>
         /// FinalFooterView control.
@@ -343,7 +343,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink CreateAnotherEventLink;
+        protected global::System.Web.UI.WebControls.Button CreateAnotherEventLink;
         
         /// <summary>
         /// CancelGoHomeLink control.

@@ -56,6 +56,7 @@ namespace Engage.Dnn.Events
             this.Load += this.Page_Load;
             this.SaveEventButton.Click += this.SaveEventButton_OnClick;
             this.SaveAndCreateNewEventButton.Click += this.SaveAndCreateNewEventButton_OnClick;
+            this.CreateAnotherEventLink.Click += this.CreateAnotherEventLink_Click;
             this.RecurringCheckBox.CheckedChanged += this.RecurringCheckbox_CheckedChanged;
             this.AllowRegistrationsCheckBox.CheckedChanged += this.AllowRegistrationsCheckBox_CheckedChanged;
             this.LimitRegistrationsCheckBox.CheckedChanged += this.LimitRegistrationsCheckBox_CheckedChanged;
@@ -146,10 +147,10 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Handles the OnClick event of the SaveAndCreateNewEventButton control.
+        /// Handles the <see cref="Button.Click"/> event of the <see cref="SaveAndCreateNewEventButton"/> control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void SaveAndCreateNewEventButton_OnClick(object sender, EventArgs e)
         {
             try
@@ -164,6 +165,16 @@ namespace Engage.Dnn.Events
             {
                 Exceptions.ProcessModuleLoadException(this, exc);
             }
+        }
+
+        /// <summary>
+        /// Handles the <see cref="Button.Click"/> event of the <see cref="CreateAnotherEventLink"/> control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void CreateAnotherEventLink_Click(object sender, EventArgs e)
+        {
+            this.Response.Redirect(this.AddEventUrl, true);
         }
 
         /// <summary>
@@ -310,7 +321,6 @@ namespace Engage.Dnn.Events
         private void SetButtonLinks()
         {
             this.CancelGoHomeLink.NavigateUrl = this.CancelEventLink.NavigateUrl = Globals.NavigateURL();
-            this.CreateAnotherEventLink.NavigateUrl = this.AddEventUrl;
         }
 
         /// <summary>
@@ -320,8 +330,6 @@ namespace Engage.Dnn.Events
         {
             string addEditResourceKey = this.EventId.HasValue ? "EditEvent.Text" : "AddNewEvent.Text";
             this.AddEditEventLabel.Text = Localization.GetString(addEditResourceKey, this.LocalResourceFile);
-            this.SaveAndCreateNewEventButton.AlternateText = Localization.GetString("SaveAndCreateNew.Alt", LocalResourceFile);
-            this.SaveEventButton.AlternateText = Localization.GetString("Save.Alt", LocalResourceFile);
         }
 
         /// <summary>

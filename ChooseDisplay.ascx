@@ -21,3 +21,4 @@
 		<asp:Button ID="CancelButton" runat="server" resourcekey="Cancel" CausesValidation="false" EnableViewState="false" />
 	</div>
 </div>
+<div style="clear:both">&nbsp;</div>

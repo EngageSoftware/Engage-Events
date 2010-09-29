@@ -14,39 +14,39 @@
         <asp:Label ID="AddEditEventLabel" runat="server"/>
     </h2>
     
-    <div class="AEEventTitle">
-        <asp:Label runat="server" ResourceKey="EventTitleLabel" CssClass="NormalBold" AssociatedControlID="EventTitleTextBox"/>
-        <asp:TextBox ID="EventTitleTextBox" runat="server" CssClass="NormalTextBox" MaxLength="250"/>
+    <div class="AEEventTitle eng-section">
+        <asp:Label runat="server" ResourceKey="EventTitleLabel" CssClass="NormalBold eng-label" AssociatedControlID="EventTitleTextBox"/>
+        <telerik:RadTextBox ID="EventTitleTextBox" runat="server" CssClass="NormalTextBox eng-input eng-input-large" MaxLength="250" skin="WebBlue" ShouldResetWidthInPixels="false"/>
         <asp:RequiredFieldValidator runat="server" ControlToValidate="EventTitleTextBox" ResourceKey="EventTitleTextBoxRequired" Display="None" EnableClientScript="false"/>
     </div>
     
-    <asp:Panel ID="CategoryPanel" runat="server" CssClass="AEEventCategory">
-        <asp:Label runat="server" ResourceKey="EventCategoryLabel" CssClass="NormalBold" AssociatedControlID="CategoryComboBox"/>
-        <telerik:RadComboBox ID="CategoryComboBox" runat="server" skin="WebBlue" MarkFirstMatch="true" ShowDropDownOnTextboxClick="true" 
-            OnClientSelectedIndexChanged="CategoryComboBox_SelectedIndexChanged" OnClientTextChange="CategoryComboBox_TextChange" />
+    <asp:Panel ID="CategoryPanel" runat="server" CssClass="AEEventCategory eng-section">
+        <asp:Label runat="server" ResourceKey="EventCategoryLabel" CssClass="NormalBold eng-label" AssociatedControlID="CategoryComboBox"/>
+        <telerik:RadComboBox ID="CategoryComboBox" runat="server" CssClass="eng-input eng-input-large" skin="WebBlue" MarkFirstMatch="true" ShowDropDownOnTextboxClick="true" 
+            OnClientSelectedIndexChanged="CategoryComboBox_SelectedIndexChanged" OnClientTextChange="CategoryComboBox_TextChange" ShouldResetWidthInPixels="false" />
         <asp:Label ID="CategoryCreationPendingLabel" runat="server" ResourceKey="CategoryCreationPending" CssClass="InformationBody" style="display:none;" />
         <asp:RequiredFieldValidator runat="server" ControlToValidate="CategoryComboBox" ResourceKey="EventCategoryRequired" Display="None" EnableClientScript="false"/>
         <asp:CustomValidator ID="UniqueCategoryNameValidator" runat="server" ControlToValidate="CategoryComboBox" ResourceKey="EventCategoryUnique" Display="None" EnableClientScript="false"/>
     </asp:Panel>
     
-    <div class="AEEventStartDate">
-        <asp:Label runat="server" ResourceKey="EventStartDateLabel" CssClass="NormalBold" AssociatedControlID="StartDateTimePicker"/>
-        <telerik:raddatetimepicker runat="server" id="StartDateTimePicker" skin="WebBlue">
+    <div class="AEEventStartDate eng-section">
+        <asp:Label runat="server" ResourceKey="EventStartDateLabel" CssClass="NormalBold eng-label" AssociatedControlID="StartDateTimePicker"/>
+        <telerik:raddatetimepicker runat="server" id="StartDateTimePicker" skin="WebBlue" ShouldResetWidthInPixels="false">
             <timeview skin="WebBlue"/>
             <calendar skin="WebBlue" ShowRowHeaders="false"/>
-            <DateInput InvalidStyleDuration="100"/>
+            <DateInput InvalidStyleDuration="100" CssClass="eng-input eng-input-medium"/>
             <ClientEvents OnDateSelected="StartDateTimePicker_DateSelected" />
         </telerik:raddatetimepicker>
         
         <asp:RequiredFieldValidator runat="server" ControlToValidate="StartDateTimePicker" ResourceKey="StartDateTimePickerRequired" Display="None" EnableClientScript="false"/>
     </div>
     
-    <div class="AEEventEndDate">
-        <asp:Label runat="server" ResourceKey="EventEndDateLabel" CssClass="NormalBold" AssociatedControlID="EndDateTimePicker"/>
-        <telerik:raddatetimepicker runat="server" id="EndDateTimePicker" skin="WebBlue">
+    <div class="AEEventEndDate eng-section">
+        <asp:Label runat="server" ResourceKey="EventEndDateLabel" CssClass="NormalBold eng-label" AssociatedControlID="EndDateTimePicker"/>
+        <telerik:raddatetimepicker runat="server" id="EndDateTimePicker" skin="WebBlue" ShouldResetWidthInPixels="false">
             <timeview skin="WebBlue"/>
             <calendar skin="WebBlue" ShowRowHeaders="false"/>
-            <DateInput InvalidStyleDuration="100"/>
+            <DateInput InvalidStyleDuration="100" CssClass="eng-input eng-input-medium"/>
         </telerik:raddatetimepicker>
         
         <asp:CompareValidator 
@@ -58,36 +58,36 @@
         <asp:RequiredFieldValidator runat="server" ControlToValidate="EndDateTimePicker" ResourceKey="EndDateTimePickerRequired" Display="None" EnableClientScript="false"/>
     </div>
     
-    <div class="AEEventTimeZone">
-        <asp:Label runat="server" ResourceKey="EventTimeZoneLabel" CssClass="NormalBold" AssociatedControlID="TimeZoneDropDownList" />
+    <div class="AEEventTimeZone eng-section">
+        <asp:Label runat="server" ResourceKey="EventTimeZoneLabel" CssClass="NormalBold eng-label" AssociatedControlID="TimeZoneDropDownList" />
         <div class="timezone_display">
-        	<asp:DropDownList runat="server" ID="TimeZoneDropDownList" />
+        	<asp:DropDownList runat="server" ID="TimeZoneDropDownList" CssClass="eng-input eng-input-x-large" />
 	        <div class="Normal"><asp:CheckBox runat="server" ID="InDaylightTimeCheckBox" ResourceKey="EventTimeZoneCheckBox" /></div>
         </div>
     </div>
     
-    <div class="AEEventLocationAdd">
-        <asp:Label runat="server" ResourceKey="EventLocationLabel" CssClass="NormalBold" AssociatedControlID="EventLocationTextBox"/>
-        <asp:TextBox ID="EventLocationTextBox" runat="server" CssClass="NormalTextBox"/>
+    <div class="AEEventLocationAdd eng-section">
+        <asp:Label runat="server" ResourceKey="EventLocationLabel" CssClass="NormalBold eng-label" AssociatedControlID="EventLocationTextBox"/>
+        <telerik:RadTextBox ID="EventLocationTextBox" runat="server" CssClass="NormalTextBox eng-input eng-input-large" Skin="WebBlue" ShouldResetWidthInPixels="false" />
         <asp:RequiredFieldValidator runat="server" ControlToValidate="EventLocationTextBox" ResourceKey="EventLocationTextBoxRequired" Display="None" EnableClientScript="false"/>
     </div>
 
-    <div class="AEEventEditor">
-        <asp:Label runat="server" ResourceKey="EventOverviewLabel" CssClass="NormalBold" AssociatedControlID="EventOverviewTextEditor"/>
-        <asp:TextBox  ID="EventOverviewTextEditor" runat="server" Columns="30" Rows="5" Width="400" TextMode="MultiLine" Height="350" />
+    <div class="AEEventEditor eng-section">
+        <asp:Label runat="server" ResourceKey="EventOverviewLabel" CssClass="NormalBold eng-label" AssociatedControlID="EventOverviewTextEditor"/>
+        <telerik:RadTextBox ID="EventOverviewTextEditor" runat="server" CssClass="eng-input eng-input-x-large" TextMode="MultiLine" Skin="WebBlue" ShouldResetWidthInPixels="false" />
     </div>
     
-    <div class="AEEventEditor">
-        <asp:Label runat="server" ResourceKey="EventDescriptionLabel" CssClass="NormalBold" AssociatedControlID="EventDescriptionTextEditor"/>
-        <dnn:TextEditor ID="EventDescriptionTextEditor" runat="server" Width="400" TextRenderMode="Raw" HtmlEncode="False" DefaultMode="Rich" Height="350" ChooseMode="True" ChooseRender="False" />
+    <div class="AEEventEditor eng-section">
+        <asp:Label runat="server" ResourceKey="EventDescriptionLabel" CssClass="NormalBold eng-label" AssociatedControlID="EventDescriptionTextEditor"/>
+        <dnn:TextEditor ID="EventDescriptionTextEditor" runat="server" Height="400" Width="400" CssClass="eng-input eng-input-x-large" TextRenderMode="Raw" HtmlEncode="False" DefaultMode="Rich" ChooseMode="True" ChooseRender="False" />
         <asp:CustomValidator ID="EventDescriptionTextEditorValidator" runat="server" ResourceKey="EventDescriptionTextEditorRequired" Display="None"/>
     </div>
     
-    <div class="AEEventFeature">
-        <asp:Label runat="server" ResourceKey="FeaturedEventLabel" CssClass="NormalBold" AssociatedControlID="FeaturedCheckBox"/>
+    <div class="AEEventFeature eng-section">
+        <asp:Label runat="server" ResourceKey="FeaturedEventLabel" CssClass="NormalBold eng-label" AssociatedControlID="FeaturedCheckBox"/>
         <asp:CheckBox ID="FeaturedCheckBox" runat="server" />        
     </div>
-    <div class="AEEventRegister">
+    <div class="AEEventRegister eng-section">
         <asp:UpdatePanel runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
             <Triggers>
                 <asp:AsyncPostBackTrigger ControlID="AllowRegistrationsCheckBox" />
@@ -95,7 +95,7 @@
                 <asp:AsyncPostBackTrigger ControlID="CapacityMetMessageRadioButtonList" />
             </Triggers>
             <ContentTemplate>
-                <asp:Label runat="server" ResourceKey="AllowRegistrationsLabel" CssClass="NormalBold MainLabel" AssociatedControlID="AllowRegistrationsCheckBox"/>
+                <asp:Label runat="server" ResourceKey="AllowRegistrationsLabel" CssClass="NormalBold eng-label MainLabel" AssociatedControlID="AllowRegistrationsCheckBox"/>
                 <asp:CheckBox ID="AllowRegistrationsCheckBox" runat="server" Checked="true" AutoPostBack="true" />
                 <asp:Panel ID="LimitRegistrationsPanel" runat="server">
                     <fieldset class="registration_fs">
@@ -125,13 +125,13 @@
             </ContentTemplate>
         </asp:UpdatePanel>
     </div>
-    <div class="AEEventRecur">
+    <div class="AEEventRecur eng-section">
         <asp:UpdatePanel runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
             <Triggers>
                 <asp:AsyncPostBackTrigger ControlID="RecurringCheckbox" />
             </Triggers>
             <ContentTemplate>
-                <asp:Label ID="RecurringEventLabel" runat="server" ResourceKey="RecurringEventLabel" CssClass="NormalBold" AssociatedControlID="RecurringCheckBox"/>
+                <asp:Label ID="RecurringEventLabel" runat="server" ResourceKey="RecurringEventLabel" CssClass="NormalBold eng-label" AssociatedControlID="RecurringCheckBox"/>
                 <asp:CheckBox ID="RecurringCheckBox" runat="server" AutoPostBack="true" />
                 <engage:RecurrenceEditor ID="RecurrenceEditor" runat="server" Visible="false" DatePickerSkin="WebBlue" />
                 <asp:CustomValidator ID="RecurrenceEditorValidator" runat="server" ResourceKey="InvalidRecurrence" Display="None" />
@@ -145,20 +145,19 @@
 <asp:MultiView ID="FooterMultiview" runat="server" ActiveViewIndex="0">
     <asp:View ID="AddEventFooterView" runat="server">
         <div class="AddEventFooterButtons AdminButtons FooterButtons">
-            <asp:ImageButton ID="SaveEventButton" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/save.gif" />
-            <asp:HyperLink ID="CancelEventLink" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/cancel_go_home.gif" ResourceKey="Cancel.Alt" />
-            <asp:ImageButton ID="SaveAndCreateNewEventButton" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/save_create_new.gif"/>
+            <asp:Button ID="SaveEventButton" runat="server" CssClass="Normal" ResourceKey="Save.Alt" />
+            <asp:Button ID="SaveAndCreateNewEventButton" runat="server" CssClass="Normal" ResourceKey="SaveAndCreateNew.Alt" />
+            <asp:HyperLink ID="CancelEventLink" runat="server" CssClass="Normal" ResourceKey="Cancel.Alt" />
         </div>
     </asp:View>
     <asp:View ID="FinalFooterView" runat="server">
         <div class="FinalButtons AdminButtons FooterButtons">
-            <asp:HyperLink ID="CreateAnotherEventLink" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/create_another_event.gif" ResourceKey="CreateAnother.Alt" />
-            <%--<asp:LinkButton ID="CreateEventEmailButton" runat="server">Create E-Mail For This Event</asp:LinkButton>--%>
-            <asp:HyperLink ID="CancelGoHomeLink" runat="server" CssClass="Normal" ImageUrl="~/DesktopModules/EngageEvents/Images/home.gif" ResourceKey=CancelGoHome.Alt" />
+            <asp:Button ID="CreateAnotherEventLink" runat="server" CssClass="Normal" ResourceKey="CreateAnother.Alt" />
+            <asp:HyperLink ID="CancelGoHomeLink" runat="server" CssClass="Normal" ResourceKey="Home" />
         </div>
     </asp:View>
 </asp:MultiView>
-
+<div style="clear:both">&nbsp;</div>
 <script type="text/ecmascript">
     function StartDateTimePicker_DateSelected(sender, eventArgs) {
         var EndDateTimePicker = $find("<%= EndDateTimePicker.ClientID %>");

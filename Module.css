@@ -15,7 +15,8 @@
 /*------------- event calendar display page --------------------*/
 
 .EventCalendar li{list-style-type: none;}
-.RadScheduler_Telerik div.rsHeader p{ width:110px; }
+.RadScheduler_Telerik div.rsHeader p{width:110px;}
+.RadScheduler .rsContent{float:left;} 
 
 .respond-wrap{padding:15px;}
 	.respond-wrap h2.Head, .respond-wrap h3.SubHead{margin:0;}
@@ -27,7 +28,7 @@
 	.AdminButtons a img{padding: 0 6px 0 0;}
 	.FooterButtons{padding-top: 3%;}
 	.AddEventSuccessMessage{padding-left: 10%;}
-	.AddNewEvent{padding-top: 2%; width: 100%; height: 100%;}
+	.AddNewEvent{padding-top: 2%; width: 100%;}
 	.AddNewEvent h2.SubHead{text-align: left; border-bottom: dashed 1px black; margin-bottom: 1em; padding-bottom: 0.375em; font-size: 125%;}
 
 	.rsAdvRecurrenceFreq:after,	.rsAdvRecurrencePatterns:after{	content:"."; display:block; clear:both; height:0; visibility:hidden;}
@@ -38,13 +39,13 @@
 	.rsAdvancedEdit .rsAdvCheckboxWrapper input{vertical-align: middle;}
 	.rsAdvancedEdit .rsAdvCheckboxWrapper label{width: auto;}
 
-	.rsAdvRecurrenceFreq{float:left; width:20%; margin:0.8em 0 0 0; border-right:1px solid #dfdfdf;}
+	.rsAdvRecurrenceFreq{float:left; width:20%; margin:15px 0; border-right:1px solid #dfdfdf;}
 	.rsAdvRecurrenceFreq ul{list-style:none;margin:0 0 0 15px;padding:0;}
-	.rsAdvRecurrenceFreq ul li{list-style: none;}
+	.rsAdvRecurrenceFreq ul li{margin:0 0 10px 0; list-style: none;}
 
-	.rsAdvHourly, .rsAdvDaily, .rsAdvWeekly, .rsAdvMonthly, .rsAdvYearly{float:right; width: 78%; margin:0.8em 0 0 0;}
-	.rsAdvHourly ul, .rsAdvDaily ul, .rsAdvWeekly ul, .rsAdvMonthly ul, .rsAdvYearly ul{list-style:none;margin:0 0 0 15px;padding:0;width: 390px;}
-    .rsAdvHourly li, .rsAdvDaily li, .rsAdvWeekly li, .rsAdvMonthly li, .rsAdvYearly li, .rsAdvRecurrenceRangePanel li,  .rsAdvMoreControls li{margin:0 0 0.3em 0; list-style: none;}
+	.rsAdvHourly, .rsAdvDaily, .rsAdvWeekly, .rsAdvMonthly, .rsAdvYearly{float:right; width: 78%; margin:15px 0 0 0;}
+	.rsAdvHourly ul, .rsAdvDaily ul, .rsAdvWeekly ul, .rsAdvMonthly ul, .rsAdvYearly ul{list-style:none;margin:0 0 0 15px;padding:0;}
+    .rsAdvHourly li, .rsAdvDaily li, .rsAdvWeekly li, .rsAdvMonthly li, .rsAdvYearly li, .rsAdvRecurrenceRangePanel li,  .rsAdvMoreControls li{margin:0 0 10px 0; list-style: none;}
 
     .rsAdvHourly input, .rsAdvDaily input, .rsAdvWeekly input, .rsAdvMonthly input, .rsAdvYearly input, .rsAdvHourly select, 
 	.rsAdvDaily select, .rsAdvWeekly select, .rsAdvMonthly select, .rsAdvYearly select{margin:0 2px;}
@@ -53,8 +54,8 @@
 	.rsAdvRecurrencePatterns ul li	{list-style-type: none;}
 	.rsAdvRecurrencePatterns{zoom:1;}
 	
-	.rsAdvancedEdit fieldset, fieldset.range_of_recurrence{border: 1px #ccc solid;}
-		fieldset.range_of_recurrence, fieldset.recurrence_fs, fieldset.registration_fs{margin-left: 10%; margin-top: 15px; background: #fefefe; padding: 5px 10px;}
+	.rsAdvancedEdit fieldset, fieldset.range_of_recurrence, fieldset.registration_fs{border: 1px #ccc solid;}
+		fieldset.range_of_recurrence, fieldset.recurrence_fs, fieldset.registration_fs{margin-left: 10%; margin-top: 15px; background: #fefefe; padding: 5px 10px;clear:both;}
 	.rsAdvancedEdit legend, legend.rsAdvRecurrenceRange, legend.registrationoptions{font-weight: bold; padding: 0 10px;}
 	
 	.NormalBold.RegCap{padding: 5px 0; display: inline-block;  }
@@ -63,12 +64,13 @@
 	h2.EventTitleToolTip{margin: 0;}
 	.tooltip_buttons{padding: 10px 0;}	
 
-	.AEEventTitle, .AEEventStartDate, .AEEventEndDate, .AEEventLocationAdd, .AEEventEditor, .AEEventFeature, .AEEventRecur, .AEEventRegister, .AEEventTimeZone, .AEEventCategory{clear: both; overflow: hidden; padding-bottom: 0.675em;}
-		.AEEventEditor .NormalBold, .AEEventTitle .NormalBold, .AEEventStartDate .NormalBold, .AEEventLocationAdd .NormalBold, .AEEventEndDate .NormalBold, 
-		.AEEventFeature .NormalBold, .AEEventRecur .NormalBold, .AEEventRegister .MainLabel, .AEEventTimeZone .NormalBold, .AEEventCategory .NormalBold
-		{float:left; width: 20%; margin-right: 3%; text-align: right;}
-		.AEEventEditor .Normal, .AEEventTitle .Normal, .AEEventStartDate .Normal, .AEEventLocationAdd .Normal, .AEEventEndDate .Normal, .AEEventFeature .Normal, .AEEventCategory .Normal {float: left; width: 81%;}
-
+	.eng-section{clear: both; overflow: hidden; padding-bottom: 15px;}
+		.eng-label{float:left; width: 20%; margin-right: 3%; text-align: right;}
+	    .eng-input-medium{width:150px !important;}
+	    .eng-input-large{width:200px !important;}
+	    .eng-input-large.RadComboBox{width:204px !important;}
+	    .eng-input-x-large{width:400px !important;}
+		
 .AEEventEditor li{ list-style-type: none; }
 .registerSubmitBt, .registerMessage{margin-top: 0.675em;}
 
@@ -137,7 +139,7 @@
 /*======================= Validation =============================*/
 .ModuleMessage{width:60%; padding-top: 1em; margin: 0 auto;}
 .mmTop{height: 5px; line-height: 0; background-color:transparent; background-repeat: no-repeat; background-attachment:scroll; background-position:left bottom;}
-.mmBody{height: 100%; padding: 0.675em 0.675em 1em;  margin:0 auto; overflow: hidden; border-bottom: solid 1px #000;}
+.mmBody{padding: 0.675em 0.675em 1em;  margin:0 auto; overflow: hidden; border-bottom: solid 1px #000;}
 .mmBody .mmIcon{float:left; width: 32px; height:32px; text-indent:-9999px;}
 .mmText{float: right; text-align: left; width: 88%;}
 .mmText{margin: 0; padding: 0;}
@@ -425,4 +427,5 @@ a.PopupTriggerLink
         .GlobalNavigation .RadMenu_Engage #SettingsItem{background-position:10px -210px;}
         .GlobalNavigation .RadMenu_Engage #SettingsItem:hover{background-position:9px -210px;}
 
-        .GlobalNavigation .RadMenu_Engage #ManageItem, .RadMenu_Engage #SettingsItem{cursor:default;}
+        .GlobalNavigation .RadMenu_Engage #ManageItem, .GlobalNavigation .RadMenu_Engage #SettingsItem{cursor:default;}
+        .GlobalNavigation .RadMenu_Engage #ManageItem:hover, .GlobalNavigation .RadMenu_Engage #SettingsItem:hover{color:#60605f;}
