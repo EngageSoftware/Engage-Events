@@ -1,38 +1,34 @@
-/*==============================================
-
-		1. Event Custom Listing Page
-
-==============================================*/
+/*================ Event Custom Listing Page ==========================*/
 
 .EventHeader, .ResponseHeader, .ResponseRow{clear: both; width: 100%; overflow: hidden;  border-bottom: dotted 1px #ccc;}
-	.EventHeader h4, .ResponseHeader h4 {text-transform: uppercase; font-weight: bold; margin-bottom: 0.4em; margin-top: 0; font-size: 100%;}
+	.EventHeader h4, .ResponseHeader h4{text-transform: uppercase; font-weight: bold; margin-bottom: 0.4em; margin-top: 0; font-size: 100%;}
 	.EventHeader .Normal{float:left;width: 15%; margin-right: 3%; text-align: right; color: #666;}
 	.EventHeader .NormalBold{float: left; width: 81%; color: #000;}
-	.ResponseHeader h4, .ResponseHeader h3, .ResponseRow h3 {display:inline;}
+	.ResponseHeader h4, .ResponseHeader h3, .ResponseRow h3{display:inline;}
 	.ResponseHeader .SortByHeader{width: 49%; float:left;}
 	.ResponseHeader .StatusHeader{width: 49%; float:right; text-align: center;}
 	.ResponseHeader .StatusTypeHeaders > span{padding-right: 10%;}
 	.ResponseRow .EventStats{float:right; width:30%;}
-	.ResponseRow .EventStats > a {padding-right: 50%;}
-.ResponsesSummary {padding: 25px 0;}
+	.ResponseRow .EventStats > a{padding-right: 50%;}
+.ResponsesSummary{padding: 25px 0;}
 		
-/* event calendar display page */
+/*------------- event calendar display page --------------------*/
 
-.EventCalendar li { list-style-type: none; }
-.RadScheduler_Telerik div.rsHeader p { width:110px; }
+.EventCalendar li{list-style-type: none;}
+.RadScheduler_Telerik div.rsHeader p{ width:110px; }
 
 .respond-wrap{padding:15px;}
 	.respond-wrap h2.Head, .respond-wrap h3.SubHead{margin:0;}
 
-/* event edit page */
+/*----------------- event edit page ----------------------------*/
 
 .AdminButtons{text-align: left;}
 
 	.AdminButtons a img{padding: 0 6px 0 0;}
-	.FooterButtons {padding-top: 3%; }
-	.AddEventSuccessMessage {padding-left: 10%; }
-	.AddNewEvent {padding-top: 2%; width: 100%; height: 100%;}
-	.AddNewEvent h2.SubHead {text-align: left; border-bottom: dashed 1px black; margin-bottom: 1em; padding-bottom: 0.375em; font-size: 125%;}
+	.FooterButtons{padding-top: 3%;}
+	.AddEventSuccessMessage{padding-left: 10%;}
+	.AddNewEvent{padding-top: 2%; width: 100%; height: 100%;}
+	.AddNewEvent h2.SubHead{text-align: left; border-bottom: dashed 1px black; margin-bottom: 1em; padding-bottom: 0.375em; font-size: 125%;}
 
 	.rsAdvRecurrenceFreq:after,	.rsAdvRecurrencePatterns:after{	content:"."; display:block; clear:both; height:0; visibility:hidden;}
 	.rsAdvRecurrenceRangePanel ul, .rsAdvRecurrenceRangePanel ul li{ list-style-type: none; list-style: none;}
@@ -47,21 +43,19 @@
 	.rsAdvRecurrenceFreq ul li{list-style: none;}
 
 	.rsAdvHourly, .rsAdvDaily, .rsAdvWeekly, .rsAdvMonthly, .rsAdvYearly{float:right; width: 78%; margin:0.8em 0 0 0;}
-	.rsAdvHourly ul, .rsAdvDaily ul, .rsAdvWeekly ul, .rsAdvMonthly ul, .rsAdvYearly ul {list-style:none;margin:0 0 0 15px;padding:0;width: 390px;}
+	.rsAdvHourly ul, .rsAdvDaily ul, .rsAdvWeekly ul, .rsAdvMonthly ul, .rsAdvYearly ul{list-style:none;margin:0 0 0 15px;padding:0;width: 390px;}
     .rsAdvHourly li, .rsAdvDaily li, .rsAdvWeekly li, .rsAdvMonthly li, .rsAdvYearly li, .rsAdvRecurrenceRangePanel li,  .rsAdvMoreControls li{margin:0 0 0.3em 0; list-style: none;}
 
     .rsAdvHourly input, .rsAdvDaily input, .rsAdvWeekly input, .rsAdvMonthly input, .rsAdvYearly input, .rsAdvHourly select, 
 	.rsAdvDaily select, .rsAdvWeekly select, .rsAdvMonthly select, .rsAdvYearly select{margin:0 2px;}
-    .rsAdvRecurrencePatterns .rsAdvInput, .rsAdvRecurrenceRangePanel .rsAdvInput {width: 30px; padding-left: 1px; padding-right: 1px;}
+    .rsAdvRecurrencePatterns .rsAdvInput, .rsAdvRecurrenceRangePanel .rsAdvInput{width: 30px; padding-left: 1px; padding-right: 1px;}
     .rsAdvRecurrencePatterns .rsAdvWeekly_Weekday{ float: left; width: 100px;}
 	.rsAdvRecurrencePatterns ul li	{list-style-type: none;}
-	.rsAdvRecurrencePatterns{zoom:1;	}
-
-	
+	.rsAdvRecurrencePatterns{zoom:1;}
 	
 	.rsAdvancedEdit fieldset, fieldset.range_of_recurrence{border: 1px #ccc solid;}
-		fieldset.range_of_recurrence, fieldset.recurrence_fs, fieldset.registration_fs {margin-left: 10%; margin-top: 15px; background: #fefefe; padding: 5px 10px;}
-	.rsAdvancedEdit legend, legend.rsAdvRecurrenceRange, legend.registrationoptions {font-weight: bold; padding: 0 10px;}
+		fieldset.range_of_recurrence, fieldset.recurrence_fs, fieldset.registration_fs{margin-left: 10%; margin-top: 15px; background: #fefefe; padding: 5px 10px;}
+	.rsAdvancedEdit legend, legend.rsAdvRecurrenceRange, legend.registrationoptions{font-weight: bold; padding: 0 10px;}
 	
 	.NormalBold.RegCap{padding: 5px 0; display: inline-block;  }
 	
@@ -69,24 +63,18 @@
 	h2.EventTitleToolTip{margin: 0;}
 	.tooltip_buttons{padding: 10px 0;}	
 
-
-	.AEEventTitle, .AEEventStartDate, .AEEventEndDate, .AEEventLocationAdd, .AEEventEditor, .AEEventFeature, .AEEventRecur, .AEEventRegister, .AEEventTimeZone, .AEEventCategory {clear: both; overflow: hidden; padding-bottom: 0.675em;}
+	.AEEventTitle, .AEEventStartDate, .AEEventEndDate, .AEEventLocationAdd, .AEEventEditor, .AEEventFeature, .AEEventRecur, .AEEventRegister, .AEEventTimeZone, .AEEventCategory{clear: both; overflow: hidden; padding-bottom: 0.675em;}
 		.AEEventEditor .NormalBold, .AEEventTitle .NormalBold, .AEEventStartDate .NormalBold, .AEEventLocationAdd .NormalBold, .AEEventEndDate .NormalBold, 
 		.AEEventFeature .NormalBold, .AEEventRecur .NormalBold, .AEEventRegister .MainLabel, .AEEventTimeZone .NormalBold, .AEEventCategory .NormalBold
 		{float:left; width: 20%; margin-right: 3%; text-align: right;}
-		.AEEventEditor .Normal, .AEEventTitle .Normal, .AEEventStartDate .Normal, .AEEventLocationAdd .Normal, .AEEventEndDate .Normal, .AEEventFeature .Normal, .AEEventCategory .Normal  {float: left; width: 81%;}
-/*		.AEEventRecur .Normal, .AEEventRegister .Normal, .AEEventTimeZone .Normal */
+		.AEEventEditor .Normal, .AEEventTitle .Normal, .AEEventStartDate .Normal, .AEEventLocationAdd .Normal, .AEEventEndDate .Normal, .AEEventFeature .Normal, .AEEventCategory .Normal {float: left; width: 81%;}
 
-		
-
-.AEEventEditor li { list-style-type: none; }
+.AEEventEditor li{ list-style-type: none; }
 .registerSubmitBt, .registerMessage{margin-top: 0.675em;}
-
 
 .ResponseHeader{padding: 0.375em 0;}
 	.ResponseHeader > p{float: left; width: 49%; margin: 0; font-weight: bold;}
 	.StatusTypeHeaders{float: right; width: 49%; text-align: center;}
-		.StatusTypeHeaders .Normal{}
 		.StatusTypeHeaders p{margin: 0;}
 
 	.ResponseAtt{float: left; width: 49%;}
@@ -94,37 +82,30 @@
 
 .ResponseDetailHeader td{background: #fff; color: #000; font-weight: bold; border-top: 1px #555 solid; border-bottom: 1px #333 solid; padding: 10px 0 6px; font-size: 120%;}
 .ResponseDetailItem{border-bottom: 1px #ccc dotted; border-top: 1px #ccc dotted; }
-.ResponseDetailItem td, .ResponseDetailAltItem td {padding: 8px 0;}
-.ResponseDetailItem:hover, .ResponseDetailAltItem:hover{}
+.ResponseDetailItem td, .ResponseDetailAltItem td{padding: 8px 0;}
 
 .ResponseDetailAltItem{background: #f2f9fc;}
-.ResponseDetailItemSelect{}
 
 .ResponseHeader .SortByHeader p, .ResponseHeader .StatusHeader p{display:inline; text-transform: uppercase; font-weight: bold; font-size: 90%;}
 .ResponseMemberName{font-weight: bold;}
 .ResponseDisplay{padding: 8px 0;}
 	.ResponseEventDisplay{float: left; width: 49%;}
-		.ResponseEventDisplay h3 {font-weight: bold; color: #046380; margin: 0; font-size: 110%;}
+		.ResponseEventDisplay h3{font-weight: bold; color: #046380; margin: 0; font-size: 110%;}
 		.ResponseEventDisplay p{margin: 0; color: #555; font-size: 95%;}
 	.ResponseEventStats{float: right; width: 49%; text-align: center;}
 		.ResponseEventStats p{margin: 0;}
 
 .ResponsesSummary ol{margin: 0 0 0 1.675em; padding:0;}
-	.ResponsesSummary ol li .ResponseDisplay {padding: 0; margin: 12px 0 8px;}
-	.ResponsesSummary ol li {}
-.ResponseDetailGrid table {width:100%;}
+	.ResponsesSummary ol li .ResponseDisplay{padding: 0; margin: 12px 0 8px;}
+.ResponseDetailGrid table{width:100%;}
 
-/*========================================================
-
-		2. Settings
-
-========================================================*/
+/*========================  Settings ========================*/
 
 .TemplatesSection{margin: 1em;}
 
 .timezone_display{float:left; width:70%;}
 
-/*================ New Templates Picker==================*/
+/*------------------- New Templates Picker ------------------*/
 
 .events-choose-display-wrap{width:100%;height:auto;clear:both;}
 	.GlobalNavigation{text-align:left;}
@@ -153,11 +134,7 @@
 		.settings-table{float:left;width:48%;clear:both;}
 	.cd-buttons{float:left;clear:both;padding:15px 0;}
 				
-/*========================================================
-
-		3. Validation
-
-========================================================*/
+/*======================= Validation =============================*/
 .ModuleMessage{width:60%; padding-top: 1em; margin: 0 auto;}
 .mmTop{height: 5px; line-height: 0; background-color:transparent; background-repeat: no-repeat; background-attachment:scroll; background-position:left bottom;}
 .mmBody{height: 100%; padding: 0.675em 0.675em 1em;  margin:0 auto; overflow: hidden; border-bottom: solid 1px #000;}
@@ -167,41 +144,20 @@
 .mmText > p{margin-top: 4px; font-weight: bold; color: #000;}
 .mmBt{height: 5px; background-color:transparent; background-repeat: no-repeat; background-attachment:scroll; background-position:left top;}
 
-/*========================= Error On Page ===============================*/
-
-/*.ErrorTop{background-image:url(images/redTop.gif);}
-.ErrorBody {background-image:url(images/redBody.gif);}
-.ErrorBt{background-image:url(images/redBt.gif);} */
-
-.ErrorBody {background: #fde0e0; border: 2px #ff0000 solid;}
+/*---------------------- Error -----------------------------*/
+.ErrorBody{background: #fde0e0; border: 2px #ff0000 solid;}
 .ErrorBody .ErrorIcon{background:url(images/errorSmallIcon.png) no-repeat;}
 
-
-
-/*========================= Success ===============================*/
-
-/*.SuccessTop{background-image:url(images/greenTop.gif);}
-.SuccessBody {background-image:url(images/greenBody.gif);}
-.SuccessBt{background-image:url(images/greenBt.gif);}*/
-
-.SuccessBody {background:#f2fff3; border: 2px #5cd800 solid;}
+/*--------------------- Success ----------------------------*/
+.SuccessBody{background:#f2fff3; border: 2px #5cd800 solid;}
 .SuccessBody .SuccessIcon{background:url(images/successSmallIcon.png) no-repeat;}
 
-/*========================= Warning ===============================*/
-
-/*.WarningTop{background-image:url(images/blueTop.gif);}
-.WarningBody {background-image:url(images/blueBody.gif);}
-.WarningBt{background-image:url(images/blueBt.gif);}*/
-
-/*========================= Information ===============================*/
-.InformationBody {background:#e5f8ff; border: 2px #288abc solid;}
+/*------------------- Information --------------------------*/
+.InformationBody{background:#e5f8ff; border: 2px #288abc solid;}
 .InformationBody .InformationIcon{background-image:url(images/info.png);}
 
-
-
-
 /*========================= Fancy Box ===============================*/
-div#fancy_overlay {
+div#fancy_overlay{
 	position:absolute;
 	top: 0;
 	left: 0;
@@ -210,7 +166,7 @@ div#fancy_overlay {
 	background-color: #333;
 }
 
-div#fancy_loading {
+div#fancy_loading{
 	position: absolute;
 	height: 40px;
 	width: 40px;
@@ -221,7 +177,7 @@ div#fancy_loading {
 	z-index: 9010;
 }
 
-div#fancy_loading div {
+div#fancy_loading div{
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -230,7 +186,7 @@ div#fancy_loading div {
 	background: transparent url(Images/fancy_progress.png) no-repeat;
 }
 
-div#fancy_close {
+div#fancy_close{
 	position: absolute;
 	top: -12px;
 	right: -12px;
@@ -242,7 +198,7 @@ div#fancy_close {
 	display: none;
 }
 
-div#fancy_content {
+div#fancy_content{
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -253,14 +209,14 @@ div#fancy_content {
 	z-index: 9006;
 }
 
-#fancy_frame {
+#fancy_frame{
 	position: relative;
 	width: 100%;
 	height: 100%;
 	display: none;
 }
 
-img#fancy_img {
+img#fancy_img{
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -272,7 +228,7 @@ img#fancy_img {
 	z-index: 9002;
 }
 
-div#fancy_title {
+div#fancy_title{
 	position: absolute;
 	bottom: -35px;
 	left: 0;
@@ -281,34 +237,34 @@ div#fancy_title {
 	display: none;
 }
 
-div#fancy_title table {
+div#fancy_title table{
 	margin: 0 auto;
 }
 
-div#fancy_title div {
+div#fancy_title div{
 	color: #FFF;
 	font: bold 12px Arial;
 	padding-bottom: 2px;
 }
 
-td#fancy_title_left {
+td#fancy_title_left{
 	height: 32px;
 	width: 15px;
 	background: transparent url(Images/fancy_title_left.png) repeat-x;
 }
 
-td#fancy_title_main {
+td#fancy_title_main{
 	height: 32px;
 	background: transparent url(Images/fancy_title_main.png) repeat-x;
 }
 
-td#fancy_title_right {
+td#fancy_title_right{
 	height: 32px;
 	width: 15px;
 	background: transparent url(Images/fancy_title_right.png) repeat-x;
 }
 
-div#fancy_outer {
+div#fancy_outer{
 	position: absolute;
     top: 0;
     left: 0;
@@ -322,7 +278,7 @@ div#fancy_outer {
     height: 200px;
 }
 
-div#fancy_inner {
+div#fancy_inner{
 	position: relative;
 	width:100%;
 	height:100%;
@@ -330,7 +286,7 @@ div#fancy_inner {
 	background: #FFF;
 }
 
-a#fancy_left, a#fancy_right {
+a#fancy_left, a#fancy_right{
 	position: absolute; 
 	bottom: 10px; 
 	height: 100%; 
@@ -340,23 +296,23 @@ a#fancy_left, a#fancy_right {
 	z-index: 100; 
 }
 
-a#fancy_left {
+a#fancy_left{
 	left: 0px; 
 }
 
-a#fancy_right {
+a#fancy_right{
 	right: 0px; 
 }
 
-a#fancy_left:hover {
+a#fancy_left:hover{
 	background: transparent url(Images/fancy_left.gif) no-repeat 0% 100%;
 }
 
-a#fancy_right:hover {
+a#fancy_right:hover{
 	background: transparent url(Images/fancy_right.gif) no-repeat 100% 100%;
 }
 
-#fancy_bigIframe, #fancy_freeIframe {
+#fancy_bigIframe, #fancy_freeIframe{
 	position:absolute;
 	top: 0;
 	left: 0;
@@ -365,24 +321,24 @@ a#fancy_right:hover {
 	z-index: 10;
 }
 
-div#fancy_bg {
+div#fancy_bg{
 	display: none;
 }
 	
-div.fancy_bg {
+div.fancy_bg{
 	position: absolute;
 	display: block;
 	z-index: 70;
 }
 
-div.fancy_bg_n {
+div.fancy_bg_n{
 	top: -18px;
 	width: 100%;
 	height: 18px;
 	background: transparent url(Images/fancy_shadow_n.png) repeat-x;
 }
 
-div.fancy_bg_ne {
+div.fancy_bg_ne{
 	top: -18px;
 	right: -13px;
 	width: 13px;
@@ -390,14 +346,14 @@ div.fancy_bg_ne {
 	background: transparent url(Images/fancy_shadow_ne.png) no-repeat;
 }
 
-div.fancy_bg_e {
+div.fancy_bg_e{
 	right: -13px;
 	height: 100%;
 	width: 13px;
 	background: transparent url(Images/fancy_shadow_e.png) repeat-y;
 }
 
-div.fancy_bg_se {
+div.fancy_bg_se{
 	bottom: -18px;
 	right: -13px;
 	width: 13px;
@@ -405,14 +361,14 @@ div.fancy_bg_se {
 	background: transparent url(Images/fancy_shadow_se.png) no-repeat;
 }
 
-div.fancy_bg_s {
+div.fancy_bg_s{
 	bottom: -18px;
 	width: 100%;
 	height: 18px;
 	background: transparent url(Images/fancy_shadow_s.png) repeat-x;
 }
 
-div.fancy_bg_sw {
+div.fancy_bg_sw{
 	bottom: -18px;
 	left: -13px;
 	width: 13px;
@@ -420,14 +376,14 @@ div.fancy_bg_sw {
 	background: transparent url(Images/fancy_shadow_sw.png) no-repeat;
 }
 
-div.fancy_bg_w {
+div.fancy_bg_w{
 	left: -13px;
 	height: 100%;
 	width: 13px;
 	background: transparent url(Images/fancy_shadow_w.png) repeat-y;
 }
 
-div.fancy_bg_nw {
+div.fancy_bg_nw{
 	top: -18px;
 	left: -13px;
 	width: 13px;
@@ -439,48 +395,34 @@ a.PopupTriggerLink
 {
 	visibility: hidden;
 }
-/*========================= End Fancy Box ===============================*/
 
-/*========================= RadMenu =====================================*/
+/*========================= Global Nav =====================================*/
+.GlobalNavigation .RadMenu_Engage{width:100% !important;}
+    .GlobalNavigation .RadMenu_Engage .rmRootGroup{border:1px solid #dddddd;background:url("Images/radmenu-bg.png") repeat-x #e7e7e7;width:100%;}
+        .GlobalNavigation .RadMenu_Engage .rmRootGroup .rmLink{color:#60605f;display:block; padding:6px 9px 6px 44px;height:19px;}
+        .GlobalNavigation .RadMenu_Engage .rmRootGroup .rmLink:hover{color:#d4730c;cursor:pointer;display:block;text-decoration:none;border-right: 1px solid #aaa9a9;border-left:1px solid #aaa9a9;background-color:#dcdbdb;padding:6px 8px 6px 43px;}
+        .GlobalNavigation .RadMenu_Engage .rmRootGroup .rmFocused{color:#60605f;cursor:pointer;display:block;text-decoration:none;background-color:#dcdbdb;}
+            .GlobalNavigation .RadMenu_Engage .rmRootGroup .rmText{padding:0 7px 1px 0;}
 
-.RadMenu_Engage{width:100% !important;}
+    .GlobalNavigation .RadMenu_Engage .rmLevel1{background:#f8f8f8;border-right:1px solid #efefef;border-bottom:1px solid #efefef;border-left:1px solid #efefef;}
+        .GlobalNavigation .RadMenu_Engage .rmLevel1 .rmLink{border-right: 1px solid #ccc; border-left:1px solid #ccc;padding:5px 10px;}
+        .GlobalNavigation .RadMenu_Engage .rmLevel1 .rmLink:hover{padding:5px 10px;}
+        .GlobalNavigation .RadMenu_Engage .rmLevel1 .rmLast .rmLink{border-bottom:1px solid #ccc;}
+            .GlobalNavigation .RadMenu_Engage .rmLevel1 .rmText{padding: 0;}
 
-.RadMenu_Engage .rmHorizontal {border:1px solid #dddddd;background:url("Images/radmenu-bg.png") repeat-x #e7e7e7;width:100%;}
+    .GlobalNavigation .RadMenu_Engage .rmLink{background:url("Images/icon-canvas.png") no-repeat;}
+        .GlobalNavigation .RadMenu_Engage .rmLevel1 .rmLink{background:none;}
+        
+        .GlobalNavigation .RadMenu_Engage #HomeItem{background-position:10px -73px;}
+        .GlobalNavigation .RadMenu_Engage #HomeItem:hover{background-position:8px -104px;}
 
-.RadMenu_Engage .rmHorizontal .rmLink {color:#60605f;display:block; padding:6px 9px 6px 44px;}
+        .GlobalNavigation .RadMenu_Engage #AddEventItem{background-position:9px -4px;}
+        .GlobalNavigation .RadMenu_Engage #AddEventItem:hover{background-position:8px -39px;}
 
+        .GlobalNavigation .RadMenu_Engage #ManageItem{background-position:9px -139px;}
+        .GlobalNavigation .RadMenu_Engage #ManageItem:hover{background-position:8px -139px;}
 
-.RadMenu_Engage .rmSlide .rmLink{border-right: 1px solid #ccc; border-left:1px solid #ccc;}
-.RadMenu_Engage .rmSlide .rmLast .rmLink{border-bottom:1px solid #ccc;}
+        .GlobalNavigation .RadMenu_Engage #SettingsItem{background-position:10px -210px;}
+        .GlobalNavigation .RadMenu_Engage #SettingsItem:hover{background-position:9px -210px;}
 
-.RadMenu_Engage .rmRootGroup .rmLink:hover{padding:6px 8px 6px 43px;}
-.RadMenu_Engage .rmRootGroup .rmLevel1 .rmLink:hover{padding:0;}
-
-.RadMenu_Engage .rmHorizontal .rmLink:hover{color:#d4730c;cursor:pointer;display:block;height:100%;text-decoration:none;border-right: 1px solid #aaa9a9;border-left:1px solid #aaa9a9;background-color:#dcdbdb;}
-
-.RadMenu_Engage .rmSlide .rmVertical .rmLast .rmLink:hover{border-bottom:1px solid #ccc;}
-
-.RadMenu_Engage .rmHorizontal .rmFocused{color:#60605f;cursor:pointer;display:block;height:100%;text-decoration:none;background-color:#dcdbdb;}
-
-.RadMenu_Engage .RAD-home #HomeItem{background:url("Images/icon-canvas.png") no-repeat 10px -73px;}
-.RadMenu_Engage .RAD-home #HomeItem:hover {background-position:8px -104px;}
-
-.RadMenu_Engage .RAD-add #AddEventItem{background:url("Images/icon-canvas.png") no-repeat 9px -4px;}
-.RadMenu_Engage .RAD-add #AddEventItem:hover {background-position:8px -39px;}
-
-.RadMenu_Engage .RAD-manage #ManageItem{background:url("Images/icon-canvas.png") no-repeat 9px -139px;}
-.RadMenu_Engage .RAD-manage #ManageItem:hover{background-position:8px -139px;}
-
-.RadMenu_Engage .RAD-settings #SettingsItem {background:url("Images/icon-canvas.png") no-repeat 10px -210px;}
-.RadMenu_Engage .RAD-settings #SettingsItem:hover{background-position:9px -210px;}
-
-.RadMenu_Engage .RAD-manage #ManageItem, .RadMenu_Engage .RAD-settings #SettingsItem {cursor:default;}
-
-.RadMenu_Engage .rmVertical {background:#f8f8f8;border-right:1px solid #efefef;border-bottom:1px solid #efefef;border-left:1px solid #efefef;}
-
-.RadMenu_Engage .rmVertical .rmLink .rmText {padding: 10px 0;}
-
-.RadMenu_Engage .rmHorizontal .rmText{padding:0 7px 1 0 !important;}
-
-.GlobalNavigation .RadMenu_Engage. rmSlide{top:114px;}
-/*========================= End of RadMenu ==============================*/
+        .GlobalNavigation .RadMenu_Engage #ManageItem, .RadMenu_Engage #SettingsItem{cursor:default;}
