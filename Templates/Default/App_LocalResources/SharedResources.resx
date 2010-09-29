@@ -120,6 +120,9 @@
   <data name="Category.Text" xml:space="preserve">
     <value>Category</value>
   </data>
+  <data name="hCalendar.Text" xml:space="preserve">
+    <value>This content uses hCalendar</value>
+  </data>
   <data name="Next.Text" xml:space="preserve">
     <value>Next</value>
   </data>

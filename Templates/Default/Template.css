@@ -1,5 +1,5 @@
 .ItemListingWrap .ItemListingHeader p{margin: 0; padding: 0;}
-.ItemListingWrap .ItemListingHeader h2.Head{clear: both; overflow: hidden; width: 100%; border-bottom: 1px #ccc solid; padding-bottom: 5px; margin: 5px 0;}
+.ItemListingWrap .ItemListingHeader h3.Head{clear: both; overflow: hidden; width: 100%; border-bottom: 1px #ccc solid; padding-bottom: 5px; margin: 5px 0;}
 .ItemListingWrap .ItemListingHeaderTop{clear: both; overflow: hidden; width: 100%; border-bottom: 1px #ccc solid;}
 	.ItemListingWrap .ItemListingHeaderSorting{overflow: hidden; width: 40%; float: left; padding-right: 2%;}
 		.ItemListingWrap .ItemListingHeaderSorting .NormalBold {display: block; float: left; padding-top: 4px;}
@@ -12,7 +12,7 @@
 	.ItemListingWrap p{margin-top: 0; margin-bottom: 6px;}
 
 .ItemListingWrap .EventTitle{overflow: hidden; width:100%;}
-	.ItemListingWrap .EventTitle h2.Head{float:right; width:82%; padding: 0 0 5px; margin: 0;}
+	.ItemListingWrap .EventTitle h3.Head{float:right; width:82%; padding: 0 0 5px; margin: 0;}
 	
 .ItemListingWrap .eng-section{overflow: hidden;}
 	.ItemListingWrap .eng-label{float:left; width: 15%; text-align: right;}
@@ -26,6 +26,8 @@
 		
 .ItemListingWrap .RecurrenceSummary{padding-left: 15px;}
 .ItemListingWrap .RecurringEventItem{background: transparent url(../../images/recurring_icon.gif) no-repeat 0 16px;}
+
+.ItemListingWrap .dtstart{border:none;}
 	
 /* Category Colors */
 .ItemListingWrap .EventCategory span {padding: 2px 4px;-moz-border-radius:4px; -webkit-border-radius:4px; border-radius:4px;}
