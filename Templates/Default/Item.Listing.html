@@ -27,6 +27,15 @@
                 <Engage:Literal Text="%#Title%" />
             </h2>
         </div>
+        <div class="EventCategory">
+            <p class="NormalBold">
+                <Engage:Literal Text="%$Category%"/>
+            </p>
+            <div class="category-icon">&nbsp;</div>
+            <p class="Normal">
+                <Engage:Literal Text="%#Category%"/>
+            </p>
+        </div>
         <div class="EventLocation">
             <p class="NormalBold">
                 <Engage:Literal Text="%$Where%"/>
@@ -65,9 +74,6 @@
         </div>
         <div class="EventButtons">
             <Engage:EditEventButton /> <Engage:ViewResponsesButton /> <Engage:RegisterButton /> <Engage:AddToCalendarButton /> <Engage:DeleteButton /> <Engage:CancelButton />
-        </div>
-        <div class="EventCategory">
-            <p class="NormalBold"><Engage:Literal Text="%#Category%" /></p>
         </div>
     </Engage:EventWrapper>
     </Engage:List>
