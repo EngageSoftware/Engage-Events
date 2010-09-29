@@ -22,3 +22,4 @@
   </Items>
 </telerik:RadMenu>
 </div>
+<div style="clear:both;">&nbsp;</div>
