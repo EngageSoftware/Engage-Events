@@ -1,29 +1,39 @@
-<div class="EventItem ItemDetails">
+<Engage:EventWrapper CssClass="EventItem ItemDetails cat-%#Category-Name:CSS % color-%# Category-Color:CSS% vevent" RecurringEventCssClass="RecurringEventItem" FeaturedEventCssClass="FeaturedEventItem">
+    <span class="hcalendar-profile" style="display:none;"><a rel="profile" href="http://microformats.org/profile/hcalendar"><Engage:Literal Text="%$hCalendar%" /></a></span>
 	<div class="EventTitle">
-        <h2 class="Head"><Engage:Literal Text-PropertyName="Title" /></h2>
+        <h2 class="Head summary"><Engage:Literal Text-PropertyName="Title" /></h2>
     </div>
-    <div class="EventLocation">
-        <p class="NormalBold"><Engage:Label Text-ResourceKey="Where" /></p>
-        <p class="Normal"><Engage:Literal Text-PropertyName="Location" /></p>
+    <div class="EventLocation eng-section">
+        <p class="NormalBold eng-label"><Engage:Label Text-ResourceKey="Where" /></p>
+        <p class="Normal eng-value location"><Engage:Literal Text-PropertyName="Location" /></p>
     </div>
-    <div class="EventDate">
-        <p class="NormalBold"><Engage:Label Text-ResourceKey="When" /></p>
-        <p class="Normal"><Engage:Literal Text-PropertyName = "EventStart" Text-Format="MM.dd.yyyy"/></p>
-        <p class="NormalBold"><Engage:Label Text-ResourceKey="Time" /></p>
-        <p class="Normal"><Engage:Literal Text-PropertyName = "EventStart" Text-Format="%h:mm tt" /></p>
+    <div class="EventDate eng-section">
+        <p class="NormalBold eng-label"><Engage:Label Text-ResourceKey="When" /></p>
+        <p class="Normal eng-value">
+            <abbr class="dtstart" title="<Engage:Literal Text='%#EventStart:s%'/>">
+                <Engage:Literal Text-PropertyName = "EventStart" Text-Format="MM.dd.yyyy"/>
+            </abbr>
+        </p>
+        <p class="NormalBold eng-label"><Engage:Label Text-ResourceKey="Time" /></p>
+        <p class="Normal eng-value"><Engage:Literal Text-PropertyName = "EventStart" Text-Format="%h:mm tt" /></p>
     </div>
-    <div class="EventOverview">
-        <p class="NormalBold"><Engage:Label Text-ResourceKey="Overview" /></p>
-        <div class="Normal">
+    <div class="EventOverview eng-section">
+        <p class="NormalBold eng-label"><Engage:Label Text-ResourceKey="Overview" /></p>
+        <div class="Normal eng-value">
             <div><Engage:Literal Text-PropertyName="Overview" /></div>
-            <p><Engage:ReadMore Text-ResourceKey="ReadMore" /></p>
         </div>
     </div>
-    <div class="EventDescription">
-        <p class="NormalBold"><Engage:Label Text-ResourceKey="Description" /></p>
-        <div class="Normal">
-            <div><Engage:Literal Text-PropertyName="Description" /></div>
+    <div class="EventDescription eng-section">
+        <p class="NormalBold eng-label"><Engage:Label Text-ResourceKey="Description" /></p>
+        <div class="Normal eng-value">
+            <div class="description"><Engage:Literal Text-PropertyName="Description" /></div>
+        </div>
+    </div>
+    <div class="EventCategory eng-section">
+        <p class="NormalBold eng-label"><Engage:Label Text-ResourceKey="Category" /></p>
+        <div class="Normal eng-value">
+            <span class="category"><Engage:Literal Text-PropertyName="Category" /></span>
         </div>
     </div>
     <Engage:BackHyperlink Text-ResourceKey="Back" />
-</div>
+</Engage:EventWrapper>

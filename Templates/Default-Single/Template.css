@@ -1,23 +1,27 @@
-	.ItemDetails{border-bottom: 1px #ccc dotted; overflow: hidden; padding: 10px 0; width: 100%;}
-		.ItemDetails p{margin-top: 0; margin-bottom: 6px;}
+.ItemDetails{border-bottom: 1px #ccc dotted; overflow: hidden; padding: 10px 0; width: 100%;}
+	.ItemDetails p{margin-top: 0; margin-bottom: 6px;}
 
-	.ItemDetails .EventTitle{overflow: hidden; width:100%;}
-		.ItemDetails .EventTitle h2.Head {float:right; width:82%; padding: 0 0 5px; margin: 0;}
+.ItemDetails .EventTitle{overflow: hidden; width:100%;}
+	.ItemDetails .EventTitle h2.Head {float:right; width:82%; padding: 0 0 5px; margin: 0;}
 	
-	.ItemDetails .EventLocation{overflow: hidden;}
-		.ItemDetails .EventLocation .NormalBold {float:left; width: 15%; text-align: right;}
-		.ItemDetails .EventLocation .Normal{float:right; width: 82%; text-align: left;}
+.ItemDetails .eng-section{overflow: hidden;clear:both;}
+	.ItemDetails .eng-label{float:left; width: 15%; text-align: right;}
+	.ItemDetails .eng-value{float:right; width: 82%; text-align: left;}
 	
-	.ItemDetails .EventDate{overflow: hidden;}
-		.ItemDetails .EventDate .NormalBold {float:left; width: 15%; text-align: right;}
-		.ItemDetails .EventDate .Normal{float:right; width: 82%; text-align: left;}
-		.ItemDetails .RecurrenceSummary .NormalBold {float: none; width: auto; text-align: left;}
-		
-	.ItemDetails .EventOverview{overflow: hidden;}
-		.ItemDetails .EventOverview .NormalBold {float:left; width: 15%; text-align: right;}
-		.ItemDetails .EventOverview .Normal{float:right; width: 82%; text-align: left;}
+.ItemDetails .RecurrenceSummary .NormalBold {float: none; width: auto; text-align: left;}	
+.ItemDetails .EventDescription .Normal > p {margin-top: 0;}
 
-	.ItemDetails .EventDescription{overflow: hidden; clear: both;}
-		.ItemDetails .EventDescription .NormalBold {float:left; width: 15%; text-align: right;}
-		.ItemDetails .EventDescription .Normal{float:right; width: 82%; text-align: left;}
-			.ItemDetails .EventDescription .Normal > p {margin-top: 0;}
+.ItemDetails .dtstart{border:none;}
+
+/* Category Colors */
+.ItemDetails .EventCategory span {padding: 2px 4px;-moz-border-radius:4px; -webkit-border-radius:4px; border-radius:4px;}
+.ItemDetails.color-Yellow .EventCategory .eng-value span {background-color:#fffbc7}
+.ItemDetails.color-Blue .EventCategory .eng-value span {background-color:#bbd0ec}
+.ItemDetails.color-Red .EventCategory .eng-value span {background-color:#ecbbbb}
+.ItemDetails.color-DarkBlue .EventCategory .eng-value span {background-color:#202b3f;color:#fff}
+.ItemDetails.color-DarkRed .EventCategory .eng-value span {background-color:#3f2020;color:#fff}
+.ItemDetails.color-Orange .EventCategory .eng-value span {background-color:#edd5b7}
+.ItemDetails.color-Pink .EventCategory .eng-value span {background-color:#f1dcff}
+.ItemDetails.color-Violet .EventCategory .eng-value span {background-color:#540042;color:#fff}
+.ItemDetails.color-DarkGreen .EventCategory .eng-value span {background-color:#2b3f20;color:#fff}
+.ItemDetails.color-Green .EventCategory .eng-value span {background-color:#d0ecbb}

@@ -138,4 +138,10 @@
   <data name="Back.Text" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="Category.Text" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="hCalendar.Text" xml:space="preserve">
+    <value>This content uses hCalendar</value>
+  </data>
 </root>
