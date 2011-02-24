@@ -50,7 +50,7 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// Backing field for <see cref="OrdinalValues"/>
         /// </summary>
-        private static readonly IDictionary<int, string> ordinalValues = GetOrdinalValues();
+        private static readonly IDictionary<int, string> OrdinalValuesDictionary = GetOrdinalValues();
 
         /// <summary>
         /// Gets the name of the desktop module folder.
@@ -60,7 +60,7 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                StringBuilder sb = new StringBuilder(128);
+                var sb = new StringBuilder(128);
                 sb.Append("/DesktopModules/");
                 sb.Append(Globals.GetDesktopModuleByName(DesktopModuleName).FolderName);
                 sb.Append("/");
@@ -107,7 +107,7 @@ namespace Engage.Dnn.Events
         /// <value>The mapping between ordinal day values and their localization resource keys.</value>
         public static IDictionary<int, string> OrdinalValues
         {
-            get { return ordinalValues; }
+            get { return OrdinalValuesDictionary; }
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Engage.Dnn.Events
         {
             if (selectedEvent == null)
             {
-                throw new ArgumentNullException("selectedEvent", "Event must not be null");
+                throw new ArgumentNullException("selectedEvent", @"Event must not be null");
             }
 
             return GetEventParameters(selectedEvent.Id, selectedEvent.EventStart);
@@ -159,7 +159,7 @@ namespace Engage.Dnn.Events
         {
             if (additionalParameters == null)
             {
-                throw new ArgumentNullException("additionalParameters", "additionalParameters must not be null");
+                throw new ArgumentNullException("additionalParameters", @"additionalParameters must not be null");
             }
 
             Array.Resize(ref additionalParameters, additionalParameters.Length + 2);
@@ -282,7 +282,10 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// Gets the name of the <see cref="Event"/> property in the given property expression.
         /// </summary>
-        /// <remarks>Blows up if the expression isn't a simple property access expression</remarks>
+        /// <remarks>
+        /// Blows up if the expression isn't a simple property access expression
+        /// based on http://stackoverflow.com/questions/671968/retrieving-property-name-from-lambda-expression/672330#672330
+        /// </remarks>
         /// <typeparam name="T">Type of the property</typeparam>
         /// <param name="propertyExpression">An expression representing accessing a property.</param>
         /// <returns>The name of the property in the expression</returns>
@@ -292,20 +295,19 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Fills <see cref="ordinalValues"/>.
+        /// Fills <see cref="OrdinalValuesDictionary"/>.
         /// </summary>
         /// <returns>A dictionary mapping ordinal day values (based on <see cref="RecurrencePattern.DayOrdinal"/>) to their localization resource keys</returns>
         private static IDictionary<int, string> GetOrdinalValues()
         {
-            IDictionary<int, string> ordinalsDictionary = new Dictionary<int, string>();
-            
-            ordinalsDictionary.Add(1, "First");
-            ordinalsDictionary.Add(2, "Second");
-            ordinalsDictionary.Add(3, "Third");
-            ordinalsDictionary.Add(4, "Fourth");
-            ordinalsDictionary.Add(-1, "Last");
-
-            return ordinalsDictionary;
+            return new Dictionary<int, string> 
+                       {
+                           { 1, "First" },
+                           { 2, "Second" },
+                           { 3, "Third" },
+                           { 4, "Fourth" },
+                           { -1, "Last" }
+                       };
         }
 
         /// <summary>
@@ -315,7 +317,7 @@ namespace Engage.Dnn.Events
         /// <returns>A list of the days of week from the given <paramref name="daysOfWeekMask"/> with localized day names</returns>
         private static string GetDaysOfWeekList(RecurrenceDay daysOfWeekMask)
         {
-            StringBuilder daysOfWeek = new StringBuilder();
+            var daysOfWeek = new StringBuilder();
 
             AddDayToList(daysOfWeekMask, daysOfWeek, RecurrenceDay.Sunday, DayOfWeek.Sunday);
             AddDayToList(daysOfWeekMask, daysOfWeek, RecurrenceDay.Monday, DayOfWeek.Monday);
@@ -379,15 +381,13 @@ namespace Engage.Dnn.Events
                     pattern.DayOfMonth,
                     pattern.Interval);
             }
-            else
-            {
-                return String.Format(
-                    CultureInfo.CurrentCulture,
-                    Localization.GetString("MonthlyRecurrenceOnGivenDay.Text", resourceFile),
-                    Localization.GetString(ordinalValues[pattern.DayOrdinal], resourceFile),
-                    GetLocalizedDayOfWeek(pattern.DaysOfWeekMask, resourceFile),
-                    pattern.Interval);
-            }
+            
+            return String.Format(
+                CultureInfo.CurrentCulture,
+                Localization.GetString("MonthlyRecurrenceOnGivenDay.Text", resourceFile),
+                Localization.GetString(OrdinalValuesDictionary[pattern.DayOrdinal], resourceFile),
+                GetLocalizedDayOfWeek(pattern.DaysOfWeekMask, resourceFile),
+                pattern.Interval);
         }
 
         /// <summary>
@@ -406,15 +406,13 @@ namespace Engage.Dnn.Events
                     new DateTime(1, (int)pattern.Month, 1),
                     pattern.DayOfMonth);
             }
-            else
-            {
-                return String.Format(
-                    CultureInfo.CurrentCulture,
-                    Localization.GetString("YearlyRecurrenceOnGivenDay.Text", resourceFile),
-                    Localization.GetString(ordinalValues[pattern.DayOrdinal], resourceFile),
-                    GetLocalizedDayOfWeek(pattern.DaysOfWeekMask, resourceFile),
-                    new DateTime(1, (int)pattern.Month, 1));
-            }
+            
+            return String.Format(
+                CultureInfo.CurrentCulture,
+                Localization.GetString("YearlyRecurrenceOnGivenDay.Text", resourceFile),
+                Localization.GetString(OrdinalValuesDictionary[pattern.DayOrdinal], resourceFile),
+                GetLocalizedDayOfWeek(pattern.DaysOfWeekMask, resourceFile),
+                new DateTime(1, (int)pattern.Month, 1));
         }
 
         /// <summary>
@@ -431,13 +429,11 @@ namespace Engage.Dnn.Events
             {
                 return Localization.GetString("DailyRecurrenceWeekdays.Text", resourceFile);
             }
-            else
-            {
-                return String.Format(
-                    CultureInfo.CurrentCulture, 
-                    Localization.GetString("DailyRecurrence.Text", resourceFile), 
-                    pattern.Interval);
-            }
+            
+            return String.Format(
+                CultureInfo.CurrentCulture, 
+                Localization.GetString("DailyRecurrence.Text", resourceFile), 
+                pattern.Interval);
         }
 
         /// <summary>
