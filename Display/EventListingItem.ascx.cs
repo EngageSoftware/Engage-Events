@@ -246,7 +246,8 @@ namespace Engage.Dnn.Events.Display
         {
             int? selectedCategoryId = null;
             int parsedCategoryId;
-            if (!string.IsNullOrEmpty(this.CategoryFilterAction.SelectedValue) &&
+            if (this.CategoryFilterAction != null &&
+                !string.IsNullOrEmpty(this.CategoryFilterAction.SelectedValue) &&
                 int.TryParse(this.CategoryFilterAction.SelectedValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out parsedCategoryId))
             {
                 selectedCategoryId = parsedCategoryId;
