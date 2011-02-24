@@ -412,6 +412,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ReleaseNotes_1.4.1.htm" />
     <Content Include="Images\icon-canvas.png" />
     <Content Include="ReleaseNotes_1.4.0.htm" />
     <Content Include="ManageCategories.ascx" />
