@@ -143,13 +143,9 @@ namespace Engage.Dnn.Events.Display
         {
             get
             {
-                string sortValue = this.Request.QueryString["sort"];
-                if (Engage.Utility.HasValue(sortValue))
-                {
-                    return sortValue;
-                }
-
-                return "EventStart";
+                return "TITLE".Equals(this.Request.QueryString["sort"], StringComparison.OrdinalIgnoreCase)
+                           ? Utility.GetPropertyName(e => e.Title)
+                           : Utility.GetPropertyName(e => e.EventStart);
             }
         }
 

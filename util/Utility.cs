@@ -14,6 +14,7 @@ namespace Engage.Dnn.Events
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq.Expressions;
     using System.Text;
     using System.Web.Hosting;
     using DotNetNuke.Common;
@@ -276,6 +277,18 @@ namespace Engage.Dnn.Events
             }
 
             return recurrenceSummary;
+        }
+
+        /// <summary>
+        /// Gets the name of the <see cref="Event"/> property in the given property expression.
+        /// </summary>
+        /// <remarks>Blows up if the expression isn't a simple property access expression</remarks>
+        /// <typeparam name="T">Type of the property</typeparam>
+        /// <param name="propertyExpression">An expression representing accessing a property.</param>
+        /// <returns>The name of the property in the expression</returns>
+        public static string GetPropertyName<T>(Expression<Func<Event, T>> propertyExpression)
+        {
+            return ((MemberExpression)propertyExpression.Body).Member.Name;
         }
 
         /// <summary>

@@ -99,7 +99,9 @@ namespace Engage.Dnn.Events
             string sortValue = this.Request.QueryString["sort"];
             if (Engage.Utility.HasValue(sortValue))
             {
-                this.SortRadioButtonList.SelectedValue = sortValue;
+                this.SortRadioButtonList.SelectedValue = "TITLE".Equals(sortValue, StringComparison.OrdinalIgnoreCase)
+                                                             ? Utility.GetPropertyName(e => e.Title)
+                                                             : Utility.GetPropertyName(e => e.EventStart);
             }
         }
     }
