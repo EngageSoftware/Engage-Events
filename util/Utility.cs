@@ -60,11 +60,7 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                var sb = new StringBuilder(128);
-                sb.Append("/DesktopModules/");
-                sb.Append(Globals.GetDesktopModuleByName(DesktopModuleName).FolderName);
-                sb.Append("/");
-                return sb.ToString();
+                return Dnn.Utility.GetDesktopModuleFolderName(DesktopModuleName);
             }
         }
 
