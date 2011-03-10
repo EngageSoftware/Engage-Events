@@ -29,12 +29,21 @@ namespace Engage.Dnn.Events
         public event EventHandler CategoryChanged;
 
         /// <summary>
-        /// Gets the selected status of event to display.
+        /// Gets the ID of the category of event to display.
         /// </summary>
-        /// <value>The selected status of event to display.</value>
-        internal string SelectedValue
+        /// <value>The category ID, or <c>null</c> for all categories.</value>
+        internal int? SelectedCategoryId
         {
-            get { return this.CategoriesList.SelectedValue; }
+            get
+            {
+                int selectedValue;
+                if (int.TryParse(this.CategoriesList.SelectedValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out selectedValue))
+                {
+                    return selectedValue;
+                }
+
+                return null;
+            }
         }
 
         /// <summary>

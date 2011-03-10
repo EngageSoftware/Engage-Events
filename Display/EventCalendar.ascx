@@ -1,6 +1,6 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.Display.EventCalendar" CodeBehind="EventCalendar.ascx.cs" %>
-<%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
-<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register TagPrefix="engage" TagName="CategoryFilterAction" Src="..\Actions\CategoryFilterAction.ascx" %>
+<%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 
 <script type="text/javascript">
 /*global Telerik, Sys */
@@ -25,6 +25,9 @@
     <h2 class="NormalBold">
         <asp:Label runat="server" ResourceKey="EventsTitle" />
     </h2>
+    <div class="EventFilter">
+        <engage:CategoryFilterAction ID="CategoryFilterAction" runat="server" />
+    </div>
 </div>
 <div class="EventCalendar">
     <telerik:RadScheduler ID="EventsCalendarDisplay" runat="server" SelectedView="MonthView"

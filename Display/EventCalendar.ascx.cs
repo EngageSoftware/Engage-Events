@@ -17,9 +17,12 @@ namespace Engage.Dnn.Events.Display
     using System.Web.UI;
     using System.Web.UI.WebControls;
 
+    using DotNetNuke.Common;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
     using Engage.Events;
+    using Engage.Util;
+
     using Telerik.Web.UI;
 
     /// <summary>
@@ -58,6 +61,7 @@ namespace Engage.Dnn.Events.Display
             this.EventsCalendarDisplay.DataBound += this.EventsCalendarDisplay_DataBound;
             this.EventsCalendarDisplay.NavigationCommand += this.EventsCalendarDisplay_NavigationCommand;
             this.EventsCalendarToolTipManager.AjaxUpdate += this.EventsCalendarToolTipManager_AjaxUpdate;
+            this.CategoryFilterAction.CategoryChanged += this.CategoryFilterAction_CategoryChanged;
         }
 
         /// <summary>
@@ -177,6 +181,16 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
+        /// Handles the <see cref="Events.CategoryFilterAction.CategoryChanged"/> event of the <see cref="CategoryFilterAction"/> control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void CategoryFilterAction_CategoryChanged(object sender, EventArgs e)
+        {
+            this.BindData();
+        }
+
+        /// <summary>
         /// Sets up the <see cref="EventToolTip"/> control and displays it
         /// </summary>
         /// <param name="eventId">The ID of the <see cref="Event"/> to display within the tool-tip.</param>
@@ -219,14 +233,22 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         private void BindData()
         {
+
             this.EventsCalendarDisplay.Culture = CultureInfo.CurrentCulture;
-            this.EventsCalendarDisplay.DataSource = EventCollection.Load(this.PortalId, ListingMode.All, false, this.IsFeatured, this.CategoryIds);
             this.EventsCalendarDisplay.DataEndField = "EventEnd";
             this.EventsCalendarDisplay.DataKeyField = "Id";
             this.EventsCalendarDisplay.DataRecurrenceField = "RecurrenceRule";
             this.EventsCalendarDisplay.DataRecurrenceParentKeyField = "RecurrenceParentId";
             this.EventsCalendarDisplay.DataStartField = "EventStart";
             this.EventsCalendarDisplay.DataSubjectField = "Title";
+
+            var selectedCategoryId = this.CategoryFilterAction.SelectedCategoryId;
+            this.EventsCalendarDisplay.DataSource = EventCollection.Load(
+                this.PortalId,
+                ListingMode.All,
+                false,
+                this.IsFeatured,
+                selectedCategoryId == null ? this.CategoryIds : selectedCategoryId.Value.AsSequence());
             this.EventsCalendarDisplay.DataBind();
 
             var skinSetting = ModuleSettings.SkinSelection.GetValueAsEnumFor<TelerikSkin>(this).Value;

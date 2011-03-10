@@ -244,17 +244,8 @@ namespace Engage.Dnn.Events.Display
         /// <param name="pageNumber">The page number.</param>
         protected void ReloadPage(int pageNumber)
         {
-            int? selectedCategoryId = null;
-            int parsedCategoryId;
-            if (this.CategoryFilterAction != null &&
-                !string.IsNullOrEmpty(this.CategoryFilterAction.SelectedValue) &&
-                int.TryParse(this.CategoryFilterAction.SelectedValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out parsedCategoryId))
-            {
-                selectedCategoryId = parsedCategoryId;
-            }
-
-            this.Response.Redirect(
-                this.GetPageUrl(pageNumber, this.SortAction.SelectedValue, this.StatusFilterAction.SelectedValue, selectedCategoryId), true);
+            var selectedCategoryId = this.CategoryFilterAction != null ? this.CategoryFilterAction.SelectedCategoryId : null;
+            this.Response.Redirect(this.GetPageUrl(pageNumber, this.SortAction.SelectedValue, this.StatusFilterAction.SelectedValue, selectedCategoryId), true);
         }
 
         /// <summary>
@@ -266,7 +257,7 @@ namespace Engage.Dnn.Events.Display
         /// <returns>
         /// The URL to use for the paging buttons, with the page number templated out for use with <see cref="string.Format(IFormatProvider,string,object[])"/> (that is, "{0}")
         /// </returns>
-        [SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings", Justification = "Backwards compatability")]
+        [SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings", Justification = "Backwards compatibility")]
         protected string GetPageUrlTemplate(string sortExpression, string status, int? filterCategoryId)
         {
             // We can't just send {0} to BuildLinkUrl, because it will get "special treatment" by the friendly URL provider for its special characters
