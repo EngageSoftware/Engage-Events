@@ -13,6 +13,7 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Linq;
+    using System.Web.UI;
 
     using DotNetNuke.Common;
 
