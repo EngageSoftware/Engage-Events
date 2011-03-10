@@ -3,27 +3,22 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 <script type="text/javascript">
-//<![CDATA[
-    function hideActiveToolTip()
-    {            
-        var controller = Telerik.Web.UI.RadToolTipController.getInstance();
-        var tooltip = controller.get_activeToolTip();
-        if (tooltip)
-        {
+/*global Telerik, Sys */
+(function (window, radToolTip, pageRequestManager) {
+    "use strict";
+    window.hideActiveToolTip = function () {            
+        var tooltip = radToolTip.getCurrent();
+        if (tooltip) {
             tooltip.hide(); 
         }
-    }
+    };
     
-    Sys.WebForms.PageRequestManager.getInstance().add_beginRequest(beginRequestHandler);
-    function beginRequestHandler(sender, args)
-    {
-        var prm = Sys.WebForms.PageRequestManager.getInstance();
-        if (args.get_postBackElement().id.indexOf('EventsCalendarDisplay') != -1) 
-        { 
-            hideActiveToolTip(); 
+    pageRequestManager.getInstance().add_beginRequest(function (sender, args) {
+        if (args.get_postBackElement().id.indexOf('EventsCalendarDisplay') !== -1) { 
+            window.hideActiveToolTip(); 
         } 
-    } 
-//]]>
+    });
+}(this, Telerik.Web.UI.RadToolTip, Sys.WebForms.PageRequestManager));
 </script>
 
 <div class="EventHeader">
@@ -32,15 +27,9 @@
     </h2>
 </div>
 <div class="EventCalendar">
-<%--    <asp:UpdatePanel runat="server" UpdateMode="Conditional">
-        <ContentTemplate>--%>
-            <telerik:radscheduler id="EventsCalendarDisplay" runat="server" selectedview="MonthView"
-                enableembeddedskins="True" allowdelete="False" allowedit="False" allowinsert="False"
-                overflowbehavior="Expand" ReadOnly="true" ShowFullTime="true">
-                <timelineview userselectable="False" />
-            </telerik:radscheduler>
-            <telerik:radtooltipmanager runat="server" id="EventsCalendarToolTipManager" width="300" height="150"
-                animation="None" position="BottomRight" sticky="true" text="Loading..." AutoTooltipify="false" />
-<%--        </ContentTemplate>
-    </asp:UpdatePanel>--%>
+    <telerik:RadScheduler ID="EventsCalendarDisplay" runat="server" SelectedView="MonthView"
+        EnableEmbeddedSkins="True" AllowDelete="False" AllowEdit="False" AllowInsert="False"
+        OverflowBehavior="Expand" ReadOnly="true" ShowFullTime="true" TimelineView-UserSelectable="False" />
+    <telerik:RadToolTipManager runat="server" ID="EventsCalendarToolTipManager" Width="300" Height="150"
+        Animation="None" Position="BottomRight" Sticky="true" Text="Loading..." AutoTooltipify="false" />
 </div>

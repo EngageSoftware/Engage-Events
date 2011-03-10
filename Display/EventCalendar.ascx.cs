@@ -15,6 +15,8 @@ namespace Engage.Dnn.Events.Display
     using System.Globalization;
     using System.Linq;
     using System.Web.UI;
+    using System.Web.UI.WebControls;
+
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
     using Engage.Events;
@@ -53,7 +55,8 @@ namespace Engage.Dnn.Events.Display
             this.Load += this.Page_Load;
             this.EventsCalendarDisplay.AppointmentCreated += this.EventsCalendarDisplay_AppointmentCreated;
             this.EventsCalendarDisplay.AppointmentDataBound += this.EventsCalendarDisplay_AppointmentDataBound;
-            this.EventsCalendarDisplay.NavigationCommand += this.EventsCalendarDisplay_NavigationCommand; 
+            this.EventsCalendarDisplay.DataBound += this.EventsCalendarDisplay_DataBound;
+            this.EventsCalendarDisplay.NavigationCommand += this.EventsCalendarDisplay_NavigationCommand;
             this.EventsCalendarToolTipManager.AjaxUpdate += this.EventsCalendarToolTipManager_AjaxUpdate;
         }
 
@@ -102,12 +105,15 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="Telerik.Web.UI.AppointmentCreatedEventArgs"/> instance containing the event data.</param>
         private void EventsCalendarDisplay_AppointmentCreated(object sender, AppointmentCreatedEventArgs e)
         {
-            if (e.Appointment.Visible && !this.IsAppointmentRegisteredForToolTip(e.Appointment))
+            if (!e.Appointment.Visible || this.IsAppointmentRegisteredForToolTip(e.Appointment))
             {
-                foreach (AppointmentControl appointmentControl in e.Appointment.AppointmentControls)
-                {
-                    this.EventsCalendarToolTipManager.TargetControls.Add(appointmentControl.ClientID, e.Appointment.ID.ToString(), true);                    
-                }
+                return;
+            }
+
+            var appointmentId = e.Appointment.ID.ToString();
+            foreach (var domElementId in e.Appointment.DomElements)
+            {
+                this.EventsCalendarToolTipManager.TargetControls.Add(domElementId, appointmentId, true);
             }
         }
 
@@ -118,9 +124,6 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="Telerik.Web.UI.SchedulerEventArgs"/> instance containing the event data.</param>
         private void EventsCalendarDisplay_AppointmentDataBound(object sender, SchedulerEventArgs e)
         {
-            this.EventsCalendarToolTipManager.TargetControls.Clear();
-            ScriptManager.RegisterStartupScript(this, typeof(EventCalendar), "HideToolTip", "hideActiveToolTip();", true);
-
             var category = ((Event)e.Appointment.DataItem).Category;
             var categoryName = string.IsNullOrEmpty(category.Name) ? this.Localize("DefaultCategory", this.LocalSharedResourceFile) : category.Name;
             var color = category.Color ?? "Default";
@@ -143,18 +146,44 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
+        /// Handles the <see cref="BaseDataBoundControl.DataBound"/> event of the <see cref="EventsCalendarDisplay"/> control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void EventsCalendarDisplay_DataBound(object sender, EventArgs e)
+        {
+            ////this.ToolTipEventId = null;
+            this.EventsCalendarToolTipManager.TargetControls.Clear();
+            ScriptManager.RegisterStartupScript(this, typeof(EventCalendar), "HideToolTip", "hideActiveToolTip();", true);
+        }
+
+        /// <summary>
+        /// Handles the <see cref="RadScheduler.NavigationCommand"/> event of the <see cref="EventsCalendarDisplay"/> control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="SchedulerNavigationCommandEventArgs"/> instance containing the event data.</param>
+        private void EventsCalendarDisplay_NavigationCommand(object sender, SchedulerNavigationCommandEventArgs e)
+        {
+            this.ToolTipEventId = null;
+        }
+
+        /// <summary>
         /// Handles the AjaxUpdate event of the EventsCalendarToolTipManager control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="Telerik.Web.UI.ToolTipUpdateEventArgs"/> instance containing the event data.</param>
         private void EventsCalendarToolTipManager_AjaxUpdate(object sender, ToolTipUpdateEventArgs e)
         {
+            // Value is ID_# when when the appointment is a recurrence, but just ID when it's not
             int eventId;
-            if (int.TryParse(e.Value.Split('_')[0], NumberStyles.Integer, CultureInfo.InvariantCulture, out eventId))
+            if (!int.TryParse(e.Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out eventId))
             {
-                this.ToolTipEventId = eventId;
-                this.ShowToolTip(eventId, e.UpdatePanel);
+                var appointment = this.EventsCalendarDisplay.Appointments.FindByID(e.Value);
+                eventId = (int)appointment.RecurrenceParentID;
             }
+
+            this.ToolTipEventId = eventId;
+            this.ShowToolTip(eventId, e.UpdatePanel);
         }
 
         /// <summary>
@@ -164,7 +193,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="panel">The panel in which the tool-tip is displayed.</param>
         private void ShowToolTip(int eventId, UpdatePanel panel)
         {
-            Event ev = Event.Load(eventId);
+            var ev = Event.Load(eventId);
             if (!this.CanShowEvent(ev))
             {
                 return;
@@ -192,7 +221,7 @@ namespace Engage.Dnn.Events.Display
         /// </returns>
         private bool IsAppointmentRegisteredForToolTip(Appointment apt)
         {
-            return this.EventsCalendarToolTipManager.TargetControls.Cast<ToolTipTargetControl>().Any(targetControl => targetControl.TargetControlID == apt.ClientID);
+            return this.EventsCalendarToolTipManager.TargetControls.Cast<ToolTipTargetControl>().Any(targetControl => apt.DomElements.Contains(targetControl.TargetControlID));
         }
 
         /// <summary>

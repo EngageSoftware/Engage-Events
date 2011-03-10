@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="EventToolTip.ascx.cs" Inherits="Engage.Dnn.Events.Display.EventToolTip" %>
+﻿<%@ Control Language="C#" AutoEventWireup="false" CodeBehind="EventToolTip.ascx.cs" Inherits="Engage.Dnn.Events.Display.EventToolTip" %>
 <%@ Register TagPrefix="engage" TagName="RegisterAction" Src="../Actions/RegisterAction.ascx" %>
 
 <div class="EventToolTip">
