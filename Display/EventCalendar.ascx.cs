@@ -136,16 +136,6 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Handles the <see cref="RadScheduler.NavigationCommand"/> event of the <see cref="EventsCalendarDisplay"/> control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="SchedulerNavigationCommandEventArgs"/> instance containing the event data.</param>
-        private void EventsCalendarDisplay_NavigationCommand(object sender, SchedulerNavigationCommandEventArgs e)
-        {
-            this.ToolTipEventId = null;
-        }
-
-        /// <summary>
         /// Handles the <see cref="BaseDataBoundControl.DataBound"/> event of the <see cref="EventsCalendarDisplay"/> control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
