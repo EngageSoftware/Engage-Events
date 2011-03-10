@@ -53,6 +53,7 @@ namespace Engage.Dnn.Events.Display
             this.Load += this.Page_Load;
             this.EventsCalendarDisplay.AppointmentCreated += this.EventsCalendarDisplay_AppointmentCreated;
             this.EventsCalendarDisplay.AppointmentDataBound += this.EventsCalendarDisplay_AppointmentDataBound;
+            this.EventsCalendarDisplay.NavigationCommand += this.EventsCalendarDisplay_NavigationCommand; 
             this.EventsCalendarToolTipManager.AjaxUpdate += this.EventsCalendarToolTipManager_AjaxUpdate;
         }
 
@@ -129,6 +130,16 @@ namespace Engage.Dnn.Events.Display
                 "cat-{0} rsCategory{1}", 
                 Engage.Utility.ConvertToSlug(categoryName),
                 Engage.Utility.ConvertToSlug(color));
+        }
+
+        /// <summary>
+        /// Handles the <see cref="RadScheduler.NavigationCommand"/> event of the <see cref="EventsCalendarDisplay"/> control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="SchedulerNavigationCommandEventArgs"/> instance containing the event data.</param>
+        private void EventsCalendarDisplay_NavigationCommand(object sender, SchedulerNavigationCommandEventArgs e)
+        {
+            this.ToolTipEventId = null;
         }
 
         /// <summary>
