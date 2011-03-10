@@ -1,6 +1,6 @@
 // <copyright file="Respond.ascx.cs" company="Engage Sooftware">
 // Engage: Events - http://www.EngageSoftware.com
-// Copyright (c) 2004-2010
+// Copyright (c) 2004-2011
 // by Engage Software ( http://www.engagesoftware.com )
 // </copyright>
 
