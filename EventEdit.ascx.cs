@@ -15,13 +15,16 @@ namespace Engage.Dnn.Events
     using System.Globalization;
     using System.Linq;
     using System.Web.UI.WebControls;
-    using DotNetNuke.Common;
+
     using DotNetNuke.Framework;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.UserControls;
+    using DotNetNuke.UI.Utilities;
 
     using Engage.Events;
+
+    using Globals = DotNetNuke.Common.Globals;
 
     /// <summary>
     /// This class contains a collection of methods for adding or editing an Event.
@@ -54,8 +57,9 @@ namespace Engage.Dnn.Events
             AJAX.RegisterPostBackControl(this.SaveAndCreateNewEventButton);
 
             this.Load += this.Page_Load;
-            this.SaveEventButton.Click += this.SaveEventButton_OnClick;
-            this.SaveAndCreateNewEventButton.Click += this.SaveAndCreateNewEventButton_OnClick;
+            this.SaveEventButton.Click += this.SaveEventButton_Click;
+            this.SaveAndCreateNewEventButton.Click += this.SaveAndCreateNewEventButton_Click;
+            this.DeleteAction.Delete += this.DeleteAction_Delete;
             this.CreateAnotherEventLink.Click += this.CreateAnotherEventLink_Click;
             this.RecurringCheckBox.CheckedChanged += this.RecurringCheckbox_CheckedChanged;
             this.AllowRegistrationsCheckBox.CheckedChanged += this.AllowRegistrationsCheckBox_CheckedChanged;
@@ -108,6 +112,7 @@ namespace Engage.Dnn.Events
                 if (!this.IsPostBack)
                 {
                     this.FillLists();
+                    this.DeleteAction.Visible = this.EventId.HasValue;
 
                     if (this.EventId.HasValue)
                     {
@@ -130,7 +135,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void SaveEventButton_OnClick(object sender, EventArgs e)
+        private void SaveEventButton_Click(object sender, EventArgs e)
         {
             try
             {
@@ -151,7 +156,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void SaveAndCreateNewEventButton_OnClick(object sender, EventArgs e)
+        private void SaveAndCreateNewEventButton_Click(object sender, EventArgs e)
         {
             try
             {
@@ -165,6 +170,16 @@ namespace Engage.Dnn.Events
             {
                 Exceptions.ProcessModuleLoadException(this, exc);
             }
+        }
+
+        /// <summary>
+        /// Handles the <see cref="Events.DeleteAction.Delete"/> event of the <see cref="DeleteAction"/> control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void DeleteAction_Delete(object sender, EventArgs e)
+        {
+            this.Response.Redirect(Globals.NavigateURL());
         }
 
         /// <summary>
@@ -456,6 +471,7 @@ namespace Engage.Dnn.Events
             this.RecurringCheckBox.Checked = e.IsRecurring;
             this.RecurrenceEditor.Visible = this.RecurringCheckBox.Checked;
             this.RecurrenceEditor.SetRecurrenceRule(e.RecurrenceRule);
+            this.DeleteAction.CurrentEvent = e;
 
             this.AllowRegistrationsCheckBox.Checked = this.LimitRegistrationsPanel.Visible = e.AllowRegistrations;
             this.LimitRegistrationsCheckBox.Checked = this.RegistrationLimitPanel.Visible = e.Capacity.HasValue;

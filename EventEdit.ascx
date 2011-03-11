@@ -4,6 +4,7 @@
 <%@ Register TagPrefix="dnn" TagName="TextEditor" Src="~/controls/TextEditor.ascx" %>
 <%@ Register TagPrefix="engage" TagName="ModuleMessage" Src="Controls/ModuleMessage.ascx" %>
 <%@ Register TagPrefix="engage" TagName="RecurrenceEditor" Src="Controls/RecurrenceEditor.ascx" %>
+<%@ Register TagPrefix="engage" TagName="DeleteAction" Src="Actions/DeleteAction.ascx" %>
 <%@ Register TagPrefix="engage" Namespace="Engage.Controls" Assembly="Engage.Framework" %>
 
 <engage:ModuleMessage runat="server" ID="SuccessModuleMessage" MessageType="Success" TextResourceKey="AddEventSuccess" CssClass="AddEventSuccessMessage"/>
@@ -145,9 +146,10 @@
 <asp:MultiView ID="FooterMultiview" runat="server" ActiveViewIndex="0">
     <asp:View ID="AddEventFooterView" runat="server">
         <div class="AddEventFooterButtons AdminButtons FooterButtons">
-            <asp:Button ID="SaveEventButton" runat="server" CssClass="Normal" ResourceKey="Save.Alt" />
-            <asp:Button ID="SaveAndCreateNewEventButton" runat="server" CssClass="Normal" ResourceKey="SaveAndCreateNew.Alt" />
-            <asp:HyperLink ID="CancelEventLink" runat="server" CssClass="Normal" ResourceKey="Cancel.Alt" />
+            <asp:Button ID="SaveEventButton" runat="server" CssClass="Normal save-btn primary-btn" ResourceKey="Save.Alt" />
+            <asp:Button ID="SaveAndCreateNewEventButton" runat="server" CssClass="Normal save-new-btn primary-btn" ResourceKey="SaveAndCreateNew.Alt" />
+            <asp:HyperLink ID="CancelEventLink" runat="server" CssClass="Normal cancel-btn secondary-btn" ResourceKey="Cancel.Alt" />
+            <engage:DeleteAction ID="DeleteAction" runat="server" CssClass="Normal delete-btn tertiary-btn" />
         </div>
     </asp:View>
     <asp:View ID="FinalFooterView" runat="server">

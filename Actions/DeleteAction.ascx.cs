@@ -12,6 +12,8 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.Web.UI;
+
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.Utilities;
     using Engage.Events;
@@ -26,9 +28,25 @@ namespace Engage.Dnn.Events
     public partial class DeleteAction : ActionControlBase
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteAction"/> class.
+        /// </summary>
+        public DeleteAction()
+        {
+            this.CssClass = "Normal";
+        }
+
+        /// <summary>
         /// Occurs when the Delete button is pressed.
         /// </summary>
         public event EventHandler Delete;
+
+        /// <summary>
+        /// Gets or sets the CSS class.
+        /// </summary>
+        /// <value>
+        /// The CSS class.
+        /// </value>
+        public string CssClass { get; set; }
 
         /// <summary>
         /// Sets the visibility of each of the buttons.  Also, sets the text for the cancel/uncancel button, and the delete confirm.
@@ -55,6 +73,7 @@ namespace Engage.Dnn.Events
             base.OnInit(e);
 
             this.Load += this.Page_Load;
+            this.PreRender += this.Page_PreRender;
             this.DeleteEventButton.Click += this.DeleteEventButton_Click;
         }
 
@@ -70,6 +89,16 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Handles the <see cref="Control.PreRender"/> event of this control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void Page_PreRender(object sender, EventArgs e)
+        {
+            this.DeleteEventButton.CssClass = this.CssClass;
+        }
+
+        /// <summary>
         /// Handles the OnClick event of the DeleteEventButton control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -78,12 +107,6 @@ namespace Engage.Dnn.Events
         {
             Event.Delete(this.CurrentEvent.Id);
             this.OnDelete(e);
-
-            ////EventListingItem listing = Engage.Utility.FindParentControl<EventListingItem>(this);
-            ////if (listing != null)
-            ////{
-            ////    listing.BindData();
-            ////}
         }
 
         /// <summary>
