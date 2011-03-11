@@ -1,5 +1,5 @@
 ﻿IF OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_spGetEvents]', N'P') IS NOT NULL
-  DROP PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEvents]
+    DROP PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEvents]
 GO
 CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEvents](
     @portalId int, 
@@ -41,4 +41,22 @@ BEGIN
        N'@portalId int, @showAll bit, @featured bit, @startDate datetime, @endDate datetime, @categoryIds nvarchar(4000), @hideFullEvents bit, @Attending nvarchar(20)',
        @portalId=@portalId, @showAll=@showAll, @featured=@featured, @startDate=@startDate, @endDate=@endDate, @categoryIds=@categoryIds, @hideFullEvents=@hideFullEvents, @Attending=@Attending
 END
+GO
+
+IF OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_spDeleteEvent]', N'P') IS NOT NULL
+    DROP PROCEDURE {databaseOwner}[{objectQualifier}Engage_spDeleteEvent]
+GO
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spDeleteEvent](
+    @EventId int
+)
+AS
+BEGIN TRANSACTION
+
+DELETE {databaseOwner}[{objectQualifier}Engage_Response] 
+WHERE EventID = @EventId
+
+DELETE {databaseOwner}[{objectQualifier}Engage_Event] 
+WHERE EventID = @EventId
+
+COMMIT TRANSACTION
 GO
