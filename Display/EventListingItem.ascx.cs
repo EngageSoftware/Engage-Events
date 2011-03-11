@@ -435,6 +435,7 @@ namespace Engage.Dnn.Events.Display
                     this.RecordsPerPage,
                     this.Status.Equals("All", StringComparison.Ordinal),
                     this.IsManageEvents ? false : this.IsFeatured,
+                    this.IsManageEvents ? false : this.HideFullEvents,
                     this.CategoryId.HasValue ? new[] { this.CategoryId.Value } : this.CategoryIds);
             
             this.TotalNumberOfEvents = events.TotalRecords;

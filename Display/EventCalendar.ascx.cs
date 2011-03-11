@@ -248,6 +248,7 @@ namespace Engage.Dnn.Events.Display
                 ListingMode.All,
                 false,
                 this.IsFeatured,
+                this.HideFullEvents,
                 selectedCategoryId == null ? this.CategoryIds : selectedCategoryId.Value.AsSequence());
             this.EventsCalendarDisplay.DataBind();
 

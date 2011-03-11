@@ -40,6 +40,24 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.CheckBox FeaturedCheckBox;
         
         /// <summary>
+        /// HideFullEventsLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DotNetNuke.UI.UserControls.LabelControl HideFullEventsLabel;
+        
+        /// <summary>
+        /// HideFullEventsCheckBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox HideFullEventsCheckBox;
+        
+        /// <summary>
         /// AllCategoriesCheckBox control.
         /// </summary>
         /// <remarks>

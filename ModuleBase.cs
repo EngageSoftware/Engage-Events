@@ -246,6 +246,17 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Gets a value indicating whether this instance should show events which have hit their registration cap.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance should not display events which have hit their registration cap; otherwise, <c>false</c>.
+        /// </value>
+        protected bool HideFullEvents
+        {
+            get { return ModuleSettings.HideFullEvents.GetValueAsBooleanFor(this).Value; }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether this instance is configured.
         /// </summary>
         /// <value>

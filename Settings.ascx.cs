@@ -77,6 +77,7 @@ namespace Engage.Dnn.Events
                 try
                 {
                     Dnn.Events.ModuleSettings.FeaturedOnly.Set(this, this.FeaturedCheckBox.Checked);
+                    Dnn.Events.ModuleSettings.HideFullEvents.Set(this, this.HideFullEventsCheckBox.Checked);
                     Dnn.Events.ModuleSettings.DetailsDisplayTabId.Set(this, this.GetSelectedDetailsDisplayTabId());
                     Dnn.Events.ModuleSettings.DetailsDisplayModuleId.Set(this, this.GetSelectedDetailsDisplayModuleId());
 
@@ -209,6 +210,7 @@ namespace Engage.Dnn.Events
         private void SetOptions()
         {
             this.FeaturedCheckBox.Checked = Dnn.Events.ModuleSettings.FeaturedOnly.GetValueAsBooleanFor(this).Value;
+            this.HideFullEventsCheckBox.Checked = Dnn.Events.ModuleSettings.HideFullEvents.GetValueAsBooleanFor(this).Value;
             this.SetDetailsDisplayModuleGridSelection(Dnn.Events.ModuleSettings.DetailsDisplayTabId.GetValueAsInt32For(this) ?? this.TabId, Dnn.Events.ModuleSettings.DetailsDisplayModuleId.GetValueAsInt32For(this) ?? this.ModuleId);
 
             var categoriesSettingValue = Dnn.Events.ModuleSettings.Categories.GetValueAsStringFor(this);

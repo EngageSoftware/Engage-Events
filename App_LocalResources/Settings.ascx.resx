@@ -147,6 +147,12 @@
   <data name="FeaturedEventLabel.Text" xml:space="preserve">
     <value>Display Featured Events Only</value>
   </data>
+  <data name="HideFullEventsLabel.Help" xml:space="preserve">
+    <value>Choose whether this module should display events that have reached their registration caps</value>
+  </data>
+  <data name="HideFullEventsLabel.Text" xml:space="preserve">
+    <value>Hide Full Events</value>
+  </data>
   <data name="Module ID.Header" xml:space="preserve">
     <value>Module ID</value>
   </data>

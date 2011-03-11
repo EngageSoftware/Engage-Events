@@ -73,5 +73,10 @@ namespace Engage.Dnn.Events
         /// The chosen display type (calendar or listing) for this module 
         /// </summary>
         public static readonly Setting<int> RecordsPerPage = new Setting<int>("RecordsPerPage", SettingScope.TabModule, 10);
+
+        /// <summary>
+        /// Whether to hide events which have hit their registration cap
+        /// </summary>
+        public static readonly Setting<bool> HideFullEvents = new Setting<bool>("HideFullEvents", SettingScope.TabModule, false);
     }
 }

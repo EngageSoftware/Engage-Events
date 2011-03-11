@@ -4,7 +4,7 @@
 <%@ Register TagPrefix="dnn" TagName="label" Src="~/controls/labelControl.ascx" %>
 
 <style type="text/css">
-    @import url(<%=Engage.Dnn.Framework.ModuleBase.ApplicationUrl %><%=Engage.Dnn.Framework.Utility.GetDesktopModuleFolderName(Engage.Dnn.Events.Utility.DesktopModuleName) %>Module.css);
+    @import url(<%=ResolveUrl("Module.css")%>);
 </style>
 
 <asp:UpdatePanel runat="server" UpdateMode="Conditional">
@@ -14,6 +14,10 @@
         <div class="EventsSetting">
             <dnn:label ID="FeaturedEventLabel" ResourceKey="FeaturedEventLabel" runat="server" CssClass="SubHead" ControlName="FeaturedCheckBox" />
             <asp:CheckBox ID="FeaturedCheckBox" runat="server" />
+        </div>
+        <div class="EventsSetting">
+            <dnn:label ID="HideFullEventsLabel" ResourceKey="HideFullEventsLabel" runat="server" CssClass="SubHead" ControlName="HideFullEventsCheckBox" />
+            <asp:CheckBox ID="HideFullEventsCheckBox" runat="server" />
         </div>
         <div class="EventsSetting">
             <dnn:label ResourceKey="CategoriesLabel" runat="server" CssClass="SubHead" />
