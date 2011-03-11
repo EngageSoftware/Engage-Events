@@ -313,6 +313,24 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Gets the Tab ID to use when displaying module details.
+        /// </summary>
+        /// <value>The Tab ID to use when displaying module details.</value>
+        protected int DetailsTabId
+        {
+            get { return ModuleSettings.DetailsDisplayTabId.GetValueAsInt32For(this) ?? this.TabId; }
+        }
+
+        /// <summary>
+        /// Gets the Module ID to use when displaying module details.
+        /// </summary>
+        /// <value>The Module ID to use when displaying module details.</value>
+        protected int DetailsModuleId
+        {
+            get { return ModuleSettings.DetailsDisplayModuleId.GetValueAsInt32For(this) ?? this.ModuleId; }
+        }
+
+        /// <summary>
         /// Sends an <c>iCalendar</c> to the client to download.
         /// </summary>
         /// <param name="response">The response to use to send the <c>iCalendar</c>.</param>
