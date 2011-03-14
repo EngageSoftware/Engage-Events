@@ -415,7 +415,7 @@ namespace Engage.Dnn.Events.Display
                     this.SortExpression,
                     this.CurrentPageIndex - 1,
                     this.RecordsPerPage,
-                    this.Status.Equals("All", StringComparison.Ordinal),
+                    this.Status.Equals("All", StringComparison.OrdinalIgnoreCase),
                     this.IsManageEvents ? false : this.IsFeatured,
                     this.IsManageEvents ? false : this.HideFullEvents,
                     IsLoggedIn ? this.UserInfo.Email : null,
