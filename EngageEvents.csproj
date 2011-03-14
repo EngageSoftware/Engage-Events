@@ -414,7 +414,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ReleaseNotes_1.4.5.htm" />
+    <Content Include="ReleaseNotes_1.5.0.htm" />
     <Content Include="ReleaseNotes_1.4.1.htm" />
     <Content Include="Images\icon-canvas.png" />
     <Content Include="ReleaseNotes_1.4.0.htm" />

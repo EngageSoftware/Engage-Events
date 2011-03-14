@@ -141,4 +141,7 @@
   <data name="TimespanDifferentYear.Text" xml:space="preserve">
     <value>{0:hh:mmtt} - {1:hh:mmtt}</value>
   </data>
+  <data name="View Details.Text" xml:space="preserve">
+    <value>View Details</value>
+  </data>
 </root>

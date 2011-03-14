@@ -100,24 +100,6 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Gets the Tab ID to use when displaying module details.
-        /// </summary>
-        /// <value>The Tab ID to use when displaying module details.</value>
-        private int DetailsTabId
-        {
-            get { return ModuleSettings.DetailsDisplayTabId.GetValueAsInt32For(this) ?? this.TabId; }
-        }
-
-        /// <summary>
-        /// Gets the Module ID to use when displaying module details.
-        /// </summary>
-        /// <value>The Module ID to use when displaying module details.</value>
-        private int DetailsModuleId
-        {
-            get { return ModuleSettings.DetailsDisplayModuleId.GetValueAsInt32For(this) ?? this.ModuleId; }
-        }
-
-        /// <summary>
         /// Gets the status of events to retrieve.  Possible values are "Active" and "All".  "Active" by default.
         /// </summary>
         /// <value>The status of events to retrieve.</value>
