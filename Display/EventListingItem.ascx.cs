@@ -418,6 +418,7 @@ namespace Engage.Dnn.Events.Display
                     this.Status.Equals("All", StringComparison.Ordinal),
                     this.IsManageEvents ? false : this.IsFeatured,
                     this.IsManageEvents ? false : this.HideFullEvents,
+                    IsLoggedIn ? this.UserInfo.Email : null,
                     this.CategoryId.HasValue ? new[] { this.CategoryId.Value } : this.CategoryIds);
             
             this.TotalNumberOfEvents = events.TotalRecords;

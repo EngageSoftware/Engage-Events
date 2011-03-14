@@ -247,6 +247,7 @@ namespace Engage.Dnn.Events.Display
                 false,
                 this.IsFeatured,
                 this.HideFullEvents,
+                IsLoggedIn ? this.UserInfo.Email : null,
                 selectedCategoryId == null ? this.CategoryIds : selectedCategoryId.Value.AsSequence());
             this.EventsCalendarDisplay.DataBind();
 

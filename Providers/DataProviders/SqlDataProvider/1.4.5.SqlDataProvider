@@ -6,6 +6,7 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEvents](
     @showAll bit,
     @featured bit,
     @hideFullEvents bit,
+    @email nvarchar(50),
     @startDate datetime,
     @endDate datetime,
     @categoryIds nvarchar(4000)
@@ -30,7 +31,11 @@ BEGIN
             OR 
             (RecurrenceRule IS NOT NULL AND (FinalRecurringEndDate IS NULL OR FinalRecurringEndDate >= @startDate OR @startDate IS NULL))
           )
-       AND (@hideFullEvents = 0 OR AllowRegistrations = 0 OR Capacity IS NULL OR Capacity > (SELECT COUNT(*) FROM {databaseOwner}[{objectQualifier}Engage_Response] r WHERE r.EventId = e.EventId AND r.EventStart = e.EventStart AND r.Status = @Attending))'
+       AND (@hideFullEvents = 0 
+            OR AllowRegistrations = 0 
+            OR Capacity IS NULL 
+            OR (@email IS NOT NULL AND EXISTS (SELECT 1 FROM {databaseOwner}[{objectQualifier}Engage_Response] r WHERE r.EventId = e.EventId AND r.EventStart = e.EventStart AND r.Status = @Attending AND r.Email = @email)) 
+            OR Capacity > (SELECT COUNT(*) FROM {databaseOwner}[{objectQualifier}Engage_Response] r WHERE r.EventId = e.EventId AND r.EventStart = e.EventStart AND r.Status = @Attending))'
 
     IF @categoryIds IS NOT NULL
     BEGIN
@@ -38,8 +43,8 @@ BEGIN
     END
 
     EXEC sp_executesql @sql,
-       N'@portalId int, @showAll bit, @featured bit, @startDate datetime, @endDate datetime, @categoryIds nvarchar(4000), @hideFullEvents bit, @Attending nvarchar(20)',
-       @portalId=@portalId, @showAll=@showAll, @featured=@featured, @startDate=@startDate, @endDate=@endDate, @categoryIds=@categoryIds, @hideFullEvents=@hideFullEvents, @Attending=@Attending
+       N'@portalId int, @showAll bit, @featured bit, @startDate datetime, @endDate datetime, @categoryIds nvarchar(4000), @hideFullEvents bit, @email nvarchar(50), @Attending nvarchar(20)',
+       @portalId=@portalId, @showAll=@showAll, @featured=@featured, @startDate=@startDate, @endDate=@endDate, @categoryIds=@categoryIds, @hideFullEvents=@hideFullEvents, @email=@email, @Attending=@Attending
 END
 GO
 
