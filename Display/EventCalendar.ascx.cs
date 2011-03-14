@@ -58,7 +58,6 @@ namespace Engage.Dnn.Events.Display
             this.EventsCalendarDisplay.AppointmentCreated += this.EventsCalendarDisplay_AppointmentCreated;
             this.EventsCalendarDisplay.AppointmentDataBound += this.EventsCalendarDisplay_AppointmentDataBound;
             this.EventsCalendarDisplay.DataBound += this.EventsCalendarDisplay_DataBound;
-            this.EventsCalendarDisplay.AppointmentClick += this.EventsCalendarDisplay_AppointmentClick;
             this.EventsCalendarDisplay.NavigationCommand += this.EventsCalendarDisplay_NavigationCommand;
             this.EventsCalendarToolTipManager.AjaxUpdate += this.EventsCalendarToolTipManager_AjaxUpdate;
             this.CategoryFilterAction.CategoryChanged += this.CategoryFilterAction_CategoryChanged;
@@ -149,18 +148,6 @@ namespace Engage.Dnn.Events.Display
             ////this.ToolTipEventId = null;
             this.EventsCalendarToolTipManager.TargetControls.Clear();
             ScriptManager.RegisterStartupScript(this, typeof(EventCalendar), "HideToolTip", "hideActiveToolTip();", true);
-        }
-
-        /// <summary>
-        /// Handles the <see cref="RadScheduler.AppointmentClick"/> event of the <see cref="EventsCalendarDisplay"/> control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="SchedulerEventArgs"/> instance containing the event data.</param>
-        private void EventsCalendarDisplay_AppointmentClick(object sender, SchedulerEventArgs e)
-        {
-            // Appointment.ID is int for regular events, string "ID_#" for recurring events
-            var eventId = e.Appointment.ID as int? ?? (int)e.Appointment.RecurrenceParentID;
-            this.Response.Redirect(this.BuildLinkUrl(this.DetailsTabId, this.DetailsModuleId, "EventDetail", Dnn.Events.Utility.GetEventParameters(eventId, e.Appointment.Start)));
         }
 
         /// <summary>
