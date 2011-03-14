@@ -54,14 +54,15 @@ namespace Engage.Events
         /// <param name="showAll">if set to <c>true</c> included canceled events.</param>
         /// <param name="featuredOnly">if set to <c>true</c> only include events that are featured.</param>
         /// <param name="hideFullEvents">if set to <c>true</c> only include events that have not hit their registration cap (or have no registration cap)</param>
+        /// <param name="email">The email address of the user requesting the events</param>
         /// <param name="categoryIds">A sequence of IDs for the category/ies that events must be in in order to be retrieved, or an empty/<c>null</c> sequence to get events regardless of category.</param>
         /// <returns>
         /// A page of events based on the given <paramref name="listingMode"/>.
         /// </returns>
         /// <exception cref="DBException">if there's an error while going to the database to retrieve the events</exception>
-        public static EventCollection Load(int portalId, ListingMode listingMode, bool showAll, bool featuredOnly, bool hideFullEvents, IEnumerable<int> categoryIds)
+        public static EventCollection Load(int portalId, ListingMode listingMode, bool showAll, bool featuredOnly, bool hideFullEvents, string email, IEnumerable<int> categoryIds)
         {
-            return Load(portalId, listingMode, null, null, null, showAll, featuredOnly, hideFullEvents, categoryIds, false);
+            return Load(portalId, listingMode, null, null, null, showAll, featuredOnly, hideFullEvents, email, categoryIds, false);
         }
 
         /// <summary>
@@ -75,25 +76,26 @@ namespace Engage.Events
         /// <param name="showAll">if set to <c>true</c> included canceled events.</param>
         /// <param name="featuredOnly">if set to <c>true</c> only include events that are featured.</param>
         /// <param name="hideFullEvents">if set to <c>true</c> only include events that have not hit their registration cap (or have no registration cap)</param>
+        /// <param name="email">The email address of the user requesting the events</param>
         /// <param name="categoryIds">A sequence of IDs for the category/ies that events must be in in order to be retrieved, or an empty/<c>null</c> sequence to get events regardless of category.</param>
         /// <returns>
         /// A page of events based on the given <paramref name="listingMode"/>.
         /// </returns>
         /// <exception cref="DBException">if there's an error while going to the database to retrieve the events</exception>
-        public static EventCollection Load(int portalId, ListingMode listingMode, string sortExpression, int pageIndex, int pageSize, bool showAll, bool featuredOnly, bool hideFullEvents, IEnumerable<int> categoryIds)
+        public static EventCollection Load(int portalId, ListingMode listingMode, string sortExpression, int pageIndex, int pageSize, bool showAll, bool featuredOnly, bool hideFullEvents, string email, IEnumerable<int> categoryIds)
         {
-            return Load(portalId, listingMode, sortExpression, pageIndex, pageSize, showAll, featuredOnly, hideFullEvents, categoryIds, true);
+            return Load(portalId, listingMode, sortExpression, pageIndex, pageSize, showAll, featuredOnly, hideFullEvents, email, categoryIds, true);
         }
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
         /// <returns>
-        /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+        /// A <see cref="IEnumerator{T}"/> that can be used to iterate through the collection.
         /// </returns>
         IEnumerator<ITemplateable> IEnumerable<ITemplateable>.GetEnumerator()
         {
-            foreach (Event @event in this)
+            foreach (var @event in this)
             {
                 yield return @event;
             }
@@ -110,13 +112,14 @@ namespace Engage.Events
         /// <param name="showAll">if set to <c>true</c> included canceled events.</param>
         /// <param name="featuredOnly">if set to <c>true</c> only include events that are featured.</param>
         /// <param name="hideFullEvents">if set to <c>true</c> only include events that have not hit their registration cap (or have no registration cap)</param>
+        /// <param name="email">The email address of the user requesting the events</param>
         /// <param name="categoryIds">A sequence of IDs for the category/ies that events must be in in order to be retrieved, or an empty/<c>null</c> sequence to get events regardless of category.</param>
         /// <param name="processCollection">if set to <c>true</c> the collection should be sorted and paged, and each recurring event should be replaced by its earliest occurrence.</param>
         /// <returns>
         /// A page of events based on the given <paramref name="listingMode"/>.
         /// </returns>
         /// <exception cref="DBException">if there's an error while going to the database to retrieve the events</exception>
-        private static EventCollection Load(int portalId, ListingMode listingMode, string sortExpression, int? pageIndex, int? pageSize, bool showAll, bool featuredOnly, bool hideFullEvents, IEnumerable<int> categoryIds, bool processCollection)
+        private static EventCollection Load(int portalId, ListingMode listingMode, string sortExpression, int? pageIndex, int? pageSize, bool showAll, bool featuredOnly, bool hideFullEvents, string email, IEnumerable<int> categoryIds, bool processCollection)
         {
             IDataProvider dp = DataProvider.Instance;
             try
@@ -147,17 +150,17 @@ namespace Engage.Events
                 var categoryIdsValue = categoryIds != null && categoryIds.Any()
                                            ? string.Join(",", categoryIds.Select(id => id.ToString(CultureInfo.InvariantCulture)).ToArray())
                                            : null;
-                using (
-                    IDataReader reader = dp.ExecuteReader(
-                        CommandType.StoredProcedure,
-                        dp.NamePrefix + "spGetEvents",
-                        Utility.CreateIntegerParam("@portalId", portalId),
-                        Utility.CreateBitParam("@showAll", showAll),
-                        Utility.CreateBitParam("@featured", featuredOnly),
-                        Utility.CreateBitParam("@hideFullEvents", hideFullEvents),
-                        Utility.CreateDateTimeParam("@startDate", startDate),
-                        Utility.CreateDateTimeParam("@endDate", endDate),
-                        Utility.CreateVarcharParam("@categoryIds", categoryIdsValue)))
+                using (var reader = dp.ExecuteReader(
+                            CommandType.StoredProcedure,
+                            dp.NamePrefix + "spGetEvents",
+                            Utility.CreateIntegerParam("@portalId", portalId),
+                            Utility.CreateBitParam("@showAll", showAll),
+                            Utility.CreateBitParam("@featured", featuredOnly),
+                            Utility.CreateBitParam("@hideFullEvents", hideFullEvents),
+                            Utility.CreateVarcharParam("@email", email),
+                            Utility.CreateDateTimeParam("@startDate", startDate),
+                            Utility.CreateDateTimeParam("@endDate", endDate),
+                            Utility.CreateVarcharParam("@categoryIds", categoryIdsValue)))
                 {
                     return FillEvents(reader, processCollection, pageIndex, pageSize, sortExpression, startDate, endDate);
                 }
