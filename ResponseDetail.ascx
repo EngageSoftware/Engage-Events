@@ -54,7 +54,9 @@
         </Columns></MasterTableView>
     </telerik:RadGrid>
     <dnn:PagingControl ID="pager" runat="server"/>
-    <asp:HyperLink ID="CancelGoHomeLink" runat="server" ImageUrl="~/DesktopModules/EngageEvents/Images/cancel_go_home.gif" ResourceKey="CancelGoHomeLink.Alt" />
+    <asp:HyperLink ID="CancelGoHomeLink" runat="server">
+        <asp:Image ID="CancelGoHomeImage" runat="server" ImageUrl="Images/cancel_go_home.gif" />
+    </asp:HyperLink>
     <asp:ImageButton ID="ExportToCsvButton" runat="server" ImageUrl="Images/export_to_csv.gif" />
     <asp:ImageButton ID="ExportToExcelButton" runat="server" ImageUrl="Images/export_to_excel.gif" />
 </div>

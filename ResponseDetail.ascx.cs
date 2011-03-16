@@ -166,8 +166,9 @@ namespace Engage.Dnn.Events
         {
             this.LocalizeGridHeaders();
             this.CancelGoHomeLink.NavigateUrl = Globals.NavigateURL();
-            this.ExportToCsvButton.AlternateText = Localization.GetString("Export To CSV.Alt", this.LocalResourceFile);
-            this.ExportToExcelButton.AlternateText = Localization.GetString("Export To Excel.Alt", this.LocalResourceFile);
+            this.CancelGoHomeImage.AlternateText = this.Localize("CancelGoHomeLink.Alt");
+            this.ExportToCsvButton.AlternateText = this.Localize("Export To CSV.Alt");
+            this.ExportToExcelButton.AlternateText = this.Localize("Export To Excel.Alt");
         }
 
         /// <summary>
@@ -235,7 +236,7 @@ namespace Engage.Dnn.Events
 
             int pageIndex = getAll ? 0 : this.CurrentPageIndex - 1;
             int pageSize = getAll ? 0 : this.ResponseDetailGrid.PageSize;
-            ResponseCollection responses = ResponseCollection.Load(eventId.Value, this.EventStart, this.Status, sortColumn, pageIndex, pageSize);
+            ResponseCollection responses = ResponseCollection.Load(eventId.Value, this.EventStart, this.Status, sortColumn, pageIndex, pageSize, this.CategoryIds);
             this.ResponseDetailGrid.DataSource = responses;
             this.ResponseDetailGrid.DataBind();
             ////this.ResponseDetailGrid.Attributes.Add("SortColumn", sortColumn);

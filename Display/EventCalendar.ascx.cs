@@ -12,6 +12,7 @@
 namespace Engage.Dnn.Events.Display
 {
     using System;
+    using System.Diagnostics;
     using System.Globalization;
     using System.Linq;
     using System.Web.UI;
@@ -43,6 +44,23 @@ namespace Engage.Dnn.Events.Display
             set
             {
                 this.ViewState["ToolTipEventId"] = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the occurrence date of the <see cref="Event"/> last displayed in the tool-tip.
+        /// </summary>
+        /// <value>The occurrence date of the event (or <c>null</c> for non-recurring events) in the tool-tip.</value>
+        private DateTime? ToolTipEventOccurrenceDate
+        {
+            get
+            {
+                return this.ViewState["ToolTipEventOccurrenceDate"] as DateTime?;
+            }
+
+            set
+            {
+                this.ViewState["ToolTipEventOccurrenceDate"] = value;
             }
         }
 
@@ -169,14 +187,17 @@ namespace Engage.Dnn.Events.Display
         {
             // Value is ID_# when when the appointment is a recurrence, but just ID when it's not
             int eventId;
+            DateTime? occurrenceDate = null;
             if (!int.TryParse(e.Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out eventId))
             {
                 var appointment = this.EventsCalendarDisplay.Appointments.FindByID(e.Value);
                 eventId = (int)appointment.RecurrenceParentID;
+                occurrenceDate = appointment.Start;
             }
 
             this.ToolTipEventId = eventId;
-            this.ShowToolTip(eventId, e.UpdatePanel);
+            this.ToolTipEventOccurrenceDate = occurrenceDate;
+            this.ShowToolTip(eventId, occurrenceDate, e.UpdatePanel);
         }
 
         /// <summary>
@@ -193,13 +214,20 @@ namespace Engage.Dnn.Events.Display
         /// Sets up the <see cref="EventToolTip"/> control and displays it
         /// </summary>
         /// <param name="eventId">The ID of the <see cref="Event"/> to display within the tool-tip.</param>
+        /// <param name="occurrenceDate">The occurrence date of the event, or <c>null</c> if it's not a recurring event.</param>
         /// <param name="panel">The panel in which the tool-tip is displayed.</param>
-        private void ShowToolTip(int eventId, UpdatePanel panel)
+        private void ShowToolTip(int eventId, DateTime? occurrenceDate, UpdatePanel panel)
         {
             var ev = Event.Load(eventId);
             if (!this.CanShowEvent(ev))
             {
                 return;
+            }
+
+            Debug.Assert(occurrenceDate.HasValue == ev.IsRecurring, "Recurring events need occurrence dates");
+            if (occurrenceDate != null)
+            {
+                ev = ev.CreateOccurrence(occurrenceDate.Value);
             }
 
             var toolTip = (EventToolTip)(panel.ContentTemplateContainer.FindControl("EventToolTip") ?? this.LoadControl("EventToolTip.ascx"));
@@ -258,7 +286,7 @@ namespace Engage.Dnn.Events.Display
 
             if (this.ToolTipEventId.HasValue)
             {
-                this.ShowToolTip(this.ToolTipEventId.Value, this.EventsCalendarToolTipManager.UpdatePanel);
+                this.ShowToolTip(this.ToolTipEventId.Value, this.ToolTipEventOccurrenceDate, this.EventsCalendarToolTipManager.UpdatePanel);
                 this.ToolTipEventId = null;
             }
         }

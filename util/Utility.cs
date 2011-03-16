@@ -13,12 +13,15 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Globalization;
     using System.Linq.Expressions;
     using System.Text;
     using System.Web.Hosting;
-    using DotNetNuke.Common;
+
     using DotNetNuke.Services.Localization;
+
+    using Engage.Dnn.Events;
     using Engage.Events;
     using Telerik.Web.UI;
 
@@ -291,6 +294,16 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Wraps the <paramref name="dataReader"/> in a <see cref="DataReaderEnumerable"/>.
+        /// </summary>
+        /// <param name="dataReader">The data reader to wrap.</param>
+        /// <returns>A <see cref="DataReaderEnumerable"/> instance wrapping the <paramref name="dataReader"/></returns>
+        public static DataReaderEnumerable AsEnumerable(this IDataReader dataReader)
+        {
+            return new DataReaderEnumerable(dataReader);
+        }
+
+        /// <summary>
         /// Fills <see cref="OrdinalValuesDictionary"/>.
         /// </summary>
         /// <returns>A dictionary mapping ordinal day values (based on <see cref="RecurrencePattern.DayOrdinal"/>) to their localization resource keys</returns>
@@ -475,5 +488,6 @@ namespace Engage.Dnn.Events
 
             return CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(dayOfWeek);
         }
+
     }
 }

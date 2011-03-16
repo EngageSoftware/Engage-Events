@@ -86,6 +86,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -234,6 +235,7 @@
     <Compile Include="ChooseDisplay.ascx.designer.cs">
       <DependentUpon>ChooseDisplay.ascx</DependentUpon>
     </Compile>
+    <Compile Include="ExportFormat.cs" />
     <Compile Include="ModuleSettings.cs" />
     <Compile Include="SettingsBase.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -262,6 +264,7 @@
     <Compile Include="TemplatedDisplayModuleBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Util\DataReaderEnumerable.cs" />
     <Compile Include="Util\TelerikSkin.cs" />
     <Compile Include="Display\TemplateDisplayOptions.ascx.cs">
       <DependentUpon>TemplateDisplayOptions.ascx</DependentUpon>

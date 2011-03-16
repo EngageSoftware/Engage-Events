@@ -150,4 +150,49 @@
   <data name="NotAttending.Text" xml:space="preserve">
     <value>Not Attending</value>
   </data>
+  <data name="ReportFileName.Text" xml:space="preserve">
+    <value>Response Report</value>
+  </data>
+  <data name="CategoryName.Header" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="EventEndDate.Header" xml:space="preserve">
+    <value>Event End Date</value>
+  </data>
+  <data name="EventEndTime.Header" xml:space="preserve">
+    <value>Event End Time</value>
+  </data>
+  <data name="EventStartDate.Header" xml:space="preserve">
+    <value>Event Start Date</value>
+  </data>
+  <data name="EventStartTime.Header" xml:space="preserve">
+    <value>Event Start Time</value>
+  </data>
+  <data name="EventTitle.Header" xml:space="preserve">
+    <value>Event</value>
+  </data>
+  <data name="ResponderEmail.Header" xml:space="preserve">
+    <value>Responder Email</value>
+  </data>
+  <data name="ResponseDate.Header" xml:space="preserve">
+    <value>Response Time</value>
+  </data>
+  <data name="ResponseStatus.Header" xml:space="preserve">
+    <value>Attending?</value>
+  </data>
+  <data name="ResponderName.Header" xml:space="preserve">
+    <value>Responder</value>
+  </data>
+  <data name="ExportToCsv.Alt" xml:space="preserve">
+    <value>Export to CSV</value>
+  </data>
+  <data name="ExportToCsv.ToolTip" xml:space="preserve">
+    <value>Export all responses to upcoming events (in comma-separated values format)</value>
+  </data>
+  <data name="ExportToExcel.Alt" xml:space="preserve">
+    <value>Export to Excel</value>
+  </data>
+  <data name="ExportToExcel.ToolTip" xml:space="preserve">
+    <value>Export all responses to upcoming events (in Microsoft Excel format)</value>
+  </data>
 </root>

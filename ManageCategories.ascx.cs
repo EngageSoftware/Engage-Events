@@ -70,15 +70,6 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Gets the name of the default category.
-        /// </summary>
-        /// <returns>The default category's display name</returns>
-        protected string GetDefaultCategoryName()
-        {
-            return this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile);
-        }
-
-        /// <summary>
         /// Handles the <see cref="CustomValidator.ServerValidate"/> event of the <c>UniqueNameValidator</c> control.
         /// </summary>
         /// <param name="source">The source of the event.</param>

@@ -49,14 +49,14 @@ namespace Engage.Dnn.Events
         /// <returns>
         /// <c>true</c> if the given event can accept new registrations; otherwise, <c>false</c>.
         /// </returns>
-        private static bool CanRegisterFor(Event eventBeingRespondedTo)
+        private bool CanRegisterFor(Event eventBeingRespondedTo)
         {
             if (!eventBeingRespondedTo.Capacity.HasValue)
             {
                 return true;
             }
 
-            var responses = ResponseCollection.Load(eventBeingRespondedTo.Id, eventBeingRespondedTo.EventStart, ResponseStatus.Attending.ToString(), "ResponseId", 1, 0);
+            var responses = ResponseCollection.Load(eventBeingRespondedTo.Id, eventBeingRespondedTo.EventStart, ResponseStatus.Attending.ToString(), "ResponseId", 1, 0, this.CategoryIds);
             return eventBeingRespondedTo.Capacity > responses.TotalRecords;
         }
 
@@ -109,7 +109,7 @@ namespace Engage.Dnn.Events
 
             eventBeingRespondedTo = eventBeingRespondedTo.CreateOccurrence(this.EventStart);
 
-            if (!CanRegisterFor(eventBeingRespondedTo) && !this.CanUnregisterFrom(eventBeingRespondedTo.Id))
+            if (!this.CanRegisterFor(eventBeingRespondedTo) && !this.CanUnregisterFrom(eventBeingRespondedTo.Id))
             {
                 this.ShowEventFullView(eventBeingRespondedTo);
             }
@@ -169,18 +169,18 @@ namespace Engage.Dnn.Events
                     return;
                 }
 
-                Event eventBeingRespondedTo = Event.Load(eventId.Value);
+                var eventBeingRespondedTo = Event.Load(eventId.Value).CreateOccurrence(this.EventStart);
                 if (!this.CanShowEvent(eventBeingRespondedTo))
                 {
                     return;
                 }
 
                 var responseStatus = (ResponseStatus)Enum.Parse(typeof(ResponseStatus), this.ResponseStatusRadioButtons.SelectedValue);
-                if (responseStatus != ResponseStatus.Attending || CanRegisterFor(eventBeingRespondedTo))
+                if (responseStatus != ResponseStatus.Attending || this.CanRegisterFor(eventBeingRespondedTo))
                 {
-                    Response response = Engage.Events.Response.Load(eventId.Value, this.EventStart, this.UserInfo.Email) ??
-                                        Engage.Events.Response.Create(
-                                            eventId.Value, this.EventStart, this.UserInfo.FirstName, this.UserInfo.LastName, this.UserInfo.Email);
+                    var response = Engage.Events.Response.Load(eventId.Value, this.EventStart, this.UserInfo.Email) ??
+                                   Engage.Events.Response.Create(
+                                       eventId.Value, this.EventStart, this.UserInfo.FirstName, this.UserInfo.LastName, this.UserInfo.Email);
 
                     response.Status = responseStatus;
                     response.Save(this.UserId);

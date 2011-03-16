@@ -477,5 +477,14 @@ namespace Engage.Dnn.Events
             pagingControl.TabID = this.TabId;
             pagingControl.QuerystringParams = GenerateQueryStringParameters(this.Request, queryStringKeys);
         }
+
+        /// <summary>
+        /// Gets the name of the default category.
+        /// </summary>
+        /// <returns>The default category's display name</returns>
+        protected string GetDefaultCategoryName()
+        {
+            return this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile);
+        }
     }
 }
