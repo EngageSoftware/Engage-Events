@@ -16,7 +16,7 @@
     <include name="Engage.Events_Source.zip"/>
   </patternset>
   <property name="projectDllName" value="Engage${projectName}.dll" />
-  <property name="solutionFile" value="Engage${projectName}2008.sln"/>
+  <property name="solutionFile" value="Engage${projectName}2010.sln"/>
   <property name="binDirectory" value="..\..\bin" overwrite="false"/> <!-- binDirectory is readonly if set from the command line (i.e. during Team Build CI) -->
   <property name="trialBinDirectory" value="${binDirectory}\..\trialBin"/>
   <property name="currentBinDirectory" value="${binDirectory}"/>
@@ -38,7 +38,6 @@
   <property name="referencesDirectory" value="References"/>
   <property name="packageDirectory" value="package"/>
   <property name="packageName" value="Resources.zip"/>
-  <property name="nant.settings.currentframework" value="net-3.5" />
 
   <target name="package" description="Creates packages for this module, one for each value in the licenses and versions properties">
 
