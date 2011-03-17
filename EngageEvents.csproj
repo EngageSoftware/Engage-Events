@@ -691,9 +691,6 @@
     </Content>
     <Content Include="Actions\App_LocalResources\CategoryFilterAction.ascx.resx" />
     <EmbeddedResource Include="JavaScript\jquery.fancybox-1.0.0.js" />
-    <Content Include="Templates\ToolTip\App_LocalResources\SharedResources.resx">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Templates\Admin\ManageEvents\App_LocalResources\SharedResources.resx" />
     <Content Include="Templates\Legacy-ListingAll\App_LocalResources\SharedResources.resx">
       <SubType>Designer</SubType>
@@ -756,9 +753,6 @@
     <Content Include="Templates\Admin\ManageEvents\Item.Listing.html" />
     <Content Include="Templates\Admin\ManageEvents\Manifest.xml" />
     <Content Include="Templates\Admin\ManageEvents\Template.css" />
-    <Content Include="Templates\ToolTip\ToolTip.html" />
-    <Content Include="Templates\ToolTip\Manifest.xml" />
-    <Content Include="Templates\ToolTip\Template.css" />
     <Content Include="Templates\Default-Single\single-item-default.jpg" />
     <Content Include="Templates\Default\default.jpg" />
     <Content Include="Templates\Legacy-ListingAll\Item.Listing.html" />

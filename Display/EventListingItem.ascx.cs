@@ -226,8 +226,10 @@ namespace Engage.Dnn.Events.Display
         /// <param name="pageNumber">The page number.</param>
         protected void ReloadPage(int pageNumber)
         {
+            var sortExpression = this.SortAction != null ? this.SortAction.SelectedValue : null;
+            var status = this.StatusFilterAction != null ? this.StatusFilterAction.SelectedValue : null;
             var selectedCategoryId = this.CategoryFilterAction != null ? this.CategoryFilterAction.SelectedCategoryId : null;
-            this.Response.Redirect(this.GetPageUrl(pageNumber, this.SortAction.SelectedValue, this.StatusFilterAction.SelectedValue, selectedCategoryId), true);
+            this.Response.Redirect(this.GetPageUrl(pageNumber, sortExpression, status, selectedCategoryId), true);
         }
 
         /// <summary>
@@ -250,8 +252,10 @@ namespace Engage.Dnn.Events.Display
                 controlKey = MainContainer.DefaultControlKey;
             }
 
+            var sortParameter = sortExpression != null ? "sort=" + sortExpression : null;
+            var statusParameter = status != null ? "status=" + status : status;
             var categoryIdParameter = filterCategoryId.HasValue ? "catId=" + filterCategoryId.Value.ToString(CultureInfo.InvariantCulture) : null;
-            return this.BuildLinkUrl(this.ModuleId, controlKey, "sort=" + sortExpression, "status=" + status, categoryIdParameter, "currentPage=" + UniqueReplaceableTemplateValue).Replace(UniqueReplaceableTemplateValue, "{0}");
+            return this.BuildLinkUrl(this.ModuleId, controlKey, sortParameter, statusParameter, categoryIdParameter, "currentPage=" + UniqueReplaceableTemplateValue).Replace(UniqueReplaceableTemplateValue, "{0}");
         }
 
         /// <summary>
