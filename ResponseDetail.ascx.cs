@@ -32,14 +32,14 @@ namespace Engage.Dnn.Events
         private const string DefaultSortColumn = "CreationDate";
 
         /// <summary>
-        /// Gets the status of responses to display, or <see cref="string.Empty"/> for all statuses.
+        /// Gets the status of responses to display, or <c>null</c> for all statuses.
         /// </summary>
         /// <value>The status of responses to display.</value>
         private string Status
         {
             get
             {
-                return this.Request.QueryString["status"] ?? string.Empty;
+                return this.Request.QueryString["status"];
             }
         }
 
