@@ -58,10 +58,13 @@ namespace Engage.Events
         /// </summary>
         /// <param name="eventId">The event id.</param>
         /// <param name="eventStart">The date for which this response was made.</param>
-        /// <param name="status">The status.</param>
-        /// <param name="sortColumn">The sort column.</param>
-        /// <param name="index">The page index.</param>
-        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="status">The status, or <c>null</c> for all statuses.</param>
+        /// <param name="sortColumn">
+        /// The sort column (any column on Response, e.g. <c>CreationDate</c>, <c>FirstName</c>, <c>LastName</c>, or <c>ResponseId</c>)
+        /// or <c>null</c> for a default column (<c>CreationDate</c>).
+        /// </param>
+        /// <param name="index">The page index (0-based).</param>
+        /// <param name="pageSize">Size of the page (or <c>0</c> for all records).</param>
         /// <param name="categoryIds">
         /// A sequence of IDs for the category/ies that events must be in in order to retrieve their responses, 
         /// or an empty/<c>null</c> sequence to get responses regardless of the event's category.
@@ -83,7 +86,7 @@ namespace Engage.Events
                         Utility.CreateIntegerParam("@EventId", eventId),
                         Utility.CreateDateTimeParam("@EventStart", eventStart),
                         Utility.CreateVarcharParam("@Status", status),
-                        Utility.CreateVarcharParam("@sortColumn", sortColumn, 200),
+                        Utility.CreateVarcharParam("@sortColumn", sortColumn ?? "CreationDate", 200),
                         Utility.CreateIntegerParam("@index", index),
                         Utility.CreateIntegerParam("@pageSize", pageSize),
                         Utility.CreateVarcharParam("@categoryIds", categoryIdsValue)))

@@ -33,6 +33,16 @@ namespace Engage.Events
         private Category category;
 
         /// <summary>
+        /// Backing field for <see cref="HasAttendees"/> and <see cref="AttendeeCount"/>
+        /// </summary>
+        private int? attendeeCount;
+
+        /// <summary>
+        /// Backing field for <see cref="HasResponses"/> and <see cref="ResponseCount"/>
+        /// </summary>
+        private int? responseCount;
+
+        /// <summary>
         /// Prevents a default instance of the Event class from being created.
         /// </summary>
         private Event()
@@ -370,6 +380,70 @@ namespace Engage.Events
         }
 
         /// <summary>
+        /// Gets the number of responses to this event.
+        /// </summary>
+        [XmlIgnore]
+        public int ResponseCount
+        {
+            get
+            {
+                if (this.responseCount == null)
+                {
+                    this.responseCount = ResponseCollection.Load(this.Id, this.EventStart, null, null, 0, -1, null).TotalRecords;
+                }
+
+                return this.responseCount.Value;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has any responses.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance has responses; otherwise, <c>false</c>.
+        /// </value>
+        [XmlIgnore]
+        public bool HasResponses
+        {
+            get
+            {
+                return this.ResponseCount > 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the number of responses to this event.
+        /// </summary>
+        [XmlIgnore]
+        public int AttendeeCount
+        {
+            get
+            {
+                if (this.attendeeCount == null)
+                {
+                    this.attendeeCount = ResponseCollection.Load(this.Id, this.EventStart, ResponseStatus.Attending.ToString(), null, 0, -1, null).TotalRecords;
+                }
+
+                return this.attendeeCount.Value;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance has any attending responses.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance has anyone registered as attending; otherwise, <c>false</c>.
+        /// </value>
+        [XmlIgnore]
+        public bool HasAttendees
+        {
+            get
+            {
+                return this.AttendeeCount > 0;
+            }
+        }
+
+        /// <summary>
         /// Gets the final recurring end date.
         /// </summary>
         /// <value>The final recurring end date.</value>
@@ -615,6 +689,29 @@ namespace Engage.Events
                 case "EVENTEND":
                 case "EVENT END":
                     return this.EventEnd.ToString(format, CultureInfo.CurrentCulture);
+                case "HASCAPACITY":
+                case "HAS CAPACITY":
+                    return this.Capacity.HasValue.ToString(CultureInfo.InvariantCulture);
+                case "CAPACITY":
+                    return this.Capacity.HasValue ? this.Capacity.Value.ToString(format, CultureInfo.CurrentCulture) : string.Empty;
+                case "ALLOWS REGISTRATION":
+                case "ALLOWSREGISTRATION":
+                    return this.AllowRegistrations.ToString(CultureInfo.InvariantCulture);
+                case "HAS RESPONSES":
+                case "HASRESPONSES":
+                    return this.HasResponses.ToString(CultureInfo.InvariantCulture);
+                case "HAS ATTENDEES":
+                case "HASATTENDEES":
+                    return this.HasAttendees.ToString(CultureInfo.InvariantCulture);
+                case "RESPONSE COUNT":
+                case "RESPONSECOUNT":
+                    return this.ResponseCount.ToString(format, CultureInfo.InvariantCulture);
+                case "ATTENDEE COUNT":
+                case "ATTENDEECOUNT":
+                    return this.AttendeeCount.ToString(format, CultureInfo.InvariantCulture);
+                case "IS FULL":
+                case "ISFULL":
+                    return (this.AttendeeCount >= this.Capacity).ToString(CultureInfo.InvariantCulture);
                 case "LOCATION":
                     return TemplateEngine.FormatString(this.Location, format ?? "HTML");
                 case "CATEGORY":
