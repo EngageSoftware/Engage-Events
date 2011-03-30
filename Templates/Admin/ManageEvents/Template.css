@@ -12,27 +12,45 @@ h2.MEvents {clear: both; overflow: hidden; width: 100%; font-size: 120%; border-
 .MEEventItem {padding-bottom: 2em; clear:both;}
 .MEEventItem .EventDate p, .MEEventItem .EventLocation p, .MEEventItem .EventDescription p {margin-top: 0;}
 
-.MEEventItem .EventTitle{overflow: hidden; width:100%;}
-	.MEEventItem .EventTitle h2.Head {float:right; width:82%; padding: 0 0 5px; margin: 0;}
+.MEEventItem .EventTitle{width:100%;}
+.MEEventItem .EventDescription{clear: both;}
 
-.MEEventItem .EventLocation{overflow: hidden;}
-	.MEEventItem .EventLocation .NormalBold {float:left; width: 15%; text-align: right;}
-	.MEEventItem .EventLocation .Normal{float:right; width: 82%; text-align: left;}
+.MEEventItem .EventTitle,
+.MEEventItem .EventDescription,
+.MEEventItem .EventLocation,
+.MEEventItem .EventDate,
+.MEEventItem .EventOverview,
+.MEEventItem .EventCategory{overflow: hidden;}
 
-.MEEventItem .EventDate{overflow: hidden;}
-	.MEEventItem .EventDate .NormalBold {float:left; width: 15%; text-align: right;}
-	.MEEventItem .EventDate .Normal{float:right; width: 82%; text-align: left;}
-	.MEEventItem .RecurrenceSummary .NormalBold {float: none; width: auto; text-align: left;}
-	
-.MEEventItem .EventOverview{overflow: hidden;}
-	.MEEventItem .EventOverview .NormalBold {float:left; width: 15%; text-align: right;}
-	.MEEventItem .EventOverview .Normal{float:right; width: 82%; text-align: left;}
-
-.MEEventItem .EventDescription{overflow: hidden; clear: both;}
+	.MEEventItem .EventLocation .NormalBold,
+	.MEEventItem .EventDate .NormalBold,
+	.MEEventItem .EventOverview .NormalBold,
+	.MEEventItem .EventCategory .NormalBold,
 	.MEEventItem .EventDescription .NormalBold {float:left; width: 15%; text-align: right;}
+
+	.MEEventItem .EventTitle h2.Head {float:right; width: 82%; padding: 0 0 5px; margin: 0;}
+	.MEEventItem .EventLocation .Normal,
+	.MEEventItem .EventDate .Normal,
+	.MEEventItem .EventOverview .Normal,
+	.MEEventItem .EventCategory .Normal,
 	.MEEventItem .EventDescription .Normal{float:right; width: 82%; text-align: left;}
+
+	.MEEventItem .RecurrenceSummary .NormalBold {float: none; width: auto; text-align: left;}
 		.MEEventItem .EventDescription .Normal > p {margin-top: 0;}
 	
 .MEEventItem .EventButtons{margin-top: 10px; overflow:hidden; float:right; width: 82%; clear: both;}
 .MEEventItem .RecurrenceSummary{padding-left: 15px;}
 .MEEventItem .RecurringEventItem{background: transparent url(../../../images/recurring_icon.gif) no-repeat 0 16px;}
+
+/* Category Colors */
+.MEEventItem .EventCategory span {padding: 2px 4px;-moz-border-radius:4px; -webkit-border-radius:4px; border-radius:4px;}
+.MEEventItem.color-Yellow .EventCategory span {background-color:#fffbc7}
+.MEEventItem.color-Blue .EventCategory span {background-color:#bbd0ec}
+.MEEventItem.color-Red .EventCategory span {background-color:#ecbbbb}
+.MEEventItem.color-DarkBlue .EventCategory span {background-color:#202b3f;color:#fff}
+.MEEventItem.color-DarkRed .EventCategory span {background-color:#3f2020;color:#fff}
+.MEEventItem.color-Orange .EventCategory span {background-color:#edd5b7}
+.MEEventItem.color-Pink .EventCategory span {background-color:#f1dcff}
+.MEEventItem.color-Violet .EventCategory span {background-color:#540042;color:#fff}
+.MEEventItem.color-DarkGreen .EventCategory span {background-color:#2b3f20;color:#fff}
+.MEEventItem.color-Green .EventCategory span {background-color:#d0ecbb}

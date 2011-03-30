@@ -9,10 +9,14 @@
             <engage:Label CssClass="NormalBold" Text="%$StatusLabel%" />
             <engage:StatusFilter />
         </div>
+        <div class="MECategory">
+            <Engage:Label CssClass="NormalBold" Text="%$CategoryLabel%" />
+            <Engage:CategoryFilter />
+        </div>
 	</div>
 </div>
 <engage:List>
-	<div class="MEEventItem">
+    <Engage:EventWrapper CssClass="MEEventItem cat-%#Category-Name:CSS % color-%# Category-Color:CSS%" RecurringEventCssClass="MERecurringEventItem" FeaturedEventCssClass="MEFeaturedEventItem" AlternatingCssClass="MEAlternatingEventItem">
         <div class="EventTitle">
             <h2 class="Head"><Engage:Literal Text="%#Title%"></h2>
         </div>
@@ -28,6 +32,10 @@
             <p class="NormalBold"><engage:Label Text="%$Overview%"/></p>
             <div class="Normal"><engage:literal text="%#Overview%"></div>
         </div>
+        <div class="EventCategory">
+            <p class="NormalBold"><Engage:Literal Text="%$Category%" /></p>
+            <p class="Normal"><span class="category"><Engage:Literal Text="%#Category%"/></span></p>
+        </div>
         <div class="EventButtons Normal">
             <engage:EditEventButton/>
             <Engage:ViewResponsesButton />
@@ -36,7 +44,7 @@
             <Engage:DeleteButton />
             <Engage:CancelButton />
         </div>
-	</div>
+	</Engage:EventWrapper>
 </engage:List>
 <div class="Pager Normal">
     <Engage:PreviousPage Text="%$Previous%" Tooltip="%$PreviousTip%" />&nbsp; 
