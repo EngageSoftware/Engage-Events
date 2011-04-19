@@ -15,6 +15,7 @@ namespace Engage.Dnn.Events
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Enumerates over an <see cref="IDataReader"/> instance, moving to the next record upon each enumeration.
@@ -23,6 +24,7 @@ namespace Engage.Dnn.Events
     /// Based on http://codecisions.com/post/2010/04/08/Enumerating-IDataReader-With-LINQ.aspx
     /// Stored on https://gist.github.com/873080
     /// </remarks>
+    [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "DataReaderCollection isn't really an accurate name")]
     public class DataReaderEnumerable : IEnumerable<IDataReader>, IDisposable
     {
         /// <summary>
@@ -50,6 +52,7 @@ namespace Engage.Dnn.Events
         /// <returns>
         /// <returns>An <see cref="IEnumerable{T}"/> instance that can iterate over the rows in the <see cref="DataReader"/></returns>
         /// </returns>
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "IDataReader", Justification = "IDataReader is spelled correctly")]
         public IEnumerator<IDataReader> GetEnumerator()
         {
             if (this.enumerated)
@@ -66,7 +69,8 @@ namespace Engage.Dnn.Events
         /// </summary>
         public void Dispose()
         {
-            this.DataReader.Dispose();
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -78,6 +82,22 @@ namespace Engage.Dnn.Events
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
+        }
+
+        /// <summary>
+        /// Disposes the <see cref="DataReader"/>.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.DataReader != null)
+                {
+                    this.DataReader.Dispose();
+                    this.DataReader = null;
+                }
+            }
         }
 
         /// <summary>
