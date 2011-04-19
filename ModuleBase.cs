@@ -158,7 +158,6 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <value>The date when the event occurs.</value>
         /// <exception cref="InvalidOperationException">EventStart is not present on QueryString</exception>
-        [SuppressMessage("Microsoft.Naming", "CA2204:LiteralsShouldBeSpelledCorrectly", Justification = "EventStart and QueryString aren't part of the dictionary, surprisingly.")]
         protected DateTime EventStart
         {
             get
@@ -180,7 +179,7 @@ namespace Engage.Dnn.Events
         /// Gets the register URL.
         /// </summary>
         /// <value>The register URL.</value>
-        [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Justification = "Backwards compatability")]
+        [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Justification = "Backwards compatibility")]
         protected string RegisterUrl
         {
             get
@@ -340,7 +339,7 @@ namespace Engage.Dnn.Events
         {
             if (response == null)
             {
-                throw new ArgumentNullException("response", "response must not be null");
+                throw new ArgumentNullException("response");
             }
 
             response.Clear();
@@ -370,12 +369,12 @@ namespace Engage.Dnn.Events
         {
             if (request == null)
             {
-                throw new ArgumentNullException("request", "request must not be null");
+                throw new ArgumentNullException("request");
             }
 
             if (queryStringKeys == null)
             {
-                throw new ArgumentNullException("queryStringKeys", "queryStringKeys must not be null");
+                throw new ArgumentNullException("queryStringKeys");
             }
 
             var queryString = new StringBuilder(64);
@@ -468,7 +467,7 @@ namespace Engage.Dnn.Events
         {
             if (pagingControl == null)
             {
-                throw new ArgumentNullException("pagingControl", "pagingControl must not be null");
+                throw new ArgumentNullException("pagingControl");
             }
 
             pagingControl.Visible = totalRecords != 0;

@@ -12,6 +12,7 @@
 namespace Engage.Dnn.Events.Display
 {
     using System;
+    using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Web.UI;
     using System.Web.UI.WebControls;
@@ -105,10 +106,15 @@ namespace Engage.Dnn.Events.Display
                 return;
             }
 
-            Event ev = Event.Load(eventId.Value);
+            var ev = Event.Load(eventId.Value);
             if (!this.CanShowEvent(ev))
             {
                 return;
+            }
+
+            if (ev.IsRecurring)
+            {
+                ev = ev.CreateOccurrence(this.EventStart);
             }
 
             this.TemplateProvider = new SingleItemTemplateProvider(
