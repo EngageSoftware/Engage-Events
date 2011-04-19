@@ -75,4 +75,3 @@ namespace Engage.Dnn.Events
         protected abstract void BindData();
     }
 }
-

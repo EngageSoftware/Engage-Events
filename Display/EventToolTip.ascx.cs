@@ -45,7 +45,7 @@ namespace Engage.Dnn.Events.Display
             this.EventDate.Text = Dnn.Events.Utility.GetFormattedEventDate(this.currentEvent.EventStart, this.currentEvent.EventEnd, this.LocalResourceFile);
             this.EventOverview.Text = this.currentEvent.Overview;
             this.EventTitle.Text = this.currentEvent.Title;
-            this.EventLink.NavigateUrl = this.BuildLinkUrl(this.DetailsTabId, this.DetailsModuleId, "EventDetail", Dnn.Events.Utility.GetEventParameters(currentEvent));
+            this.EventLink.NavigateUrl = this.BuildLinkUrl(this.DetailsTabId, this.DetailsModuleId, "EventDetail", Dnn.Events.Utility.GetEventParameters(this.currentEvent));
 
             this.RegisterButton.Visible = this.currentEvent.AllowRegistrations;
         }

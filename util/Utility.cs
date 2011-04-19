@@ -22,7 +22,6 @@ namespace Engage.Dnn.Events
 
     using DotNetNuke.Services.Localization;
 
-    using Engage.Dnn.Events;
     using Engage.Events;
     using Telerik.Web.UI;
 
@@ -209,7 +208,7 @@ namespace Engage.Dnn.Events
                 timespanResourceKey = "Timespan.Text";
             }
 
-            return String.Format(CultureInfo.CurrentCulture, Localization.GetString(timespanResourceKey, resourceFile), startDate, endDate);
+            return string.Format(CultureInfo.CurrentCulture, Localization.GetString(timespanResourceKey, resourceFile), startDate, endDate);
         }
 
         /// <summary>
@@ -221,7 +220,7 @@ namespace Engage.Dnn.Events
         /// </returns>
         public static string GetRecurrenceSummary(RecurrenceRule recurrenceRule)
         {
-            string recurrenceSummary = String.Empty;
+            string recurrenceSummary = string.Empty;
             if (recurrenceRule != null)
             {
                 switch (recurrenceRule.Pattern.Frequency)
@@ -255,7 +254,7 @@ namespace Engage.Dnn.Events
         /// </returns>
         public static string GetRecurrenceSummary(RecurrenceRule recurrenceRule, string resourceFile)
         {
-            string recurrenceSummary = String.Empty;
+            string recurrenceSummary = string.Empty;
             if (recurrenceRule != null)
             {
                 switch (recurrenceRule.Pattern.Frequency)
@@ -317,8 +316,8 @@ namespace Engage.Dnn.Events
         /// <returns>A dictionary mapping ordinal day values (based on <see cref="RecurrencePattern.DayOrdinal"/>) to their localization resource keys</returns>
         private static IDictionary<int, string> GetOrdinalValues()
         {
-            return new Dictionary<int, string> 
-                       {
+            return new Dictionary<int, string>
+                {
                            { 1, "First" },
                            { 2, "Second" },
                            { 3, "Third" },
@@ -375,7 +374,7 @@ namespace Engage.Dnn.Events
         /// <returns>A human-readable, localized summary of the provided recurrence pattern.</returns>
         private static string GetWeeklyRecurrenceSummary(RecurrencePattern pattern, string resourceFile)
         {
-            return String.Format(
+            return string.Format(
                 CultureInfo.CurrentCulture,
                 Localization.GetString("WeeklyRecurrence.Text", resourceFile),
                 pattern.Interval,
@@ -392,14 +391,14 @@ namespace Engage.Dnn.Events
         {
             if (pattern.DayOfMonth > 0)
             {
-                return String.Format(
+                return string.Format(
                     CultureInfo.CurrentCulture,
                     Localization.GetString("MonthlyRecurrenceOnDate.Text", resourceFile),
                     pattern.DayOfMonth,
                     pattern.Interval);
             }
             
-            return String.Format(
+            return string.Format(
                 CultureInfo.CurrentCulture,
                 Localization.GetString("MonthlyRecurrenceOnGivenDay.Text", resourceFile),
                 Localization.GetString(OrdinalValuesDictionary[pattern.DayOrdinal], resourceFile),
@@ -417,14 +416,14 @@ namespace Engage.Dnn.Events
         {
             if (pattern.DayOfMonth > 0)
             {
-                return String.Format(
+                return string.Format(
                     CultureInfo.CurrentCulture,
                     Localization.GetString("YearlyRecurrenceOnDate.Text", resourceFile),
                     new DateTime(1, (int)pattern.Month, 1),
                     pattern.DayOfMonth);
             }
             
-            return String.Format(
+            return string.Format(
                 CultureInfo.CurrentCulture,
                 Localization.GetString("YearlyRecurrenceOnGivenDay.Text", resourceFile),
                 Localization.GetString(OrdinalValuesDictionary[pattern.DayOrdinal], resourceFile),
@@ -447,7 +446,7 @@ namespace Engage.Dnn.Events
                 return Localization.GetString("DailyRecurrenceWeekdays.Text", resourceFile);
             }
             
-            return String.Format(
+            return string.Format(
                 CultureInfo.CurrentCulture, 
                 Localization.GetString("DailyRecurrence.Text", resourceFile), 
                 pattern.Interval);
@@ -496,6 +495,5 @@ namespace Engage.Dnn.Events
 
             return CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(dayOfWeek);
         }
-
     }
 }

@@ -53,4 +53,3 @@ namespace Engage.Dnn.Events.Display
         }
     }
 }
-
