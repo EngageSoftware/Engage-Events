@@ -413,13 +413,18 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// Determines whether this instance of the module can display the given event (based on the Categories setting).
         /// </summary>
-        /// <param name="e">The event to check.</param>
+        /// <param name="event">The event to check.</param>
         /// <returns>
         /// <c>true</c> if this instance can show the event; otherwise, <c>false</c>.
         /// </returns>
-        protected bool CanShowEvent(Event e)
+        protected bool CanShowEvent(Event @event)
         {
-            return !this.CategoryIds.Any() || this.CategoryIds.Contains(e.CategoryId);
+            if (@event == null)
+            {
+                throw new ArgumentNullException("event");
+            }
+            
+            return !this.CategoryIds.Any() || this.CategoryIds.Contains(@event.CategoryId);
         }
 
         /// <summary>
@@ -481,6 +486,7 @@ namespace Engage.Dnn.Events
         /// Gets the name of the default category.
         /// </summary>
         /// <returns>The default category's display name</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Does not represent object state")]
         protected string GetDefaultCategoryName()
         {
             return this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile);

@@ -11,6 +11,8 @@
 
 namespace Engage.Dnn.Events
 {
+    using System.Diagnostics.CodeAnalysis;
+
     using Engage.Dnn.Framework;
     using Engage.Events;
 
@@ -22,61 +24,75 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// The categories by which to limit the display of events
         /// </summary>
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Setting<T> is immutable")]
         public static readonly Setting<string> Categories = new Setting<string>("Categories", SettingScope.TabModule, string.Empty);
 
         /// <summary>
         /// Whether to only display featured events
         /// </summary>
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Setting<T> is immutable")]
         public static readonly Setting<bool> FeaturedOnly = new Setting<bool>("FeaturedOnly", SettingScope.TabModule, false);
 
         /// <summary>
         /// The ID of the tab on which to display details when an event's details link is clicked
         /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Nesting nullable types isn't a big deal")]
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Setting<T> is immutable")]
         public static readonly Setting<int?> DetailsDisplayTabId = new Setting<int?>("DetailsDisplayTabId", SettingScope.TabModule, null);
 
         /// <summary>
         /// The ID of the module in which to display details when an event's details link is clicked
         /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Nesting nullable types isn't a big deal")]
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Setting<T> is immutable")]
         public static readonly Setting<int?> DetailsDisplayModuleId = new Setting<int?>("DetailsDisplayModuleId", SettingScope.TabModule, null);
 
         /// <summary>
         /// The skin used for the Calendar display
         /// </summary>
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Setting<T> is immutable")]
         public static readonly Setting<TelerikSkin> SkinSelection = new Setting<TelerikSkin>("SkinSelection", SettingScope.TabModule, TelerikSkin.Default);
 
         /// <summary>
         /// The number of events to display on a single day in the calendar's month view
         /// </summary>
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Setting<T> is immutable")]
         public static readonly Setting<int> EventsPerDay = new Setting<int>("EventsPerDay", SettingScope.TabModule, 3);
 
         /// <summary>
         /// The template used to display a list of events
         /// </summary>
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Setting<T> is immutable")]
         public static readonly Setting<string> Template = new Setting<string>("Template", SettingScope.TabModule, string.Empty);
 
         /// <summary>
         /// The template used to display a single event
         /// </summary>
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Setting<T> is immutable")]
         public static readonly Setting<string> SingleItemTemplate = new Setting<string>("SingleItemTemplate", SettingScope.TabModule, string.Empty);
 
         /// <summary>
         /// The chosen display type (calendar or listing) for this module 
         /// </summary>
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Setting<T> is immutable")]
         public static readonly Setting<string> DisplayType = new Setting<string>("DisplayType", SettingScope.TabModule, "LIST");
 
         /// <summary>
         /// The chosen display type (calendar or listing) for this module 
         /// </summary>
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Setting<T> is immutable")]
         public static readonly Setting<ListingMode> DisplayModeOption = new Setting<ListingMode>("DisplayModeOption", SettingScope.TabModule, ListingMode.All);
 
         /// <summary>
         /// The chosen display type (calendar or listing) for this module 
         /// </summary>
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Setting<T> is immutable")]
         public static readonly Setting<int> RecordsPerPage = new Setting<int>("RecordsPerPage", SettingScope.TabModule, 10);
 
         /// <summary>
         /// Whether to hide events which have hit their registration cap
         /// </summary>
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Setting<T> is immutable")]
         public static readonly Setting<bool> HideFullEvents = new Setting<bool>("HideFullEvents", SettingScope.TabModule, false);
     }
 }

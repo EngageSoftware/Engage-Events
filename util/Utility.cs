@@ -14,6 +14,7 @@ namespace Engage.Dnn.Events
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Linq.Expressions;
     using System.Text;
@@ -288,8 +289,15 @@ namespace Engage.Dnn.Events
         /// <typeparam name="T">Type of the property</typeparam>
         /// <param name="propertyExpression">An expression representing accessing a property.</param>
         /// <returns>The name of the property in the expression</returns>
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Sorry, can't use expressions without nesting types")]
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Requires specific signature")]
         public static string GetPropertyName<T>(Expression<Func<Event, T>> propertyExpression)
         {
+            if (propertyExpression == null)
+            {
+                throw new ArgumentNullException("propertyExpression");
+            }
+            
             return ((MemberExpression)propertyExpression.Body).Member.Name;
         }
 

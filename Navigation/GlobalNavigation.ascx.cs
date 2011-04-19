@@ -13,6 +13,7 @@ namespace Engage.Dnn.Events.Navigation
 {
     using System;
     using System.ComponentModel;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Web.UI;
 
@@ -103,25 +104,26 @@ namespace Engage.Dnn.Events.Navigation
         /// <summary>
         /// Sets up the URLs for each of the links.
         /// </summary>
+        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "Telerik.Web.UI.ControlItem.set_Value(System.String)", Justification = "Value is not a human-readable field")]
         private void SetupLinks()
         {
             this.HomeItem.NavigateUrl = Globals.NavigateURL();
 
-            this.AddEventItem.Value = "EventEdit";
+            this.AddEventItem.Value = @"EventEdit";
             this.AddEventItem.NavigateUrl = this.BuildLinkUrl(this.ModuleId, this.AddEventItem.Value);
 
-            this.ManageEventsItem.Value = "EventListingAdmin";
+            this.ManageEventsItem.Value = @"EventListingAdmin";
             this.ManageEventsItem.NavigateUrl = this.BuildLinkUrl(this.ModuleId, this.ManageEventsItem.Value);
 
-            this.ManageResponsesItem.Value = "ResponseSummary";
+            this.ManageResponsesItem.Value = @"ResponseSummary";
             this.ManageResponsesItem.NavigateUrl = this.BuildLinkUrl(this.ModuleId, this.ManageResponsesItem.Value);
 
-            this.ManageCategoriesItem.Value = "ManageCategories";
+            this.ManageCategoriesItem.Value = @"ManageCategories";
             this.ManageCategoriesItem.NavigateUrl = this.BuildLinkUrl(this.ModuleId, this.ManageCategoriesItem.Value);
 
             this.ModuleSettingsItem.NavigateUrl = this.EditUrl("ModuleId", this.ModuleId.ToString(CultureInfo.InvariantCulture), "Module");
 
-            this.ChooseDisplayItem.Value = "ChooseDisplay";
+            this.ChooseDisplayItem.Value = @"ChooseDisplay";
             this.ChooseDisplayItem.NavigateUrl = this.BuildLinkUrl(this.ModuleId, this.ChooseDisplayItem.Value);
         }
 

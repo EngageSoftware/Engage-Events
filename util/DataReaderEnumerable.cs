@@ -52,7 +52,6 @@ namespace Engage.Dnn.Events
         /// <returns>
         /// <returns>An <see cref="IEnumerable{T}"/> instance that can iterate over the rows in the <see cref="DataReader"/></returns>
         /// </returns>
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "IDataReader", Justification = "IDataReader is spelled correctly")]
         public IEnumerator<IDataReader> GetEnumerator()
         {
             if (this.enumerated)
