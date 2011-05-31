@@ -259,7 +259,7 @@
     <property name="installPackageFileName" value="${packageFileNameTemplate}"/>
     <property name="packageType" value="Source"/>
     <property name="sourcePackageFileName" value="${packageFileNameTemplate}"/>
-    <zip zipfile="${packageDirectory}/${projectName}_${sourcePackageLicenseName}_${projectVersion}.zip">
+    <zip zipfile="${packageDirectory}/${projectName}_${sourcePackageLicenseName}_${projectVersion}_DNN${dnnVersion}.zip">
       <fileset basedir="${packageDirectory}">
         <include name="${installPackageFileName}.zip"/>
         <include name="${sourcePackageFileName}.zip"/>
@@ -275,7 +275,7 @@
   <target name="project-specific-tasks" description="Place tasks specific to the current project in this task">
   </target>
   <target name="cleanup" description="Deletes temporary files">
-    <delete file="${packageDirectory}\${projectName}_${sourcePackageLicenseName}_${projectVersion}_DependencySource.zip" failonerror="false"/>
+    <delete file="${packageDirectory}\${dependencySourcePackageFileNameTemplate}.zip" failonerror="false"/>
     <delete file="${packageDirectory}\${packageName}" failonerror="false"/>
     <delete dir="${packageDirectory}\temp" failonerror="false"/>
   </target>
