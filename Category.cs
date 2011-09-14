@@ -36,11 +36,13 @@ namespace Engage.Events
         /// Initializes a new instance of the <see cref="Category"/> class.
         /// </summary>
         /// <param name="portalId">The portal ID.</param>
+        /// <param name="parentId">The parent id.</param>
         /// <param name="name">The name of the category.</param>
         /// <param name="color">The color of the category.</param>
-        private Category(int portalId, string name, string color) : this()
+        private Category(int portalId, int? parentId, string name, string color) : this()
         {
             this.PortalId = portalId;
+            this.ParentId = parentId;
             this.Name = name;
             this.Color = color;
         }
@@ -72,6 +74,12 @@ namespace Engage.Events
         /// <value>The category color.</value>
         [XmlElement(Order = 4)]
         public string Color { get; set; }
+
+        /// <summary>
+        /// Gets or sets the parent id.
+        /// </summary>
+        [XmlElement(Order = 5)]
+        public int? ParentId { get; set; }
 
         /// <summary>
         /// Gets or sets the number of events in this category.
@@ -113,12 +121,15 @@ namespace Engage.Events
         /// Creates the specified category.
         /// </summary>
         /// <param name="portalId">The portal ID.</param>
+        /// <param name="parentId">The parent id.</param>
         /// <param name="name">The name of the category.</param>
         /// <param name="color">The color of the category.</param>
-        /// <returns>A new <see cref="Category"/> instance.</returns>
-        public static Category Create(int portalId, string name, string color)
+        /// <returns>
+        /// A new <see cref="Category"/> instance.
+        /// </returns>
+        public static Category Create(int portalId, int? parentId, string name, string color)
         {
-            return new Category(portalId, name, color);
+            return new Category(portalId, parentId, name, color);
         }
 
         /// <summary>
@@ -208,6 +219,9 @@ namespace Engage.Events
             {
                 case "ID":
                     return this.Id.ToString(format, CultureInfo.CurrentCulture);
+                case "PARENT":
+                case "PARENTID":
+                    return this.ParentId.HasValue ? this.ParentId.Value.ToString(format, CultureInfo.CurrentCulture) : string.Empty;
                 case "NAME":
                 case "TITLE":
                     return TemplateEngine.FormatString(this.Name, format ?? "HTML");
@@ -228,6 +242,7 @@ namespace Engage.Events
             return new Category 
                 {
                     Id = (int)categoryRecord["CategoryId"],
+                    ParentId = categoryRecord["ParentId"] as int?,
                     Name = categoryRecord["Name"].ToString(),
                     Color = categoryRecord["Color"] as string,
                     EventCount = (int)categoryRecord["EventCount"]
@@ -249,6 +264,7 @@ namespace Engage.Events
                         CommandType.StoredProcedure,
                         dp.NamePrefix + "spInsertEventCategory",
                         Utility.CreateIntegerParam("@PortalId", this.PortalId),
+                        Utility.CreateIntegerParam("@ParentId", this.ParentId),
                         Utility.CreateVarcharParam("@Name", this.Name, 250),
                         Utility.CreateVarcharParam("@Color", this.Color, 50),
                         Utility.CreateIntegerParam("@CreatedBy", revisingUser));
@@ -274,6 +290,7 @@ namespace Engage.Events
                         CommandType.StoredProcedure,
                         dp.NamePrefix + "spUpdateEventCategory",
                         Utility.CreateIntegerParam("@CategoryId", this.Id),
+                        Utility.CreateIntegerParam("@ParentId", this.ParentId),
                         Utility.CreateVarcharParam("@Name", this.Name, 250),
                         Utility.CreateVarcharParam("@Color", this.Color, 50),
                         Utility.CreateIntegerParam("@RevisingUser", revisingUser));
