@@ -5,13 +5,14 @@
 
 <engage:ModuleMessage runat="server" ID="SuccessModuleMessage" MessageType="Success" CssClass="CategorySaveSuccessMessage"/>
 
-<telerik:RadGrid ID="CategoriesGrid" runat="server" AutoGenerateColumns="false" AllowMultiRowEdit="true" ValidationSettings-ValidationGroup="ManageCategories">
-    <MasterTableView DataKeyNames="Id" EditMode="InPlace" CommandItemDisplay="Top">
+<telerik:RadGrid ID="CategoriesGrid" runat="server" AutoGenerateColumns="false" AllowMultiRowEdit="true" ValidationSettings-ValidationGroup="ManageCategories" CssClass="ManageCategoriesGrid">
+    <MasterTableView HierarchyDefaultExpanded="true" HierarchyLoadMode="Client" DataKeyNames="Id, ParentId" EditMode="InPlace" CommandItemDisplay="Top" >
         <Columns>
             <telerik:GridEditCommandColumn UniqueName="EditButtons" ItemStyle-CssClass="buttons-col" />
             <telerik:GridTemplateColumn UniqueName="Name" ItemStyle-CssClass="name-col">
                 <ItemTemplate>
-                    <asp:Label runat="server" Text='<%# string.IsNullOrEmpty((string)Eval("Name")) ? this.GetDefaultCategoryName() : Eval("Name") %>' />
+                    <asp:PlaceHolder runat="server" ID="ExpandCollapseButtonPlaceHolder"/>
+                    <asp:Label ID="NameLabel" runat="server" Text='<%# string.IsNullOrEmpty((string)Eval("Name")) ? this.GetDefaultCategoryName() : Eval("Name") %>' />
                 </ItemTemplate>
                 <EditItemTemplate>
                     <asp:TextBox ID="NameTextBox" runat="server" Text='<%# Bind("Name") %>' MaxLength="250" />
@@ -19,6 +20,14 @@
                         ResourceKey="NameRequired" ForeColor="" CssClass="NormalRed" Display="None" />
                     <asp:CustomValidator runat="server" ControlToValidate="NameTextBox" ValidationGroup="ManageCategories"
                         ResourceKey="NameUnique" ForeColor="" CssClass="NormalRed" Display="None" OnServerValidate="UniqueNameValidator_ServerValidate" />
+                </EditItemTemplate>
+            </telerik:GridTemplateColumn>
+            <telerik:GridTemplateColumn UniqueName="ParentId" ItemStyle-CssClass="parent-col">
+                <ItemTemplate>
+                    <asp:Label ID="Label1" runat="server" Text='<%# this.FindCategoryName(Eval("ParentId") as int?) %>' />
+                </ItemTemplate>
+                <EditItemTemplate>
+                    <telerik:RadComboBox ID="ParentCategoriesComboBox" runat="server" DataTextField="Text" DataValueField="Value"/>
                 </EditItemTemplate>
             </telerik:GridTemplateColumn>
             <telerik:GridTemplateColumn UniqueName="Color" ItemStyle-CssClass="color-col">
@@ -45,7 +54,8 @@
             </telerik:GridTemplateColumn>
             <telerik:GridButtonColumn UniqueName="Delete" ItemStyle-CssClass="delete-col" CommandName="Delete" />
         </Columns>
+        <SelfHierarchySettings ParentKeyName="ParentId" KeyName="Id"/>
     </MasterTableView>
+    <ClientSettings AllowExpandCollapse="true"/>
 </telerik:RadGrid>
-
 <engage:ValidationSummary runat="server" ValidationGroup="ManageCategories" />

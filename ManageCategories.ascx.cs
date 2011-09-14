@@ -31,6 +31,32 @@ namespace Engage.Dnn.Events
     public partial class ManageCategories : ModuleBase
     {
         /// <summary>
+        /// Backing field for <see cref="ParentCategories"/>
+        /// </summary>
+        private IEnumerable<Category> parentCategories;
+
+        /// <summary>
+        /// Gets the parent categories.
+        /// </summary>
+        protected IEnumerable<ListItem> ParentCategories
+        {
+            get
+            {
+                yield return new ListItem(this.Localize("NoParent"), string.Empty);
+
+                foreach (var parentCategory in this.parentCategories)
+                {
+                    yield return
+                        new ListItem(
+                            string.IsNullOrEmpty(parentCategory.Name)
+                                ? this.GetDefaultCategoryName()
+                                : parentCategory.Name,
+                            parentCategory.Id.ToString(CultureInfo.InvariantCulture));
+                }
+            }
+        }
+
+        /// <summary>
         /// Raises the <see cref="Control.Init"/> event.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
@@ -44,11 +70,16 @@ namespace Engage.Dnn.Events
             base.OnInit(e);
 
             this.Load += this.Page_Load;
-            this.CategoriesGrid.DeleteCommand += CategoriesGrid_DeleteCommand;
-            this.CategoriesGrid.ItemCreated += CategoriesGrid_ItemCreated;
+            this.CategoriesGrid.ColumnCreated += this.CategoriesGrid_ColumnCreated;
+            this.CategoriesGrid.DeleteCommand += this.CategoriesGrid_DeleteCommand;
+            this.CategoriesGrid.ItemCreated += this.CategoriesGrid_ItemCreated;
             this.CategoriesGrid.NeedDataSource += this.CategoriesGrid_NeedDataSource;
             this.CategoriesGrid.InsertCommand += this.CategoriesGrid_InsertCommand;
             this.CategoriesGrid.UpdateCommand += this.CategoriesGrid_UpdateCommand;
+            this.CategoriesGrid.ItemDataBound += this.CategoriesGrid_ItemDataBound;
+            this.PreRender += (s, o) => this.HideExpandColumnRecursive(this.CategoriesGrid.MasterTableView);
+
+            this.parentCategories = CategoryCollection.Load(this.PortalId);
         }
 
         /// <summary>
@@ -82,11 +113,27 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Finds the name of the category.
+        /// </summary>
+        /// <param name="categoryId">The category id.</param>
+        /// <returns>The category name of the given id</returns>
+        protected string FindCategoryName(int? categoryId)
+        {
+            if (!categoryId.HasValue)
+            {
+                return string.Empty;
+            }
+
+            var category = this.parentCategories.Where(c => c.Id == categoryId).FirstOrDefault();
+            return category != null ? category.Name : string.Empty;
+        }
+
+        /// <summary>
         /// Handles the <see cref="RadGrid.DeleteCommand"/> event of the <see cref="CategoriesGrid"/> control.
         /// </summary>
         /// <param name="source">The source of the event.</param>
         /// <param name="e">The <see cref="GridCommandEventArgs"/> instance containing the event data.</param>
-        private static void CategoriesGrid_DeleteCommand(object source, GridCommandEventArgs e)
+        private void CategoriesGrid_DeleteCommand(object source, GridCommandEventArgs e)
         {
             var categoryId = (int)e.Item.OwnerTableView.DataKeyValues[e.Item.ItemIndex]["Id"];
             Category.Delete(categoryId);
@@ -97,11 +144,18 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="GridItemEventArgs"/> instance containing the event data.</param>
-        private static void CategoriesGrid_ItemCreated(object sender, GridItemEventArgs e)
+        private void CategoriesGrid_ItemCreated(object sender, GridItemEventArgs e)
         {
+            this.CreateExpandCollapseButton(e.Item, "Name");
+
             var commandItem = e.Item as GridCommandItem;
             if (commandItem != null)
             {
+                if (commandItem.OwnerTableView != this.CategoriesGrid.MasterTableView)
+                {
+                    commandItem.Visible = false;
+                }
+
                 // control names from http://www.telerik.com/help/aspnet-ajax/grddefaultbehavior.html
                 commandItem.FindControl("RefreshButton").Visible = false;
                 commandItem.FindControl("RebindGridButton").Visible = false;
@@ -125,6 +179,22 @@ namespace Engage.Dnn.Events
                         var category = (Category)e.Item.DataItem;
                         normalItem["Delete"].Controls.OfType<LinkButton>().Single().Visible = category.EventCount == 0;
                     }
+                }
+
+                // hide grid header for nested grid.
+                if (e.Item is GridHeaderItem && e.Item.OwnerTableView != this.CategoriesGrid.MasterTableView)
+                {
+                    e.Item.Style["display"] = "none";
+                }
+
+                if (e.Item is GridNestedViewItem)
+                {
+                    e.Item.Cells[0].Visible = false;
+                }
+
+                if (e.Item is GridNoRecordsItem && e.Item.OwnerTableView != this.CategoriesGrid.MasterTableView)
+                {
+                    e.Item.OwnerTableView.Visible = false;
                 }
             }
         }
@@ -158,9 +228,14 @@ namespace Engage.Dnn.Events
                 return;
             }
 
-            var newValues = new Dictionary<string, string>(2);
+            var newValues = new Dictionary<string, string>(3);
             e.Item.OwnerTableView.ExtractValuesFromItem(newValues, (GridEditableItem)e.Item);
-            var category = Category.Create(this.PortalId, newValues["Name"], newValues["Color"]);
+            int parentId;
+            var category = Category.Create(
+                this.PortalId,
+                int.TryParse(((RadComboBox)e.Item.FindControl("ParentCategoriesComboBox")).SelectedValue, out parentId) ? parentId : (int?)null,
+                newValues["Name"],
+                newValues["Color"]);
             category.Save(this.UserId);
 
             // if this is a new category and the categories are restricted in the settings, make sure that this category can show up in this module
@@ -195,8 +270,10 @@ namespace Engage.Dnn.Events
                 return;
             }
 
-            var newValues = new Dictionary<string, string>(2);
+            var newValues = new Dictionary<string, string>(3);
             e.Item.OwnerTableView.ExtractValuesFromItem(newValues, (GridEditableItem)e.Item);
+            int parentId;
+            category.ParentId = int.TryParse(((RadComboBox)e.Item.FindControl("ParentCategoriesComboBox")).SelectedValue, out parentId) ? parentId : (int?)null;
             category.Name = newValues["Name"];
             category.Color = newValues["Color"];
             if (string.IsNullOrEmpty(category.Color))
@@ -208,6 +285,8 @@ namespace Engage.Dnn.Events
 
             this.SuccessModuleMessage.Visible = true;
             this.SuccessModuleMessage.Text = this.Localize("CategoryUpdateSuccess");
+
+            this.CategoriesGrid.Rebind();
         }
 
         /// <summary>
@@ -221,7 +300,8 @@ namespace Engage.Dnn.Events
             {
                 if (!this.IsPostBack)
                 {
-                    this.LocalizeGrid();
+                    this.LocalizeAndStyleGrid();
+                    this.CategoriesGrid.MasterTableView.FilterExpression = "ParentId == NULL";
                 }
 
                 this.SuccessModuleMessage.Visible = false;
@@ -235,7 +315,7 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// Localizes the <see cref="CategoriesGrid"/>.
         /// </summary>
-        private void LocalizeGrid()
+        private void LocalizeAndStyleGrid()
         {
             this.CategoriesGrid.MasterTableView.NoMasterRecordsText = this.Localize("NoCategories.Text");
             this.CategoriesGrid.MasterTableView.CommandItemSettings.AddNewRecordText = this.Localize("AddCategory.Text");
@@ -246,6 +326,9 @@ namespace Engage.Dnn.Events
             editColumn.UpdateText = this.Localize("UpdateCategory.Text");
             editColumn.InsertText = this.Localize("CreateCategory.Text");
 
+            var parentIdName = (GridTemplateColumn)this.CategoriesGrid.Columns.FindByUniqueName("ParentId");
+            parentIdName.HeaderText = this.Localize("ParentId.Header");
+
             var categoryNameColumn = (GridTemplateColumn)this.CategoriesGrid.Columns.FindByUniqueName("Name");
             categoryNameColumn.HeaderText = this.Localize("Name.Header");
 
@@ -255,6 +338,143 @@ namespace Engage.Dnn.Events
             var deleteColumn = (GridButtonColumn)this.CategoriesGrid.Columns.FindByUniqueName("Delete");
             deleteColumn.Text = this.Localize("DeleteCategory.Text");
             deleteColumn.ConfirmText = this.Localize("DeleteConfirmation.Text");
+        }
+
+        /// <summary>
+        /// Handles the ItemDataBound event of the CategoriesGrid control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Telerik.Web.UI.GridItemEventArgs"/> instance containing the event data.</param>
+        private void CategoriesGrid_ItemDataBound(object sender, GridItemEventArgs e)
+        {
+            this.CreateExpandCollapseButton(e.Item, "Name");
+
+            if (e.Item is GridEditableItem && (e.Item as GridEditableItem).IsInEditMode)
+            {
+                var editedItem = e.Item as GridEditableItem;
+                var category = e.Item.DataItem as Category;
+                var dropDown = editedItem.FindControl("ParentCategoriesComboBox") as RadComboBox;
+                if (dropDown != null)
+                {
+                    dropDown.DataSource = (category != null)
+                                              ? this.ParentCategories.Where(
+                                                  c => c.Value != category.Id.ToString(CultureInfo.InvariantCulture))
+                                              : this.ParentCategories;
+                    dropDown.DataBind();
+                    dropDown.SelectedValue = (category != null && category.ParentId.HasValue)
+                                                 ? category.ParentId.Value.ToString(CultureInfo.CurrentCulture)
+                                                 : string.Empty;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates the expand collapse button.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="columnUniqueName">Name of the column unique.</param>
+        private void CreateExpandCollapseButton(GridItem item, string columnUniqueName)
+        {
+            if (item is GridDataItem)
+            {
+                if (item.FindControl("MyExpandCollapseButton") == null)
+                {
+                    Button button = null;
+                    try
+                    {
+                        button = new Button();
+                        button.Click += this.Button_Click;
+                        button.CommandName = "ExpandCollapse";
+                        button.CssClass = item.Expanded ? "rgCollapse" : "rgExpand";
+                        button.ID = "MyExpandCollapseButton";
+
+                        if (item.OwnerTableView.HierarchyLoadMode == GridChildLoadMode.Client)
+                        {
+                            var script = string.Format(
+                                @"$find(""{0}"")._toggleExpand(this, event); return false;", item.Parent.Parent.ClientID);
+
+                            button.OnClientClick = script;
+                        }
+
+                        var level = item.ItemIndexHierarchical.Split(':').Length - 1;
+
+                        button.Style["margin-left"] = (level * 15) + "px";
+
+                        var cell = ((GridDataItem)item)[columnUniqueName];
+                        cell.FindControl("ExpandCollapseButtonPlaceHolder").Controls.Add(button);
+                    }
+                    catch
+                    {
+                        if (button != null)
+                        {
+                            button.Dispose();
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles the Click event of the button control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void Button_Click(object sender, EventArgs e)
+        {
+            ((Button)sender).CssClass = (((Button)sender).CssClass == "rgExpand") ? "rgCollapse" : "rgExpand";
+        }
+
+        /// <summary>
+        /// Handles the ColumnCreated event of the CategoriesGrid control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Telerik.Web.UI.GridColumnCreatedEventArgs"/> instance containing the event data.</param>
+        private void CategoriesGrid_ColumnCreated(object sender, GridColumnCreatedEventArgs e)
+        {
+            ////e.Column.HeaderStyle.Width = Unit.Pixel(100);
+
+            if (e.Column is GridExpandColumn)
+            {
+                e.Column.Visible = false;
+            }
+        }
+
+        /// <summary>
+        /// Hides the expand column recursive.
+        /// </summary>
+        /// <param name="tableView">The table view.</param>
+        private void HideExpandColumnRecursive(GridTableView tableView)
+        {
+            GridItem[] nestedViewItems = tableView.GetItems(GridItemType.NestedView);
+            foreach (GridNestedViewItem nestedViewItem in nestedViewItems)
+            {
+                foreach (GridTableView nestedView in nestedViewItem.NestedTableViews)
+                {
+                    nestedView.Style["border"] = "0";
+
+                    var myExpandCollapseButton = (Button)nestedView.ParentItem.FindControl("MyExpandCollapseButton");
+                    if (nestedView.Items.Count == 0)
+                    {
+                        if (myExpandCollapseButton != null)
+                        {
+                            myExpandCollapseButton.Style["visibility"] = "hidden";
+                        }
+                        nestedViewItem.Visible = false;
+                    }
+                    else
+                    {
+                        if (myExpandCollapseButton != null)
+                        {
+                            myExpandCollapseButton.Style.Remove("visibility");
+                        }
+                    }
+
+                    if (nestedView.HasDetailTables)
+                    {
+                        this.HideExpandColumnRecursive(nestedView);
+                    }
+                }
+            }
         }
     }
 }

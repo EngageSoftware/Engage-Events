@@ -1,0 +1,61 @@
+﻿IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE name = 'ParentId' AND object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_EventCategory]', N'U'))
+BEGIN
+	ALTER TABLE {databaseOwner}[{objectQualifier}Engage_EventCategory]
+		ADD ParentId int NULL 
+            CONSTRAINT {objectQualifier}FK_Engage_EventCategory_Engage_EventCategory FOREIGN KEY (ParentId) REFERENCES {databaseOwner}[{objectQualifier}Engage_EventCategory] (CategoryId)
+END
+GO
+
+IF OBJECT_ID(N'{databaseOwner}{objectQualifier}Engage_spGetEventCategories', N'P') IS NOT NULL
+DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategories
+GO
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategories (@PortalId int)
+AS
+    SELECT CategoryId, ParentId, Name, Color, (
+        SELECT COUNT(*)
+        FROM {databaseOwner}{objectQualifier}Engage_Event e
+        WHERE e.CategoryId = c.CategoryId
+        ) AS EventCount
+    FROM {databaseOwner}{objectQualifier}Engage_EventCategory c
+    WHERE PortalId = @PortalId
+    ORDER BY Name
+GO
+
+IF OBJECT_ID(N'{databaseOwner}{objectQualifier}Engage_spGetEventCategory', N'P') IS NOT NULL
+DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategory
+GO
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spGetEventCategory (@CategoryId int)
+AS
+    SELECT CategoryId, ParentId, Name, Color, (
+        SELECT COUNT(*)
+        FROM {databaseOwner}{objectQualifier}Engage_Event e
+        WHERE e.CategoryId = c.CategoryId
+        ) AS EventCount
+    FROM {databaseOwner}{objectQualifier}Engage_EventCategory c
+    WHERE CategoryId = @CategoryId
+GO
+
+IF OBJECT_ID(N'{databaseOwner}{objectQualifier}Engage_spInsertEventCategory', N'P') IS NOT NULL
+DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spInsertEventCategory
+GO
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spInsertEventCategory (@PortalId int, @ParentId int, @Name nvarchar(250), @Color nvarchar(50), @CreatedBy int)
+AS
+    INSERT INTO {databaseOwner}{objectQualifier}Engage_EventCategory (PortalId, ParentId, Name, Color, CreatedBy, RevisingUser)
+    VALUES (@PortalId, @ParentId, @Name, @Color, @CreatedBy, @CreatedBy)
+    
+    SELECT SCOPE_IDENTITY()  
+GO
+
+IF OBJECT_ID(N'{databaseOwner}{objectQualifier}Engage_spUpdateEventCategory', N'P') IS NOT NULL
+DROP PROCEDURE {databaseOwner}{objectQualifier}Engage_spUpdateEventCategory
+GO
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Engage_spUpdateEventCategory (@CategoryId int, @ParentId int, @Name nvarchar(250), @Color nvarchar(50), @RevisingUser int)
+AS
+    UPDATE {databaseOwner}{objectQualifier}Engage_EventCategory 
+    SET ParentId = @ParentId,
+		Name = @Name, 
+        Color = @Color, 
+        RevisingUser = @RevisingUser,
+        RevisionDate = GETDATE()
+    WHERE CategoryId = @CategoryId
+GO

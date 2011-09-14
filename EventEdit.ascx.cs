@@ -269,7 +269,7 @@ namespace Engage.Dnn.Events
                 return categoryId;
             }
 
-            var category = Category.Create(this.PortalId, this.CategoryComboBox.Text, null);
+            var category = Category.Create(this.PortalId, null, this.CategoryComboBox.Text, null);
             category.Save(this.UserId);
 
             // if this is a new category and the categories are restricted in the settings, make sure that this category can show up in this module

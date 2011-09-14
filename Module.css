@@ -398,6 +398,24 @@ a.PopupTriggerLink
 	visibility: hidden;
 }
 
+/*========================= Manage Categories ==============================*/
+.ManageCategoriesGrid td {
+    padding: 0;
+    width: 70px;
+}
+
+.ManageCategoriesGrid .buttons-col {
+    width: 70px;
+}
+
+.ManageCategoriesGrid .name-col {
+    width: 337px;
+}
+
+.ManageCategoriesGrid .parent-col {
+    width: 120px;
+}
+
 /*========================= Global Nav =====================================*/
 .GlobalNavigation .RadMenu_Engage{width:100% !important;}
     .GlobalNavigation .RadMenu_Engage .rmRootGroup{border:1px solid #dddddd;background:url("Images/radmenu-bg.png") repeat-x #e7e7e7;width:100%;}

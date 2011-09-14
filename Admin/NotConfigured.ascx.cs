@@ -72,7 +72,7 @@ namespace Engage.Dnn.Events
                 return;
             }
 
-            var defaultCategory = Category.Create(this.PortalId, string.Empty, null);
+            var defaultCategory = Category.Create(this.PortalId, null, string.Empty, null);
             defaultCategory.Save(this.UserId);
         }
     }

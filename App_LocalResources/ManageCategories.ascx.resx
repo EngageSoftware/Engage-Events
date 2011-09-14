@@ -177,8 +177,14 @@
   <data name="NoColor.Text" xml:space="preserve">
     <value>Default</value>
   </data>
+  <data name="NoParent.Text" xml:space="preserve">
+    <value>[No Parent]</value>
+  </data>
   <data name="Orange.Text" xml:space="preserve">
     <value>Orange</value>
+  </data>
+  <data name="ParentId.Header" xml:space="preserve">
+    <value>Parent</value>
   </data>
   <data name="Pink.Text" xml:space="preserve">
     <value>Pink</value>
