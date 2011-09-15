@@ -38,20 +38,15 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// Gets the parent categories.
         /// </summary>
-        protected IEnumerable<ListItem> ParentCategories
+        protected IEnumerable<Category> ParentCategories
         {
             get
             {
-                yield return new ListItem(this.Localize("NoParent"), string.Empty);
+                yield return Category.Create(this.PortalId, null, this.Localize("NoParent"), string.Empty);
 
                 foreach (var parentCategory in this.parentCategories)
                 {
-                    yield return
-                        new ListItem(
-                            string.IsNullOrEmpty(parentCategory.Name)
-                                ? this.GetDefaultCategoryName()
-                                : parentCategory.Name,
-                            parentCategory.Id.ToString(CultureInfo.InvariantCulture));
+                    yield return parentCategory;
                 }
             }
         }
@@ -80,6 +75,10 @@ namespace Engage.Dnn.Events
             this.PreRender += (s, o) => this.HideExpandColumnRecursive(this.CategoriesGrid.MasterTableView);
 
             this.parentCategories = CategoryCollection.Load(this.PortalId);
+            foreach (var category in this.parentCategories.Where(c => string.IsNullOrEmpty(c.Name)))
+            {
+                category.Name = this.GetDefaultCategoryName();
+            }
         }
 
         /// <summary>
@@ -300,7 +299,7 @@ namespace Engage.Dnn.Events
             {
                 if (!this.IsPostBack)
                 {
-                    this.LocalizeAndStyleGrid();
+                    this.LocalizeGrid();
                     this.CategoriesGrid.MasterTableView.FilterExpression = "ParentId == NULL";
                 }
 
@@ -315,16 +314,21 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// Localizes the <see cref="CategoriesGrid"/>.
         /// </summary>
-        private void LocalizeAndStyleGrid()
+        private void LocalizeGrid()
         {
             this.CategoriesGrid.MasterTableView.NoMasterRecordsText = this.Localize("NoCategories.Text");
             this.CategoriesGrid.MasterTableView.CommandItemSettings.AddNewRecordText = this.Localize("AddCategory.Text");
 
-            var editColumn = (GridEditCommandColumn)this.CategoriesGrid.Columns.FindByUniqueName("EditButtons");
-            editColumn.EditText = this.Localize("EditCategory.Text");
-            editColumn.CancelText = this.Localize("CancelEdit.Text");
-            editColumn.UpdateText = this.Localize("UpdateCategory.Text");
-            editColumn.InsertText = this.Localize("CreateCategory.Text");
+            // TODO: Fix this => this doesn't work on nested self referencing hierarchy grid.
+            ////var editColumn = (GridEditCommandColumn)this.CategoriesGrid.Columns.FindByUniqueName("EditButtons");
+            ////editColumn.EditText = this.Localize("EditCategory.Text");
+            ////editColumn.CancelText = this.Localize("CancelEdit.Text");
+            ////editColumn.UpdateText = this.Localize("UpdateCategory.Text");
+            ////editColumn.InsertText = this.Localize("CreateCategory.Text");
+
+            ////var deleteColumn = (GridButtonColumn)this.CategoriesGrid.Columns.FindByUniqueName("Delete");
+            ////deleteColumn.Text = this.Localize("DeleteCategory.Text");
+            ////deleteColumn.ConfirmText = this.Localize("DeleteConfirmation.Text");
 
             var parentIdName = (GridTemplateColumn)this.CategoriesGrid.Columns.FindByUniqueName("ParentId");
             parentIdName.HeaderText = this.Localize("ParentId.Header");
@@ -334,10 +338,6 @@ namespace Engage.Dnn.Events
 
             var colorColumn = (GridTemplateColumn)this.CategoriesGrid.Columns.FindByUniqueName("Color");
             colorColumn.HeaderText = this.Localize("Color.Header");
-
-            var deleteColumn = (GridButtonColumn)this.CategoriesGrid.Columns.FindByUniqueName("Delete");
-            deleteColumn.Text = this.Localize("DeleteCategory.Text");
-            deleteColumn.ConfirmText = this.Localize("DeleteConfirmation.Text");
         }
 
         /// <summary>
@@ -358,7 +358,7 @@ namespace Engage.Dnn.Events
                 {
                     dropDown.DataSource = (category != null)
                                               ? this.ParentCategories.Where(
-                                                  c => c.Value != category.Id.ToString(CultureInfo.InvariantCulture))
+                                                  c => c.Id != category.Id)
                                               : this.ParentCategories;
                     dropDown.DataBind();
                     dropDown.SelectedValue = (category != null && category.ParentId.HasValue)
@@ -431,8 +431,6 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="Telerik.Web.UI.GridColumnCreatedEventArgs"/> instance containing the event data.</param>
         private void CategoriesGrid_ColumnCreated(object sender, GridColumnCreatedEventArgs e)
         {
-            ////e.Column.HeaderStyle.Width = Unit.Pixel(100);
-
             if (e.Column is GridExpandColumn)
             {
                 e.Column.Visible = false;
@@ -475,6 +473,6 @@ namespace Engage.Dnn.Events
                     }
                 }
             }
-        }
+        } 
     }
 }

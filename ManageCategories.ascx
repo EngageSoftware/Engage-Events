@@ -6,9 +6,9 @@
 <engage:ModuleMessage runat="server" ID="SuccessModuleMessage" MessageType="Success" CssClass="CategorySaveSuccessMessage"/>
 
 <telerik:RadGrid ID="CategoriesGrid" runat="server" AutoGenerateColumns="false" AllowMultiRowEdit="true" ValidationSettings-ValidationGroup="ManageCategories" CssClass="ManageCategoriesGrid">
-    <MasterTableView HierarchyDefaultExpanded="true" HierarchyLoadMode="Client" DataKeyNames="Id, ParentId" EditMode="InPlace" CommandItemDisplay="Top" >
+    <MasterTableView HierarchyDefaultExpanded="true" DataKeyNames="Id, ParentId" EditMode="InPlace" CommandItemDisplay="Top" >
         <Columns>
-            <telerik:GridEditCommandColumn UniqueName="EditButtons" ItemStyle-CssClass="buttons-col" />
+            <telerik:GridEditCommandColumn UniqueName="EditButtons" ItemStyle-CssClass="buttons-col" EditText="Edit" CancelText="Cancel" UpdateText="Update" />
             <telerik:GridTemplateColumn UniqueName="Name" ItemStyle-CssClass="name-col">
                 <ItemTemplate>
                     <asp:PlaceHolder runat="server" ID="ExpandCollapseButtonPlaceHolder"/>
@@ -27,7 +27,11 @@
                     <asp:Label ID="Label1" runat="server" Text='<%# this.FindCategoryName(Eval("ParentId") as int?) %>' />
                 </ItemTemplate>
                 <EditItemTemplate>
-                    <telerik:RadComboBox ID="ParentCategoriesComboBox" runat="server" DataTextField="Text" DataValueField="Value"/>
+                    <telerik:RadComboBox ID="ParentCategoriesComboBox" runat="server" DataTextField="Name" DataValueField="Id">
+                        <%--<ItemTemplate>
+                            <telerik:RadTreeView runat="server" ID="ParentCategoriesTreeView" DataTextField="Name" DataValueField="Id" DataFieldParentID="ParentId" DataFieldID="Id"/>
+                        </ItemTemplate>--%>
+                    </telerik:RadComboBox>
                 </EditItemTemplate>
             </telerik:GridTemplateColumn>
             <telerik:GridTemplateColumn UniqueName="Color" ItemStyle-CssClass="color-col">
@@ -52,7 +56,7 @@
                     </telerik:RadComboBox>
                 </EditItemTemplate>
             </telerik:GridTemplateColumn>
-            <telerik:GridButtonColumn UniqueName="Delete" ItemStyle-CssClass="delete-col" CommandName="Delete" />
+            <telerik:GridButtonColumn UniqueName="Delete" ItemStyle-CssClass="delete-col" CommandName="Delete" Text="Delete" ConfirmText="Are you sure that you want to permanently delete this category?"/>
         </Columns>
         <SelfHierarchySettings ParentKeyName="ParentId" KeyName="Id"/>
     </MasterTableView>
