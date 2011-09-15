@@ -25,6 +25,11 @@ namespace Engage.Events
     public class Category : ITemplateable
     {
         /// <summary>
+        /// Backing field for <see cref="ParentId"/>
+        /// </summary>
+        private int? parentId;
+
+        /// <summary>
         /// Prevents a default instance of the <see cref="Category"/> class from being created.
         /// </summary>
         private Category()
@@ -79,7 +84,18 @@ namespace Engage.Events
         /// Gets or sets the parent id.
         /// </summary>
         [XmlElement(Order = 5)]
-        public int? ParentId { get; set; }
+        public int? ParentId
+        {
+            get
+            {
+                return this.parentId;
+            }
+
+            set
+            {
+                this.parentId = value > 0 ? value : null;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the number of events in this category.
