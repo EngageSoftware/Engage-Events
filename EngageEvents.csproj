@@ -420,7 +420,7 @@
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
-    <Content Include="ReleaseNotes_1.5.5.htm" />
+    <Content Include="ReleaseNotes_1.5.6.htm" />
     <Content Include="ReleaseNotes_1.4.1.htm" />
     <Content Include="Images\icon-canvas.png" />
     <Content Include="ReleaseNotes_1.4.0.htm" />
