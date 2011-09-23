@@ -68,6 +68,10 @@
           <name>1.5.1.SqlDataProvider</name>
         </file>
         <file>
+          <path>Providers\DataProviders\SqlDataProvider</path>
+          <name>1.5.6.SqlDataProvider</name>
+        </file>
+        <file>
           <name>01.00.00.txt</name>
         </file>
         <file>
