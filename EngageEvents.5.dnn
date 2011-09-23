@@ -1,6 +1,6 @@
 ﻿<dotnetnuke type="Package" version="5.0">
   <packages>
-    <package name="Engage: Events" type="Module" version="1.2.0">
+    <package name="Engage: Events" type="Module" version="01.02.00">
       <friendlyName>Engage: Events</friendlyName>
       <description>The DotNetNuke Events module by Engage Software (www.EngageSoftware.com)</description>
       <owner>
@@ -10,7 +10,7 @@
         <email>support@engagemodules.com</email>
       </owner>
       <license src="Licenses/EULA-Standard.htm"/>
-      <releaseNotes src="ReleaseNotes_1.2.0.htm" />
+      <releaseNotes src="ReleaseNotes_01.02.00.htm" />
       <components>
         <component type="ResourceFile">
           <resourceFiles>
@@ -40,37 +40,37 @@
               <version>01.00.00</version>
             </script>
             <script type="Install">
-              <name>1.1.0.SqlDataProvider</name>
-              <version>1.1.0</version>
+              <name>01.01.00.SqlDataProvider</name>
+              <version>01.01.00</version>
             </script>
             <script type="Install">
-              <name>1.2.0.SqlDataProvider</name>
-              <version>1.2.0</version>
+              <name>01.02.00.SqlDataProvider</name>
+              <version>01.02.00</version>
             </script>
             <script type="Install">
-              <name>1.4.0.SqlDataProvider</name>
-              <version>1.4.0</version>
+              <name>01.04.00.SqlDataProvider</name>
+              <version>01.04.00</version>
             </script>
             <script type="Install">
-              <name>1.4.5.SqlDataProvider</name>
-              <version>1.4.5</version>
+              <name>01.04.05.SqlDataProvider</name>
+              <version>01.04.05</version>
             </script>
             <script type="Install">
-              <name>1.5.1.SqlDataProvider</name>
-              <version>1.5.1</version>
+              <name>01.05.01.SqlDataProvider</name>
+              <version>01.05.01</version>
             </script>
             <script type="Install">
-              <name>1.5.6.SqlDataProvider</name>
-              <version>1.5.6</version>
+              <name>01.05.06.SqlDataProvider</name>
+              <version>01.05.06</version>
             </script>
             <script type="UnInstall">
               <name>Uninstall.SqlDataProvider</name>
-              <version latestVersion="latestVersion">1.2.0</version>
+              <version latestVersion="latestVersion">01.02.00</version>
             </script>
           </scripts>
         </component>
         <component type="Cleanup" fileName="01.00.00.txt" version="01.00.00" />
-        <component type="Cleanup" fileName="1.2.0.txt" version="1.2.0" />
+        <component type="Cleanup" fileName="01.02.00.txt" version="01.02.00" />
         <component type="Module">
           <desktopModule>
             <moduleName>Engage: Events</moduleName>
@@ -110,23 +110,23 @@
           <assemblies>
             <assembly>
               <name>EngageEvents.dll</name>
-              <version latestVersion="latestVersion">1.2.0</version>
+              <version latestVersion="latestVersion">01.02.00</version>
             </assembly>
             <assembly>
               <name>Engage.Events.dll</name>
-              <version>3.1.0</version>
+              <version>03.01.00</version>
             </assembly>
             <assembly>
               <name>Engage.Framework.dll</name>
-              <version>3.1.0</version>
+              <version>03.01.00</version>
             </assembly>
             <assembly>
               <name>Engage.Dnn.Framework.dll</name>
-              <version>3.1.0</version>
+              <version>03.01.00</version>
             </assembly>
             <assembly>
               <name>Telerik.Web.UI.dll</name>
-              <version>2009.3.1103.20</version>
+              <version>2009.03.1103.20</version>
             </assembly>
           </assemblies>
         </component>

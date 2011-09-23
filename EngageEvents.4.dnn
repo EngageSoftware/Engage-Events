@@ -6,7 +6,7 @@
       <foldername>EngageEvents</foldername>
       <modulename>Engage: Events</modulename>
       <description>The DotNetNuke Events module by Engage Software (www.EngageSoftware.com)</description>
-      <version latestVersion="latestVersion">1.2.0</version>
+      <version latestVersion="latestVersion">01.02.00</version>
       <businesscontrollerclass>Engage.Dnn.Events.Components.FeaturesController</businesscontrollerclass>
       <resourcefile>Resources.zip</resourcefile>
       <modules>
@@ -49,33 +49,33 @@
         </file>
         <file>
           <path>Providers\DataProviders\SqlDataProvider</path>
-          <name>1.1.0.SqlDataProvider</name>
+          <name>01.01.00.SqlDataProvider</name>
         </file>
         <file>
           <path>Providers\DataProviders\SqlDataProvider</path>
-          <name>1.2.0.SqlDataProvider</name>
+          <name>01.02.00.SqlDataProvider</name>
         </file>
         <file>
           <path>Providers\DataProviders\SqlDataProvider</path>
-          <name>1.4.0.SqlDataProvider</name>
+          <name>01.04.00.SqlDataProvider</name>
         </file>
         <file>
           <path>Providers\DataProviders\SqlDataProvider</path>
-          <name>1.4.5.SqlDataProvider</name>
+          <name>01.04.05.SqlDataProvider</name>
         </file>
         <file>
           <path>Providers\DataProviders\SqlDataProvider</path>
-          <name>1.5.1.SqlDataProvider</name>
+          <name>01.05.01.SqlDataProvider</name>
         </file>
         <file>
           <path>Providers\DataProviders\SqlDataProvider</path>
-          <name>1.5.6.SqlDataProvider</name>
+          <name>01.05.06.SqlDataProvider</name>
         </file>
         <file>
           <name>01.00.00.txt</name>
         </file>
         <file>
-          <name>1.2.0.txt</name>
+          <name>01.02.00.txt</name>
         </file>
         <file>
           <name>ReadMe.txt</name>
