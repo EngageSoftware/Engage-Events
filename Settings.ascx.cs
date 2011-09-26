@@ -30,7 +30,7 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// Backing field for the current module settings base selected.
         /// </summary>
-        private ModuleSettingsBase currentSettingsBase;
+        private ModuleSettingsBase specificSettingsControl;
 
         /// <summary>
         /// Loads the settings.
@@ -94,7 +94,7 @@ namespace Engage.Dnn.Events
 
                     Dnn.Events.ModuleSettings.Categories.Set(this, categories);
 
-                    this.currentSettingsBase.UpdateSettings();
+                    this.specificSettingsControl.UpdateSettings();
                 }
                 catch (Exception exc)
                 {
@@ -291,10 +291,10 @@ namespace Engage.Dnn.Events
             switch (Dnn.Events.ModuleSettings.DisplayType.GetValueAsStringFor(this).ToUpperInvariant())
             {
                 case "LIST":
-                    this.LoadSettingsControl("Display/TemplateDisplayOptions.ascx");
+                    this.LoadSettingsControl("Display/TemplateDisplayOptions.ascx", "List Settings.Header");
                     break;
                 case "CALENDAR":
-                    this.LoadSettingsControl("Display/CalendarDisplayOptions.ascx");
+                    this.LoadSettingsControl("Display/CalendarDisplayOptions.ascx", "Calendar Settings.Header");
                     break;
                 default:
                     break;
@@ -305,13 +305,15 @@ namespace Engage.Dnn.Events
         /// Loads the settings control.
         /// </summary>
         /// <param name="controlName">Name of the control.</param>
-        private void LoadSettingsControl(string controlName)
+        private void LoadSettingsControl(string controlName, string headerResourceKey)
         {
-            this.ControlsPlaceholder.EnableViewState = false;
-            this.ControlsPlaceholder.Controls.Clear();
+            this.SpecificSettingsPlaceholder.EnableViewState = false;
+            this.SpecificSettingsPlaceholder.Controls.Clear();
 
-            this.currentSettingsBase = this.CreateSettingsControl(controlName);
-            this.ControlsPlaceholder.Controls.Add(this.currentSettingsBase);
+            this.specificSettingsControl = this.CreateSettingsControl(controlName);
+            this.SpecificSettingsPlaceholder.Controls.Add(this.specificSettingsControl);
+
+            this.SpecificSettingsHeaderLiteral.Text = this.Localize(headerResourceKey);
         }
 
         /// <summary>

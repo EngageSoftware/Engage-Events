@@ -13,13 +13,22 @@ namespace Engage.Dnn.Events {
     public partial class Settings {
         
         /// <summary>
-        /// ControlsPlaceholder control.
+        /// SpecificSettingsHeaderLiteral control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder ControlsPlaceholder;
+        protected global::System.Web.UI.WebControls.Literal SpecificSettingsHeaderLiteral;
+        
+        /// <summary>
+        /// SpecificSettingsPlaceholder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder SpecificSettingsPlaceholder;
         
         /// <summary>
         /// FeaturedEventLabel control.

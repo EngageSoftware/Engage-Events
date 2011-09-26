@@ -120,6 +120,9 @@
   <data name="All Categories.Text" xml:space="preserve">
     <value>All Categories</value>
   </data>
+  <data name="Calendar Settings.Header" xml:space="preserve">
+    <value>Calendar View Settings</value>
+  </data>
   <data name="CategoriesLabel.Help" xml:space="preserve">
     <value>Choose whether this module should display events from all categories, or only from specific categories</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="CategoriesListValidator.Text" xml:space="preserve">
     <value>You must select at least one category (or choose to display all categories)</value>
+  </data>
+  <data name="Common Settings.Header" xml:space="preserve">
+    <value>Common Settings</value>
   </data>
   <data name="ControlTitle_settings.Text" xml:space="preserve">
     <value>Engage: Events Settings</value>
@@ -152,6 +158,9 @@
   </data>
   <data name="HideFullEventsLabel.Text" xml:space="preserve">
     <value>Hide Full Events</value>
+  </data>
+  <data name="List Settings.Header" xml:space="preserve">
+    <value>Listing View Settings</value>
   </data>
   <data name="Module ID.Header" xml:space="preserve">
     <value>Module ID</value>
