@@ -305,6 +305,7 @@ namespace Engage.Dnn.Events
         /// Loads the settings control.
         /// </summary>
         /// <param name="controlName">Name of the control.</param>
+        /// <param name="headerResourceKey">The resource key for the specific settings control's header.</param>
         private void LoadSettingsControl(string controlName, string headerResourceKey)
         {
             this.SpecificSettingsPlaceholder.EnableViewState = false;
