@@ -13,6 +13,7 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Linq;
     using System.Web.UI;
@@ -293,6 +294,8 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> object that contains the event data.</param>
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "ParentId", Justification = "Spelled correctly")]
+        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "Telerik.Web.UI.GridTableView.set_FilterExpression(System.String)", Justification = "Not a localizable message, but code as string")]
         private void Page_Load(object sender, EventArgs e)
         {
             try
@@ -300,7 +303,7 @@ namespace Engage.Dnn.Events
                 if (!this.IsPostBack)
                 {
                     this.LocalizeGrid();
-                    this.CategoriesGrid.MasterTableView.FilterExpression = "ParentId == NULL";
+                    this.CategoriesGrid.MasterTableView.FilterExpression = @"ParentId == NULL";
                 }
 
                 this.SuccessModuleMessage.Visible = false;
@@ -375,41 +378,39 @@ namespace Engage.Dnn.Events
         /// <param name="columnUniqueName">Name of the column unique.</param>
         private void CreateExpandCollapseButton(GridItem item, string columnUniqueName)
         {
-            if (item is GridDataItem)
+            var dataItem = item as GridDataItem;
+            if (dataItem == null || dataItem.FindControl("MyExpandCollapseButton") != null)
             {
-                if (item.FindControl("MyExpandCollapseButton") == null)
+                return;
+            }
+
+            Button button = null;
+            try
+            {
+                button = new Button();
+                button.Click += this.Button_Click;
+                button.CommandName = "ExpandCollapse";
+                button.CssClass = dataItem.Expanded ? "rgCollapse" : "rgExpand";
+                button.ID = "MyExpandCollapseButton";
+
+                if (dataItem.OwnerTableView.HierarchyLoadMode == GridChildLoadMode.Client)
                 {
-                    Button button = null;
-                    try
-                    {
-                        button = new Button();
-                        button.Click += this.Button_Click;
-                        button.CommandName = "ExpandCollapse";
-                        button.CssClass = item.Expanded ? "rgCollapse" : "rgExpand";
-                        button.ID = "MyExpandCollapseButton";
+                    var script = string.Format(CultureInfo.InvariantCulture, @"$find(""{0}"")._toggleExpand(this, event); return false;", dataItem.Parent.Parent.ClientID);
+                    button.OnClientClick = script;
+                }
 
-                        if (item.OwnerTableView.HierarchyLoadMode == GridChildLoadMode.Client)
-                        {
-                            var script = string.Format(
-                                @"$find(""{0}"")._toggleExpand(this, event); return false;", item.Parent.Parent.ClientID);
+                var level = dataItem.ItemIndexHierarchical.Split(':').Length - 1;
 
-                            button.OnClientClick = script;
-                        }
+                button.Style["margin-left"] = (level * 15) + "px";
 
-                        var level = item.ItemIndexHierarchical.Split(':').Length - 1;
-
-                        button.Style["margin-left"] = (level * 15) + "px";
-
-                        var cell = ((GridDataItem)item)[columnUniqueName];
-                        cell.FindControl("ExpandCollapseButtonPlaceHolder").Controls.Add(button);
-                    }
-                    catch
-                    {
-                        if (button != null)
-                        {
-                            button.Dispose();
-                        }
-                    }
+                var cell = dataItem[columnUniqueName];
+                cell.FindControl("ExpandCollapseButtonPlaceHolder").Controls.Add(button);
+            }
+            catch
+            {
+                if (button != null)
+                {
+                    button.Dispose();
                 }
             }
         }
@@ -421,7 +422,8 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Button_Click(object sender, EventArgs e)
         {
-            ((Button)sender).CssClass = (((Button)sender).CssClass == "rgExpand") ? "rgCollapse" : "rgExpand";
+            var button = (Button)sender;
+            button.CssClass = (button.CssClass == "rgExpand") ? "rgCollapse" : "rgExpand";
         }
 
         /// <summary>
@@ -457,6 +459,7 @@ namespace Engage.Dnn.Events
                         {
                             myExpandCollapseButton.Style["visibility"] = "hidden";
                         }
+
                         nestedViewItem.Visible = false;
                     }
                     else
