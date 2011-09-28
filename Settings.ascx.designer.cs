@@ -37,7 +37,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.LabelControl FeaturedEventLabel;
+        protected global::System.Web.UI.UserControl FeaturedEventLabel;
         
         /// <summary>
         /// FeaturedCheckBox control.
@@ -55,7 +55,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.LabelControl HideFullEventsLabel;
+        protected global::System.Web.UI.UserControl HideFullEventsLabel;
         
         /// <summary>
         /// HideFullEventsCheckBox control.
@@ -76,13 +76,13 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.CheckBox AllCategoriesCheckBox;
         
         /// <summary>
-        /// CategoriesCheckBoxList control.
+        /// CategoriesCheckBoxTreeView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList CategoriesCheckBoxList;
+        protected global::Telerik.Web.UI.RadTreeView CategoriesCheckBoxTreeView;
         
         /// <summary>
         /// CategoriesListValidator control.

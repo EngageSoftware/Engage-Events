@@ -2,6 +2,7 @@
 <%@ Import Namespace="DotNetNuke.Entities.Tabs"%>
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.Settings" CodeBehind="Settings.ascx.cs" %>
 <%@ Register TagPrefix="dnn" TagName="label" Src="~/controls/labelControl.ascx" %>
+<%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 
 <style type="text/css">
     @import url(<%=ResolveUrl("Module.css")%>);
@@ -26,7 +27,7 @@
             <div class="EventsSetting">
                 <dnn:label ResourceKey="CategoriesLabel" runat="server" CssClass="SubHead" />
                 <asp:CheckBox ID="AllCategoriesCheckBox" runat="server" ResourceKey="All Categories" AutoPostBack="true" />
-                <asp:CheckBoxList ID="CategoriesCheckBoxList" runat="server" />
+                <telerik:RadTreeView runat="server" ID="CategoriesCheckBoxTreeView" CheckBoxes="True" TriStateCheckBoxes="true" CheckChildNodes="true"/>
                 <asp:CustomValidator ID="CategoriesListValidator" runat="server" CssClass="NormalRed" ResourceKey="CategoriesListValidator" Display="None" ForeColor="" />
             </div>
             <div class="EventsSetting">
