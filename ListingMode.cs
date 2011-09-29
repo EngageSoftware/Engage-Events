@@ -11,9 +11,12 @@
 
 namespace Engage.Events
 {
+    using System;
+
     /// <summary>
     /// Defines the date range for which to retrieve a list of events.
     /// </summary>
+    [Obsolete("Use startDate/endDate instead")]
     public enum ListingMode
     {
         /// <summary>
