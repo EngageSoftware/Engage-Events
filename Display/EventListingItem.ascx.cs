@@ -258,7 +258,6 @@ namespace Engage.Dnn.Events.Display
 
             var sortParameter = sortExpression != null ? "sort=" + sortExpression : null;
             var statusParameter = status != null ? "status=" + status : status;
-            ////var categoryIdParameter = filterCategoryId.HasValue ? "catId=" + filterCategoryId.Value.ToString(CultureInfo.InvariantCulture) : null;
             return this.BuildLinkUrl(this.ModuleId, controlKey, sortParameter, statusParameter, "currentPage=" + UniqueReplaceableTemplateValue).Replace(UniqueReplaceableTemplateValue, "{0}");
         }
 
