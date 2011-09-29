@@ -32,7 +32,7 @@ namespace Engage.Dnn.Events.Display
         /// <summary>
         /// Backing field for <see cref="CategoryId"/>
         /// </summary>
-        private int? categoryId;
+        private IEnumerable<int> filterCategoryId;
 
         /// <summary>
         /// Gets the listing mode used for this display.
@@ -57,6 +57,14 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         /// <value>The category filter action control.</value>
         public CategoryFilterAction CategoryFilterAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets the multiple category filter action.
+        /// </summary>
+        /// <value>
+        /// The multiple category filter action.
+        /// </value>
+        public MultipleCategoriesFilterAction MultipleCategoriesFilterAction { get; set; }
 
         /// <summary>
         /// Gets or sets the template provider to use for providing templating functionality within this control.
@@ -132,25 +140,22 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Gets the ID of the category by which to filter events, or <c>null</c> to display all events.
+        /// Gets the IDs of the category by which to filter events, or <c>null</c> to display all events.
         /// </summary>
-        /// <value>The ID of the category to filter by.</value>
-        private int? CategoryId
+        /// <value>
+        /// The ID of the category to filter by.
+        /// </value>
+        private IEnumerable<int> FilterCategoryIds 
         {
             get
             {
-                if (this.categoryId == null)
+                if (this.filterCategoryId == null && this.Session["categoryIds"] != null)
                 {
                     int parsedCategoryId;
-                    string categoryIdValue = this.Request.QueryString["catId"];
-                    if (Engage.Utility.HasValue(categoryIdValue) &&
-                        int.TryParse(categoryIdValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out parsedCategoryId))
-                    {
-                        this.categoryId = parsedCategoryId;
-                    }
+                    this.filterCategoryId = (int[])this.Session["categoryIds"];
                 }
 
-                return this.categoryId;
+                return this.filterCategoryId;
             }
         }
 
@@ -228,8 +233,8 @@ namespace Engage.Dnn.Events.Display
         {
             var sortExpression = this.SortAction != null ? this.SortAction.SelectedValue : null;
             var status = this.StatusFilterAction != null ? this.StatusFilterAction.SelectedValue : null;
-            var selectedCategoryId = this.CategoryFilterAction != null ? this.CategoryFilterAction.SelectedCategoryId : null;
-            this.Response.Redirect(this.GetPageUrl(pageNumber, sortExpression, status, selectedCategoryId), true);
+            ////var selectedCategoryIds = this.CategoryFilterAction != null ? this.CategoryFilterAction.SelectedCategoryId : null;
+            this.Response.Redirect(this.GetPageUrl(pageNumber, sortExpression, status), true);
         }
 
         /// <summary>
@@ -237,12 +242,11 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         /// <param name="sortExpression">The field on which to sort the event list.</param>
         /// <param name="status">The status of events to retrieve.</param>
-        /// <param name="filterCategoryId">The ID of the category by which results should be filtered, or <c>null</c> for all results.</param>
         /// <returns>
         /// The URL to use for the paging buttons, with the page number templated out for use with <see cref="string.Format(IFormatProvider,string,object[])"/> (that is, "{0}")
         /// </returns>
         [SuppressMessage("Microsoft.Design", "CA1055:UriReturnValuesShouldNotBeStrings", Justification = "Backwards compatibility")]
-        protected string GetPageUrlTemplate(string sortExpression, string status, int? filterCategoryId)
+        protected string GetPageUrlTemplate(string sortExpression, string status)
         {
             // We can't just send {0} to BuildLinkUrl, because it will get "special treatment" by the friendly URL provider for its special characters
             const string UniqueReplaceableTemplateValue = "__--0--__";
@@ -254,8 +258,8 @@ namespace Engage.Dnn.Events.Display
 
             var sortParameter = sortExpression != null ? "sort=" + sortExpression : null;
             var statusParameter = status != null ? "status=" + status : status;
-            var categoryIdParameter = filterCategoryId.HasValue ? "catId=" + filterCategoryId.Value.ToString(CultureInfo.InvariantCulture) : null;
-            return this.BuildLinkUrl(this.ModuleId, controlKey, sortParameter, statusParameter, categoryIdParameter, "currentPage=" + UniqueReplaceableTemplateValue).Replace(UniqueReplaceableTemplateValue, "{0}");
+            ////var categoryIdParameter = filterCategoryId.HasValue ? "catId=" + filterCategoryId.Value.ToString(CultureInfo.InvariantCulture) : null;
+            return this.BuildLinkUrl(this.ModuleId, controlKey, sortParameter, statusParameter, "currentPage=" + UniqueReplaceableTemplateValue).Replace(UniqueReplaceableTemplateValue, "{0}");
         }
 
         /// <summary>
@@ -276,13 +280,12 @@ namespace Engage.Dnn.Events.Display
         /// <param name="pageNumber">The page number.</param>
         /// <param name="sortExpression">The field on which to sort the event list.</param>
         /// <param name="status">The status of events to retrieve.</param>
-        /// <param name="filterCategoryId">The ID of the category by which results should be filtered, or <c>null</c> for all results.</param>
         /// <returns>
         /// The URL to use for this page, for a listing with the given <paramref name="pageNumber"/>, <paramref name="sortExpression"/>, and <paramref name="status"/>.
         /// </returns>
-        private string GetPageUrl(int pageNumber, string sortExpression, string status, int? filterCategoryId)
+        private string GetPageUrl(int pageNumber, string sortExpression, string status)
         {
-            return string.Format(CultureInfo.InvariantCulture, this.GetPageUrlTemplate(sortExpression, status, filterCategoryId), pageNumber);
+            return string.Format(CultureInfo.InvariantCulture, this.GetPageUrlTemplate(sortExpression, status), pageNumber);
         }
 
         /// <summary>
@@ -322,9 +325,17 @@ namespace Engage.Dnn.Events.Display
                         this.CategoryFilterAction = (CategoryFilterAction)this.LoadControl(this.ActionsControlsFolder + "CategoryFilterAction.ascx");
                         this.CategoryFilterAction.ModuleConfiguration = this.ModuleConfiguration;
                         this.CategoryFilterAction.LocalResourceFile = resourceFile;
-                        this.CategoryFilterAction.CategoryChanged += this.SortActions_SortChanged;
+                        this.CategoryFilterAction.CategoryChanged += this.CategoryFilter_SortChanged;
 
                         container.Controls.Add(this.CategoryFilterAction);
+                        break;
+                    case "MULTIPLECATEGORYFILTER":
+                        this.MultipleCategoriesFilterAction = (MultipleCategoriesFilterAction)this.LoadControl(this.ActionsControlsFolder + "MultipleCategoryFilterAction.ascx");
+                        this.MultipleCategoriesFilterAction.ModuleConfiguration = this.ModuleConfiguration;
+                        this.MultipleCategoriesFilterAction.LocalResourceFile = resourceFile;
+                        this.MultipleCategoriesFilterAction.CategoryChanged += this.MultipleCategoriesActions_SortChanged;
+
+                        container.Controls.Add(MultipleCategoriesFilterAction);
                         break;
                     case "READMORE":
                         if (currentEvent == null || Engage.Utility.HasValue(currentEvent.Description))
@@ -387,6 +398,36 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
+        /// Handles the SortChanged event of the MultipleCategoriesActions control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void MultipleCategoriesActions_SortChanged(object sender, EventArgs e)
+        {
+            this.Session.Add("categoryIds", this.MultipleCategoriesFilterAction.SelectedCategoryIds);
+            this.ReloadPage(this.CurrentPageIndex);
+        }
+
+        /// <summary>
+        /// Handles the SortChanged event of the CategoryFilter control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void CategoryFilter_SortChanged(object sender, EventArgs e)
+        {
+            if (this.CategoryFilterAction.SelectedCategoryId.HasValue)
+            {
+                this.Session.Add("categoryIds", new[] { this.CategoryFilterAction.SelectedCategoryId.Value });
+            }
+            else
+            {
+                this.Session.Remove("categoryIds");
+            }
+
+            this.ReloadPage(this.CurrentPageIndex);
+        }
+
+        /// <summary>
         /// Sets up the <see cref="TemplateProvider"/> for this control.
         /// </summary>
         private void SetupTemplateProvider()
@@ -395,7 +436,7 @@ namespace Engage.Dnn.Events.Display
             this.TemplateProvider = new PagingTemplateProvider(
                 this.GetTemplate(templateFolderName),
                 this,
-                this.GetPageUrlTemplate(this.SortExpression, this.Status, this.CategoryId),
+                this.GetPageUrlTemplate(this.SortExpression, this.Status),
                 new ItemPagingState(this.CurrentPageIndex, this.TotalNumberOfEvents, this.RecordsPerPage), 
                 this.ProcessTag,
                 this.GetEvents);
@@ -423,7 +464,7 @@ namespace Engage.Dnn.Events.Display
                     this.IsManageEvents ? false : this.IsFeatured,
                     this.IsManageEvents ? false : this.HideFullEvents,
                     IsLoggedIn ? this.UserInfo.Email : null,
-                    this.CategoryId.HasValue ? new[] { this.CategoryId.Value } : this.CategoryIds);
+                    this.FilterCategoryIds ?? this.CategoryIds);
             
             this.TotalNumberOfEvents = events.TotalRecords;
             this.TemplateProvider.ItemPagingState = new ItemPagingState(this.CurrentPageIndex, events.TotalRecords, this.RecordsPerPage);

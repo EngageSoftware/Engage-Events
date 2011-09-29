@@ -128,10 +128,14 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetInitialValue()
         {
-            string categoryId = this.Request.QueryString["catId"];
-            if (Engage.Utility.HasValue(categoryId) && this.CategoriesList.Items.Cast<ListItem>().Any(item => item.Value == categoryId))
+            var categoryIds = this.Session["categoryIds"] as int[];
+            if (categoryIds != null && categoryIds.Length > 0)
             {
-                this.CategoriesList.SelectedValue = categoryId;
+                var categoryId = categoryIds[0].ToString(CultureInfo.InvariantCulture);
+                if (this.CategoriesList.Items.Cast<ListItem>().Any(item => item.Value == categoryId))
+                {
+                    this.CategoriesList.SelectedValue = categoryId;
+                }
             }
         }
     }

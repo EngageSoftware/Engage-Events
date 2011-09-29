@@ -164,6 +164,13 @@
     <Compile Include="Actions\CategoryFilterAction.ascx.designer.cs">
       <DependentUpon>CategoryFilterAction.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Actions\MultipleCategoryFilterAction.ascx.cs">
+      <DependentUpon>MultipleCategoryFilterAction.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Actions\MultipleCategoryFilterAction.ascx.designer.cs">
+      <DependentUpon>MultipleCategoryFilterAction.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Actions\RegisterAction.ascx.cs">
       <DependentUpon>RegisterAction.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -264,6 +271,7 @@
     <Compile Include="TemplatedDisplayModuleBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Util\ComboBoxTreeViewTemplate.cs" />
     <Compile Include="Util\DataReaderEnumerable.cs" />
     <Compile Include="Util\TelerikSkin.cs" />
     <Compile Include="Display\TemplateDisplayOptions.ascx.cs">
@@ -411,6 +419,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Actions\CategoryFilterAction.ascx" />
+    <Content Include="Actions\MultipleCategoryFilterAction.ascx" />
     <Content Include="App_LocalResources\ItemPreview.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
@@ -420,6 +429,7 @@
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
+    <EmbeddedResource Include="JavaScript\jquery-ui-1.8.16.dialog.min.js" />
     <Content Include="ReleaseNotes_01.05.06.htm" />
     <Content Include="ReleaseNotes_01.04.01.htm" />
     <Content Include="Images\icon-canvas.png" />
@@ -693,6 +703,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Actions\App_LocalResources\CategoryFilterAction.ascx.resx" />
+    <Content Include="Actions\App_LocalResources\MultipleCategoryFilterAction.ascx.resx" />
     <EmbeddedResource Include="JavaScript\jquery.fancybox-1.0.0.js" />
     <Content Include="Templates\Admin\ManageEvents\App_LocalResources\SharedResources.resx" />
     <Content Include="Templates\Legacy-ListingAll\App_LocalResources\SharedResources.resx">

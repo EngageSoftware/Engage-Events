@@ -32,3 +32,4 @@ using System.Web.UI;
 [assembly: AssemblyKeyName("")]
 
 [assembly: WebResource("Engage.Dnn.Events.JavaScript.jquery.fancybox-1.0.0.js", "text/javascript")]
+[assembly: WebResource("Engage.Dnn.Events.JavaScript.jquery-ui-1.8.16.dialog.min.js", "text/javascript")]

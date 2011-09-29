@@ -12,6 +12,7 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Globalization;
     using System.IO;
@@ -75,15 +76,22 @@ namespace Engage.Dnn.Events
                     this.CategoriesCheckBoxTreeView.DataValueField = "Id";
                     this.CategoriesCheckBoxTreeView.DataFieldID = "Id";
                     this.CategoriesCheckBoxTreeView.DataFieldParentID = "ParentId";
-                    this.CategoriesCheckBoxTreeView.DataSource = from category in CategoryCollection.Load(this.PortalId)
-                                                             select new
-                                                                 {
-                                                                     Name = string.IsNullOrEmpty(category.Name)
-                                                                                ? this.Localize("DefaultCategory", this.LocalSharedResourceFile)
-                                                                                : category.Name,
-                                                                     Id = category.Id.ToString(CultureInfo.InvariantCulture),
-                                                                     ParentId = category.ParentId.HasValue ? category.ParentId.Value.ToString(CultureInfo.InvariantCulture) : null
-                                                                 };
+                    var categoryList = (from category in CategoryCollection.Load(this.PortalId)
+                                      select
+                                          new
+                                              {
+                                                  Name =
+                                          string.IsNullOrEmpty(category.Name)
+                                              ? this.Localize("DefaultCategory", this.LocalSharedResourceFile)
+                                              : category.Name,
+                                                  Id = category.Id.ToString(CultureInfo.InvariantCulture),
+                                                  ParentId =
+                                          category.ParentId.HasValue
+                                              ? category.ParentId.Value.ToString(CultureInfo.InvariantCulture)
+                                              : string.Empty
+                                              }).ToList();
+                    categoryList.Add(new { Name = this.Localize("All Categories.Text"), Id = string.Empty, ParentId = (string)null });
+                    this.CategoriesCheckBoxTreeView.DataSource = categoryList;
                     this.CategoriesCheckBoxTreeView.DataBind();
 
                     this.SetOptions();
@@ -109,20 +117,21 @@ namespace Engage.Dnn.Events
                     Dnn.Events.ModuleSettings.DetailsDisplayTabId.Set(this, this.GetSelectedDetailsDisplayTabId());
                     Dnn.Events.ModuleSettings.DetailsDisplayModuleId.Set(this, this.GetSelectedDetailsDisplayModuleId());
 
-                    string categories;
-                    if (this.AllCategoriesCheckBox.Checked)
+                    string cats;
+                    var nodes = this.CategoriesCheckBoxTreeView.Nodes.Cast<RadTreeNode>().ToList();
+                    if (nodes.Count() > 0 && nodes.First().Checked)
                     {
-                        categories = string.Empty;
+                        cats = string.Empty;
                     }
                     else
                     {
                         ////var selectedCategoryIds = this.CategoriesCheckBoxTreeView.Items.Cast<ListItem>().Where(item => item.Selected).Select(item => item.Value);
                         var selectedCategoryIds = this.CategoriesCheckBoxTreeView.CheckedNodes.Select(
                             node => node.Value);
-                        categories = string.Join(",", selectedCategoryIds.ToArray());
+                        cats = string.Join(",", selectedCategoryIds.ToArray());
                     }
 
-                    Dnn.Events.ModuleSettings.Categories.Set(this, categories);
+                    Dnn.Events.ModuleSettings.Categories.Set(this, cats);
 
                     this.specificSettingsControl.UpdateSettings();
                 }
@@ -142,7 +151,9 @@ namespace Engage.Dnn.Events
             base.OnInit(e);
 
             this.Load += this.Page_Load;
-            this.AllCategoriesCheckBox.CheckedChanged += this.AllCategoriesCheckBox_CheckedChanged;
+            ////this.AllCategoriesCheckBox.CheckedChanged += this.AllCategoriesCheckBox_CheckedChanged;
+            this.CategoriesCheckBoxTreeView.NodeCheck += this.CategoriesCheckBoxTreeView_NodeCheck;
+            this.CategoriesCheckBoxTreeView.NodeClick += this.CategoriesCheckBoxTreeView_NodeClick;
             this.CategoriesListValidator.ServerValidate += this.CategoriesListValidator_ServerValidate;
             this.DetailsDisplayModuleValidator.ServerValidate += this.DetailsDisplayModuleValidator_ServerValidate;
             this.CategoriesCheckBoxTreeView.NodeCreated += this.CategoriesCheckBoxTreeView_NodeCreated;
@@ -181,6 +192,49 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Handles the NodeCheck event of the CategoriesCheckBoxTreeView control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Telerik.Web.UI.RadTreeNodeEventArgs"/> instance containing the event data.</param>
+        private void CategoriesCheckBoxTreeView_NodeCheck(object sender, RadTreeNodeEventArgs e)
+        {
+            if (e.Node.Level == 0)
+            {
+                // all categories node
+                this.SetEnabledAllNodes(e.Node.Nodes.Cast<RadTreeNode>(), !e.Node.Checked);
+            }
+        }
+
+        /// <summary>
+        /// Handles the NodeClick event of the CategoriesCheckBoxTreeView control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Telerik.Web.UI.RadTreeNodeEventArgs"/> instance containing the event data.</param>
+        private void CategoriesCheckBoxTreeView_NodeClick(object sender, RadTreeNodeEventArgs e)
+        {
+            e.Node.Selected = false;
+        }
+
+        /// <summary>
+        /// Disables / enables the all nodes.
+        /// </summary>
+        /// <param name="nodes">The nodes.</param>
+        /// <param name="enabled">if set to <c>true</c> [enabled].</param>
+        private void SetEnabledAllNodes(IEnumerable<RadTreeNode> nodes, bool enabled)
+        {
+            foreach (var node in nodes)
+            {
+                node.Enabled = enabled;
+                node.Checked = enabled;
+
+                if (node.Nodes != null && node.Nodes.Count > 0)
+                {
+                    this.SetEnabledAllNodes(node.Nodes.Cast<RadTreeNode>(), enabled);
+                }
+            }
+        }
+
+        /// <summary>
         /// Handles the NodeDataBound event of the CategoriesCheckBoxTreeView control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -203,15 +257,15 @@ namespace Engage.Dnn.Events
             e.Node.Expanded = true;
         }
 
-        /// <summary>
-        /// Handles the <see cref="CheckBox.CheckedChanged"/> event of the <see cref="AllCategoriesCheckBox"/> control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void AllCategoriesCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            this.CategoriesCheckBoxTreeView.Enabled = !this.AllCategoriesCheckBox.Checked;
-        }
+        /////// <summary>
+        /////// Handles the <see cref="CheckBox.CheckedChanged"/> event of the <see cref="AllCategoriesCheckBox"/> control.
+        /////// </summary>
+        /////// <param name="sender">The source of the event.</param>
+        /////// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        ////private void AllCategoriesCheckBox_CheckedChanged(object sender, EventArgs e)
+        ////{
+        ////    this.CategoriesCheckBoxTreeView.Enabled = !this.AllCategoriesCheckBox.Checked;
+        ////}
 
         /// <summary>
         /// Handles the <see cref="CustomValidator.ServerValidate"/> event of the <see cref="CategoriesListValidator"/> control.
@@ -220,11 +274,11 @@ namespace Engage.Dnn.Events
         /// <param name="args">The <see cref="ServerValidateEventArgs"/> instance containing the event data.</param>
         private void CategoriesListValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            if (this.AllCategoriesCheckBox.Checked)
-            {
-                args.IsValid = true;
-                return;
-            }
+            ////if (this.AllCategoriesCheckBox.Checked)
+            ////{
+            ////    args.IsValid = true;
+            ////    return;
+            ////}
 
             ////args.IsValid = this.CategoriesCheckBoxList.Items.Cast<ListItem>().Any(categoryItem => categoryItem.Selected);
             args.IsValid = this.CategoriesCheckBoxTreeView.CheckedNodes.Any();
@@ -272,8 +326,13 @@ namespace Engage.Dnn.Events
             var categoriesSettingValue = Dnn.Events.ModuleSettings.Categories.GetValueAsStringFor(this);
             if (string.IsNullOrEmpty(categoriesSettingValue))
             {
-                this.AllCategoriesCheckBox.Checked = true;
-                this.CategoriesCheckBoxTreeView.Enabled = false;
+                var all = this.CategoriesCheckBoxTreeView.Nodes.Cast<RadTreeNode>().FirstOrDefault();
+                if (all != null)
+                {
+                    all.Checked = true;
+                    this.SetEnabledAllNodes(all.Nodes.Cast<RadTreeNode>(), false);
+                }
+                ////this.CategoriesCheckBoxTreeView.Enabled = false;
             }
 
             // Note: the set options for the selected categories is moved to NodeDataBound event on the treeview.
