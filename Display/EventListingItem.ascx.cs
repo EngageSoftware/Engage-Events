@@ -30,7 +30,7 @@ namespace Engage.Dnn.Events.Display
     public partial class EventListingItem : TemplatedDisplayModuleBase
     {
         /// <summary>
-        /// Backing field for <see cref="CategoryId"/>
+        /// Backing field for <see cref="FilterCategoryIds"/>
         /// </summary>
         private IEnumerable<int> filterCategoryId;
 
@@ -151,7 +151,6 @@ namespace Engage.Dnn.Events.Display
             {
                 if (this.filterCategoryId == null && this.Session["categoryIds"] != null)
                 {
-                    int parsedCategoryId;
                     this.filterCategoryId = (int[])this.Session["categoryIds"];
                 }
 
@@ -257,7 +256,7 @@ namespace Engage.Dnn.Events.Display
             }
 
             var sortParameter = sortExpression != null ? "sort=" + sortExpression : null;
-            var statusParameter = status != null ? "status=" + status : status;
+            var statusParameter = status != null ? "status=" + status : null;
             return this.BuildLinkUrl(this.ModuleId, controlKey, sortParameter, statusParameter, "currentPage=" + UniqueReplaceableTemplateValue).Replace(UniqueReplaceableTemplateValue, "{0}");
         }
 
@@ -299,7 +298,7 @@ namespace Engage.Dnn.Events.Display
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "The complexity cannot easily be reduced and the method is easy to understand, test, and maintain")]
         private bool ProcessTag(Control container, Tag tag, ITemplateable templateItem, string resourceFile)
         {
-            Event currentEvent = (Event)templateItem;
+            var currentEvent = (Event)templateItem;
             if (tag.TagType == TagType.Open)
             {
                 switch (tag.LocalName.ToUpperInvariant())
@@ -329,7 +328,7 @@ namespace Engage.Dnn.Events.Display
                         container.Controls.Add(this.CategoryFilterAction);
                         break;
                     case "MULTIPLECATEGORYFILTER":
-                        this.MultipleCategoriesFilterAction = (MultipleCategoriesFilterAction)this.LoadControl(this.ActionsControlsFolder + "MultipleCategoryFilterAction.ascx");
+                        this.MultipleCategoriesFilterAction = (MultipleCategoriesFilterAction)this.LoadControl(this.ActionsControlsFolder + "MultipleCategoriesFilterAction.ascx");
                         this.MultipleCategoriesFilterAction.ModuleConfiguration = this.ModuleConfiguration;
                         this.MultipleCategoriesFilterAction.LocalResourceFile = resourceFile;
                         this.MultipleCategoriesFilterAction.CategoryChanged += this.MultipleCategoriesActions_SortChanged;
@@ -339,7 +338,7 @@ namespace Engage.Dnn.Events.Display
                     case "READMORE":
                         if (currentEvent == null || Engage.Utility.HasValue(currentEvent.Description))
                         {
-                            StringBuilder detailLinkBuilder = new StringBuilder();
+                            var detailLinkBuilder = new StringBuilder();
                             string linkUrl;
                             if (currentEvent != null)
                             {
@@ -460,8 +459,8 @@ namespace Engage.Dnn.Events.Display
                     this.CurrentPageIndex - 1,
                     this.RecordsPerPage,
                     this.Status.Equals("All", StringComparison.OrdinalIgnoreCase),
-                    this.IsManageEvents ? false : this.IsFeatured,
-                    this.IsManageEvents ? false : this.HideFullEvents,
+                    !this.IsManageEvents && this.IsFeatured,
+                    !this.IsManageEvents && this.HideFullEvents,
                     IsLoggedIn ? this.UserInfo.Email : null,
                     this.FilterCategoryIds ?? this.CategoryIds);
             

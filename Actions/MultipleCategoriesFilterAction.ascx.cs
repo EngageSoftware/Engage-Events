@@ -12,12 +12,10 @@
 namespace Engage.Dnn.Events
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using System.Web.UI;
-    using System.Web.UI.WebControls;
 
     using Engage.Events;
 
@@ -184,7 +182,6 @@ namespace Engage.Dnn.Events
             {
                 e.Node.Checked = this.SessionCategoryIds.Contains(id);
             }
-            
         }
 
         /// <summary>

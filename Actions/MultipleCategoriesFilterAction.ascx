@@ -1,4 +1,4 @@
-<%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.MultipleCategoriesFilterAction" CodeBehind="MultipleCategoryFilterAction.ascx.cs" %>
+<%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.MultipleCategoriesFilterAction" CodeBehind="MultipleCategoriesFilterAction.ascx.cs" %>
 <%@ Register TagPrefix="telerik" namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <asp:Button runat="server" ID="FilterButton" />
 <div runat="server" class="events-categoryfilter-dialog">
