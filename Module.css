@@ -760,3 +760,4 @@ a.PopupTriggerLink
 .ui-draggable .ui-dialog-titlebar { cursor: move; } 
 
 .events-categoryfilter-dialog { display: none; }
+.ui-dialog  { border: 2px solid #fff; -moz-box-shadow: 5px 5px 5px #c4c4c4; -webkit-box-shadow:  5px 5px 5px #c4c4c4; box-shadow: 5px 5px 5px #c4c4c4; }
