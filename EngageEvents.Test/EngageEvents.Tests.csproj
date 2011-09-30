@@ -39,7 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Engage.Framework, Version=3.2.5.27991, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Engage.Framework">
+      <HintPath>..\References\Framework\Engage.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="nunit-console-runner">
       <HintPath>..\packages\NUnit.2.5.10.11092\tools\lib\nunit-console-runner.dll</HintPath>
     </Reference>
