@@ -701,7 +701,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Actions\App_LocalResources\CategoryFilterAction.ascx.resx" />
-    <Content Include="Actions\App_LocalResources\MultipleCategoryFilterAction.ascx.resx" />
+    <Content Include="Actions\App_LocalResources\MultipleCategoriesFilterAction.ascx.resx" />
     <EmbeddedResource Include="JavaScript\jquery.fancybox-1.0.0.js" />
     <Content Include="Templates\Admin\ManageEvents\App_LocalResources\SharedResources.resx" />
     <Content Include="Templates\Legacy-ListingAll\App_LocalResources\SharedResources.resx">

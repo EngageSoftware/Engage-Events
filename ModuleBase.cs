@@ -46,6 +46,11 @@ namespace Engage.Dnn.Events
         private IEnumerable<int> categoryIds;
 
         /// <summary>
+        /// Backing field for <see cref="CategoryWithAncestorIds"/>
+        /// </summary>
+        private IEnumerable<int> categoryWithAncestorIds;
+
+        /// <summary>
         /// Backing field for <see cref="PermissionsService"/>
         /// </summary>
         private PermissionsService permissionsService;

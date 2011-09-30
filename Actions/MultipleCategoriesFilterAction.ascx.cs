@@ -98,32 +98,68 @@ namespace Engage.Dnn.Events
             this.CategoriesTreeView.DataValueField = "Id";
             this.CategoriesTreeView.DataFieldID = "Id";
             this.CategoriesTreeView.DataFieldParentID = "ParentId";
-            var categories = (from category in CategoryCollection.Load(this.PortalId)
-                              where !this.CategoryIds.Any() || this.CategoryIds.Contains(category.Id)
-                              select
-                                  new
-                                      {
-                                          Name =
-                                  string.IsNullOrEmpty(category.Name)
-                                      ? this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile)
-                                      : category.Name,
-                                          Id = category.Id.ToString(CultureInfo.InvariantCulture),
-                                          ParentId =
-                                  category.ParentId.HasValue
-                                      ? category.ParentId.Value.ToString(CultureInfo.InvariantCulture)
-                                      : string.Empty
-                                      }).ToList();
-            if (categories.Count > 1)
+            
+            IEnumerable<Category> categories = CategoryCollection.Load(this.PortalId);
+            if (this.CategoryIds.Any())
             {
-                categories.Add(new { Name = this.Localize("AllListItem.Text"), Id = string.Empty, ParentId = (string)null });
+                var categoryIdsWithAncestor = Utility.AddAncestorIds(this.CategoryIds.ToArray(), categories.ToArray(), true).ToArray();
+                categories = categories.Where(category => categoryIdsWithAncestor.Contains(category.Id));
+            }
+
+            var categoryNodeItems =
+                categories.Select(
+                    category =>
+                    new
+                        {
+                            Name =
+                        string.IsNullOrEmpty(category.Name)
+                            ? this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile)
+                            : category.Name,
+                            Id = category.Id.ToString(CultureInfo.InvariantCulture),
+                            ParentId =
+                        category.ParentId.HasValue
+                            ? category.ParentId.Value.ToString(CultureInfo.InvariantCulture)
+                            : string.Empty
+                        }).ToList();
+
+            if (categoryNodeItems.Count > 1)
+            {
+                categoryNodeItems.Add(new { Name = this.Localize("AllListItem.Text"), Id = string.Empty, ParentId = (string)null });
             }
             else
             {
                 this.CategoriesTreeView.Enabled = false;
             }
 
-            this.CategoriesTreeView.DataSource = categories;
+            this.CategoriesTreeView.DataSource = categoryNodeItems;
             this.CategoriesTreeView.DataBind();
+
+            ////var categories = (from category in CategoryCollection.Load(this.PortalId)
+            ////                  where !this.CategoryIds.Any() || this.CategoryIds.Contains(category.Id)
+            ////                  select
+            ////                      new
+            ////                          {
+            ////                              Name =
+            ////                      string.IsNullOrEmpty(category.Name)
+            ////                          ? this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile)
+            ////                          : category.Name,
+            ////                              Id = category.Id.ToString(CultureInfo.InvariantCulture),
+            ////                              ParentId =
+            ////                      category.ParentId.HasValue
+            ////                          ? category.ParentId.Value.ToString(CultureInfo.InvariantCulture)
+            ////                          : string.Empty
+            ////                          }).ToList();
+            ////if (categories.Count > 1)
+            ////{
+            ////    categories.Add(new { Name = this.Localize("AllListItem.Text"), Id = string.Empty, ParentId = (string)null });
+            ////}
+            ////else
+            ////{
+            ////    this.CategoriesTreeView.Enabled = false;
+            ////}
+
+            ////this.CategoriesTreeView.DataSource = categories;
+            ////this.CategoriesTreeView.DataBind();
 
             ////if (this.CategoriesTreeView.Nodes.Count > 1)
             ////{
@@ -171,16 +207,18 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="Telerik.Web.UI.RadTreeNodeEventArgs"/> instance containing the event data.</param>
         private void CategoriesTreeView_NodeDataBound(object sender, RadTreeNodeEventArgs e)
         {
-            if (this.SessionCategoryIds == null)
-            {
-                e.Node.Checked = true;
-                return;
-            }
-
+            
             int id;
             if (int.TryParse(e.Node.Value, out id))
             {
-                e.Node.Checked = this.SessionCategoryIds.Contains(id);
+                var isEnabled = this.CategoryIds.Contains(id);
+                e.Node.Attributes.Add("enabled", isEnabled ? "1" : "0");
+                e.Node.Enabled = isEnabled;
+                e.Node.Checked = this.SessionCategoryIds == null || this.SessionCategoryIds.Contains(id);
+            }
+            else if (this.SessionCategoryIds == null)
+            {
+                e.Node.Checked = true;
             }
         }
 
@@ -237,6 +275,13 @@ namespace Engage.Dnn.Events
         {
             foreach (var node in nodes)
             {
+                int id;
+                if (int.TryParse(node.Value, out id) && !this.CategoryIds.Contains(id))
+                {
+                    node.Enabled = false;
+                    node.Checked = false;
+                }
+
                 node.Enabled = enabled;
                 node.Checked = enabled;
 

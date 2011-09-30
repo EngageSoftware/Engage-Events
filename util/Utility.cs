@@ -16,6 +16,7 @@ namespace Engage.Dnn.Events
     using System.Data;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
+    using System.Linq;
     using System.Linq.Expressions;
     using System.Text;
     using System.Web.Hosting;
@@ -308,6 +309,44 @@ namespace Engage.Dnn.Events
         public static DataReaderEnumerable AsEnumerable(this IDataReader dataReader)
         {
             return new DataReaderEnumerable(dataReader);
+        }
+
+        /// <summary>
+        /// Adds the ancestor ids.
+        /// </summary>
+        /// <param name="categoryIds">The category ids.</param>
+        /// <param name="categories">The categories.</param>
+        /// <param name="recursive">if set to <c>true</c> [recursive].</param>
+        /// <returns>
+        /// Array of the categoryIds with its ancestors
+        /// </returns>
+        public static List<int> AddAncestorIds(int[] categoryIds, Category[] categories, bool recursive)
+        {
+            var ancestorList = new List<int>();
+            foreach (var categoryId in categoryIds)
+            {
+                var category = categories.Where(c => c.Id == categoryId).FirstOrDefault();
+                if (category != null)
+                {
+                    // find for its parent
+                    var parent = categories.Where(c => c.Id == category.ParentId).FirstOrDefault();
+                    if (parent != null && !ancestorList.Contains(parent.Id) && !categoryIds.Contains(parent.Id))
+                    {
+                        ancestorList.Add(parent.Id);
+                    }
+                }
+            }
+
+            if (ancestorList.Count > 0 && recursive)
+            {
+                // need to find the next ancestor for the categories in this list.
+                var nextAncestorList = AddAncestorIds(ancestorList.ToArray(), categories, true);
+                nextAncestorList.AddRange(categoryIds);
+                return nextAncestorList;
+            }
+
+            ancestorList.AddRange(categoryIds);
+            return ancestorList;
         }
 
         /// <summary>

@@ -219,50 +219,12 @@ namespace Engage.Dnn.Events
             IEnumerable<Category> categories = CategoryCollection.Load(this.PortalId);
             if (this.CategoryIds.Any())
             {
-                var categoryIdsWithAncestor = this.AddAncestorIds(this.CategoryIds.ToArray(), categories.ToArray(), true).ToArray();
+                var categoryIdsWithAncestor = Utility.AddAncestorIds(this.CategoryIds.ToArray(), categories.ToArray(), true).ToArray();
                 categories = categories.Where(category => categoryIdsWithAncestor.Contains(category.Id));
             }
 
             this.CategoriesGrid.DataSource = categories.ToList();
-        }
-
-        /// <summary>
-        /// Adds the ancestor ids.
-        /// </summary>
-        /// <param name="categoryIds">The category ids.</param>
-        /// <param name="categories">The categories.</param>
-        /// <param name="recursive">if set to <c>true</c> [recursive].</param>
-        /// <returns>
-        /// Array of the categoryIds with its ancestors
-        /// </returns>
-        private List<int> AddAncestorIds(int[] categoryIds, Category[] categories, bool recursive)
-        {
-            var ancestorList = new List<int>();
-            foreach (var categoryId in categoryIds)
-            {
-                var category = categories.Where(c => c.Id == categoryId).FirstOrDefault();
-                if (category != null)
-                {
-                    // find for its parent
-                    var parent = categories.Where(c => c.Id == category.ParentId).FirstOrDefault();
-                    if (parent != null && !ancestorList.Contains(parent.Id) && !categoryIds.Contains(parent.Id))
-                    {
-                        ancestorList.Add(parent.Id);
-                    }
-                }
-            }
-
-            if (ancestorList.Count > 0 && recursive)
-            {
-                // need to find the next ancestor for the categories in this list.
-                var nextAncestorList = this.AddAncestorIds(ancestorList.ToArray(), categories, true);
-                nextAncestorList.AddRange(categoryIds);
-                return nextAncestorList;
-            }
-
-            ancestorList.AddRange(categoryIds);
-            return ancestorList;
-        }
+        }        
 
         /// <summary>
         /// Handles the <see cref="RadGrid.InsertCommand"/> event of the <see cref="CategoriesGrid"/> control.
@@ -413,7 +375,7 @@ namespace Engage.Dnn.Events
                                          ? this.ParentCategories.Where(
                                              c => c.Id != category.Id)
                                          : this.ParentCategories;
-                    var filter = this.AddAncestorIds(this.CategoryIds.ToArray(), dataSource.ToArray(), false);
+                    var filter = Utility.AddAncestorIds(this.CategoryIds.ToArray(), dataSource.ToArray(), false);
                     dropDown.DataSource = dataSource.Where(c => filter.Contains(c.Id));
                     dropDown.DataBind();
                     dropDown.SelectedValue = (category != null && category.ParentId.HasValue)

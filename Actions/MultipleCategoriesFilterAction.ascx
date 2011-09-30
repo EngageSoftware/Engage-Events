@@ -50,11 +50,20 @@
         var nodes = treeView.get_allNodes();
 
         if (node.get_level() == 0 && node.get_index() == 0) {
+            // the root (all categories) node is checked
             var checked = node.get_checked();
             for (var i = 1; i < nodes.length; i++) {
+                var attributes = nodes[i].get_attributes();
                 if (nodes[i].get_nodes() != null) {
-                    nodes[i].set_enabled(!checked);
-                    nodes[i].set_checked(!checked);
+                    if (attributes.getAttribute("enabled") == "1") {
+                        nodes[i].set_enabled(!checked);
+                        nodes[i].set_checked(!checked);
+                    }
+                    else {
+                        // node is not in the module setting filter.
+                        nodes[i].set_enabled(false);
+                        nodes[i].set_checked(false);
+                    }
                 }
             }
         }
