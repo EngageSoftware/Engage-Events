@@ -44,23 +44,24 @@ namespace Engage.Dnn.Events
         {
             get
             {
-                if (this.CategoriesTreeView.Nodes.Count == 0 ||
-                    this.CategoriesTreeView.Nodes.Cast<RadTreeNode>().First() == this.CategoriesTreeView.CheckedNodes.FirstOrDefault())
+                int[] selectedIds = null;
+                var first = this.CategoriesTreeView.CheckedNodes.FirstOrDefault();
+                if (this.CategoriesTreeView.Nodes.Count != 0 && (first == null || first.Level != 0))
                 {
-                    return null;
-                }
-
-                var selectedCategoryIds = new List<int>();
-                foreach (var node in this.CategoriesTreeView.CheckedNodes)
-                {
-                    int id;
-                    if (int.TryParse(node.Value, out id))
+                    var selectedCategoryIds = new List<int>();
+                    foreach (var node in this.CategoriesTreeView.CheckedNodes)
                     {
-                        selectedCategoryIds.Add(id);
+                        int id;
+                        if (int.TryParse(node.Value, out id))
+                        {
+                            selectedCategoryIds.Add(id);
+                        }
                     }
+
+                    selectedIds = selectedCategoryIds.ToArray();
                 }
 
-                return selectedCategoryIds.ToArray();
+                return selectedIds;
             }
         }
 
@@ -98,7 +99,7 @@ namespace Engage.Dnn.Events
             this.CategoriesTreeView.DataValueField = "Id";
             this.CategoriesTreeView.DataFieldID = "Id";
             this.CategoriesTreeView.DataFieldParentID = "ParentId";
-            
+
             IEnumerable<Category> categories = CategoryCollection.Load(this.PortalId);
             if (this.CategoryIds.Any())
             {
@@ -110,17 +111,17 @@ namespace Engage.Dnn.Events
                 categories.Select(
                     category =>
                     new
-                        {
-                            Name =
-                        string.IsNullOrEmpty(category.Name)
-                            ? this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile)
-                            : category.Name,
-                            Id = category.Id.ToString(CultureInfo.InvariantCulture),
-                            ParentId =
-                        category.ParentId.HasValue
-                            ? category.ParentId.Value.ToString(CultureInfo.InvariantCulture)
-                            : string.Empty
-                        }).ToList();
+                    {
+                        Name =
+                    string.IsNullOrEmpty(category.Name)
+                        ? this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile)
+                        : category.Name,
+                        Id = category.Id.ToString(CultureInfo.InvariantCulture),
+                        ParentId =
+                    category.ParentId.HasValue
+                        ? category.ParentId.Value.ToString(CultureInfo.InvariantCulture)
+                        : string.Empty
+                    }).ToList();
 
             if (categoryNodeItems.Count > 1)
             {
@@ -133,42 +134,6 @@ namespace Engage.Dnn.Events
 
             this.CategoriesTreeView.DataSource = categoryNodeItems;
             this.CategoriesTreeView.DataBind();
-
-            ////var categories = (from category in CategoryCollection.Load(this.PortalId)
-            ////                  where !this.CategoryIds.Any() || this.CategoryIds.Contains(category.Id)
-            ////                  select
-            ////                      new
-            ////                          {
-            ////                              Name =
-            ////                      string.IsNullOrEmpty(category.Name)
-            ////                          ? this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile)
-            ////                          : category.Name,
-            ////                              Id = category.Id.ToString(CultureInfo.InvariantCulture),
-            ////                              ParentId =
-            ////                      category.ParentId.HasValue
-            ////                          ? category.ParentId.Value.ToString(CultureInfo.InvariantCulture)
-            ////                          : string.Empty
-            ////                          }).ToList();
-            ////if (categories.Count > 1)
-            ////{
-            ////    categories.Add(new { Name = this.Localize("AllListItem.Text"), Id = string.Empty, ParentId = (string)null });
-            ////}
-            ////else
-            ////{
-            ////    this.CategoriesTreeView.Enabled = false;
-            ////}
-
-            ////this.CategoriesTreeView.DataSource = categories;
-            ////this.CategoriesTreeView.DataBind();
-
-            ////if (this.CategoriesTreeView.Nodes.Count > 1)
-            ////{
-            ////    this.CategoriesTreeView.Nodes.Insert(0, new RadTreeNode(this.Localize("AllListItem.Text"), "0"));
-            ////}
-            ////else
-            ////{
-            ////    this.CategoriesTreeView.Enabled = false;
-            ////}
         }
 
         /// <summary>
@@ -197,6 +162,7 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void ApplyButton_Click(object sender, EventArgs e)
         {
+            this.Session.Add("categoryIds", this.SelectedCategoryIds);
             this.InvokeCategoryChanged(new EventArgs());
         }
 
@@ -207,12 +173,17 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="Telerik.Web.UI.RadTreeNodeEventArgs"/> instance containing the event data.</param>
         private void CategoriesTreeView_NodeDataBound(object sender, RadTreeNodeEventArgs e)
         {
+            if (this.IsPostBack)
+            {
+                return;
+            }
+
             int id;
             if (int.TryParse(e.Node.Value, out id))
             {
-                var isEnabled = this.CategoryIds.Contains(id);
+                var isEnabled = !this.CategoryIds.Any() || this.CategoryIds.Contains(id);
                 e.Node.Attributes.Add("enabled", isEnabled ? "1" : "0");
-                e.Node.Enabled = isEnabled;
+                ////e.Node.Enabled = isEnabled;
                 e.Node.Checked = this.SessionCategoryIds == null || this.SessionCategoryIds.Contains(id);
             }
             else if (this.SessionCategoryIds == null)
@@ -238,6 +209,11 @@ namespace Engage.Dnn.Events
         /// <param name="node">The node.</param>
         private void CheckFirstNodeSelected(RadTreeNode node)
         {
+            if (this.CategoryIds.Any())
+            {
+                return;
+            }
+
             var nodes = this.CategoriesTreeView.Nodes.Cast<RadTreeNode>().ToList();
             if (nodes.Count > 0 && node == nodes.First())
             {
@@ -317,7 +293,7 @@ namespace Engage.Dnn.Events
             if (this.SessionCategoryIds == null)
             {
                 // select all
-                var allCategoriesNode  = this.CategoriesTreeView.Nodes.Cast<RadTreeNode>().First();
+                var allCategoriesNode = this.CategoriesTreeView.Nodes.Cast<RadTreeNode>().First();
                 allCategoriesNode.Checked = true;
                 this.CheckFirstNodeSelected(allCategoriesNode);
             }

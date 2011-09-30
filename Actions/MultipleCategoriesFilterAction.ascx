@@ -2,7 +2,7 @@
 <%@ Register TagPrefix="telerik" namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <asp:Button runat="server" ID="FilterButton" />
 <div runat="server" class="events-categoryfilter-dialog">
-    <telerik:RadTreeView runat="server" ID="CategoriesTreeView" CheckBoxes="True" 
+    <telerik:RadTreeView runat="server" ID="CategoriesTreeView" CheckBoxes="True"
         TriStateCheckBoxes="False" CheckChildNodes="True"
         OnClientNodeChecked="OnClientNodeChecked" OnClientNodeClicking="OnClientNodeClicking" OnClientNodeClicked="OnClientNodeClicked"/>
     <asp:Button runat="server" ID="ApplyButton" OnClick="ApplyButton_Click"/>
@@ -10,17 +10,17 @@
 <script type="text/javascript">
     jQuery(function ($) {
         var dlg = $('.events-categoryfilter-dialog').dialog({
-                autoOpen: false,
-                position: {
-                    my: 'right top',
-                    at: 'right bottom',
-                    of: $('#<%=this.FilterButton.ClientID %>')
-                }
-            });
+            autoOpen: false,
+            position: {
+                my: 'right top',
+                at: 'right bottom',
+                of: $('#<%=this.FilterButton.ClientID %>')
+            }
+        });
 
         dlg.parent().appendTo($("form:first"));
 
-        $('#<%=this.FilterButton.ClientID %>').click(function() {
+        $('#<%=this.FilterButton.ClientID %>').click(function () {
             if ($('.events-categoryfilter-dialog').dialog("isOpen")) {
                 $('.events-categoryfilter-dialog').dialog("close");
             }
@@ -30,22 +30,8 @@
             return false;
         });
     });
-    
-    function OnClientNodeClicked(sender, event) {
-        var node = event.get_node();
-        node.set_selected(false);
-        return false;
-    }
 
-    function OnClientNodeClicking(sender, event) {
-        var node = event.get_node();
-        node.set_checked(!node.get_checked());
-        node.set_selected(false);
-        return false;
-    }
-
-    function OnClientNodeChecked(sender, event) {
-        var node = event.get_node();
+    function DisableEnableAll(node) {
         var treeView = $find("<%=this.CategoriesTreeView.ClientID %>");
         var nodes = treeView.get_allNodes();
 
@@ -85,5 +71,24 @@
                 }
             }
         }
+    }    
+    
+    function OnClientNodeClicked(sender, event) {
+        var node = event.get_node();
+        node.set_selected(false);
+        return false;
     }
+
+    function OnClientNodeClicking(sender, event) {
+        var node = event.get_node();
+        node.set_checked(!node.get_checked());
+        node.set_selected(false);
+        DisableEnableAll(node);
+        return false;
+    }
+
+    function OnClientNodeChecked(sender, event) {
+        var node = event.get_node();
+        DisableEnableAll(node);
+    }   
 </script>

@@ -207,7 +207,9 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void CategoryFilterAction_CategoryChanged(object sender, EventArgs e)
         {
-            this.BindData();
+            ////this.BindData();
+            // NOTE: temporarly reload the page instead of using postback since the multiplecategoriesfilter viewstate doesn't seem to sync properly because of all the client javascript.
+            this.Response.Redirect(BuildLinkUrl(this.TabId));
         }
 
         /// <summary>
@@ -268,7 +270,7 @@ namespace Engage.Dnn.Events.Display
             this.EventsCalendarDisplay.DataStartField = "EventStart";
             this.EventsCalendarDisplay.DataSubjectField = "Title";
 
-            var selectedCategoryId = this.CategoryFilterAction.SelectedCategoryId;
+            var selectedCategoryId = this.CategoryFilterAction.SelectedCategoryIds;
             this.EventsCalendarDisplay.DataSource = EventCollection.Load(
                 this.PortalId,
                 null,
@@ -277,7 +279,7 @@ namespace Engage.Dnn.Events.Display
                 this.IsFeatured,
                 this.HideFullEvents,
                 IsLoggedIn ? this.UserInfo.Email : null,
-                selectedCategoryId == null ? this.CategoryIds : selectedCategoryId.Value.AsSequence());
+                selectedCategoryId ?? this.CategoryIds);
             this.EventsCalendarDisplay.DataBind();
 
             var skinSetting = ModuleSettings.SkinSelection.GetValueAsEnumFor<TelerikSkin>(this).Value;

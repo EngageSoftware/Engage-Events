@@ -177,7 +177,7 @@ namespace Engage.Dnn.Events
                     if (normalItem != null && e.Item.DataItem != null)
                     {
                         var category = (Category)e.Item.DataItem;
-                        if (!this.CategoryIds.Contains(category.Id))
+                        if (this.CategoryIds.Any() && !this.CategoryIds.Contains(category.Id))
                         {
                             // disable this item if not on the filter list.
                             normalItem.Enabled = false;
@@ -376,7 +376,7 @@ namespace Engage.Dnn.Events
                                              c => c.Id != category.Id)
                                          : this.ParentCategories;
                     var filter = Utility.AddAncestorIds(this.CategoryIds.ToArray(), dataSource.ToArray(), false);
-                    dropDown.DataSource = dataSource.Where(c => filter.Contains(c.Id));
+                    dropDown.DataSource = dataSource.Where(c => !filter.Any() || filter.Contains(c.Id));
                     dropDown.DataBind();
                     dropDown.SelectedValue = (category != null && category.ParentId.HasValue)
                                                  ? category.ParentId.Value.ToString(CultureInfo.CurrentCulture)

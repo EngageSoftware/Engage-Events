@@ -1,5 +1,5 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.Display.EventCalendar" CodeBehind="EventCalendar.ascx.cs" %>
-<%@ Register TagPrefix="engage" TagName="CategoryFilterAction" Src="..\Actions\CategoryFilterAction.ascx" %>
+<%@ Register TagPrefix="engage" TagName="MultipleCategoriesFilterAction" Src="..\Actions\MultipleCategoriesFilterAction.ascx" %>
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 
 <script type="text/javascript">
@@ -26,7 +26,7 @@
         <asp:Label runat="server" ResourceKey="EventsTitle" />
     </h2>
     <div class="EventFilter">
-        <engage:CategoryFilterAction ID="CategoryFilterAction" runat="server" />
+        <engage:MultipleCategoriesFilterAction ID="CategoryFilterAction" runat="server" />
     </div>
 </div>
 <div class="EventCalendar">
