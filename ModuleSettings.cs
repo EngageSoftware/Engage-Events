@@ -196,11 +196,13 @@ namespace Engage.Dnn.Events
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Setting<T> is immutable")]
         private static readonly Setting<DateTime?> RangeEndSpecificDate = new Setting<DateTime?>("RangeEndSpecificDate", SettingScope.TabModule, null);
 
+#pragma warning disable 618
         /// <summary>
         /// The chosen display type (calendar or listing) for this module 
         /// </summary>
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Setting<T> is immutable")]
         private static readonly Setting<ListingMode> DisplayModeOption = new Setting<ListingMode>("DisplayModeOption", SettingScope.TabModule, ListingMode.All);
+#pragma warning restore 618
 
         /// <summary>
         /// Gets the date range for the given module.
@@ -211,7 +213,7 @@ namespace Engage.Dnn.Events
         {
             if (!RangeStartRelativeAmount.IsSettingDefinedFor(moduleControl) && DisplayModeOption.IsSettingDefinedFor(moduleControl))
             {
-                var dateRange = GetDateRangeForListingMode(DisplayModeOption.GetValueAsEnumFor<ListingMode>(moduleControl));
+                var dateRange = GetDateRangeForListingMode(moduleControl);
                 SetDateRangeSettings(moduleControl, dateRange);
                 return dateRange;
             }
@@ -321,13 +323,15 @@ namespace Engage.Dnn.Events
         /// Gets the date range represented by the listing mode, 
         /// to allow migrating from old settings (<see cref="ListingMode"/>) to new settings (<see cref="DateRange"/>).
         /// </summary>
-        /// <param name="listingMode">The listing mode.</param>
+        /// <param name="moduleControl">The module control for which to get the date range.</param>
         /// <returns>A new <see cref="DateRange"/> instance</returns>
-        private static DateRange GetDateRangeForListingMode(ListingMode? listingMode)
+        private static DateRange GetDateRangeForListingMode(IModuleControlBase moduleControl)
         {
             DateRangeBound startRangeBound;
             DateRangeBound endRangeBound;
-            switch (listingMode)
+
+#pragma warning disable 618
+            switch (DisplayModeOption.GetValueAsEnumFor<ListingMode>(moduleControl))
             {
                 case ListingMode.CurrentMonth:
                     startRangeBound = DateRangeBound.CreateRelativeBound(0, DateInterval.Day);
@@ -347,6 +351,7 @@ namespace Engage.Dnn.Events
                     endRangeBound = DateRangeBound.CreateUnboundedBound();
                     break;
             }
+#pragma warning restore 618
 
             return new DateRange(startRangeBound, endRangeBound);
         }

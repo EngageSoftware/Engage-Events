@@ -31,7 +31,6 @@ namespace Engage.Dnn.Events
     using Engage.Events;
 
 #if TRIAL
-    using Engage.Dnn.Events.Components;
     using Engage.Licensing;
 #endif
 
@@ -44,11 +43,6 @@ namespace Engage.Dnn.Events
         /// Backing field for <see cref="CategoryIds"/>
         /// </summary>
         private IEnumerable<int> categoryIds;
-
-        /// <summary>
-        /// Backing field for <see cref="CategoryWithAncestorIds"/>
-        /// </summary>
-        private IEnumerable<int> categoryWithAncestorIds;
 
         /// <summary>
         /// Backing field for <see cref="PermissionsService"/>

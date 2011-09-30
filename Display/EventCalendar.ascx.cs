@@ -271,7 +271,8 @@ namespace Engage.Dnn.Events.Display
             var selectedCategoryId = this.CategoryFilterAction.SelectedCategoryId;
             this.EventsCalendarDisplay.DataSource = EventCollection.Load(
                 this.PortalId,
-                ListingMode.All,
+                null,
+                null,
                 false,
                 this.IsFeatured,
                 this.HideFullEvents,

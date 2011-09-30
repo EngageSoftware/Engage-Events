@@ -155,7 +155,7 @@ namespace Engage.Dnn.Events
                         {
                             if (currentEvent != null)
                             {
-                                var cssClass = new StringBuilder(TemplateEngine.GetAttributeValue(tag, currentEvent, resourceFile, "CssClass", "class"));
+                                var cssClass = new StringBuilder(TemplateEngine.GetAttributeValue(tag, currentEvent, null, resourceFile, "CssClass", "class"));
                                 if (currentEvent.IsRecurring)
                                 {
                                     AppendCssClassAttribute(tag, cssClass, "RecurringEventCssClass");

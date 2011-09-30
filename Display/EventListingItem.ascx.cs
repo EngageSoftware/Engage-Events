@@ -331,7 +331,7 @@ namespace Engage.Dnn.Events.Display
                                     "<a href=\"{0}\"",
                                     HttpUtility.HtmlAttributeEncode(linkUrl));
 
-                            string detailLinkCssClass = TemplateEngine.GetAttributeValue(tag, templateItem, resourceFile, "CssClass", "class");
+                            string detailLinkCssClass = TemplateEngine.GetAttributeValue(tag, templateItem, null, resourceFile, "CssClass", "class");
                             if (Engage.Utility.HasValue(detailLinkCssClass))
                             {
                                 detailLinkBuilder.AppendFormat(
@@ -345,7 +345,7 @@ namespace Engage.Dnn.Events.Display
                             if (!tag.HasChildTags)
                             {
                                 detailLinkBuilder
-                                    .Append(TemplateEngine.GetAttributeValue(tag, templateItem, resourceFile, "Text"))
+                                    .Append(TemplateEngine.GetAttributeValue(tag, templateItem, (ITemplateable)null, resourceFile, "Text"))
                                     .Append("</a>");
                             }
 

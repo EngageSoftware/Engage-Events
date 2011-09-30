@@ -41,8 +41,8 @@ namespace Engage.Dnn.Events.Display
                 var backHyperlink = new HyperLink
                     {
                         NavigateUrl = Globals.NavigateURL(),
-                        CssClass = TemplateEngine.GetAttributeValue(tag, templateItem, resourceFile, "CssClass", "class"),
-                        Text = TemplateEngine.GetAttributeValue(tag, templateItem, resourceFile, "Text")
+                        CssClass = TemplateEngine.GetAttributeValue(tag, templateItem, null, resourceFile, "CssClass", "class"),
+                        Text = TemplateEngine.GetAttributeValue(tag, templateItem, (ITemplateable)null, resourceFile, "Text")
                     };
 
                 container.Controls.Add(backHyperlink);

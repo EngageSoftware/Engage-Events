@@ -113,7 +113,9 @@ namespace Engage.Dnn.Events
             {
                 if (!this.IsPostBack)
                 {
+#pragma warning disable 618 // Can't transition to DNN's LocalizeGridView until we're on DNN 4.6
                     Dnn.Utility.LocalizeGridView(ref this.SettingsGrid, this.LocalResourceFile);
+#pragma warning restore 618
                     this.FillTemplatesList();
                     this.TemplatesDropDownList.SelectedValue = this.selectedTemplateFolderName;
                     this.FillTemplateTab();
@@ -210,7 +212,9 @@ namespace Engage.Dnn.Events
             foreach (var settingPair in settings)
             {
                 // TODO: We need to take default settings into account, in case they haven't changed any of the settings yet
+#pragma warning disable 618
                 string currentSetting = Dnn.Utility.GetStringSetting(this.Settings, settingPair.Key);
+#pragma warning restore 618
                 if (!settingPair.Value.Equals(currentSetting, StringComparison.OrdinalIgnoreCase))
                 {
                     changedSettings.Add(settingPair.Key, new Pair<string, string>(settingPair.Value, currentSetting));

@@ -68,7 +68,9 @@ namespace Engage.Dnn.Events
             {
                 if (!this.IsPostBack)
                 {
+#pragma warning disable 618 // Can't transition to DNN's LocalizeGridView until we're on DNN 4.6
                     Dnn.Utility.LocalizeGridView(ref this.DetailsDisplayModuleGrid, this.LocalResourceFile);
+#pragma warning restore 618
                     this.DetailsDisplayModuleGrid.DataSource = new ModuleController().GetModulesByDefinition(this.PortalId, Utility.ModuleDefinitionFriendlyName);
                     this.DetailsDisplayModuleGrid.DataBind();
 

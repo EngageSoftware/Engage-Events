@@ -207,7 +207,6 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="Telerik.Web.UI.RadTreeNodeEventArgs"/> instance containing the event data.</param>
         private void CategoriesTreeView_NodeDataBound(object sender, RadTreeNodeEventArgs e)
         {
-            
             int id;
             if (int.TryParse(e.Node.Value, out id))
             {
