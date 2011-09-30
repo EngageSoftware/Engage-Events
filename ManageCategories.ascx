@@ -5,8 +5,9 @@
 
 <engage:ModuleMessage runat="server" ID="SuccessModuleMessage" MessageType="Success" CssClass="CategorySaveSuccessMessage"/>
 
-<telerik:RadGrid ID="CategoriesGrid" runat="server" AutoGenerateColumns="false" AllowMultiRowEdit="true" ValidationSettings-ValidationGroup="ManageCategories" CssClass="ManageCategoriesGrid">
-    <MasterTableView HierarchyDefaultExpanded="true" DataKeyNames="Id, ParentId" EditMode="InPlace" CommandItemDisplay="Top" >
+<telerik:RadGrid ID="CategoriesGrid" runat="server" AutoGenerateColumns="false" AllowMultiRowEdit="true" ValidationSettings-ValidationGroup="ManageCategories" 
+    CssClass="ManageCategoriesGrid">
+    <MasterTableView HierarchyDefaultExpanded="true" DataKeyNames="Id, ParentId" EditMode="InPlace" CommandItemDisplay="Top">
         <Columns>
             <telerik:GridEditCommandColumn UniqueName="EditButtons" ItemStyle-CssClass="buttons-col" EditText="Edit" CancelText="Cancel" UpdateText="Update" />
             <telerik:GridTemplateColumn UniqueName="Name" ItemStyle-CssClass="name-col">

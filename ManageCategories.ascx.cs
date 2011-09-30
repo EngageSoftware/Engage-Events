@@ -177,7 +177,17 @@ namespace Engage.Dnn.Events
                     if (normalItem != null && e.Item.DataItem != null)
                     {
                         var category = (Category)e.Item.DataItem;
-                        normalItem["Delete"].Controls.OfType<LinkButton>().Single().Visible = category.EventCount == 0;
+                        if (!this.CategoryIds.Contains(category.Id))
+                        {
+                            // disable this item if not on the filter list.
+                            normalItem.Enabled = false;
+                            normalItem["Delete"].Controls.OfType<LinkButton>().Single().Visible = false;
+                            normalItem["EditButtons"].Controls.OfType<LinkButton>().Single().Visible = false;
+                        }
+                        else
+                        {
+                            normalItem["Delete"].Controls.OfType<LinkButton>().Single().Visible = category.EventCount == 0;
+                        }
                     }
                 }
 
@@ -209,10 +219,49 @@ namespace Engage.Dnn.Events
             IEnumerable<Category> categories = CategoryCollection.Load(this.PortalId);
             if (this.CategoryIds.Any())
             {
-                categories = categories.Where(category => this.CategoryIds.Contains(category.Id));
+                var categoryIdsWithAncestor = this.AddAncestorIds(this.CategoryIds.ToArray(), categories.ToArray(), true).ToArray();
+                categories = categories.Where(category => categoryIdsWithAncestor.Contains(category.Id));
             }
 
-            this.CategoriesGrid.DataSource = categories;
+            this.CategoriesGrid.DataSource = categories.ToList();
+        }
+
+        /// <summary>
+        /// Adds the ancestor ids.
+        /// </summary>
+        /// <param name="categoryIds">The category ids.</param>
+        /// <param name="categories">The categories.</param>
+        /// <param name="recursive">if set to <c>true</c> [recursive].</param>
+        /// <returns>
+        /// Array of the categoryIds with its ancestors
+        /// </returns>
+        private List<int> AddAncestorIds(int[] categoryIds, Category[] categories, bool recursive)
+        {
+            var ancestorList = new List<int>();
+            foreach (var categoryId in categoryIds)
+            {
+                var category = categories.Where(c => c.Id == categoryId).FirstOrDefault();
+                if (category != null)
+                {
+                    // find for its parent
+                    var parent = categories.Where(c => c.Id == category.ParentId).FirstOrDefault();
+                    if (parent != null && !ancestorList.Contains(parent.Id) && !categoryIds.Contains(parent.Id))
+                    {
+                        ancestorList.Add(parent.Id);
+                    }
+                }
+            }
+
+            if (ancestorList.Count > 0 && recursive)
+            {
+                // need to find the next ancestor for the categories in this list.
+                var nextAncestorList = this.AddAncestorIds(ancestorList.ToArray(), categories, true);
+                nextAncestorList.AddRange(categoryIds);
+                return nextAncestorList;
+            }
+
+            ancestorList.AddRange(categoryIds);
+            return ancestorList;
         }
 
         /// <summary>
@@ -286,6 +335,7 @@ namespace Engage.Dnn.Events
             this.SuccessModuleMessage.Visible = true;
             this.SuccessModuleMessage.Text = this.Localize("CategoryUpdateSuccess");
 
+            e.Item.Edit = false;
             this.CategoriesGrid.Rebind();
         }
 
@@ -359,10 +409,12 @@ namespace Engage.Dnn.Events
                 var dropDown = editedItem.FindControl("ParentCategoriesComboBox") as RadComboBox;
                 if (dropDown != null)
                 {
-                    dropDown.DataSource = (category != null)
-                                              ? this.ParentCategories.Where(
-                                                  c => c.Id != category.Id)
-                                              : this.ParentCategories;
+                    var dataSource = (category != null)
+                                         ? this.ParentCategories.Where(
+                                             c => c.Id != category.Id)
+                                         : this.ParentCategories;
+                    var filter = this.AddAncestorIds(this.CategoryIds.ToArray(), dataSource.ToArray(), false);
+                    dropDown.DataSource = dataSource.Where(c => filter.Contains(c.Id));
                     dropDown.DataBind();
                     dropDown.SelectedValue = (category != null && category.ParentId.HasValue)
                                                  ? category.ParentId.Value.ToString(CultureInfo.CurrentCulture)
@@ -476,6 +528,6 @@ namespace Engage.Dnn.Events
                     }
                 }
             }
-        } 
+        }
     }
 }
