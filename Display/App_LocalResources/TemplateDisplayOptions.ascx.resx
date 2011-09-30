@@ -117,20 +117,44 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="All.Text" xml:space="preserve">
-    <value>All</value>
+  <data name="A Specific Date.Text" xml:space="preserve">
+    <value>A Specific Date</value>
   </data>
-  <data name="CurrentMonth.Text" xml:space="preserve">
-    <value>Current Month</value>
+  <data name="A Window of Days After Start.Text" xml:space="preserve">
+    <value>A Window of Days After Start</value>
   </data>
-  <data name="DisplayModeLabel.Help" xml:space="preserve">
-    <value>Select which set of events you want to be displayed in this module</value>
+  <data name="A Window of Days Before End.Text" xml:space="preserve">
+    <value>A Window of Days Before End</value>
+  </data>
+  <data name="after start.Text" xml:space="preserve">
+    <value>after start</value>
+  </data>
+  <data name="before end.Text" xml:space="preserve">
+    <value>before end</value>
+  </data>
+  <data name="Date Range Without Bounds.Text" xml:space="preserve">
+    <value>&lt;p&gt;Today, this will include every event&lt;/p&gt;</value>
+  </data>
+  <data name="Date Range Without End.Format" xml:space="preserve">
+    <value>&lt;p&gt;Today, this will include every event occuring on or after &lt;strong&gt;{0:D}&lt;/strong&lt;/p&gt;</value>
+  </data>
+  <data name="Date Range Without Start.Format" xml:space="preserve">
+    <value>&lt;p&gt;Today, this will include every event occuring before the end of &lt;strong&gt;{1:D}&lt;/strong&gt;&lt;/p&gt;</value>
+  </data>
+  <data name="Date Range.Format" xml:space="preserve">
+    <value>&lt;p&gt;Today, this will include every event occuring between the beginning of &lt;strong&gt;{0:D}&lt;/strong&gt; and the end of &lt;strong&gt;{1:D}&lt;/strong&gt;&lt;/p&gt;</value>
+  </data>
+  <data name="Days.Text" xml:space="preserve">
+    <value>Days</value>
   </data>
   <data name="DisplayModeLabel.Text" xml:space="preserve">
-    <value>Select a Display Mode</value>
+    <value>Date Range</value>
   </data>
-  <data name="Future.Text" xml:space="preserve">
-    <value>Future</value>
+  <data name="Months..Text" xml:space="preserve">
+    <value>Months</value>
+  </data>
+  <data name="Next Month.Text" xml:space="preserve">
+    <value>Next Month</value>
   </data>
   <data name="PagingLabel.Help" xml:space="preserve">
     <value>Specify how many records you want to display per page.</value>
@@ -138,10 +162,61 @@
   <data name="PagingLabel.Text" xml:space="preserve">
     <value>Enter the number of events to display per page</value>
   </data>
-  <data name="Past.Text" xml:space="preserve">
-    <value>Past</value>
+  <data name="RangeEndLabel.Help" xml:space="preserve">
+    <value>Choose the end of the range of events to display.  Events which occur after the selected range will not be included in the listing.  Note that when selecting a "range," such as This Month, you are effectively selecting the last date of that range (so, selecting This Month for the Start and End will give you the full month of events).  Events which start during the range and end after the range ends will still be included.</value>
+  </data>
+  <data name="RangeEndLabel.Text" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="RangeStartLabel.Help" xml:space="preserve">
+    <value>Choose the beginning of the range of events to display.  Events which occur before the selected date will not be included in the listing. Note that events which occur on the selected date will be included, and events which begin before the selected date but are still occuring on the selected date will also be included.</value>
+  </data>
+  <data name="RangeStartLabel.Text" xml:space="preserve">
+    <value>Start</value>
   </data>
   <data name="RecordsPerPageRequiredValidator.Text" xml:space="preserve">
     <value>You must supply the number of events to display per page</value>
+  </data>
+  <data name="The Beginning of Time.Text" xml:space="preserve">
+    <value>The Beginning of Time</value>
+  </data>
+  <data name="The End of Time.Text" xml:space="preserve">
+    <value>The End of Time</value>
+  </data>
+  <data name="This Month.Text" xml:space="preserve">
+    <value>This Month</value>
+  </data>
+  <data name="This Year.Text" xml:space="preserve">
+    <value>This Year</value>
+  </data>
+  <data name="Today.Text" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="Tomorrow.Text" xml:space="preserve">
+    <value>Tomorrow</value>
+  </data>
+  <data name="Years.Text" xml:space="preserve">
+    <value>Years</value>
+  </data>
+  <data name="Yesterday.Text" xml:space="preserve">
+    <value>Yesterday</value>
+  </data>
+  <data name="Both Window.Text" xml:space="preserve">
+    <value>Start and End cannot both be a window</value>
+  </data>
+  <data name="Missing specificDate.Text" xml:space="preserve">
+    <value>Please specify the date</value>
+  </data>
+  <data name="Missing windowAmount.Text" xml:space="preserve">
+    <value>Please specify the window amount</value>
+  </data>
+  <data name="Missing windowInterval.Text" xml:space="preserve">
+    <value>Please specify the window interval</value>
+  </data>
+  <data name="Window to Beginning of Time.Text" xml:space="preserve">
+    <value>A window of days is not valid against the beginning of time</value>
+  </data>
+  <data name="Window to End of Time.Text" xml:space="preserve">
+    <value>A window of days is not valid against the end of time</value>
   </data>
 </root>

@@ -20,9 +20,12 @@ namespace Engage.Dnn.Events.Display
     using System.Web;
     using System.Web.UI;
     using DotNetNuke.Common;
+
     using Engage.Events;
     using Framework.Templating;
     using Templating;
+
+    using Utility = Engage.Dnn.Events.Utility;
 
     /// <summary>
     /// Custom event listing item
@@ -33,12 +36,6 @@ namespace Engage.Dnn.Events.Display
         /// Backing field for <see cref="FilterCategoryIds"/>
         /// </summary>
         private IEnumerable<int> filterCategoryId;
-
-        /// <summary>
-        /// Gets the listing mode used for this display.
-        /// </summary>
-        /// <value>The listing mode used for this display</value>
-        public ListingMode ListingMode { get; private set; }
 
         /// <summary>
         /// Gets or sets the sort action control.
@@ -173,31 +170,11 @@ namespace Engage.Dnn.Events.Display
         }
 
         /// <summary>
-        /// Sets the listing mode used for this display.
-        /// </summary>
-        /// <param name="listingModeValue">The listing mode used for this display.</param>
-        public void SetListingMode(string listingModeValue)
-        {
-            if (!string.IsNullOrEmpty(listingModeValue))
-            {
-                try
-                {
-                    this.ListingMode = (ListingMode)Enum.Parse(typeof(ListingMode), listingModeValue, true);
-                }
-                catch (ArgumentException)
-                {
-                    // if listingModeValue does not parse, just leave this.ListingMode to its default
-                }
-            }
-        }
-
-        /// <summary>
         /// Raises the <see cref="EventArgs"/> event.
         /// </summary>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected override void OnInit(EventArgs e)
         {
-            this.ListingMode = ModuleSettings.DisplayModeOption.GetValueAsEnumFor<ListingMode>(this).Value;
             this.SetupTemplateProvider();
             base.OnInit(e);            
         }
@@ -452,9 +429,14 @@ namespace Engage.Dnn.Events.Display
         /// <returns>A list of the <see cref="Event"/>s over which the given <paramref name="listTag"/> should be processed</returns>
         private IEnumerable<ITemplateable> GetEvents(Tag listTag, ITemplateable context)
         {
+            var dateRange = this.IsManageEvents
+                                ? new DateRange(DateRangeBound.CreateUnboundedBound(), DateRangeBound.CreateUnboundedBound())
+                                : ModuleSettings.GetDateRangeFor(this);
+
             var events = EventCollection.Load(
                     this.PortalId,
-                    this.IsManageEvents ? ListingMode.All : this.ListingMode,
+                    dateRange.GetStartDate(),
+                    dateRange.GetEndDate(),
                     this.SortExpression,
                     this.CurrentPageIndex - 1,
                     this.RecordsPerPage,

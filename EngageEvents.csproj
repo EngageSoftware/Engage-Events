@@ -25,7 +25,7 @@
     <OldToolsVersion>3.5</OldToolsVersion>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
-    <JSLintSkip>\JavaScript\jquery.fancybox-1.0.0.js|\JavaScript\jquery-1.2.6.min.debug.js</JSLintSkip>
+    <JSLintSkip>\JavaScript\jquery.fancybox-1.0.0.js|\JavaScript\jquery-1.2.6.min.debug.js|\JavaScript\knockout-1.2.1.js|\JavaScript\knockout-1.2.1.debug.js|\JavaScript\json2.js|\JavaScript\jquery-ui-1.8.16.dialog.min.js</JSLintSkip>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -91,6 +91,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Telerik.Web.UI, Version=2009.3.1103.35, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
@@ -213,6 +214,7 @@
     <Compile Include="Admin\NotConfigured.ascx.designer.cs">
       <DependentUpon>NotConfigured.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Components\DateInterval.cs" />
     <Compile Include="Components\PermissionsService.cs" />
     <Compile Include="Controls\TemplatePicker.ascx.cs">
       <DependentUpon>TemplatePicker.ascx</DependentUpon>
@@ -244,6 +246,13 @@
     </Compile>
     <Compile Include="ExportFormat.cs" />
     <Compile Include="ModuleSettings.cs" />
+    <Compile Include="Components\DateRange.cs" />
+    <Compile Include="Components\DateRangeBound.cs" />
+    <Compile Include="Services\DateRangeBoundJsonTransferObject.cs" />
+    <Compile Include="Services\SettingsService.asmx.cs">
+      <DependentUpon>SettingsService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="SettingsBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -402,6 +411,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="EngageEvents.4.dnn" />
+    <None Include="JavaScript\json2.js" />
+    <EmbeddedResource Include="JavaScript\EngageEvents.TemplatedDisplayOptions.combined.js">
+      <DependentUpon>scripts.chirp.config</DependentUpon>
+    </EmbeddedResource>
+    <Content Include="JavaScript\knockout-1.2.1.debug.js" />
+    <Content Include="JavaScript\scripts.chirp.config" />
     <None Include="Migrated rules for EngageEvents.ruleset" />
     <None Include="Providers\DataProviders\SqlDataProvider\00.00.01.SqlDataProvider" />
     <None Include="Providers\DataProviders\SqlDataProvider\00.00.04.SqlDataProvider" />
@@ -428,6 +443,8 @@
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
+    <None Include="JavaScript\EngageEvents.TemplatedDisplayOptions.js" />
+    <None Include="JavaScript\knockout-1.2.1.js" />
     <EmbeddedResource Include="JavaScript\jquery-ui-1.8.16.dialog.min.js" />
     <Content Include="ReleaseNotes_01.05.06.htm" />
     <Content Include="ReleaseNotes_01.04.01.htm" />
@@ -454,6 +471,7 @@
     <Content Include="References\Framework\Engage.Dnn.Framework.dll" />
     <Content Include="References\Framework\Engage.Events.dll" />
     <Content Include="References\Framework\Engage.Framework.dll" />
+    <Content Include="Services\SettingsService.asmx" />
     <Content Include="Settings.ascx" />
     <Content Include="Module.css" />
   </ItemGroup>
@@ -686,7 +704,6 @@
     <Content Include="Images\fancy_title_left.png" />
     <Content Include="Images\fancy_title_main.png" />
     <Content Include="Images\fancy_title_right.png" />
-    <None Include="JavaScript\jquery-1.2.6.min.debug.js" />
     <Content Include="App_LocalResources\ChooseDisplay.ascx.resx">
       <SubType>Designer</SubType>
     </Content>

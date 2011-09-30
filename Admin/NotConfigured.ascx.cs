@@ -46,7 +46,6 @@ namespace Engage.Dnn.Events
             this.EnsureDefaultCategoryExists();
 
             ModuleSettings.DisplayType.Set(this, ModuleSettings.DisplayType.DefaultValue);
-            ModuleSettings.DisplayModeOption.Set(this, ModuleSettings.DisplayModeOption.DefaultValue);
             ModuleSettings.RecordsPerPage.Set(this, ModuleSettings.RecordsPerPage.DefaultValue);
 
             // TODO: add error handling if no templates exist?

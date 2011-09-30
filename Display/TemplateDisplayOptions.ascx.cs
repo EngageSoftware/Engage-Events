@@ -12,11 +12,16 @@
 namespace Engage.Dnn.Events.Display
 {
     using System;
-    using System.Collections;
+    using System.Reflection;
+    using System.Web.UI;
     using System.Web.UI.WebControls;
 
+    using DotNetNuke.Framework;
     using DotNetNuke.Services.Exceptions;
-    using Engage.Events;
+
+    using Telerik.Web.UI;
+
+    using SettingsBase = Engage.Dnn.Events.SettingsBase;
     using Utility = Dnn.Utility;
 
     /// <summary>
@@ -25,15 +30,63 @@ namespace Engage.Dnn.Events.Display
     public partial class TemplateDisplayOptions : SettingsBase
     {
         /// <summary>
+        /// Backing field for <see cref="DateRangeFromSettings"/>
+        /// </summary>
+        private DateRange dateRangeFromSettings;
+
+        /// <summary>
+        /// Backing field for <see cref="ParseInputToDateRange"/>
+        /// </summary>
+        private DateRange parsedDateRange;
+
+        /// <summary>
+        /// Gets a JSON string representing the start date range bound.
+        /// </summary>
+        protected string StartDateRangeBoundJson 
+        { 
+            get
+            {
+                return new DateRangeBoundJsonTransferObject(this.DateRangeFromSettings.Start).AsJson();
+            }
+        }
+
+        /// <summary>
+        /// Gets a JSON string representing the end date range bound.
+        /// </summary>
+        protected string EndDateRangeBoundJson 
+        { 
+            get
+            {
+                return new DateRangeBoundJsonTransferObject(this.DateRangeFromSettings.End).AsJson();
+            }
+        }
+
+        /// <summary>
         /// Gets the number of events to display per page.
         /// </summary>
         /// <value>The number of events to display per page.</value>
-        internal int RecordsPerPage
+        private int RecordsPerPage
         {
             get
             {
                 int? recordsPerPage = Dnn.Events.ModuleSettings.RecordsPerPage.GetValueAsInt32For(this);
                 return recordsPerPage.HasValue && recordsPerPage.Value > 0 ? recordsPerPage.Value : Dnn.Events.ModuleSettings.RecordsPerPage.DefaultValue;
+            }
+        }
+
+        /// <summary>
+        /// Gets the module's configured date range.
+        /// </summary>
+        private DateRange DateRangeFromSettings
+        {
+            get
+            {
+                if (this.dateRangeFromSettings == null)
+                {
+                    this.dateRangeFromSettings = Dnn.Events.ModuleSettings.GetDateRangeFor(this);
+                }
+
+                return this.dateRangeFromSettings;
             }
         }
 
@@ -44,11 +97,28 @@ namespace Engage.Dnn.Events.Display
         {
             try
             {
-                FillListControl(this.DisplayModeDropDown, Enum.GetNames(typeof(ListingMode)), string.Empty, string.Empty);
-                Utility.LocalizeListControl(this.DisplayModeDropDown, this.LocalResourceFile);
-                SelectListValue(this.DisplayModeDropDown, Dnn.Events.ModuleSettings.DisplayModeOption.GetValueAsStringFor(this));
+                base.LoadSettings();
+
+                ((ScriptManager)AJAX.ScriptManagerControl(this.Page)).Scripts.Add(new ScriptReference("Engage.Dnn.Events.JavaScript.EngageEvents.TemplatedDisplayOptions.combined.js", Assembly.GetExecutingAssembly().FullName));
+
+                this.LoadBoundSettings(
+                    this.DateRangeFromSettings.Start,
+                    this.RangeStartDropDownList,
+                    this.StartSpecificDatePicker,
+                    this.StartWindowAmountTextBox,
+                    this.StartWindowIntervalDropDownList);
+
+                this.LoadBoundSettings(
+                    this.DateRangeFromSettings.End,
+                    this.RangeEndDropDownList,
+                    this.EndSpecificDatePicker,
+                    this.EndWindowAmountTextBox,
+                    this.EndWindowIntervalDropDownList);
 
                 this.RecordsPerPageTextBox.Value = this.RecordsPerPage;
+
+                this.Load += (_, __) => this.DataBind();
+                this.DateRangeValidator.ServerValidate += this.DateRangeValidator_ServerValidate;
             }
             catch (Exception exc)
             {
@@ -61,28 +131,23 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         public override void UpdateSettings()
         {
-            base.UpdateSettings();
-
-            if (this.Page.IsValid)
+            try
             {
-                Dnn.Events.ModuleSettings.DisplayModeOption.Set(this, this.DisplayModeDropDown.SelectedValue);
+                base.UpdateSettings();
+
+                if (!this.Page.IsValid)
+                {
+                    return;
+                }
+
+                var dateRange = this.ParseInputToDateRange();
+                Dnn.Events.ModuleSettings.SetDateRangeSettings(this, dateRange);
                 Dnn.Events.ModuleSettings.RecordsPerPage.Set(this, (int)this.RecordsPerPageTextBox.Value.Value);
             }
-        }
-
-        /// <summary>
-        /// Fills the given list control with the items.
-        /// </summary>
-        /// <param name="list">The list to fill.</param>
-        /// <param name="items">The items with which to fill the <paramref name="list"/>.</param>
-        /// <param name="dataTextField">Name of the field in the <paramref name="items"/> that should be displayed as text in the <paramref name="list"/></param>
-        /// <param name="dataValueField">Name of the field in the <paramref name="items"/> that should be the value of the item in the <paramref name="list"/></param>
-        private static void FillListControl(ListControl list, IEnumerable items, string dataTextField, string dataValueField)
-        {
-            list.DataTextField = dataTextField;
-            list.DataValueField = dataValueField;
-            list.DataSource = items;
-            list.DataBind();
+            catch (Exception exc)
+            {
+                Exceptions.ProcessModuleLoadException(this, exc);
+            }
         }
 
         /// <summary>
@@ -97,6 +162,81 @@ namespace Engage.Dnn.Events.Display
             {
                 li.Selected = true;
             }
+        }
+
+        /// <summary>
+        /// Sets the initial values of the controls for a date range bound.
+        /// </summary>
+        /// <param name="bound">The bound to load</param>
+        /// <param name="rangeBoundList">The main range bound list.</param>
+        /// <param name="specificDatePicker">The picker for the specific date.</param>
+        /// <param name="windowAmountTextBox">The text box for the window amount.</param>
+        /// <param name="windowIntervalList">The window interval list.</param>
+        private void LoadBoundSettings(DateRangeBound bound, ListControl rangeBoundList, RadDatePicker specificDatePicker, RadNumericTextBox windowAmountTextBox, ListControl windowIntervalList)
+        {
+            Utility.LocalizeListControl(rangeBoundList, this.LocalResourceFile);
+            Utility.LocalizeListControl(windowIntervalList, this.LocalResourceFile);
+
+            SelectListValue(rangeBoundList, DateRangeBoundJsonTransferObject.GetListValueForBound(bound));
+
+            if (bound.IsSpecificDate)
+            {
+                specificDatePicker.SelectedDate = bound.SpecificDate;
+            }
+            else if (bound.IsWindow)
+            {
+                windowAmountTextBox.Value = bound.WindowAmount;
+                SelectListValue(windowIntervalList, bound.WindowInterval.Value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Parses the form's input into a date range.
+        /// </summary>
+        /// <returns>A <see cref="DateRange"/> instance</returns>
+        private DateRange ParseInputToDateRange()
+        {
+            if (this.parsedDateRange == null)
+            {
+                var startRangeBound = DateRangeBound.Parse(
+                    this.RangeStartDropDownList.SelectedValue,
+                    this.StartSpecificDatePicker.SelectedDate,
+                    this.StartWindowAmountTextBox.Value,
+                    this.StartWindowIntervalDropDownList.SelectedValue);
+
+                var endRangeBound = DateRangeBound.Parse(
+                    this.RangeEndDropDownList.SelectedValue,
+                    this.EndSpecificDatePicker.SelectedDate,
+                    this.EndWindowAmountTextBox.Value,
+                    this.EndWindowIntervalDropDownList.SelectedValue);
+
+                this.parsedDateRange = new DateRange(startRangeBound, endRangeBound);
+            }
+
+            return this.parsedDateRange;
+        }
+
+        /// <summary>
+        /// Handles the <see cref="CustomValidator.ServerValidate"/> event of the <see cref="DateRangeValidator"/> control.
+        /// </summary>
+        /// <param name="source">The source of the event.</param>
+        /// <param name="args">The <see cref="System.Web.UI.WebControls.ServerValidateEventArgs"/> instance containing the event data.</param>
+        private void DateRangeValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            DateRange dateRange;
+            try
+            {
+                dateRange = this.ParseInputToDateRange();
+            }
+            catch (ArgumentNullException exc)
+            {
+                args.IsValid = false;
+                this.DateRangeValidator.ErrorMessage = this.Localize("Missing " + exc.ParamName);
+                return;
+            }
+
+            args.IsValid = dateRange.IsValid;
+            this.DateRangeValidator.ErrorMessage = this.Localize(dateRange.ErrorMessage);
         }
     }
 }
