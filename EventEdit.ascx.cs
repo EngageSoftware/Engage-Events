@@ -12,6 +12,7 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using System.Web.UI.WebControls;
@@ -23,6 +24,8 @@ namespace Engage.Dnn.Events
     using DotNetNuke.UI.Utilities;
 
     using Engage.Events;
+
+    using Telerik.Web.UI;
 
     using Globals = DotNetNuke.Common.Globals;
 
@@ -291,6 +294,38 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Convert to the hierarchical categories.
+        /// </summary>
+        /// <param name="hierarchicalList">The hierarchical list.</param>
+        /// <param name="categories">The categories.</param>
+        /// <param name="parentCategory">The parent category.</param>
+        /// <param name="level">The level.</param>
+        private void ToIndentedList(List<RadComboBoxItem> hierarchicalList, List<Category> categories, Category parentCategory, int level)
+        {
+            foreach (var category in categories.Where(c => parentCategory == null ? c.ParentId == null : c.ParentId == parentCategory.Id))
+            {
+                var listItem =
+                    new RadComboBoxItem(
+                        string.IsNullOrEmpty(category.Name)
+                            ? this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile)
+                            : level > 0 ? " " + category.Name : category.Name,
+                        category.Id.ToString(CultureInfo.InvariantCulture));
+
+                if (level > 0)
+                {
+                    var pad = string.IsNullOrEmpty(this.Localize("Indent.Text")) ? '>' : this.Localize("Indent.Text")[0];
+                    listItem.Text = listItem.Text.PadLeft(listItem.Text.Length + level, pad);
+                }
+
+                hierarchicalList.Add(listItem);
+                if (categories.ToList().Any(c => c.ParentId == category.Id))
+                {
+                    this.ToIndentedList(hierarchicalList, categories, category, level + 1);
+                }
+            }
+        }
+
+        /// <summary>
         /// Fills the <see cref="TimeZoneDropDownList"/> and <see cref="CategoryComboBox"/>.
         /// </summary>
         private void FillLists()
@@ -301,19 +336,26 @@ namespace Engage.Dnn.Events
                 CultureInfo.CurrentCulture.Name,
                 ((int)Dnn.Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings).TotalMinutes).ToString(CultureInfo.InvariantCulture));
 
-            var categories = from category in CategoryCollection.Load(this.PortalId)
+            ////var categories = from category in CategoryCollection.Load(this.PortalId)
+            ////                 where !this.CategoryIds.Any() || this.CategoryIds.Contains(category.Id)
+            ////                 select new
+            ////                     {
+            ////                         Name = string.IsNullOrEmpty(category.Name)
+            ////                                    ? this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile)
+            ////                                    : category.Name,
+            ////                         Id = category.Id.ToString(CultureInfo.InvariantCulture)
+            ////                     };
+
+            var categories = (from category in CategoryCollection.Load(this.PortalId)
                              where !this.CategoryIds.Any() || this.CategoryIds.Contains(category.Id)
-                             select new
-                                 {
-                                     Name = string.IsNullOrEmpty(category.Name)
-                                                ? this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile)
-                                                : category.Name,
-                                     Id = category.Id.ToString(CultureInfo.InvariantCulture)
-                                 };
+                             select category).ToList();
+
+            var indentedList = new List<RadComboBoxItem>();
+            this.ToIndentedList(indentedList, categories, null, 0);
             this.CategoryComboBox.AllowCustomText = this.PermissionsService.CanManageCategories;
-            this.CategoryComboBox.DataTextField = "Name";
-            this.CategoryComboBox.DataValueField = "Id";
-            this.CategoryComboBox.DataSource = categories;
+            this.CategoryComboBox.DataTextField = "Text";
+            this.CategoryComboBox.DataValueField = "Value";
+            this.CategoryComboBox.DataSource = indentedList;
             this.CategoryComboBox.DataBind();
 
             // don't show the categories if there's only one option

@@ -243,4 +243,7 @@
   <data name="StartDateTimePickerRequired.Text" xml:space="preserve">
     <value>You must specify when your event begins</value>
   </data>
+  <data name="Indent.Text" xml:space="preserve">
+    <value>&gt;</value>
+  </data>
 </root>
