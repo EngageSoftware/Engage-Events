@@ -1,6 +1,6 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.MultipleCategoriesFilterAction" CodeBehind="MultipleCategoriesFilterAction.ascx.cs" %>
 <%@ Register TagPrefix="telerik" namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
-<asp:Button runat="server" ID="FilterButton" />
+<asp:Button runat="server" ID="FilterButton" OnClientClick="return false;" />
 <div runat="server" class="events-categoryfilter-dialog">
     <telerik:RadTreeView runat="server" ID="CategoriesTreeView" CheckBoxes="True"
         TriStateCheckBoxes="False" CheckChildNodes="True"
@@ -27,6 +27,7 @@
             else {
                 $('.events-categoryfilter-dialog').dialog("open");
             }
+            
             return false;
         });
     });

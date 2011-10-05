@@ -154,8 +154,8 @@ namespace Engage.Dnn.Events
 
             this.Load += this.Page_Load;
             ////this.AllCategoriesCheckBox.CheckedChanged += this.AllCategoriesCheckBox_CheckedChanged;
-            this.CategoriesCheckBoxTreeView.NodeCheck += this.CategoriesCheckBoxTreeView_NodeCheck;
-            this.CategoriesCheckBoxTreeView.NodeClick += this.CategoriesCheckBoxTreeView_NodeClick;
+            ////this.CategoriesCheckBoxTreeView.NodeCheck += this.CategoriesCheckBoxTreeView_NodeCheck;
+            ////this.CategoriesCheckBoxTreeView.NodeClick += this.CategoriesCheckBoxTreeView_NodeClick;
             this.CategoriesListValidator.ServerValidate += this.CategoriesListValidator_ServerValidate;
             this.DetailsDisplayModuleValidator.ServerValidate += this.DetailsDisplayModuleValidator_ServerValidate;
             this.CategoriesCheckBoxTreeView.NodeCreated += this.CategoriesCheckBoxTreeView_NodeCreated;

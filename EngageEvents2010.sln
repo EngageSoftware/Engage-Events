@@ -41,8 +41,8 @@ Global
 		Trial|x86 = Trial|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F9BEB83D-4945-45DE-BF7D-11FBD4A15080}.Debug|Any CPU.ActiveCfg = Trial|Any CPU
-		{F9BEB83D-4945-45DE-BF7D-11FBD4A15080}.Debug|Any CPU.Build.0 = Trial|Any CPU
+		{F9BEB83D-4945-45DE-BF7D-11FBD4A15080}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9BEB83D-4945-45DE-BF7D-11FBD4A15080}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9BEB83D-4945-45DE-BF7D-11FBD4A15080}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{F9BEB83D-4945-45DE-BF7D-11FBD4A15080}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{F9BEB83D-4945-45DE-BF7D-11FBD4A15080}.Debug|x86.ActiveCfg = Debug|Any CPU

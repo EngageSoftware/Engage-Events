@@ -27,7 +27,7 @@
             <div class="EventsSetting">
                 <dnn:label ResourceKey="CategoriesLabel" runat="server" CssClass="SubHead" />
                 <%--<asp:CheckBox ID="AllCategoriesCheckBox" runat="server" ResourceKey="All Categories" AutoPostBack="true" />--%>
-                <telerik:RadTreeView runat="server" ID="CategoriesCheckBoxTreeView" CheckBoxes="True" TriStateCheckBoxes="False" CheckChildNodes="true" />
+                <telerik:RadTreeView runat="server" ID="CategoriesCheckBoxTreeView" CheckBoxes="True" TriStateCheckBoxes="False" CheckChildNodes="true" OnClientNodeChecked="OnClientNodeChecked" OnClientNodeClicking="OnClientNodeClicking" OnClientNodeClicked="OnClientNodeClicked"/>
                 <asp:CustomValidator ID="CategoriesListValidator" runat="server" CssClass="NormalRed" ResourceKey="CategoriesListValidator" Display="None" ForeColor="" />
             </div>
             <div class="EventsSetting">
@@ -59,3 +59,58 @@
         <asp:ValidationSummary runat="server" ShowMessageBox="false" ShowSummary="true" CssClass="NormalRed" />
     </ContentTemplate>
 </asp:UpdatePanel>
+<script type="text/javascript">
+    function DisableEnableAll(node) {
+        var treeView = $find("<%=this.CategoriesCheckBoxTreeView.ClientID %>");
+        var nodes = treeView.get_allNodes();
+
+        if (node.get_level() == 0 && node.get_index() == 0) {
+            // the root (all categories) node is checked
+            var checked = node.get_checked();
+            for (var i = 1; i < nodes.length; i++) {
+                var attributes = nodes[i].get_attributes();
+                if (nodes[i].get_nodes() != null) {
+                    nodes[i].set_enabled(!checked);
+                    nodes[i].set_checked(!checked);
+                }
+            }
+        }
+        else {
+            // check if all nodes are unchecked
+            var allUnchecked = true;
+            for (var i = 1; i < nodes.length; i++) {
+                allUnchecked = allUnchecked && !nodes[i].get_checked();
+            }
+
+            if (allUnchecked) {
+                nodes[0].set_checked(true);
+
+                for (var i = 1; i < nodes.length; i++) {
+                    if (nodes[i].get_nodes() != null) {
+                        nodes[i].set_enabled(false);
+                        nodes[i].set_checked(false);
+                    }
+                }
+            }
+        }
+    }
+
+    function OnClientNodeClicked(sender, event) {
+        var node = event.get_node();
+        node.set_selected(false);
+        return false;
+    }
+
+    function OnClientNodeClicking(sender, event) {
+        var node = event.get_node();
+        node.set_checked(!node.get_checked());
+        node.set_selected(false);
+        DisableEnableAll(node);
+        return false;
+    }
+
+    function OnClientNodeChecked(sender, event) {
+        var node = event.get_node();
+        DisableEnableAll(node);
+    }   
+</script>
