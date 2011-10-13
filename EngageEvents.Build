@@ -3,7 +3,7 @@
   <property name="projectName" value="Events"/>
   <property name="createTrialPackage" value="true"/>
   <property name="trialPackageLicenseName" value="Trial"/>
-  <property name="versions" value="4,5,5.2"/>
+  <property name="versions" value="5,5.2"/>
   <property name="licenses" value="Standard,Professional,Enterprise"/>
   <property name="packageFileNameTemplate" value="${projectName}_${packageLicense}_${projectVersion}_${packageType}_DNN${dnnVersion}" dynamic="true"/>
   <property name="dependencySourcePackageFileNameTemplate" value="${projectName}_${packageLicense}_${projectVersion}_DependencySource" dynamic="true"/>
@@ -118,7 +118,6 @@
         <include name="??.??.??.txt" />
         <include name="ReadMe.txt" />
         <include name="**/*.SqlDataProvider"/>
-        <include name="**/*.4.dnn"/>
         <include name="**/*.5.dnn"/>
       </fileset>
     </copy>
@@ -153,11 +152,14 @@
         <xmlpoke file="${packageDirectory}/temp/package/Engage${projectName}.5.dnn" value="${assemblyVersion}" xpath="dotnetnuke/packages/package/components/component[@type='Assembly']/assemblies/assembly[name='${path::get-file-name(assemblyFile)}']/version"/>
       </foreach>
       
+      <if test="${file::exists(referencesDirectory + '/DotNetNuke.dll')}">
+        <property name="assemblyFile" value="${referencesDirectory}/DotNetNuke.dll" />
+        <call target="set-assemblyVersion" />
+        <xmlpoke file="${packageDirectory}/temp/package/Engage${projectName}.5.dnn" value="${assemblyVersion}" xpath="dotnetnuke/packages/package/dependencies/dependency[@type='CoreVersion']"/>
+      </if>
+      
       <copy file="${packageDirectory}/temp/package/Engage${projectName}.5.dnn" tofile="${packageDirectory}/temp/package/Engage${projectName}.5.2.dnn"/>
       <xmlstrip file="${packageDirectory}/temp/package/Engage${projectName}.5.2.dnn" xpath="dotnetnuke/packages/package/components/component[@type='Assembly']/assemblies/assembly[name='Telerik.Web.UI.dll']"/>
-    </if>
-    <if test="${file::exists(packageDirectory + '/temp/package/Engage' + projectName + '.4.dnn')}">
-      <xmlpoke file="${packageDirectory}/temp/package/Engage${projectName}.4.dnn" value="${projectVersion}" xpath="//*[@latestVersion='latestVersion']"/>
     </if>
   </target>
   <target name="create-resources-zip" description="Creates the Resources.zip file for content (Install package) files">
@@ -208,7 +210,6 @@
     <zip zipfile="${packageDirectory}/${packageFileNameTemplate}.zip">
       <fileset basedir="${packageDirectory}/temp/package">
         <include name="**/*"/>
-        <exclude name="**/*.4.dnn" if="${dnnVersion!='4'}"/>
         <exclude name="**/*.5.dnn" if="${dnnVersion!='5'}"/>
         <exclude name="**/*.5.2.dnn" if="${dnnVersion!='5.2'}"/>
         <exclude name="**/Telerik.Web.UI.dll" if="${dnnVersion=='5.2'}"/>

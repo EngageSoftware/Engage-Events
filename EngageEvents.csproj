@@ -410,11 +410,11 @@
     <Compile Include="Util\Utility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="EngageEvents.4.dnn" />
     <None Include="JavaScript\json2.js" />
     <EmbeddedResource Include="JavaScript\EngageEvents.TemplatedDisplayOptions.combined.js">
       <DependentUpon>scripts.chirp.config</DependentUpon>
     </EmbeddedResource>
+    <Content Include="Images\events-icon32.png" />
     <Content Include="JavaScript\knockout-1.2.1.debug.js" />
     <Content Include="JavaScript\scripts.chirp.config" />
     <None Include="Migrated rules for EngageEvents.ruleset" />

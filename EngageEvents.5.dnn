@@ -3,6 +3,7 @@
     <package name="Engage: Events" type="Module" version="01.02.00">
       <friendlyName>Engage: Events</friendlyName>
       <description>The DotNetNuke Events module by Engage Software (www.EngageSoftware.com)</description>
+      <iconFile>DesktopModules/EngageEvents/Images/events-icon32.png</iconFile>
       <owner>
         <name>Engage Software</name>
         <organization>Engage Software</organization>
@@ -11,6 +12,9 @@
       </owner>
       <license src="Licenses/EULA-Standard.htm"/>
       <releaseNotes src="ReleaseNotes_01.02.00.htm" />
+      <dependencies>
+        <dependency type="CoreVersion">5.0.0</dependency>
+      </dependencies>
       <components>
         <component type="ResourceFile">
           <resourceFiles>
