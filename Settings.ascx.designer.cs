@@ -37,7 +37,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UserControl FeaturedEventLabel;
+        protected global::DotNetNuke.UI.UserControls.LabelControl FeaturedEventLabel;
         
         /// <summary>
         /// FeaturedCheckBox control.
@@ -55,7 +55,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UserControl HideFullEventsLabel;
+        protected global::DotNetNuke.UI.UserControls.LabelControl HideFullEventsLabel;
         
         /// <summary>
         /// HideFullEventsCheckBox control.

@@ -42,7 +42,7 @@ namespace Engage.Dnn.Events
                         {
                             if (@this.PermissionsService.CanManageEvents)
                             {
-                                    ButtonAction editEventAction = (ButtonAction)@this.LoadControl(@this.ActionsControlsFolder + "ButtonAction.ascx");
+                                    var editEventAction = (ButtonAction)@this.LoadControl(@this.ActionsControlsFolder + "ButtonAction.ascx");
                                     editEventAction.CurrentEvent = currentEvent;
                                     editEventAction.ModuleConfiguration = @this.ModuleConfiguration;
                                     editEventAction.Href = @this.BuildLinkUrl(@this.ModuleId, "EventEdit", Utility.GetEventParameters(currentEvent));
@@ -59,7 +59,7 @@ namespace Engage.Dnn.Events
                         {
                             if (@this.PermissionsService.CanViewResponses)
                             {
-                                    ButtonAction responsesEventAction = (ButtonAction)@this.LoadControl(@this.ActionsControlsFolder + "ButtonAction.ascx");
+                                    var responsesEventAction = (ButtonAction)@this.LoadControl(@this.ActionsControlsFolder + "ButtonAction.ascx");
                                     responsesEventAction.CurrentEvent = currentEvent;
                                     responsesEventAction.ModuleConfiguration = @this.ModuleConfiguration;
                                     responsesEventAction.Href = @this.BuildLinkUrl(@this.ModuleId, "ResponseDetail", Utility.GetEventParameters(currentEvent));
@@ -77,7 +77,7 @@ namespace Engage.Dnn.Events
                             // must be an active event and has not ended
                             if (currentEvent != null && currentEvent.AllowRegistrations && !currentEvent.Canceled && currentEvent.EventEnd > DateTime.Now)
                             {
-                                    RegisterAction registerEventAction = (RegisterAction)@this.LoadControl(@this.ActionsControlsFolder + "RegisterAction.ascx");
+                                    var registerEventAction = (RegisterAction)@this.LoadControl(@this.ActionsControlsFolder + "RegisterAction.ascx");
                                     registerEventAction.CurrentEvent = currentEvent;
                                     registerEventAction.ModuleConfiguration = @this.ModuleConfiguration;
                                     registerEventAction.LocalResourceFile = resourceFile;
@@ -95,7 +95,7 @@ namespace Engage.Dnn.Events
                             // must be an active event and has not ended
                             if (currentEvent != null && !currentEvent.Canceled && currentEvent.EventEnd > DateTime.Now)
                             {
-                                    AddToCalendarAction addToCalendarAction =
+                                    var addToCalendarAction =
                                     (AddToCalendarAction)@this.LoadControl(@this.ActionsControlsFolder + "AddToCalendarAction.ascx");
                                     addToCalendarAction.CurrentEvent = currentEvent;
                                     addToCalendarAction.ModuleConfiguration = @this.ModuleConfiguration;
@@ -111,7 +111,7 @@ namespace Engage.Dnn.Events
                         "DELETEBUTTON", 
                         (@this, container, tag, currentEvent, resourceFile) => 
                         {
-                                DeleteAction deleteAction = (DeleteAction)@this.LoadControl(@this.ActionsControlsFolder + "DeleteAction.ascx");
+                                var deleteAction = (DeleteAction)@this.LoadControl(@this.ActionsControlsFolder + "DeleteAction.ascx");
                                 deleteAction.CurrentEvent = currentEvent;
                                 deleteAction.ModuleConfiguration = @this.ModuleConfiguration;
                                 deleteAction.LocalResourceFile = resourceFile;
@@ -126,7 +126,7 @@ namespace Engage.Dnn.Events
                         "CANCELBUTTON", 
                         (@this, container, tag, currentEvent, resourceFile) => 
                         {
-                                CancelAction cancelAction = (CancelAction)@this.LoadControl(@this.ActionsControlsFolder + "CancelAction.ascx");
+                                var cancelAction = (CancelAction)@this.LoadControl(@this.ActionsControlsFolder + "CancelAction.ascx");
                                 cancelAction.CurrentEvent = currentEvent;
                                 cancelAction.ModuleConfiguration = @this.ModuleConfiguration;
                                 cancelAction.LocalResourceFile = resourceFile;
@@ -265,7 +265,8 @@ namespace Engage.Dnn.Events
 
                 return false;
             }
-            else if (tag.TagType == TagType.Close && tag.LocalName.Equals("EVENTWRAPPER", StringComparison.OrdinalIgnoreCase))
+            
+            if (tag.TagType == TagType.Close && tag.LocalName.Equals("EVENTWRAPPER", StringComparison.OrdinalIgnoreCase))
             {
                 container.Controls.Add(new LiteralControl("</div>"));
             }

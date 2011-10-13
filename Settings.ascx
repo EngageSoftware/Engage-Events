@@ -26,7 +26,6 @@
             </div>
             <div class="EventsSetting">
                 <dnn:label ResourceKey="CategoriesLabel" runat="server" CssClass="SubHead" />
-                <%--<asp:CheckBox ID="AllCategoriesCheckBox" runat="server" ResourceKey="All Categories" AutoPostBack="true" />--%>
                 <telerik:RadTreeView runat="server" ID="CategoriesCheckBoxTreeView" CheckBoxes="True" TriStateCheckBoxes="False" CheckChildNodes="true" OnClientNodeChecked="OnClientNodeChecked" OnClientNodeClicking="OnClientNodeClicking" OnClientNodeClicked="OnClientNodeClicked"/>
                 <asp:CustomValidator ID="CategoriesListValidator" runat="server" CssClass="NormalRed" ResourceKey="CategoriesListValidator" Display="None" ForeColor="" />
             </div>

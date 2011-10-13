@@ -13,6 +13,7 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Linq;
     using System.Web.UI.WebControls;
@@ -21,7 +22,6 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.UserControls;
-    using DotNetNuke.UI.Utilities;
 
     using Engage.Events;
 
@@ -300,25 +300,41 @@ namespace Engage.Dnn.Events
         /// <param name="categories">The categories.</param>
         /// <param name="parentCategory">The parent category.</param>
         /// <param name="level">The level.</param>
+        [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "Telerik.Web.UI.RadComboBoxItem.#ctor(System.String,System.String)", Justification = "Don't need to localize space")]
         private void ToIndentedList(List<RadComboBoxItem> hierarchicalList, List<Category> categories, Category parentCategory, int level)
         {
             foreach (var category in categories.Where(c => parentCategory == null ? c.ParentId == null : c.ParentId == parentCategory.Id))
             {
-                var listItem =
-                    new RadComboBoxItem(
-                        string.IsNullOrEmpty(category.Name)
-                            ? this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile)
-                            : level > 0 ? " " + category.Name : category.Name,
-                        category.Id.ToString(CultureInfo.InvariantCulture));
+                var listItemText = string.IsNullOrEmpty(category.Name)
+                                       ? this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile)
+                                       : level > 0 ? " " + category.Name : category.Name;
+                var listItemValue = category.Id.ToString(CultureInfo.InvariantCulture);
 
-                if (level > 0)
+                RadComboBoxItem listItem = null;
+                try
                 {
-                    var pad = string.IsNullOrEmpty(this.Localize("Indent.Text")) ? '>' : this.Localize("Indent.Text")[0];
-                    listItem.Text = listItem.Text.PadLeft(listItem.Text.Length + level, pad);
+                    listItem = new RadComboBoxItem(listItemText, listItemValue);
+
+                    if (level > 0)
+                    {
+                        var pad = string.IsNullOrEmpty(this.Localize("Indent.Text")) ? '>' : this.Localize("Indent.Text")[0];
+                        listItem.Text = listItem.Text.PadLeft(listItem.Text.Length + level, pad);
+                    }
+
+                    hierarchicalList.Add(listItem);
+                }
+                catch
+                {
+                    if (listItem != null)
+                    {
+                        listItem.Dispose();
+                    }
+
+                    throw;
                 }
 
-                hierarchicalList.Add(listItem);
-                if (categories.ToList().Any(c => c.ParentId == category.Id))
+                var categoryId = category.Id;
+                if (categories.ToList().Any(c => c.ParentId == categoryId))
                 {
                     this.ToIndentedList(hierarchicalList, categories, category, level + 1);
                 }

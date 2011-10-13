@@ -194,30 +194,6 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Handles the NodeCheck event of the CategoriesCheckBoxTreeView control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="Telerik.Web.UI.RadTreeNodeEventArgs"/> instance containing the event data.</param>
-        private void CategoriesCheckBoxTreeView_NodeCheck(object sender, RadTreeNodeEventArgs e)
-        {
-            if (e.Node.Level == 0)
-            {
-                // all categories node
-                this.SetEnabledAllNodes(e.Node.Nodes.Cast<RadTreeNode>(), !e.Node.Checked);
-            }
-        }
-
-        /// <summary>
-        /// Handles the NodeClick event of the CategoriesCheckBoxTreeView control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="Telerik.Web.UI.RadTreeNodeEventArgs"/> instance containing the event data.</param>
-        private void CategoriesCheckBoxTreeView_NodeClick(object sender, RadTreeNodeEventArgs e)
-        {
-            e.Node.Selected = false;
-        }
-
-        /// <summary>
         /// Disables / enables the all nodes.
         /// </summary>
         /// <param name="nodes">The nodes.</param>

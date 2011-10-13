@@ -19,10 +19,10 @@ namespace Engage.Dnn.Events
     using System.Linq;
     using System.Linq.Expressions;
     using System.Text;
-    using System.Web.Hosting;
 
     using DotNetNuke.Services.Localization;
 
+    using Engage.Annotations;
     using Engage.Events;
     using Telerik.Web.UI;
 
@@ -40,16 +40,6 @@ namespace Engage.Dnn.Events
         /// The friendly name of this module's definition.
         /// </summary>
         public const string ModuleDefinitionFriendlyName = "Engage: Events";
-
-        /// <summary>
-        /// The host setting key base for whether this module have been configured
-        /// </summary>
-        public const string ModuleConfigured = "ModuleConfigured";
-
-        // <summary>
-        // The License Key for the Engage: Events module
-        // </summary>
-        ////internal static readonly Guid LicenseKey = new Guid("FB92E7C1-F789-4adc-99F2-47BC612BF541");
 
         /// <summary>
         /// Backing field for <see cref="OrdinalValues"/>
@@ -78,48 +68,12 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Gets the relative path to the templates folder.
-        /// </summary>
-        /// <value>The relative path to the templates folder</value>
-        public static string TemplatesFolderName
-        {
-            get
-            {
-                return DesktopModuleFolderName + "Templates/";
-            }
-        }
-
-        /// <summary>
-        /// Gets the full physical path for the templates folder.
-        /// </summary>
-        /// <value>The full physical path for the templates folder</value>
-        public static string PhysicalTemplatesFolderName
-        {
-            get
-            {
-                return HostingEnvironment.MapPath("~" + TemplatesFolderName);
-            }
-        }
-
-        /// <summary>
         /// Gets a dictionary mapping ordinal day values (based on <see cref="RecurrencePattern.DayOrdinal"/>) to their localization resource keys.
         /// </summary>
         /// <value>The mapping between ordinal day values and their localization resource keys.</value>
         public static IDictionary<int, string> OrdinalValues
         {
             get { return OrdinalValuesDictionary; }
-        }
-
-        /// <summary>
-        /// Determines whether the specified email address is valid.
-        /// </summary>
-        /// <param name="emailAddress">The email address.</param>
-        /// <returns>
-        /// <c>true</c> if the specified email address is valid; otherwise, <c>false</c>.
-        /// </returns>
-        public static bool IsValidEmailAddress(string emailAddress)
-        {
-            return Engage.Utility.ValidateEmailAddress(emailAddress);
         }
 
         /// <summary>
@@ -221,28 +175,7 @@ namespace Engage.Dnn.Events
         /// </returns>
         public static string GetRecurrenceSummary(RecurrenceRule recurrenceRule)
         {
-            string recurrenceSummary = string.Empty;
-            if (recurrenceRule != null)
-            {
-                switch (recurrenceRule.Pattern.Frequency)
-                {
-                    case RecurrenceFrequency.Weekly:
-                        recurrenceSummary = GetWeeklyRecurrenceSummary(recurrenceRule.Pattern, LocalSharedResourceFile);
-                        break;
-                    case RecurrenceFrequency.Monthly:
-                        recurrenceSummary = GetMonthlyRecurrenceSummary(recurrenceRule.Pattern, LocalSharedResourceFile);
-                        break;
-                    case RecurrenceFrequency.Yearly:
-                        recurrenceSummary = GetYearlyRecurrenceSummary(recurrenceRule.Pattern, LocalSharedResourceFile);
-                        break;
-                        ////case RecurrenceFrequency.Daily:
-                    default:
-                        recurrenceSummary = GetDailyRecurrenceSummary(recurrenceRule.Pattern, LocalSharedResourceFile);
-                        break;
-                }
-            }
-
-            return recurrenceSummary;
+            return GetRecurrenceSummary(recurrenceRule, LocalSharedResourceFile);
         }
 
         /// <summary>
@@ -320,20 +253,28 @@ namespace Engage.Dnn.Events
         /// <returns>
         /// Array of the categoryIds with its ancestors
         /// </returns>
-        public static List<int> AddAncestorIds(int[] categoryIds, Category[] categories, bool recursive)
+        public static IEnumerable<int> AddAncestorIds([NotNull] IEnumerable<int> categoryIds, IEnumerable<Category> categories, bool recursive)
         {
+            if (categoryIds == null)
+            {
+                throw new ArgumentNullException("categoryIds");
+            }
+
             var ancestorList = new List<int>();
             foreach (var categoryId in categoryIds)
             {
-                var category = categories.Where(c => c.Id == categoryId).FirstOrDefault();
-                if (category != null)
+                var lambdaCategoryId = categoryId;
+                var category = categories.Where(c => c.Id == lambdaCategoryId).FirstOrDefault();
+                if (category == null)
                 {
-                    // find for its parent
-                    var parent = categories.Where(c => c.Id == category.ParentId).FirstOrDefault();
-                    if (parent != null && !ancestorList.Contains(parent.Id) && !categoryIds.Contains(parent.Id))
-                    {
-                        ancestorList.Add(parent.Id);
-                    }
+                    continue;
+                }
+
+                // find its parent
+                var parent = categories.Where(c => c.Id == category.ParentId).FirstOrDefault();
+                if (parent != null && !ancestorList.Contains(parent.Id) && !categoryIds.Contains(parent.Id))
+                {
+                    ancestorList.Add(parent.Id);
                 }
             }
 
@@ -341,8 +282,7 @@ namespace Engage.Dnn.Events
             {
                 // need to find the next ancestor for the categories in this list.
                 var nextAncestorList = AddAncestorIds(ancestorList.ToArray(), categories, true);
-                nextAncestorList.AddRange(categoryIds);
-                return nextAncestorList;
+                return nextAncestorList.Concat(categoryIds);
             }
 
             ancestorList.AddRange(categoryIds);

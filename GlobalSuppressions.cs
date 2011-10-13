@@ -36,3 +36,6 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "EventStart", Scope = "member", Target = "Engage.Dnn.Events.ModuleBase.#EventStart")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "QueryString", Scope = "member", Target = "Engage.Dnn.Events.ModuleBase.#EventStart")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "ManageCategories", Scope = "member", Target = "Engage.Dnn.Events.Navigation.GlobalNavigation.#SetupLinks()")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "Engage.Dnn.Events.Components", Justification = "Breaking change")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "Engage.Dnn.Events.Controls", Justification = "Breaking change")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "Engage.Dnn.Events.Navigation", Justification = "Breaking change")]
