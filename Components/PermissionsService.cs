@@ -60,7 +60,7 @@ namespace Engage.Dnn.Events.Components
             }
 
             this.ModulePermissions = moduleConfiguration.ModulePermissions;
-            this.TabPermissions = new TabPermissionController().GetTabPermissionsCollectionByTabID(moduleConfiguration.TabID, moduleConfiguration.PortalID);
+            this.TabPermissions = TabPermissionController.GetTabPermissions(moduleConfiguration.TabID, moduleConfiguration.PortalID);
         }
 
         /// <summary>
