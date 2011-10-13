@@ -446,6 +446,12 @@
     <None Include="JavaScript\EngageEvents.TemplatedDisplayOptions.js" />
     <None Include="JavaScript\knockout-1.2.1.js" />
     <EmbeddedResource Include="JavaScript\jquery-ui-1.8.16.dialog.min.js" />
+    <Content Include="Module.css">
+      <DependentUpon>Module.chirp.less</DependentUpon>
+    </Content>
+    <Content Include="Module.min.css">
+      <DependentUpon>Module.chirp.less</DependentUpon>
+    </Content>
     <Content Include="ReleaseNotes_01.05.06.htm" />
     <Content Include="ReleaseNotes_01.04.01.htm" />
     <Content Include="Images\icon-canvas.png" />
@@ -473,7 +479,7 @@
     <Content Include="References\Framework\Engage.Framework.dll" />
     <Content Include="Services\SettingsService.asmx" />
     <Content Include="Settings.ascx" />
-    <Content Include="Module.css" />
+    <None Include="Module.chirp.less" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\EmptyStar.png" />
