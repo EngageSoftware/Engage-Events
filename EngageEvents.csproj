@@ -414,6 +414,7 @@
     <EmbeddedResource Include="JavaScript\EngageEvents.TemplatedDisplayOptions.combined.js">
       <DependentUpon>scripts.chirp.config</DependentUpon>
     </EmbeddedResource>
+    <Content Include="ReleaseNotes_01.06.00.htm" />
     <Content Include="Images\events-icon32.png" />
     <Content Include="JavaScript\knockout-1.2.1.debug.js" />
     <Content Include="JavaScript\scripts.chirp.config" />

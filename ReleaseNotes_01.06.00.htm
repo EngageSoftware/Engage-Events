@@ -1,0 +1,18 @@
+﻿<div class="Normal">
+	<h3>Change Log</h3>
+    <ul>
+        <li>Added the ability to enter arbitrary date ranges of events to display in the listing, replacing the four "Display Type" options</li>
+        <li>Added the ability to nest categories in a hierarchy (i.e. subcategories)</li>
+        <li>Updated default listing template to display categories as a hierarchy</li>
+        <li>Removed support for DotNetNuke 4.x; 5.0.0 is the required minimum version</li>
+        <li>More details can be found on the <a href="http://support.engagesoftware.com/Default.aspx?EVT=ChangeLog">Engage: Events Change Log</a></li>
+    </ul>
+    <h3>Known Issues</h3>
+    <ul>
+        <li>Some versions of modules from OnyakTech will conflict with Engage: Events.  Starting in DNN 5.2, the Telerik assembly is shared with the core, so this issue should be resolved.</li>
+        <li>In DNN 5.2, the reference to the included Telerik assembly is incompatible with any other version.  It is recommended to upgrade to DNN 5.2.2 or above to address this issue.</li>
+        <li>The entire range of a recurring event might not display on the Calendar view. To increase performance, only 1,000 possible dates are considered to display. This means that only about 33 years of a yearly recurrence will display, while close to the full 1,000 days of a daily recurrence will be shown.</li>
+        <li>If you have multiple events modules on the same page, paging through the events or responses lists on one module will cause the other module to change pages as well. This can cause an issue if the other module has fewer pages than the module you are paging through, resulting in a blank module.</li>
+        <li>Line breaks entered in the Overview field of an event are not displayed; that is, all text displays on the same line, regardless of any line breaks entered.</li>
+    </ul>
+</div>
