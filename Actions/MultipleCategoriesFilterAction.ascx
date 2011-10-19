@@ -14,8 +14,17 @@
             position: {
                 my: 'right top',
                 at: 'right bottom',
-                of: $('#<%=this.FilterButton.ClientID %>')
+                of: $('#<%=this.FilterButton.ClientID %>'),
+                collision: 'none'
             }
+        });
+
+        $('.events-categoryfilter-dialog').click(function (e) {
+            e.stopPropagation();
+        });
+
+        $("body").click(function () {
+            $('.events-categoryfilter-dialog').dialog("close");
         });
 
         dlg.parent().appendTo($("form:first"));
@@ -27,7 +36,7 @@
             else {
                 $('.events-categoryfilter-dialog').dialog("open");
             }
-            
+
             return false;
         });
     });

@@ -1,4 +1,4 @@
-/*================ Event Custom Listing Page ==========================*/
+﻿/*================ Event Custom Listing Page ==========================*/
 .EventHeader, .ResponseHeader, .ResponseRow {
   clear: both;
   width: 100%;
@@ -945,7 +945,7 @@ a.PopupTriggerLink {
 }
 .ui-widget-content {
   border: 1px solid #dddddd;
-  background: #eeeeee url(images/ui-bg_highlight-soft_100_eeeeee_1x100.png) 50% top repeat-x;
+  background: #eeeeee 50% top repeat-x;
   color: #333333;
 }
 .ui-widget-content a {
@@ -953,7 +953,7 @@ a.PopupTriggerLink {
 }
 .ui-widget-header {
   border: 1px solid #e78f08;
-  background: #f6a828 url(images/ui-bg_gloss-wave_35_f6a828_500x100.png) 50% 50% repeat-x;
+  background: #f6a828 50% 50% repeat-x;
   color: #ffffff;
   font-weight: bold;
 }
@@ -1628,9 +1628,7 @@ a.PopupTriggerLink {
 }
 /* Overlays */
 .ui-widget-overlay {
-  background: #666666 url(images/ui-bg_diagonals-thick_20_666666_40x40.png) 50% 50% repeat;
-  opacity: .50;
-  filter: alpha(opacity=50);
+  background: none;
 }
 .ui-widget-shadow {
   margin: -5px 0 0 -5px;
