@@ -135,7 +135,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void LocalizeControls()
         {
-            ClientAPI.AddButtonConfirm(this.DeleteEventButton, Localization.GetString("ConfirmDelete", this.LocalResourceFile));
+            ////ClientAPI.AddButtonConfirm(this.DeleteEventButton, Localization.GetString("ConfirmDelete", this.LocalResourceFile));
         }
     }
 }

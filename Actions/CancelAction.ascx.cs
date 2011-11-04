@@ -31,6 +31,20 @@ namespace Engage.Dnn.Events
         public event EventHandler Cancel;
 
         /// <summary>
+        /// Gets a value indicating whether this instance is canceled.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is canceled; otherwise, <c>false</c>.
+        /// </value>
+        protected bool Canceled 
+        { 
+            get
+            {
+                return this.CurrentEvent.Canceled;
+            }
+        }
+
+        /// <summary>
         /// Sets the visibility of each of the buttons.  Also, sets the text for the cancel/uncancel button, and the delete confirm.
         /// </summary>
         protected override void BindData()
@@ -117,8 +131,8 @@ namespace Engage.Dnn.Events
                                          ? Localization.GetString("UnCancel", this.LocalResourceFile)
                                          : Localization.GetString("Cancel", this.LocalResourceFile);
 
-            ClientAPI.AddButtonConfirm(
-                this.CancelButton, Localization.GetString(this.CurrentEvent.Canceled ? "ConfirmUnCancel" : "ConfirmCancel", this.LocalResourceFile));
+            ////ClientAPI.AddButtonConfirm(
+            ////    this.CancelButton, Localization.GetString(this.CurrentEvent.Canceled ? "ConfirmUnCancel" : "ConfirmCancel", this.LocalResourceFile));
         }
     }
 }
