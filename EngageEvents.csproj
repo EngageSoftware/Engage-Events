@@ -32,7 +32,7 @@
     <DebugType>full</DebugType>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <OutputPath>..\..\Bin\</OutputPath>
-    <DocumentationFile>EngageEvents.xml</DocumentationFile>
+    <DocumentationFile>..\..\Bin\EngageEvents.xml</DocumentationFile>
     <WarningLevel>1</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRules>
