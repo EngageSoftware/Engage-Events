@@ -21,6 +21,7 @@ namespace Engage.Dnn.Events
     using System.Web.UI.HtmlControls;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Framework;
+    using DotNetNuke.Services.Exceptions;
     using DotNetNuke.UI.Utilities;
     using Globals = DotNetNuke.Common.Globals;
 
@@ -71,10 +72,17 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected override void OnInit(EventArgs e)
         {
-            AJAX.AddScriptManager(this.Page);
+            try
+            {
+                AJAX.AddScriptManager(this.Page);
 
-            base.OnInit(e);
-            this.Load += this.Page_Load;
+                base.OnInit(e);
+                this.Load += this.Page_Load;
+            }
+            catch (Exception exc)
+            {
+                Exceptions.ProcessModuleLoadException(this, exc);
+            }
         }
 
         /// <summary>
@@ -84,8 +92,15 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Page_Load(object sender, EventArgs e)
         {
-            this.RespondControl.ModuleConfiguration = new ModuleController().GetModule(this.ModuleId, this.TabId);
-            this.LoadStylesheets();
+            try
+            {
+                this.RespondControl.ModuleConfiguration = new ModuleController().GetModule(this.ModuleId, this.TabId);
+                this.LoadStylesheets();
+            }
+            catch (Exception exc)
+            {
+                Exceptions.ProcessModuleLoadException(this, exc);
+            }
         }
 
         /// <summary>
