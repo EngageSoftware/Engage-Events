@@ -483,6 +483,7 @@
     <exclude name="Licenses/EULA-*"/>
     <exclude name="ReleaseNotes_*.htm"/>
     <exclude name="??.??.??.txt" />
+    <exclude name="packages/**"/>
     <exclude name="_ReSharper.*/**"/>
     <exclude name="**/obj/**"/>
     <exclude name="${referencesDirectory}/**"/>
