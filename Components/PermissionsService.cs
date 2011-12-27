@@ -59,7 +59,11 @@ namespace Engage.Dnn.Events.Components
                 throw new ArgumentNullException("moduleConfiguration", "moduleConfiguration must not be null");
             }
 
+// Only ModulePermissions getter should be marked Obsolete
+#pragma warning disable 612
             this.ModulePermissions = moduleConfiguration.ModulePermissions;
+#pragma warning restore 612
+
             this.TabPermissions = TabPermissionController.GetTabPermissions(moduleConfiguration.TabID, moduleConfiguration.PortalID);
         }
 
