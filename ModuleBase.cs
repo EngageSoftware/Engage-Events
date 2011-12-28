@@ -279,12 +279,23 @@ namespace Engage.Dnn.Events
             get
             {
                 int index;
-                if (!int.TryParse(this.Request.QueryString["currentPage"], NumberStyles.Integer, CultureInfo.InvariantCulture, out index))
+                if (!int.TryParse(this.Request.QueryString[this.PageIndexQueryStringKey], NumberStyles.Integer, CultureInfo.InvariantCulture, out index))
                 {
                     index = 1;
                 }
 
                 return index;
+            }
+        }
+
+        /// <summary>
+        /// Gets the query-string key for the index of the current page.
+        /// </summary>
+        protected string PageIndexQueryStringKey
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, this.Localize("PageIndexKey.Format", this.LocalSharedResourceFile), this.ModuleId);
             }
         }
 

@@ -234,7 +234,8 @@ namespace Engage.Dnn.Events.Display
 
             var sortParameter = sortExpression != null ? "sort=" + sortExpression : null;
             var statusParameter = status != null ? "status=" + status : null;
-            return this.BuildLinkUrl(this.ModuleId, controlKey, sortParameter, statusParameter, "currentPage=" + UniqueReplaceableTemplateValue).Replace(UniqueReplaceableTemplateValue, "{0}");
+            return this.BuildLinkUrl(this.ModuleId, controlKey, sortParameter, statusParameter, this.PageIndexQueryStringKey + "=" + UniqueReplaceableTemplateValue)
+                       .Replace(UniqueReplaceableTemplateValue, "{0}");
         }
 
         /// <summary>

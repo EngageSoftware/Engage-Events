@@ -210,4 +210,8 @@
   <data name="Add Event.Action" xml:space="preserve">
     <value>Add Event</value>
   </data>
+  <data name="PageIndexKey.Format" xml:space="preserve">
+    <value>p{0}</value>
+    <comment>{0} is module ID (for differentiation when multiple modules are on the same page)</comment>
+  </data>
 </root>
