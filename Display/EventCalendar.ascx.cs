@@ -21,7 +21,6 @@ namespace Engage.Dnn.Events.Display
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
     using Engage.Events;
-    using Engage.Util;
 
     using Telerik.Web.UI;
 
@@ -105,6 +104,11 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         private void LocalizeCalendar()
         {
+            this.EventsCalendarDisplay.Culture = CultureInfo.CurrentCulture;
+            this.EventsCalendarDisplay.FirstDayOfWeek = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+            var lastDayOfWeek = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek - 1;
+            this.EventsCalendarDisplay.LastDayOfWeek = lastDayOfWeek < DayOfWeek.Sunday ? DayOfWeek.Saturday : lastDayOfWeek;
+
             this.EventsCalendarDisplay.Localization.HeaderToday = Localization.GetString("HeaderToday.Text", this.LocalResourceFile);
             this.EventsCalendarDisplay.Localization.HeaderPrevDay = Localization.GetString("HeaderPrevDay.Text", this.LocalResourceFile);
             this.EventsCalendarDisplay.Localization.HeaderNextDay = Localization.GetString("HeaderNextDay.Text", this.LocalResourceFile);
@@ -262,7 +266,6 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         private void BindData()
         {
-            this.EventsCalendarDisplay.Culture = CultureInfo.CurrentCulture;
             this.EventsCalendarDisplay.DataEndField = "EventEnd";
             this.EventsCalendarDisplay.DataKeyField = "Id";
             this.EventsCalendarDisplay.DataRecurrenceField = "RecurrenceRule";
