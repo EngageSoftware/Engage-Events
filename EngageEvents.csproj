@@ -358,13 +358,6 @@
     <Compile Include="Navigation\GlobalNavigation.ascx.designer.cs">
       <DependentUpon>GlobalNavigation.ascx</DependentUpon>
     </Compile>
-    <Compile Include="EmailAFriend.ascx.cs">
-      <DependentUpon>EmailAFriend.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="EmailAFriend.ascx.designer.cs">
-      <DependentUpon>EmailAFriend.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Respond.ascx.cs">
       <DependentUpon>Respond.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -524,9 +517,6 @@
     </Content>
     <Content Include="ResponseSummaryDisplay.ascx" />
     <Content Include="EventEdit.ascx" />
-    <Content Include="Samples\AttendingReminder.htm" />
-    <Content Include="Samples\NoResponseReminder.htm" />
-    <Content Include="Samples\NotAttendingReminder.htm" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_LocalResources\UserContainer.ascx.resx">
@@ -548,12 +538,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_LocalResources\Respond.ascx.resx">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="EmailAFriend.ascx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_LocalResources\EmailAFriend.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
