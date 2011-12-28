@@ -16,13 +16,14 @@ namespace Engage.Dnn.Events
     using System.Globalization;
     using System.Linq;
     using System.Web.UI;
+    using System.Web.UI.WebControls;
 
     using Engage.Events;
 
     using Telerik.Web.UI;
 
     /// <summary>
-    /// Allows the user to choose whether to display all events or only active events.
+    /// Allows the user to filter the list to multiple categories
     /// </summary>
     public partial class MultipleCategoriesFilterAction : ActionControlBase
     {
@@ -32,9 +33,9 @@ namespace Engage.Dnn.Events
         private int[] sessionCategoryIds;
 
         /// <summary>
-        /// Occurs when the sort has changed.
+        /// Occurs when the selected category has changed.
         /// </summary>
-        public event EventHandler CategoryChanged;
+        public event EventHandler CategoryChanged = (_, __) => { };
 
         /// <summary>
         /// Gets the ID of the category of event to display.
@@ -79,15 +80,6 @@ namespace Engage.Dnn.Events
 
                 return this.sessionCategoryIds;
             }
-        }
-
-        /// <summary>
-        /// Raises the <see cref="CategoryChanged"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        protected void OnCategoryChanged(EventArgs e)
-        {
-            this.InvokeCategoryChanged(e);
         }
 
         /// <summary>
@@ -137,16 +129,17 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
+        /// Raises the <see cref="Control.Init"/> event.
         /// </summary>
-        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
-            this.Load += this.Page_Load;
 
-            this.CategoriesTreeView.NodeCreated += this.CategoriesTreeView_NodeCreated;
+            this.Load += this.Page_Load;
+            this.CategoriesTreeView.NodeCreated += CategoriesTreeView_NodeCreated;
             this.CategoriesTreeView.NodeDataBound += this.CategoriesTreeView_NodeDataBound;
+            this.ApplyButton.Click += this.ApplyButton_Click;
 
             if (!this.IsPostBack)
             {
@@ -156,21 +149,20 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Handles the Click event of the MultipleCategoriesFilterButton control.
+        /// Handles the <see cref="RadTreeView.NodeCreated"/> event of the <see cref="CategoriesTreeView"/> control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void ApplyButton_Click(object sender, EventArgs e)
+        /// <param name="e">The <see cref="RadTreeNodeEventArgs"/> instance containing the event data.</param>
+        private static void CategoriesTreeView_NodeCreated(object sender, RadTreeNodeEventArgs e)
         {
-            this.Session.Add("categoryIds", this.SelectedCategoryIds);
-            this.InvokeCategoryChanged(new EventArgs());
+            e.Node.Expanded = true;
         }
 
         /// <summary>
-        /// Handles the NodeDataBound event of the CategoriesTreeView control.
+        /// Handles the <see cref="RadTreeView.NodeDataBound"/> event of the <see cref="CategoriesTreeView"/> control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="Telerik.Web.UI.RadTreeNodeEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="RadTreeNodeEventArgs"/> instance containing the event data.</param>
         private void CategoriesTreeView_NodeDataBound(object sender, RadTreeNodeEventArgs e)
         {
             if (this.IsPostBack)
@@ -183,7 +175,6 @@ namespace Engage.Dnn.Events
             {
                 var isEnabled = !this.CategoryIds.Any() || this.CategoryIds.Contains(id);
                 e.Node.Attributes.Add("enabled", isEnabled ? "1" : "0");
-                ////e.Node.Enabled = isEnabled;
                 e.Node.Checked = this.SessionCategoryIds == null || this.SessionCategoryIds.Contains(id);
             }
             else if (this.SessionCategoryIds == null)
@@ -193,14 +184,24 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Handles the Load event of the Page control.
+        /// Handles the <see cref="Button.Click"/> event of the <see cref="ApplyButton"/> control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void ApplyButton_Click(object sender, EventArgs e)
+        {
+            this.Session.Add("categoryIds", this.SelectedCategoryIds);
+            this.OnCategoryChanged(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Handles the <see cref="Control.Load"/> event of this control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void Page_Load(object sender, EventArgs e)
         {
-            this.LocalizeControls();
-            this.SetupjQueryUIDialog();
+            this.AddJQueryUIReference();
         }
 
         /// <summary>
@@ -220,25 +221,6 @@ namespace Engage.Dnn.Events
                 // the first "all list item" node is checked
                 this.SetEnabledAllNodes(node.Nodes.Cast<RadTreeNode>(), !node.Checked);
             }
-        }
-
-        /// <summary>
-        /// Localizeds the controls.
-        /// </summary>
-        private void LocalizeControls()
-        {
-            this.FilterButton.Text = this.Localize("FilterButton");
-            this.ApplyButton.Text = this.Localize("ApplyButton");
-        }
-
-        /// <summary>
-        /// Handles the NodeCreated event of the CategoriesTreeView control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="Telerik.Web.UI.RadTreeNodeEventArgs"/> instance containing the event data.</param>
-        private void CategoriesTreeView_NodeCreated(object sender, RadTreeNodeEventArgs e)
-        {
-            e.Node.Expanded = true;
         }
 
         /// <summary>
@@ -268,19 +250,6 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Invokes the <see cref="CategoryChanged"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void InvokeCategoryChanged(EventArgs e)
-        {
-            EventHandler handler = this.CategoryChanged;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
-
-        /// <summary>
         /// Sets the initial status value from the <c>QueryString</c>.
         /// </summary>
         private void SetInitialValue()
@@ -290,22 +259,24 @@ namespace Engage.Dnn.Events
                 return;
             }
 
-            if (this.SessionCategoryIds == null)
+            if (this.SessionCategoryIds != null)
             {
-                // select all
-                var allCategoriesNode = this.CategoriesTreeView.Nodes.Cast<RadTreeNode>().First();
-                allCategoriesNode.Checked = true;
-                this.CheckFirstNodeSelected(allCategoriesNode);
+                return;
             }
+
+            // select all
+            var allCategoriesNode = this.CategoriesTreeView.Nodes.Cast<RadTreeNode>().First();
+            allCategoriesNode.Checked = true;
+            this.CheckFirstNodeSelected(allCategoriesNode);
         }
 
         /// <summary>
-        /// Setup the jQueryUI dialog to enable overlay for filter tree.
+        /// Raises the <see cref="CategoryChanged"/> event.
         /// </summary>
-        private void SetupjQueryUIDialog()
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void OnCategoryChanged(EventArgs e)
         {
-            this.AddJQueryReference();
-            ScriptManager.RegisterClientScriptResource(this, typeof(RegisterAction), "Engage.Dnn.Events.JavaScript.jquery-ui-1.8.16.dialog.min.js");
+            this.CategoryChanged(this, e);
         }
     }
 }

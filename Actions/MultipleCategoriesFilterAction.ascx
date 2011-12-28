@@ -1,12 +1,18 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="Engage.Dnn.Events.MultipleCategoriesFilterAction" CodeBehind="MultipleCategoriesFilterAction.ascx.cs" %>
 <%@ Register TagPrefix="telerik" namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
-<asp:Button runat="server" ID="FilterButton" OnClientClick="return false;" />
+
+<asp:Button runat="server" ID="FilterButton" ResourceKey="FilterButton" OnClientClick="return false;" />
 <div runat="server" class="events-categoryfilter-dialog">
-    <telerik:RadTreeView runat="server" ID="CategoriesTreeView" CheckBoxes="True"
-        TriStateCheckBoxes="False" CheckChildNodes="True"
-        OnClientNodeChecked="OnClientNodeChecked" OnClientNodeClicking="OnClientNodeClicking" OnClientNodeClicked="OnClientNodeClicked"/>
-    <asp:Button runat="server" ID="ApplyButton" OnClick="ApplyButton_Click"/>
+    <telerik:RadTreeView ID="CategoriesTreeView" runat="server" 
+                         CheckBoxes="True"
+                         TriStateCheckBoxes="False" 
+                         CheckChildNodes="True"
+                         OnClientNodeChecked="OnClientNodeChecked" 
+                         OnClientNodeClicking="OnClientNodeClicking" 
+                         OnClientNodeClicked="OnClientNodeClicked" />
+    <asp:Button runat="server" ID="ApplyButton" ResourceKey="ApplyButton" />
 </div>
+
 <script type="text/javascript">
     jQuery(function ($) {
         var dlg = $('.events-categoryfilter-dialog').dialog({

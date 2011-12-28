@@ -13,13 +13,11 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Globalization;
-    using System.Runtime.InteropServices;
 
     using Engage.Events;
 
     /// <summary>
-    /// The base class for all controls in the Engage: Events module. Since this module is licensed it 
-    /// inherits from LicenseModuleBase and requires a unique GUID be defined. DO NOT CHANGE THIS!
+    /// The base class for all action controls in the Engage: Events module.
     /// </summary>
     public abstract class ActionControlBase : ModuleBase
     {
@@ -27,6 +25,12 @@ namespace Engage.Dnn.Events
         /// Backing field for <see cref="CurrentEvent"/>
         /// </summary>
         private Event currentEvent;
+
+        /// <summary>
+        /// Gets or sets the CSS class.
+        /// </summary>
+        /// <value>The CSS class.</value>
+        public string CssClass { get; set; }
 
         /// <summary>
         /// Gets or sets the current event that this control is displaying actions for.
@@ -65,13 +69,14 @@ namespace Engage.Dnn.Events
         internal int CurrentEventId
         {
             get { return Convert.ToInt32(this.ViewState["id"], CultureInfo.InvariantCulture); }
-
             set { this.ViewState["id"] = value.ToString(CultureInfo.InvariantCulture); }
         }
 
         /// <summary>
         /// Performs all necessary operations to display the control's data correctly.
         /// </summary>
-        protected abstract void BindData();
+        protected virtual void BindData()
+        {
+        }
     }
 }

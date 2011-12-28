@@ -12,6 +12,8 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.Web.UI;
+    using System.Web.UI.WebControls;
 
     /// <summary>
     /// Allows the user to choose whether to display all events or only active events.
@@ -23,9 +25,17 @@ namespace Engage.Dnn.Events
     public partial class StatusFilterAction : ActionControlBase
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="StatusFilterAction"/> class.
+        /// </summary>
+        protected StatusFilterAction()
+        {
+            this.CssClass = "Normal";
+        }
+
+        /// <summary>
         /// Occurs when the sort has changed.
         /// </summary>
-        public event EventHandler SortChanged;
+        public event EventHandler SortChanged = (_, __) => { };
 
         /// <summary>
         /// Gets the selected status of event to display.
@@ -37,25 +47,9 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Raises the <see cref="SortChanged"/> event.
+        /// Raises the <see cref="Control.Init"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void OnSortChanged(EventArgs e)
-        {
-            this.InvokeSortChanged(e);
-        }
-
-        /// <summary>
-        /// Performs all necessary operations to display the control's data correctly.
-        /// </summary>
-        protected override void BindData()
-        {
-        }
-
-        /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -65,30 +59,8 @@ namespace Engage.Dnn.Events
                 this.SetInitialValue();
             }
 
+            this.Load += this.Page_Load;
             this.StatusRadioButtonList.SelectedIndexChanged += this.StatusRadioButtonList_SelectedIndexChanged;
-        }
-
-        /// <summary>
-        /// Handles the SelectedIndexChanged event of the StatusRadioButtonList control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void StatusRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.OnSortChanged(e);
-        }
-
-        /// <summary>
-        /// Invokes the sort changed.
-        /// </summary>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void InvokeSortChanged(EventArgs e)
-        {
-            EventHandler handler = this.SortChanged;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
         }
 
         /// <summary>
@@ -96,11 +68,42 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetInitialValue()
         {
-            string status = this.Request.QueryString["status"];
-            if (Engage.Utility.HasValue(status))
+            var status = this.Request.QueryString["status"];
+            if (!Engage.Utility.HasValue(status))
             {
-                this.StatusRadioButtonList.SelectedValue = status;
+                return;
             }
+
+            this.StatusRadioButtonList.SelectedValue = status;
+        }
+
+        /// <summary>
+        /// Handles the <see cref="Control.Load"/> event of this control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="eventArgs">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void Page_Load(object sender, EventArgs eventArgs)
+        {
+            this.DataBind();
+        }
+
+        /// <summary>
+        /// Handles the <see cref="ListControl.SelectedIndexChanged"/> event of the <see cref="StatusRadioButtonList"/> control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void StatusRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.OnSortChanged(e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="SortChanged"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void OnSortChanged(EventArgs e)
+        {
+            this.SortChanged(this, e);
         }
     }
 }

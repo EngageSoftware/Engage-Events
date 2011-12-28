@@ -14,19 +14,20 @@ namespace Engage.Dnn.Events
     using System;
     using System.Globalization;
     using System.Linq;
+    using System.Web.UI;
     using System.Web.UI.WebControls;
 
     using Engage.Events;
 
     /// <summary>
-    /// Allows the user to choose whether to display all events or only active events.
+    /// Allows the user to filter the list to one category
     /// </summary>
     public partial class CategoryFilterAction : ActionControlBase
     {
         /// <summary>
         /// Occurs when the sort has changed.
         /// </summary>
-        public event EventHandler CategoryChanged;
+        public event EventHandler CategoryChanged = (_, __) => { };
 
         /// <summary>
         /// Gets the ID of the category of event to display.
@@ -47,15 +48,6 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Raises the <see cref="CategoryChanged"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        protected void OnCategoryChanged(EventArgs e)
-        {
-            this.InvokeCategoryChanged(e);
-        }
-
-        /// <summary>
         /// Performs all necessary operations to display the control's data correctly.
         /// </summary>
         protected override void BindData()
@@ -71,7 +63,7 @@ namespace Engage.Dnn.Events
                                                                 : category.Name,
                                                      Id = category.Id.ToString(CultureInfo.InvariantCulture)
                                                  };
-            this.CategoriesList.DataBind();
+            this.DataBind();
 
             if (this.CategoriesList.Items.Count > 1)
             {
@@ -84,9 +76,9 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
+        /// Raises the <see cref="Control.Init"/> event.
         /// </summary>
-        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -97,30 +89,7 @@ namespace Engage.Dnn.Events
                 this.SetInitialValue();
             }
 
-            this.CategoriesList.SelectedIndexChanged += this.StatusRadioButtonList_SelectedIndexChanged;
-        }
-
-        /// <summary>
-        /// Handles the SelectedIndexChanged event of the StatusRadioButtonList control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void StatusRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.OnCategoryChanged(e);
-        }
-
-        /// <summary>
-        /// Invokes the <see cref="CategoryChanged"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void InvokeCategoryChanged(EventArgs e)
-        {
-            EventHandler handler = this.CategoryChanged;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            this.CategoriesList.SelectedIndexChanged += this.CategoriesList_SelectedIndexChanged;
         }
 
         /// <summary>
@@ -129,14 +98,35 @@ namespace Engage.Dnn.Events
         private void SetInitialValue()
         {
             var categoryIds = this.Session["categoryIds"] as int[];
-            if (categoryIds != null && categoryIds.Length > 0)
+            if (categoryIds == null || categoryIds.Length <= 0)
             {
-                var categoryId = categoryIds[0].ToString(CultureInfo.InvariantCulture);
-                if (this.CategoriesList.Items.Cast<ListItem>().Any(item => item.Value == categoryId))
-                {
-                    this.CategoriesList.SelectedValue = categoryId;
-                }
+                return;
             }
+
+            var categoryId = categoryIds[0].ToString(CultureInfo.InvariantCulture);
+            if (this.CategoriesList.Items.Cast<ListItem>().Any(item => item.Value == categoryId))
+            {
+                this.CategoriesList.SelectedValue = categoryId;
+            }
+        }
+
+        /// <summary>
+        /// Handles the <see cref="ListControl.SelectedIndexChanged"/> event of the <see cref="CategoriesList"/> control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void CategoriesList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.OnCategoryChanged(e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="CategoryChanged"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void OnCategoryChanged(EventArgs e)
+        {
+            this.CategoryChanged(this, e);
         }
     }
 }

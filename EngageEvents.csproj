@@ -454,7 +454,6 @@
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
     <None Include="JavaScript\EngageEvents.TemplatedDisplayOptions.js" />
     <None Include="JavaScript\knockout-1.2.1.js" />
-    <EmbeddedResource Include="JavaScript\jquery-ui-1.8.16.dialog.min.js" />
     <Content Include="Module.css">
       <DependentUpon>Module.chirp.less</DependentUpon>
     </Content>

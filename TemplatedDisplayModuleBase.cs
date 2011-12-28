@@ -42,12 +42,14 @@ namespace Engage.Dnn.Events
                         {
                             if (@this.PermissionsService.CanManageEvents)
                             {
-                                    var editEventAction = (ButtonAction)@this.LoadControl(@this.ActionsControlsFolder + "ButtonAction.ascx");
-                                    editEventAction.CurrentEvent = currentEvent;
-                                    editEventAction.ModuleConfiguration = @this.ModuleConfiguration;
-                                    editEventAction.Href = @this.BuildLinkUrl(@this.ModuleId, "EventEdit", Utility.GetEventParameters(currentEvent));
-                                    editEventAction.ResourceKey = "EditEventButton";
-                                    container.Controls.Add(editEventAction);
+                                var editEventAction = (ButtonAction)@this.LoadControl(@this.ActionsControlsFolder + "ButtonAction.ascx");
+                                editEventAction.CurrentEvent = currentEvent;
+                                editEventAction.ModuleConfiguration = @this.ModuleConfiguration;
+                                editEventAction.Href = @this.BuildLinkUrl(@this.ModuleId, "EventEdit", Utility.GetEventParameters(currentEvent));
+                                editEventAction.ResourceKey = "EditEventButton";
+                                editEventAction.CssClass = TemplateEngine.GetAttributeValue(tag, currentEvent, null, resourceFile, "class", "CssClass") ?? editEventAction.CssClass;
+                                    
+                                container.Controls.Add(editEventAction);
                             }
 
                             return false;
@@ -59,12 +61,14 @@ namespace Engage.Dnn.Events
                         {
                             if (@this.PermissionsService.CanViewResponses)
                             {
-                                    var responsesEventAction = (ButtonAction)@this.LoadControl(@this.ActionsControlsFolder + "ButtonAction.ascx");
-                                    responsesEventAction.CurrentEvent = currentEvent;
-                                    responsesEventAction.ModuleConfiguration = @this.ModuleConfiguration;
-                                    responsesEventAction.Href = @this.BuildLinkUrl(@this.ModuleId, "ResponseDetail", Utility.GetEventParameters(currentEvent));
-                                    responsesEventAction.ResourceKey = "ResponsesButton";
-                                    container.Controls.Add(responsesEventAction);
+                                var responsesEventAction = (ButtonAction)@this.LoadControl(@this.ActionsControlsFolder + "ButtonAction.ascx");
+                                responsesEventAction.CurrentEvent = currentEvent;
+                                responsesEventAction.ModuleConfiguration = @this.ModuleConfiguration;
+                                responsesEventAction.Href = @this.BuildLinkUrl(@this.ModuleId, "ResponseDetail", Utility.GetEventParameters(currentEvent));
+                                responsesEventAction.ResourceKey = "ResponsesButton";
+                                responsesEventAction.CssClass = TemplateEngine.GetAttributeValue(tag, currentEvent, null, resourceFile, "class", "CssClass") ?? responsesEventAction.CssClass;
+
+                                container.Controls.Add(responsesEventAction);
                             }
 
                             return false;
@@ -77,12 +81,13 @@ namespace Engage.Dnn.Events
                             // must be an active event and has not ended
                             if (currentEvent != null && currentEvent.AllowRegistrations && !currentEvent.Canceled && currentEvent.EventEnd > DateTime.Now)
                             {
-                                    var registerEventAction = (RegisterAction)@this.LoadControl(@this.ActionsControlsFolder + "RegisterAction.ascx");
-                                    registerEventAction.CurrentEvent = currentEvent;
-                                    registerEventAction.ModuleConfiguration = @this.ModuleConfiguration;
-                                    registerEventAction.LocalResourceFile = resourceFile;
+                                var registerEventAction = (RegisterAction)@this.LoadControl(@this.ActionsControlsFolder + "RegisterAction.ascx");
+                                registerEventAction.CurrentEvent = currentEvent;
+                                registerEventAction.ModuleConfiguration = @this.ModuleConfiguration;
+                                registerEventAction.LocalResourceFile = resourceFile;
+                                registerEventAction.CssClass = TemplateEngine.GetAttributeValue(tag, currentEvent, null, resourceFile, "class", "CssClass") ?? registerEventAction.CssClass;
 
-                                    container.Controls.Add(registerEventAction);
+                                container.Controls.Add(registerEventAction);
                             }
 
                             return false;
@@ -95,13 +100,13 @@ namespace Engage.Dnn.Events
                             // must be an active event and has not ended
                             if (currentEvent != null && !currentEvent.Canceled && currentEvent.EventEnd > DateTime.Now)
                             {
-                                    var addToCalendarAction =
-                                    (AddToCalendarAction)@this.LoadControl(@this.ActionsControlsFolder + "AddToCalendarAction.ascx");
-                                    addToCalendarAction.CurrentEvent = currentEvent;
-                                    addToCalendarAction.ModuleConfiguration = @this.ModuleConfiguration;
-                                    addToCalendarAction.LocalResourceFile = resourceFile;
+                                var addToCalendarAction = (AddToCalendarAction)@this.LoadControl(@this.ActionsControlsFolder + "AddToCalendarAction.ascx");
+                                addToCalendarAction.CurrentEvent = currentEvent;
+                                addToCalendarAction.ModuleConfiguration = @this.ModuleConfiguration;
+                                addToCalendarAction.LocalResourceFile = resourceFile;
+                                addToCalendarAction.CssClass = TemplateEngine.GetAttributeValue(tag, currentEvent, null, resourceFile, "class", "CssClass") ?? addToCalendarAction.CssClass;
 
-                                    container.Controls.Add(addToCalendarAction);
+                                container.Controls.Add(addToCalendarAction);
                             }
 
                             return false;
@@ -111,30 +116,32 @@ namespace Engage.Dnn.Events
                         "DELETEBUTTON", 
                         (@this, container, tag, currentEvent, resourceFile) => 
                         {
-                                var deleteAction = (DeleteAction)@this.LoadControl(@this.ActionsControlsFolder + "DeleteAction.ascx");
-                                deleteAction.CurrentEvent = currentEvent;
-                                deleteAction.ModuleConfiguration = @this.ModuleConfiguration;
-                                deleteAction.LocalResourceFile = resourceFile;
-                                deleteAction.Delete += @this.ReturnToList;
+                            var deleteAction = (DeleteAction)@this.LoadControl(@this.ActionsControlsFolder + "DeleteAction.ascx");
+                            deleteAction.CurrentEvent = currentEvent;
+                            deleteAction.ModuleConfiguration = @this.ModuleConfiguration;
+                            deleteAction.LocalResourceFile = resourceFile;
+                            deleteAction.Delete += @this.ReturnToList;
+                            deleteAction.CssClass = TemplateEngine.GetAttributeValue(tag, currentEvent, null, resourceFile, "class", "CssClass") ?? deleteAction.CssClass;
 
-                                container.Controls.Add(deleteAction);
+                            container.Controls.Add(deleteAction);
 
-                                return false;
+                            return false;
                         }
                     },
                     {
                         "CANCELBUTTON", 
                         (@this, container, tag, currentEvent, resourceFile) => 
                         {
-                                var cancelAction = (CancelAction)@this.LoadControl(@this.ActionsControlsFolder + "CancelAction.ascx");
-                                cancelAction.CurrentEvent = currentEvent;
-                                cancelAction.ModuleConfiguration = @this.ModuleConfiguration;
-                                cancelAction.LocalResourceFile = resourceFile;
-                                cancelAction.Cancel += @this.ReloadPage;
+                            var cancelAction = (CancelAction)@this.LoadControl(@this.ActionsControlsFolder + "CancelAction.ascx");
+                            cancelAction.CurrentEvent = currentEvent;
+                            cancelAction.ModuleConfiguration = @this.ModuleConfiguration;
+                            cancelAction.LocalResourceFile = resourceFile;
+                            cancelAction.Cancel += @this.ReloadPage;
+                            cancelAction.CssClass = TemplateEngine.GetAttributeValue(tag, currentEvent, null, resourceFile, "class", "CssClass") ?? cancelAction.CssClass;
 
-                                container.Controls.Add(cancelAction);
+                            container.Controls.Add(cancelAction);
 
-                                return false;
+                            return false;
                         }
                     },
                     {
@@ -241,12 +248,12 @@ namespace Engage.Dnn.Events
         {
             if (container == null)
             {
-                throw new ArgumentNullException("container", "container must not be null");
+                throw new ArgumentNullException("container");
             }
 
             if (tag == null)
             {
-                throw new ArgumentNullException("tag", "tag must not be null");
+                throw new ArgumentNullException("tag");
             }
 
             if (currentEvent != null && currentEvent != this.lastEventProcessed)

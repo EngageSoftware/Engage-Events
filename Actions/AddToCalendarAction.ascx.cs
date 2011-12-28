@@ -12,6 +12,9 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.Web.UI;
+    using System.Web.UI.WebControls;
+
     using DotNetNuke.Framework;
 
     /// <summary>
@@ -20,16 +23,17 @@ namespace Engage.Dnn.Events
     public partial class AddToCalendarAction : ActionControlBase
     {
         /// <summary>
-        /// Performs all necessary operations to display the control's data correctly.
+        /// Initializes a new instance of the <see cref="AddToCalendarAction"/> class.
         /// </summary>
-        protected override void BindData()
+        protected AddToCalendarAction()
         {
+            this.CssClass = "Normal";
         }
 
         /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
+        /// Raises the <see cref="Control.Init"/> event.
         /// </summary>
-        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -41,28 +45,20 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Sets the visibility of this control's child controls.
-        /// </summary>
-        private void SetVisibility()
-        {
-            this.AddToCalendarButton.Visible = IsLoggedIn;
-        }
-
-        /// <summary>
-        /// Handles the Load event of the Page control.
+        /// Handles the <see cref="Control.Load"/> event of this control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void Page_Load(object sender, EventArgs e)
         {
-            this.SetVisibility();
+            this.DataBind();
         }
 
         /// <summary>
-        /// Handles the OnClick event of the AddToCalendarButton control.
+        /// Handles the <see cref="Button.Click"/> event of the <see cref="AddToCalendarButton"/> control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void AddToCalendarButton_Click(object sender, EventArgs e)
         {
             SendICalendarToClient(this.Response, this.CurrentEvent.ToICal(), this.CurrentEvent.Title);

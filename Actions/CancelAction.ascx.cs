@@ -37,14 +37,6 @@ namespace Engage.Dnn.Events
         public event EventHandler Cancel = (_, __) => { };
 
         /// <summary>
-        /// Gets or sets the CSS class.
-        /// </summary>
-        /// <value>
-        /// The CSS class.
-        /// </value>
-        public string CssClass { get; set; }
-
-        /// <summary>
         /// Gets a value indicating whether this instance is canceled.
         /// </summary>
         /// <value>
@@ -53,13 +45,6 @@ namespace Engage.Dnn.Events
         protected bool Canceled 
         { 
             get { return this.CurrentEvent.Canceled; }
-        }
-
-        /// <summary>
-        /// Sets the visibility of each of the buttons.  Also, sets the text for the cancel/uncancel button, and the delete confirm.
-        /// </summary>
-        protected override void BindData()
-        {
         }
 
         /// <summary>
@@ -75,7 +60,7 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Handles the Load event of the Page control.
+        /// Handles the <see cref="Control.Load"/> event of this control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
@@ -89,7 +74,7 @@ namespace Engage.Dnn.Events
         /// Handles the OnClick event of the CancelButton control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void CancelButton_Click(object sender, EventArgs e)
         {
             this.CurrentEvent.Canceled = !this.CurrentEvent.Canceled;

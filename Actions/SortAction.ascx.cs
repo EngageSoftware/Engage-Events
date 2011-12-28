@@ -12,6 +12,8 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.Web.UI;
+    using System.Web.UI.WebControls;
 
     /// <summary>
     /// Allows the user to choose whether to sort the events by date or title.
@@ -23,9 +25,17 @@ namespace Engage.Dnn.Events
     public partial class SortAction : ActionControlBase
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SortAction"/> class.
+        /// </summary>
+        protected SortAction()
+        {
+            this.CssClass = "Normal";
+        }
+
+        /// <summary>
         /// Occurs when the sort has changed.
         /// </summary>
-        public event EventHandler SortChanged;
+        public event EventHandler SortChanged = (_, __) => { };
 
         /// <summary>
         /// Gets the selected field by which to sort the event listing.
@@ -37,25 +47,9 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Performs all necessary operations to display the control's data correctly.
+        /// Raises the <see cref="Control.Init"/> event.
         /// </summary>
-        protected override void BindData()
-        {
-        }
-
-        /// <summary>
-        /// Raises the <see cref="SortChanged"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void OnSortChanged(EventArgs e)
-        {
-            this.InvokeSortChanged(e);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -65,30 +59,8 @@ namespace Engage.Dnn.Events
                 this.SetInitialValue();
             }
 
-            this.SortRadioButtonList.SelectedIndexChanged += this.SortAction_SortChanged;
-        }
-
-        /// <summary>
-        /// Handles the SortChanged event of the SortAction control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void SortAction_SortChanged(object sender, EventArgs e)
-        {
-            this.OnSortChanged(e);
-        }
-
-        /// <summary>
-        /// Invokes the sort changed.
-        /// </summary>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void InvokeSortChanged(EventArgs e)
-        {
-            EventHandler handler = this.SortChanged;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            this.Load += this.Page_Load;
+            this.SortRadioButtonList.SelectedIndexChanged += this.SortRadioButtonList_SelectedIndexChanged;
         }
 
         /// <summary>
@@ -96,13 +68,44 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void SetInitialValue()
         {
-            string sortValue = this.Request.QueryString["sort"];
-            if (Engage.Utility.HasValue(sortValue))
+            var sortValue = this.Request.QueryString["sort"];
+            if (!Engage.Utility.HasValue(sortValue))
             {
-                this.SortRadioButtonList.SelectedValue = "TITLE".Equals(sortValue, StringComparison.OrdinalIgnoreCase)
-                                                             ? Utility.GetPropertyName(e => e.Title)
-                                                             : Utility.GetPropertyName(e => e.EventStart);
+                return;
             }
+
+            this.SortRadioButtonList.SelectedValue = "TITLE".Equals(sortValue, StringComparison.OrdinalIgnoreCase)
+                                                         ? Utility.GetPropertyName(e => e.Title)
+                                                         : Utility.GetPropertyName(e => e.EventStart);
+        }
+
+        /// <summary>
+        /// Handles the <see cref="Control.Load"/> event of this control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="eventArgs">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void Page_Load(object sender, EventArgs eventArgs)
+        {
+            this.DataBind();
+        }
+
+        /// <summary>
+        /// Handles the <see cref="ListControl.SelectedIndexChanged"/> event of the <see cref="SortRadioButtonList"/> control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void SortRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.OnSortChanged(e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="SortChanged"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void OnSortChanged(EventArgs e)
+        {
+            this.SortChanged(this, e);
         }
     }
 }

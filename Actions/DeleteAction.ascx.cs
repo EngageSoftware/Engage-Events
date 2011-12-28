@@ -39,21 +39,6 @@ namespace Engage.Dnn.Events
         public event EventHandler Delete = (_, __) => { };
 
         /// <summary>
-        /// Gets or sets the CSS class.
-        /// </summary>
-        /// <value>
-        /// The CSS class.
-        /// </value>
-        public string CssClass { get; set; }
-
-        /// <summary>
-        /// Performs all necessary operations to display the control's data correctly.
-        /// </summary>
-        protected override void BindData()
-        {
-        }
-
-        /// <summary>
         /// Raises the <see cref="Control.Init"/> event.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
@@ -66,7 +51,7 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Handles the Load event of the Page control.
+        /// Handles the <see cref="Control.Load"/> event of this control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
@@ -80,7 +65,7 @@ namespace Engage.Dnn.Events
         /// Handles the OnClick event of the DeleteEventButton control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void DeleteEventButton_Click(object sender, EventArgs e)
         {
             Event.Delete(this.CurrentEvent.Id);
@@ -90,7 +75,7 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// Raises the <see cref="Delete"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void OnDelete(EventArgs e)
         {
             this.Delete(this, e);
