@@ -40,61 +40,14 @@ namespace Engage.Events.Util
         /// <returns>The given event in an iCalendar format</returns>
         public static string Export(string description, string location, Appointment app, bool outlookCompatibleMode, TimeSpan timeZoneOffset)
         {
-            StringBuilder output = new StringBuilder();
+            var output = new StringBuilder();
             WriteFileHeader(output, outlookCompatibleMode);
-
-            ////if (app.RecurrenceState != RecurrenceState.Occurrence)
-            ////{
-            ////    if (outlookCompatibleMode)
-            ////    {
-            ////        ValidateOutlookCompatibility(app);
-            ////    }
-            ////}
 
             WriteTask(description, location, output, app, outlookCompatibleMode, timeZoneOffset);
 
             WriteFileFooter(output);
 
             return output.ToString();
-        }
-
-        /// <summary>
-        /// Validates the compatibility of the given appointment with Outlook.  Throws an <see cref="InvalidOperationException"/> if the appointment is not valid.
-        /// </summary>
-        /// <param name="app">The appointment to validate.</param>
-        /// <exception cref="InvalidOperationException">Invalid recurrence rule.</exception>
-        /// <exception cref="InvalidOperationException">Cannot export appointments with hourly recurrence in Outlook compatible mode.</exception>
-        /// <exception cref="InvalidOperationException">Cannot export appointments with daily recurrence and custom DaysOfWeekMask in Outlook compatible mode.</exception>
-        /// <exception cref="InvalidOperationException">Cannot export appointments with daily recurrence and interval different than 1 in Outlook compatible mode.</exception>
-        private static void ValidateOutlookCompatibility(Appointment app)
-        {
-            if (!string.IsNullOrEmpty(app.RecurrenceRule))
-            {
-                RecurrenceRule rrule;
-                if (!RecurrenceRule.TryParse(app.RecurrenceRule, out rrule))
-                {
-                    throw new InvalidOperationException("Invalid recurrence rule.");
-                }
-
-                if (rrule.Pattern.Frequency == RecurrenceFrequency.Hourly)
-                {
-                    throw new InvalidOperationException("Cannot export appointments with hourly recurrence in Outlook compatible mode.");
-                }
-
-                if (rrule.Pattern.Frequency == RecurrenceFrequency.Daily)
-                {
-                    if (rrule.Pattern.DaysOfWeekMask != RecurrenceDay.EveryDay &&
-                        rrule.Pattern.DaysOfWeekMask != RecurrenceDay.WeekDays)
-                    {
-                        throw new InvalidOperationException("Cannot export appointments with daily recurrence and custom DaysOfWeekMask in Outlook compatible mode.");
-                    }
-
-                    if (rrule.Pattern.Interval != 1)
-                    {
-                        throw new InvalidOperationException("Cannot export appointments with daily recurrence and interval different than 1 in Outlook compatible mode.");
-                    }
-                }
-            }
         }
 
         /// <summary>

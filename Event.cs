@@ -12,20 +12,24 @@
 namespace Engage.Events
 {
     using System;
-    using System.ComponentModel;
     using System.Data;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Linq;
     using System.Xml.Serialization;
     using Data;
     using Dnn.Framework.Templating;
+
+    using Engage.Annotations;
+
     using Telerik.Web.UI;
 
     /// <summary>
     /// An event, with a title, description, location, and start and end date.
     /// </summary>
+    [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Event", Justification = "Breaking change")]
     [XmlRoot(ElementName = "event", IsNullable = false)]
-    public class Event : IEditableObject, INotifyPropertyChanged, ITemplateable
+    public class Event : ITemplateable
     {
         /// <summary>
         /// Backing field for <see cref="Category"/>
@@ -142,15 +146,6 @@ namespace Engage.Events
             this.CapacityMetMessage = capacityMetMessage;
             this.CategoryId = categoryId;
         }
-
-        #region INotifyPropertyChanged Members
-
-        /// <summary>
-        /// Occurs when a property value changes.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
 
         /// <summary>
         /// Gets the id of this event.
@@ -593,31 +588,6 @@ namespace Engage.Events
             return Util.ICalUtil.Export(this.Overview, this.Location, new Appointment(this.Id, this.EventStart, this.EventEnd, this.Title, rule), true, this.TimeZoneOffset);
         }
 
-        #region IEditableObject Members
-
-        /// <summary>
-        /// Begins an edit on an object.
-        /// </summary>
-        public void BeginEdit()
-        {
-        }
-
-        /// <summary>
-        /// Discards changes since the last <see cref="M:System.ComponentModel.IEditableObject.BeginEdit"/> call.
-        /// </summary>
-        public void CancelEdit()
-        {
-        }
-
-        /// <summary>
-        /// Pushes changes since the last <see cref="M:System.ComponentModel.IEditableObject.BeginEdit"/> or <see cref="M:System.ComponentModel.IBindingList.AddNew"/> call into the underlying object.
-        /// </summary>
-        public void EndEdit()
-        {
-        }
-
-        #endregion
-
         /// <summary>
         /// Gets the value of the property with the given <paramref name="propertyName"/>, or <see cref="string.Empty"/> if a property with that name does not exist on this object or is <c>null</c>.
         /// </summary>
@@ -663,8 +633,13 @@ namespace Engage.Events
         /// or <c>null</c> or <see cref="string.Empty"/> to apply the default format.
         /// </param>
         /// <returns>The string representation of the value of this instance as specified by <paramref name="format"/>.</returns>
-        public string GetValue(string propertyName, string format)
+        public string GetValue([NotNull] string propertyName, string format)
         {
+            if (propertyName == null)
+            {
+                throw new ArgumentNullException("propertyName");
+            }
+
             var subPropertyIndicatorIndex = propertyName.IndexOf('-');
             if (subPropertyIndicatorIndex > -1 && propertyName.Substring(0, subPropertyIndicatorIndex).Equals("CATEGORY", StringComparison.OrdinalIgnoreCase))
             {

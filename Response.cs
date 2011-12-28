@@ -12,7 +12,6 @@
 namespace Engage.Events
 {
     using System;
-    using System.ComponentModel;
     using System.Data;
     using System.Diagnostics;
     using Data;
@@ -20,7 +19,7 @@ namespace Engage.Events
     /// <summary>
     /// An indication of how a particular individual responded to an invitation to an event.
     /// </summary>
-    public class Response : IEditableObject, INotifyPropertyChanged
+    public class Response
     {
         /// <summary>
         /// Backing field for <see cref="CreatedBy"/>
@@ -101,11 +100,6 @@ namespace Engage.Events
         }
 
         /// <summary>
-        /// Occurs when a property value changes.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
         /// Gets the user this Response was created by.
         /// </summary>
         /// <value>The user this Response was created by.</value>
@@ -123,18 +117,6 @@ namespace Engage.Events
         {
             [DebuggerStepThrough]
             get { return this.creationDate; }
-        }
-
-        /// <summary>
-        /// Gets the company.
-        /// </summary>
-        /// <value>The company.</value>
-        public string Company
-        {
-            // Need to get this from somewhere without referencing the DotNetNuke.dll (userinfo class).
-            // May need to make part of engage_spGetResponses to try and look this up from profile?? This 
-            // would still create a dependency though. hk
-            get { return string.Empty; }
         }
 
         /// <summary>
@@ -325,46 +307,24 @@ namespace Engage.Events
         }
 
         /// <summary>
-        /// Begins an edit on an object.
-        /// </summary>
-        public void BeginEdit()
-        {
-        }
-
-        /// <summary>
-        /// Discards changes since the last <see cref="M:System.ComponentModel.IEditableObject.BeginEdit"/> call.
-        /// </summary>
-        public void CancelEdit()
-        {
-        }
-
-        /// <summary>
-        /// Pushes changes since the last <see cref="M:System.ComponentModel.IEditableObject.BeginEdit"/> or <see cref="M:System.ComponentModel.IBindingList.AddNew"/> call into the underlying object.
-        /// </summary>
-        public void EndEdit()
-        {
-        }
-
-        /// <summary>
         /// Fills an Response from the provided data record.
         /// </summary>
         /// <param name="dataRecord">A data record representing an Response instance.</param>
         /// <returns>The requested Response instance</returns>
         internal static Response Fill(IDataRecord dataRecord)
         {
-            Response response = new Response();
-
-            response.id = (int)dataRecord["ResponseId"];
-            response.eventId = (int)dataRecord["EventId"];
-            response.eventStart = (DateTime)dataRecord["EventStart"];
-            response.lastName = dataRecord["LastName"].ToString();
-            response.firstName = dataRecord["FirstName"].ToString();
-            response.email = dataRecord["Email"].ToString();
-            response.status = (ResponseStatus)Enum.Parse(typeof(ResponseStatus), dataRecord["Status"].ToString());
-            response.createdBy = (int)dataRecord["CreatedBy"];
-            response.creationDate = (DateTime)dataRecord["CreationDate"];
-
-            return response;
+            return new Response
+                {
+                    id = (int)dataRecord["ResponseId"],
+                    eventId = (int)dataRecord["EventId"],
+                    eventStart = (DateTime)dataRecord["EventStart"],
+                    lastName = dataRecord["LastName"].ToString(),
+                    firstName = dataRecord["FirstName"].ToString(),
+                    email = dataRecord["Email"].ToString(),
+                    status = (ResponseStatus)Enum.Parse(typeof(ResponseStatus), dataRecord["Status"].ToString()),
+                    createdBy = (int)dataRecord["CreatedBy"],
+                    creationDate = (DateTime)dataRecord["CreationDate"]
+                };
         }
 
         /// <summary>

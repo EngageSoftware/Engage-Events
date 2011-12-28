@@ -18,6 +18,8 @@ namespace Engage.Events
     using Data;
     using Dnn.Framework.Templating;
 
+    using Engage.Annotations;
+
     /// <summary>
     /// An event category
     /// </summary>
@@ -228,8 +230,13 @@ namespace Engage.Events
         /// or <c>null</c> or <see cref="string.Empty"/> to apply the default format.
         /// </param>
         /// <returns>The string representation of the value of this instance as specified by <paramref name="format"/>.</returns>
-        public string GetValue(string propertyName, string format)
+        public string GetValue([NotNull] string propertyName, string format)
         {
+            if (propertyName == null)
+            {
+                throw new ArgumentNullException("propertyName");
+            }
+
             format = string.IsNullOrEmpty(format) ? null : format;
             switch (propertyName.ToUpperInvariant())
             {

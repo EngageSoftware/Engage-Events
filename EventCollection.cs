@@ -47,49 +47,6 @@ namespace Engage.Events
         public int TotalRecords { get; private set; }
 
         /// <summary>
-        /// Loads a page of events based on the given <paramref name="listingMode"/>.
-        /// </summary>
-        /// <param name="portalId">The ID of the portal that the events are for.</param>
-        /// <param name="listingMode">The listing mode.</param>
-        /// <param name="showAll">if set to <c>true</c> included canceled events.</param>
-        /// <param name="featuredOnly">if set to <c>true</c> only include events that are featured.</param>
-        /// <param name="hideFullEvents">if set to <c>true</c> only include events that have not hit their registration cap (or have no registration cap)</param>
-        /// <param name="email">The email address of the user requesting the events</param>
-        /// <param name="categoryIds">A sequence of IDs for the category/ies that events must be in in order to be retrieved, or an empty/<c>null</c> sequence to get events regardless of category.</param>
-        /// <returns>
-        /// A page of events based on the given <paramref name="listingMode"/>.
-        /// </returns>
-        /// <exception cref="DBException">if there's an error while going to the database to retrieve the events</exception>
-        [Obsolete("Use the overload that provides startDate and endDate instead of listingMode")]
-        public static EventCollection Load(int portalId, ListingMode listingMode, bool showAll, bool featuredOnly, bool hideFullEvents, string email, IEnumerable<int> categoryIds)
-        {
-            return Load(portalId, listingMode, null, null, null, showAll, featuredOnly, hideFullEvents, email, categoryIds, false);
-        }
-
-        /// <summary>
-        /// Loads a page of events based on the given <paramref name="listingMode"/>.
-        /// </summary>
-        /// <param name="portalId">The ID of the portal that the events are for.</param>
-        /// <param name="listingMode">The listing mode.</param>
-        /// <param name="sortExpression">The property by which the events should be sorted.</param>
-        /// <param name="pageIndex">The index of the page of events.</param>
-        /// <param name="pageSize">Size of the page of events.</param>
-        /// <param name="showAll">if set to <c>true</c> included canceled events.</param>
-        /// <param name="featuredOnly">if set to <c>true</c> only include events that are featured.</param>
-        /// <param name="hideFullEvents">if set to <c>true</c> only include events that have not hit their registration cap (or have no registration cap)</param>
-        /// <param name="email">The email address of the user requesting the events</param>
-        /// <param name="categoryIds">A sequence of IDs for the category/ies that events must be in in order to be retrieved, or an empty/<c>null</c> sequence to get events regardless of category.</param>
-        /// <returns>
-        /// A page of events based on the given <paramref name="listingMode"/>.
-        /// </returns>
-        /// <exception cref="DBException">if there's an error while going to the database to retrieve the events</exception>
-        [Obsolete("Use the overload that provides startDate and endDate instead of listingMode")]
-        public static EventCollection Load(int portalId, ListingMode listingMode, string sortExpression, int pageIndex, int pageSize, bool showAll, bool featuredOnly, bool hideFullEvents, string email, IEnumerable<int> categoryIds)
-        {
-            return Load(portalId, listingMode, sortExpression, pageIndex, pageSize, showAll, featuredOnly, hideFullEvents, email, categoryIds, true);
-        }
-
-        /// <summary>
         /// Loads a page of events based on the given <paramref name="startDate"/> and <paramref name="endDate"/>.
         /// </summary>
         /// <param name="portalId">The ID of the portal that the events are for.</param>
@@ -143,52 +100,6 @@ namespace Engage.Events
         }
 
         /// <summary>
-        /// Loads a page of events based on the given <paramref name="listingMode"/>.
-        /// </summary>
-        /// <param name="portalId">The ID of the portal that the events are for.</param>
-        /// <param name="listingMode">The listing mode.</param>
-        /// <param name="sortExpression">The property by which the events should be sorted.</param>
-        /// <param name="pageIndex">The index of the page of events.</param>
-        /// <param name="pageSize">Size of the page of events.</param>
-        /// <param name="showAll">if set to <c>true</c> included canceled events.</param>
-        /// <param name="featuredOnly">if set to <c>true</c> only include events that are featured.</param>
-        /// <param name="hideFullEvents">if set to <c>true</c> only include events that have not hit their registration cap (or have no registration cap)</param>
-        /// <param name="email">The email address of the user requesting the events</param>
-        /// <param name="categoryIds">A sequence of IDs for the category/ies that events must be in in order to be retrieved, or an empty/<c>null</c> sequence to get events regardless of category.</param>
-        /// <param name="processCollection">if set to <c>true</c> the collection should be sorted and paged, and each recurring event should be replaced by its earliest occurrence.</param>
-        /// <returns>
-        /// A page of events based on the given <paramref name="listingMode"/>.
-        /// </returns>
-        /// <exception cref="DBException">if there's an error while going to the database to retrieve the events</exception>
-        private static EventCollection Load(int portalId, ListingMode listingMode, string sortExpression, int? pageIndex, int? pageSize, bool showAll, bool featuredOnly, bool hideFullEvents, string email, IEnumerable<int> categoryIds, bool processCollection)
-        {
-            DateTime? startDate;
-            DateTime? endDate;
-
-            switch (listingMode)
-            {
-                case ListingMode.CurrentMonth:
-                    startDate = DateTime.Today;
-                    endDate = GetLastDayOfThisMonth();
-                    break;
-                case ListingMode.Future:
-                    startDate = GetFirstDayOfNextMonth();
-                    endDate = null;
-                    break;
-                case ListingMode.Past:
-                    startDate = null;
-                    endDate = DateTime.Today;
-                    break;
-                ////case ListingMode.All:
-                default:
-                    startDate = endDate = null;
-                    break;
-            }
-
-            return Load(portalId, startDate, endDate, sortExpression, pageIndex, pageSize, showAll, featuredOnly, hideFullEvents, email, categoryIds, processCollection);
-        }
-        
-        /// <summary>
         /// Loads a page of events based on the given <paramref name="startDate"/> and <paramref name="endDate"/>.
         /// </summary>
         /// <param name="portalId">The ID of the portal that the events are for.</param>
@@ -207,15 +118,15 @@ namespace Engage.Events
         /// <exception cref="DBException">if there's an error while going to the database to retrieve the events</exception>
         private static EventCollection Load(int portalId, DateTime? startDate, DateTime? endDate, string sortExpression, int? pageIndex, int? pageSize, bool showAll, bool featuredOnly, bool hideFullEvents, string email, IEnumerable<int> categoryIds, bool processCollection)
         {
-            IDataProvider dp = DataProvider.Instance;
+            var dataProvider = DataProvider.Instance;
             try
             {
                 var categoryIdsValue = categoryIds != null && categoryIds.Any()
                                            ? string.Join(",", categoryIds.Select(id => id.ToString(CultureInfo.InvariantCulture)).ToArray())
                                            : null;
-                using (var reader = dp.ExecuteReader(
+                using (var reader = dataProvider.ExecuteReader(
                             CommandType.StoredProcedure,
-                            dp.NamePrefix + "spGetEvents",
+                            dataProvider.NamePrefix + "spGetEvents",
                             Utility.CreateIntegerParam("@portalId", portalId),
                             Utility.CreateBitParam("@showAll", showAll),
                             Utility.CreateBitParam("@featured", featuredOnly),
@@ -232,24 +143,6 @@ namespace Engage.Events
             {
                 throw new DBException("spGetEvents", exc);
             }
-        }
-
-        /// <summary>
-        /// Gets the first day of next month.
-        /// </summary>
-        /// <returns>The first day of next month</returns>
-        private static DateTime GetFirstDayOfNextMonth()
-        {
-            return new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(1);
-        }
-
-        /// <summary>
-        /// Gets the end of the last day of this month.
-        /// </summary>
-        /// <returns>The just before midnight of the last day of this month</returns>
-        private static DateTime GetLastDayOfThisMonth()
-        {
-            return GetFirstDayOfNextMonth().AddTicks(-1);
         }
 
         /// <summary>

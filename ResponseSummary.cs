@@ -52,12 +52,6 @@ namespace Engage.Events
         private int notAttending;
 
         /// <summary>
-        /// Backing field for <see cref="Title"/>.
-        /// </summary>
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private string title = string.Empty;
-
-        /// <summary>
         /// Backing field for <see cref="EventStart"/>.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -75,15 +69,13 @@ namespace Engage.Events
         /// </summary>
         /// <param name="eventId">The event id.</param>
         /// <param name="eventStart">When the event starts.</param>
-        /// <param name="title">The title of the event.</param>
         /// <param name="attending">The number of folks attending.</param>
         /// <param name="notAttending">The number of folks not attending.</param>
         /// <param name="noResponse">The number of folks who haven't responded.</param>
-        private ResponseSummary(int eventId, DateTime eventStart, string title, int attending, int notAttending, int noResponse)
+        private ResponseSummary(int eventId, DateTime eventStart, int attending, int notAttending, int noResponse)
         {
             this.eventId = eventId;
             this.eventStart = eventStart;
-            this.title = title;
             this.attending = attending;
             this.notAttending = notAttending;
             this.noResponse = noResponse;
@@ -181,16 +173,15 @@ namespace Engage.Events
         /// </summary>
         /// <param name="eventId">The event id.</param>
         /// <param name="eventStart">When the event starts.</param>
-        /// <param name="title">The title of the event.</param>
         /// <param name="attending">The number of folks attending.</param>
         /// <param name="notAttending">The number of folks not attending.</param>
         /// <param name="noResponse">The number of folks who haven't responded.</param>
         /// <returns>
         /// A new <see cref="ResponseSummary"/> instance
         /// </returns>
-        public static ResponseSummary Create(int eventId, DateTime eventStart, string title, int attending, int notAttending, int noResponse)
+        public static ResponseSummary Create(int eventId, DateTime eventStart, int attending, int notAttending, int noResponse)
         {
-            return new ResponseSummary(eventId, eventStart, title, attending, notAttending, noResponse);
+            return new ResponseSummary(eventId, eventStart, attending, notAttending, noResponse);
         }
 
         /// <summary>
@@ -234,14 +225,14 @@ namespace Engage.Events
         /// <returns>The instantiated <see cref="ResponseSummary"/></returns>
         internal static ResponseSummary Fill(IDataRecord dataRecord)
         {
-            ResponseSummary r = new ResponseSummary();
-            r.eventId = (int)dataRecord["EventId"];
-            r.eventStart = (DateTime)dataRecord["EventStart"];
-            r.attending = (int)dataRecord["Attending"];
-            r.notAttending = (int)dataRecord["NotAttending"];
-            r.noResponse = (int)dataRecord["NoResponse"];
-
-            return r;
+            return new ResponseSummary
+                {
+                    eventId = (int)dataRecord["EventId"],
+                    eventStart = (DateTime)dataRecord["EventStart"],
+                    attending = (int)dataRecord["Attending"],
+                    notAttending = (int)dataRecord["NotAttending"],
+                    noResponse = (int)dataRecord["NoResponse"]
+                };
         }
     }
 }
