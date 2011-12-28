@@ -31,6 +31,7 @@ using System.Web.UI;
 
 [assembly: InternalsVisibleTo("EngageEvents.Tests")]
 
-[assembly: WebResource("Engage.Dnn.Events.JavaScript.jquery.fancybox-1.0.0.js", "text/javascript")] // TODO: Move into template
+[assembly: WebResource("Engage.Dnn.Events.JavaScript.EngageEvents.Actions.RegisterAction.combined.js", "text/javascript")] // TODO: Move into template
 [assembly: WebResource("Engage.Dnn.Events.JavaScript.EngageEvents.TemplatedDisplayOptions.combined.js", "text/javascript")]
+[assembly: WebResource("Engage.Dnn.Events.JavaScript.EngageEvents.Actions.data-confirm.combined.js", "text/javascript")]
 [assembly: WebResource("Engage.Dnn.Events.JavaScript.jquery-ui-1.8.16.dialog.min.js", "text/javascript")]

@@ -12,9 +12,7 @@
 namespace Engage.Dnn.Events
 {
     using System;
-
-    using DotNetNuke.Services.Localization;
-    using DotNetNuke.UI.Utilities;
+    using System.Web.UI;
 
     /// <summary>
     /// Displays the actions that users can perform on an event instance.
@@ -26,9 +24,25 @@ namespace Engage.Dnn.Events
     public partial class CancelAction : ActionControlBase
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="CancelAction"/> class.
+        /// </summary>
+        public CancelAction()
+        {
+            this.CssClass = "Normal";
+        }
+
+        /// <summary>
         /// Occurs when the Cancel (or UnCancel) button is pressed.
         /// </summary>
-        public event EventHandler Cancel;
+        public event EventHandler Cancel = (_, __) => { };
+
+        /// <summary>
+        /// Gets or sets the CSS class.
+        /// </summary>
+        /// <value>
+        /// The CSS class.
+        /// </value>
+        public string CssClass { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether this instance is canceled.
@@ -38,10 +52,7 @@ namespace Engage.Dnn.Events
         /// </value>
         protected bool Canceled 
         { 
-            get
-            {
-                return this.CurrentEvent.Canceled;
-            }
+            get { return this.CurrentEvent.Canceled; }
         }
 
         /// <summary>
@@ -52,18 +63,9 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Raises the <see cref="Cancel"/> event.
+        /// Raises the <see cref="Control.Init"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void OnCancel(EventArgs e)
-        {
-            this.InvokeCancel(e);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -76,11 +78,11 @@ namespace Engage.Dnn.Events
         /// Handles the Load event of the Page control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void Page_Load(object sender, EventArgs e)
         {
-            this.SetVisibility();
-            this.LocalizeControls();
+            this.Page.ClientScript.RegisterClientScriptResource(typeof(ActionControlBase), "Engage.Dnn.Events.JavaScript.EngageEvents.Actions.data-confirm.combined.js");
+            this.DataBind();
         }
 
         /// <summary>
@@ -93,46 +95,15 @@ namespace Engage.Dnn.Events
             this.CurrentEvent.Canceled = !this.CurrentEvent.Canceled;
             this.CurrentEvent.Save(this.UserId);
             this.OnCancel(e);
-
-            ////EventListingItem listing = Engage.Utility.FindParentControl<EventListingItem>(this);
-            ////if (listing != null)
-            ////{
-            ////    listing.BindData();
-            ////}
         }
 
         /// <summary>
-        /// Invokes the cancel.
+        /// Raises the <see cref="Cancel"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void InvokeCancel(EventArgs e)
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void OnCancel(EventArgs e)
         {
-            EventHandler cancelHandler = this.Cancel;
-            if (cancelHandler != null)
-            {
-                cancelHandler(this, e);
-            }
-        }
-
-        /// <summary>
-        /// Sets the visibility of this control's child controls.
-        /// </summary>
-        private void SetVisibility()
-        {
-            this.CancelButton.Visible = this.IsEditable || this.PermissionsService.CanManageEvents;
-        }
-
-        /// <summary>
-        /// Localizes this control's child controls.
-        /// </summary>
-        private void LocalizeControls()
-        {
-            this.CancelButton.Text = this.CurrentEvent.Canceled
-                                         ? Localization.GetString("UnCancel", this.LocalResourceFile)
-                                         : Localization.GetString("Cancel", this.LocalResourceFile);
-
-            ////ClientAPI.AddButtonConfirm(
-            ////    this.CancelButton, Localization.GetString(this.CurrentEvent.Canceled ? "ConfirmUnCancel" : "ConfirmCancel", this.LocalResourceFile));
+            this.Cancel(this, e);
         }
     }
 }

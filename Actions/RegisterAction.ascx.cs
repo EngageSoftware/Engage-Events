@@ -83,7 +83,7 @@ namespace Engage.Dnn.Events
         private void SetupFancyBox()
         {
             this.AddJQueryReference();
-            ScriptManager.RegisterClientScriptResource(this, typeof(RegisterAction), "Engage.Dnn.Events.JavaScript.jquery.fancybox-1.0.0.js");
+            ScriptManager.RegisterClientScriptResource(this, typeof(RegisterAction), "Engage.Dnn.Events.JavaScript.EngageEvents.Actions.RegisterAction.combined.js");
 
             var parameters = Utility.GetEventParameters(
                     this.CurrentEvent.Id,

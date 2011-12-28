@@ -414,9 +414,17 @@
     <EmbeddedResource Include="JavaScript\EngageEvents.TemplatedDisplayOptions.combined.js">
       <DependentUpon>scripts.chirp.config</DependentUpon>
     </EmbeddedResource>
+    <None Include="JavaScript\jQuery.fn.replaceOnclick.js" />
+    <None Include="JavaScript\data-confirm.js" />
+    <EmbeddedResource Include="JavaScript\EngageEvents.Actions.data-confirm.combined.js">
+      <DependentUpon>scripts.chirp.config</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JavaScript\EngageEvents.Actions.RegisterAction.combined.js">
+      <DependentUpon>scripts.chirp.config</DependentUpon>
+    </EmbeddedResource>
     <Content Include="ReleaseNotes_01.06.00.htm" />
     <Content Include="Images\events-icon32.png" />
-    <Content Include="JavaScript\knockout-1.2.1.debug.js" />
+    <None Include="JavaScript\knockout-1.2.1.debug.js" />
     <Content Include="JavaScript\scripts.chirp.config" />
     <None Include="Migrated rules for EngageEvents.ruleset" />
     <None Include="Providers\DataProviders\SqlDataProvider\00.00.01.SqlDataProvider" />
@@ -726,7 +734,7 @@
     </Content>
     <Content Include="Actions\App_LocalResources\CategoryFilterAction.ascx.resx" />
     <Content Include="Actions\App_LocalResources\MultipleCategoriesFilterAction.ascx.resx" />
-    <EmbeddedResource Include="JavaScript\jquery.fancybox-1.0.0.js" />
+    <None Include="JavaScript\jquery.fancybox-1.0.0.js" />
     <Content Include="Templates\Admin\ManageEvents\App_LocalResources\SharedResources.resx" />
     <Content Include="Templates\Legacy-ListingAll\App_LocalResources\SharedResources.resx">
       <SubType>Designer</SubType>

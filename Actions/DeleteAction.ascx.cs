@@ -14,8 +14,6 @@ namespace Engage.Dnn.Events
     using System;
     using System.Web.UI;
 
-    using DotNetNuke.Services.Localization;
-    using DotNetNuke.UI.Utilities;
     using Engage.Events;
 
     /// <summary>
@@ -38,7 +36,7 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// Occurs when the Delete button is pressed.
         /// </summary>
-        public event EventHandler Delete;
+        public event EventHandler Delete = (_, __) => { };
 
         /// <summary>
         /// Gets or sets the CSS class.
@@ -49,31 +47,21 @@ namespace Engage.Dnn.Events
         public string CssClass { get; set; }
 
         /// <summary>
-        /// Sets the visibility of each of the buttons.  Also, sets the text for the cancel/uncancel button, and the delete confirm.
+        /// Performs all necessary operations to display the control's data correctly.
         /// </summary>
         protected override void BindData()
         {
         }
 
         /// <summary>
-        /// Raises the <see cref="Delete"/> event.
+        /// Raises the <see cref="Control.Init"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void OnDelete(EventArgs e)
-        {
-            this.InvokeDelete(e);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Init"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> object that contains the event data.</param>
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
 
             this.Load += this.Page_Load;
-            this.PreRender += this.Page_PreRender;
             this.DeleteEventButton.Click += this.DeleteEventButton_Click;
         }
 
@@ -81,21 +69,11 @@ namespace Engage.Dnn.Events
         /// Handles the Load event of the Page control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void Page_Load(object sender, EventArgs e)
         {
-            this.SetVisibility();
-            this.LocalizeControls();
-        }
-
-        /// <summary>
-        /// Handles the <see cref="Control.PreRender"/> event of this control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void Page_PreRender(object sender, EventArgs e)
-        {
-            this.DeleteEventButton.CssClass = this.CssClass;
+            this.Page.ClientScript.RegisterClientScriptResource(typeof(ActionControlBase), "Engage.Dnn.Events.JavaScript.EngageEvents.Actions.data-confirm.combined.js");
+            this.DataBind();
         }
 
         /// <summary>
@@ -110,32 +88,12 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Invokes the delete.
+        /// Raises the <see cref="Delete"/> event.
         /// </summary>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void InvokeDelete(EventArgs e)
+        private void OnDelete(EventArgs e)
         {
-            EventHandler deleteHandler = this.Delete;
-            if (deleteHandler != null)
-            {
-                deleteHandler(this, e);
-            }
-        }
-
-        /// <summary>
-        /// Sets the visibility of this control's child controls.
-        /// </summary>
-        private void SetVisibility()
-        {
-            this.DeleteEventButton.Visible = this.IsEditable || this.PermissionsService.CanManageEvents;
-        }
-
-        /// <summary>
-        /// Localizes this control's child controls.
-        /// </summary>
-        private void LocalizeControls()
-        {
-            ////ClientAPI.AddButtonConfirm(this.DeleteEventButton, Localization.GetString("ConfirmDelete", this.LocalResourceFile));
+            this.Delete(this, e);
         }
     }
 }
