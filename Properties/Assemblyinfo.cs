@@ -26,8 +26,8 @@ using System.Web.UI;
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
 
-[assembly: AssemblyFileVersion("1.6.0.0")]
-[assembly: AssemblyVersion("1.6.0.*")]
+[assembly: AssemblyFileVersion("1.7.0.0")]
+[assembly: AssemblyVersion("1.7.0.*")]
 
 [assembly: InternalsVisibleTo("EngageEvents.Tests")]
 
