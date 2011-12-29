@@ -7,7 +7,7 @@
 <%@ Register TagPrefix="engage" TagName="DeleteAction" Src="Actions/DeleteAction.ascx" %>
 <%@ Register TagPrefix="engage" Namespace="Engage.Controls" Assembly="Engage.Framework" %>
 
-<engage:ModuleMessage runat="server" ID="SuccessModuleMessage" MessageType="Success" TextResourceKey="AddEventSuccess" CssClass="AddEventSuccessMessage"/>
+<engage:ModuleMessage runat="server" ID="SuccessModuleMessage" MessageType="Success" CssClass="AddEventSuccessMessage"/>
 
 <div id="AddNewEvent" runat="server" class="AddNewEvent">
 

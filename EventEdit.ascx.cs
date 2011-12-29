@@ -357,6 +357,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void DisplayFinalSuccess()
         {
+            this.SuccessModuleMessage.TextResourceKey = this.EventId.HasValue ? "EditEventSuccess" : "AddEventSuccess";
             this.SuccessModuleMessage.Visible = true;
             this.AddNewEvent.Visible = false;
             this.FooterMultiview.SetActiveView(this.FinalFooterView);
