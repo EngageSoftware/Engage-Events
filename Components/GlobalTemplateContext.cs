@@ -9,13 +9,12 @@
 // CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 // DEALINGS IN THE SOFTWARE.
 
-using System.Linq;
-
 namespace Engage.Dnn.Events.Components
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq;
 
     using DotNetNuke.UI.Modules;
 
@@ -25,36 +24,78 @@ namespace Engage.Dnn.Events.Components
 
     using Utility = Engage.Dnn.Events.Utility;
 
+    /// <summary>
+    /// Provides information that is always accessible to a template (not related to the particular item being displayed by the template)
+    /// </summary>
     public class GlobalTemplateContext : ITemplateable
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GlobalTemplateContext"/> class.
+        /// </summary>
+        /// <param name="moduleContext">The module context.</param>
         public GlobalTemplateContext(ModuleInstanceContext moduleContext)
         {
             this.ModuleContext = moduleContext;
         }
 
+        /// <summary>
+        /// Gets the module context.
+        /// </summary>
         public ModuleInstanceContext ModuleContext { get; private set; }
 
-        protected int PortalId
+        /// <summary>
+        /// Gets the portal ID.
+        /// </summary>
+        private int PortalId
         {
             get { return this.ModuleContext.PortalId; }
         }
 
         /// <summary>
-        /// Gets the value.
+        /// Gets the value of the property with the given <paramref name="propertyName"/>, or <see cref="string.Empty"/> if a property with that name does not exist on this object or is <c>null</c>.
         /// </summary>
+        /// <remarks>
+        /// To avoid conflicts with template syntax, avoid using the following symbols in the property name
+        /// <list type="bullet">
+        ///     <item><description>:</description></item>
+        ///     <item><description>%</description></item>
+        ///     <item><description>$</description></item>
+        ///     <item><description>#</description></item>
+        ///     <item><description>&gt;</description></item>
+        ///     <item><description>&lt;</description></item>
+        ///     <item><description>"</description></item>
+        ///     <item><description>'</description></item>
+        /// </list>
+        /// </remarks>
         /// <param name="propertyName">Name of the property.</param>
-        /// <returns></returns>
+        /// <returns>The string representation of the value of this instance.</returns>
         public string GetValue(string propertyName)
         {
             return this.GetValue(propertyName, null);
         }
 
         /// <summary>
-        /// Gets the value.
+        /// Gets the value of the property with the given <paramref name="propertyName"/>, or <see cref="string.Empty"/> if a property with that name does not exist on this object or is <c>null</c>.
         /// </summary>
+        /// <remarks>
+        /// To avoid conflicts with template syntax, avoid using the following symbols in the property name
+        /// <list type="bullet">
+        ///     <item><description>:</description></item>
+        ///     <item><description>%</description></item>
+        ///     <item><description>$</description></item>
+        ///     <item><description>#</description></item>
+        ///     <item><description>&gt;</description></item>
+        ///     <item><description>&lt;</description></item>
+        ///     <item><description>"</description></item>
+        ///     <item><description>'</description></item>
+        /// </list>
+        /// </remarks>
         /// <param name="propertyName">Name of the property.</param>
-        /// <param name="format">The format.</param>
-        /// <returns></returns>
+        /// <param name="format">
+        /// A numeric or DateTime format string, or one of the string formatting options accepted by <see cref="TemplateEngine.FormatString"/>,
+        /// or <c>null</c> or <see cref="string.Empty"/> to apply the default format.
+        /// </param>
+        /// <returns>The string representation of the value of this instance as specified by <paramref name="format"/>.</returns>
         public string GetValue(string propertyName, string format)
         {
             if (propertyName == null)
@@ -77,7 +118,7 @@ namespace Engage.Dnn.Events.Components
                     return (categories.Count() > 1).ToString(CultureInfo.InvariantCulture);
             }
 
-            return String.Empty;
+            return string.Empty;
         }
     }
 }

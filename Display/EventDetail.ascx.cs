@@ -16,6 +16,8 @@ namespace Engage.Dnn.Events.Display
     using System.Web.UI;
     using System.Web.UI.WebControls;
     using DotNetNuke.Common;
+
+    using Engage.Dnn.Events.Components;
     using Engage.Events;
     using Framework.Templating;
     using Templating;
@@ -121,7 +123,8 @@ namespace Engage.Dnn.Events.Display
                 this,
                 this.ProcessTag,
                 null,
-                ev);
+                ev,
+                new GlobalTemplateContext(this.ModuleContext));
         }
     }
 }
