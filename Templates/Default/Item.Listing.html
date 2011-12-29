@@ -8,14 +8,16 @@
                 <p class="NormalBold"><Engage:Literal Text="%$SortBy%" /></p>
                 <Engage:EventSort />
             </div>
-            <div class="ItemListingHeaderStatus">
-                <p class="NormalBold"><Engage:Literal Text="%$Status%" /></p>
-                <Engage:StatusFilter />
-            </div>
-            <div class="ItemListingHeaderCategory">
-                <p class="NormalBold"><Engage:Literal Text="%$Category%" /></p>
-                <Engage:MultipleCategoryFilter />
-            </div>
+	        <div class="ItemListingHeaderStatus">
+	            <p class="NormalBold"><Engage:Literal Text="%$Status%" /></p>
+	            <Engage:StatusFilter />
+	        </div>
+	        <Engage:Condition if="%#MultipleCategories%">
+	            <div class="ItemListingHeaderCategory">
+	                <p class="NormalBold"><Engage:Literal Text="%$Category%" /></p>
+	                <Engage:MultipleCategoryFilter />
+	            </div>
+            </Engage:Condition>
 	    </div>
     </div>
     <Engage:List>

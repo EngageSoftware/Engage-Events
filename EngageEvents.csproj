@@ -215,6 +215,7 @@
       <DependentUpon>NotConfigured.ascx</DependentUpon>
     </Compile>
     <Compile Include="Components\DateInterval.cs" />
+    <Compile Include="Components\GlobalTemplateContext.cs" />
     <Compile Include="Components\PermissionsService.cs" />
     <Compile Include="Controls\TemplatePicker.ascx.cs">
       <DependentUpon>TemplatePicker.ascx</DependentUpon>

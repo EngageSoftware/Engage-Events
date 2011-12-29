@@ -99,21 +99,16 @@ namespace Engage.Dnn.Events
                 categories = categories.Where(category => categoryIdsWithAncestor.Contains(category.Id));
             }
 
-            var categoryNodeItems =
-                categories.Select(
-                    category =>
-                    new
-                    {
-                        Name =
-                    string.IsNullOrEmpty(category.Name)
-                        ? this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile)
-                        : category.Name,
-                        Id = category.Id.ToString(CultureInfo.InvariantCulture),
-                        ParentId =
-                    category.ParentId.HasValue
-                        ? category.ParentId.Value.ToString(CultureInfo.InvariantCulture)
-                        : string.Empty
-                    }).ToList();
+            var categoryNodeItems = categories.Select(category => new
+                                                                    {
+                                                                        Name = string.IsNullOrEmpty(category.Name)
+                                                                            ? this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile)
+                                                                            : category.Name, 
+                                                                        Id = category.Id.ToString(CultureInfo.InvariantCulture),
+                                                                        ParentId = category.ParentId.HasValue
+                                                                            ? category.ParentId.Value.ToString(CultureInfo.InvariantCulture)
+                                                                            : string.Empty,
+                                                                    }).ToList();
 
             if (categoryNodeItems.Count > 1)
             {
@@ -121,7 +116,7 @@ namespace Engage.Dnn.Events
             }
             else
             {
-                this.CategoriesTreeView.Enabled = false;
+                this.Visible = false;
             }
 
             this.CategoriesTreeView.DataSource = categoryNodeItems;

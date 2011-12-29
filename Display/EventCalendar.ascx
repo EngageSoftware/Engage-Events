@@ -25,9 +25,9 @@
     <h2 class="NormalBold">
         <asp:Label runat="server" ResourceKey="EventsTitle" />
     </h2>
-    <div class="EventFilter">
+    <asp:Panel CssClass="EventFilter" runat="server" ID="EventFilterPanel">
         <engage:MultipleCategoriesFilterAction ID="CategoryFilterAction" runat="server" />
-    </div>
+    </asp:Panel>
 </div>
 <div class="EventCalendar">
     <telerik:RadScheduler ID="EventsCalendarDisplay" runat="server" 

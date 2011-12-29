@@ -12,7 +12,10 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
+    using System.Linq;
 
     using Engage.Dnn.Framework;
     using Engage.Events;
@@ -203,6 +206,14 @@ namespace Engage.Dnn.Events
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Setting<T> is immutable")]
         private static readonly Setting<ListingMode> DisplayModeOption = new Setting<ListingMode>("DisplayModeOption", SettingScope.TabModule, ListingMode.All);
 #pragma warning restore 618
+
+        public static IEnumerable<int> GetCategoriesFor(IModuleControlBase moduleControl)
+        {
+            var categoriesSettingValue = Categories.GetValueAsStringFor(moduleControl);
+            return string.IsNullOrEmpty(categoriesSettingValue)
+                       ? Enumerable.Empty<int>()
+                       : categoriesSettingValue.Split(',').Select(id => int.Parse(id, CultureInfo.InvariantCulture));
+        }
 
         /// <summary>
         /// Gets the date range for the given module.

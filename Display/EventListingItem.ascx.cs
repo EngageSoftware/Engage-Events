@@ -21,6 +21,7 @@ namespace Engage.Dnn.Events.Display
     using System.Web.UI;
     using DotNetNuke.Common;
 
+    using Engage.Dnn.Events.Components;
     using Engage.Events;
     using Framework.Templating;
     using Templating;
@@ -317,15 +318,9 @@ namespace Engage.Dnn.Events.Display
                         if (currentEvent == null || Engage.Utility.HasValue(currentEvent.Description))
                         {
                             var detailLinkBuilder = new StringBuilder();
-                            string linkUrl;
-                            if (currentEvent != null)
-                            {
-                                linkUrl = this.BuildLinkUrl(this.DetailsTabId, this.DetailsModuleId, "EventDetail", Dnn.Events.Utility.GetEventParameters(currentEvent));
-                            }
-                            else
-                            {
-                                linkUrl = Globals.NavigateURL(this.DetailsTabId);
-                            }
+                            var linkUrl = currentEvent != null
+                                                 ? this.BuildLinkUrl(this.DetailsTabId, this.DetailsModuleId, "EventDetail", Dnn.Events.Utility.GetEventParameters(currentEvent))
+                                                 : Globals.NavigateURL(this.DetailsTabId);
 
                             detailLinkBuilder.AppendFormat(
                                     CultureInfo.InvariantCulture,
@@ -415,7 +410,9 @@ namespace Engage.Dnn.Events.Display
                 this.GetPageUrlTemplate(this.SortExpression, this.Status),
                 new ItemPagingState(this.CurrentPageIndex, this.TotalNumberOfEvents, this.RecordsPerPage), 
                 this.ProcessTag,
-                this.GetEvents);
+                this.GetEvents, 
+                null, 
+                new GlobalTemplateContext(this.ModuleContext));
         }
 
         /// <summary>
