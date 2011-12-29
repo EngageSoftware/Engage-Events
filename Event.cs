@@ -179,6 +179,12 @@ namespace Engage.Events
         public DateTime CreationDate { get; private set; }
 
         /// <summary>
+        /// Gets the date when this event was last edited.
+        /// </summary>
+        /// <value>The date when this event was last edited.</value>
+        public DateTime RevisionDate { get; private set; }
+
+        /// <summary>
         /// Gets the email address of the organizer of this event.
         /// </summary>
         /// <value>The organizer's email.</value>
@@ -721,6 +727,7 @@ namespace Engage.Events
                 TimeZoneOffset = new TimeSpan(0, (int)eventRecord["TimeZoneOffset"], 0),
                 CreatedBy = (int)eventRecord["CreatedBy"],
                 CreationDate = (DateTime)eventRecord["CreationDate"],
+                RevisionDate = (DateTime)eventRecord["RevisionDate"],
                 Canceled = (bool)eventRecord["Canceled"],
                 IsFeatured = (bool)eventRecord["IsFeatured"],
                 IsDeleted = (bool)eventRecord["IsDeleted"],
