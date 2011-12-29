@@ -94,6 +94,12 @@ namespace Engage.Dnn.Events
         public static readonly Setting<bool> HideFullEvents = new Setting<bool>("HideFullEvents", SettingScope.TabModule, false);
 
         /// <summary>
+        /// Whether new events created through this module allow registration by default
+        /// </summary>
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Setting<T> is immutable")]
+        public static readonly Setting<bool> AllowRegistrationsByDefault = new Setting<bool>("AllowRegistrationsByDefault", SettingScope.Portal, false);
+
+        /// <summary>
         /// The amount the range starts from today, if the range start is relative (the unit of the amount is determined by <see cref="RangeStartRelativeInterval"/>)
         /// </summary>
         /// <example>

@@ -114,6 +114,7 @@ namespace Engage.Dnn.Events
                 {
                     this.FillLists();
                     this.DeleteAction.Visible = this.EventId.HasValue;
+                    this.AllowRegistrationsCheckBox.Checked = ModuleSettings.AllowRegistrationsByDefault.GetValueAsBooleanFor(this).Value;
 
                     if (this.EventId.HasValue)
                     {

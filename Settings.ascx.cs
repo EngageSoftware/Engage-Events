@@ -13,7 +13,6 @@ namespace Engage.Dnn.Events
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -21,6 +20,7 @@ namespace Engage.Dnn.Events
 
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Services.Exceptions;
+    using DotNetNuke.Services.Localization;
 
     using Engage.Events;
 
@@ -66,38 +66,36 @@ namespace Engage.Dnn.Events
             base.LoadSettings();
             try
             {
-                if (!this.IsPostBack)
+                if (this.IsPostBack)
                 {
-#pragma warning disable 618 // Can't transition to DNN's LocalizeGridView until we're on DNN 4.6
-                    Dnn.Utility.LocalizeGridView(ref this.DetailsDisplayModuleGrid, this.LocalResourceFile);
-#pragma warning restore 618
-                    this.DetailsDisplayModuleGrid.DataSource = new ModuleController().GetModulesByDefinition(this.PortalId, Utility.ModuleDefinitionFriendlyName);
-                    this.DetailsDisplayModuleGrid.DataBind();
-
-                    this.CategoriesCheckBoxTreeView.DataTextField = "Name";
-                    this.CategoriesCheckBoxTreeView.DataValueField = "Id";
-                    this.CategoriesCheckBoxTreeView.DataFieldID = "Id";
-                    this.CategoriesCheckBoxTreeView.DataFieldParentID = "ParentId";
-                    var categoryList = (from category in CategoryCollection.Load(this.PortalId)
-                                      select
-                                          new
-                                              {
-                                                  Name =
-                                          string.IsNullOrEmpty(category.Name)
-                                              ? this.Localize("DefaultCategory", this.LocalSharedResourceFile)
-                                              : category.Name,
-                                                  Id = category.Id.ToString(CultureInfo.InvariantCulture),
-                                                  ParentId =
-                                          category.ParentId.HasValue
-                                              ? category.ParentId.Value.ToString(CultureInfo.InvariantCulture)
-                                              : string.Empty
-                                              }).ToList();
-                    categoryList.Add(new { Name = this.Localize("All Categories.Text"), Id = string.Empty, ParentId = (string)null });
-                    this.CategoriesCheckBoxTreeView.DataSource = categoryList;
-                    this.CategoriesCheckBoxTreeView.DataBind();
-
-                    this.SetOptions();
+                    return;
                 }
+
+                Localization.LocalizeGridView(ref this.DetailsDisplayModuleGrid, this.LocalResourceFile);
+
+                this.DetailsDisplayModuleGrid.DataSource = new ModuleController().GetModulesByDefinition(this.PortalId, Utility.ModuleDefinitionFriendlyName);
+                this.DetailsDisplayModuleGrid.DataBind();
+
+                this.CategoriesCheckBoxTreeView.DataTextField = "Name";
+                this.CategoriesCheckBoxTreeView.DataValueField = "Id";
+                this.CategoriesCheckBoxTreeView.DataFieldID = "Id";
+                this.CategoriesCheckBoxTreeView.DataFieldParentID = "ParentId";
+                var categoryList = (from category in CategoryCollection.Load(this.PortalId)
+                                    select new
+                                            {
+                                                Name = string.IsNullOrEmpty(category.Name)
+                                                    ? this.Localize("DefaultCategory", this.LocalSharedResourceFile)
+                                                    : category.Name,
+                                                Id = category.Id.ToString(CultureInfo.InvariantCulture),
+                                                ParentId = category.ParentId.HasValue
+                                                    ? category.ParentId.Value.ToString(CultureInfo.InvariantCulture)
+                                                    : string.Empty
+                                            }).ToList();
+                categoryList.Add(new { Name = this.Localize("All Categories.Text"), Id = string.Empty, ParentId = (string)null });
+                this.CategoriesCheckBoxTreeView.DataSource = categoryList;
+                this.CategoriesCheckBoxTreeView.DataBind();
+
+                this.SetOptions();
             }
             catch (Exception exc)
             {
@@ -110,37 +108,38 @@ namespace Engage.Dnn.Events
         /// </summary>
         public override void UpdateSettings()
         {
-            if (this.Page.IsValid)
+            if (!this.Page.IsValid)
             {
-                try
+                return;
+            }
+
+            try
+            {
+                Dnn.Events.ModuleSettings.FeaturedOnly.Set(this, this.FeaturedCheckBox.Checked);
+                Dnn.Events.ModuleSettings.HideFullEvents.Set(this, this.HideFullEventsCheckBox.Checked);
+                Dnn.Events.ModuleSettings.AllowRegistrationsByDefault.Set(this, this.AllowRegistrationsByDefaultCheckBox.Checked);
+                Dnn.Events.ModuleSettings.DetailsDisplayTabId.Set(this, this.GetSelectedDetailsDisplayTabId());
+                Dnn.Events.ModuleSettings.DetailsDisplayModuleId.Set(this, this.GetSelectedDetailsDisplayModuleId());
+
+                string cats;
+                var nodes = this.CategoriesCheckBoxTreeView.Nodes.Cast<RadTreeNode>().ToList();
+                if (nodes.Any() && nodes.First().Checked)
                 {
-                    Dnn.Events.ModuleSettings.FeaturedOnly.Set(this, this.FeaturedCheckBox.Checked);
-                    Dnn.Events.ModuleSettings.HideFullEvents.Set(this, this.HideFullEventsCheckBox.Checked);
-                    Dnn.Events.ModuleSettings.DetailsDisplayTabId.Set(this, this.GetSelectedDetailsDisplayTabId());
-                    Dnn.Events.ModuleSettings.DetailsDisplayModuleId.Set(this, this.GetSelectedDetailsDisplayModuleId());
-
-                    string cats;
-                    var nodes = this.CategoriesCheckBoxTreeView.Nodes.Cast<RadTreeNode>().ToList();
-                    if (nodes.Count() > 0 && nodes.First().Checked)
-                    {
-                        cats = string.Empty;
-                    }
-                    else
-                    {
-                        ////var selectedCategoryIds = this.CategoriesCheckBoxTreeView.Items.Cast<ListItem>().Where(item => item.Selected).Select(item => item.Value);
-                        var selectedCategoryIds = this.CategoriesCheckBoxTreeView.CheckedNodes.Select(
-                            node => node.Value);
-                        cats = string.Join(",", selectedCategoryIds.ToArray());
-                    }
-
-                    Dnn.Events.ModuleSettings.Categories.Set(this, cats);
-
-                    this.specificSettingsControl.UpdateSettings();
+                    cats = string.Empty;
                 }
-                catch (Exception exc)
+                else
                 {
-                    Exceptions.ProcessModuleLoadException(this, exc);
+                    var selectedCategoryIds = this.CategoriesCheckBoxTreeView.CheckedNodes.Select(node => node.Value);
+                    cats = string.Join(",", selectedCategoryIds.ToArray());
                 }
+
+                Dnn.Events.ModuleSettings.Categories.Set(this, cats);
+
+                this.specificSettingsControl.UpdateSettings();
+            }
+            catch (Exception exc)
+            {
+                Exceptions.ProcessModuleLoadException(this, exc);
             }
         }
 
@@ -153,9 +152,6 @@ namespace Engage.Dnn.Events
             base.OnInit(e);
 
             this.Load += this.Page_Load;
-            ////this.AllCategoriesCheckBox.CheckedChanged += this.AllCategoriesCheckBox_CheckedChanged;
-            ////this.CategoriesCheckBoxTreeView.NodeCheck += this.CategoriesCheckBoxTreeView_NodeCheck;
-            ////this.CategoriesCheckBoxTreeView.NodeClick += this.CategoriesCheckBoxTreeView_NodeClick;
             this.CategoriesListValidator.ServerValidate += this.CategoriesListValidator_ServerValidate;
             this.DetailsDisplayModuleValidator.ServerValidate += this.DetailsDisplayModuleValidator_ServerValidate;
             this.CategoriesCheckBoxTreeView.NodeCreated += this.CategoriesCheckBoxTreeView_NodeCreated;
@@ -235,16 +231,6 @@ namespace Engage.Dnn.Events
             e.Node.Expanded = true;
         }
 
-        /////// <summary>
-        /////// Handles the <see cref="CheckBox.CheckedChanged"/> event of the <see cref="AllCategoriesCheckBox"/> control.
-        /////// </summary>
-        /////// <param name="sender">The source of the event.</param>
-        /////// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        ////private void AllCategoriesCheckBox_CheckedChanged(object sender, EventArgs e)
-        ////{
-        ////    this.CategoriesCheckBoxTreeView.Enabled = !this.AllCategoriesCheckBox.Checked;
-        ////}
-
         /// <summary>
         /// Handles the <see cref="CustomValidator.ServerValidate"/> event of the <see cref="CategoriesListValidator"/> control.
         /// </summary>
@@ -252,13 +238,6 @@ namespace Engage.Dnn.Events
         /// <param name="args">The <see cref="ServerValidateEventArgs"/> instance containing the event data.</param>
         private void CategoriesListValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            ////if (this.AllCategoriesCheckBox.Checked)
-            ////{
-            ////    args.IsValid = true;
-            ////    return;
-            ////}
-
-            ////args.IsValid = this.CategoriesCheckBoxList.Items.Cast<ListItem>().Any(categoryItem => categoryItem.Selected);
             args.IsValid = this.CategoriesCheckBoxTreeView.CheckedNodes.Any();
         }
 
@@ -269,15 +248,9 @@ namespace Engage.Dnn.Events
         /// <param name="args">The <see cref="System.Web.UI.WebControls.ServerValidateEventArgs"/> instance containing the event data.</param>
         private void DetailsDisplayModuleValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            int checkedCount = 0;
-            foreach (GridViewRow row in this.DetailsDisplayModuleGrid.Rows)
-            {
-                var detailsDisplayModuleRadioButton = (RadioButton)row.FindControl("DetailsDisplayModuleRadioButton");
-                if (detailsDisplayModuleRadioButton.Checked)
-                {
-                    checkedCount++;
-                }
-            }
+            var checkedCount = this.DetailsDisplayModuleGrid.Rows.Cast<GridViewRow>()
+                                                                 .Select(row => (RadioButton)row.FindControl("DetailsDisplayModuleRadioButton"))
+                                                                 .Count(detailsDisplayModuleRadioButton => detailsDisplayModuleRadioButton.Checked);
 
             args.IsValid = checkedCount == 1;
         }
@@ -299,21 +272,25 @@ namespace Engage.Dnn.Events
         {
             this.FeaturedCheckBox.Checked = Dnn.Events.ModuleSettings.FeaturedOnly.GetValueAsBooleanFor(this).Value;
             this.HideFullEventsCheckBox.Checked = Dnn.Events.ModuleSettings.HideFullEvents.GetValueAsBooleanFor(this).Value;
-            this.SetDetailsDisplayModuleGridSelection(Dnn.Events.ModuleSettings.DetailsDisplayTabId.GetValueAsInt32For(this) ?? this.TabId, Dnn.Events.ModuleSettings.DetailsDisplayModuleId.GetValueAsInt32For(this) ?? this.ModuleId);
+            this.AllowRegistrationsByDefaultCheckBox.Checked = Dnn.Events.ModuleSettings.AllowRegistrationsByDefault.GetValueAsBooleanFor(this).Value;
+            this.SetDetailsDisplayModuleGridSelection(
+                Dnn.Events.ModuleSettings.DetailsDisplayTabId.GetValueAsInt32For(this) ?? this.TabId,
+                Dnn.Events.ModuleSettings.DetailsDisplayModuleId.GetValueAsInt32For(this) ?? this.ModuleId);
 
             var categoriesSettingValue = Dnn.Events.ModuleSettings.Categories.GetValueAsStringFor(this);
-            if (string.IsNullOrEmpty(categoriesSettingValue))
+            if (!string.IsNullOrEmpty(categoriesSettingValue))
             {
-                var all = this.CategoriesCheckBoxTreeView.Nodes.Cast<RadTreeNode>().FirstOrDefault();
-                if (all != null)
-                {
-                    all.Checked = true;
-                    this.SetEnabledAllNodes(all.Nodes.Cast<RadTreeNode>(), false);
-                }
-                ////this.CategoriesCheckBoxTreeView.Enabled = false;
+                return;
             }
 
-            // Note: the set options for the selected categories is moved to NodeDataBound event on the treeview.
+            var all = this.CategoriesCheckBoxTreeView.Nodes.Cast<RadTreeNode>().FirstOrDefault();
+            if (all == null)
+            {
+                return;
+            }
+
+            all.Checked = true;
+            this.SetEnabledAllNodes(all.Nodes.Cast<RadTreeNode>(), false);
         }
 
         /// <summary>

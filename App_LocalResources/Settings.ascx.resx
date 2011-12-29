@@ -120,6 +120,12 @@
   <data name="All Categories.Text" xml:space="preserve">
     <value>All Categories</value>
   </data>
+  <data name="AllowRegistrationsByDefaultLabel.Help" xml:space="preserve">
+    <value>When creating a new event, should it default to allowing registration?  Or should it not allow registrations?</value>
+  </data>
+  <data name="AllowRegistrationsByDefaultLabel.Text" xml:space="preserve">
+    <value>Allow Registrations By Default On New Events</value>
+  </data>
   <data name="Calendar Settings.Header" xml:space="preserve">
     <value>Calendar View Settings</value>
   </data>

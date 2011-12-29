@@ -31,15 +31,6 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.PlaceHolder SpecificSettingsPlaceholder;
         
         /// <summary>
-        /// FeaturedEventLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UserControl FeaturedEventLabel;
-        
-        /// <summary>
         /// FeaturedCheckBox control.
         /// </summary>
         /// <remarks>
@@ -49,15 +40,6 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.CheckBox FeaturedCheckBox;
         
         /// <summary>
-        /// HideFullEventsLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UserControl HideFullEventsLabel;
-        
-        /// <summary>
         /// HideFullEventsCheckBox control.
         /// </summary>
         /// <remarks>
@@ -65,6 +47,15 @@ namespace Engage.Dnn.Events {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox HideFullEventsCheckBox;
+        
+        /// <summary>
+        /// AllowRegistrationsByDefaultCheckBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox AllowRegistrationsByDefaultCheckBox;
         
         /// <summary>
         /// CategoriesCheckBoxTreeView control.
