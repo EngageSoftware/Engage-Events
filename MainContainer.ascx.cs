@@ -15,11 +15,12 @@ namespace Engage.Dnn.Events
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.IO;
-    using DotNetNuke.Common;
+
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Security;
     using DotNetNuke.Services.Exceptions;
-    using Framework;
+
+    using Engage.Dnn.Framework;
 
     /// <summary>
     /// The main container that is used by the Engage: Events module.  

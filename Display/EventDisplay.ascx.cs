@@ -13,8 +13,6 @@ namespace Engage.Dnn.Events.Display
 {
     using System;
     using System.Web.UI;
-    using Framework.Templating;
-    using Templating;
 
     /// <summary>
     /// Custom event listing
@@ -45,7 +43,7 @@ namespace Engage.Dnn.Events.Display
             }
             else
             {
-                displayControl = (ModuleBase)this.LoadControl("~" + DesktopModuleFolderName + "Display/EventCalendar.ascx");
+                displayControl = (ModuleBase)this.LoadControl("~" + this.DesktopModuleFolderName + "Display/EventCalendar.ascx");
             }
 
             displayControl.ModuleConfiguration = this.ModuleConfiguration;

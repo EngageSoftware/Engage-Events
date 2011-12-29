@@ -67,6 +67,10 @@
               <name>01.05.06.SqlDataProvider</name>
               <version>01.05.06</version>
             </script>
+            <script type="Install">
+              <name>01.07.00.SqlDataProvider</name>
+              <version>01.07.00</version>
+            </script>
             <script type="UnInstall">
               <name>Uninstall.SqlDataProvider</name>
               <version latestVersion="latestVersion">01.02.00</version>
@@ -80,6 +84,9 @@
             <moduleName>Engage: Events</moduleName>
             <foldername>EngageEvents</foldername>
             <businessControllerClass>Engage.Dnn.Events.Components.FeaturesController</businessControllerClass>
+            <supportedFeatures>
+              <supportedFeature type="Searchable" />
+            </supportedFeatures>
             <moduleDefinitions>
               <moduleDefinition>
                 <friendlyName>Engage: Events</friendlyName>

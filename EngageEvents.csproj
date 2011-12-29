@@ -415,6 +415,7 @@
     <EmbeddedResource Include="JavaScript\EngageEvents.Actions.RegisterAction.combined.js">
       <DependentUpon>scripts.chirp.config</DependentUpon>
     </EmbeddedResource>
+    <Content Include="ReleaseNotes_01.07.00.htm" />
     <Content Include="ReleaseNotes_01.06.00.htm" />
     <Content Include="Images\events-icon32.png" />
     <None Include="JavaScript\knockout-1.2.1.debug.js" />
@@ -429,6 +430,7 @@
     <None Include="Providers\DataProviders\SqlDataProvider\01.04.05.SqlDataProvider" />
     <None Include="Providers\DataProviders\SqlDataProvider\01.05.01.SqlDataProvider" />
     <None Include="Providers\DataProviders\SqlDataProvider\01.05.06.SqlDataProvider" />
+    <None Include="Providers\DataProviders\SqlDataProvider\01.07.00.SqlDataProvider" />
     <None Include="Templates\Engage Events Templates.docx" />
     <None Include="Templates\Engage Events Templates.pdf" />
     <None Include="Uninstall.SqlDataProvider" />
