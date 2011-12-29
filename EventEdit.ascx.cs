@@ -1,4 +1,4 @@
-// <copyright file="EventEdit.ascx.cs" company="Engage Software">
+ // <copyright file="EventEdit.ascx.cs" company="Engage Software">
 // Engage: Events - http://www.EngageSoftware.com
 // Copyright (c) 2004-2011
 // by Engage Software ( http://www.engagesoftware.com )
@@ -21,7 +21,6 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Framework;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
-    using DotNetNuke.UI.UserControls;
 
     using Engage.Events;
 
@@ -69,7 +68,6 @@ namespace Engage.Dnn.Events
             this.LimitRegistrationsCheckBox.CheckedChanged += this.LimitRegistrationsCheckBox_CheckedChanged;
             this.CapacityMetMessageRadioButtonList.SelectedIndexChanged += this.CapacityMetMessageRadioButtonList_SelectedIndexChanged;
             this.RecurrenceEditorValidator.ServerValidate += this.RecurrenceEditorValidator_ServerValidate;
-            this.EventDescriptionTextEditorValidator.ServerValidate += this.EventDescriptionTextEditorValidator_ServerValidate;
             this.UniqueCategoryNameValidator.ServerValidate += this.UniqueCategoryNameValidator_ServerValidate;
         }
 
@@ -196,16 +194,6 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Handles the ServerValidate event of the EventDescriptionTextEditorValidator control.
-        /// </summary>
-        /// <param name="source">The source of the event.</param>
-        /// <param name="args">The <see cref="System.Web.UI.WebControls.ServerValidateEventArgs"/> instance containing the event data.</param>
-        private void EventDescriptionTextEditorValidator_ServerValidate(object source, ServerValidateEventArgs args)
-        {
-            args.IsValid = this.TextEditorHasValue(this.EventDescriptionTextEditor);
-        }
-
-        /// <summary>
         /// Handles the ServerValidate event of the RecurrenceEditorValidator control.
         /// </summary>
         /// <param name="source">The source of the event.</param>
@@ -235,20 +223,6 @@ namespace Engage.Dnn.Events
             // they picked an existing category, or the new category name doesn't exist in the list of this portal's categories
             args.IsValid = this.CategoryComboBox.SelectedItem != null ||
                            !CategoryCollection.Load(this.PortalId).Any(category => category.Name.Equals(args.Value, StringComparison.CurrentCultureIgnoreCase));
-        }
-
-        /// <summary>
-        /// Determines whether the given <paramref name="textEditor"/> has a meaningful value, checking for empty HTML (based on the "DefaultEmptyText" resource key).
-        /// </summary>
-        /// <param name="textEditor">The text editor to check.</param>
-        /// <returns><c>true</c> if the given <paramref name="textEditor"/> has any meaningful value, otherwise <c>false</c></returns>
-        private bool TextEditorHasValue(TextEditor textEditor)
-        {
-            string defaultEmptyText = Localization.GetString("DefaultEmptyText.Text", this.LocalResourceFile);
-#if DEBUG
-            defaultEmptyText = defaultEmptyText.Replace("[L]", string.Empty);
-#endif
-            return Engage.Utility.HasValue(textEditor.Text) && !textEditor.Text.Equals(defaultEmptyText, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>

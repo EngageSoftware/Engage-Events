@@ -148,15 +148,6 @@ namespace Engage.Dnn.Events {
         protected global::DotNetNuke.UI.UserControls.TextEditor EventDescriptionTextEditor;
         
         /// <summary>
-        /// EventDescriptionTextEditorValidator control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator EventDescriptionTextEditorValidator;
-        
-        /// <summary>
         /// FeaturedCheckBox control.
         /// </summary>
         /// <remarks>

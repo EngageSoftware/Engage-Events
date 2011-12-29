@@ -70,7 +70,6 @@
     <div class="AEEventLocationAdd eng-section">
         <asp:Label runat="server" ResourceKey="EventLocationLabel" CssClass="NormalBold eng-label" AssociatedControlID="EventLocationTextBox"/>
         <telerik:RadTextBox ID="EventLocationTextBox" runat="server" CssClass="NormalTextBox eng-input eng-input-large" Skin="WebBlue" ShouldResetWidthInPixels="false" />
-        <asp:RequiredFieldValidator runat="server" ControlToValidate="EventLocationTextBox" ResourceKey="EventLocationTextBoxRequired" Display="None" EnableClientScript="false"/>
     </div>
 
     <div class="AEEventEditor eng-section">
@@ -81,7 +80,6 @@
     <div class="AEEventEditor eng-section">
         <asp:Label runat="server" ResourceKey="EventDescriptionLabel" CssClass="NormalBold eng-label" AssociatedControlID="EventDescriptionTextEditor"/>
         <dnn:TextEditor ID="EventDescriptionTextEditor" runat="server" Height="400" Width="400" CssClass="eng-input eng-input-x-large" TextRenderMode="Raw" HtmlEncode="False" DefaultMode="Rich" ChooseMode="True" ChooseRender="False" />
-        <asp:CustomValidator ID="EventDescriptionTextEditorValidator" runat="server" ResourceKey="EventDescriptionTextEditorRequired" Display="None"/>
     </div>
     
     <div class="AEEventFeature eng-section">
