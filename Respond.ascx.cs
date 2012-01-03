@@ -43,24 +43,6 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Determines whether the given event can accept new registrations
-        /// </summary>
-        /// <param name="eventBeingRespondedTo">The event being responded to.</param>
-        /// <returns>
-        /// <c>true</c> if the given event can accept new registrations; otherwise, <c>false</c>.
-        /// </returns>
-        private bool CanRegisterFor(Event eventBeingRespondedTo)
-        {
-            if (!eventBeingRespondedTo.Capacity.HasValue)
-            {
-                return true;
-            }
-
-            var responses = ResponseCollection.Load(eventBeingRespondedTo.Id, eventBeingRespondedTo.EventStart, ResponseStatus.Attending.ToString(), "ResponseId", 1, 0, this.CategoryIds);
-            return eventBeingRespondedTo.Capacity > responses.TotalRecords;
-        }
-
-        /// <summary>
         /// Determines whether the current user has already registered for the event with the given <paramref name="eventId"/>, and can therefore unregister from the event.
         /// </summary>
         /// <param name="eventId">The ID of the event being responded to.</param>
@@ -69,7 +51,7 @@ namespace Engage.Dnn.Events
         /// </returns>
         private bool CanUnregisterFrom(int? eventId)
         {
-            Response response = Engage.Events.Response.Load(eventId.Value, this.EventStart, this.UserInfo.Email);
+            var response = Engage.Events.Response.Load(eventId.Value, this.EventStart, this.UserInfo.Email);
             return response != null && response.Status == ResponseStatus.Attending;
         }
 
@@ -109,7 +91,7 @@ namespace Engage.Dnn.Events
 
             eventBeingRespondedTo = eventBeingRespondedTo.CreateOccurrence(this.EventStart);
 
-            if (!this.CanRegisterFor(eventBeingRespondedTo) && !this.CanUnregisterFrom(eventBeingRespondedTo.Id))
+            if (eventBeingRespondedTo.IsFull && !this.CanUnregisterFrom(eventBeingRespondedTo.Id))
             {
                 this.ShowEventFullView(eventBeingRespondedTo);
             }
@@ -176,7 +158,7 @@ namespace Engage.Dnn.Events
                 }
 
                 var responseStatus = (ResponseStatus)Enum.Parse(typeof(ResponseStatus), this.ResponseStatusRadioButtons.SelectedValue);
-                if (responseStatus != ResponseStatus.Attending || this.CanRegisterFor(eventBeingRespondedTo))
+                if (responseStatus != ResponseStatus.Attending || !eventBeingRespondedTo.IsFull)
                 {
                     var response = Engage.Events.Response.Load(eventId.Value, this.EventStart, this.UserInfo.Email) ??
                                    Engage.Events.Response.Create(
