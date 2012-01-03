@@ -436,6 +436,21 @@ namespace Engage.Events
         }
 
         /// <summary>
+        /// Gets a value indicating whether this instance is full (i.e. cannot accept any new registrations).
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is full (has met <see cref="Capacity"/>); otherwise, <c>false</c>.
+        /// </value>
+        [XmlIgnore]
+        public bool IsFull
+        {
+            get
+            {
+                return this.AttendeeCount >= this.Capacity;
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether this instance has any attending responses.
         /// </summary>
         /// <value>
@@ -698,7 +713,7 @@ namespace Engage.Events
                     return this.AttendeeCount.ToString(format, CultureInfo.InvariantCulture);
                 case "IS FULL":
                 case "ISFULL":
-                    return (this.AttendeeCount >= this.Capacity).ToString(CultureInfo.InvariantCulture);
+                    return this.IsFull.ToString(CultureInfo.InvariantCulture);
                 case "LOCATION":
                     return TemplateEngine.FormatString(this.Location, format ?? "HTML");
                 case "CATEGORY":
