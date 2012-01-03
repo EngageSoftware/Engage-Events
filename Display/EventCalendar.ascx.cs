@@ -149,15 +149,19 @@ namespace Engage.Dnn.Events.Display
         /// <param name="e">The <see cref="Telerik.Web.UI.SchedulerEventArgs"/> instance containing the event data.</param>
         private void EventsCalendarDisplay_AppointmentDataBound(object sender, SchedulerEventArgs e)
         {
-            var category = ((Event)e.Appointment.DataItem).Category;
+            var @event = (Event)e.Appointment.DataItem;
+            var category = @event.Category;
             var categoryName = string.IsNullOrEmpty(category.Name) ? this.Localize("DefaultCategory", this.LocalSharedResourceFile) : category.Name;
             var color = category.Color ?? "Default";
 
             e.Appointment.CssClass = string.Format(
                 CultureInfo.InvariantCulture, 
-                "cat-{0} rsCategory{1}", 
+                "cat-{0} rsCategory{1} {2} {3} {4}", 
                 Engage.Utility.ConvertToSlug(categoryName),
-                Engage.Utility.ConvertToSlug(color));
+                Engage.Utility.ConvertToSlug(color),
+                @event.IsFeatured ? "featured" : string.Empty,
+                @event.IsRecurring ? "recurring" : string.Empty,
+                @event.IsFull ? "seats-full" : @event.Capacity.HasValue ? "seats-available" : "no-seat-limit");
         }
 
         /// <summary>
