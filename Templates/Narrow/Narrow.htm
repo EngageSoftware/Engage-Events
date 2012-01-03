@@ -1,22 +1,23 @@
 <div class="Narrow">
-    <Engage:List>
-    <Engage:EventWrapper cssclass="EventItem" 
-                         recurringeventcssclass="RecurringEventItem" 
-                         featuredeventcssclass="FeaturedEventItem" 
-                         fulleventcssclass="FullEventItem" 
-                         alternatingcssclass="AlternatingEventItem">
-	    <p class="Normal">
-	        <Engage:ReadMore CssClass="EventLink">
-	            <Engage:Literal Text="%#EventStart:MM.dd.yyyy%"/>
-	        </Engage:ReadMore>
-	    </p>
-        <h2 class="NormalBold">
-            <Engage:ReadMore CssClass="EventLink">
-                <Engage:Literal Text="%#Title%" />
-            </Engage:ReadMore>
-        </h2>
-    </Engage:EventWrapper>
-    </Engage:List>
-
-	<p class="calendarLink"><Engage:ReadMore CssClass="Normal" Text="%$ViewCalendar.Text%"/></p>
+    <engage:list>
+        <Engage:EventWrapper cssclass="EventItem" 
+                             recurringeventcssclass="RecurringEventItem" 
+                             featuredeventcssclass="FeaturedEventItem" 
+                             fulleventcssclass="FullEventItem" 
+                             alternatingcssclass="AlternatingEventItem">
+	        <p class="Normal">
+	            <Engage:ReadMore CssClass="EventLink">
+	                <Engage:Literal Text="%#EventStart:MM.dd.yyyy%"/>
+	            </Engage:ReadMore>
+	        </p>
+            <h2 class="NormalBold">
+                <Engage:ReadMore CssClass="EventLink">
+                    <Engage:Literal Text="%#Title%" />
+                </Engage:ReadMore>
+            </h2>
+        </Engage:EventWrapper>
+    </engage:list>
+    <p class="calendarLink">
+        <engage:readmore cssclass="Normal" text="%$ViewCalendar.Text%" />
+    </p>
 </div>

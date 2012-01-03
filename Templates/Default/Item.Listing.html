@@ -1,6 +1,6 @@
 <div class="ItemListingWrap">
     <div class="ItemListingHeader">
-      <!-- This link is recommended by microformats.org, not sure if it does anything but can't hurt -->
+      <Engage:Comment>This link is recommended by microformats.org, not sure if it does anything but can't hurt</Engage:Comment>
       <span class="hcalendar-profile" style="display:none;"><a rel="profile" href="http://microformats.org/profile/hcalendar"><Engage:Literal Text="%$hCalendar%" /></a></span>
 	    <h2 class="Head"><Engage:Literal Text="%$Title%" /></h2>
 	    <div class="ItemListingHeaderTop">
@@ -21,66 +21,66 @@
 	    </div>
     </div>
     <Engage:List>
-    <!-- First start by giving the wrapper a class of "vevent" -->
+        <Engage:Comment>First start by giving the wrapper a class of "vevent"</Engage:Comment>
         <Engage:EventWrapper CssClass="EventItem ItemListing cat-%#Category-Name:CSS % color-%# Category-Color:CSS% vevent" 
                              RecurringEventCssClass="RecurringEventItem" 
                              FeaturedEventCssClass="FeaturedEventItem" 
                              FullEventCssClass="FullEventItem" 
                              AlternatingCssClass="AlternatingEventItem">
-        <div class="EventTitle">
-        <!-- Next, the Title of the event gets a "summary" class -->
-            <h3 class="Head summary">
-                <Engage:Literal Text="%#Title%" />
-            </h3>
-        </div>
-        <div class="EventLocation eng-section">
-            <p class="NormalBold eng-label">
-                <Engage:Literal Text="%$Where%"/>
-            </p>
-            <!-- The location of the event gets a "location" class, ideally this would be further broken down to use "hcard" and how cool would it be to include geo location information automagically -->
-            <p class="Normal location eng-value">
-                <Engage:Literal Text="%#Location%"/>
-            </p>
-        </div>
-        <div class="EventDate eng-section">
-            <p class="NormalBold eng-label">
-                <Engage:Literal Text="%$When%" />
-            </p>
-            <!-- Next, the Start of the event gets a "dtstart" class and uses an abbr with a title of the full ISO support date format -->
-            <p class="Normal eng-value">
-                <abbr class="dtstart" title="<Engage:Literal Text='%#EventStart:s%' />" >
-                    <Engage:Literal Text="%#EventStart:MM.dd.yyyy%"/>
-                </abbr>
-                <span class="RecurrenceSummary">
-                    <Engage:RecurrenceSummary />
-                </span>
-            </p>
-        </div>
-        <div class="EventOverview eng-section">
-            <p class="NormalBold eng-label">
-                <Engage:Literal Text="%$Overview%" />
-            </p>
-            <div class="Normal eng-value">
-                <!-- The overview of the event gets a "description" class -->
-                <div class="description">
-                    <Engage:Literal Text="%#Overview%" />
-                </div>
-                <!-- The Readmore link of the event gets a "url" class -->
-                <p class="url"><Engage:ReadMore Text="%$ReadMore%" /></p>
+            <div class="EventTitle">
+                <Engage:Comment>Next, the Title of the event gets a "summary" class</Engage:Comment>
+                <h3 class="Head summary">
+                    <Engage:Literal Text="%#Title%" />
+                </h3>
             </div>
-        </div>
-        <div class="EventCategory eng-section">
-            <p class="NormalBold eng-label">
-                <Engage:Literal Text="%$Category%" />
-            </p>
-            <p class="NormalBold eng-value">
-                <span class="category"><Engage:Literal Text="%#Category%"/></span>
-            </p>
-        </div>
-        <div class="EventButtons">
-            <Engage:EditEventButton /> <Engage:ViewResponsesButton /> <Engage:RegisterButton /> <Engage:AddToCalendarButton /> <Engage:DeleteButton /> <Engage:CancelButton />
-        </div>
-    </Engage:EventWrapper>
+            <div class="EventLocation eng-section">
+                <p class="NormalBold eng-label">
+                    <Engage:Literal Text="%$Where%"/>
+                </p>
+                <Engage:Comment>The location of the event gets a "location" class, ideally this would be further broken down to use "hcard" and how cool would it be to include geo location information automagically</Engage:Comment>
+                <p class="Normal location eng-value">
+                    <Engage:Literal Text="%#Location%"/>
+                </p>
+            </div>
+            <div class="EventDate eng-section">
+                <p class="NormalBold eng-label">
+                    <Engage:Literal Text="%$When%" />
+                </p>
+                <Engage:Comment>Next, the Start of the event gets a "dtstart" class and uses an abbr with a title of the full ISO support date format</Engage:Comment>
+                <p class="Normal eng-value">
+                    <abbr class="dtstart" title="<Engage:Literal Text='%#EventStart:s%' />" >
+                        <Engage:Literal Text="%#EventStart:MM.dd.yyyy%"/>
+                    </abbr>
+                    <span class="RecurrenceSummary">
+                        <Engage:RecurrenceSummary />
+                    </span>
+                </p>
+            </div>
+            <div class="EventOverview eng-section">
+                <p class="NormalBold eng-label">
+                    <Engage:Literal Text="%$Overview%" />
+                </p>
+                <div class="Normal eng-value">
+                    <Engage:Comment>The overview of the event gets a "description" class</Engage:Comment>
+                    <div class="description">
+                        <Engage:Literal Text="%#Overview%" />
+                    </div>
+                    <Engage:Comment>The Readmore link of the event gets a "url" class</Engage:Comment>
+                    <p class="url"><Engage:ReadMore Text="%$ReadMore%" /></p>
+                </div>
+            </div>
+            <div class="EventCategory eng-section">
+                <p class="NormalBold eng-label">
+                    <Engage:Literal Text="%$Category%" />
+                </p>
+                <p class="NormalBold eng-value">
+                    <span class="category"><Engage:Literal Text="%#Category%"/></span>
+                </p>
+            </div>
+            <div class="EventButtons">
+                <Engage:EditEventButton /> <Engage:ViewResponsesButton /> <Engage:RegisterButton /> <Engage:AddToCalendarButton /> <Engage:DeleteButton /> <Engage:CancelButton />
+            </div>
+        </Engage:EventWrapper>
     </Engage:List>
     <div class="Pager Normal">
         <Engage:PreviousPage Text="%$Previous%" Tooltip="%$PreviousTip%" /> 

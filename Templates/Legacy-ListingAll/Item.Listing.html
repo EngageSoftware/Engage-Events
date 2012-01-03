@@ -12,33 +12,33 @@
 	</div>
 </div>
 <Engage:List>
-<Engage:EventWrapper CssClass="EventItem ItemListing" 
-                     RecurringEventCssClass="RecurringEventItem" 
-                     FeaturedEventCssClass="FeaturedEventItem" 
-                     FullEventCssClass="FullEventItem" 
-                     AlternatingCssClass="AlternatingEventItem">
-  <div class="EventTitle">
-        <h2 class="Head"><Engage:Literal Text="%#Title%" /></h2>
-    </div>
-    <div class="EventLocation">
-        <p class="NormalBold"><Engage:Literal Text="%$Where%"/></p>
-        <p class="Normal"><Engage:Literal Text="%#Location%"/></p>
-    </div>
-    <div class="EventDate">
-        <p class="NormalBold"><Engage:Literal Text="%$When%" /></p>
-        <p class="Normal"><Engage:Literal Text="%#EventStart:MM.dd.yyyy%"/><span class="RecurrenceSummary"><Engage:RecurrenceSummary /></span></p>
-    </div>
-    <div class="EventOverview">
-        <p class="NormalBold"><Engage:Literal Text="%$Overview%" /></p>
-        <div class="Normal">
-            <div><Engage:Literal Text="%#Overview%" /></div>
-            <p><Engage:ReadMore Text="%$ReadMore%" /></p>
+    <Engage:EventWrapper CssClass="EventItem ItemListing" 
+                         RecurringEventCssClass="RecurringEventItem" 
+                         FeaturedEventCssClass="FeaturedEventItem" 
+                         FullEventCssClass="FullEventItem" 
+                         AlternatingCssClass="AlternatingEventItem">
+        <div class="EventTitle">
+            <h2 class="Head"><Engage:Literal Text="%#Title%" /></h2>
         </div>
-    </div>
-    <div class="EventButtons">
-        <Engage:EditEventButton /> <Engage:ViewResponsesButton /> <Engage:RegisterButton /> <Engage:AddToCalendarButton /> <Engage:DeleteButton /> <Engage:CancelButton />
-    </div>
-</Engage:EventWrapper>
+        <div class="EventLocation">
+            <p class="NormalBold"><Engage:Literal Text="%$Where%"/></p>
+            <p class="Normal"><Engage:Literal Text="%#Location%"/></p>
+        </div>
+        <div class="EventDate">
+            <p class="NormalBold"><Engage:Literal Text="%$When%" /></p>
+            <p class="Normal"><Engage:Literal Text="%#EventStart:MM.dd.yyyy%"/><span class="RecurrenceSummary"><Engage:RecurrenceSummary /></span></p>
+        </div>
+        <div class="EventOverview">
+            <p class="NormalBold"><Engage:Literal Text="%$Overview%" /></p>
+            <div class="Normal">
+                <div><Engage:Literal Text="%#Overview%" /></div>
+                <p><Engage:ReadMore Text="%$ReadMore%" /></p>
+            </div>
+        </div>
+        <div class="EventButtons">
+            <Engage:EditEventButton /> <Engage:ViewResponsesButton /> <Engage:RegisterButton /> <Engage:AddToCalendarButton /> <Engage:DeleteButton /> <Engage:CancelButton />
+        </div>
+    </Engage:EventWrapper>
 </Engage:List>
 <div class="Pager Normal">
     <Engage:PreviousPage Text="%$Previous%" Tooltip="%$PreviousTip%" /> 
