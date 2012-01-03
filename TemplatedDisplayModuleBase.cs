@@ -178,6 +178,11 @@ namespace Engage.Dnn.Events
                                     AppendCssClassAttribute(tag, cssClass, "CanceledEventCssClass");
                                 }
 
+                                if (currentEvent.IsFull)
+                                {
+                                    AppendCssClassAttribute(tag, cssClass, "FullEventCssClass");
+                                }
+
                                 if (@this.isAlternatingEvent)
                                 {
                                     AppendCssClassAttribute(tag, cssClass, "AlternatingCssClass");
