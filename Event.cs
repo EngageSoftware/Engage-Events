@@ -394,7 +394,7 @@ namespace Engage.Events
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException();
+                    throw new ArgumentNullException("value");
                 }
 
                 this.timeZone = value;
