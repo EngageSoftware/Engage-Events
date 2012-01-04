@@ -63,7 +63,6 @@
         <asp:Label runat="server" ResourceKey="EventTimeZoneLabel" CssClass="NormalBold eng-label" AssociatedControlID="TimeZoneDropDownList" />
         <div class="timezone_display">
         	<asp:DropDownList runat="server" ID="TimeZoneDropDownList" CssClass="eng-input eng-input-x-large" />
-	        <div class="Normal"><asp:CheckBox runat="server" ID="InDaylightTimeCheckBox" ResourceKey="EventTimeZoneCheckBox" /></div>
         </div>
     </div>
     

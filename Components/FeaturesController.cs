@@ -16,6 +16,7 @@ namespace Engage.Dnn.Events.Components
     using System.Globalization;
     using System.Linq;
 
+    using DotNetNuke.Data;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Services.Search;
 
@@ -29,7 +30,7 @@ namespace Engage.Dnn.Events.Components
     /// Controls which DNN features are available for this module.
     /// </summary>
     [UsedImplicitly, SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Instantiated through reflection by DNN")]
-    internal class FeaturesController : ISearchable
+    internal class FeaturesController : IUpgradeable, ISearchable
     {
 #if TRIAL
         /// <summary>
@@ -37,6 +38,42 @@ namespace Engage.Dnn.Events.Components
         /// </summary>
         public static readonly Guid ModuleLicenseKey = new Guid("2A2C5DE3-8690-4D97-B027-4750409DAC9A");
 #endif
+
+        /// <summary>
+        /// Performs an action when the module is installed/upgraded, based on the given <paramref name="version"/>.
+        /// </summary>
+        /// <param name="version">The version to which the module is being upgraded.</param>
+        /// <returns>A status message</returns>
+        public string UpgradeModule(string version)
+        {
+            var versionNumber = new Version(version);
+            if (versionNumber.Equals(new Version(1, 7, 0)))
+            {
+                var dataProvider = DataProvider.Instance();
+                using (var transaction = dataProvider.GetTransaction())
+                {
+                    using (var timeZoneOffsetsReader = dataProvider.ExecuteReader("Engage_spGetEventTimeZoneOffsetsFor01_07_00Upgrade").AsEnumerable())
+                    {
+                        foreach (var timeZoneOffset in timeZoneOffsetsReader.Select(reader => reader.GetInt32(0)))
+                        {
+                            var timeZone = Dnn.Utility.ConvertLegacyTimeZoneOffsetToTimeZoneInfo(timeZoneOffset);
+                            dataProvider.ExecuteNonQuery(
+                                "Engage_spConvertTimeZoneOffsetToTimeZoneFor01_07_00Upgrade",
+                                Engage.Utility.CreateIntegerParam("timeZoneOffset", timeZoneOffset),
+                                Engage.Utility.CreateVarcharParam("timeZone", timeZone.Id, 50));
+                        }
+                    }
+
+                    dataProvider.CommitTransaction(transaction);
+                }
+
+                dataProvider.ExecuteNonQuery("Engage_spCleanup01_07_00Upgrade");
+
+                return "We have upgraded time zones";
+            }
+
+            return "No upgrade action required for version " + version + " of Engage: Events";
+        }
 
         /// <summary>
         /// Gets the search items for the given module.

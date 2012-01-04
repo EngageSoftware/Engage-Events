@@ -792,7 +792,9 @@
     <Content Include="Templates\ListingShort\short-listing.jpg" />
     <Content Include="Templates\MiniList\minilist.jpg" />
     <Content Include="Templates\Narrow\narrow.jpg" />
-    <None Include="EngageEvents.5.dnn" />
+    <None Include="EngageEvents.5.dnn">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EngageEvents.Build" />
     <None Include="Providers\DataProviders\SqlDataProvider\01.02.00.SqlDataProvider" />
     <None Include="Providers\DataProviders\SqlDataProvider\01.02.01.SqlDataProvider" />

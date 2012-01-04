@@ -321,21 +321,11 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void FillLists()
         {
-            // TODO: Now that we support .NET 3.5, replace this with TimeZoneInfo.GetSystemTimeZones
-            Localization.LoadTimeZoneDropDownList(
-                this.TimeZoneDropDownList,
-                CultureInfo.CurrentCulture.Name,
-                ((int)Dnn.Utility.GetUserTimeZoneOffset(this.UserInfo, this.PortalSettings).TotalMinutes).ToString(CultureInfo.InvariantCulture));
-
-            ////var categories = from category in CategoryCollection.Load(this.PortalId)
-            ////                 where !this.CategoryIds.Any() || this.CategoryIds.Contains(category.Id)
-            ////                 select new
-            ////                     {
-            ////                         Name = string.IsNullOrEmpty(category.Name)
-            ////                                    ? this.Localize("DefaultCategory.Text", this.LocalSharedResourceFile)
-            ////                                    : category.Name,
-            ////                         Id = category.Id.ToString(CultureInfo.InvariantCulture)
-            ////                     };
+            this.TimeZoneDropDownList.DataSource = TimeZoneInfo.GetSystemTimeZones();
+            this.TimeZoneDropDownList.DataTextField = "DisplayName";
+            this.TimeZoneDropDownList.DataValueField = "Id";
+            this.TimeZoneDropDownList.DataBind();
+            this.TimeZoneDropDownList.SelectedValue = Dnn.Utility.GetUserTimeZone(this.UserInfo, this.PortalSettings).Id;
 
             var categories = (from category in CategoryCollection.Load(this.PortalId)
                              where !this.CategoryIds.Any() || this.CategoryIds.Contains(category.Id)
@@ -401,10 +391,8 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void Update()
         {
-            int timeZoneOffsetMinutes;
             int? eventId = this.EventId;
-            if (!eventId.HasValue ||
-                !int.TryParse(this.TimeZoneDropDownList.SelectedValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out timeZoneOffsetMinutes))
+            if (!eventId.HasValue)
             {
                 return;
             }
@@ -415,16 +403,9 @@ namespace Engage.Dnn.Events
                 return;
             }
 
-            var timeZoneOffset = new TimeSpan(0, timeZoneOffsetMinutes, 0);
-            if (this.InDaylightTimeCheckBox.Checked)
-            {
-                timeZoneOffset = timeZoneOffset.Add(new TimeSpan(1, 0, 0));
-            }
-
             e.EventStart = this.StartDateTimePicker.SelectedDate.Value;
             e.EventEnd = this.EndDateTimePicker.SelectedDate.Value;
-            e.TimeZoneOffset = timeZoneOffset;
-            e.InDaylightTime = this.InDaylightTimeCheckBox.Checked;
+            e.TimeZoneId = this.TimeZoneDropDownList.SelectedValue;
             e.Location = this.EventLocationTextBox.Text;
             e.Title = this.EventTitleTextBox.Text;
             e.Overview = this.EventOverviewTextEditor.Text;
@@ -443,38 +424,27 @@ namespace Engage.Dnn.Events
         /// </summary>
         private void Insert()
         {
-            int timeZoneOffsetMinutes;
-            if (int.TryParse(this.TimeZoneDropDownList.SelectedValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out timeZoneOffsetMinutes))
-            {
-                var timeZoneOffset = TimeSpan.FromMinutes(timeZoneOffsetMinutes);
-                if (this.InDaylightTimeCheckBox.Checked)
-                {
-                    timeZoneOffset = timeZoneOffset.Add(TimeSpan.FromHours(1));
-                }
-
-                DateTime eventStart = this.StartDateTimePicker.SelectedDate.Value;
-                DateTime eventEnd = this.EndDateTimePicker.SelectedDate.Value;
-                Event e = Event.Create(
-                        this.PortalId,
-                        this.ModuleId,
-                        this.UserInfo.Email,
-                        this.EventTitleTextBox.Text,
-                        this.EventOverviewTextEditor.Text,
-                        this.EventDescriptionTextEditor.Text,
-                        eventStart,
-                        eventEnd,
-                        timeZoneOffset,
-                        this.EventLocationTextBox.Text,
-                        this.FeaturedCheckBox.Checked,
-                        this.AllowRegistrationsCheckBox.Checked,
-                        this.RecurrenceEditor.GetRecurrenceRule(eventStart, eventEnd),
-                        this.LimitRegistrationsCheckBox.Checked && this.LimitRegistrationsCheckBox.Visible ? (int?)this.RegistrationLimitTextBox.Value : null,
-                        this.InDaylightTimeCheckBox.Checked,
-                        this.GetCustomCapacityMetMessage(),
-                        this.GetSelectedCategoryId());
+            DateTime eventStart = this.StartDateTimePicker.SelectedDate.Value;
+            DateTime eventEnd = this.EndDateTimePicker.SelectedDate.Value;
+            Event e = Event.Create(
+                this.PortalId,
+                this.ModuleId,
+                this.UserInfo.Email,
+                this.EventTitleTextBox.Text,
+                this.EventOverviewTextEditor.Text,
+                this.EventDescriptionTextEditor.Text,
+                eventStart,
+                eventEnd,
+                this.TimeZoneDropDownList.SelectedValue,
+                this.EventLocationTextBox.Text,
+                this.FeaturedCheckBox.Checked,
+                this.AllowRegistrationsCheckBox.Checked,
+                this.RecurrenceEditor.GetRecurrenceRule(eventStart, eventEnd),
+                this.LimitRegistrationsCheckBox.Checked && this.LimitRegistrationsCheckBox.Visible ? (int?)this.RegistrationLimitTextBox.Value : null,
+                this.GetCustomCapacityMetMessage(),
+                this.GetSelectedCategoryId());
                 
-                e.Save(this.UserId);
-            }
+            e.Save(this.UserId);
         }
 
         /// <summary>
@@ -519,14 +489,7 @@ namespace Engage.Dnn.Events
             this.CapacityMetMessageRadioButtonList.SelectedValue = hasCustomCapacityMetMessage.ToString(CultureInfo.InvariantCulture);
             this.CustomCapacityMetMessageTextEditor.Text = e.CapacityMetMessage;
 
-            this.InDaylightTimeCheckBox.Checked = e.InDaylightTime;
-            TimeSpan timeZoneOffset = e.TimeZoneOffset;
-            if (e.InDaylightTime)
-            {
-                timeZoneOffset = timeZoneOffset.Subtract(new TimeSpan(1, 0, 0));
-            }
-
-            this.TimeZoneDropDownList.SelectedValue = ((int)timeZoneOffset.TotalMinutes).ToString(CultureInfo.InvariantCulture);
+            this.TimeZoneDropDownList.SelectedValue = e.TimeZoneId;
         }
     }
 }
