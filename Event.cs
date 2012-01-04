@@ -47,6 +47,11 @@ namespace Engage.Events
         private int? responseCount;
 
         /// <summary>
+        /// Backing field for <see cref="TimeZone"/>
+        /// </summary>
+        private TimeZoneInfo timeZone;
+
+        /// <summary>
         /// Prevents a default instance of the Event class from being created.
         /// </summary>
         private Event()
@@ -78,21 +83,53 @@ namespace Engage.Events
         /// <param name="description">The event description.</param>
         /// <param name="eventStart">When the event starts.</param>
         /// <param name="eventEnd">When the event ends.</param>
-        /// <param name="timeZoneOffset">The time zone offset.</param>
+        /// <param name="timeZoneId">The time zone's ID.</param>
         /// <param name="location">The location of the event.</param>
         /// <param name="isFeatured">if set to <c>true</c> this event is featured.</param>
         /// <param name="allowRegistrations">if set to <c>true</c> this event allows users to register for it.</param>
         /// <param name="recurrenceRule">The recurrence rule.</param>
         /// <param name="capacity">The maximum number of registrants for this event, or <c>null</c> if there is no maximum.</param>
-        /// <param name="inDaylightTime">if set to <c>true</c> this event occurs in Daylight Time.</param>
         /// <param name="capacityMetMessage">
         /// The the message to display to a user who wants to register for this
         /// event when the <see cref="Capacity"/> for this event has been met,  or 
         /// <c>null</c> or <see cref="string.Empty"/> to display a generic message.
         /// </param>
         /// <param name="categoryId">The ID of the event's <see cref="Category"/>.</param>
-        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule, int? capacity, bool inDaylightTime, string capacityMetMessage, int categoryId)
-            : this(portalId, moduleId, organizerEmail, title, overview, description, eventStart, eventEnd, timeZoneOffset, location, isFeatured, allowRegistrations, recurrenceRule, false, capacity, inDaylightTime, capacityMetMessage, categoryId)
+        private Event(
+            int portalId,
+            int moduleId,
+            string organizerEmail,
+            string title,
+            string overview,
+            string description,
+            DateTime eventStart,
+            DateTime eventEnd,
+            string timeZoneId,
+            string location,
+            bool isFeatured,
+            bool allowRegistrations,
+            RecurrenceRule recurrenceRule,
+            int? capacity,
+            string capacityMetMessage,
+            int categoryId)
+            : this(
+                portalId,
+                moduleId,
+                organizerEmail,
+                title,
+                overview,
+                description,
+                eventStart,
+                eventEnd,
+                timeZoneId,
+                location,
+                isFeatured,
+                allowRegistrations,
+                recurrenceRule,
+                false,
+                capacity,
+                capacityMetMessage,
+                categoryId)
         {
         }
 
@@ -107,19 +144,35 @@ namespace Engage.Events
         /// <param name="description">The event description.</param>
         /// <param name="eventStart">When the event starts.</param>
         /// <param name="eventEnd">When the event ends.</param>
-        /// <param name="timeZoneOffset">The time zone offset.</param>
+        /// <param name="timeZoneId">The time zone's ID.</param>
         /// <param name="location">The location of the event.</param>
         /// <param name="isFeatured">if set to <c>true</c> this event is featured.</param>
         /// <param name="allowRegistrations">if set to <c>true</c> this event allows users to register for it.</param>
         /// <param name="recurrenceRule">The recurrence rule.</param>
         /// <param name="canceled">if set to <c>true</c> this event is canceled.</param>
         /// <param name="capacity">The maximum number of registrants for this event, or <c>null</c> if there is no maximum.</param>
-        /// <param name="inDaylightTime">if set to <c>true</c> this event occurs in Daylight Time.</param>
         /// <param name="capacityMetMessage">The the message to display to a user who wants to register for this
         /// event when the <see cref="Capacity"/> for this event has been met,  or
         /// <c>null</c> or <see cref="string.Empty"/> to display a generic message.</param>
         /// <param name="categoryId">The ID of the event's <see cref="Category"/>.</param>
-        private Event(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule, bool canceled, int? capacity, bool inDaylightTime, string capacityMetMessage, int categoryId)
+        private Event(
+            int portalId,
+            int moduleId,
+            string organizerEmail,
+            string title,
+            string overview,
+            string description,
+            DateTime eventStart,
+            DateTime eventEnd,
+            string timeZoneId,
+            string location,
+            bool isFeatured,
+            bool allowRegistrations,
+            RecurrenceRule recurrenceRule,
+            bool canceled,
+            int? capacity,
+            string capacityMetMessage,
+            int categoryId)
         {
             this.Id = -1;
             this.CreatedBy = -1;
@@ -135,14 +188,13 @@ namespace Engage.Events
             this.Description = description;
             this.EventStart = eventStart;
             this.EventEnd = eventEnd;
-            this.TimeZoneOffset = timeZoneOffset;
+            this.TimeZoneId = timeZoneId;
             this.Location = location;
             this.IsFeatured = isFeatured;
             this.AllowRegistrations = allowRegistrations;
             this.RecurrenceRule = recurrenceRule;
             this.Canceled = canceled;
             this.Capacity = capacity;
-            this.InDaylightTime = inDaylightTime;
             this.CapacityMetMessage = capacityMetMessage;
             this.CategoryId = categoryId;
         }
@@ -306,8 +358,49 @@ namespace Engage.Events
         /// Gets or sets the time zone offset for this event.
         /// </summary>
         /// <value>The time zone offset for this event.</value>
-        [XmlElement(Order = 14)]
+        [Obsolete("Use TimeZone")]
         public TimeSpan TimeZoneOffset { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID of time zone in which this event takes place.
+        /// </summary>
+        /// <value>The time zone's ID.</value>
+        [XmlElement(Order = 14)]
+        public string TimeZoneId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time zone in which this event takes place.
+        /// </summary>
+        /// <value>The time zone of this event.</value>
+        [XmlIgnore, NotNull]
+        public TimeZoneInfo TimeZone
+        {
+            get
+            {
+                if (this.timeZone == null)
+                {
+                    this.timeZone = TimeZoneInfo.FindSystemTimeZoneById(this.TimeZoneId);
+                    if (this.timeZone == null)
+                    {
+                        this.timeZone = TimeZoneInfo.Local; 
+                        this.TimeZoneId = this.timeZone.Id;
+                    }
+                }
+
+                return this.timeZone;
+            }
+
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException();
+                }
+
+                this.timeZone = value;
+                this.TimeZoneId = this.timeZone.Id;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the maximum number of attending registrants this event can have, or <c>null</c> if there is no maximum.
@@ -324,7 +417,7 @@ namespace Engage.Events
         /// The <see cref="TimeZoneOffset"/> property is already adjusted based on that same check box.
         /// </remarks>
         /// <value><c>true</c> if this event occurs during Daylight Time; otherwise, <c>false</c>.</value>
-        [XmlElement(Order = 16)]
+        [Obsolete("Check TimeZone instead")]
         public bool InDaylightTime { get; set; }
 
         /// <summary>
@@ -537,13 +630,12 @@ namespace Engage.Events
         /// <param name="description">The description.</param>
         /// <param name="eventStart">The event's start date and time.</param>
         /// <param name="eventEnd">The event end.</param>
-        /// <param name="timeZoneOffset">The time zone offset.</param>
+        /// <param name="timeZoneId">The time zone's ID.</param>
         /// <param name="location">The location of the event.</param>
         /// <param name="isFeatured">if set to <c>true</c> the event should be listed in featured displays.</param>
         /// <param name="allowRegistrations">if set to <c>true</c> this event allows users to register for it.</param>
         /// <param name="recurrenceRule">The recurrence rule.</param>
         /// <param name="capacity">The maximum number of registrants for this event, or <c>null</c> if there is no maximum.</param>
-        /// <param name="inDaylightTime">if set to <c>true</c> this event occurs in Daylight Time.</param>
         /// <param name="capacityMetMessage">
         /// The the message to display to a user who wants to register for this
         /// event when the <see cref="Capacity"/> for this event has been met,  or 
@@ -551,9 +643,41 @@ namespace Engage.Events
         /// </param>
         /// <param name="categoryId">The ID of the event's <see cref="Category"/>.</param>
         /// <returns>A new event object.</returns>
-        public static Event Create(int portalId, int moduleId, string organizerEmail, string title, string overview, string description, DateTime eventStart, DateTime eventEnd, TimeSpan timeZoneOffset, string location, bool isFeatured, bool allowRegistrations, RecurrenceRule recurrenceRule, int? capacity, bool inDaylightTime, string capacityMetMessage, int categoryId)
+        public static Event Create(
+            int portalId,
+            int moduleId,
+            string organizerEmail,
+            string title,
+            string overview,
+            string description,
+            DateTime eventStart,
+            DateTime eventEnd,
+            string timeZoneId,
+            string location,
+            bool isFeatured,
+            bool allowRegistrations,
+            RecurrenceRule recurrenceRule,
+            int? capacity,
+            string capacityMetMessage,
+            int categoryId)
         {
-            return new Event(portalId, moduleId, organizerEmail, title, overview, description, eventStart, eventEnd, timeZoneOffset, location, isFeatured, allowRegistrations, recurrenceRule, capacity, inDaylightTime, capacityMetMessage, categoryId);
+            return new Event(
+                portalId,
+                moduleId,
+                organizerEmail,
+                title,
+                overview,
+                description,
+                eventStart,
+                eventEnd,
+                timeZoneId,
+                location,
+                isFeatured,
+                allowRegistrations,
+                recurrenceRule,
+                capacity,
+                capacityMetMessage,
+                categoryId);
         }
 
         /// <summary>
@@ -582,9 +706,26 @@ namespace Engage.Events
         /// <returns>An occurrence of this <see cref="Event"/></returns>
         public Event CreateOccurrence(DateTime occurrenceStart)
         {
-            return new Event(this.PortalId, this.ModuleId, this.OrganizerEmail, this.Title, this.Overview, this.Description, occurrenceStart, occurrenceStart + this.Duration, this.TimeZoneOffset, this.Location, this.IsFeatured, this.AllowRegistrations, this.RecurrenceRule, this.Canceled, this.Capacity, this.InDaylightTime, this.CapacityMetMessage, this.CategoryId)
+            return new Event(
+                this.PortalId,
+                this.ModuleId,
+                this.OrganizerEmail,
+                this.Title,
+                this.Overview,
+                this.Description,
+                occurrenceStart,
+                occurrenceStart + this.Duration,
+                this.TimeZoneId,
+                this.Location,
+                this.IsFeatured,
+                this.AllowRegistrations,
+                this.RecurrenceRule,
+                this.Canceled,
+                this.Capacity,
+                this.CapacityMetMessage,
+                this.CategoryId)
                 {
-                    RecurrenceParentId = this.Id,
+                    RecurrenceParentId = this.Id, 
                     Id = this.Id
                 };
         }
@@ -612,7 +753,12 @@ namespace Engage.Events
         public string ToICal()
         {
             string rule = this.RecurrenceRule != null ? this.RecurrenceRule.ToString() : null;
-            return Util.ICalUtil.Export(this.Overview, this.Location, new Appointment(this.Id, this.EventStart, this.EventEnd, this.Title, rule), true, this.TimeZoneOffset);
+            return Util.ICalUtil.Export(
+                this.Overview,
+                this.Location,
+                new Appointment(this.Id, this.EventStart, this.EventEnd, this.Title, rule),
+                true,
+                this.TimeZoneOffset);
         }
 
         /// <summary>
@@ -739,7 +885,7 @@ namespace Engage.Events
                 Description = eventRecord["Description"].ToString(),
                 EventStart = (DateTime)eventRecord["EventStart"],
                 EventEnd = (DateTime)eventRecord["EventEnd"],
-                TimeZoneOffset = new TimeSpan(0, (int)eventRecord["TimeZoneOffset"], 0),
+                TimeZoneId = eventRecord["TimeZone"].ToString(),
                 CreatedBy = (int)eventRecord["CreatedBy"],
                 CreationDate = (DateTime)eventRecord["CreationDate"],
                 RevisionDate = (DateTime)eventRecord["RevisionDate"],
@@ -754,8 +900,7 @@ namespace Engage.Events
                 RecapUrl = eventRecord["RecapUrl"].ToString(),
                 RecurrenceParentId = eventRecord["RecurrenceParentId"] as int?,
                 Capacity = eventRecord["Capacity"] as int?,
-                InDaylightTime = (bool)eventRecord["InDaylightTime"],
-                CategoryId = (int)eventRecord["CategoryId"]
+                CategoryId = (int)eventRecord["CategoryId"],
             };
 
             var capacityMetMessageColumnIndex = eventRecord.GetOrdinal("CapacityMetMessage");
@@ -786,26 +931,25 @@ namespace Engage.Events
                         dp.NamePrefix + "spInsertEvent",
                         Utility.CreateIntegerParam("@PortalId", this.PortalId),
                         Utility.CreateIntegerParam("@ModuleId", this.ModuleId),
-                        Utility.CreateVarcharParam("@Title", this.Title),
+                        Utility.CreateVarcharParam("@Title", this.Title, 500),
                         Utility.CreateTextParam("@Overview", this.Overview),
                         Utility.CreateTextParam("@Description", this.Description),
                         Utility.CreateDateTimeParam("@EventStart", this.EventStart),
                         Utility.CreateDateTimeParam("@EventEnd", this.EventEnd),
-                        Utility.CreateIntegerParam("@TimeZoneOffset", (int)this.TimeZoneOffset.TotalMinutes),
-                        Utility.CreateVarcharParam("@Organizer", this.Organizer),
-                        Utility.CreateVarcharParam("@OrganizerEmail", this.OrganizerEmail),
-                        Utility.CreateVarcharParam("@Location", this.Location),
-                        Utility.CreateVarcharParam("@LocationUrl", this.LocationUrl),
-                        Utility.CreateVarcharParam("@InvitationUrl", this.InvitationUrl),
-                        Utility.CreateVarcharParam("@RecapUrl", this.RecapUrl),
+                        Utility.CreateVarcharParam("@TimeZone", this.TimeZone.Id, 50),
+                        Utility.CreateVarcharParam("@Organizer", this.Organizer, 100),
+                        Utility.CreateVarcharParam("@OrganizerEmail", this.OrganizerEmail, 100),
+                        Utility.CreateVarcharParam("@Location", this.Location, 1000),
+                        Utility.CreateVarcharParam("@LocationUrl", this.LocationUrl, 1000),
+                        Utility.CreateVarcharParam("@InvitationUrl", this.InvitationUrl, 1000),
+                        Utility.CreateVarcharParam("@RecapUrl", this.RecapUrl, 1000),
                         Utility.CreateIntegerParam("@RecurrenceParentId", this.RecurrenceParentId),
-                        Utility.CreateVarcharParam("@RecurrenceRule", this.RecurrenceRule != null ? this.RecurrenceRule.ToString() : null),
+                        Utility.CreateVarcharParam("@RecurrenceRule", this.RecurrenceRule != null ? this.RecurrenceRule.ToString() : null, 256),
                         Utility.CreateBitParam("@AllowRegistrations", this.AllowRegistrations),
                         Utility.CreateBitParam("@isFeatured", this.IsFeatured),
                         Utility.CreateIntegerParam("@CreatedBy", revisingUser),
                         Utility.CreateDateTimeParam("@FinalRecurringEndDate", this.FinalRecurringEndDate),
                         Utility.CreateIntegerParam("@Capacity", this.Capacity),
-                        Utility.CreateBitParam("@InDaylightTime", this.InDaylightTime),
                         Utility.CreateTextParam("@CapacityMetMessage", this.CapacityMetMessage),
                         Utility.CreateBitParam("@IsDeleted", this.IsDeleted),
                         Utility.CreateIntegerParam("@CategoryId", this.CategoryId));
@@ -831,19 +975,19 @@ namespace Engage.Events
                         CommandType.StoredProcedure,
                         dp.NamePrefix + "spUpdateEvent",
                         Utility.CreateIntegerParam("@EventId", this.Id),
-                        Utility.CreateVarcharParam("@Title", this.Title),
+                        Utility.CreateVarcharParam("@Title", this.Title, 500),
                         Utility.CreateTextParam("@Overview", this.Overview),
                         Utility.CreateTextParam("@Description", this.Description),
                         Utility.CreateDateTimeParam("@EventStart", this.EventStart),
                         Utility.CreateDateTimeParam("@EventEnd", this.EventEnd),
-                        Utility.CreateIntegerParam("@TimeZoneOffset", (int)this.TimeZoneOffset.TotalMinutes),
-                        Utility.CreateVarcharParam("@Organizer", this.Organizer),
-                        Utility.CreateVarcharParam("@OrganizerEmail", this.OrganizerEmail),
-                        Utility.CreateVarcharParam("@Location", this.Location),
-                        Utility.CreateVarcharParam("@LocationUrl", this.LocationUrl),
-                        Utility.CreateVarcharParam("@InvitationUrl", this.InvitationUrl),
-                        Utility.CreateVarcharParam("@RecapUrl", this.RecapUrl),
-                        Utility.CreateTextParam("@RecurrenceRule", this.RecurrenceRule != null ? this.RecurrenceRule.ToString() : null),
+                        Utility.CreateVarcharParam("@TimeZone", this.TimeZone.Id, 50),
+                        Utility.CreateVarcharParam("@Organizer", this.Organizer, 100),
+                        Utility.CreateVarcharParam("@OrganizerEmail", this.OrganizerEmail, 100),
+                        Utility.CreateVarcharParam("@Location", this.Location, 1000),
+                        Utility.CreateVarcharParam("@LocationUrl", this.LocationUrl, 1000),
+                        Utility.CreateVarcharParam("@InvitationUrl", this.InvitationUrl, 1000),
+                        Utility.CreateVarcharParam("@RecapUrl", this.RecapUrl, 1000),
+                        Utility.CreateVarcharParam("@RecurrenceRule", this.RecurrenceRule != null ? this.RecurrenceRule.ToString() : null, 256),
                         Utility.CreateIntegerParam("@RecurrenceParentId", this.RecurrenceParentId),
                         Utility.CreateBitParam("@AllowRegistrations", this.AllowRegistrations),
                         Utility.CreateBitParam("@Canceled", this.Canceled),
@@ -851,7 +995,6 @@ namespace Engage.Events
                         Utility.CreateIntegerParam("@RevisingUser", revisingUser),
                         Utility.CreateDateTimeParam("@FinalRecurringEndDate", this.FinalRecurringEndDate),
                         Utility.CreateIntegerParam("@Capacity", this.Capacity),
-                        Utility.CreateBitParam("@InDaylightTime", this.InDaylightTime),
                         Utility.CreateTextParam("@CapacityMetMessage", this.CapacityMetMessage),
                         Utility.CreateBitParam("@IsDeleted", this.IsDeleted),
                         Utility.CreateIntegerParam("@CategoryId", this.CategoryId));
