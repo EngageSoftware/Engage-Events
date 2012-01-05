@@ -26,7 +26,7 @@
         </component>
         <component type="Script">
           <scripts>
-            <basePath>DesktopModules\EngageEvents</basePath>
+            <basePath>DesktopModules\EngageEvents\Providers\DataProviders\SqlDataProvider</basePath>
             <script type="Install">
               <name>00.00.01.SqlDataProvider</name>
               <version>00.00.01</version>
