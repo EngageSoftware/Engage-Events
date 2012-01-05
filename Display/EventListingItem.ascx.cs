@@ -315,54 +315,28 @@ namespace Engage.Dnn.Events.Display
                         container.Controls.Add(MultipleCategoriesFilterAction);
                         break;
                     case "READMORE":
-                        if (currentEvent == null || Engage.Utility.HasValue(currentEvent.Description))
+                        if (currentEvent != null && !Engage.Utility.HasValue(currentEvent.Description))
                         {
-                            var detailLinkBuilder = new StringBuilder();
-                            var linkUrl = currentEvent != null
-                                                 ? this.BuildLinkUrl(this.DetailsTabId, this.DetailsModuleId, "EventDetail", Dnn.Events.Utility.GetEventParameters(currentEvent))
-                                                 : Globals.NavigateURL(this.DetailsTabId);
-
-                            detailLinkBuilder.AppendFormat(
-                                    CultureInfo.InvariantCulture,
-                                    "<a href=\"{0}\"",
-                                    HttpUtility.HtmlAttributeEncode(linkUrl));
-
-                            string detailLinkCssClass = TemplateEngine.GetAttributeValue(tag, templateItem, null, resourceFile, "CssClass", "class");
-                            if (Engage.Utility.HasValue(detailLinkCssClass))
-                            {
-                                detailLinkBuilder.AppendFormat(
-                                        CultureInfo.InvariantCulture, 
-                                        "class=\"{0}\"", 
-                                        HttpUtility.HtmlAttributeEncode(detailLinkCssClass));
-                            }
-
-                            detailLinkBuilder.Append(">");
-
-                            if (!tag.HasChildTags)
-                            {
-                                detailLinkBuilder
-                                    .Append(TemplateEngine.GetAttributeValue(tag, templateItem, (ITemplateable)null, resourceFile, "Text"))
-                                    .Append("</a>");
-                            }
-
-                            container.Controls.Add(new LiteralControl(detailLinkBuilder.ToString()));
+                            break;
                         }
 
-                        return true;
+                        var linkUrl = currentEvent != null
+                                          ? this.BuildLinkUrl(
+                                              this.DetailsTabId,
+                                              this.DetailsModuleId,
+                                              "EventDetail",
+                                              Dnn.Events.Utility.GetEventParameters(currentEvent))
+                                          : Globals.NavigateURL(this.DetailsTabId);
+
+                        TemplateEngine.AddControl(container, TemplateEngine.CreateLink(tag, templateItem, null, resourceFile, linkUrl));
+                        break;
                     default:
                         return this.ProcessCommonTag(container, tag, currentEvent, resourceFile);
                 }
             }
             else if (tag.TagType == TagType.Close)
             {
-                switch (tag.LocalName.ToUpperInvariant())
-                {
-                    case "READMORE":
-                        container.Controls.Add(new LiteralControl("</a>"));
-                        break;
-                    default:
-                        return this.ProcessCommonTag(container, tag, currentEvent, resourceFile);
-                }
+                return this.ProcessCommonTag(container, tag, currentEvent, resourceFile);
             }
 
             return false;
