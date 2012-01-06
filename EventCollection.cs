@@ -170,7 +170,7 @@ namespace Engage.Events
             while (reader.Read())
             {
                 Event masterEvent = Event.Fill(reader);
-                if (!processCollection || !masterEvent.IsRecurring || (masterEvent.EventStart <= endDate && masterEvent.EventEnd >= startDate))
+                if (!processCollection || !masterEvent.IsRecurring || (masterEvent.EventStartUtc <= endDate && masterEvent.EventEndUtc >= startDate))
                 {
                     events.Add(masterEvent);
                 }

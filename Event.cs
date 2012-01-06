@@ -291,18 +291,44 @@ namespace Engage.Events
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets when the event starts.
+        /// Gets or sets when the event starts, in the event's <see cref="TimeZone"/>.
         /// </summary>
         /// <value>The event's start date and time.</value>
         [XmlElement(Order = 9)]
         public DateTime EventStart { get; set; }
 
         /// <summary>
-        /// Gets or sets when this event ends.
+        /// Gets when the event starts, in UTC.
+        /// </summary>
+        /// <value>The event's start date and time.</value>
+        [XmlIgnore]
+        public DateTime EventStartUtc 
+        { 
+            get
+            {
+                return TimeZoneInfo.ConvertTimeToUtc(this.EventStart, this.TimeZone);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets when this event ends, in the event's <see cref="TimeZone"/>.
         /// </summary>
         /// <value>The event's end date and time.</value>
         [XmlElement(Order = 10)]
         public DateTime EventEnd { get; set; }
+
+        /// <summary>
+        /// Gets when this event ends, in UTC.
+        /// </summary>
+        /// <value>The event's end date and time.</value>
+        [XmlIgnore]
+        public DateTime EventEndUtc
+        {
+            get
+            {
+                return TimeZoneInfo.ConvertTimeToUtc(this.EventEnd, this.TimeZone);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the ID of the parent event if this event is overriding a recurring event.
@@ -458,7 +484,7 @@ namespace Engage.Events
         [XmlIgnore]
         public TimeSpan Duration
         {
-            get { return this.EventEnd - this.EventStart; }
+            get { return this.EventEndUtc - this.EventStartUtc; }
         }
 
         /// <summary>
@@ -756,9 +782,8 @@ namespace Engage.Events
             return Util.ICalUtil.Export(
                 this.Overview,
                 this.Location,
-                new Appointment(this.Id, this.EventStart, this.EventEnd, this.Title, rule),
-                true,
-                this.TimeZoneOffset);
+                new Appointment(this.Id, this.EventStartUtc, this.EventEndUtc, this.Title, rule),
+                true);
         }
 
         /// <summary>

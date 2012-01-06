@@ -36,14 +36,13 @@ namespace Engage.Events.Util
         /// <param name="location">The event's location.</param>
         /// <param name="app">The event to export.</param>
         /// <param name="outlookCompatibleMode">if set to <c>true</c> make the output compatible with Outlook.</param>
-        /// <param name="timeZoneOffset">The time zone offset.</param>
         /// <returns>The given event in an iCalendar format</returns>
-        public static string Export(string description, string location, Appointment app, bool outlookCompatibleMode, TimeSpan timeZoneOffset)
+        public static string Export(string description, string location, Appointment app, bool outlookCompatibleMode)
         {
             var output = new StringBuilder();
             WriteFileHeader(output, outlookCompatibleMode);
 
-            WriteTask(description, location, output, app, outlookCompatibleMode, timeZoneOffset);
+            WriteTask(description, location, output, app, outlookCompatibleMode);
 
             WriteFileFooter(output);
 
@@ -58,9 +57,8 @@ namespace Engage.Events.Util
         /// <param name="output">The <see cref="StringBuilder"/> into which the output should be appended.</param>
         /// <param name="app">The appointment to export.</param>
         /// <param name="outlookCompatibleMode">if set to <c>true</c> make the output compatible with Outlook.</param>
-        /// <param name="timeZoneOffset">The time zone offset.</param>
         /// <exception cref="InvalidOperationException">Invalid recurrence rule.</exception>
-        private static void WriteTask(string description, string location, StringBuilder output, Appointment app, bool outlookCompatibleMode, TimeSpan timeZoneOffset)
+        private static void WriteTask(string description, string location, StringBuilder output, Appointment app, bool outlookCompatibleMode)
         {
             output.AppendLine("BEGIN:VEVENT");
             output.AppendLine("DESCRIPTION:" + description.Replace("\n", "\\n").Replace("\r", "\\r"));
@@ -91,19 +89,18 @@ namespace Engage.Events.Util
                     }
                 }
 
-                ConvertRecurrenceRuleToUtc(rrule, timeZoneOffset);
                 output.Append(rrule.ToString());
             }
             else
             {
-                output.AppendFormat("DTSTART:{0}\r\n", FormatDate(ClientToUtc(app.Start, timeZoneOffset)));
-                output.AppendFormat("DTEND:{0}\r\n", FormatDate(ClientToUtc(app.End, timeZoneOffset)));
+                output.AppendFormat("DTSTART:{0}\r\n", FormatDate(app.Start));
+                output.AppendFormat("DTEND:{0}\r\n", FormatDate(app.End));
             }
 
             if (outlookCompatibleMode)
             {
-                output.AppendFormat("UID:{0}-{1}\r\n", FormatDate(DateTime.Now.ToUniversalTime()), app.ID);
-                output.AppendFormat("DTSTAMP:{0}\r\n", FormatDate(DateTime.Now.ToUniversalTime()));
+                output.AppendFormat("UID:{0}-{1}\r\n", FormatDate(DateTime.UtcNow), app.ID);
+                output.AppendFormat("DTSTAMP:{0}\r\n", FormatDate(DateTime.UtcNow));
             }
 
             string summary = app.Subject.Replace("\r\n", "\\n");
@@ -140,17 +137,6 @@ namespace Engage.Events.Util
         }
 
         /// <summary>
-        /// Adjusts the given date from client time to UTC.
-        /// </summary>
-        /// <param name="date">The date to be adjusted.</param>
-        /// <param name="offset">The time zone offset.</param>
-        /// <returns>The given date adjusted to UTC</returns>
-        private static DateTime ClientToUtc(DateTime date, TimeSpan offset)
-        {
-            return new DateTime(date.Add(-offset).Ticks, DateTimeKind.Utc);
-        }
-
-        /// <summary>
         /// Formats the given date to the iCalendar date format.
         /// </summary>
         /// <param name="date">The date to be formatted.</param>
@@ -158,26 +144,6 @@ namespace Engage.Events.Util
         private static string FormatDate(DateTime date)
         {
             return date.ToString(DateFormat, CultureInfo.InvariantCulture);
-        }
-
-        /// <summary>
-        /// Converts the recurrence rule from client time to UTC.
-        /// </summary>
-        /// <param name="rrule">The recurrence rule.</param>
-        /// <param name="offset">The time zone offset.</param>
-        private static void ConvertRecurrenceRuleToUtc(RecurrenceRule rrule, TimeSpan offset)
-        {
-            rrule.Range.Start = ClientToUtc(rrule.Range.Start, offset);
-
-            if (rrule.Range.RecursUntil < DateTime.MaxValue)
-            {
-                rrule.Range.RecursUntil = ClientToUtc(rrule.Range.RecursUntil, offset);
-            }
-
-            for (int i = 0; i < rrule.Exceptions.Count; i++)
-            {
-                rrule.Exceptions[i] = ClientToUtc(rrule.Exceptions[i], offset);
-            }
         }
     }
 }
