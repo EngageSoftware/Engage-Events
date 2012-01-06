@@ -203,9 +203,15 @@ namespace Engage.Dnn.Events.Display
                 occurrenceDate = appointment.Start;
             }
 
+            var @event = Event.Load(eventId);
+            if (occurrenceDate.HasValue)
+            {
+                occurrenceDate = TimeZoneInfo.ConvertTimeFromUtc(occurrenceDate.Value, @event.TimeZone);
+            }
+
             this.ToolTipEventId = eventId;
             this.ToolTipEventOccurrenceDate = occurrenceDate;
-            this.ShowToolTip(eventId, occurrenceDate, e.UpdatePanel);
+            this.ShowToolTip(@event, occurrenceDate, e.UpdatePanel);
         }
 
         /// <summary>
@@ -223,28 +229,27 @@ namespace Engage.Dnn.Events.Display
         /// <summary>
         /// Sets up the <see cref="EventToolTip"/> control and displays it
         /// </summary>
-        /// <param name="eventId">The ID of the <see cref="Event"/> to display within the tool-tip.</param>
+        /// <param name="event">The event being displayed</param>
         /// <param name="occurrenceDate">The occurrence date of the event, or <c>null</c> if it's not a recurring event.</param>
         /// <param name="panel">The panel in which the tool-tip is displayed.</param>
-        private void ShowToolTip(int eventId, DateTime? occurrenceDate, UpdatePanel panel)
+        private void ShowToolTip(Event @event, DateTime? occurrenceDate, UpdatePanel panel)
         {
-            var ev = Event.Load(eventId);
-            if (!this.CanShowEvent(ev))
+            if (!this.CanShowEvent(@event))
             {
                 return;
             }
 
-            Debug.Assert(occurrenceDate.HasValue == ev.IsRecurring, "Recurring events need occurrence dates");
+            Debug.Assert(occurrenceDate.HasValue == @event.IsRecurring, "Recurring events need occurrence dates");
             if (occurrenceDate != null)
             {
-                ev = ev.CreateOccurrence(occurrenceDate.Value);
+                @event = @event.CreateOccurrence(occurrenceDate.Value);
             }
 
             var toolTip = (EventToolTip)(panel.ContentTemplateContainer.FindControl("EventToolTip") ?? this.LoadControl("EventToolTip.ascx"));
 
             toolTip.ID = "EventToolTip";
             toolTip.ModuleConfiguration = this.ModuleConfiguration;
-            toolTip.SetEvent(ev);
+            toolTip.SetEvent(@event);
             toolTip.ShowEvent();
 
             if (!panel.ContentTemplateContainer.Controls.Contains(toolTip))
@@ -297,7 +302,7 @@ namespace Engage.Dnn.Events.Display
 
             if (this.ToolTipEventId.HasValue)
             {
-                this.ShowToolTip(this.ToolTipEventId.Value, this.ToolTipEventOccurrenceDate, this.EventsCalendarToolTipManager.UpdatePanel);
+                this.ShowToolTip(Event.Load(this.ToolTipEventId.Value), this.ToolTipEventOccurrenceDate, this.EventsCalendarToolTipManager.UpdatePanel);
                 this.ToolTipEventId = null;
             }
         }
