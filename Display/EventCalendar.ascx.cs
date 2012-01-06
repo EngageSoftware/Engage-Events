@@ -270,12 +270,13 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         private void BindData()
         {
-            this.EventsCalendarDisplay.DataEndField = "EventEnd";
+            this.EventsCalendarDisplay.DataEndField = "EventEndUtc";
             this.EventsCalendarDisplay.DataKeyField = "Id";
             this.EventsCalendarDisplay.DataRecurrenceField = "RecurrenceRule";
             this.EventsCalendarDisplay.DataRecurrenceParentKeyField = "RecurrenceParentId";
-            this.EventsCalendarDisplay.DataStartField = "EventStart";
+            this.EventsCalendarDisplay.DataStartField = "EventStartUtc";
             this.EventsCalendarDisplay.DataSubjectField = "Title";
+            this.EventsCalendarDisplay.TimeZoneOffset = Dnn.Utility.GetUserTimeZone(this.UserInfo, this.PortalSettings).GetUtcOffset(DateTimeOffset.UtcNow);
 
             var selectedCategoryId = this.CategoryFilterAction.SelectedCategoryIds;
             this.EventsCalendarDisplay.DataSource = EventCollection.Load(

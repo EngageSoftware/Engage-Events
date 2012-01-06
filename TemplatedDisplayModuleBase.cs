@@ -79,7 +79,7 @@ namespace Engage.Dnn.Events
                         (@this, container, tag, currentEvent, resourceFile) => 
                         {
                             // must be an active event and has not ended
-                            if (currentEvent != null && currentEvent.AllowRegistrations && !currentEvent.Canceled && currentEvent.EventEnd > DateTime.Now)
+                            if (currentEvent != null && currentEvent.AllowRegistrations && !currentEvent.Canceled && currentEvent.EventEndUtc > DateTime.UtcNow)
                             {
                                 var registerEventAction = (RegisterAction)@this.LoadControl(@this.ActionsControlsFolder + "RegisterAction.ascx");
                                 registerEventAction.CurrentEvent = currentEvent;
@@ -98,7 +98,7 @@ namespace Engage.Dnn.Events
                         (@this, container, tag, currentEvent, resourceFile) => 
                         {
                             // must be an active event and has not ended
-                            if (currentEvent != null && !currentEvent.Canceled && currentEvent.EventEnd > DateTime.Now)
+                            if (currentEvent != null && !currentEvent.Canceled && currentEvent.EventEndUtc > DateTime.UtcNow)
                             {
                                 var addToCalendarAction = (AddToCalendarAction)@this.LoadControl(@this.ActionsControlsFolder + "AddToCalendarAction.ascx");
                                 addToCalendarAction.CurrentEvent = currentEvent;
