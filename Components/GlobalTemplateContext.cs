@@ -27,7 +27,7 @@ namespace Engage.Dnn.Events.Components
     /// <summary>
     /// Provides information that is always accessible to a template (not related to the particular item being displayed by the template)
     /// </summary>
-    public class GlobalTemplateContext : ITemplateable
+    public class GlobalTemplateContext : GlobalTemplateContextBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GlobalTemplateContext"/> class.
@@ -68,35 +68,12 @@ namespace Engage.Dnn.Events.Components
         /// </list>
         /// </remarks>
         /// <param name="propertyName">Name of the property.</param>
-        /// <returns>The string representation of the value of this instance.</returns>
-        public string GetValue(string propertyName)
-        {
-            return this.GetValue(propertyName, null);
-        }
-
-        /// <summary>
-        /// Gets the value of the property with the given <paramref name="propertyName"/>, or <see cref="string.Empty"/> if a property with that name does not exist on this object or is <c>null</c>.
-        /// </summary>
-        /// <remarks>
-        /// To avoid conflicts with template syntax, avoid using the following symbols in the property name
-        /// <list type="bullet">
-        ///     <item><description>:</description></item>
-        ///     <item><description>%</description></item>
-        ///     <item><description>$</description></item>
-        ///     <item><description>#</description></item>
-        ///     <item><description>&gt;</description></item>
-        ///     <item><description>&lt;</description></item>
-        ///     <item><description>"</description></item>
-        ///     <item><description>'</description></item>
-        /// </list>
-        /// </remarks>
-        /// <param name="propertyName">Name of the property.</param>
         /// <param name="format">
         /// A numeric or DateTime format string, or one of the string formatting options accepted by <see cref="TemplateEngine.FormatString"/>,
         /// or <c>null</c> or <see cref="string.Empty"/> to apply the default format.
         /// </param>
         /// <returns>The string representation of the value of this instance as specified by <paramref name="format"/>.</returns>
-        public string GetValue(string propertyName, string format)
+        public override string GetValue(string propertyName, string format)
         {
             if (propertyName == null)
             {
@@ -118,7 +95,7 @@ namespace Engage.Dnn.Events.Components
                     return (categories.Count() > 1).ToString(CultureInfo.InvariantCulture);
             }
 
-            return string.Empty;
+            return base.GetValue(propertyName, format);
         }
     }
 }
