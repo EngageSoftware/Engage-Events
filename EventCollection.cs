@@ -206,7 +206,7 @@ namespace Engage.Events
 
             foreach (DateTime eventStart in masterEvent.RecurrenceRule.Occurrences)
             {
-                events.Add(masterEvent.CreateOccurrence(eventStart));
+                events.Add(masterEvent.CreateOccurrence(DateTime.SpecifyKind(eventStart, DateTimeKind.Unspecified)));
                 break;
             }
         }
