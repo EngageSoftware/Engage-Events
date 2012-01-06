@@ -47,7 +47,7 @@ namespace Engage.Dnn.Events
                                 editEventAction.ModuleConfiguration = @this.ModuleConfiguration;
                                 editEventAction.Href = @this.BuildLinkUrl(@this.ModuleId, "EventEdit", Utility.GetEventParameters(currentEvent));
                                 editEventAction.ResourceKey = "EditEventButton";
-                                editEventAction.CssClass = TemplateEngine.GetAttributeValue(tag, currentEvent, null, resourceFile, "class", "CssClass") ?? editEventAction.CssClass;
+                                editEventAction.CssClass = TemplateEngine.GetAttributeValue(tag, currentEvent, @this.TemplateProvider.GlobalItem, resourceFile, "class", "CssClass") ?? editEventAction.CssClass;
                                     
                                 container.Controls.Add(editEventAction);
                             }
@@ -66,7 +66,7 @@ namespace Engage.Dnn.Events
                                 responsesEventAction.ModuleConfiguration = @this.ModuleConfiguration;
                                 responsesEventAction.Href = @this.BuildLinkUrl(@this.ModuleId, "ResponseDetail", Utility.GetEventParameters(currentEvent));
                                 responsesEventAction.ResourceKey = "ResponsesButton";
-                                responsesEventAction.CssClass = TemplateEngine.GetAttributeValue(tag, currentEvent, null, resourceFile, "class", "CssClass") ?? responsesEventAction.CssClass;
+                                responsesEventAction.CssClass = TemplateEngine.GetAttributeValue(tag, currentEvent, @this.TemplateProvider.GlobalItem, resourceFile, "class", "CssClass") ?? responsesEventAction.CssClass;
 
                                 container.Controls.Add(responsesEventAction);
                             }
@@ -85,7 +85,7 @@ namespace Engage.Dnn.Events
                                 registerEventAction.CurrentEvent = currentEvent;
                                 registerEventAction.ModuleConfiguration = @this.ModuleConfiguration;
                                 registerEventAction.LocalResourceFile = resourceFile;
-                                registerEventAction.CssClass = TemplateEngine.GetAttributeValue(tag, currentEvent, null, resourceFile, "class", "CssClass") ?? registerEventAction.CssClass;
+                                registerEventAction.CssClass = TemplateEngine.GetAttributeValue(tag, currentEvent, @this.TemplateProvider.GlobalItem, resourceFile, "class", "CssClass") ?? registerEventAction.CssClass;
 
                                 container.Controls.Add(registerEventAction);
                             }
@@ -104,7 +104,7 @@ namespace Engage.Dnn.Events
                                 addToCalendarAction.CurrentEvent = currentEvent;
                                 addToCalendarAction.ModuleConfiguration = @this.ModuleConfiguration;
                                 addToCalendarAction.LocalResourceFile = resourceFile;
-                                addToCalendarAction.CssClass = TemplateEngine.GetAttributeValue(tag, currentEvent, null, resourceFile, "class", "CssClass") ?? addToCalendarAction.CssClass;
+                                addToCalendarAction.CssClass = TemplateEngine.GetAttributeValue(tag, currentEvent, @this.TemplateProvider.GlobalItem, resourceFile, "class", "CssClass") ?? addToCalendarAction.CssClass;
 
                                 container.Controls.Add(addToCalendarAction);
                             }
@@ -121,7 +121,7 @@ namespace Engage.Dnn.Events
                             deleteAction.ModuleConfiguration = @this.ModuleConfiguration;
                             deleteAction.LocalResourceFile = resourceFile;
                             deleteAction.Delete += @this.ReturnToList;
-                            deleteAction.CssClass = TemplateEngine.GetAttributeValue(tag, currentEvent, null, resourceFile, "class", "CssClass") ?? deleteAction.CssClass;
+                            deleteAction.CssClass = TemplateEngine.GetAttributeValue(tag, currentEvent, @this.TemplateProvider.GlobalItem, resourceFile, "class", "CssClass") ?? deleteAction.CssClass;
 
                             container.Controls.Add(deleteAction);
 
@@ -137,7 +137,7 @@ namespace Engage.Dnn.Events
                             cancelAction.ModuleConfiguration = @this.ModuleConfiguration;
                             cancelAction.LocalResourceFile = resourceFile;
                             cancelAction.Cancel += @this.ReloadPage;
-                            cancelAction.CssClass = TemplateEngine.GetAttributeValue(tag, currentEvent, null, resourceFile, "class", "CssClass") ?? cancelAction.CssClass;
+                            cancelAction.CssClass = TemplateEngine.GetAttributeValue(tag, currentEvent, @this.TemplateProvider.GlobalItem, resourceFile, "class", "CssClass") ?? cancelAction.CssClass;
 
                             container.Controls.Add(cancelAction);
 
@@ -162,7 +162,7 @@ namespace Engage.Dnn.Events
                         {
                             if (currentEvent != null)
                             {
-                                var cssClass = new StringBuilder(TemplateEngine.GetAttributeValue(tag, currentEvent, null, resourceFile, "CssClass", "class"));
+                                var cssClass = new StringBuilder(TemplateEngine.GetAttributeValue(tag, currentEvent, @this.TemplateProvider.GlobalItem, resourceFile, "CssClass", "class"));
                                 if (currentEvent.IsRecurring)
                                 {
                                     AppendCssClassAttribute(tag, cssClass, "RecurringEventCssClass");

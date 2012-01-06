@@ -329,7 +329,7 @@ namespace Engage.Dnn.Events.Display
                                               Dnn.Events.Utility.GetEventParameters(currentEvent))
                                           : Globals.NavigateURL(this.DetailsTabId);
 
-                        TemplateEngine.AddControl(container, TemplateEngine.CreateLink(tag, templateItem, null, resourceFile, linkUrl));
+                        TemplateEngine.AddControl(container, TemplateEngine.CreateLink(tag, templateItem, this.TemplateProvider.GlobalItem, resourceFile, linkUrl));
                         break;
                     default:
                         return this.ProcessCommonTag(container, tag, currentEvent, resourceFile);

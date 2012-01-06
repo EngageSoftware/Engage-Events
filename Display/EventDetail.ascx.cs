@@ -14,7 +14,7 @@ namespace Engage.Dnn.Events.Display
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Web.UI;
-    using System.Web.UI.WebControls;
+
     using DotNetNuke.Common;
 
     using Engage.Dnn.Events.Components;
@@ -40,14 +40,7 @@ namespace Engage.Dnn.Events.Display
         {
             if (tag.TagType == TagType.Open && tag.LocalName.Equals("BACKHYPERLINK", StringComparison.OrdinalIgnoreCase))
             {
-                var backHyperlink = new HyperLink
-                    {
-                        NavigateUrl = Globals.NavigateURL(),
-                        CssClass = TemplateEngine.GetAttributeValue(tag, templateItem, null, resourceFile, "CssClass", "class"),
-                        Text = TemplateEngine.GetAttributeValue(tag, templateItem, (ITemplateable)null, resourceFile, "Text")
-                    };
-
-                container.Controls.Add(backHyperlink);
+                TemplateEngine.AddControl(container, TemplateEngine.CreateLink(tag, templateItem, this.TemplateProvider.GlobalItem, resourceFile, Globals.NavigateURL()));
             }
             else
             {
