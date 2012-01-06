@@ -51,17 +51,15 @@ namespace Engage.Dnn.Events.Components
             {
                 var dataProvider = DataProvider.Instance();
                 using (var transaction = dataProvider.GetTransaction())
+                using (var timeZoneOffsetsReader = dataProvider.ExecuteReader("Engage_spGetEventTimeZoneOffsetsFor01_07_00Upgrade").AsEnumerable())
                 {
-                    using (var timeZoneOffsetsReader = dataProvider.ExecuteReader("Engage_spGetEventTimeZoneOffsetsFor01_07_00Upgrade").AsEnumerable())
+                    foreach (var timeZoneOffset in timeZoneOffsetsReader.Select(reader => reader.GetInt32(0)))
                     {
-                        foreach (var timeZoneOffset in timeZoneOffsetsReader.Select(reader => reader.GetInt32(0)))
-                        {
-                            var timeZone = Dnn.Utility.ConvertLegacyTimeZoneOffsetToTimeZoneInfo(timeZoneOffset);
-                            dataProvider.ExecuteNonQuery(
-                                "Engage_spConvertTimeZoneOffsetToTimeZoneFor01_07_00Upgrade",
-                                Engage.Utility.CreateIntegerParam("timeZoneOffset", timeZoneOffset),
-                                Engage.Utility.CreateVarcharParam("timeZone", timeZone.Id, 50));
-                        }
+                        var timeZone = Dnn.Utility.ConvertLegacyTimeZoneOffsetToTimeZoneInfo(timeZoneOffset);
+                        dataProvider.ExecuteNonQuery(
+                            "Engage_spConvertTimeZoneOffsetToTimeZoneFor01_07_00Upgrade",
+                            Engage.Utility.CreateIntegerParam("timeZoneOffset", timeZoneOffset),
+                            Engage.Utility.CreateVarcharParam("timeZone", timeZone.Id, 50));
                     }
 
                     dataProvider.CommitTransaction(transaction);
@@ -69,7 +67,7 @@ namespace Engage.Dnn.Events.Components
 
                 dataProvider.ExecuteNonQuery("Engage_spCleanup01_07_00Upgrade");
 
-                return "We have upgraded time zones";
+                return "Engage: Events 01.07.00 upgrade complete: time zones converted from offsets to real time zones";
             }
 
             return "No upgrade action required for version " + version + " of Engage: Events";
