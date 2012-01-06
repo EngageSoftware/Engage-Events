@@ -595,6 +595,50 @@ namespace Engage.Events
         }
 
         /// <summary>
+        /// Gets this event's start date/time, local to the <see cref="UserTimeZone"/>.
+        /// </summary>
+        public DateTime UserEventStart
+        {
+            get
+            {
+                return TimeZoneInfo.ConvertTime(this.EventStart, this.TimeZone, this.UserTimeZone);
+            }
+        }
+
+        /// <summary>
+        /// Gets this event's end date/time, local to the <see cref="UserTimeZone"/>.
+        /// </summary>
+        public DateTime UserEventEnd
+        {
+            get
+            {
+                return TimeZoneInfo.ConvertTime(this.EventEnd, this.TimeZone, this.UserTimeZone);
+            }
+        }
+
+        /// <summary>
+        /// Gets this event's start date/time, local to the <see cref="PortalTimeZone"/>.
+        /// </summary>
+        public DateTime PortalEventStart
+        {
+            get
+            {
+                return TimeZoneInfo.ConvertTime(this.EventStart, this.TimeZone, this.PortalTimeZone);
+            }
+        }
+
+        /// <summary>
+        /// Gets this event's end date/time, local to the <see cref="PortalTimeZone"/>.
+        /// </summary>
+        public DateTime PortalEventEnd
+        {
+            get
+            {
+                return TimeZoneInfo.ConvertTime(this.EventEnd, this.TimeZone, this.PortalTimeZone);
+            }
+        }
+
+        /// <summary>
         /// Gets the final recurring end date.
         /// </summary>
         /// <value>The final recurring end date.</value>
@@ -655,50 +699,6 @@ namespace Engage.Events
                 }
 
                 return this.userTimeZone;
-            }
-        }
-
-        /// <summary>
-        /// Gets this event's start date/time, local to the <see cref="UserTimeZone"/>.
-        /// </summary>
-        private DateTime UserEventStart
-        {
-            get
-            {
-                return TimeZoneInfo.ConvertTime(this.EventStart, this.TimeZone, this.UserTimeZone);
-            }
-        }
-
-        /// <summary>
-        /// Gets this event's end date/time, local to the <see cref="UserTimeZone"/>.
-        /// </summary>
-        private DateTime UserEventEnd
-        {
-            get
-            {
-                return TimeZoneInfo.ConvertTime(this.EventEnd, this.TimeZone, this.UserTimeZone);
-            }
-        }
-
-        /// <summary>
-        /// Gets this event's start date/time, local to the <see cref="PortalTimeZone"/>.
-        /// </summary>
-        private DateTime PortalEventStart
-        {
-            get
-            {
-                return TimeZoneInfo.ConvertTime(this.EventStart, this.TimeZone, this.PortalTimeZone);
-            }
-        }
-
-        /// <summary>
-        /// Gets this event's end date/time, local to the <see cref="PortalTimeZone"/>.
-        /// </summary>
-        private DateTime PortalEventEnd
-        {
-            get
-            {
-                return TimeZoneInfo.ConvertTime(this.EventEnd, this.TimeZone, this.PortalTimeZone);
             }
         }
 
