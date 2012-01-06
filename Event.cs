@@ -52,6 +52,16 @@ namespace Engage.Events
         private TimeZoneInfo timeZone;
 
         /// <summary>
+        /// Backing field for <see cref="UserTimeZone"/>
+        /// </summary>
+        private TimeZoneInfo userTimeZone;
+
+        /// <summary>
+        /// Backing field for <see cref="PortalTimeZone"/>
+        /// </summary>
+        private TimeZoneInfo portalTimeZone;
+
+        /// <summary>
         /// Prevents a default instance of the Event class from being created.
         /// </summary>
         private Event()
@@ -617,6 +627,82 @@ namespace Engage.Events
         }
 
         /// <summary>
+        /// Gets the time zone for the current portal.
+        /// </summary>
+        private TimeZoneInfo PortalTimeZone
+        {
+            get
+            {
+                if (this.portalTimeZone == null)
+                {
+                    this.portalTimeZone = Dnn.Utility.GetPortalTimeZone();
+                }
+
+                return this.portalTimeZone;
+            }
+        }
+
+        /// <summary>
+        /// Gets the time zone for the current user.
+        /// </summary>
+        private TimeZoneInfo UserTimeZone
+        {
+            get
+            {
+                if (this.userTimeZone == null)
+                {
+                    this.userTimeZone = Dnn.Utility.GetUserTimeZone();
+                }
+
+                return this.userTimeZone;
+            }
+        }
+
+        /// <summary>
+        /// Gets this event's start date/time, local to the <see cref="UserTimeZone"/>.
+        /// </summary>
+        private DateTime UserEventStart
+        {
+            get
+            {
+                return TimeZoneInfo.ConvertTime(this.EventStart, this.TimeZone, this.UserTimeZone);
+            }
+        }
+
+        /// <summary>
+        /// Gets this event's end date/time, local to the <see cref="UserTimeZone"/>.
+        /// </summary>
+        private DateTime UserEventEnd
+        {
+            get
+            {
+                return TimeZoneInfo.ConvertTime(this.EventEnd, this.TimeZone, this.UserTimeZone);
+            }
+        }
+
+        /// <summary>
+        /// Gets this event's start date/time, local to the <see cref="PortalTimeZone"/>.
+        /// </summary>
+        private DateTime PortalEventStart
+        {
+            get
+            {
+                return TimeZoneInfo.ConvertTime(this.EventStart, this.TimeZone, this.PortalTimeZone);
+            }
+        }
+
+        /// <summary>
+        /// Gets this event's end date/time, local to the <see cref="PortalTimeZone"/>.
+        /// </summary>
+        private DateTime PortalEventEnd
+        {
+            get
+            {
+                return TimeZoneInfo.ConvertTime(this.EventEnd, this.TimeZone, this.PortalTimeZone);
+            }
+        }
+
+        /// <summary>
         /// Loads the specified event.
         /// </summary>
         /// <param name="id">The id of an event to load.</param>
@@ -878,10 +964,10 @@ namespace Engage.Events
                     return this.HasAttendees.ToString(CultureInfo.InvariantCulture);
                 case "RESPONSE COUNT":
                 case "RESPONSECOUNT":
-                    return this.ResponseCount.ToString(format, CultureInfo.InvariantCulture);
+                    return this.ResponseCount.ToString(format, CultureInfo.CurrentCulture);
                 case "ATTENDEE COUNT":
                 case "ATTENDEECOUNT":
-                    return this.AttendeeCount.ToString(format, CultureInfo.InvariantCulture);
+                    return this.AttendeeCount.ToString(format, CultureInfo.CurrentCulture);
                 case "IS FULL":
                 case "ISFULL":
                     return this.IsFull.ToString(CultureInfo.InvariantCulture);
@@ -889,6 +975,93 @@ namespace Engage.Events
                     return TemplateEngine.FormatString(this.Location, format ?? "HTML");
                 case "CATEGORY":
                     return TemplateEngine.FormatString(this.Category.Name, format ?? "HTML");
+                case "TIMEZONE":
+                case "TIME ZONE":
+                    return TemplateEngine.FormatString(this.TimeZone.DisplayName, format ?? "HTML");
+                case "TIMEZONEHOURS":
+                case "TIME ZONE HOURS":
+                    return this.TimeZone.BaseUtcOffset.TotalHours.ToString(format, CultureInfo.CurrentCulture);
+                case "TIMEZONEMINUTES":
+                case "TIME ZONE MINUTES":
+                    return this.TimeZone.BaseUtcOffset.Minutes.ToString(format, CultureInfo.CurrentCulture);
+                case "STARTTIMEZONEHOURS":
+                case "START TIME ZONE HOURS":
+                    return this.TimeZone.GetUtcOffset(this.EventStart).TotalHours.ToString(format, CultureInfo.CurrentCulture);
+                case "STARTTIMEZONEMINUTES":
+                case "START TIME ZONE MINUTES":
+                    return this.TimeZone.GetUtcOffset(this.EventStart).Minutes.ToString(format, CultureInfo.CurrentCulture);
+                case "ENDTIMEZONEHOURS":
+                case "END TIME ZONE HOURS":
+                    return this.TimeZone.GetUtcOffset(this.EventEnd).TotalHours.ToString(format, CultureInfo.CurrentCulture);
+                case "ENDTIMEZONEMINUTES":
+                case "END TIME ZONE MINUTES":
+                    return this.TimeZone.GetUtcOffset(this.EventEnd).Minutes.ToString(format, CultureInfo.CurrentCulture);
+                case "STARTTIMEZONENAME":
+                case "START TIME ZONE NAME":
+                    var startTimeZoneName = this.TimeZone.IsDaylightSavingTime(this.EventStart) ? this.TimeZone.DaylightName : this.TimeZone.StandardName;
+                    return TemplateEngine.FormatString(startTimeZoneName, format ?? "HTML");
+                case "ENDTIMEZONENAME":
+                case "END TIME ZONE NAME":
+                    var endTimeZoneName = this.TimeZone.IsDaylightSavingTime(this.EventEnd) ? this.TimeZone.DaylightName : this.TimeZone.StandardName;
+                    return TemplateEngine.FormatString(endTimeZoneName, format ?? "HTML");
+                case "USERSTARTTIMEZONEHOURS":
+                case "USER START TIME ZONE HOURS":
+                    return this.UserTimeZone.GetUtcOffset(this.UserEventStart).TotalHours.ToString(format, CultureInfo.CurrentCulture);
+                case "USERSTARTTIMEZONEMINUTES":
+                case "USER START TIME ZONE MINUTES":
+                    return this.UserTimeZone.GetUtcOffset(this.UserEventStart).Minutes.ToString(format, CultureInfo.CurrentCulture);
+                case "USERENDTIMEZONEHOURS":
+                case "USER END TIME ZONE HOURS":
+                    return this.UserTimeZone.GetUtcOffset(this.UserEventEnd).TotalHours.ToString(format, CultureInfo.CurrentCulture);
+                case "USERENDTIMEZONEMINUTES":
+                case "USER END TIME ZONE MINUTES":
+                    return this.UserTimeZone.GetUtcOffset(this.UserEventEnd).Minutes.ToString(format, CultureInfo.CurrentCulture);
+                case "USERSTARTTIMEZONENAME":
+                case "USER START TIME ZONE NAME":
+                    var userStartTimeZoneName = this.UserTimeZone.IsDaylightSavingTime(this.UserEventStart) ? this.UserTimeZone.DaylightName : this.UserTimeZone.StandardName;
+                    return TemplateEngine.FormatString(userStartTimeZoneName, format ?? "HTML");
+                case "USERENDTIMEZONENAME":
+                case "USER END TIME ZONE NAME":
+                    var userEndTimeZoneName = this.UserTimeZone.IsDaylightSavingTime(this.UserEventEnd) ? this.UserTimeZone.DaylightName : this.UserTimeZone.StandardName;
+                    return TemplateEngine.FormatString(userEndTimeZoneName, format ?? "HTML");
+                case "SITESTARTTIMEZONEHOURS":
+                case "SITE START TIME ZONE HOURS":
+                    return this.PortalTimeZone.GetUtcOffset(this.PortalEventStart).TotalHours.ToString(format, CultureInfo.CurrentCulture);
+                case "SITESTARTTIMEZONEMINUTES":
+                case "SITE START TIME ZONE MINUTES":
+                    return this.PortalTimeZone.GetUtcOffset(this.PortalEventStart).Minutes.ToString(format, CultureInfo.CurrentCulture);
+                case "SITEENDTIMEZONEHOURS":
+                case "SITE END TIME ZONE HOURS":
+                    return this.PortalTimeZone.GetUtcOffset(this.PortalEventEnd).TotalHours.ToString(format, CultureInfo.CurrentCulture);
+                case "SITEENDTIMEZONEMINUTES":
+                case "SITE END TIME ZONE MINUTES":
+                    return this.PortalTimeZone.GetUtcOffset(this.PortalEventEnd).Minutes.ToString(format, CultureInfo.CurrentCulture);
+                case "SITESTARTTIMEZONENAME":
+                case "SITE START TIME ZONE NAME":
+                    var portalStartTimeZoneName = this.PortalTimeZone.IsDaylightSavingTime(this.PortalEventStart) ? this.PortalTimeZone.DaylightName : this.PortalTimeZone.StandardName;
+                    return TemplateEngine.FormatString(portalStartTimeZoneName, format ?? "HTML");
+                case "SITEENDTIMEZONENAME":
+                case "SITE END TIME ZONE NAME":
+                    var portalEndTimeZoneName = this.PortalTimeZone.IsDaylightSavingTime(this.PortalEventEnd) ? this.PortalTimeZone.DaylightName : this.PortalTimeZone.StandardName;
+                    return TemplateEngine.FormatString(portalEndTimeZoneName, format ?? "HTML");
+                case "INUSERTIMEZONE":
+                case "IN USER TIME ZONE":
+                    return this.UserTimeZone.Equals(this.TimeZone).ToString(CultureInfo.InvariantCulture);
+                case "INSITETIMEZONE":
+                case "IN SITE TIME ZONE":
+                    return this.PortalTimeZone.Equals(this.TimeZone).ToString(CultureInfo.InvariantCulture);
+                case "USEREVENTSTART":
+                case "USER EVENT START":
+                    return this.UserEventStart.ToString(format, CultureInfo.CurrentCulture);
+                case "USEREVENTEND":
+                case "USER EVENT END":
+                    return this.UserEventEnd.ToString(format, CultureInfo.CurrentCulture);
+                case "SITEEVENTSTART":
+                case "SITE EVENT START":
+                    return this.PortalEventStart.ToString(format, CultureInfo.CurrentCulture);
+                case "SITEEVENTEND":
+                case "SITE EVENT END":
+                    return this.PortalEventEnd.ToString(format, CultureInfo.CurrentCulture);
             }
 
             return string.Empty;
