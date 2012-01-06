@@ -2,7 +2,7 @@
 BEGIN
     ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Event]
         ADD TimeZone nvarchar(50) NOT NULL 
-            CONSTRAINT {objectQualifier}DF_Engage_Event_TimeZone DEFAULT ''
+            CONSTRAINT [{objectQualifier}DF_Engage_Event_TimeZone] DEFAULT ''
 END
 GO
 
@@ -194,10 +194,24 @@ GO
 CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spCleanup01_07_00Upgrade]
 AS
 BEGIN
-    ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Event]
-        DROP CONSTRAINT {objectQualifier}DF_Engage_Event_TimeZone,
-             COLUMN TimeZoneOffset,
-             COLUMN InDaylightTime;
+    IF EXISTS (SELECT 1 FROM syscolumns WHERE id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Event]', N'U') AND name = 'TimeZoneOffset')
+    BEGIN
+        DECLARE @dropInDaylightTimeDefaultSql nvarchar(1000)
+        SELECT @dropInDaylightTimeDefaultSql = N'
+            ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Event]
+                DROP CONSTRAINT [' + [constraint].name + N']'
+        FROM syscolumns [column]
+        JOIN sysobjects [constraint] ON [column].cdefault = [constraint].id
+        WHERE [column].name = 'InDaylightTime'
+          AND [column].id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Engage_Event]', N'U')
+
+        EXEC sp_executesql @dropInDaylightTimeDefaultSql
+
+        ALTER TABLE {databaseOwner}[{objectQualifier}Engage_Event]
+            DROP CONSTRAINT [{objectQualifier}DF_Engage_Event_TimeZone],
+                 COLUMN TimeZoneOffset,
+                 COLUMN InDaylightTime
+    END
 
     DROP PROCEDURE {databaseOwner}[{objectQualifier}Engage_spGetEventTimeZoneOffsetsFor01_07_00Upgrade]
     DROP PROCEDURE {databaseOwner}[{objectQualifier}Engage_spConvertTimeZoneOffsetToTimeZoneFor01_07_00Upgrade]
