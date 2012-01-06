@@ -80,26 +80,16 @@ namespace Engage.Dnn.Events
         /// Gets <c>QueryString</c> parameter(s) that represent an instance of an <see cref="Event"/>.
         /// </summary>
         /// <param name="selectedEvent">The <see cref="Event"/> to represent.</param>
+        /// <param name="additionalParameters">Any other querystring parameters.</param>
         /// <returns>A list of <c>QueryString</c> parameters that represent <paramref name="selectedEvent"/></returns>
-        public static string[] GetEventParameters(Event selectedEvent)
+        public static string[] GetEventParameters(Event selectedEvent, params string[] additionalParameters)
         {
             if (selectedEvent == null)
             {
-                throw new ArgumentNullException("selectedEvent", @"Event must not be null");
+                throw new ArgumentNullException("selectedEvent");
             }
 
-            return GetEventParameters(selectedEvent.Id, selectedEvent.EventStart);
-        }
-
-        /// <summary>
-        /// Gets <c>QueryString</c> parameter(s) that represent the given event information
-        /// </summary>
-        /// <param name="eventId">The event id.</param>
-        /// <param name="eventStart">The date and time at which this occurrence starts.</param>
-        /// <returns>A list of <c>QueryString</c> parameters that represent the given event information</returns>
-        public static string[] GetEventParameters(int eventId, DateTime eventStart)
-        {
-            return GetEventParameters(eventId, eventStart, new string[0]);
+            return GetEventParameters(selectedEvent.Id, selectedEvent.EventStart, additionalParameters);
         }
 
         /// <summary>

@@ -126,7 +126,7 @@ namespace Engage.Dnn.Events.Components
                                                           modInfo.ModuleID,
                                                           e.Id.ToString(CultureInfo.InvariantCulture),
                                                           e.Title + ' ' + e.Overview + ' ' + e.Description,
-                                                          string.Join("&", Utility.GetEventParameters(e.Id, e.EventStart, querystringParameters).ToArray())))
+                                                          string.Join("&", Utility.GetEventParameters(e, querystringParameters).ToArray())))
                                                       .ToArray());
         }
     }
