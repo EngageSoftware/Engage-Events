@@ -15,7 +15,10 @@
             </abbr>
         </p>
         <p class="NormalBold eng-label"><Engage:Label Text-ResourceKey="Time" /></p>
-        <p class="Normal eng-value"><Engage:Literal Text-PropertyName = "EventStart" Text-Format="%h:mm tt" /></p>
+        <p class="Normal eng-value">
+            <Engage:Literal Text-PropertyName="EventStart" Text-Format="%h:mm tt" /> 
+            <Engage:Label class="timezone" Unless-PropertyName="InUserTimeZone">(<Engage:Literal Text-PropertyName="UserEventStart" Text-Format="%h:mm tt" /> <Engage:Literal Text-PropertyName="UserStartTimeZoneName" />)</Engage:Label>
+        </p>
     </div>
     <div class="EventOverview eng-section">
         <p class="NormalBold eng-label"><Engage:Label Text-ResourceKey="Overview" /></p>
