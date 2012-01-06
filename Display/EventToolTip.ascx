@@ -3,7 +3,7 @@
 
 <div class="EventToolTip">
     <h2 class="EventTitleToolTip Head"><asp:Label runat="server" ID="EventTitle"/></h2>
-    <p class="EventStartToolTip NormalBold"><asp:Label runat="server" ID="EventDate"/></p>
+    <p class="EventStartToolTip NormalBold"><asp:Label runat="server" ID="EventDate"/><asp:Label runat="server" CssClass="timezone" ID="EventTimeZone" /></p>
     <div class="event_description_tooltip Normal"><asp:Literal runat="server" id="EventOverview" /></div>
     <p class="EventLinkToolTip Normal"><asp:HyperLink runat="server" ID="EventLink" ResourceKey="View Details.Text" /></p>
     <div class="tooltip_buttons">

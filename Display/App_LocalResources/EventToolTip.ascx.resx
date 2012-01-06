@@ -120,6 +120,21 @@
   <data name="AddToCalendarButton.Text" xml:space="preserve">
     <value>Add To Calendar</value>
   </data>
+  <data name="DifferentTimeZone.Format" xml:space="preserve">
+    <value> ({0:hh:mmtt} {2})</value>
+    <comment>{0} is start date/time in user's time zone
+{1} is end date/time in user's time zone
+{2} is user's time zone name during event start (e.g. "Central Standard Time")
+{3} is user's time zone name during event end (e.g. "Central Daylight Time")
+{4} is user's time zone display name (e.g. "(UTC-06:00) Central Time (US &amp; Canada)")
+{5} is user's time zone base offset hours (e.g. -6.0)
+{6} is user's time zone base offset minutes (e.g. 0)
+{7} is event's time zone name during event start (e.g. "Newfoundland Daylight Time")
+{8} is event's time zone name during event end (e.g. "Newfoundland Standard Time")
+{9} is event's time zone display name (e.g. "(UTC-03:30) Newfoundland")
+{10} is event's time zone base offset hours (e.g. -3.5)
+{11} is event's time zone base offset minutes (e.g. 30)</comment>
+  </data>
   <data name="EditButton.Text" xml:space="preserve">
     <value>Edit</value>
   </data>
@@ -129,17 +144,40 @@
   <data name="RegisterButton.Text" xml:space="preserve">
     <value>Register</value>
   </data>
+  <data name="SameTimeZone.Format" xml:space="preserve">
+    <value />
+    <comment>{0} is start date/time in user's time zone
+{1} is end date/time in user's time zone
+{2} is user's time zone name during event start (e.g. "Central Standard Time")
+{3} is user's time zone name during event end (e.g. "Central Daylight Time")
+{4} is user's time zone display name (e.g. "(UTC-06:00) Central Time (US &amp; Canada)")
+{5} is user's time zone base offset hours (e.g. -6.0)
+{6} is user's time zone base offset minutes (e.g. 0)
+{7} is event's time zone name during event start (e.g. "Newfoundland Daylight Time")
+{8} is event's time zone name during event end (e.g. "Newfoundland Standard Time")
+{9} is event's time zone display name (e.g. "(UTC-03:30) Newfoundland")
+{10} is event's time zone base offset hours (e.g. -3.5)
+{11} is event's time zone base offset minutes (e.g. 30)</comment>
+  </data>
   <data name="Timespan.Text" xml:space="preserve">
     <value>{0:hh:mmtt} - {1:hh:mmtt}</value>
+    <comment>{0} is start date/time
+{1} is end date/time</comment>
   </data>
   <data name="TimespanDifferentDay.Text" xml:space="preserve">
     <value>{0:hh:mmtt} - {1:hh:mmtt}</value>
+    <comment>{0} is start date/time
+{1} is end date/time</comment>
   </data>
   <data name="TimespanDifferentMonth.Text" xml:space="preserve">
     <value>{0:hh:mmtt} - {1:hh:mmtt}</value>
+    <comment>{0} is start date/time
+{1} is end date/time</comment>
   </data>
   <data name="TimespanDifferentYear.Text" xml:space="preserve">
     <value>{0:hh:mmtt} - {1:hh:mmtt}</value>
+    <comment>{0} is start date/time
+{1} is end date/time</comment>
   </data>
   <data name="View Details.Text" xml:space="preserve">
     <value>View Details</value>

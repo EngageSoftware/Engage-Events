@@ -13,6 +13,8 @@ namespace Engage.Dnn.Events.Display
 {
     using System;
     using System.Diagnostics;
+    using System.Globalization;
+    using System.Web;
     using System.Web.UI;
     using DotNetNuke.Framework;
     using Engage.Events;
@@ -43,6 +45,25 @@ namespace Engage.Dnn.Events.Display
         public void ShowEvent()
         {
             this.EventDate.Text = Dnn.Events.Utility.GetFormattedEventDate(this.currentEvent.EventStart, this.currentEvent.EventEnd, this.LocalResourceFile);
+            
+            var userTimeZone = Dnn.Utility.GetUserTimeZone();
+            this.EventTimeZone.Text = HttpUtility.HtmlEncode(
+                string.Format(
+                    CultureInfo.CurrentCulture,
+                    this.Localize(this.currentEvent.TimeZone.Equals(userTimeZone) ? "SameTimeZone.Format" : "DifferentTimeZone.Format"),
+                    this.currentEvent.UserEventStart,
+                    this.currentEvent.UserEventEnd,
+                    userTimeZone.IsDaylightSavingTime(this.currentEvent.UserEventStart) ? userTimeZone.DaylightName : userTimeZone.StandardName,
+                    userTimeZone.IsDaylightSavingTime(this.currentEvent.UserEventEnd) ? userTimeZone.DaylightName : userTimeZone.StandardName,
+                    userTimeZone.DisplayName,
+                    userTimeZone.BaseUtcOffset.TotalHours,
+                    userTimeZone.BaseUtcOffset.Minutes,
+                    this.currentEvent.TimeZone.IsDaylightSavingTime(this.currentEvent.EventStart) ? this.currentEvent.TimeZone.DaylightName : this.currentEvent.TimeZone.StandardName,
+                    this.currentEvent.TimeZone.IsDaylightSavingTime(this.currentEvent.EventEnd) ? this.currentEvent.TimeZone.DaylightName : this.currentEvent.TimeZone.StandardName,
+                    this.currentEvent.TimeZone.DisplayName,
+                    this.currentEvent.TimeZone.BaseUtcOffset.TotalHours,
+                    this.currentEvent.TimeZone.BaseUtcOffset.Minutes));
+
             this.EventOverview.Text = this.currentEvent.Overview;
             this.EventTitle.Text = this.currentEvent.Title;
             this.EventLink.NavigateUrl = this.BuildLinkUrl(this.DetailsTabId, this.DetailsModuleId, "EventDetail", Dnn.Events.Utility.GetEventParameters(this.currentEvent));
