@@ -274,6 +274,7 @@ namespace Engage.Dnn.Events.Display
         /// <param name="templateItem">The object to query for data to implement the given tag</param>
         /// <param name="resourceFile">The resource file to use to find get localized text.</param>
         /// <returns>Whether to process the tag's ChildTags collection</returns>
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposed by container")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "The complexity cannot easily be reduced and the method is easy to understand, test, and maintain")]
         private bool ProcessTag(Control container, Tag tag, ITemplateable templateItem, string resourceFile)
         {
