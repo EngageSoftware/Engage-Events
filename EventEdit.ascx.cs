@@ -479,12 +479,17 @@ namespace Engage.Dnn.Events
 
             this.AllowRegistrationsCheckBox.Checked = this.LimitRegistrationsPanel.Visible = e.AllowRegistrations;
             this.LimitRegistrationsCheckBox.Checked = this.RegistrationLimitPanel.Visible = e.Capacity.HasValue;
+            this.RegistrationCountLabel.Text = string.Format(
+                CultureInfo.CurrentCulture,
+                this.Localize(e.AttendeeCount == 1 ? "Attendee Count (Singular).Format" : "Attendee Count.Format"),
+                e.AttendeeCount);
+            this.RegistrationLimitValidator.ValueToCompare = e.AttendeeCount.ToString(CultureInfo.CurrentCulture);
             if (e.Capacity.HasValue)
             {
                 this.RegistrationLimitTextBox.Value = e.Capacity.Value;
             }
 
-            bool hasCustomCapacityMetMessage = e.CapacityMetMessage != null;
+            var hasCustomCapacityMetMessage = e.CapacityMetMessage != null;
             this.CustomCapacityMetMessagePanel.Visible = hasCustomCapacityMetMessage;
             this.CapacityMetMessageRadioButtonList.SelectedValue = hasCustomCapacityMetMessage.ToString(CultureInfo.InvariantCulture);
             this.CustomCapacityMetMessageTextEditor.Text = e.CapacityMetMessage;

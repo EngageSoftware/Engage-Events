@@ -229,7 +229,7 @@
     <value>Registration Options:</value>
   </data>
   <data name="RegistrationLimitLabel.Text" xml:space="preserve">
-    <value>Maximum Number of Registrants</value>
+    <value>Maximum Number of Attendees</value>
   </data>
   <data name="Save.Alt" xml:space="preserve">
     <value>Save</value>
@@ -242,5 +242,19 @@
   </data>
   <data name="Indent.Text" xml:space="preserve">
     <value>&gt;</value>
+  </data>
+  <data name="Attendee Count (Singular).Format" xml:space="preserve">
+    <value>(Currently there is one attendee registered)</value>
+    <comment>{0} is attendee count</comment>
+  </data>
+  <data name="Attendee Count.Format" xml:space="preserve">
+    <value>(Currently there are {0} attendees registered)</value>
+    <comment>{0} is attendee count</comment>
+  </data>
+  <data name="RegistrationLimitRequiredValidator.Text" xml:space="preserve">
+    <value>You must supply the maximum number of attendees</value>
+  </data>
+  <data name="RegistrationLimitValidator.Text" xml:space="preserve">
+    <value>The maximum number of attendees cannot be less than the current number of attendees.</value>
   </data>
 </root>

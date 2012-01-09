@@ -100,12 +100,14 @@
                         <legend class="registrationoptions SubHead"><%=Localize("Registration Options:") %></legend>
                         <asp:Label ID="LimitRegistrationsLabel" runat="server" ResourceKey="LimitRegistrationsLabel" CssClass="NormalBold RegCap" AssociatedControlID="LimitRegistrationsCheckBox" />
                         <asp:CheckBox ID="LimitRegistrationsCheckBox" runat="server" CssClass="NormalBold" AutoPostBack="true" />
+                        <asp:Label ID="RegistrationCountLabel" runat="server" CssClass="Normal RegCount" />
                         <asp:Panel ID="RegistrationLimitPanel" runat="server" Visible="false">
-                            <asp:Label runat="server" ResourceKey="RegistrationLimitLabel" CssClass="NormalBold RegCap" AssociatedControlID="LimitRegistrationsCheckBox" />
+                            <asp:Label runat="server" ResourceKey="RegistrationLimitLabel" CssClass="NormalBold RegCap" AssociatedControlID="RegistrationLimitTextBox" />
                             <telerik:RadNumericTextBox ID="RegistrationLimitTextBox" runat="server" Value="25" MinValue="1" ShowSpinButtons="True"> 
                                 <NumberFormat AllowRounding="True" DecimalDigits="0"/>
                             </telerik:RadNumericTextBox>
                             <asp:RequiredFieldValidator runat="server" ControlToValidate="RegistrationLimitTextBox" ResourceKey="RegistrationLimitRequiredValidator" CssClass="NormalRed" Display="None" />
+                            <asp:CompareValidator ID="RegistrationLimitValidator" runat="server" ControlToValidate="RegistrationLimitTextBox" ResourceKey="RegistrationLimitValidator" CssClass="NormalRed" Display="None" Operator="GreaterThanEqual" Type="Integer" />
                             <div>
                                 <asp:Label runat="server" ResourceKey="CapacityMetMessageLabel" CssClass="NormalBold RegCap" AssociatedControlID="CapacityMetMessageRadioButtonList" />
                                 <asp:RadioButtonList ID="CapacityMetMessageRadioButtonList" runat="server" ResourceKey="CapacityMetMessageRadioButtonList" CssClass="NormalBold" AutoPostBack="true">
@@ -138,7 +140,7 @@
     </div>
 </div>
 
-<engage:ValidationSummary runat="server" />
+<engage:ValidationSummary runat="server" CssClass="NormalRed" />
 
 <asp:MultiView ID="FooterMultiview" runat="server" ActiveViewIndex="0">
     <asp:View ID="AddEventFooterView" runat="server">
@@ -176,4 +178,13 @@
     function CategoryComboBox_TextChange(sender, eventArgs) {
         $get("<%=CategoryCreationPendingLabel.ClientID %>").style.display = 'inline';
     }
+    (function () {
+        var originalValidationSummaryOnSubmit = window.ValidationSummaryOnSubmit;
+        window.ValidationSummaryOnSubmit = function (validationGroup) {
+            var originalScrollTo = window.scrollTo;
+            window.scrollTo = function() { };
+            originalValidationSummaryOnSubmit(validationGroup);
+            window.scrollTo = originalScrollTo;
+        }
+    }());
 </script>

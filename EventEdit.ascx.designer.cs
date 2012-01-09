@@ -184,6 +184,15 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.CheckBox LimitRegistrationsCheckBox;
         
         /// <summary>
+        /// RegistrationCountLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label RegistrationCountLabel;
+        
+        /// <summary>
         /// RegistrationLimitPanel control.
         /// </summary>
         /// <remarks>
@@ -200,6 +209,15 @@ namespace Engage.Dnn.Events {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadNumericTextBox RegistrationLimitTextBox;
+        
+        /// <summary>
+        /// RegistrationLimitValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator RegistrationLimitValidator;
         
         /// <summary>
         /// CapacityMetMessageRadioButtonList control.
