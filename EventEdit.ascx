@@ -161,19 +161,22 @@
 <div style="clear:both">&nbsp;</div>
 <script type="text/ecmascript">
     function StartDateTimePicker_DateSelected(sender, eventArgs) {
-        var EndDateTimePicker = $find("<%= EndDateTimePicker.ClientID %>");
-        // don't update end date if there's already an end date but not an old start date
-        if (EndDateTimePicker.isEmpty() || eventArgs.get_oldDate() || EndDateTimePicker.get_selectedDate() <= eventArgs.get_newDate()) {
+        var EndDateTimePicker = $find("<%= EndDateTimePicker.ClientID %>"),
+            endDate = EndDateTimePicker.get_selectedDate(),
+            newStartDate = eventArgs.get_newDate(),
+            endDateAfterNewDate = endDate > newStartDate;
+        // don't update end date if there's already an end date but not an old start date, or if the start date was cleared
+        if (newStartDate && (EndDateTimePicker.isEmpty() || eventArgs.get_oldDate() || !endDateAfterNewDate)) {
             var selectedDateSpan = 1800000; // 30 minutes
-            if (!EndDateTimePicker.isEmpty() && EndDateTimePicker.get_selectedDate() > eventArgs.get_newDate()) {
-                selectedDateSpan = EndDateTimePicker.get_selectedDate() - eventArgs.get_oldDate();
+            if (!EndDateTimePicker.isEmpty() && endDateAfterNewDate) {
+                selectedDateSpan = endDate - eventArgs.get_oldDate();
             }
 
-            EndDateTimePicker.set_selectedDate(new Date(eventArgs.get_newDate().getTime() + selectedDateSpan));
+            EndDateTimePicker.set_selectedDate(new Date(newStartDate.getTime() + selectedDateSpan));
         }
     }
     function CategoryComboBox_SelectedIndexChanged(sender, eventArgs) {
-        $get("<%=CategoryCreationPendingLabel.ClientID %>").style.display = 'none';
+        $get("<%=CategoryCreationPendingLabel.ClientID %>").style.display = eventArgs.item ? 'none' : 'inline';
     }
     function CategoryComboBox_TextChange(sender, eventArgs) {
         $get("<%=CategoryCreationPendingLabel.ClientID %>").style.display = 'inline';
