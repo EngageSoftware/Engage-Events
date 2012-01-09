@@ -416,6 +416,7 @@
     <EmbeddedResource Include="JavaScript\EngageEvents.Actions.RegisterAction.combined.js">
       <DependentUpon>scripts.chirp.config</DependentUpon>
     </EmbeddedResource>
+    <Content Include="Images\warning_32.png" />
     <Content Include="ReleaseNotes_01.07.00.htm" />
     <Content Include="ReleaseNotes_01.06.00.htm" />
     <Content Include="Images\events-icon32.png" />

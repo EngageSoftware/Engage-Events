@@ -1,4 +1,4 @@
-﻿/*================ Event Custom Listing Page ==========================*/
+/*================ Event Custom Listing Page ==========================*/
 .EventHeader, .ResponseHeader, .ResponseRow {
   clear: both;
   width: 100%;
@@ -515,6 +515,14 @@ h2.EventTitleToolTip {
 }
 .SuccessBody .SuccessIcon {
   background: url(images/successSmallIcon.png) no-repeat;
+}
+/*-------------------- Warning -----------------------------*/
+.WarningBody {
+  background: #feffce;
+  border: 2px #cdb21f solid;
+}
+.WarningBody .WarningIcon {
+  background-image: url(images/warning_32.png);
 }
 /*------------------- Information --------------------------*/
 .InformationBody {
