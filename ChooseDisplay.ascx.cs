@@ -18,7 +18,7 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Common;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Services.Exceptions;
-    using DotNetNuke.Services.Localization;
+
     using Framework.Templating;
 
     /// <summary>
@@ -98,8 +98,8 @@ namespace Engage.Dnn.Events
             {
                 if (!this.IsPostBack)
                 {
-                    this.ChooseDisplayDropDown.Items.Add(new ListItem(Localization.GetString("EventListingTemplate", this.LocalResourceFile), "LIST"));
-                    this.ChooseDisplayDropDown.Items.Add(new ListItem(Localization.GetString("EventCalendar", this.LocalResourceFile), "CALENDAR"));
+                    this.ChooseDisplayDropDown.Items.Add(new ListItem(this.Localize("EventListingTemplate"), "LIST"));
+                    this.ChooseDisplayDropDown.Items.Add(new ListItem(this.Localize("EventCalendar"), "CALENDAR"));
 
                     string displayType = ModuleSettings.DisplayType.GetValueAsStringFor(this).ToUpperInvariant();
                     ListItem li = this.ChooseDisplayDropDown.Items.FindByValue(displayType);

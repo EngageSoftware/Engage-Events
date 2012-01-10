@@ -19,7 +19,7 @@ namespace Engage.Dnn.Events.Display
     using System.Web.UI.WebControls;
 
     using DotNetNuke.Services.Exceptions;
-    using DotNetNuke.Services.Localization;
+
     using Engage.Events;
 
     using Telerik.Web.UI;
@@ -109,18 +109,18 @@ namespace Engage.Dnn.Events.Display
             var lastDayOfWeek = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek - 1;
             this.EventsCalendarDisplay.LastDayOfWeek = lastDayOfWeek < DayOfWeek.Sunday ? DayOfWeek.Saturday : lastDayOfWeek;
 
-            this.EventsCalendarDisplay.Localization.HeaderToday = Localization.GetString("HeaderToday.Text", this.LocalResourceFile);
-            this.EventsCalendarDisplay.Localization.HeaderPrevDay = Localization.GetString("HeaderPrevDay.Text", this.LocalResourceFile);
-            this.EventsCalendarDisplay.Localization.HeaderNextDay = Localization.GetString("HeaderNextDay.Text", this.LocalResourceFile);
-            this.EventsCalendarDisplay.Localization.HeaderDay = Localization.GetString("HeaderDay.Text", this.LocalResourceFile);
-            this.EventsCalendarDisplay.Localization.HeaderWeek = Localization.GetString("HeaderWeek.Text", this.LocalResourceFile);
-            this.EventsCalendarDisplay.Localization.HeaderMonth = Localization.GetString("HeaderMonth.Text", this.LocalResourceFile);
+            this.EventsCalendarDisplay.Localization.HeaderToday = this.Localize("HeaderToday.Text");
+            this.EventsCalendarDisplay.Localization.HeaderPrevDay = this.Localize("HeaderPrevDay.Text");
+            this.EventsCalendarDisplay.Localization.HeaderNextDay = this.Localize("HeaderNextDay.Text");
+            this.EventsCalendarDisplay.Localization.HeaderDay = this.Localize("HeaderDay.Text");
+            this.EventsCalendarDisplay.Localization.HeaderWeek = this.Localize("HeaderWeek.Text");
+            this.EventsCalendarDisplay.Localization.HeaderMonth = this.Localize("HeaderMonth.Text");
 
-            this.EventsCalendarDisplay.Localization.AllDay = Localization.GetString("AllDay.Text", this.LocalResourceFile);
-            this.EventsCalendarDisplay.Localization.Show24Hours = Localization.GetString("Show24Hours.Text", this.LocalResourceFile);
-            this.EventsCalendarDisplay.Localization.ShowBusinessHours = Localization.GetString("ShowBusinessHours.Text", this.LocalResourceFile);
+            this.EventsCalendarDisplay.Localization.AllDay = this.Localize("AllDay.Text");
+            this.EventsCalendarDisplay.Localization.Show24Hours = this.Localize("Show24Hours.Text");
+            this.EventsCalendarDisplay.Localization.ShowBusinessHours = this.Localize("ShowBusinessHours.Text");
 
-            this.EventsCalendarDisplay.Localization.ShowMore = Localization.GetString("ShowMore.Text", this.LocalResourceFile);
+            this.EventsCalendarDisplay.Localization.ShowMore = this.Localize("ShowMore.Text");
         }
 
         /// <summary>

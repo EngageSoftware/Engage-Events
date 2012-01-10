@@ -17,8 +17,9 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Common;
     using DotNetNuke.Framework;
     using DotNetNuke.Services.Exceptions;
-    using DotNetNuke.Services.Localization;
+
     using Engage.Events;
+
     using Telerik.Web.UI;
 
     /// <summary>
@@ -52,11 +53,11 @@ namespace Engage.Dnn.Events
         {
             if (responseStatus == null)
             {
-                throw new ArgumentNullException("responseStatus", "responseStatus must not be null");
+                throw new ArgumentNullException("responseStatus");
             }
 
             string url = string.Empty;
-            ResponseStatus status = (ResponseStatus)Enum.Parse(typeof(ResponseStatus), responseStatus.ToString());
+            var status = (ResponseStatus)Enum.Parse(typeof(ResponseStatus), responseStatus.ToString());
 
             switch (status)
             {
@@ -180,7 +181,7 @@ namespace Engage.Dnn.Events
             {
                 if (!string.IsNullOrEmpty(column.HeaderText))
                 {
-                    string localizedHeaderText = Localization.GetString(column.HeaderText + ".Header", this.LocalResourceFile);
+                    string localizedHeaderText = this.Localize(column.HeaderText + ".Header");
                     if (!string.IsNullOrEmpty(localizedHeaderText))
                     {
                         column.HeaderText = localizedHeaderText;
@@ -192,16 +193,8 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// Binds the data.
         /// </summary>
-        private void BindData()
-        {
-            this.BindData(DefaultSortColumn);
-        }
-
-        /// <summary>
-        /// Binds the data.
-        /// </summary>
         /// <param name="sortColumn">The sort column.</param>
-        private void BindData(string sortColumn)
+        private void BindData(string sortColumn = DefaultSortColumn)
         {
             this.BindData(sortColumn, false);
         }
@@ -266,7 +259,7 @@ namespace Engage.Dnn.Events
 
             this.ResponseDetailGrid.ExportSettings.FileName = string.Format(
                 CultureInfo.CurrentCulture,
-                Localization.GetString("Export Filename.Text", this.LocalResourceFile),
+                this.Localize("Export Filename.Text"),
                 currentEvent == null ? null : currentEvent.Title,
                 this.EventStart);
         }

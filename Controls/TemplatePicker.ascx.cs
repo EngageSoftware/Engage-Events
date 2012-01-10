@@ -18,8 +18,9 @@ namespace Engage.Dnn.Events
     using System.Web.UI.WebControls;
     using System.Xml;
     using System.Xml.Schema;
+
     using DotNetNuke.Services.Exceptions;
-    using DotNetNuke.Services.Localization;
+
     using Framework.Templating;
 
     /// <summary>
@@ -92,7 +93,7 @@ namespace Engage.Dnn.Events
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                KeyValuePair<string, Pair<string, string>> settingInfo = (KeyValuePair<string, Pair<string, string>>)e.Row.DataItem;
+                var settingInfo = (KeyValuePair<string, Pair<string, string>>)e.Row.DataItem;
 
                 // new setting value
                 e.Row.Cells[1].Text = settingInfo.Value.First;
@@ -232,7 +233,7 @@ namespace Engage.Dnn.Events
             foreach (GridViewRow row in this.SettingsGrid.Rows)
             {
                 string settingKey = row.Cells[0].Text;
-                string localizedKey = Localization.GetString(settingKey, this.LocalResourceFile);
+                string localizedKey = this.Localize(settingKey);
                 row.Cells[0].Text = string.IsNullOrEmpty(localizedKey) ? settingKey : localizedKey;
             }
         }
@@ -243,19 +244,19 @@ namespace Engage.Dnn.Events
         /// <param name="exc">The <see cref="Exception"/> created from the validation error.</param>
         private void ShowManifestValidationErrorMessage(Exception exc)
         {
-            StringBuilder validationMessage = new StringBuilder("<ul>");
-            validationMessage.AppendFormat("<li>{0}</li>", Localization.GetString("ManifestValidation", this.LocalResourceFile));
+            var validationMessageBuilder = new StringBuilder("<ul>");
+            validationMessageBuilder.AppendFormat("<li>{0}</li>", this.Localize("ManifestValidation"));
             if (exc != null)
             {
-                validationMessage.AppendFormat("<li>{0}</li>", HttpUtility.HtmlEncode(exc.Message));
+                validationMessageBuilder.AppendFormat("<li>{0}</li>", HttpUtility.HtmlEncode(exc.Message));
                 if (exc.InnerException != null)
                 {
-                    validationMessage.AppendFormat("<li>{0}</li>", HttpUtility.HtmlEncode(exc.InnerException.Message));
+                    validationMessageBuilder.AppendFormat("<li>{0}</li>", HttpUtility.HtmlEncode(exc.InnerException.Message));
                 }
             }
 
-            validationMessage.Append("</ul>");
-            this.ManifestValidationErrorsLabel.Text = validationMessage.ToString();
+            validationMessageBuilder.Append("</ul>");
+            this.ManifestValidationErrorsLabel.Text = validationMessageBuilder.ToString();
             this.ManifestValidationErrorsLabel.Visible = true;
             this.TemplateDescriptionPanel.Visible = false;
             this.TemplatePreviewImage.Visible = false;

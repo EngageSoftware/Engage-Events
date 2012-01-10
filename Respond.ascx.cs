@@ -16,10 +16,11 @@ namespace Engage.Dnn.Events
     using System.Globalization;
     using System.Web;
     using System.Web.UI.WebControls;
+
     using DotNetNuke.Common;
     using DotNetNuke.Framework;
     using DotNetNuke.Services.Exceptions;
-    using DotNetNuke.Services.Localization;
+
     using Engage.Events;
 
     /// <summary>
@@ -97,15 +98,15 @@ namespace Engage.Dnn.Events
             }
             else
             {
-                this.EventNameLabel.Text = string.Format(CultureInfo.CurrentCulture, Localization.GetString("EventNameLabel.Text", this.LocalResourceFile), eventBeingRespondedTo.Title);
+                this.EventNameLabel.Text = string.Format(CultureInfo.CurrentCulture, this.Localize("EventNameLabel.Text"), eventBeingRespondedTo.Title);
                 this.AddToCalendarButton.Enabled = true;
 
                 this.ResponseStatusRadioButtons.Items.Clear();
                 this.ResponseStatusRadioButtons.Items.Add(new ListItem(
-                    Localization.GetString(ResponseStatus.Attending.ToString(), this.LocalResourceFile),
+                    this.Localize(ResponseStatus.Attending.ToString()),
                     ResponseStatus.Attending.ToString()));
                 this.ResponseStatusRadioButtons.Items.Add(new ListItem(
-                    Localization.GetString(ResponseStatus.NotAttending.ToString(), this.LocalResourceFile),
+                    this.Localize(ResponseStatus.NotAttending.ToString()),
                     ResponseStatus.NotAttending.ToString()));
                 this.ResponseStatusRadioButtons.Items[0].Selected = true;
             }

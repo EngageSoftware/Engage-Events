@@ -20,7 +20,6 @@ namespace Engage.Dnn.Events
 
     using DotNetNuke.Framework;
     using DotNetNuke.Services.Exceptions;
-    using DotNetNuke.Services.Localization;
 
     using Engage.Events;
 
@@ -368,7 +367,7 @@ namespace Engage.Dnn.Events
         private void LocalizeControl()
         {
             string addEditResourceKey = this.EventId.HasValue ? "EditEvent.Text" : "AddNewEvent.Text";
-            this.AddEditEventLabel.Text = Localization.GetString(addEditResourceKey, this.LocalResourceFile);
+            this.AddEditEventLabel.Text = this.Localize(addEditResourceKey);
         }
 
         /// <summary>
