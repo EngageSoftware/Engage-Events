@@ -275,7 +275,7 @@ namespace Engage.Dnn.Events
         /// Gets the index of the current page from the QueryString.
         /// </summary>
         /// <value>The index of the current page.</value>
-        protected int CurrentPageIndex
+        protected virtual int CurrentPageIndex
         {
             get
             {

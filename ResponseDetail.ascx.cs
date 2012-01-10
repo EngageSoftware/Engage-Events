@@ -33,6 +33,24 @@ namespace Engage.Dnn.Events
         private const string DefaultSortColumn = "CreationDate";
 
         /// <summary>
+        /// Gets the index of the current page.
+        /// </summary>
+        /// <value>The index of the current page.</value>
+        protected override int CurrentPageIndex
+        {
+            get
+            {
+                int index;
+                if (!int.TryParse(this.Request.QueryString["currentpage"], NumberStyles.Integer, CultureInfo.InvariantCulture, out index))
+                {
+                    index = 1;
+                }
+
+                return index;
+            }
+        }
+
+        /// <summary>
         /// Gets the status of responses to display, or <c>null</c> for all statuses.
         /// </summary>
         /// <value>The status of responses to display.</value>
@@ -234,8 +252,8 @@ namespace Engage.Dnn.Events
             this.ResponseDetailGrid.DataBind();
             ////this.ResponseDetailGrid.Attributes.Add("SortColumn", sortColumn);
 
-            this.pager.PageSize = this.ResponseDetailGrid.PageSize;
-            this.SetupPagingControl(this.pager, responses.TotalRecords, "modId", "key", "status", "eventId", "start");
+            this.ResponsePager.PageSize = this.ResponseDetailGrid.PageSize;
+            this.SetupPagingControl(this.ResponsePager, responses.TotalRecords, "modId", "key", "status", "eventId", "start");
 
             this.responseDisplay.SetResponseSummary(responseSummary);
             this.responseDisplay.ModuleConfiguration = this.ModuleConfiguration;

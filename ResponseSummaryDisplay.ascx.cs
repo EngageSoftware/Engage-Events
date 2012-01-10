@@ -12,10 +12,11 @@
 namespace Engage.Dnn.Events
 {
     using System;
-    using System.Data.Linq;
+    using System.Globalization;
     using System.Linq;
     using System.Web.UI;
     using System.Web.UI.WebControls;
+
     using DotNetNuke.Common;
     using DotNetNuke.Framework;
     using DotNetNuke.Services.Exceptions;
@@ -29,6 +30,24 @@ namespace Engage.Dnn.Events
     /// </summary>
     public partial class ResponseSummaryDisplay : ModuleBase
     {
+        /// <summary>
+        /// Gets the index of the current page.
+        /// </summary>
+        /// <value>The index of the current page.</value>
+        protected override int CurrentPageIndex
+        {
+            get
+            {
+                int index;
+                if (!int.TryParse(this.Request.QueryString["currentpage"], NumberStyles.Integer, CultureInfo.InvariantCulture, out index))
+                {
+                    index = 1;
+                }
+
+                return index;
+            }
+        }
+
         /// <summary>
         /// Gets the index at which the list of responses should start (based on page number).
         /// </summary>
