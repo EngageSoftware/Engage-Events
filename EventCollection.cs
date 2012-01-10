@@ -47,11 +47,11 @@ namespace Engage.Events
         public int TotalRecords { get; private set; }
 
         /// <summary>
-        /// Loads a page of events based on the given <paramref name="startDate"/> and <paramref name="endDate"/>.
+        /// Loads a page of events based on the given <paramref name="startDateUtc"/> and <paramref name="endDateUtc"/>.
         /// </summary>
         /// <param name="portalId">The ID of the portal that the events are for.</param>
-        /// <param name="startDate">The starting date for events to retrieve, or <c>null</c> to have no starting bound.</param>
-        /// <param name="endDate">The ending date for events to retrieve, or <c>null</c> to have no ending bound.</param>
+        /// <param name="startDateUtc">The starting date for events to retrieve (in UTC), or <c>null</c> to have no starting bound.</param>
+        /// <param name="endDateUtc">The ending date for events to retrieve (in UTC), or <c>null</c> to have no ending bound.</param>
         /// <param name="showAll">if set to <c>true</c> included canceled events.</param>
         /// <param name="featuredOnly">if set to <c>true</c> only include events that are featured.</param>
         /// <param name="hideFullEvents">if set to <c>true</c> only include events that have not hit their registration cap (or have no registration cap)</param>
@@ -59,17 +59,17 @@ namespace Engage.Events
         /// <param name="categoryIds">A sequence of IDs for the category/ies that events must be in in order to be retrieved, or an empty/<c>null</c> sequence to get events regardless of category.</param>
         /// <returns>A page of events</returns>
         /// <exception cref="DBException">if there's an error while going to the database to retrieve the events</exception>
-        public static EventCollection Load(int portalId, DateTime? startDate, DateTime? endDate, bool showAll, bool featuredOnly, bool hideFullEvents, string email, IEnumerable<int> categoryIds)
+        public static EventCollection Load(int portalId, DateTime? startDateUtc, DateTime? endDateUtc, bool showAll, bool featuredOnly, bool hideFullEvents, string email, IEnumerable<int> categoryIds)
         {
-            return Load(portalId, startDate, endDate, null, null, null, showAll, featuredOnly, hideFullEvents, email, categoryIds, false);
+            return Load(portalId, startDateUtc, endDateUtc, null, null, null, showAll, featuredOnly, hideFullEvents, email, categoryIds, false);
         }
 
         /// <summary>
-        /// Loads a page of events based on the given <paramref name="startDate"/> and <paramref name="endDate"/>.
+        /// Loads a page of events based on the given <paramref name="startDateUtc"/> and <paramref name="endDateUtc"/>.
         /// </summary>
         /// <param name="portalId">The ID of the portal that the events are for.</param>
-        /// <param name="startDate">The starting date for events to retrieve, or <c>null</c> to have no starting bound.</param>
-        /// <param name="endDate">The ending date for events to retrieve, or <c>null</c> to have no ending bound.</param>
+        /// <param name="startDateUtc">The starting date for events to retrieve (in UTC), or <c>null</c> to have no starting bound.</param>
+        /// <param name="endDateUtc">The ending date for events to retrieve (in UTC), or <c>null</c> to have no ending bound.</param>
         /// <param name="sortExpression">The property by which the events should be sorted.</param>
         /// <param name="pageIndex">The index of the page of events.</param>
         /// <param name="pageSize">Size of the page of events.</param>
@@ -80,9 +80,9 @@ namespace Engage.Events
         /// <param name="categoryIds">A sequence of IDs for the category/ies that events must be in in order to be retrieved, or an empty/<c>null</c> sequence to get events regardless of category.</param>
         /// <returns>A page of events</returns>
         /// <exception cref="DBException">if there's an error while going to the database to retrieve the events</exception>
-        public static EventCollection Load(int portalId, DateTime? startDate, DateTime? endDate, string sortExpression, int pageIndex, int pageSize, bool showAll, bool featuredOnly, bool hideFullEvents, string email, IEnumerable<int> categoryIds)
+        public static EventCollection Load(int portalId, DateTime? startDateUtc, DateTime? endDateUtc, string sortExpression, int pageIndex, int pageSize, bool showAll, bool featuredOnly, bool hideFullEvents, string email, IEnumerable<int> categoryIds)
         {
-            return Load(portalId, startDate, endDate, sortExpression, pageIndex, pageSize, showAll, featuredOnly, hideFullEvents, email, categoryIds, true);
+            return Load(portalId, startDateUtc, endDateUtc, sortExpression, pageIndex, pageSize, showAll, featuredOnly, hideFullEvents, email, categoryIds, true);
         }
 
         /// <summary>
@@ -100,11 +100,11 @@ namespace Engage.Events
         }
 
         /// <summary>
-        /// Loads a page of events based on the given <paramref name="startDate"/> and <paramref name="endDate"/>.
+        /// Loads a page of events based on the given <paramref name="startDateUtc"/> and <paramref name="endDateUtc"/>.
         /// </summary>
         /// <param name="portalId">The ID of the portal that the events are for.</param>
-        /// <param name="startDate">The starting date for events to retrieve, or <c>null</c> to have no starting bound.</param>
-        /// <param name="endDate">The ending date for events to retrieve, or <c>null</c> to have no ending bound.</param>
+        /// <param name="startDateUtc">The starting date for events to retrieve (in UTC), or <c>null</c> to have no starting bound.</param>
+        /// <param name="endDateUtc">The ending date for events to retrieve (in UTC), or <c>null</c> to have no ending bound.</param>
         /// <param name="sortExpression">The property by which the events should be sorted.</param>
         /// <param name="pageIndex">The index of the page of events.</param>
         /// <param name="pageSize">Size of the page of events.</param>
@@ -116,7 +116,7 @@ namespace Engage.Events
         /// <param name="processCollection">if set to <c>true</c> the collection should be sorted and paged, and each recurring event should be replaced by its earliest occurrence.</param>
         /// <returns>A page of events</returns>
         /// <exception cref="DBException">if there's an error while going to the database to retrieve the events</exception>
-        private static EventCollection Load(int portalId, DateTime? startDate, DateTime? endDate, string sortExpression, int? pageIndex, int? pageSize, bool showAll, bool featuredOnly, bool hideFullEvents, string email, IEnumerable<int> categoryIds, bool processCollection)
+        private static EventCollection Load(int portalId, DateTime? startDateUtc, DateTime? endDateUtc, string sortExpression, int? pageIndex, int? pageSize, bool showAll, bool featuredOnly, bool hideFullEvents, string email, IEnumerable<int> categoryIds, bool processCollection)
         {
             var dataProvider = DataProvider.Instance;
             try
@@ -124,6 +124,9 @@ namespace Engage.Events
                 var categoryIdsValue = categoryIds != null && categoryIds.Any()
                                            ? string.Join(",", categoryIds.Select(id => id.ToString(CultureInfo.InvariantCulture)).ToArray())
                                            : null;
+
+                // Since events are stored in local time, and the start/end dates are in UTC
+                // we need to extend the range to make sure we don't miss events because of time zone
                 using (var reader = dataProvider.ExecuteReader(
                             CommandType.StoredProcedure,
                             dataProvider.NamePrefix + "spGetEvents",
@@ -132,11 +135,11 @@ namespace Engage.Events
                             Utility.CreateBitParam("@featured", featuredOnly),
                             Utility.CreateBitParam("@hideFullEvents", hideFullEvents),
                             Utility.CreateVarcharParam("@email", email),
-                            Utility.CreateDateTimeParam("@startDate", startDate),
-                            Utility.CreateDateTimeParam("@endDate", endDate),
+                            Utility.CreateDateTimeParam("@startDate", AddTimeSpan(startDateUtc, TimeSpan.FromDays(-1))),
+                            Utility.CreateDateTimeParam("@endDate", AddTimeSpan(endDateUtc, TimeSpan.FromDays(1))),
                             Utility.CreateVarcharParam("@categoryIds", categoryIdsValue)))
                 {
-                    return FillEvents(reader, processCollection, pageIndex, pageSize, sortExpression, startDate, endDate);
+                    return FillEvents(reader, processCollection, pageIndex, pageSize, sortExpression, startDateUtc, endDateUtc);
                 }
             }
             catch (Exception exc)
@@ -155,13 +158,13 @@ namespace Engage.Events
         /// <param name="pageIndex">Index of the page of events being retrieved.</param>
         /// <param name="pageSize">Size of the page (number of events) being retrieved.</param>
         /// <param name="sortExpression">The property by which we should sort.</param>
-        /// <param name="startDate">The beginning date of the range of dates being retrieved.</param>
-        /// <param name="endDate">The ending date of the range of dates being retrieved.</param>
+        /// <param name="startDateUtc">The beginning date of the range of dates being retrieved (in UTC).</param>
+        /// <param name="endDateUtc">The ending date of the range of dates being retrieved (in UTC).</param>
         /// <returns>
         /// A collection of instantiated <see cref="Event"/> object, as represented in <paramref name="reader"/>.
         /// </returns>
         /// <exception cref="DBException">Data reader did not have the expected structure.  An error must have occurred in the query.</exception>
-        private static EventCollection FillEvents(IDataReader reader, bool processCollection, int? pageIndex, int? pageSize, string sortExpression, DateTime? startDate, DateTime? endDate)
+        private static EventCollection FillEvents(IDataReader reader, bool processCollection, int? pageIndex, int? pageSize, string sortExpression, DateTime? startDateUtc, DateTime? endDateUtc)
         {
             int? beginIndex = processCollection && pageIndex.HasValue && pageSize.HasValue ? pageIndex * pageSize : null;
             int? endIndex = beginIndex.HasValue ? (pageIndex + 1) * pageSize : null;
@@ -169,20 +172,27 @@ namespace Engage.Events
 
             while (reader.Read())
             {
-                Event masterEvent = Event.Fill(reader);
-                if (!processCollection || !masterEvent.IsRecurring || (masterEvent.EventStartUtc <= endDate && masterEvent.EventEndUtc >= startDate))
+                var masterEvent = Event.Fill(reader);
+                if ((masterEvent.EventStartUtc <= endDateUtc || endDateUtc == null) && (masterEvent.EventEndUtc >= startDateUtc || startDateUtc == null))
                 {
                     events.Add(masterEvent);
                 }
-                else
+
+                if (!processCollection || !masterEvent.IsRecurring)
                 {
-                    AddEventOccurrence(masterEvent, startDate, endDate, events);
+                    continue;
+                }
+
+                var eventOccurrence = GetEventOccurrence(masterEvent, startDateUtc, endDateUtc);
+                if (eventOccurrence != null)
+                {
+                    events.Add(eventOccurrence);
                 }
             }
 
             // After all events have been added (and recurring events outside of the date range have been removed),
             // we need to get the total count before we remove events from the list for paging
-            int totalRecords = events.Count;
+            var totalRecords = events.Count;
 
             // We don't need to sort or page if we are never ending, they should be sorted from the database in that case
             if (processCollection && endIndex.HasValue)
@@ -194,21 +204,39 @@ namespace Engage.Events
         }
 
         /// <summary>
-        /// Adds an occurrence of <paramref name="masterEvent"/> that fits within the given time span to <paramref name="events"/>.
+        /// Gets an occurrence of <paramref name="masterEvent"/> that fits within the given time span.
         /// </summary>
         /// <param name="masterEvent">The master event.</param>
-        /// <param name="startDate">The start date.</param>
-        /// <param name="endDate">The end date.</param>
-        /// <param name="events">The list of events to which the occurrence will be added.</param>
-        private static void AddEventOccurrence(Event masterEvent, DateTime? startDate, DateTime? endDate, ICollection<Event> events)
+        /// <param name="startDateUtc">The range's start date in UTC.</param>
+        /// <param name="endDateUtc">The range's end date in UTC.</param>
+        /// <returns>An <see cref="Event"/> instance, or <c>null</c></returns>
+        private static Event GetEventOccurrence(Event masterEvent, DateTime? startDateUtc, DateTime? endDateUtc)
         {
-            masterEvent.RecurrenceRule.SetEffectiveRange(startDate ?? DateTime.MinValue, endDate ?? DateTime.MaxValue);
+            var startDate = UtcToEventTime(masterEvent.TimeZone, startDateUtc, DateTime.MinValue);
+            var endDate = UtcToEventTime(masterEvent.TimeZone, endDateUtc, DateTime.MaxValue);
+            masterEvent.RecurrenceRule.SetEffectiveRange(startDate, endDate);
 
-            foreach (DateTime eventStart in masterEvent.RecurrenceRule.Occurrences)
+            return (from eventStart in masterEvent.RecurrenceRule.Occurrences
+                    select masterEvent.CreateOccurrence(DateTime.SpecifyKind(eventStart, DateTimeKind.Unspecified)))
+                    .FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Converts a UTC time into an event's local time.
+        /// </summary>
+        /// <param name="eventTimeZone">The event time zone.</param>
+        /// <param name="utcDate">The UTC date.</param>
+        /// <param name="defaultTime">The default time.</param>
+        /// <returns></returns>
+        private static DateTime UtcToEventTime(TimeZoneInfo eventTimeZone, DateTime? utcDate, DateTime defaultTime)
+        {
+            var eventTime = defaultTime;
+            if (utcDate.HasValue)
             {
-                events.Add(masterEvent.CreateOccurrence(DateTime.SpecifyKind(eventStart, DateTimeKind.Unspecified)));
-                break;
+                eventTime = TimeZoneInfo.ConvertTimeFromUtc(utcDate.Value, eventTimeZone);
             }
+
+            return eventTime;
         }
 
         /// <summary>
@@ -234,6 +262,22 @@ namespace Engage.Events
             {
                 events.RemoveRange(0, Math.Min(beginIndex, events.Count));
             }
+        }
+
+        /// <summary>
+        /// Extends the date by the given span.
+        /// </summary>
+        /// <param name="utcDate">The UTC date.</param>
+        /// <param name="timeSpan">The time span.</param>
+        /// <returns>The altered date</returns>
+        private static DateTime? AddTimeSpan(DateTime? utcDate, TimeSpan timeSpan)
+        {
+            if (utcDate.HasValue)
+            {
+                utcDate = utcDate.Value.Add(timeSpan);
+            }
+
+            return utcDate;
         }
     }
 }
