@@ -159,38 +159,17 @@
     </asp:View>
 </asp:MultiView>
 <div style="clear:both">&nbsp;</div>
+<asp:ScriptManagerProxy runat="server">
+    <Scripts>
+        <asp:ScriptReference Assembly="EngageEvents" Name="Engage.Dnn.Events.JavaScript.EngageEvents.EventEdit.combined.js" />
+    </Scripts>
+</asp:ScriptManagerProxy>
 <script type="text/ecmascript">
-    function StartDateTimePicker_DateSelected(sender, eventArgs) {
-        var EndDateTimePicker = $find("<%= EndDateTimePicker.ClientID %>"),
-            endDate = EndDateTimePicker.get_selectedDate(),
-            newStartDate = eventArgs.get_newDate(),
-            endDateAfterNewDate = endDate > newStartDate;
-        // don't update end date if there's already an end date but not an old start date, or if the start date was cleared
-        if (newStartDate && (EndDateTimePicker.isEmpty() || eventArgs.get_oldDate() || !endDateAfterNewDate)) {
-            var selectedDateSpan = 1800000; // 30 minutes
-            if (!EndDateTimePicker.isEmpty() && endDateAfterNewDate) {
-                selectedDateSpan = endDate - eventArgs.get_oldDate();
-            }
-
-            EndDateTimePicker.set_selectedDate(new Date(newStartDate.getTime() + selectedDateSpan));
-        }
-    }
-    
-    function CategoryComboBox_SelectedIndexChanged(sender, eventArgs) {
-        $get("<%=CategoryCreationPendingLabel.ClientID %>").style.display = eventArgs.get_item() ? 'none' : 'inline';
-    }
-    
-    function CategoryComboBox_TextChange(sender, eventArgs) {
-        $get("<%=CategoryCreationPendingLabel.ClientID %>").style.display = 'inline';
-    }
-
-    (function () {
-        var originalValidationSummaryOnSubmit = window.ValidationSummaryOnSubmit;
-        window.ValidationSummaryOnSubmit = function (validationGroup) {
-            var originalScrollTo = window.scrollTo;
-            window.scrollTo = function() { };
-            originalValidationSummaryOnSubmit(validationGroup);
-            window.scrollTo = originalScrollTo;
-        };
-    }());
+engageEvents.setupEventEdit({ 
+    endDateTimePickerId: "<%= EndDateTimePicker.ClientID %>", 
+    categoryCreationPendingLabelId: "<%=CategoryCreationPendingLabel.ClientID %>", 
+    startDateTimePickerDateSelectedFunctionName: "<%= StartDateTimePicker.ClientEvents.OnDateSelected %>",
+    categoryComboBoxSelectedIndexChangedFunctionName: "<%= CategoryComboBox.OnClientSelectedIndexChanged %>",
+    categoryComboBoxTextChangeFunctionName: "<%= CategoryComboBox.OnClientTextChange %>"
+});
 </script>
