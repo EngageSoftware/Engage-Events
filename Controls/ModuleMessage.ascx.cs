@@ -177,11 +177,11 @@ namespace Engage.Dnn.Events.Controls
         {
             if (control == null)
             {
-                throw new ArgumentNullException("control", "control must not be null");
+                throw new ArgumentNullException("control");
             }
 
             // We need to find the parent module
-            PortalModuleBase parentControl = control.Parent as PortalModuleBase;
+            var parentControl = control.Parent as PortalModuleBase;
             if (parentControl != null)
             {
                 // We are at the Module Level so return key

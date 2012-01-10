@@ -307,13 +307,15 @@ namespace Engage.Dnn.Events.Controls
                     return null;
                 }
 
-                RecurrencePattern submittedPattern = new RecurrencePattern();
-                submittedPattern.Frequency = this.Frequency;
-                submittedPattern.Interval = this.Interval;
-                submittedPattern.DaysOfWeekMask = this.DaysOfWeekMask;
-                submittedPattern.DayOfMonth = this.DayOfMonth;
-                submittedPattern.DayOrdinal = this.DayOrdinal;
-                submittedPattern.Month = this.Month;
+                var submittedPattern = new RecurrencePattern
+                    {
+                        Frequency = this.Frequency,
+                        Interval = this.Interval,
+                        DaysOfWeekMask = this.DaysOfWeekMask,
+                        DayOfMonth = this.DayOfMonth,
+                        DayOrdinal = this.DayOrdinal,
+                        Month = this.Month,
+                    };
 
                 if (submittedPattern.Frequency == RecurrenceFrequency.Weekly)
                 {
@@ -330,7 +332,7 @@ namespace Engage.Dnn.Events.Controls
         /// <returns>The list of possible months selections, from <see cref="RecurrenceMonth"/></returns>
         public static ListItem[] GetMonthItems()
         {
-            return new ListItem[]
+            return new[]
             {
                 new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((int)RecurrenceMonth.January), RecurrenceMonth.January.ToString()), 
                 new ListItem(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName((int)RecurrenceMonth.February), RecurrenceMonth.February.ToString()),
@@ -354,7 +356,7 @@ namespace Engage.Dnn.Events.Controls
         /// <returns>The list of possible day selections, from <see cref="RecurrenceDay"/></returns>
         public static ListItem[] GetDayMaskItems(string resourceFile)
         {
-            return new ListItem[]
+            return new[]
                {
                    new ListItem(Localization.GetString(RecurrenceDay.EveryDay.ToString(), resourceFile), RecurrenceDay.EveryDay.ToString()), 
                    new ListItem(Localization.GetString(RecurrenceDay.WeekDays.ToString(), resourceFile), RecurrenceDay.WeekDays.ToString()),
@@ -376,7 +378,7 @@ namespace Engage.Dnn.Events.Controls
         /// <returns>The list of possible ordinal selections</returns>
         public static ListItem[] GetOrdinalItems(string resourceFile)
         {
-            return new ListItem[]
+            return new[]
                {
                    new ListItem(Localization.GetString(Utility.OrdinalValues[1], resourceFile), "1"),
                    new ListItem(Localization.GetString(Utility.OrdinalValues[2], resourceFile), "2"),
@@ -657,11 +659,13 @@ namespace Engage.Dnn.Events.Controls
         /// <returns>The recurrence range for the event in question</returns>
         private RecurrenceRange GetRange(DateTime startDate, DateTime endDate)
         {
-            RecurrenceRange range = new RecurrenceRange();
-            range.Start = startDate;
-            range.EventDuration = endDate - startDate;
-            range.MaxOccurrences = 0;
-            range.RecursUntil = DateTime.MaxValue;
+            var range = new RecurrenceRange
+                {
+                    Start = startDate,
+                    EventDuration = endDate - startDate,
+                    MaxOccurrences = 0,
+                    RecursUntil = DateTime.MaxValue,
+                };
 
             if (this.Visible)
             {

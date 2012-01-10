@@ -103,7 +103,7 @@ namespace Engage.Dnn.Events
         {
             if (additionalParameters == null)
             {
-                throw new ArgumentNullException("additionalParameters", @"additionalParameters must not be null");
+                throw new ArgumentNullException("additionalParameters");
             }
 
             Array.Resize(ref additionalParameters, additionalParameters.Length + 2);
@@ -254,14 +254,14 @@ namespace Engage.Dnn.Events
             foreach (var categoryId in categoryIds)
             {
                 var lambdaCategoryId = categoryId;
-                var category = categories.Where(c => c.Id == lambdaCategoryId).FirstOrDefault();
+                var category = categories.FirstOrDefault(c => c.Id == lambdaCategoryId);
                 if (category == null)
                 {
                     continue;
                 }
 
                 // find its parent
-                var parent = categories.Where(c => c.Id == category.ParentId).FirstOrDefault();
+                var parent = categories.FirstOrDefault(c => c.Id == category.ParentId);
                 if (parent != null && !ancestorList.Contains(parent.Id) && !categoryIds.Contains(parent.Id))
                 {
                     ancestorList.Add(parent.Id);

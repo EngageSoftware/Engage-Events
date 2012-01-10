@@ -56,7 +56,7 @@ namespace Engage.Dnn.Events.Components
         {
             if (moduleConfiguration == null)
             {
-                throw new ArgumentNullException("moduleConfiguration", "moduleConfiguration must not be null");
+                throw new ArgumentNullException("moduleConfiguration");
             }
 
 // Only ModulePermissions getter should be marked Obsolete
