@@ -16,8 +16,6 @@ namespace Engage.Dnn.Events.Display
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Linq;
-    using System.Text;
-    using System.Web;
     using System.Web.UI;
     using DotNetNuke.Common;
 
@@ -316,11 +314,6 @@ namespace Engage.Dnn.Events.Display
                         container.Controls.Add(MultipleCategoriesFilterAction);
                         break;
                     case "READMORE":
-                        if (currentEvent != null && !Engage.Utility.HasValue(currentEvent.Description))
-                        {
-                            break;
-                        }
-
                         var linkUrl = currentEvent != null
                                           ? this.BuildLinkUrl(
                                               this.DetailsTabId,
