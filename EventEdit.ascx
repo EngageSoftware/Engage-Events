@@ -175,12 +175,15 @@
             EndDateTimePicker.set_selectedDate(new Date(newStartDate.getTime() + selectedDateSpan));
         }
     }
+    
     function CategoryComboBox_SelectedIndexChanged(sender, eventArgs) {
-        $get("<%=CategoryCreationPendingLabel.ClientID %>").style.display = eventArgs.item ? 'none' : 'inline';
+        $get("<%=CategoryCreationPendingLabel.ClientID %>").style.display = eventArgs.get_item() ? 'none' : 'inline';
     }
+    
     function CategoryComboBox_TextChange(sender, eventArgs) {
         $get("<%=CategoryCreationPendingLabel.ClientID %>").style.display = 'inline';
     }
+
     (function () {
         var originalValidationSummaryOnSubmit = window.ValidationSummaryOnSubmit;
         window.ValidationSummaryOnSubmit = function (validationGroup) {
@@ -188,6 +191,6 @@
             window.scrollTo = function() { };
             originalValidationSummaryOnSubmit(validationGroup);
             window.scrollTo = originalScrollTo;
-        }
+        };
     }());
 </script>
