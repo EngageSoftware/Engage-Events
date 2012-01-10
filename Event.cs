@@ -940,8 +940,14 @@ namespace Engage.Events
                     return TemplateEngine.FormatString(this.Title, format ?? "HTML");
                 case "OVERVIEW":
                     return TemplateEngine.FormatString(this.Overview, format ?? "HTML");
+                case "HASOVERVIEW":
+                case "HAS OVERVIEW":
+                    return Utility.HasValue(this.Overview).ToString(CultureInfo.InvariantCulture);
                 case "DESCRIPTION":
                     return TemplateEngine.FormatString(this.Description, format ?? "RAW");
+                case "HASDESCRIPTION":
+                case "HAS DESCRIPTION":
+                    return Utility.HasValue(this.Description).ToString(CultureInfo.InvariantCulture);
                 case "EVENTSTART":
                 case "EVENT START":
                     return this.EventStart.ToString(format, CultureInfo.CurrentCulture);
@@ -973,6 +979,9 @@ namespace Engage.Events
                     return this.IsFull.ToString(CultureInfo.InvariantCulture);
                 case "LOCATION":
                     return TemplateEngine.FormatString(this.Location, format ?? "HTML");
+                case "HASLOCATION":
+                case "HAS LOCATION":
+                    return Utility.HasValue(this.Location).ToString(CultureInfo.InvariantCulture);
                 case "CATEGORY":
                     return TemplateEngine.FormatString(this.Category.Name, format ?? "HTML");
                 case "TIMEZONE":
