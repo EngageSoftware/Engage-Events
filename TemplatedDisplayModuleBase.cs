@@ -162,33 +162,38 @@ namespace Engage.Dnn.Events
                         {
                             if (currentEvent != null)
                             {
-                                var cssClass = new StringBuilder(TemplateEngine.GetAttributeValue(tag, currentEvent, @this.TemplateProvider.GlobalItem, resourceFile, "CssClass", "class"));
+                                var cssClassBuilder = new StringBuilder(TemplateEngine.GetAttributeValue(tag, currentEvent, @this.TemplateProvider.GlobalItem, resourceFile, "CssClass", "class"));
                                 if (currentEvent.IsRecurring)
                                 {
-                                    AppendCssClassAttribute(tag, cssClass, "RecurringEventCssClass");
+                                    AppendCssClassAttribute(cssClassBuilder, TemplateEngine.GetAttributeValue(tag, currentEvent, @this.TemplateProvider.GlobalItem, resourceFile, "RecurringEventCssClass"));
                                 }
 
                                 if (currentEvent.IsFeatured)
                                 {
-                                    AppendCssClassAttribute(tag, cssClass, "FeaturedEventCssClass");
+                                    AppendCssClassAttribute(cssClassBuilder, TemplateEngine.GetAttributeValue(tag, currentEvent, @this.TemplateProvider.GlobalItem, resourceFile, "FeaturedEventCssClass"));
                                 }
 
                                 if (currentEvent.Canceled)
                                 {
-                                    AppendCssClassAttribute(tag, cssClass, "CanceledEventCssClass");
+                                    AppendCssClassAttribute(cssClassBuilder, TemplateEngine.GetAttributeValue(tag, currentEvent, @this.TemplateProvider.GlobalItem, resourceFile, "CanceledEventCssClass", "CancelledEventCssClass"));
                                 }
 
                                 if (currentEvent.IsFull)
                                 {
-                                    AppendCssClassAttribute(tag, cssClass, "FullEventCssClass");
+                                    AppendCssClassAttribute(cssClassBuilder, TemplateEngine.GetAttributeValue(tag, currentEvent, @this.TemplateProvider.GlobalItem, resourceFile, "FullEventCssClass"));
                                 }
 
                                 if (@this.isAlternatingEvent)
                                 {
-                                    AppendCssClassAttribute(tag, cssClass, "AlternatingCssClass");
+                                    AppendCssClassAttribute(cssClassBuilder, TemplateEngine.GetAttributeValue(tag, currentEvent, @this.TemplateProvider.GlobalItem, resourceFile, "AlternatingCssClass"));
                                 }
 
-                                container.Controls.Add(new LiteralControl(string.Format(CultureInfo.InvariantCulture, "<div class=\"{0}\">", cssClass)));
+                                container.Controls.Add(
+                                    new LiteralControl(
+                                        string.Format(
+                                            CultureInfo.InvariantCulture,
+                                            "<div class=\"{0}\">",
+                                            HttpUtility.HtmlAttributeEncode(cssClassBuilder.ToString()))));
                             }
 
                             return true;
@@ -305,17 +310,16 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// Appends the given attribute to <paramref name="cssClassBuilder"/>, adding a space beforehand if necessary.
         /// </summary>
-        /// <param name="tag">The tag whose attribute we are appending.</param>
         /// <param name="cssClassBuilder">The <see cref="StringBuilder"/> which will contain the appended CSS class.</param>
-        /// <param name="attributeName">Name of the attribute being appended.</param>
-        private static void AppendCssClassAttribute(Tag tag, StringBuilder cssClassBuilder, string attributeName)
+        /// <param name="cssClass">The class to add to the <see cref="cssClassBuilder"/></param>
+        private static void AppendCssClassAttribute(StringBuilder cssClassBuilder, string cssClass)
         {
             if (cssClassBuilder.Length > 0)
             {
                 cssClassBuilder.Append(" ");
             }
 
-            cssClassBuilder.Append(tag.GetAttributeValue(attributeName));
+            cssClassBuilder.Append(cssClass);
         }
     }
 }
