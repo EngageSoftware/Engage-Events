@@ -204,11 +204,6 @@ namespace Engage.Dnn.Events.Display
             }
 
             var @event = Event.Load(eventId);
-            if (occurrenceDate.HasValue)
-            {
-                occurrenceDate = TimeZoneInfo.ConvertTimeFromUtc(occurrenceDate.Value, @event.TimeZone);
-            }
-
             this.ToolTipEventId = eventId;
             this.ToolTipEventOccurrenceDate = occurrenceDate;
             this.ShowToolTip(@event, occurrenceDate, e.UpdatePanel);
@@ -242,7 +237,7 @@ namespace Engage.Dnn.Events.Display
             Debug.Assert(occurrenceDate.HasValue == @event.IsRecurring, "Recurring events need occurrence dates");
             if (occurrenceDate != null)
             {
-                @event = @event.CreateOccurrence(occurrenceDate.Value);
+                @event = @event.CreateOccurrence(DateTime.SpecifyKind(occurrenceDate.Value, DateTimeKind.Unspecified));
             }
 
             var toolTip = (EventToolTip)(panel.ContentTemplateContainer.FindControl("EventToolTip") ?? this.LoadControl("EventToolTip.ascx"));
@@ -275,13 +270,12 @@ namespace Engage.Dnn.Events.Display
         /// </summary>
         private void BindData()
         {
-            this.EventsCalendarDisplay.DataEndField = "EventEndUtc";
+            this.EventsCalendarDisplay.DataEndField = "EventEnd";
             this.EventsCalendarDisplay.DataKeyField = "Id";
             this.EventsCalendarDisplay.DataRecurrenceField = "RecurrenceRule";
             this.EventsCalendarDisplay.DataRecurrenceParentKeyField = "RecurrenceParentId";
-            this.EventsCalendarDisplay.DataStartField = "EventStartUtc";
+            this.EventsCalendarDisplay.DataStartField = "EventStart";
             this.EventsCalendarDisplay.DataSubjectField = "Title";
-            this.EventsCalendarDisplay.TimeZoneOffset = Dnn.Utility.GetUserTimeZone(this.UserInfo, this.PortalSettings).GetUtcOffset(DateTimeOffset.UtcNow);
 
             var selectedCategoryId = this.CategoryFilterAction.SelectedCategoryIds;
             this.EventsCalendarDisplay.DataSource = EventCollection.Load(
