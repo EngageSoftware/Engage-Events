@@ -84,6 +84,10 @@ CREATE PROCEDURE {databaseOwner}[{objectQualifier}Engage_spUpdateEvent] (
     @IsDeleted bit)
 AS
 BEGIN
+    DECLARE @RescheduleMinutes int
+    SELECT @RescheduleMinutes = DATEDIFF(minute, EventStart, @EventStart)
+    FROM {databaseOwner}[{objectQualifier}Engage_Event] 
+    WHERE EventId = @EventId
 
     UPDATE {databaseOwner}[{objectQualifier}Engage_Event] 
     SET [Title] = @Title, 
@@ -111,6 +115,13 @@ BEGIN
         [IsDeleted] = @IsDeleted,
         [CategoryId] = @CategoryId
     WHERE EventId = @EventId
+
+    IF @RescheduleMinutes IS NOT NULL AND @RescheduleMinutes > 0
+    BEGIN
+        UPDATE {databaseOwner}[{objectQualifier}Engage_Response]
+        SET [EventStart] = DATEADD(minute, @RescheduleMinutes, [EventStart])
+        WHERE [EventId] = @EventId
+    END
 END
 GO
 
