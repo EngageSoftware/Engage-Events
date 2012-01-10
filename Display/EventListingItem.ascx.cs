@@ -408,8 +408,8 @@ namespace Engage.Dnn.Events.Display
 
             var events = EventCollection.Load(
                     this.PortalId,
-                    dateRange.GetStartDate(),
-                    dateRange.GetEndDate(),
+                    dateRange.GetStartDateUtc(),
+                    dateRange.GetEndDateUtc(),
                     this.SortExpression,
                     this.CurrentPageIndex - 1,
                     this.RecordsPerPage,

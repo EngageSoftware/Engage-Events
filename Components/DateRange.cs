@@ -96,6 +96,23 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
+        /// Gets the start date for this range today, in UTC.
+        /// </summary>
+        /// <returns>The range's starting date for today, in UTC</returns>
+        /// <remarks>Make sure to check <see cref="IsValid"/> before calling this; an invalid will go into an infinite loop</remarks>
+        public DateTime? GetStartDateUtc()
+        {
+            var startDate = this.GetStartDate();
+            DateTime? startDateUtc = null;
+            if (startDate.HasValue)
+            {
+                startDateUtc = TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(startDate.Value, DateTimeKind.Unspecified), Dnn.Utility.GetUserTimeZone());
+            }
+
+            return startDateUtc;
+        }
+
+        /// <summary>
         /// Gets the start date for this range based on the given base date.
         /// </summary>
         /// <param name="relativeBaseDate">The base date from which relative dates should be calculated.</param>
@@ -152,6 +169,24 @@ namespace Engage.Dnn.Events
         public DateTime? GetEndDate()
         {
             return this.GetEndDate(DateTime.Today);
+        }
+
+
+        /// <summary>
+        /// Gets the end date for this range today, in UTC.
+        /// </summary>
+        /// <returns>The range's ending date for today, in UTC</returns>
+        /// <remarks>Make sure to check <see cref="IsValid"/> before calling this; an invalid will go into an infinite loop</remarks>
+        public DateTime? GetEndDateUtc()
+        {
+            var endDate = this.GetEndDate();
+            DateTime? endDateUtc = null;
+            if (endDate.HasValue)
+            {
+                endDateUtc = TimeZoneInfo.ConvertTimeToUtc(endDate.Value, Dnn.Utility.GetUserTimeZone());
+            }
+
+            return endDateUtc;
         }
 
         /// <summary>

@@ -108,8 +108,8 @@ namespace Engage.Dnn.Events.Components
 
             var events = EventCollection.Load(
                     modInfo.PortalID,
-                    dateRange.GetStartDate(),
-                    dateRange.GetEndDate(),
+                    dateRange.GetStartDateUtc(),
+                    dateRange.GetEndDateUtc(),
                     isListingDisplay,
                     featuredOnly,
                     hideFullEvents,
