@@ -250,6 +250,9 @@ namespace Engage.Events
                     return TemplateEngine.FormatString(this.Name, format ?? "HTML");
                 case "COLOR":
                     return TemplateEngine.FormatString(this.Color, format ?? "HTML");
+                case "EVENTCOUNT":
+                case "EVENT COUNT":
+                    return this.EventCount.ToString(format, CultureInfo.CurrentCulture);
             }
 
             return string.Empty;
