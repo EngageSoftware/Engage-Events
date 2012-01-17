@@ -59,7 +59,7 @@
                 if (nodes[i].get_nodes() != null) {
                     if (attributes.getAttribute("enabled") == "1") {
                         nodes[i].set_enabled(!checked);
-                        nodes[i].set_checked(!checked);
+                        nodes[i].set_checked(false);
                     }
                     else {
                         // node is not in the module setting filter.
