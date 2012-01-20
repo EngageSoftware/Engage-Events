@@ -17,6 +17,7 @@
 .EventCalendar li{list-style-type: none;}
 .RadScheduler_Telerik div.rsHeader p{width:110px;}
 .RadScheduler .rsContent{float:left;} 
+.EventCalendar .RadScheduler .rsHeader { z-index: 899; /*Behind DNN 6 action menu*/}
 
 .respond-wrap{padding:15px;}
 	.respond-wrap h2.Head, .respond-wrap h3.SubHead{margin:0;}
@@ -110,7 +111,6 @@
 /*------------------- New Templates Picker ------------------*/
 
 .events-choose-display-wrap{width:100%;height:auto;clear:both;}
-	.GlobalNavigation{text-align:left;}
 	.cd-type{width:100%;padding:10px 0;}
 		.cd-type h4{font-size:14px;color:#333;}
 		.cd-type .NormalTextBox{display:inline;}
@@ -421,7 +421,8 @@ a.PopupTriggerLink
 }
 
 /*========================= Global Nav =====================================*/
-.GlobalNavigation .RadMenu_Engage{width:100% !important;}
+.GlobalNavigation{text-align:left;}
+.GlobalNavigation .RadMenu_Engage{width:100% !important;z-index: 900 !important; /*Stay under DNN 6 action menu (while still over RadScheduler)*/}
     .GlobalNavigation .RadMenu_Engage .rmRootGroup{border:1px solid #dddddd;background:url("Images/radmenu-bg.png") repeat-x #e7e7e7;width:100%;}
         .GlobalNavigation .RadMenu_Engage .rmRootGroup .rmLink{color:#60605f;display:block; padding:6px 9px 6px 44px;height:19px;}
         .GlobalNavigation .RadMenu_Engage .rmRootGroup .rmLink:hover{color:#d4730c;cursor:pointer;display:block;text-decoration:none;border-right: 1px solid #aaa9a9;border-left:1px solid #aaa9a9;background-color:#dcdbdb;padding:6px 8px 6px 43px;}
