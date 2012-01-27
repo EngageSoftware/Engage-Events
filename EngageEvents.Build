@@ -28,7 +28,7 @@
   <patternset id="trialProjectAssemblies">
     <include name="${trialProjectDll}"/>
   </patternset>
-  
+
   <property name="testBuild" value="true" overwrite="false"/> <!-- testBuild is true if building from Visual Studio, false from Team Build (CI) -->
   <property name="buildTrial" value="false"/>
   <property name="projectConfig" value="release"/>
@@ -42,11 +42,11 @@
   <target name="package" description="Creates packages for this module, one for each value in the licenses and versions properties">
 
     <call target="build"/>
-    
+
     <property name="assemblyFile" value="${projectDll}"/>
     <call target="set-assemblyVersion"/>
     <property name="projectVersion" value="${assemblyVersion}"/>
-    
+
     <call target="clean-package-folder"/>
     <call target="setup-package-files"/>
     <call target="create-resources-zip"/>
@@ -70,7 +70,7 @@
         </foreach>
       </if>
     </if>
-    
+
     <if test="${createTrialPackage}">
       <property name="buildTrial" value="true"/>
       <property name="includeSource" value="false"/>
@@ -98,7 +98,6 @@
         <arg value="/p:Platform=&quot;Any CPU&quot;" />
         <arg value="/p:OutputPath=&quot;${currentBinDirectory}&quot;" />
         <arg value="/m" /> <!-- multicore -->
-        <arg value="/noconsolelogger" />
       </exec>
     </if>
   </target>
@@ -126,16 +125,18 @@
         <patternset refid="projectAssemblies" unless="${buildTrial}"/>
         <patternset refid="trialProjectAssemblies" if="${buildTrial}"/>
         <include name="${referencesDirectory}/**/*.dll"/>
-        <exclude name="${referencesDirectory}/Framework/EvolutionaryAlgorithms.dll"/>
         <exclude name="${referencesDirectory}/DotNetNuke.dll"/>
-        <exclude name="${referencesDirectory}/DotNetNuke.WebUtility.dll"/>
+        <exclude name="${referencesDirectory}/DotNetNuke.*.dll"/>
         <exclude name="${referencesDirectory}/Microsoft.ApplicationBlocks.Data.dll"/>
         <exclude name="${referencesDirectory}/System.Web.Extensions.dll"/>
         <exclude name="${referencesDirectory}/*.Design.dll"/>
         <!--<exclude name="${referencesDirectory}/Telerik.Web.UI.dll"/>-->
+        <exclude name="${referencesDirectory}/WebFormsMvp.dll"/>
+        <exclude name="${referencesDirectory}/CodeAnalysis/*.dll"/>
+        <!--<exclude name="${referencesDirectory}/Framework/Engage.Events.dll"/>-->
+        <exclude name="${referencesDirectory}/Framework/EvolutionaryAlgorithms.dll"/>
       </fileset>
     </copy>
-
     <attrib readonly="false">
       <fileset basedir="${packageDirectory}/temp/package">
         <include name="**"/>
@@ -146,12 +147,12 @@
       <xmlpoke file="${packageDirectory}/temp/package/Engage${projectName}.5.dnn" value="${releaseNotesFile}" xpath="dotnetnuke/packages/package/releaseNotes/@src"/>
       <xmlpoke file="${packageDirectory}/temp/package/Engage${projectName}.5.dnn" value="${projectVersion}" xpath="dotnetnuke/packages/package/@version"/>
       <xmlpoke file="${packageDirectory}/temp/package/Engage${projectName}.5.dnn" value="${projectVersion}" xpath="//*[@latestVersion='latestVersion']"/>
-      
+
       <foreach item="File" in="${packageDirectory}/temp/package/bin" property="assemblyFile">
         <call target="set-assemblyVersion"/>
         <xmlpoke file="${packageDirectory}/temp/package/Engage${projectName}.5.dnn" value="${assemblyVersion}" xpath="dotnetnuke/packages/package/components/component[@type='Assembly']/assemblies/assembly[name='${path::get-file-name(assemblyFile)}']/version"/>
       </foreach>
-      
+
       <if test="${file::exists(referencesDirectory + '/DotNetNuke.dll')}">
         <property name="assemblyFile" value="${referencesDirectory}/DotNetNuke.dll" />
         <call target="set-assemblyVersion" />
@@ -169,6 +170,10 @@
         <exclude name="${packageDirectory}/**"/>
       </fileset>
     </copy>
+
+    <if test="${file::exists(packageDirectory + '/temp/resources/module.min.css')}">
+      <move file="${packageDirectory}/temp/resources/module.min.css" tofile="${packageDirectory}/temp/resources/module.css" overwrite="true" />
+    </if>
 
     <zip zipfile="${packageDirectory}/temp/package/${packageName}" ziplevel="${zipLevel}">
       <fileset basedir="${packageDirectory}/temp/resources">
@@ -473,6 +478,8 @@
     <include name="**/*.resx" />
     <include name="**/*.html" />
     <include name="**/*.htm" />
+    <include name="**/*.cshtml" />
+    <include name="**/*.vbhtml" />
     <include name="**/*.css" />
     <include name="**/*.jpg" />
     <include name="**/*.gif" />
@@ -483,10 +490,10 @@
     <exclude name="Licenses/EULA-*"/>
     <exclude name="ReleaseNotes_*.htm"/>
     <exclude name="??.??.??.txt" />
-    <exclude name="packages/**"/>
     <exclude name="_ReSharper.*/**"/>
     <exclude name="**/obj/**"/>
     <exclude name="${referencesDirectory}/**"/>
+    <exclude name="packages/**" />
   </patternset>
   <patternset id="source.fileset">
     <include name="**/*.js"/>
@@ -509,6 +516,6 @@
     <include name="MSBuild/*.dll"/>
     <include name="MSBuild/*.targets"/>
     <exclude name="**/obj/**"/>
-    <exclude name="Release.txt"/>
+    <exclude name="Release.txt" />
   </patternset>
 </project>
