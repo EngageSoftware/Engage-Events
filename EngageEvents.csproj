@@ -410,7 +410,6 @@
     </EmbeddedResource>
     <None Include="JavaScript\jQuery.fn.replaceOnclick.js" />
     <None Include="JavaScript\data-confirm.js" />
-    <Content Include="Images\warning_32.png" />
     <None Include="JavaScript\EngageEvents.EventEdit.js" />
     <EmbeddedResource Include="JavaScript\EngageEvents.Actions.data-confirm.combined.js">
       <DependentUpon>scripts.chirp.config</DependentUpon>
@@ -421,6 +420,10 @@
     <EmbeddedResource Include="JavaScript\EngageEvents.EventEdit.combined.js">
       <DependentUpon>scripts.chirp.config</DependentUpon>
     </EmbeddedResource>
+    <Content Include="Images\error-icn.png" />
+    <Content Include="Images\help-icn.png" />
+    <Content Include="Images\success-icn.png" />
+    <Content Include="Images\warning-icn.png" />
     <Content Include="ReleaseNotes_01.07.00.htm" />
     <Content Include="ReleaseNotes_01.06.00.htm" />
     <Content Include="Images\events-icon32.png" />
@@ -590,14 +593,12 @@
   <ItemGroup>
     <Content Include="Display\CalendarDisplayOptions.ascx" />
     <Content Include="Display\EventCalendar.ascx" />
-    <Content Include="Images\errorSmallIcon.png" />
     <Content Include="Images\greenBody.gif" />
     <Content Include="Images\greenBt.gif" />
     <Content Include="Images\greenTop.gif" />
     <Content Include="Images\redBody.gif" />
     <Content Include="Images\redBt.gif" />
     <Content Include="Images\redTop.gif" />
-    <Content Include="Images\successSmallIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_LocalResources\EventEdit.ascx.resx">
@@ -690,7 +691,6 @@
     <Content Include="Images\attending_icon.gif" />
     <Content Include="Images\export_to_csv.gif" />
     <Content Include="Images\export_to_excel.gif" />
-    <Content Include="Images\info.png" />
     <Content Include="Images\not_attending_icon.gif" />
     <Content Include="Images\no_response_icon.gif" />
     <Content Include="Images\recurring_icon.gif" />

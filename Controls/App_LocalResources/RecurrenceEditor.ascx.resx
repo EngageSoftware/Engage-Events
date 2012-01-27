@@ -163,13 +163,13 @@
     <value> of every </value>
   </data>
   <data name="Range.Text" xml:space="preserve">
-    <value>Range of recurrence: </value>
+    <value>Recurrence Range</value>
   </data>
   <data name="RecurEvery.Text" xml:space="preserve">
     <value>Recur every</value>
   </data>
   <data name="Recurrence.Text" xml:space="preserve">
-    <value>Recurrence:</value>
+    <value>Recurrence Pattern</value>
   </data>
   <data name="The.Text" xml:space="preserve">
     <value>The</value>

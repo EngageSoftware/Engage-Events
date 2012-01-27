@@ -63,6 +63,16 @@
   z-index: 899;
   /*Behind DNN 6 action menu*/
 }
+.EventToolTip {
+  padding: 10px;
+  padding-bottom: 0;
+}
+h2.EventTitleToolTip {
+  margin: 0;
+}
+.tooltip_buttons {
+  padding: 10px 0;
+}
 .respond-wrap {
   padding: 15px;
 }
@@ -72,30 +82,10 @@
 .events-categoryfilter-dialog {
   display: none;
 }
+.registerSubmitBt, .registerMessage {
+  margin-top: 0.675em;
+}
 /*----------------- event edit page ----------------------------*/
-.AdminButtons {
-  text-align: left;
-}
-.AdminButtons a img {
-  padding: 0 6px 0 0;
-}
-.FooterButtons {
-  padding-top: 3%;
-}
-.AddEventSuccessMessage {
-  padding-left: 10%;
-}
-.AddNewEvent {
-  padding-top: 2%;
-  width: 100%;
-}
-.AddNewEvent h2.SubHead {
-  text-align: left;
-  border-bottom: dashed 1px black;
-  margin-bottom: 1em;
-  padding-bottom: 0.375em;
-  font-size: 125%;
-}
 .rsAdvRecurrenceFreq:after, .rsAdvRecurrencePatterns:after {
   content: ".";
   display: block;
@@ -103,13 +93,11 @@
   height: 0;
   visibility: hidden;
 }
-.rsAdvRecurrenceRangePanel ul, .rsAdvRecurrenceRangePanel ul li {
-  list-style-type: none;
+.rsAdvRecurrenceRangePanel ul li {
   list-style: none;
 }
-.rsAdvRecurrenceRangePanel ul {
-  margin: 0.8em 0 0 15px;
-  padding: 0;
+.rsAdvRecurrenceRangePanel {
+  padding-left: 2%;
 }
 .rsAdvRecurrenceRangePanel label {
   padding-right: 4px;
@@ -123,7 +111,7 @@
 .rsAdvRecurrenceFreq {
   float: left;
   width: 20%;
-  margin: 15px 0;
+  padding-left: 2%;
   border-right: 1px solid #dfdfdf;
 }
 .rsAdvRecurrenceFreq ul {
@@ -141,8 +129,8 @@
 .rsAdvMonthly,
 .rsAdvYearly {
   float: right;
-  width: 78%;
-  margin: 15px 0 0 0;
+  width: 75%;
+  padding-left: 2%;
 }
 .rsAdvHourly ul,
 .rsAdvDaily ul,
@@ -190,63 +178,7 @@
 .rsAdvRecurrencePatterns {
   zoom: 1;
 }
-.rsAdvancedEdit fieldset, fieldset.range_of_recurrence, fieldset.registration_fs {
-  border: 1px #ccc solid;
-}
-fieldset.range_of_recurrence, fieldset.recurrence_fs, fieldset.registration_fs {
-  margin-left: 10%;
-  margin-top: 15px;
-  background: #fefefe;
-  padding: 5px 10px;
-  clear: both;
-}
-.rsAdvancedEdit legend, legend.rsAdvRecurrenceRange, legend.registrationoptions {
-  font-weight: bold;
-  padding: 0 10px;
-}
-.NormalBold.RegCap {
-  padding: 5px 0;
-  display: inline-block;
-}
-.EventToolTip {
-  padding: 10px;
-  padding-bottom: 0;
-}
-h2.EventTitleToolTip {
-  margin: 0;
-}
-.tooltip_buttons {
-  padding: 10px 0;
-}
-.eng-section {
-  clear: both;
-  overflow: hidden;
-  padding-bottom: 15px;
-}
-.eng-label {
-  float: left;
-  width: 20%;
-  margin-right: 3%;
-  text-align: right;
-}
-.eng-input-medium {
-  width: 150px !important;
-}
-.eng-input-large {
-  width: 200px !important;
-}
-.eng-input-large.RadComboBox {
-  width: 204px !important;
-}
-.eng-input-x-large {
-  width: 400px !important;
-}
-.AEEventEditor li {
-  list-style-type: none;
-}
-.registerSubmitBt, .registerMessage {
-  margin-top: 0.675em;
-}
+/*----------------- event responses page ----------------------------*/
 .ResponseHeader {
   padding: 0.375em 0;
 }
@@ -337,7 +269,7 @@ h2.EventTitleToolTip {
 .ResponseDetailGrid table {
   width: 100%;
 }
-/*========================  Settings ========================*/
+/*========================  Form Pattern ========================*/
 .eng-form fieldset {
   color: #222;
   background: #f7f7f7;
@@ -368,7 +300,7 @@ h2.EventTitleToolTip {
 .eng-form label {
   display: block;
 }
-.eng-form .eng-window-wrap label {
+.eng-form .eng-window-wrap label, .eng-form .eng-events-recurrence-pattern label, .eng-form .eng-events-recurrence-range label {
   display: inline;
 }
 .eng-form .eng-form-item label a.dnnFormHelp {
@@ -379,25 +311,94 @@ h2.EventTitleToolTip {
 .eng-form .eng-form-item .dnnFormHelpContent {
   left: 30%;
 }
+.eng-form .eng-form-item .dnnTextEditor label a.dnnFormHelp {
+  display: block;
+}
 .eng-form .eng-tiny input, .eng-form .eng-tiny label {
   float: left;
+  padding-right: 1ex;
 }
 /* eng-tiny should have the label after the input (e.g. for checkboxes) */
 .eng-form .eng-tiny .eng-form-help {
   clear: left;
   float: none;
 }
-.eng-form .eng-medium input, .eng-form .eng-medium select {
+.eng-form .eng-tiny input,
+.eng-form .eng-tiny textarea,
+.eng-form .eng-tiny select,
+.eng-form .eng-tiny textarea {
+  width: 40px;
+}
+.eng-form .eng-tiny .RadInput,
+.eng-form .eng-tiny .RadInput input,
+.eng-form .eng-tiny .RadInput textarea,
+.eng-form .eng-tiny .RadComboBox,
+.eng-form .eng-tiny .RadEditor {
+  width: 40px !important;
+}
+.eng-form .eng-small input,
+.eng-form .eng-small textarea,
+.eng-form .eng-small select,
+.eng-form .eng-small textarea {
+  width: 100px;
+}
+.eng-form .eng-small .RadInput,
+.eng-form .eng-small .RadInput input,
+.eng-form .eng-small .RadInput textarea,
+.eng-form .eng-small .RadComboBox,
+.eng-form .eng-small .RadEditor {
+  width: 100px !important;
+}
+.eng-form .eng-small textarea {
+  height: 3em;
+}
+.eng-form .eng-medium input,
+.eng-form .eng-medium textarea,
+.eng-form .eng-medium select,
+.eng-form .eng-medium textarea {
   width: 200px;
 }
-.eng-form .eng-medium .RadInput input {
+.eng-form .eng-medium .RadInput,
+.eng-form .eng-medium .RadInput input,
+.eng-form .eng-medium .RadInput textarea,
+.eng-form .eng-medium .RadComboBox,
+.eng-form .eng-medium .RadEditor {
   width: 200px !important;
 }
-.eng-form .eng-large input, .eng-form .eng-large select {
+.eng-form .eng-medium textarea {
+  height: 4em;
+}
+.eng-form .eng-large input,
+.eng-form .eng-large textarea,
+.eng-form .eng-large select,
+.eng-form .eng-large textarea {
+  width: 400px;
+}
+.eng-form .eng-large .RadInput,
+.eng-form .eng-large .RadInput input,
+.eng-form .eng-large .RadInput textarea,
+.eng-form .eng-large .RadComboBox,
+.eng-form .eng-large .RadEditor {
+  width: 400px !important;
+}
+.eng-form .eng-large textarea {
+  height: 5em;
+}
+.eng-form .eng-x-large input,
+.eng-form .eng-x-large textarea,
+.eng-form .eng-x-large select,
+.eng-form .eng-x-large textarea {
   width: 600px;
 }
-.eng-form .eng-large .RadInput input {
+.eng-form .eng-x-large .RadInput,
+.eng-form .eng-x-large .RadInput input,
+.eng-form .eng-x-large .RadInput textarea,
+.eng-form .eng-x-large .RadComboBox,
+.eng-form .eng-x-large .RadEditor {
   width: 600px !important;
+}
+.eng-form .eng-x-large textarea {
+  height: 6em;
 }
 .eng-form input[type="checkbox"],
 .eng-form input[type="radio"],
@@ -459,12 +460,56 @@ h2.EventTitleToolTip {
 .eng-end-form {
   clear: both;
 }
+.eng-form-message {
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 10px 10px 10px 40px;
+  line-height: 1.4;
+  margin: 0.5em 1em;
+}
+.eng-form-message span {
+  float: none;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+  text-shadow: 0 1px 1px #fff;
+}
+.eng-form-warning {
+  background: #feffce url(Images/warning-icn.png) no-repeat 10px center;
+  border: 2px #cdb21f solid;
+  color: #41370C;
+  text-shadow: 0 1px 1px #fff;
+}
+.eng-form-validation-summary {
+  background: #f7eaea url(Images/error-icn.png) no-repeat 10px center;
+  text-shadow: 0 1px 1px #fff;
+  color: #900;
+  border: 2px #df4a40 solid;
+}
+.eng-form-validation-summary ul {
+  padding-left: 40px;
+}
+.eng-form-success {
+  background: #ecffeb url(Images/success-icn.png) no-repeat 10px center;
+  border: 2px #64b657 solid;
+  color: #358927;
+}
+.eng-form-info {
+  background: #edf8ff url(Images/help-icn.png) no-repeat 10px center;
+  border: #46a3d3 2px solid;
+  color: #085b8f;
+  text-shadow: 0 1px 1px #fff;
+}
+.eng-form-message.eng-form-error {
+  display: block;
+  color: #c00;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  font-style: italic;
+}
 .TemplatesSection {
   margin: 1em;
-}
-.timezone_display {
-  float: left;
-  width: 70%;
 }
 /*------------------- New Templates Picker ------------------*/
 .events-choose-display-wrap {
@@ -577,85 +622,6 @@ h2.EventTitleToolTip {
   float: left;
   clear: both;
   padding: 15px 0;
-}
-/*======================= Validation =============================*/
-.ModuleMessage {
-  width: 60%;
-  padding-top: 1em;
-  margin: 0 auto;
-}
-.mmTop {
-  height: 5px;
-  line-height: 0;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-position: left bottom;
-}
-.mmBody {
-  padding: 0.675em 0.675em 1em;
-  margin: 0 auto;
-  overflow: hidden;
-  border-bottom: solid 1px #000;
-}
-.mmBody .mmIcon {
-  float: left;
-  width: 32px;
-  height: 32px;
-  text-indent: -9999px;
-}
-.mmText {
-  float: right;
-  text-align: left;
-  width: 88%;
-}
-.mmText {
-  margin: 0;
-  padding: 0;
-}
-.mmText > p {
-  margin-top: 4px;
-  font-weight: bold;
-  color: #000;
-}
-.mmBt {
-  height: 5px;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-position: left top;
-}
-/*---------------------- Error -----------------------------*/
-.ErrorBody {
-  background: #fde0e0;
-  border: 2px #ff0000 solid;
-}
-.ErrorBody .ErrorIcon {
-  background: url(images/errorSmallIcon.png) no-repeat;
-}
-/*--------------------- Success ----------------------------*/
-.SuccessBody {
-  background: #f2fff3;
-  border: 2px #5cd800 solid;
-}
-.SuccessBody .SuccessIcon {
-  background: url(images/successSmallIcon.png) no-repeat;
-}
-/*-------------------- Warning -----------------------------*/
-.WarningBody {
-  background: #feffce;
-  border: 2px #cdb21f solid;
-}
-.WarningBody .WarningIcon {
-  background-image: url(images/warning_32.png);
-}
-/*------------------- Information --------------------------*/
-.InformationBody {
-  background: #e5f8ff;
-  border: 2px #288abc solid;
-}
-.InformationBody .InformationIcon {
-  background-image: url(images/info.png);
 }
 /*========================= Fancy Box ===============================*/
 div#fancy_overlay {

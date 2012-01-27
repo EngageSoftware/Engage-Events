@@ -225,8 +225,8 @@
   <data name="RecurringEventLabel.Text" xml:space="preserve">
     <value>Recurring Event</value>
   </data>
-  <data name="Registration Options:.Text" xml:space="preserve">
-    <value>Registration Options:</value>
+  <data name="Registration.Header" xml:space="preserve">
+    <value>Registration</value>
   </data>
   <data name="RegistrationLimitLabel.Text" xml:space="preserve">
     <value>Maximum Number of Attendees</value>
@@ -256,5 +256,11 @@
   </data>
   <data name="RegistrationLimitValidator.Text" xml:space="preserve">
     <value>The maximum number of attendees cannot be less than the current number of attendees.</value>
+  </data>
+  <data name="Recurrence.Header" xml:space="preserve">
+    <value>Recurrence</value>
+  </data>
+  <data name="ValidationSummary.Header" xml:space="preserve">
+    <value>There was an error trying to submit the form. Please fix the following problem(s):</value>
   </data>
 </root>

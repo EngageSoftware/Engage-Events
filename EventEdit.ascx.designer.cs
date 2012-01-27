@@ -22,22 +22,31 @@ namespace Engage.Dnn.Events {
         protected global::Engage.Dnn.Events.Controls.ModuleMessage SuccessModuleMessage;
         
         /// <summary>
-        /// AddNewEvent control.
+        /// EventEditWrap control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AddNewEvent;
+        protected global::System.Web.UI.WebControls.Panel EventEditWrap;
         
         /// <summary>
-        /// AddEditEventLabel control.
+        /// ValidationSummary control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label AddEditEventLabel;
+        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary;
+        
+        /// <summary>
+        /// EventEditForm control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder EventEditForm;
         
         /// <summary>
         /// EventTitleTextBox control.
@@ -55,7 +64,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel CategoryPanel;
+        protected global::System.Web.UI.WebControls.PlaceHolder CategoryPanel;
         
         /// <summary>
         /// CategoryComboBox control.
@@ -163,7 +172,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel LimitRegistrationsPanel;
+        protected global::System.Web.UI.WebControls.PlaceHolder LimitRegistrationsPanel;
         
         /// <summary>
         /// LimitRegistrationsLabel control.
@@ -199,7 +208,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel RegistrationLimitPanel;
+        protected global::System.Web.UI.WebControls.PlaceHolder RegistrationLimitPanel;
         
         /// <summary>
         /// RegistrationLimitTextBox control.
@@ -235,7 +244,7 @@ namespace Engage.Dnn.Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel CustomCapacityMetMessagePanel;
+        protected global::System.Web.UI.WebControls.PlaceHolder CustomCapacityMetMessagePanel;
         
         /// <summary>
         /// CustomCapacityMetMessageTextEditor control.
@@ -319,13 +328,13 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.Button SaveAndCreateNewEventButton;
         
         /// <summary>
-        /// CancelEventLink control.
+        /// CancelButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink CancelEventLink;
+        protected global::System.Web.UI.WebControls.Button CancelButton;
         
         /// <summary>
         /// DeleteAction control.
@@ -355,12 +364,12 @@ namespace Engage.Dnn.Events {
         protected global::System.Web.UI.WebControls.Button CreateAnotherEventLink;
         
         /// <summary>
-        /// CancelGoHomeLink control.
+        /// CancelGoHomeButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink CancelGoHomeLink;
+        protected global::System.Web.UI.WebControls.Button CancelGoHomeButton;
     }
 }

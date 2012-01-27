@@ -60,6 +60,8 @@ namespace Engage.Dnn.Events
             this.Load += this.Page_Load;
             this.SaveEventButton.Click += this.SaveEventButton_Click;
             this.SaveAndCreateNewEventButton.Click += this.SaveAndCreateNewEventButton_Click;
+            this.CancelButton.Click += this.CancelButtonClick;
+            this.CancelGoHomeButton.Click += this.CancelGoHomeButton_Click;
             this.DeleteAction.Delete += this.DeleteAction_Delete;
             this.CreateAnotherEventLink.Click += this.CreateAnotherEventLink_Click;
             this.RecurringCheckBox.CheckedChanged += this.RecurringCheckbox_CheckedChanged;
@@ -114,6 +116,7 @@ namespace Engage.Dnn.Events
                     this.FillLists();
                     this.DeleteAction.Visible = this.EventId.HasValue;
                     this.AllowRegistrationsCheckBox.Checked = ModuleSettings.AllowRegistrationsByDefault.GetValueAsBooleanFor(this).Value;
+                    this.ValidationSummary.HeaderText = this.Localize("ValidationSummary.Header");
 
                     if (this.EventId.HasValue)
                     {
@@ -121,8 +124,6 @@ namespace Engage.Dnn.Events
                     }
                 }
 
-                this.SetButtonLinks();
-                this.LocalizeControl();
                 this.SuccessModuleMessage.Visible = false;
             }
             catch (Exception exc)
@@ -171,6 +172,26 @@ namespace Engage.Dnn.Events
             {
                 Exceptions.ProcessModuleLoadException(this, exc);
             }
+        }
+
+        /// <summary>
+        /// Handles the <see cref="Button.Click"/> event of the <see cref="CancelButton"/> control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void CancelButtonClick(object sender, EventArgs e)
+        {
+            this.Response.Redirect(Globals.NavigateURL());
+        }
+
+        /// <summary>
+        /// Handles the <see cref="Button.Click"/> event of the <see cref="CancelGoHomeButton"/> control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void CancelGoHomeButton_Click(object sender, EventArgs e)
+        {
+            this.Response.Redirect(Globals.NavigateURL());
         }
 
         /// <summary>
@@ -349,25 +370,8 @@ namespace Engage.Dnn.Events
         {
             this.SuccessModuleMessage.TextResourceKey = this.EventId.HasValue ? "EditEventSuccess" : "AddEventSuccess";
             this.SuccessModuleMessage.Visible = true;
-            this.AddNewEvent.Visible = false;
+            this.EventEditForm.Visible = false;
             this.FooterMultiview.SetActiveView(this.FinalFooterView);
-        }
-
-        /// <summary>
-        /// Sets the <c>NavigateUrl</c> property for the button links.
-        /// </summary>
-        private void SetButtonLinks()
-        {
-            this.CancelGoHomeLink.NavigateUrl = this.CancelEventLink.NavigateUrl = Globals.NavigateURL();
-        }
-
-        /// <summary>
-        /// This method will update the form with any localized values that cannot be localized by using the ResourceKey attribute in the control's markup.
-        /// </summary>
-        private void LocalizeControl()
-        {
-            string addEditResourceKey = this.EventId.HasValue ? "EditEvent.Text" : "AddNewEvent.Text";
-            this.AddEditEventLabel.Text = this.Localize(addEditResourceKey);
         }
 
         /// <summary>
