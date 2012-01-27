@@ -800,7 +800,9 @@
     <None Include="EngageEvents.5.dnn">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EngageEvents.Build" />
+    <None Include="EngageEvents.Build">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Providers\DataProviders\SqlDataProvider\01.02.00.SqlDataProvider" />
     <None Include="Providers\DataProviders\SqlDataProvider\01.02.01.SqlDataProvider" />
     <None Include="Templates\EngageManifest.xsd" />
