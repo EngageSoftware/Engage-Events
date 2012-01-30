@@ -818,6 +818,7 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Import Project="$(ProgramFiles)\MSBuild\StyleCop\v4.5\StyleCop.Targets" Condition="Exists('$(ProgramFiles)\MSBuild\StyleCop\v4.5\StyleCop.Targets')" />
   <Import Project="$(ProgramFiles)\MSBuild\StyleCop\v4.6\StyleCop.Targets" Condition="Exists('$(ProgramFiles)\MSBuild\StyleCop\v4.6\StyleCop.Targets')" />
+  <Import Project="$(ProgramFiles)\MSBuild\StyleCop\v4.7\StyleCop.Targets" Condition="Exists('$(ProgramFiles)\MSBuild\StyleCop\v4.7\StyleCop.Targets')" />
   <Import Project="MSBuild\Yui.Compressor.targets" />
   <ProjectExtensions>
     <VisualStudio>
