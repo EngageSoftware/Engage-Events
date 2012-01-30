@@ -173,20 +173,23 @@ namespace Engage.Events
             while (reader.Read())
             {
                 var masterEvent = Event.Fill(reader);
-                if ((masterEvent.EventStartUtc <= endDateUtc || endDateUtc == null) && (masterEvent.EventEndUtc >= startDateUtc || startDateUtc == null))
+                if ((masterEvent.EventStartUtc <= endDateUtc || endDateUtc == null)
+                    && (masterEvent.EventEndUtc >= startDateUtc || startDateUtc == null))
                 {
                     events.Add(masterEvent);
                 }
-
-                if (!processCollection || !masterEvent.IsRecurring)
+                else
                 {
-                    continue;
-                }
+                    if (!processCollection || !masterEvent.IsRecurring)
+                    {
+                        continue;
+                    }
 
-                var eventOccurrence = GetEventOccurrence(masterEvent, startDateUtc, endDateUtc);
-                if (eventOccurrence != null)
-                {
-                    events.Add(eventOccurrence);
+                    var eventOccurrence = GetEventOccurrence(masterEvent, startDateUtc, endDateUtc);
+                    if (eventOccurrence != null)
+                    {
+                        events.Add(eventOccurrence);
+                    }
                 }
             }
 
