@@ -4,8 +4,8 @@
 <li class="eng-form-item eng-events-recurrence-pattern">
     <fieldset>
         <legend><%=Localize("Recurrence")%></legend>
-	
-        <asp:UpdatePanel runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false" class="rsAdvRecurrencePatterns"><%-- This UpdatePanel needs to include the RecurrenceFrequencyPanel, so that it can update the RepeatFrequencyDaily to postback if it gets reselected.  See http://www.engagesoftware.com/Blog/EntryID/76.aspx --%>
+        <div class="rsAdvRecurrencePatterns">
+        <asp:UpdatePanel runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false"><%-- This UpdatePanel needs to include the RecurrenceFrequencyPanel, so that it can update the RepeatFrequencyDaily to postback if it gets reselected.  See http://www.engagesoftware.com/Blog/EntryID/76.aspx --%>
             <Triggers>
                 <asp:AsyncPostBackTrigger ControlID="RepeatFrequencyDaily" />
                 <asp:AsyncPostBackTrigger ControlID="RepeatFrequencyWeekly" />
@@ -108,6 +108,7 @@
                 </asp:MultiView>
             </ContentTemplate>
         </asp:UpdatePanel>
+        </div>
     </fieldset>
 </li>
 <li class="eng-form-item eng-events-recurrence-range">
