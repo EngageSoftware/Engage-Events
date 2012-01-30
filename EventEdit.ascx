@@ -106,7 +106,7 @@
                             <li class="eng-form-item eng-tiny eng-events-registration-cap">
                                 <asp:Label ID="LimitRegistrationsLabel" runat="server" ResourceKey="LimitRegistrationsLabel" CssClass="RegCap" AssociatedControlID="LimitRegistrationsCheckBox" />
                                 <asp:CheckBox ID="LimitRegistrationsCheckBox" runat="server" AutoPostBack="true" />
-                                <asp:Label ID="RegistrationCountLabel" runat="server" CssClass="eng-form-message eng-form-info" />
+                                <asp:Label ID="RegistrationCountLabel" runat="server" CssClass="eng-form-message eng-form-info" Visible="false"/>
                             </li>
                             <asp:PlaceHolder ID="RegistrationLimitPanel" runat="server" Visible="false">
                                 <li class="eng-form-item eng-tiny eng-events-registration-limit">
