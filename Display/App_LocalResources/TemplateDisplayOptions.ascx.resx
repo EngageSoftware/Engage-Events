@@ -133,16 +133,16 @@
     <value>before end</value>
   </data>
   <data name="Date Range Without Bounds.Text" xml:space="preserve">
-    <value>&lt;p&gt;Today, this will include every event&lt;/p&gt;</value>
+    <value>&lt;p&gt;This will include every event&lt;/p&gt;</value>
   </data>
   <data name="Date Range Without End.Format" xml:space="preserve">
-    <value>&lt;p&gt;Today, this will include every event occuring on or after &lt;strong&gt;{0:D}&lt;/strong&lt;/p&gt;</value>
+    <value>&lt;p&gt;This will include every event occuring on or after &lt;strong&gt;{0:D}&lt;/strong&lt;/p&gt;</value>
   </data>
   <data name="Date Range Without Start.Format" xml:space="preserve">
-    <value>&lt;p&gt;Today, this will include every event occuring before the end of &lt;strong&gt;{1:D}&lt;/strong&gt;&lt;/p&gt;</value>
+    <value>&lt;p&gt;This will include every event occuring before the end of &lt;strong&gt;{1:D}&lt;/strong&gt;&lt;/p&gt;</value>
   </data>
   <data name="Date Range.Format" xml:space="preserve">
-    <value>&lt;p&gt;Today, this will include every event occuring between the beginning of &lt;strong&gt;{0:D}&lt;/strong&gt; and the end of &lt;strong&gt;{1:D}&lt;/strong&gt;&lt;/p&gt;</value>
+    <value>&lt;p&gt;This will include every event occuring between the beginning of &lt;strong&gt;{0:D}&lt;/strong&gt; and the end of &lt;strong&gt;{1:D}&lt;/strong&gt;&lt;/p&gt;</value>
   </data>
   <data name="Days.Text" xml:space="preserve">
     <value>Days</value>
