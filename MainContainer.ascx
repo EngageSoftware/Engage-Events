@@ -5,4 +5,4 @@
     <engage:GlobalNavigation runat="server" />
 </div>
 
-<asp:PlaceHolder id="phControls" runat="Server" />
+<asp:PlaceHolder id="ControlsPlaceHolder" runat="Server" />

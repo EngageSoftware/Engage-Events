@@ -130,7 +130,7 @@ namespace Engage.Dnn.Events
                 PortalModuleBase mb = (PortalModuleBase)this.LoadControl(controlToLoad.ControlPath);
                 mb.ModuleConfiguration = this.ModuleConfiguration;
                 mb.ID = Path.GetFileNameWithoutExtension(controlToLoad.ControlPath);
-                this.phControls.Controls.Add(mb);
+                this.ControlsPlaceHolder.Controls.Add(mb);
             }
             catch (Exception exc)
             {

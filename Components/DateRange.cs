@@ -12,6 +12,7 @@
 namespace Engage.Dnn.Events
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// A range of dates
@@ -100,6 +101,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <returns>The range's starting date for today, in UTC</returns>
         /// <remarks>Make sure to check <see cref="IsValid"/> before calling this; an invalid will go into an infinite loop</remarks>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Doesn't feel like a property")]
         public DateTime? GetStartDateUtc()
         {
             var startDate = this.GetStartDate();
@@ -176,6 +178,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <returns>The range's ending date for today, in UTC</returns>
         /// <remarks>Make sure to check <see cref="IsValid"/> before calling this; an invalid will go into an infinite loop</remarks>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Doesn't feel like a property")]
         public DateTime? GetEndDateUtc()
         {
             var endDate = this.GetEndDate();
