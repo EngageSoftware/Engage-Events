@@ -171,7 +171,6 @@ namespace Engage.Dnn.Events
             return this.GetEndDate(DateTime.Today);
         }
 
-
         /// <summary>
         /// Gets the end date for this range today, in UTC.
         /// </summary>

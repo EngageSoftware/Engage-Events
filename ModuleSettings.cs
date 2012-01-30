@@ -213,6 +213,11 @@ namespace Engage.Dnn.Events
         private static readonly Setting<ListingMode> DisplayModeOption = new Setting<ListingMode>("DisplayModeOption", SettingScope.TabModule, ListingMode.All);
 #pragma warning restore 618
 
+        /// <summary>
+        /// Gets the <see cref="Categories"/> for the given <paramref name="moduleControl"/> as an <see cref="IEnumerable{T}"/> of <see cref="int"/>
+        /// </summary>
+        /// <param name="moduleControl">The module control.</param>
+        /// <returns>The IDs of the categories that the module is to display, or an empty sequence to not filter the module by category</returns>
         public static IEnumerable<int> GetCategoriesFor(IModuleControlBase moduleControl)
         {
             var categoriesSettingValue = Categories.GetValueAsStringFor(moduleControl);

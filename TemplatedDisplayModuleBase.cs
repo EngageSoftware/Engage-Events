@@ -311,7 +311,7 @@ namespace Engage.Dnn.Events
         /// Appends the given attribute to <paramref name="cssClassBuilder"/>, adding a space beforehand if necessary.
         /// </summary>
         /// <param name="cssClassBuilder">The <see cref="StringBuilder"/> which will contain the appended CSS class.</param>
-        /// <param name="cssClass">The class to add to the <see cref="cssClassBuilder"/></param>
+        /// <param name="cssClass">The class to add to the <paramref name="cssClassBuilder"/></param>
         private static void AppendCssClassAttribute(StringBuilder cssClassBuilder, string cssClass)
         {
             if (cssClassBuilder.Length > 0)
