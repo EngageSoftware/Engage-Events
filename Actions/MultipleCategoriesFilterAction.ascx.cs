@@ -33,9 +33,99 @@ namespace Engage.Dnn.Events
         private int[] sessionCategoryIds;
 
         /// <summary>
+        /// Backing field for <see cref="DialogPosition"/>
+        /// </summary>
+        private string dialogPosition = "right top";
+
+        /// <summary>
+        /// Backing field for <see cref="ButtonPosition"/>
+        /// </summary>
+        private string buttonPosition = "right bottom";
+
+        /// <summary>
+        /// Backing field for <see cref="CollisionBehavior"/>
+        /// </summary>
+        private string collisionBehavior = "none";
+
+        /// <summary>
         /// Occurs when the selected category has changed.
         /// </summary>
         public event EventHandler CategoryChanged = (_, __) => { };
+
+        /// <summary>
+        /// Gets or sets the position of the dialog, relative to the <see cref="ButtonPosition"/>.
+        /// </summary>
+        /// <value>
+        /// The dialog position, as specified in http://jqueryui.com/demos/position/.
+        /// </value>
+        public string DialogPosition
+        {
+            get
+            {
+                return this.dialogPosition;
+            }
+
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    return;
+                }
+
+                this.dialogPosition = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the position of the button at which the dialog is positioned.
+        /// </summary>
+        /// <value>
+        /// The position on the button to alight the dialog against, as specified in http://jqueryui.com/demos/position/.
+        /// </value>
+        public string ButtonPosition
+        {
+            get
+            {
+                return this.buttonPosition;
+            }
+
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    return;
+                }
+
+                this.buttonPosition = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the behavior when the dialog overflows the window.
+        /// </summary>
+        /// <value>
+        /// A single value or a pair for horizontal/vertical, e.g. "flip", "fit", "fit flip", "fit none".
+        /// flip: to the opposite side and the collision detection is run again to see if it will fit. If it won't fit in either position, the center option should be used as a fall back. 
+        /// fit: so the element keeps in the desired direction, but is re-positioned so it fits. 
+        /// none: not do collision detection.
+        /// </value>
+        public string CollisionBehavior
+        {
+            get
+            {
+                return this.collisionBehavior;
+            }
+
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    return;
+                }
+
+                this.collisionBehavior = value;
+            }
+        }
 
         /// <summary>
         /// Gets the ID of the category of event to display.

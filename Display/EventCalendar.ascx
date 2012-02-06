@@ -22,11 +22,8 @@
 </script>
 
 <div class="EventHeader">
-    <h2 class="NormalBold">
-        <asp:Label runat="server" ResourceKey="EventsTitle" />
-    </h2>
     <asp:Panel CssClass="EventFilter" runat="server" ID="EventFilterPanel">
-        <engage:MultipleCategoriesFilterAction ID="CategoryFilterAction" runat="server" />
+        <engage:MultipleCategoriesFilterAction ID="CategoryFilterAction" runat="server" DialogPosition="left top" ButtonPosition="left bottom" />
     </asp:Panel>
 </div>
 <div class="EventCalendar">

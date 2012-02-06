@@ -19,10 +19,10 @@
             autoOpen: false,
             dialogClass: 'events-categoryfilter-dialog-wrap',
             position: {
-                my: 'right top',
-                at: 'right bottom',
+                my: '<%=DialogPosition %>',
+                at: '<%=ButtonPosition %>',
                 of: $('#<%=this.FilterButton.ClientID %>'),
-                collision: 'none'
+                collision: '<%=CollisionBehavior %>'
             }
         });
 

@@ -311,6 +311,10 @@ namespace Engage.Dnn.Events.Display
                         this.MultipleCategoriesFilterAction.LocalResourceFile = resourceFile;
                         this.MultipleCategoriesFilterAction.CategoryChanged += this.MultipleCategoriesActions_SortChanged;
 
+                        this.MultipleCategoriesFilterAction.DialogPosition = TemplateEngine.GetAttributeValue(tag, templateItem, this.TemplateProvider.GlobalItem, resourceFile, "DialogPosition", "my");
+                        this.MultipleCategoriesFilterAction.ButtonPosition = TemplateEngine.GetAttributeValue(tag, templateItem, this.TemplateProvider.GlobalItem, resourceFile, "ButtonPosition", "at");
+                        this.MultipleCategoriesFilterAction.CollisionBehavior = TemplateEngine.GetAttributeValue(tag, templateItem, this.TemplateProvider.GlobalItem, resourceFile, "CollisionBehavior", "collision");
+
                         container.Controls.Add(MultipleCategoriesFilterAction);
                         break;
                     case "READMORE":

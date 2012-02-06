@@ -120,9 +120,6 @@
   <data name="AllDay.Text" xml:space="preserve">
     <value>All Day</value>
   </data>
-  <data name="EventsTitle.Text" xml:space="preserve">
-    <value />
-  </data>
   <data name="HeaderDay.Text" xml:space="preserve">
     <value>Day</value>
   </data>
