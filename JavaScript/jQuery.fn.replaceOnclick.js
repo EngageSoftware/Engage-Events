@@ -1,8 +1,9 @@
-/*globals jQuery */
-/*jslint evil:true */
+/*global jQuery */
+/*jslint evil:true, sloppy:true */
+/*jshint strict:false */
 
 (function ($) {
-    'use strict';
+    // Do _not_ add "use strict", because doPostback hates it
     $.fn.replaceOnclick = $.fn.replaceOnclick || function (callback) {
         return this.each(function () {
             $(this).data('original-onclick', $(this).attr('onclick'));
