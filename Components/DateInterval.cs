@@ -12,7 +12,7 @@
 namespace Engage.Dnn.Events
 {
     /// <summary>
-    /// The type of interval for calulated a relative date from another date
+    /// The type of interval for calculated a relative date from another date
     /// </summary>
     public enum DateInterval
     {

@@ -6,6 +6,12 @@
     </Unrecognized>-->
     <Recognized>
       <Word>Dnn</Word>
+      <Word>templated</Word>
+      <Word>templating</Word>
+      <Word>Telerik</Word>
+      <Word>Sitefinity</Word>
+      <Word>stylesheet</Word>
+      <Word>postback</Word>
     </Recognized>
     <!--<Deprecated>
       <Term PreferredAlternate="EnterpriseServices">ComPlus</Term>

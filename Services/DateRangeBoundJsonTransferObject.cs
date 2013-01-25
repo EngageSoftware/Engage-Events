@@ -143,10 +143,10 @@ namespace Engage.Dnn.Events
         /// </returns>
         public bool Equals(DateRangeBoundJsonTransferObject other)
         {
-            return Equals(other.value, this.value) 
+            return object.Equals(other.value, this.value) 
                    && other.specificDate.Equals(this.specificDate) 
                    && other.windowAmount.Equals(this.windowAmount)
-                   && Equals(other.windowInterval, this.windowInterval);
+                   && object.Equals(other.windowInterval, this.windowInterval);
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Creates the json serializer.
+        /// Creates the JSON serializer.
         /// </summary>
         /// <returns>A new <see cref="JavaScriptSerializer"/> instance that can serialize <see cref="DateRangeBoundJsonTransferObject"/>s</returns>
         private static JavaScriptSerializer CreateJsonSerializer()
@@ -207,7 +207,7 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Converts a <see cref="DateRangeBoundJsonTransferObject"/> into a JSON structure, in order to get a parsable DateTime value
+        /// Converts a <see cref="DateRangeBoundJsonTransferObject"/> into a JSON structure, in order to get a DateTime value which can be parsed
         /// </summary>
         private class DateRangeBoundJsonConverter : JavaScriptConverter
         {

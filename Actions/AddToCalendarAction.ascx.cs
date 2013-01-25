@@ -61,7 +61,7 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void AddToCalendarButton_Click(object sender, EventArgs e)
         {
-            SendICalendarToClient(this.Response, this.CurrentEvent.ToICal(), this.CurrentEvent.Title);
+            ModuleBase.SendICalendarToClient(this.Response, this.CurrentEvent.ToICal(), this.CurrentEvent.Title);
         }
     }
 }

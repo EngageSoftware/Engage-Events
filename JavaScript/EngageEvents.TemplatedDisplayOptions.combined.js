@@ -1,4 +1,4 @@
-/*
+﻿/*
     http://www.JSON.org/json2.js
     2011-02-23
 
@@ -570,9 +570,9 @@ b){var a=this.getTemplateNode(d),e=b(a.text);this.q==1&&(e=p.a.k(e),e=e.replace(
             },
             createRangeChooser = function (rangeBound) {
                 var specificDate = rangeBound.specificDate ? new Date(
-                                                                    rangeBound.specificDate.year, 
-                                                                    rangeBound.specificDate.month, 
-                                                                    rangeBound.specificDate.day) 
+                                                                    rangeBound.specificDate.year,
+                                                                    rangeBound.specificDate.month,
+                                                                    rangeBound.specificDate.day)
                                                            : null,
                     chooser = {
                     value: ko.observable(rangeBound.value),
@@ -601,7 +601,7 @@ b){var a=this.getTemplateNode(d),e=b(a.text);this.q==1&&(e=p.a.k(e),e=e.replace(
             },
             $dateRangeWrap = $('#eng-date-range-wrap'),
             viewModel = {
-                start: createRangeChooser(data.start), 
+                start: createRangeChooser(data.start),
                 end: createRangeChooser(data.end),
                 exampleDateRangeHtml: ko.observable(''),
                 dateRangeIsValid: ko.observable(true)
@@ -658,7 +658,7 @@ b){var a=this.getTemplateNode(d),e=b(a.text);this.q==1&&(e=p.a.k(e),e=e.replace(
                 delayIfClientControlNotInitlialized($(element), function (datePicker) {
                     datePicker.add_dateSelected(function (sender, args) {
                         dateObservable(args.get_newDate());
-                    }); 
+                    });
                 });
             },
             update: function (element, getValue) {
@@ -675,7 +675,7 @@ b){var a=this.getTemplateNode(d),e=b(a.text);this.q==1&&(e=p.a.k(e),e=e.replace(
                 delayIfClientControlNotInitlialized($(element), function (textBox) {
                     textBox.add_valueChanged(function (sender, args) {
                         intObservable(args.get_newValue());
-                    });                    
+                    });
                 });
             },
             update: function (element, getValue) {

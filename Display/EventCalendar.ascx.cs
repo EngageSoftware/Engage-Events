@@ -218,7 +218,7 @@ namespace Engage.Dnn.Events.Display
         {
             ////this.BindData();
             // NOTE: temporarly reload the page instead of using postback since the multiplecategoriesfilter viewstate doesn't seem to sync properly because of all the client javascript.
-            this.Response.Redirect(BuildLinkUrl(this.TabId));
+            this.Response.Redirect(this.BuildLinkUrl(this.TabId));
         }
 
         /// <summary>
@@ -285,7 +285,7 @@ namespace Engage.Dnn.Events.Display
                 false,
                 this.IsFeatured,
                 this.HideFullEvents,
-                IsLoggedIn ? this.UserInfo.Email : null,
+                Framework.ModuleBase.IsLoggedIn ? this.UserInfo.Email : null,
                 selectedCategoryId ?? this.CategoryIds);
             this.EventsCalendarDisplay.DataBind();
 

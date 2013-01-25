@@ -24,7 +24,7 @@ namespace Engage.Dnn.Events
     using Engage.Events;
 
     /// <summary>
-    /// Code-behind for a control (Respond.ascx) that allows users to register their attendance for an event.
+    /// Code-behind for a control <c>Respond.ascx</c> that allows users to register their attendance for an event.
     /// </summary>
     public abstract partial class Respond : ModuleBase
     {
@@ -123,10 +123,10 @@ namespace Engage.Dnn.Events
             {
                 if (UserInfo.UserID < 0)
                 {
-                    Response.Redirect(RegisterUrl, true);
+                    Response.Redirect(this.RegisterUrl, true);
                 }
 
-                if (!IsPostBack)
+                if (!this.IsPostBack)
                 {
                     this.BindData();
                 }
@@ -200,7 +200,7 @@ namespace Engage.Dnn.Events
                 return;
             }
 
-            SendICalendarToClient(HttpContext.Current.Response, evnt.ToICal(), evnt.Title);
+            ModuleBase.SendICalendarToClient(HttpContext.Current.Response, evnt.ToICal(), evnt.Title);
         }
 
         /// <summary>

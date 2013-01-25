@@ -99,17 +99,17 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Gets the control to load, based on the key (or lack thereof) that is passed on the querystring.
+        /// Gets the control to load, based on the key (or lack thereof) that is passed on the query-string.
         /// </summary>
         /// <returns>A relative path to the control that should be loaded into this container</returns>
         private SubControlInfo GetControlToLoad()
         {
-            if (!IsConfigured)
+            if (!this.IsConfigured)
             {
                 return new SubControlInfo("Admin/NotConfigured.ascx", false);
             }
 
-            string keyParam = this.GetCurrentControlKey();
+            var keyParam = this.GetCurrentControlKey();
             SubControlInfo control;
             if (Engage.Utility.HasValue(keyParam) && ControlKeys.TryGetValue(keyParam, out control))
             {

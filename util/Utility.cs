@@ -77,11 +77,11 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Gets <c>QueryString</c> parameter(s) that represent an instance of an <see cref="Event"/>.
+        /// Gets query-string parameter(s) that represent an instance of an <see cref="Event"/>.
         /// </summary>
         /// <param name="selectedEvent">The <see cref="Event"/> to represent.</param>
-        /// <param name="additionalParameters">Any other querystring parameters.</param>
-        /// <returns>A list of <c>QueryString</c> parameters that represent <paramref name="selectedEvent"/></returns>
+        /// <param name="additionalParameters">Any other query-string parameters.</param>
+        /// <returns>A list of query-string parameters that represent <paramref name="selectedEvent"/></returns>
         public static string[] GetEventParameters(Event selectedEvent, params string[] additionalParameters)
         {
             if (selectedEvent == null)
@@ -93,12 +93,12 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Gets <c>QueryString</c> parameter(s) that represent the given event information
+        /// Gets query-string parameter(s) that represent the given event information
         /// </summary>
         /// <param name="eventId">The event id.</param>
         /// <param name="eventStart">The date and time at which this occurrence starts.</param>
-        /// <param name="additionalParameters">Any other querystring parameters.</param>
-        /// <returns>A list of <c>QueryString</c> parameters that represent the given event information</returns>
+        /// <param name="additionalParameters">Any other query-string parameters.</param>
+        /// <returns>A list of query-string parameters that represent the given event information</returns>
         public static string[] GetEventParameters(int eventId, DateTime eventStart, params string[] additionalParameters)
         {
             if (additionalParameters == null)
@@ -207,7 +207,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <remarks>
         /// Blows up if the expression isn't a simple property access expression
-        /// based on http://stackoverflow.com/questions/671968/retrieving-property-name-from-lambda-expression/672330#672330
+        /// based on <see href="http://stackoverflow.com/questions/671968/retrieving-property-name-from-lambda-expression/672330#672330"/>
         /// </remarks>
         /// <typeparam name="T">Type of the property</typeparam>
         /// <param name="propertyExpression">An expression representing accessing a property.</param>

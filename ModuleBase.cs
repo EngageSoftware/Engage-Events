@@ -171,7 +171,7 @@ namespace Engage.Dnn.Events
                     }
                 }
 
-                throw new InvalidOperationException("EventStart is not present on QueryString: " + this.Request.RawUrl);
+                throw new InvalidOperationException("EventStart is not present on query-string: " + this.Request.RawUrl);
             }
         }
 
@@ -341,34 +341,6 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Sends an <c>iCalendar</c> to the client to download.
-        /// </summary>
-        /// <param name="response">The response to use to send the <c>iCalendar</c>.</param>
-        /// <param name="content">The content of the <c>iCalendar</c>.</param>
-        /// <param name="name">The name of the file.</param>
-        protected static void SendICalendarToClient(HttpResponse response, string content, string name)
-        {
-            if (response == null)
-            {
-                throw new ArgumentNullException("response");
-            }
-
-            response.Clear();
-
-            // Stream The ICalendar 
-            response.Buffer = true;
-
-            response.ContentType = "text/calendar";
-            response.ContentEncoding = Encoding.UTF8;
-            response.Charset = "utf-8";
-
-            response.AddHeader("Content-Disposition", "attachment;filename=\"" + HttpUtility.UrlEncode(name) + ".ics" + "\"");
-
-            response.Write(content);
-            response.End();
-        }
-
-        /// <summary>
         /// Generates a list of QueryString parameters for the given list of <paramref name="queryStringKeys"/>.
         /// </summary>
         /// <param name="request">The current request.</param>
@@ -403,6 +375,34 @@ namespace Engage.Dnn.Events
             }
 
             return queryString.ToString();
+        }
+
+        /// <summary>
+        /// Sends an <c>iCalendar</c> to the client to download.
+        /// </summary>
+        /// <param name="response">The response to use to send the <c>iCalendar</c>.</param>
+        /// <param name="content">The content of the <c>iCalendar</c>.</param>
+        /// <param name="name">The name of the file.</param>
+        protected static void SendICalendarToClient(HttpResponse response, string content, string name)
+        {
+            if (response == null)
+            {
+                throw new ArgumentNullException("response");
+            }
+
+            response.Clear();
+
+            // Stream The ICalendar 
+            response.Buffer = true;
+
+            response.ContentType = "text/calendar";
+            response.ContentEncoding = Encoding.UTF8;
+            response.Charset = "utf-8";
+
+            response.AddHeader("Content-Disposition", "attachment;filename=\"" + HttpUtility.UrlEncode(name) + ".ics" + "\"");
+
+            response.Write(content);
+            response.End();
         }
 
         /// <summary>
@@ -451,7 +451,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         protected void DenyAccess()
         {
-            this.Response.Redirect(IsLoggedIn ? Globals.NavigateURL("Access Denied") : Dnn.Utility.GetLoginUrl(this.PortalSettings, this.Request));
+            this.Response.Redirect(Framework.ModuleBase.IsLoggedIn ? Globals.NavigateURL("Access Denied") : Dnn.Utility.GetLoginUrl(this.PortalSettings, this.Request));
         }
 
         /// <summary>

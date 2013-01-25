@@ -77,7 +77,7 @@ namespace Engage.Dnn.Events.Display
         /// Gets or sets the total number of events.
         /// </summary>
         /// <remarks>
-        /// So that we can have proper paging information constructed before we query for the list of events, we need to persist the total number of events between postbacks.
+        /// So that we can have proper paging information constructed before we query for the list of events, we need to persist the total number of events between post-backs.
         /// </remarks>
         /// <value>The total number of events.</value>
         private int TotalNumberOfEvents

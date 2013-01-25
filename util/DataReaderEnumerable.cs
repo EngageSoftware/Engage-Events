@@ -21,8 +21,8 @@ namespace Engage.Dnn.Events
     /// Enumerates over an <see cref="IDataReader"/> instance, moving to the next record upon each enumeration.
     /// </summary>
     /// <remarks>
-    /// Based on http://codecisions.com/post/2010/04/08/Enumerating-IDataReader-With-LINQ.aspx
-    /// Stored on https://gist.github.com/873080
+    /// Based on <see href="http://codecisions.com/post/2010/04/08/Enumerating-IDataReader-With-LINQ.aspx"/> 
+    /// Stored on <see href="https://gist.github.com/873080"/>
     /// </remarks>
     [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "DataReaderCollection isn't really an accurate name")]
     public class DataReaderEnumerable : IEnumerable<IDataReader>, IDisposable
@@ -56,7 +56,7 @@ namespace Engage.Dnn.Events
         {
             if (this.enumerated)
             {
-                throw new InvalidOperationException("The IDataReader can only be enumerated once.");
+                throw new InvalidOperationException("The data reader can only be enumerated once.");
             }
 
             this.enumerated = true;

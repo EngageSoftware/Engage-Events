@@ -27,7 +27,7 @@ namespace Engage.Dnn.Events.Controls
         /// Gets a value indicating whether this control is in a valid state.
         /// </summary>
         /// <remarks>
-        /// Checks whether the currently selected recurrence rule is defined in part by any <see cref="RadNumericTextBox"/>es.  
+        /// Checks whether the currently selected recurrence rule is defined in part by any <see cref="RadNumericTextBox"/>.  
         /// If so, it makes sure that the <see cref="RadNumericTextBox"/> has a value.
         /// </remarks>
         /// <value><c>true</c> if this instance is in a valid state; otherwise, <c>false</c>.</value>

@@ -19,10 +19,6 @@ namespace Engage.Dnn.Events
     /// <summary>
     /// Displays the actions that users can perform on an event instance.
     /// </summary>
-    /// <remarks>
-    /// This control's behavior changed from using LinkButtons to standard buttons. Something to do with a postback
-    /// not occurring on the container form. Not sure why? Anyhow, it stores the EventID in viewstate and uses it if needed.hk
-    /// </remarks>
     public partial class DeleteAction : ActionControlBase
     {
         /// <summary>

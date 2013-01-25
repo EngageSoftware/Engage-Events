@@ -55,9 +55,7 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// Gets or sets the position of the dialog, relative to the <see cref="ButtonPosition"/>.
         /// </summary>
-        /// <value>
-        /// The dialog position, as specified in http://jqueryui.com/demos/position/.
-        /// </value>
+        /// <value>The dialog position, as specified in <see href="http://jqueryui.com/demos/position/"/>.</value>
         public string DialogPosition
         {
             get
@@ -79,9 +77,7 @@ namespace Engage.Dnn.Events
         /// <summary>
         /// Gets or sets the position of the button at which the dialog is positioned.
         /// </summary>
-        /// <value>
-        /// The position on the button to alight the dialog against, as specified in http://jqueryui.com/demos/position/.
-        /// </value>
+        /// <value>The position on the button to alight the dialog against, as specified in <see href="http://jqueryui.com/demos/position/"/>.</value>
         public string ButtonPosition
         {
             get

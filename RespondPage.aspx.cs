@@ -109,7 +109,7 @@ namespace Engage.Dnn.Events
         /// <remarks>
         /// Based on the method of the same name in <see cref="DotNetNuke.Framework.CDefault"/> (version 4.8.2),
         /// combined with similar code in InjectSkin,
-        /// translated through http://www.codechanger.com/.
+        /// translated through <see href="http://www.codechanger.com/"/>.
         /// </remarks>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1307:SpecifyStringComparison", MessageId = "System.String.LastIndexOf(System.String)", Justification = "Mimicking the behavior of DNN core"),
         System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1307:SpecifyStringComparison", MessageId = "System.String.EndsWith(System.String)", Justification = "Mimicking the behavior of DNN core"),
@@ -235,7 +235,7 @@ namespace Engage.Dnn.Events
         /// </summary>
         /// <remarks>
         /// Based on the method of the same name in <see cref="DotNetNuke.Framework.CDefault"/> (version 4.8.2),
-        /// translated through http://www.codechanger.com/.
+        /// translated through <see href="http://www.codechanger.com/"/>.
         /// </remarks>
         /// <param name="id">The id to use for the stylesheet link.</param>
         /// <param name="path">The path to the stylesheet.</param>

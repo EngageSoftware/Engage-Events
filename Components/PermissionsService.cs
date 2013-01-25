@@ -168,12 +168,8 @@ namespace Engage.Dnn.Events.Components
         /// <value>The tab permissions.</value>
         private TabPermissionCollection TabPermissions { get; set; }
 
-        /// <summary>
-        /// Creates the custom permissions for the module.  Expected to be called once from <see cref="FeaturesController.UpgradeModule"/>
-        /// </summary>
-        /// <remarks>
-        /// based on http://www.codeproject.com/KB/aspnet/dnn_custom_permissions.aspx
-        /// </remarks>
+        /// <summary>Creates the custom permissions for the module.  Expected to be called once from <see cref="FeaturesController.UpgradeModule"/></summary>
+        /// <remarks>based on <see href="http://www.codeproject.com/KB/aspnet/dnn_custom_permissions.aspx"/> </remarks>
         /// <returns>A status message for <see cref="IUpgradeable.UpgradeModule"/></returns>
         public static string CreateCustomPermissions()
         {

@@ -18,10 +18,6 @@ namespace Engage.Dnn.Events
     /// <summary>
     /// Allows the user to choose whether to sort the events by date or title.
     /// </summary>
-    /// <remarks>
-    /// This control's behavior changed from using LinkButtons to standard buttons. Something to do with a postback
-    /// not occurring on the container form. Not sure why? Anyhow, it stores the EventID in viewstate and uses it if needed.hk
-    /// </remarks>
     public partial class SortAction : ActionControlBase
     {
         /// <summary>

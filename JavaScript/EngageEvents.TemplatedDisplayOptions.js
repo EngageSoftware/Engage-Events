@@ -12,9 +12,9 @@
             },
             createRangeChooser = function (rangeBound) {
                 var specificDate = rangeBound.specificDate ? new Date(
-                                                                    rangeBound.specificDate.year, 
-                                                                    rangeBound.specificDate.month, 
-                                                                    rangeBound.specificDate.day) 
+                                                                    rangeBound.specificDate.year,
+                                                                    rangeBound.specificDate.month,
+                                                                    rangeBound.specificDate.day)
                                                            : null,
                     chooser = {
                     value: ko.observable(rangeBound.value),
@@ -43,7 +43,7 @@
             },
             $dateRangeWrap = $('#eng-date-range-wrap'),
             viewModel = {
-                start: createRangeChooser(data.start), 
+                start: createRangeChooser(data.start),
                 end: createRangeChooser(data.end),
                 exampleDateRangeHtml: ko.observable(''),
                 dateRangeIsValid: ko.observable(true)
@@ -100,7 +100,7 @@
                 delayIfClientControlNotInitlialized($(element), function (datePicker) {
                     datePicker.add_dateSelected(function (sender, args) {
                         dateObservable(args.get_newDate());
-                    }); 
+                    });
                 });
             },
             update: function (element, getValue) {
@@ -117,7 +117,7 @@
                 delayIfClientControlNotInitlialized($(element), function (textBox) {
                     textBox.add_valueChanged(function (sender, args) {
                         intObservable(args.get_newValue());
-                    });                    
+                    });
                 });
             },
             update: function (element, getValue) {

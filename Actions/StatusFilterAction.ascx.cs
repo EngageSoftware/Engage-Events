@@ -18,10 +18,6 @@ namespace Engage.Dnn.Events
     /// <summary>
     /// Allows the user to choose whether to display all events or only active events.
     /// </summary>
-    /// <remarks>
-    /// This control's behavior changed from using LinkButtons to standard buttons. Something to do with a postback
-    /// not occurring on the container form. Not sure why? Anyhow, it stores the EventID in viewstate and uses it if needed.hk
-    /// </remarks>
     public partial class StatusFilterAction : ActionControlBase
     {
         /// <summary>
