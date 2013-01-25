@@ -21,9 +21,9 @@ Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 3
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://tfs2010.etg-inc.net:8080/tfs/engage%20tfs%202010
+		SccTeamFoundationServer = http://tfs.etg-inc.net:8080/tfs/engage%20tfs%202010
+		SccProjectUniqueName0 = EngageEvents.csproj
 		SccLocalPath0 = .
-		SccProjectUniqueName1 = EngageEvents.csproj
 		SccLocalPath1 = .
 		SccProjectUniqueName2 = EngageEvents.Test\\EngageEvents.Tests.csproj
 		SccProjectName2 = EngageEvents.Test
@@ -71,12 +71,11 @@ Global
 		{37A2248C-0595-4FB6-8EB2-DE75AC9D0F07}.Release|Mixed Platforms.Build.0 = Release|x86
 		{37A2248C-0595-4FB6-8EB2-DE75AC9D0F07}.Release|x86.ActiveCfg = Release|x86
 		{37A2248C-0595-4FB6-8EB2-DE75AC9D0F07}.Release|x86.Build.0 = Release|x86
-		{37A2248C-0595-4FB6-8EB2-DE75AC9D0F07}.Trial|Any CPU.ActiveCfg = Trial|x86
-		{37A2248C-0595-4FB6-8EB2-DE75AC9D0F07}.Trial|Any CPU.Build.0 = Trial|x86
-		{37A2248C-0595-4FB6-8EB2-DE75AC9D0F07}.Trial|Mixed Platforms.ActiveCfg = Trial|x86
-		{37A2248C-0595-4FB6-8EB2-DE75AC9D0F07}.Trial|Mixed Platforms.Build.0 = Trial|x86
-		{37A2248C-0595-4FB6-8EB2-DE75AC9D0F07}.Trial|x86.ActiveCfg = Trial|x86
-		{37A2248C-0595-4FB6-8EB2-DE75AC9D0F07}.Trial|x86.Build.0 = Trial|x86
+		{37A2248C-0595-4FB6-8EB2-DE75AC9D0F07}.Trial|Any CPU.ActiveCfg = Release|x86
+		{37A2248C-0595-4FB6-8EB2-DE75AC9D0F07}.Trial|Mixed Platforms.ActiveCfg = Release|x86
+		{37A2248C-0595-4FB6-8EB2-DE75AC9D0F07}.Trial|Mixed Platforms.Build.0 = Release|x86
+		{37A2248C-0595-4FB6-8EB2-DE75AC9D0F07}.Trial|x86.ActiveCfg = Release|x86
+		{37A2248C-0595-4FB6-8EB2-DE75AC9D0F07}.Trial|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
