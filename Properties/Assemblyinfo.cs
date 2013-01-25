@@ -1,6 +1,6 @@
 // <copyright file="Assemblyinfo.cs" company="Engage Software">
-// Engage: Events - http://www.EngageSoftware.com
-// Copyright (c) 2004-2011
+// Engage: Events
+// Copyright (c) 2004-2013
 // by Engage Software ( http://www.engagesoftware.com )
 // </copyright>
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
@@ -20,14 +20,14 @@ using System.Web.UI;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Engage Software, Inc.")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("2011 Engage Software Inc.")]
+[assembly: AssemblyCopyright("2013 Engage Software Inc.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
 
-[assembly: AssemblyFileVersion("1.7.0.0")]
-[assembly: AssemblyVersion("1.7.0.*")]
+[assembly: AssemblyFileVersion("1.7.1.0")]
+[assembly: AssemblyVersion("1.7.1.*")]
 
 [assembly: InternalsVisibleTo("EngageEvents.Tests")]
 

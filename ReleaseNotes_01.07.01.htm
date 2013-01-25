@@ -1,0 +1,27 @@
+﻿<div class="Normal">
+    <h3>Change Log - Version 1.7.1</h3>
+    <ul>
+        <li>Fix bug where Delete and Cancel buttons did not take any effect</li>
+        <li>More details can be found on the <a href="http://support.engagesoftware.com/Default.aspx?EVT=ChangeLog">Engage: Events Change Log</a></li>
+    </ul>
+    <h4>Version 1.7.0</h4>
+    <ul>
+        <li>Added support for DNN's search engine and RSS syndication (i.e. <code>ISearchable</code>)</li>
+        <li>Converted old Time Zone/Daylight Time stuff with real Time Zone stuff</li>
+        <li>Added a whole bunch of Time Zone properties to be accessible from templates (e.g. time zone names and offsets)</li>
+        <li>Added localized time properties to be accessible from templates (i.e. show event time in user's time zone)</li>
+        <li>Made Description and Location fields optional</li>
+        <li>Added ability to style events to look different if they've hit their registration cap</li>
+        <li>Don't allow registrations on new event by default (but you can turn that back on via a module setting)</li>
+        <li>Fixed an issue where registering for events didn't work in a lot of cases in DNN 6.</li>
+        <li>Fixed an issue where paging through the events or responses lists on one module would cause other modules on the same page to change pages as well.</li>
+        <li>Fixed an issue where line breaks entered in the Overview field of an event were not displayed.</li>
+        <li>Fixed an issue where rescheduling an event lost all registrations for the event.</li>
+        <li>Fixed an issue where the first day of the week in the calendar view was always Sunday, rather than coming from the site's culture.</li>
+        <li>Fixed an issue where two events modules on one page were affected by each others' paging.</li>
+    </ul>
+    <h3>Known Issues</h3>
+    <ul>
+        <li>The entire range of a recurring event might not display on the Calendar view. To increase performance, only 1,000 possible dates are considered to display. This means that only about 33 years of a yearly recurrence will display, while close to the full 1,000 days of a daily recurrence will be shown.</li>
+    </ul>
+</div>
