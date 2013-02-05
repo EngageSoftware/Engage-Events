@@ -23,6 +23,27 @@ namespace Engage.Dnn.Events.Controls
     /// </summary>
     public partial class RecurrenceEditor : ModuleBase
     {
+        /// <summary>Backing field for <see cref="WeeklyRepeatInterval"/></summary>
+        private int? weeklyRepeatInterval;
+
+        /// <summary>Backing field for <see cref="DailyRepeatInterval"/></summary>
+        private int? dailyRepeatInterval;
+
+        /// <summary>Backing field for <see cref="YearlyRepeatDate"/></summary>
+        private int? yearlyRepeatDate;
+
+        /// <summary>Backing field for <see cref="MonthlyRepeatIntervalForGivenDay"/></summary>
+        private int? monthlyRepeatIntervalForGivenDay;
+
+        /// <summary>Backing field for <see cref="MonthlyRepeatIntervalForDate"/></summary>
+        private int? monthlyRepeatIntervalForDate;
+
+        /// <summary>Backing field for <see cref="MonthlyRepeatDate"/></summary>
+        private int? monthlyRepeatDate;
+
+        /// <summary>Backing field for <see cref="RangeOccurrences"/></summary>
+        private int? rangeOccurrences;
+
         /// <summary>
         /// Gets a value indicating whether this control is in a valid state.
         /// </summary>
@@ -39,7 +60,7 @@ namespace Engage.Dnn.Events.Controls
                 switch (this.Frequency)
                 {
                     case RecurrenceFrequency.Weekly:
-                        isValid = this.WeeklyRepeatInterval.Value.HasValue
+                        isValid = this.WeeklyRepeatInterval.HasValue
                             && (this.WeeklyWeekdaySunday.Checked
                                 || this.WeeklyWeekdayMonday.Checked
                                 || this.WeeklyWeekdayTuesday.Checked
@@ -51,18 +72,18 @@ namespace Engage.Dnn.Events.Controls
                     case RecurrenceFrequency.Monthly:
                         if (this.RepeatEveryNthMonthOnDate.Checked)
                         {
-                            isValid = this.MonthlyRepeatDate.Value.HasValue && this.MonthlyRepeatIntervalForDate.Value.HasValue;
+                            isValid = this.MonthlyRepeatDate.HasValue && this.MonthlyRepeatIntervalForDate.HasValue;
                         }
                         else
                         {
-                            isValid = this.MonthlyRepeatIntervalForGivenDay.Value.HasValue;
+                            isValid = this.MonthlyRepeatIntervalForGivenDay.HasValue;
                         }
 
                         break;
                     case RecurrenceFrequency.Yearly:
                         if (this.RepeatEveryYearOnDate.Checked)
                         {
-                            isValid = this.YearlyRepeatDate.Value.HasValue;
+                            isValid = this.YearlyRepeatDate.HasValue;
                         }
                         else
                         {
@@ -74,7 +95,7 @@ namespace Engage.Dnn.Events.Controls
                     default:
                         if (this.RepeatEveryNthDay.Checked)
                         {
-                            isValid = this.DailyRepeatInterval.Value.HasValue;
+                            isValid = this.DailyRepeatInterval.HasValue;
                         }
                         else
                         {
@@ -86,7 +107,7 @@ namespace Engage.Dnn.Events.Controls
 
                 if (isValid && this.RepeatGivenOccurrences.Checked)
                 {
-                    isValid = this.RangeOccurrences.Value.HasValue;
+                    isValid = this.RangeOccurrences.HasValue;
                 }
 
                 return isValid;
@@ -99,14 +120,133 @@ namespace Engage.Dnn.Events.Controls
         /// <value>The skin name for the interface of the <see cref="RadDatePicker"/> in this control</value>
         public string DatePickerSkin
         {
+            get { return this.RangeEndDate.Skin; }
+            set { this.RangeEndDate.Skin = value; }
+        }
+
+        /// <summary>Gets the weekly repeat interval.</summary>
+        private int? WeeklyRepeatInterval
+        {
             get
             {
-                return this.RangeEndDate.Skin;
-            }
+                if (this.weeklyRepeatInterval == null)
+                {
+                    int val;
+                    if (int.TryParse(this.WeeklyRepeatIntervalTextBox.Text, NumberStyles.Integer, CultureInfo.CurrentCulture, out val))
+                    {
+                        this.weeklyRepeatInterval = val;
+                    }
+                }
 
-            set
+                return this.weeklyRepeatInterval;
+            }
+        }
+
+        /// <summary>Gets the daily repeat interval.</summary>
+        private int? DailyRepeatInterval
+        {
+            get
             {
-                this.RangeEndDate.Skin = value;
+                if (this.dailyRepeatInterval == null)
+                {
+                    int val;
+                    if (int.TryParse(this.DailyRepeatIntervalTextBox.Text, NumberStyles.Integer, CultureInfo.CurrentCulture, out val))
+                    {
+                        this.dailyRepeatInterval = val;
+                    }
+                }
+
+                return this.dailyRepeatInterval;
+            }
+        }
+
+        /// <summary>Gets the yearly repeat date.</summary>
+        private int? YearlyRepeatDate
+        {
+            get
+            {
+                if (this.yearlyRepeatDate == null)
+                {
+                    int val;
+                    if (int.TryParse(this.YearlyRepeatDateTextBox.Text, NumberStyles.Integer, CultureInfo.CurrentCulture, out val))
+                    {
+                        this.yearlyRepeatDate = val;
+                    }
+                }
+
+                return this.yearlyRepeatDate;
+            }
+        }
+
+        /// <summary>Gets the monthly repeat interval for given day.</summary>
+        private int? MonthlyRepeatIntervalForGivenDay
+        {
+            get
+            {
+                if (this.monthlyRepeatIntervalForGivenDay == null)
+                {
+                    int val;
+                    if (int.TryParse(this.MonthlyRepeatIntervalForGivenDayTextBox.Text, NumberStyles.Integer, CultureInfo.CurrentCulture, out val))
+                    {
+                        this.monthlyRepeatIntervalForGivenDay = val;
+                    }
+                }
+
+                return this.monthlyRepeatIntervalForGivenDay;
+            }
+        }
+
+        /// <summary>Gets the monthly repeat interval for date.</summary>
+        private int? MonthlyRepeatIntervalForDate
+        {
+            get
+            {
+                if (this.monthlyRepeatIntervalForDate == null)
+                {
+                    int val;
+                    if (int.TryParse(this.MonthlyRepeatIntervalForDateTextBox.Text, NumberStyles.Integer, CultureInfo.CurrentCulture, out val))
+                    {
+                        this.monthlyRepeatIntervalForDate = val;
+                    }
+                }
+
+                return this.monthlyRepeatIntervalForDate;
+            }
+        }
+
+        /// <summary>Gets the monthly repeat date.</summary>
+        private int? MonthlyRepeatDate
+        {
+            get
+            {
+                if (this.monthlyRepeatDate == null)
+                {
+                    int val;
+                    if (int.TryParse(this.MonthlyRepeatDateTextBox.Text, NumberStyles.Integer, CultureInfo.CurrentCulture, out val))
+                    {
+                        this.monthlyRepeatDate = val;
+                    }
+                }
+
+                return this.monthlyRepeatDate;
+            }
+        }
+
+        /// <summary>Gets the range occurrences.</summary>
+        private int? RangeOccurrences
+        {
+            get
+            {
+                if (this.rangeOccurrences == null)
+                {
+                    int val;
+                    if (int.TryParse(this.RangeOccurrencesTextBox.Text, NumberStyles.Integer, CultureInfo.CurrentCulture, out val))
+                    {
+                        this.rangeOccurrences = val;
+                    }
+                }
+
+                return this.rangeOccurrences;
             }
         }
 
@@ -158,19 +298,19 @@ namespace Engage.Dnn.Events.Controls
                     case RecurrenceFrequency.Daily:
                         if (this.RepeatEveryNthDay.Checked)
                         {
-                            return (int)this.DailyRepeatInterval.Value.Value;
+                            return this.DailyRepeatInterval.Value;
                         }
 
                         break;
                     case RecurrenceFrequency.Weekly:
-                        return (int)this.WeeklyRepeatInterval.Value.Value;
+                        return this.WeeklyRepeatInterval.Value;
                     case RecurrenceFrequency.Monthly:
                         if (this.RepeatEveryNthMonthOnDate.Checked)
                         {
-                            return (int)this.MonthlyRepeatIntervalForDate.Value.Value;
+                            return this.MonthlyRepeatIntervalForDate.Value;
                         }
 
-                        return (int)this.MonthlyRepeatIntervalForGivenDay.Value.Value;
+                        return this.MonthlyRepeatIntervalForGivenDay.Value;
                 }
 
                 return 0;
@@ -191,7 +331,7 @@ namespace Engage.Dnn.Events.Controls
                         return this.RepeatEveryWeekday.Checked ? RecurrenceDay.WeekDays : RecurrenceDay.EveryDay;
 
                     case RecurrenceFrequency.Weekly:
-                        RecurrenceDay finalMask = RecurrenceDay.None;
+                        var finalMask = RecurrenceDay.None;
                         finalMask |= this.WeeklyWeekdayMonday.Checked ? RecurrenceDay.Monday : finalMask;
                         finalMask |= this.WeeklyWeekdayTuesday.Checked ? RecurrenceDay.Tuesday : finalMask;
                         finalMask |= this.WeeklyWeekdayWednesday.Checked ? RecurrenceDay.Wednesday : finalMask;
@@ -233,10 +373,10 @@ namespace Engage.Dnn.Events.Controls
                 switch (this.Frequency)
                 {
                     case RecurrenceFrequency.Monthly:
-                        return this.RepeatEveryNthMonthOnDate.Checked ? (int)this.MonthlyRepeatDate.Value.Value : 0;
+                        return this.RepeatEveryNthMonthOnDate.Checked ? this.MonthlyRepeatDate.Value : 0;
 
                     case RecurrenceFrequency.Yearly:
-                        return this.RepeatEveryYearOnDate.Checked ? (int)this.YearlyRepeatDate.Value.Value : 0;
+                        return this.RepeatEveryYearOnDate.Checked ? this.YearlyRepeatDate.Value : 0;
                 }
 
                 return 0;
@@ -556,7 +696,7 @@ namespace Engage.Dnn.Events.Controls
             this.RepeatEveryNthDay.Checked = !this.RepeatEveryWeekday.Checked;
             if (this.RepeatEveryNthDay.Checked)
             {
-                this.DailyRepeatInterval.Value = pattern.Interval;
+                this.DailyRepeatIntervalTextBox.Text = pattern.Interval.ToString(CultureInfo.CurrentCulture);
             }
         }
 
@@ -568,7 +708,7 @@ namespace Engage.Dnn.Events.Controls
         {
             this.RepeatFrequencyWeekly.Checked = true;
 
-            this.WeeklyRepeatInterval.Value = pattern.Interval;
+            this.WeeklyRepeatIntervalTextBox.Text = pattern.Interval.ToString(CultureInfo.CurrentCulture);
             this.WeeklyWeekdayMonday.Checked = (pattern.DaysOfWeekMask & RecurrenceDay.Monday) != 0;
             this.WeeklyWeekdayTuesday.Checked = (pattern.DaysOfWeekMask & RecurrenceDay.Tuesday) != 0;
             this.WeeklyWeekdayWednesday.Checked = (pattern.DaysOfWeekMask & RecurrenceDay.Wednesday) != 0;
@@ -591,14 +731,14 @@ namespace Engage.Dnn.Events.Controls
 
             if (this.RepeatEveryNthMonthOnDate.Checked)
             {
-                this.MonthlyRepeatDate.Value = pattern.DayOfMonth;
-                this.MonthlyRepeatIntervalForDate.Value = pattern.Interval;
+                this.MonthlyRepeatDateTextBox.Text = pattern.DayOfMonth.ToString(CultureInfo.CurrentCulture);
+                this.MonthlyRepeatIntervalForDateTextBox.Text = pattern.Interval.ToString(CultureInfo.CurrentCulture);
             }
             else
             {
                 this.MonthlyDayOrdinalDropDown.SelectedValue = pattern.DayOrdinal.ToString(CultureInfo.CurrentCulture);
                 this.MonthlyDayMaskDropDown.SelectedValue = pattern.DaysOfWeekMask.ToString();
-                this.MonthlyRepeatIntervalForGivenDay.Value = pattern.Interval;
+                this.MonthlyRepeatIntervalForGivenDayTextBox.Text = pattern.Interval.ToString(CultureInfo.CurrentCulture);
             }
         }
 
@@ -616,7 +756,7 @@ namespace Engage.Dnn.Events.Controls
             if (this.RepeatEveryYearOnDate.Checked)
             {
                 this.YearlyRepeatMonthForDate.SelectedValue = pattern.Month.ToString();
-                this.YearlyRepeatDate.Value = pattern.DayOfMonth;
+                this.YearlyRepeatDateTextBox.Text = pattern.DayOfMonth.ToString(CultureInfo.CurrentCulture);
             }
             else
             {
@@ -636,7 +776,7 @@ namespace Engage.Dnn.Events.Controls
             if (range.MaxOccurrences != int.MaxValue)
             {
                 this.RepeatGivenOccurrences.Checked = true;
-                this.RangeOccurrences.Value = range.MaxOccurrences;
+                this.RangeOccurrencesTextBox.Text = range.MaxOccurrences.ToString(CultureInfo.InvariantCulture);
             }
             else if (range.RecursUntil != DateTime.MaxValue)
             {
@@ -671,7 +811,7 @@ namespace Engage.Dnn.Events.Controls
             {
                 if (this.RepeatGivenOccurrences.Checked)
                 {
-                    range.MaxOccurrences = (int)this.RangeOccurrences.Value.Value;
+                    range.MaxOccurrences = this.RangeOccurrences.Value;
                 }
                 else if (this.RepeatUntilGivenDate.Checked && this.RangeEndDate.SelectedDate.HasValue)
                 {

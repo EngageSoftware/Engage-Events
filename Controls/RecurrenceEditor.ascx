@@ -32,7 +32,7 @@
                         <ul class="rsAdvDaily">
                             <li>
                                 <asp:RadioButton ID="RepeatEveryNthDay" runat="server" Checked="true" ResourceKey="Every" GroupName="DailyRecurrenceDetailRadioGroup" />
-                                <telerik:RadNumericTextBox ID="DailyRepeatInterval" runat="server" CssClass="rsAdvInput" MinValue="1" ShowSpinButtons="True" Value="1" Width="50px" NumberFormat-AllowRounding="True" NumberFormat-DecimalDigits="0" />
+                                <asp:TextBox ID="DailyRepeatIntervalTextBox" runat="server" CssClass="rsAdvInput" type="number" min="1" step="1" Text="1" />
                                 <%=Localize("Days")%>
                             </li>
                             <li>
@@ -44,7 +44,7 @@
                         <ul class="rsAdvWeekly">
                             <li>
                                 <%=Localize("RecurEvery")%>
-                                <telerik:RadNumericTextBox ID="WeeklyRepeatInterval" runat="server" CssClass="rsAdvInput" MinValue="1" ShowSpinButtons="True" Value="1" Width="50px" NumberFormat-AllowRounding="True" NumberFormat-DecimalDigits="0"/>
+                                <asp:TextBox ID="WeeklyRepeatIntervalTextBox" runat="server" CssClass="rsAdvInput" type="number" min="1" step="1" Text="1" />
                                 <%=Localize("Weeks")%>
                             </li>
                             <li class="rsAdvWeekly_Weekday">
@@ -74,9 +74,9 @@
                         <ul class="rsAdvMonthly">
                             <li>
                                 <asp:RadioButton ID="RepeatEveryNthMonthOnDate" runat="server" Checked="true" ResourceKey="Day" GroupName="MonthlyRecurrenceRadioGroup" />
-                                <telerik:RadNumericTextBox ID="MonthlyRepeatDate" runat="server" CssClass="rsAdvInput" MinValue="1" MaxValue="31" ShowSpinButtons="True" Value="1" Width="50px" NumberFormat-AllowRounding="True" NumberFormat-DecimalDigits="0"/>
+                                <asp:TextBox ID="MonthlyRepeatDateTextBox" runat="server" CssClass="rsAdvInput" type="number" min="1" max="31" step="1" Text="1" />
                                 <%=Localize("OfEvery")%>
-                                <telerik:RadNumericTextBox ID="MonthlyRepeatIntervalForDate" runat="server" CssClass="rsAdvInput" MinValue="1" ShowSpinButtons="True" Value="1" Width="50px" NumberFormat-AllowRounding="True" NumberFormat-DecimalDigits="0"/>
+                                <asp:TextBox ID="MonthlyRepeatIntervalForDateTextBox" runat="server" CssClass="rsAdvInput" type="number" min="1" step="1" Text="1" />
                                 <%=Localize("Months")%>
                             </li>
                             <li>
@@ -84,7 +84,7 @@
                                 <asp:DropDownList ID="MonthlyDayOrdinalDropDown" runat="server" />
                                 <asp:DropDownList ID="MonthlyDayMaskDropDown" runat="server" />
                                 <%=Localize("OfEvery")%>
-                                <telerik:RadNumericTextBox ID="MonthlyRepeatIntervalForGivenDay" runat="server" CssClass="rsAdvInput" MinValue="1" ShowSpinButtons="True" Value="1" Width="50px" NumberFormat-AllowRounding="True" NumberFormat-DecimalDigits="0"/>
+                                <asp:TextBox ID="MonthlyRepeatIntervalForGivenDayTextBox" runat="server" CssClass="rsAdvInput" type="number" min="1" step="1" Text="1" />
                                 <%=Localize("Months")%>
                             </li>
                         </ul>
@@ -94,7 +94,7 @@
                             <li>
                                 <asp:RadioButton ID="RepeatEveryYearOnDate" runat="server" Checked="true" ResourceKey="Every" GroupName="YearlyRecurrenceRadioGroup" />
                                 <asp:DropDownList ID="YearlyRepeatMonthForDate" runat="server" />
-                                <telerik:RadNumericTextBox ID="YearlyRepeatDate" runat="server" CssClass="rsAdvInput" MinValue="1" MaxValue="31" ShowSpinButtons="True" Value="1" Width="50px" NumberFormat-AllowRounding="True" NumberFormat-DecimalDigits="0"/>
+                                <asp:TextBox ID="YearlyRepeatDateTextBox" runat="server" CssClass="rsAdvInput" type="number" min="1" max="31" step="1" Text="1" />
                             </li>
                             <li>
                                 <asp:RadioButton ID="RepeatEveryYearOnGivenDay" runat="server" ResourceKey="The" GroupName="YearlyRecurrenceRadioGroup" />
@@ -120,7 +120,7 @@
                 </li>
                 <li>
                     <asp:RadioButton ID="RepeatGivenOccurrences" runat="server" ResourceKey="EndAfter" GroupName="RecurrenceRangeRadioGroup" />
-                    <telerik:RadNumericTextBox ID="RangeOccurrences" runat="server" CssClass="rsAdvInput" MinValue="1" ShowSpinButtons="True" Value="1" Width="50px" NumberFormat-AllowRounding="True" NumberFormat-DecimalDigits="0"/>
+                    <asp:TextBox ID="RangeOccurrencesTextBox" runat="server" CssClass="rsAdvInput" type="number" min="1" step="1" Text="1" />
                     <%=Localize("Occurrences")%>
                 </li>
                 <li>

@@ -4,7 +4,6 @@
 <%@ Register TagPrefix="engage" TagName="ModuleMessage" Src="Controls/ModuleMessage.ascx" %>
 <%@ Register TagPrefix="engage" TagName="RecurrenceEditor" Src="Controls/RecurrenceEditor.ascx" %>
 <%@ Register TagPrefix="engage" TagName="DeleteAction" Src="Actions/DeleteAction.ascx" %>
-<%@ Register TagPrefix="engage" Namespace="Engage.Controls" Assembly="Engage.Framework" %>
 
 <engage:ModuleMessage runat="server" ID="SuccessModuleMessage" MessageType="Success" CssClass="AddEventSuccessMessage"/>
 
@@ -20,7 +19,7 @@
                 <li class="eng-events-title eng-medium eng-form-item">
                     <asp:Label runat="server" ResourceKey="EventTitleLabel" AssociatedControlID="EventTitleTextBox"/>
                     <telerik:RadTextBox ID="EventTitleTextBox" runat="server" MaxLength="250" skin="WebBlue" ShouldResetWidthInPixels="false"/>
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="EventTitleTextBox" ResourceKey="EventTitleTextBoxRequired" Display="None" EnableClientScript="false"/>
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="EventTitleTextBox" ResourceKey="EventTitleTextBoxRequired" Display="None" EnableClientScript="false" ValidationGroup="EditEvent" />
                 </li>
     
                 <asp:Placeholder ID="CategoryPanel" runat="server">
@@ -29,8 +28,8 @@
                         <telerik:RadComboBox ID="CategoryComboBox" runat="server" skin="WebBlue" MarkFirstMatch="true" ShowDropDownOnTextboxClick="true" 
                             OnClientSelectedIndexChanged="CategoryComboBox_SelectedIndexChanged" OnClientTextChange="CategoryComboBox_TextChange" ShouldResetWidthInPixels="false" />
                         <asp:Label ID="CategoryCreationPendingLabel" runat="server" ResourceKey="CategoryCreationPending" CssClass="InformationBody" style="display:none;" />
-                        <asp:RequiredFieldValidator runat="server" ControlToValidate="CategoryComboBox" ResourceKey="EventCategoryRequired" Display="None" EnableClientScript="false"/>
-                        <asp:CustomValidator ID="UniqueCategoryNameValidator" runat="server" ControlToValidate="CategoryComboBox" ResourceKey="EventCategoryUnique" Display="None" EnableClientScript="false"/>
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="CategoryComboBox" ResourceKey="EventCategoryRequired" Display="None" EnableClientScript="false" ValidationGroup="EditEvent" />
+                        <asp:CustomValidator ID="UniqueCategoryNameValidator" runat="server" ControlToValidate="CategoryComboBox" ResourceKey="EventCategoryUnique" Display="None" EnableClientScript="false" ValidationGroup="EditEvent" />
                     </li>
                 </asp:Placeholder>
     
@@ -43,7 +42,7 @@
                         <ClientEvents OnDateSelected="StartDateTimePicker_DateSelected" />
                     </telerik:raddatetimepicker>
         
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="StartDateTimePicker" ResourceKey="StartDateTimePickerRequired" Display="None" EnableClientScript="false"/>
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="StartDateTimePicker" ResourceKey="StartDateTimePickerRequired" Display="None" EnableClientScript="false" ValidationGroup="EditEvent" />
                 </li>
     
                 <li class="eng-events-end-date eng-medium eng-form-item">
@@ -60,7 +59,7 @@
                         ControlToValidate="EndDateTimePicker" 
                         ResourceKey="EndDateCompareValidator"
                         Operator="GreaterThan"/>
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="EndDateTimePicker" ResourceKey="EndDateTimePickerRequired" Display="None" EnableClientScript="false"/>
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="EndDateTimePicker" ResourceKey="EndDateTimePickerRequired" Display="None" EnableClientScript="false" ValidationGroup="EditEvent" />
                 </li>
     
                 <li class="eng-events-time-zone eng-medium eng-form-item">
@@ -112,8 +111,8 @@
                                 <li class="eng-form-item eng-tiny eng-events-registration-limit">
                                     <asp:Label runat="server" ResourceKey="RegistrationLimitLabel" CssClass="RegCap" AssociatedControlID="RegistrationLimitTextBox" />
                                     <telerik:RadNumericTextBox ID="RegistrationLimitTextBox" runat="server" Value="25" MinValue="1" ShowSpinButtons="True" NumberFormat-AllowRounding="True" NumberFormat-DecimalDigits="0"/>
-                                    <asp:RequiredFieldValidator runat="server" ControlToValidate="RegistrationLimitTextBox" ResourceKey="RegistrationLimitRequiredValidator" Display="None" />
-                                    <asp:CompareValidator ID="RegistrationLimitValidator" runat="server" ControlToValidate="RegistrationLimitTextBox" ResourceKey="RegistrationLimitValidator" Display="None" Operator="GreaterThanEqual" Type="Integer" ValueToCompare="0" />
+                                    <asp:RequiredFieldValidator runat="server" ControlToValidate="RegistrationLimitTextBox" ResourceKey="RegistrationLimitRequiredValidator" Display="None" ValidationGroup="EditEvent" />
+                                    <asp:CompareValidator ID="RegistrationLimitValidator" runat="server" ControlToValidate="RegistrationLimitTextBox" ResourceKey="RegistrationLimitValidator" Display="None" Operator="GreaterThanEqual" Type="Integer" ValueToCompare="0" ValidationGroup="EditEvent" />
                                 </li>
                                 <li class="eng-form-item eng-tiny eng-events-capacity-met-message-type">
                                     <asp:Label runat="server" ResourceKey="CapacityMetMessageLabel" CssClass="RegCap" AssociatedControlID="CapacityMetMessageRadioButtonList" />
@@ -148,7 +147,7 @@
                         </li>
                         <engage:RecurrenceEditor ID="RecurrenceEditor" runat="server" Visible="false" DatePickerSkin="WebBlue" />
                     </ul>
-                    <asp:CustomValidator ID="RecurrenceEditorValidator" runat="server" ResourceKey="InvalidRecurrence" Display="None" />
+                    <asp:CustomValidator ID="RecurrenceEditorValidator" runat="server" ResourceKey="InvalidRecurrence" Display="None" ValidationGroup="EditEvent" />
                 </ContentTemplate>
             </asp:UpdatePanel>
         </fieldset>
@@ -157,16 +156,16 @@
     <asp:MultiView ID="FooterMultiview" runat="server" ActiveViewIndex="0">
         <asp:View ID="AddEventFooterView" runat="server">
             <ul class="eng-actions">
-                <li><asp:Button ID="SaveEventButton" runat="server" CssClass="save-btn eng-primary-action" ResourceKey="Save.Alt" /></li>
-                <li><asp:Button ID="SaveAndCreateNewEventButton" runat="server" CssClass="save-new-btn eng-primary-action" ResourceKey="SaveAndCreateNew.Alt" /></li>
-                <li><asp:Button ID="CancelButton" runat="server" CssClass="cancel-btn eng-secondary-action" ResourceKey="Cancel.Alt" /></li>
+                <li><asp:Button ID="SaveEventButton" runat="server" CssClass="save-btn eng-primary-action" ResourceKey="Save.Alt" ValidationGroup="EditEvent" /></li>
+                <li><asp:Button ID="SaveAndCreateNewEventButton" runat="server" CssClass="save-new-btn eng-primary-action" ResourceKey="SaveAndCreateNew.Alt" ValidationGroup="EditEvent" /></li>
+                <li><asp:Button ID="CancelButton" runat="server" CssClass="cancel-btn eng-secondary-action" ResourceKey="Cancel.Alt" CausesValidation="False" /></li>
                 <li><engage:DeleteAction ID="DeleteAction" runat="server" CssClass="delete-btn eng-tertiary-action" /></li>
             </ul>
         </asp:View>
         <asp:View ID="FinalFooterView" runat="server">
             <ul class="eng-actions">
-                <li><asp:Button ID="CreateAnotherEventLink" runat="server" CssClass="eng-primary-action" ResourceKey="CreateAnother.Alt" /></li>
-                <li><asp:Button ID="CancelGoHomeButton" runat="server" CssClass="eng-secondary-action" ResourceKey="Home" /></li>
+                <li><asp:Button ID="CreateAnotherEventLink" runat="server" CssClass="eng-primary-action" ResourceKey="CreateAnother.Alt" CausesValidation="False" /></li>
+                <li><asp:Button ID="CancelGoHomeButton" runat="server" CssClass="eng-secondary-action" ResourceKey="Home" CausesValidation="False" /></li>
             </ul>
         </asp:View>
     </asp:MultiView>

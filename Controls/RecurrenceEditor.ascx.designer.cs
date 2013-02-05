@@ -76,13 +76,13 @@ namespace Engage.Dnn.Events.Controls {
         protected global::System.Web.UI.WebControls.RadioButton RepeatEveryNthDay;
         
         /// <summary>
-        /// DailyRepeatInterval control.
+        /// DailyRepeatIntervalTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox DailyRepeatInterval;
+        protected global::System.Web.UI.WebControls.TextBox DailyRepeatIntervalTextBox;
         
         /// <summary>
         /// RepeatEveryWeekday control.
@@ -103,13 +103,13 @@ namespace Engage.Dnn.Events.Controls {
         protected global::System.Web.UI.WebControls.View RecurrencePatternWeeklyView;
         
         /// <summary>
-        /// WeeklyRepeatInterval control.
+        /// WeeklyRepeatIntervalTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox WeeklyRepeatInterval;
+        protected global::System.Web.UI.WebControls.TextBox WeeklyRepeatIntervalTextBox;
         
         /// <summary>
         /// WeeklyWeekdayMonday control.
@@ -193,22 +193,22 @@ namespace Engage.Dnn.Events.Controls {
         protected global::System.Web.UI.WebControls.RadioButton RepeatEveryNthMonthOnDate;
         
         /// <summary>
-        /// MonthlyRepeatDate control.
+        /// MonthlyRepeatDateTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox MonthlyRepeatDate;
+        protected global::System.Web.UI.WebControls.TextBox MonthlyRepeatDateTextBox;
         
         /// <summary>
-        /// MonthlyRepeatIntervalForDate control.
+        /// MonthlyRepeatIntervalForDateTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox MonthlyRepeatIntervalForDate;
+        protected global::System.Web.UI.WebControls.TextBox MonthlyRepeatIntervalForDateTextBox;
         
         /// <summary>
         /// RepeatEveryNthMonthOnGivenDay control.
@@ -238,13 +238,13 @@ namespace Engage.Dnn.Events.Controls {
         protected global::System.Web.UI.WebControls.DropDownList MonthlyDayMaskDropDown;
         
         /// <summary>
-        /// MonthlyRepeatIntervalForGivenDay control.
+        /// MonthlyRepeatIntervalForGivenDayTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox MonthlyRepeatIntervalForGivenDay;
+        protected global::System.Web.UI.WebControls.TextBox MonthlyRepeatIntervalForGivenDayTextBox;
         
         /// <summary>
         /// RecurrencePatternYearlyView control.
@@ -274,13 +274,13 @@ namespace Engage.Dnn.Events.Controls {
         protected global::System.Web.UI.WebControls.DropDownList YearlyRepeatMonthForDate;
         
         /// <summary>
-        /// YearlyRepeatDate control.
+        /// YearlyRepeatDateTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox YearlyRepeatDate;
+        protected global::System.Web.UI.WebControls.TextBox YearlyRepeatDateTextBox;
         
         /// <summary>
         /// RepeatEveryYearOnGivenDay control.
@@ -337,13 +337,13 @@ namespace Engage.Dnn.Events.Controls {
         protected global::System.Web.UI.WebControls.RadioButton RepeatGivenOccurrences;
         
         /// <summary>
-        /// RangeOccurrences control.
+        /// RangeOccurrencesTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox RangeOccurrences;
+        protected global::System.Web.UI.WebControls.TextBox RangeOccurrencesTextBox;
         
         /// <summary>
         /// RepeatUntilGivenDate control.
