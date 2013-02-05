@@ -1,6 +1,6 @@
  // <copyright file="EventEdit.ascx.cs" company="Engage Software">
-// Engage: Events - http://www.EngageSoftware.com
-// Copyright (c) 2004-2011
+// Engage: Events
+// Copyright (c) 2004-2013
 // by Engage Software ( http://www.engagesoftware.com )
 // </copyright>
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 

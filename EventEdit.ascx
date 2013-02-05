@@ -10,7 +10,8 @@
 <asp:Panel ID="EventEditWrap" runat="server" CssClass="eng-form eng-events-add-edit AddNewEvent" DefaultButton="SaveEventButton">
     <asp:ValidationSummary runat="server" ID="ValidationSummary"
         ForeColor="" 
-        CssClass="eng-form-message eng-form-validation-summary" />
+        CssClass="eng-form-message eng-form-validation-summary"
+        ValidationGroup="EditEvent" />
 
     <asp:Placeholder ID="EventEditForm" runat="server">
         <fieldset>
