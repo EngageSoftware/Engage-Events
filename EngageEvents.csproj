@@ -421,7 +421,7 @@
     <EmbeddedResource Include="JavaScript\EngageEvents.EventEdit.combined.js">
       <DependentUpon>scripts.chirp.config</DependentUpon>
     </EmbeddedResource>
-    <Content Include="ReleaseNotes_01.07.01.htm" />
+    <Content Include="ReleaseNotes_01.07.02.htm" />
     <Content Include="Images\error-icn.png" />
     <Content Include="Images\help-icn.png" />
     <Content Include="Images\success-icn.png" />
