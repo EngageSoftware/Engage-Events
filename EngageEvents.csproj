@@ -421,6 +421,12 @@
     <EmbeddedResource Include="JavaScript\EngageEvents.EventEdit.combined.js">
       <DependentUpon>scripts.chirp.config</DependentUpon>
     </EmbeddedResource>
+    <Content Include="Module.css">
+      <DependentUpon>Module.less</DependentUpon>
+    </Content>
+    <Content Include="Module.min.css">
+      <DependentUpon>Module.less</DependentUpon>
+    </Content>
     <Content Include="ReleaseNotes_01.07.02.htm" />
     <Content Include="Images\error-icn.png" />
     <Content Include="Images\help-icn.png" />
@@ -460,12 +466,6 @@
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
     <None Include="JavaScript\EngageEvents.TemplatedDisplayOptions.js" />
     <None Include="JavaScript\knockout-1.2.1.js" />
-    <Content Include="Module.css">
-      <DependentUpon>Module.chirp.less</DependentUpon>
-    </Content>
-    <Content Include="Module.min.css">
-      <DependentUpon>Module.chirp.less</DependentUpon>
-    </Content>
     <Content Include="ReleaseNotes_01.05.06.htm" />
     <Content Include="ReleaseNotes_01.04.01.htm" />
     <Content Include="Images\icon-canvas.png" />
@@ -493,7 +493,7 @@
     <Content Include="References\Framework\Engage.Framework.dll" />
     <Content Include="Services\SettingsService.asmx" />
     <Content Include="Settings.ascx" />
-    <None Include="Module.chirp.less" />
+    <None Include="Module.less" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\EmptyStar.png" />

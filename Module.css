@@ -1,11 +1,14 @@
-/*================ Event Custom Listing Page ==========================*/
-.EventHeader, .ResponseHeader, .ResponseRow {
+﻿/*================ Event Custom Listing Page ==========================*/
+.EventHeader,
+.ResponseHeader,
+.ResponseRow {
   clear: both;
   width: 100%;
   overflow: hidden;
   border-bottom: dotted 1px #ccc;
 }
-.EventHeader h4, .ResponseHeader h4 {
+.EventHeader h4,
+.ResponseHeader h4 {
   text-transform: uppercase;
   font-weight: bold;
   margin-bottom: 0.4em;
@@ -24,7 +27,9 @@
   width: 81%;
   color: #000;
 }
-.ResponseHeader h4, .ResponseHeader h3, .ResponseRow h3 {
+.ResponseHeader h4,
+.ResponseHeader h3,
+.ResponseRow h3 {
   display: inline;
 }
 .ResponseHeader .SortByHeader {
@@ -76,17 +81,20 @@ h2.EventTitleToolTip {
 .respond-wrap {
   padding: 15px;
 }
-.respond-wrap h2.Head, .respond-wrap h3.SubHead {
+.respond-wrap h2.Head,
+.respond-wrap h3.SubHead {
   margin: 0;
 }
 .events-categoryfilter-dialog {
   display: none;
 }
-.registerSubmitBt, .registerMessage {
+.registerSubmitBt,
+.registerMessage {
   margin-top: 0.675em;
 }
 /*----------------- event edit page ----------------------------*/
-.rsAdvRecurrenceFreq:after, .rsAdvRecurrencePatterns:after {
+.rsAdvRecurrenceFreq:after,
+.rsAdvRecurrencePatterns:after {
   content: ".";
   display: block;
   clear: both;
@@ -163,7 +171,8 @@ h2.EventTitleToolTip {
 .rsAdvYearly select {
   margin: 0 2px;
 }
-.rsAdvRecurrencePatterns .rsAdvInput, .rsAdvRecurrenceRangePanel .rsAdvInput {
+.rsAdvRecurrencePatterns .rsAdvInput,
+.rsAdvRecurrenceRangePanel .rsAdvInput {
   width: 30px;
   padding-left: 1px;
   padding-right: 1px;
@@ -217,13 +226,15 @@ h2.EventTitleToolTip {
   border-bottom: 1px #ccc dotted;
   border-top: 1px #ccc dotted;
 }
-.ResponseDetailItem td, .ResponseDetailAltItem td {
+.ResponseDetailItem td,
+.ResponseDetailAltItem td {
   padding: 8px 0;
 }
 .ResponseDetailAltItem {
   background: #f2f9fc;
 }
-.ResponseHeader .SortByHeader p, .ResponseHeader .StatusHeader p {
+.ResponseHeader .SortByHeader p,
+.ResponseHeader .StatusHeader p {
   display: inline;
   text-transform: uppercase;
   font-weight: bold;
@@ -281,11 +292,13 @@ h2.EventTitleToolTip {
   color: #d4730c;
   font-size: 1.2em;
 }
-.eng-form ul.eng-form-items, .eng-form ul.eng-actions {
+.eng-form ul.eng-form-items,
+.eng-form ul.eng-actions {
   margin: 0;
   padding: 0;
 }
-.eng-form ul li.eng-form-item, .eng-form ul.eng-actions li {
+.eng-form ul li.eng-form-item,
+.eng-form ul.eng-actions li {
   list-style: none;
   margin: 0;
   padding: 6px 0;
@@ -300,7 +313,9 @@ h2.EventTitleToolTip {
 .eng-form label {
   display: block;
 }
-.eng-form .eng-window-wrap label, .eng-form .eng-events-recurrence-pattern label, .eng-form .eng-events-recurrence-range label {
+.eng-form .eng-window-wrap label,
+.eng-form .eng-events-recurrence-pattern label,
+.eng-form .eng-events-recurrence-range label {
   display: inline;
 }
 .eng-form .eng-form-item label a.dnnFormHelp {
@@ -314,7 +329,8 @@ h2.EventTitleToolTip {
 .eng-form .eng-form-item .dnnTextEditor label a.dnnFormHelp {
   display: block;
 }
-.eng-form .eng-tiny input, .eng-form .eng-tiny label {
+.eng-form .eng-tiny input,
+.eng-form .eng-tiny label {
   float: left;
   padding-right: 1ex;
 }
@@ -454,7 +470,9 @@ h2.EventTitleToolTip {
   border-color: #bbb;
   color: #777;
 }
-.eng-primary-action, .eng-secondary-action, .eng-tertiary-action {
+.eng-primary-action,
+.eng-secondary-action,
+.eng-tertiary-action {
   cursor: pointer;
 }
 .eng-end-form {
@@ -573,7 +591,8 @@ h2.EventTitleToolTip {
   text-align: left;
   padding: 5px 0;
 }
-.DataGrid_Item td, .DataGrid_AlternatingItem td {
+.DataGrid_Item td,
+.DataGrid_AlternatingItem td {
   text-align: left;
   padding: 0 5px;
   color: #000;
@@ -738,13 +757,14 @@ div#fancy_inner {
   border: 1px solid #444;
   background: #FFF;
 }
-a#fancy_left, a#fancy_right {
+a#fancy_left,
+a#fancy_right {
   position: absolute;
   bottom: 10px;
   height: 100%;
   width: 35%;
   cursor: pointer;
-  background-image: url(data:image/gif;base64,AAAA);
+  background-image: formatstring("url(data:image/gif;base64,AAAA)");
   z-index: 100;
 }
 a#fancy_left {
@@ -759,7 +779,8 @@ a#fancy_left:hover {
 a#fancy_right:hover {
   background: transparent url(Images/fancy_right.gif) no-repeat 100% 100%;
 }
-#fancy_bigIframe, #fancy_freeIframe {
+#fancy_bigIframe,
+#fancy_freeIframe {
   position: absolute;
   top: 0;
   left: 0;
@@ -934,10 +955,12 @@ a.PopupTriggerLink {
 .GlobalNavigation .RadMenu_Engage #SettingsItem:hover {
   background-position: 9px -210px;
 }
-.GlobalNavigation .RadMenu_Engage #ManageItem, .GlobalNavigation .RadMenu_Engage #SettingsItem {
+.GlobalNavigation .RadMenu_Engage #ManageItem,
+.GlobalNavigation .RadMenu_Engage #SettingsItem {
   cursor: default;
 }
-.GlobalNavigation .RadMenu_Engage #ManageItem:hover, .GlobalNavigation .RadMenu_Engage #SettingsItem:hover {
+.GlobalNavigation .RadMenu_Engage #ManageItem:hover,
+.GlobalNavigation .RadMenu_Engage #SettingsItem:hover {
   color: #60605f;
 }
 /*
@@ -969,7 +992,8 @@ a.PopupTriggerLink {
   font-size: 100%;
   list-style: none;
 }
-.events-categoryfilter-dialog-wrap .ui-helper-clearfix:before, .events-categoryfilter-dialog-wrap .ui-helper-clearfix:after {
+.events-categoryfilter-dialog-wrap .ui-helper-clearfix:before,
+.events-categoryfilter-dialog-wrap .ui-helper-clearfix:after {
   content: "";
   display: table;
 }
@@ -1049,13 +1073,17 @@ a.PopupTriggerLink {
 }
 /* Interaction states
 ----------------------------------*/
-.events-categoryfilter-dialog-wrap .ui-state-default, .events-categoryfilter-dialog-wrap.ui-widget-content .ui-state-default, .events-categoryfilter-dialog-wrap .ui-widget-header .ui-state-default {
+.events-categoryfilter-dialog-wrap .ui-state-default,
+.events-categoryfilter-dialog-wrap.ui-widget-content .ui-state-default,
+.events-categoryfilter-dialog-wrap .ui-widget-header .ui-state-default {
   border: 1px solid #cccccc;
   background: #f6f6f6;
   font-weight: bold;
   color: #1c94c4;
 }
-.events-categoryfilter-dialog-wrap .ui-state-default a, .events-categoryfilter-dialog-wrap .ui-state-default a:link, .events-categoryfilter-dialog-wrap .ui-state-default a:visited {
+.events-categoryfilter-dialog-wrap .ui-state-default a,
+.events-categoryfilter-dialog-wrap .ui-state-default a:link,
+.events-categoryfilter-dialog-wrap .ui-state-default a:visited {
   color: #1c94c4;
   text-decoration: none;
 }
@@ -1070,17 +1098,22 @@ a.PopupTriggerLink {
   font-weight: bold;
   color: #c77405;
 }
-.events-categoryfilter-dialog-wrap .ui-state-hover a, .events-categoryfilter-dialog-wrap .ui-state-hover a:hover {
+.events-categoryfilter-dialog-wrap .ui-state-hover a,
+.events-categoryfilter-dialog-wrap .ui-state-hover a:hover {
   color: #c77405;
   text-decoration: none;
 }
-.events-categoryfilter-dialog-wrap .ui-state-active, .events-categoryfilter-dialog-wrap.ui-widget-content .ui-state-active, .events-categoryfilter-dialog-wrap .ui-widget-header .ui-state-active {
+.events-categoryfilter-dialog-wrap .ui-state-active,
+.events-categoryfilter-dialog-wrap.ui-widget-content .ui-state-active,
+.events-categoryfilter-dialog-wrap .ui-widget-header .ui-state-active {
   border: 1px solid #fbd850;
   background: #ffffff;
   font-weight: bold;
   color: #eb8f00;
 }
-.events-categoryfilter-dialog-wrap .ui-state-active a, .events-categoryfilter-dialog-wrap .ui-state-active a:link, .events-categoryfilter-dialog-wrap .ui-state-active a:visited {
+.events-categoryfilter-dialog-wrap .ui-state-active a,
+.events-categoryfilter-dialog-wrap .ui-state-active a:link,
+.events-categoryfilter-dialog-wrap .ui-state-active a:visited {
   color: #eb8f00;
   text-decoration: none;
 }
@@ -1089,34 +1122,50 @@ a.PopupTriggerLink {
 }
 /* Interaction Cues
 ----------------------------------*/
-.events-categoryfilter-dialog-wrap .ui-state-highlight, .events-categoryfilter-dialog-wrap.ui-widget-content .ui-state-highlight, .events-categoryfilter-dialog-wrap .ui-widget-header .ui-state-highlight {
+.events-categoryfilter-dialog-wrap .ui-state-highlight,
+.events-categoryfilter-dialog-wrap.ui-widget-content .ui-state-highlight,
+.events-categoryfilter-dialog-wrap .ui-widget-header .ui-state-highlight {
   border: 1px solid #fed22f;
   background: #ffe45c;
   color: #363636;
 }
-.events-categoryfilter-dialog-wrap .ui-state-highlight a, .events-categoryfilter-dialog-wrap.ui-widget-content .ui-state-highlight a, .ui-widget-header .ui-state-highlight a {
+.events-categoryfilter-dialog-wrap .ui-state-highlight a,
+.events-categoryfilter-dialog-wrap.ui-widget-content .ui-state-highlight a,
+.ui-widget-header .ui-state-highlight a {
   color: #363636;
 }
-.events-categoryfilter-dialog-wrap .ui-state-error, .events-categoryfilter-dialog-wrap.ui-widget-content .ui-state-error, .events-categoryfilter-dialog-wrap .ui-widget-header .ui-state-error {
+.events-categoryfilter-dialog-wrap .ui-state-error,
+.events-categoryfilter-dialog-wrap.ui-widget-content .ui-state-error,
+.events-categoryfilter-dialog-wrap .ui-widget-header .ui-state-error {
   border: 1px solid #cd0a0a;
   background: #b81900;
   color: #ffffff;
 }
-.events-categoryfilter-dialog-wrap .ui-state-error a, .events-categoryfilter-dialog-wrap.ui-widget-content .ui-state-error a, .events-categoryfilter-dialog-wrap .ui-widget-header .ui-state-error a {
+.events-categoryfilter-dialog-wrap .ui-state-error a,
+.events-categoryfilter-dialog-wrap.ui-widget-content .ui-state-error a,
+.events-categoryfilter-dialog-wrap .ui-widget-header .ui-state-error a {
   color: #ffffff;
 }
-.events-categoryfilter-dialog-wrap .ui-state-error-text, .events-categoryfilter-dialog-wrap.ui-widget-content .ui-state-error-text, .events-categoryfilter-dialog-wrap .ui-widget-header .ui-state-error-text {
+.events-categoryfilter-dialog-wrap .ui-state-error-text,
+.events-categoryfilter-dialog-wrap.ui-widget-content .ui-state-error-text,
+.events-categoryfilter-dialog-wrap .ui-widget-header .ui-state-error-text {
   color: #ffffff;
 }
-.events-categoryfilter-dialog-wrap .ui-priority-primary, .events-categoryfilter-dialog-wrap.ui-widget-content .ui-priority-primary, .events-categoryfilter-dialog-wrap .ui-widget-header .ui-priority-primary {
+.events-categoryfilter-dialog-wrap .ui-priority-primary,
+.events-categoryfilter-dialog-wrap.ui-widget-content .ui-priority-primary,
+.events-categoryfilter-dialog-wrap .ui-widget-header .ui-priority-primary {
   font-weight: bold;
 }
-.events-categoryfilter-dialog-wrap .ui-priority-secondary, .events-categoryfilter-dialog-wrap.ui-widget-content .ui-priority-secondary, .ui-widget-header .ui-priority-secondary {
+.events-categoryfilter-dialog-wrap .ui-priority-secondary,
+.events-categoryfilter-dialog-wrap.ui-widget-content .ui-priority-secondary,
+.ui-widget-header .ui-priority-secondary {
   opacity: .7;
   filter: alpha(opacity=70);
   font-weight: normal;
 }
-.events-categoryfilter-dialog-wrap .ui-state-disabled, .events-categoryfilter-dialog-wrap.ui-widget-content .ui-state-disabled, .events-categoryfilter-dialog-wrap .ui-widget-header .ui-state-disabled {
+.events-categoryfilter-dialog-wrap .ui-state-disabled,
+.events-categoryfilter-dialog-wrap.ui-widget-content .ui-state-disabled,
+.events-categoryfilter-dialog-wrap .ui-widget-header .ui-state-disabled {
   opacity: .35;
   filter: alpha(opacity=35);
   background-image: none;
@@ -1216,7 +1265,8 @@ a.PopupTriggerLink {
   display: block;
   margin: 1px;
 }
-.events-categoryfilter-dialog-wrap.ui-dialog .ui-dialog-titlebar-close:hover, .events-categoryfilter-dialog-wrap.ui-dialog .ui-dialog-titlebar-close:focus {
+.events-categoryfilter-dialog-wrap.ui-dialog .ui-dialog-titlebar-close:hover,
+.events-categoryfilter-dialog-wrap.ui-dialog .ui-dialog-titlebar-close:focus {
   padding: 0;
 }
 .events-categoryfilter-dialog-wrap.ui-dialog .ui-dialog-content {
