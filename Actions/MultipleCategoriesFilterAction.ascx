@@ -7,55 +7,68 @@
                          CheckBoxes="True"
                          TriStateCheckBoxes="False" 
                          CheckChildNodes="True"
-                         OnClientNodeChecked="OnClientNodeChecked" 
-                         OnClientNodeClicking="OnClientNodeClicking" 
-                         OnClientNodeClicked="OnClientNodeClicked" />
+                         OnClientNodeChecked="OnMultipleCategoriesFilterActionClientNodeChecked" 
+                         OnClientNodeClicking="OnMultipleCategoriesFilterActionClientNodeClicking" 
+                         OnClientNodeClicked="OnMultipleCategoriesFilterActionClientNodeClicked" />
     <asp:Button runat="server" ID="ApplyButton" ResourceKey="ApplyButton" />
 </div>
 
 <script type="text/javascript">
-    jQuery(function ($) {
-        var dlg = $('.events-categoryfilter-dialog').dialog({
-            autoOpen: false,
-            dialogClass: 'events-categoryfilter-dialog-wrap',
-            position: {
-                my: '<%=DialogPosition %>',
-                at: '<%=ButtonPosition %>',
-                of: $('#<%=this.FilterButton.ClientID %>'),
-                collision: '<%=CollisionBehavior %>'
-            }
-        });
-
-        $('.events-categoryfilter-dialog').click(function (e) {
-            e.stopPropagation();
-        });
-
+    /*global jQuery, Sys */
+(function($, Sys) {
+    $(function () {
         $("body").click(function () {
             $('.events-categoryfilter-dialog').dialog("close");
         });
 
-        dlg.parent().appendTo($("form:first"));
+        var handleDialogClick = function (e) {
+                e.stopPropagation();
+            },
+            initializeDialog = function () {
+                var $button = $('#<%=this.FilterButton.ClientID %>'),
+                    $dlg = $button.siblings('.events-categoryfilter-dialog').dialog({
+                        autoOpen: false,
+                        dialogClass: 'events-categoryfilter-dialog-wrap',
+                        position: {
+                            my: '<%=DialogPosition %>',
+                            at: '<%=ButtonPosition %>',
+                            of: $('#<%=this.FilterButton.ClientID %>'),
+                            collision: '<%=CollisionBehavior %>'
+                        }
+                    });
 
-        $('#<%=this.FilterButton.ClientID %>').click(function () {
-            if ($('.events-categoryfilter-dialog').dialog("isOpen")) {
-                $('.events-categoryfilter-dialog').dialog("close");
-            }
-            else {
-                $('.events-categoryfilter-dialog').dialog("open");
-            }
+                $dlg.click(handleDialogClick);
+                $dlg.parent().appendTo($("#Form"));
 
-            return false;
+                $button.click(function () {
+                    if ($dlg.dialog("isOpen")) {
+                        $dlg.dialog("close");
+                    }
+                    else {
+                        $dlg.dialog("open");
+                    }
+
+                    return false;
+                });
+            };
+
+        initializeDialog();
+        Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+            // note that this will fire when _any_ UpdatePanel is triggered,
+            // which may or may not cause an issue
+            initializeDialog();
         });
     });
 
     function DisableEnableAll(node) {
-        var treeView = $find("<%=this.CategoriesTreeView.ClientID %>");
-        var nodes = treeView.get_allNodes();
+        var treeView = node.get_treeView(),
+            nodes = treeView.get_allNodes(),
+            i;
 
         if (node.get_level() == 0 && node.get_index() == 0) {
             // the root (all categories) node is checked
             var checked = node.get_checked();
-            for (var i = 1; i < nodes.length; i++) {
+            for (i = 1; i < nodes.length; i++) {
                 var attributes = nodes[i].get_attributes();
                 if (nodes[i].get_nodes() != null) {
                     if (attributes.getAttribute("enabled") == "1") {
@@ -73,14 +86,14 @@
         else {
             // check if all nodes are unchecked
             var allUnchecked = true;
-            for (var i = 1; i < nodes.length; i++) {
+            for (i = 1; i < nodes.length; i++) {
                 allUnchecked = allUnchecked && !nodes[i].get_checked();
             }
 
             if (allUnchecked) {
                 nodes[0].set_checked(true);
 
-                for (var i = 1; i < nodes.length; i++) {
+                for (i = 1; i < nodes.length; i++) {
                     if (nodes[i].get_nodes() != null) {
                         nodes[i].set_enabled(false);
                         nodes[i].set_checked(false);
@@ -88,24 +101,25 @@
                 }
             }
         }
-    }    
-    
-    function OnClientNodeClicked(sender, event) {
+    }
+
+    window.OnMultipleCategoriesFilterActionClientNodeClicked = window.OnMultipleCategoriesFilterActionClientNodeClicked || function(sender, event) {
         var node = event.get_node();
         node.set_selected(false);
         return false;
-    }
+    };
 
-    function OnClientNodeClicking(sender, event) {
+    window.OnMultipleCategoriesFilterActionClientNodeClicking = window.OnMultipleCategoriesFilterActionClientNodeClicking || function(sender, event) {
         var node = event.get_node();
         node.set_checked(!node.get_checked());
         node.set_selected(false);
         DisableEnableAll(node);
         return false;
-    }
+    };
 
-    function OnClientNodeChecked(sender, event) {
+    window.OnMultipleCategoriesFilterActionClientNodeChecked = window.OnMultipleCategoriesFilterActionClientNodeChecked || function(sender, event) {
         var node = event.get_node();
         DisableEnableAll(node);
-    }   
+    };
+}(jQuery, Sys));
 </script>
