@@ -1,6 +1,6 @@
 ﻿// <copyright file="AssemblyInfo.cs" company="Engage Software">
 // Engage.Events
-// Copyright (c) 2004-2011
+// Copyright (c) 2004-2013
 // by Engage Software ( http://www.engagesoftware.com )
 // </copyright>
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
@@ -18,7 +18,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Engage Software")]
 [assembly: AssemblyProduct("http://www.engagesoftware.com")]
-[assembly: AssemblyCopyright("Copyright © Engage Software 2012")]
+[assembly: AssemblyCopyright("Copyright © Engage Software 2013")]
 [assembly: AssemblyTrademark("Engage Software")]
 [assembly: AssemblyCulture("")]
 
@@ -26,5 +26,5 @@ using System.Runtime.InteropServices;
 [assembly: Guid("3c3a937d-8a8e-4f12-bfd6-8f0d9453e505")]
 [assembly: CLSCompliant(true)]
 
-[assembly: AssemblyVersion("3.4.4.*")]
-[assembly: AssemblyFileVersion("3.4.4.0")]
+[assembly: AssemblyVersion("3.4.6.*")]
+[assembly: AssemblyFileVersion("3.4.6.0")]
