@@ -34,4 +34,3 @@ using System.Web.UI;
 [assembly: WebResource("Engage.Dnn.Events.JavaScript.EngageEvents.Actions.RegisterAction.combined.js", "text/javascript")] // TODO: Move into template
 [assembly: WebResource("Engage.Dnn.Events.JavaScript.EngageEvents.TemplatedDisplayOptions.combined.js", "text/javascript")]
 [assembly: WebResource("Engage.Dnn.Events.JavaScript.EngageEvents.EventEdit.combined.js", "text/javascript")]
-[assembly: WebResource("Engage.Dnn.Events.JavaScript.EngageEvents.Actions.data-confirm.combined.js", "text/javascript")]

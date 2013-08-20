@@ -6,4 +6,4 @@
             Visible="<%# this.IsEditable || this.PermissionsService.CanManageEvents %>"
             CssClass="<%# this.CssClass %>"
             ResourceKey='<%# this.Canceled ? "UnCancel" : "Cancel" %>'
-            data-eng-events-confirm='<%# HttpUtility.HtmlAttributeEncode(Localize(this.Canceled ? "ConfirmUnCancel" : "ConfirmCancel")) %>' />
+            data-confirm-click='<%# HttpUtility.HtmlAttributeEncode(Localize(this.Canceled ? "ConfirmUnCancel" : "ConfirmCancel")) %>' />

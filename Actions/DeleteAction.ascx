@@ -6,4 +6,4 @@
             Visible="<%# this.IsEditable || this.PermissionsService.CanManageEvents %>"
             CssClass="<%# this.CssClass %>"
             ResourceKey="DeleteEventButton"
-            data-eng-events-confirm='<%# HttpUtility.HtmlAttributeEncode(Localize("ConfirmDelete.Text")) %>' />
+            data-confirm-click='<%# HttpUtility.HtmlAttributeEncode(Localize("ConfirmDelete.Text")) %>' />

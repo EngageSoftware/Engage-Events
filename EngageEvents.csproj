@@ -409,12 +409,7 @@
     <EmbeddedResource Include="JavaScript\EngageEvents.TemplatedDisplayOptions.combined.js">
       <DependentUpon>scripts.chirp.config</DependentUpon>
     </EmbeddedResource>
-    <None Include="JavaScript\jQuery.fn.replaceOnclick.js" />
-    <None Include="JavaScript\data-confirm.js" />
     <None Include="JavaScript\EngageEvents.EventEdit.js" />
-    <EmbeddedResource Include="JavaScript\EngageEvents.Actions.data-confirm.combined.js">
-      <DependentUpon>scripts.chirp.config</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="JavaScript\EngageEvents.Actions.RegisterAction.combined.js">
       <DependentUpon>scripts.chirp.config</DependentUpon>
     </EmbeddedResource>

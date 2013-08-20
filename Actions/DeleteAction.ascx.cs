@@ -53,7 +53,7 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void Page_Load(object sender, EventArgs e)
         {
-            this.Page.ClientScript.RegisterClientScriptResource(typeof(ActionControlBase), "Engage.Dnn.Events.JavaScript.EngageEvents.Actions.data-confirm.combined.js");
+            Dnn.Utility.RequestEmbeddedScript(this.Page, "confirmClick.js");
             this.DataBind();
         }
 
