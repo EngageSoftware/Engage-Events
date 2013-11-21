@@ -31,10 +31,6 @@ namespace Engage.Dnn.Events
     using Engage.Dnn.Events.Components;
     using Engage.Events;
 
-#if TRIAL
-    using Engage.Licensing;
-#endif
-
     /// <summary>
     /// This class extends the framework version in order for developers to add on any specific methods/behavior.
     /// </summary>
@@ -411,10 +407,6 @@ namespace Engage.Dnn.Events
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected override void OnInit(EventArgs e)
         {
-#if TRIAL
-            this.LicenseProvider = new TrialLicenseProvider(FeaturesController.ModuleLicenseKey);
-#endif
-
             base.OnInit(e);
 
             this.SetModuleConfiguration();
