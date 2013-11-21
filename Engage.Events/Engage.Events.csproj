@@ -60,14 +60,20 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Engage.Dnn.Framework">
+      <HintPath>..\References\Framework\Engage.Dnn.Framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Engage.Framework">
+      <HintPath>..\References\Framework\Engage.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
-    <Reference Include="Telerik.Web.UI, Version=2009.3.1103.20, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\Telerik.Web.UI.dll</HintPath>
+    <Reference Include="Telerik.Web.UI">
+      <HintPath>..\References\Telerik.Web.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -85,20 +91,6 @@
     <Compile Include="ResponseSummary.cs" />
     <Compile Include="ResponseSummaryCollection.cs" />
     <Compile Include="Util\ICalUtil.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Engage.Dnn.Framework\Engage.Dnn.Framework.csproj">
-      <Project>{A58A0922-35E3-49BD-BD18-55A6BA45EC7A}</Project>
-      <Name>Engage.Dnn.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Engage.Framework\Engage.Framework.csproj">
-      <Project>{0EA52814-FB21-4258-A411-BF2A6B1699F0}</Project>
-      <Name>Engage.Framework</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="References\Telerik.Web.UI.dll" />
-    <Content Include="References\Telerik.Web.UI.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engage.Events.Build" />

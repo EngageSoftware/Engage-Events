@@ -77,10 +77,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\Framework\Engage.Dnn.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Engage.Events, Version=3.1.3.22019, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\Framework\Engage.Events.dll</HintPath>
-    </Reference>
     <Reference Include="Engage.Framework, Version=3.1.4.22015, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\Framework\Engage.Framework.dll</HintPath>
@@ -484,7 +480,6 @@
     <Content Include="Images\rmSprite.png" />
     <Content Include="Images\rmVSprite.png" />
     <Content Include="References\Framework\Engage.Dnn.Framework.dll" />
-    <Content Include="References\Framework\Engage.Events.dll" />
     <Content Include="References\Framework\Engage.Framework.dll" />
     <Content Include="Services\SettingsService.asmx" />
     <Content Include="Settings.ascx" />
@@ -804,7 +799,12 @@
     <None Include="Providers\DataProviders\SqlDataProvider\01.02.01.SqlDataProvider" />
     <None Include="Templates\EngageManifest.xsd" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="Engage.Events\Engage.Events.csproj">
+      <Project>{7c2e3573-2df0-4b87-9eb8-1963646bcc66}</Project>
+      <Name>Engage.Events</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
