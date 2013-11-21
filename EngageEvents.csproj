@@ -453,9 +453,7 @@
     <Content Include="Images\s.gif" />
     <Content Include="Images\thumbnail.gif" />
     <Content Include="Images\up.gif" />
-    <Content Include="Licenses\EULA-Enterprise.txt" />
-    <Content Include="Licenses\EULA-Professional.txt" />
-    <Content Include="Licenses\EULA-Standard.txt" />
+    <Content Include="Licenses\EULA-Free.txt" />
     <Content Include="MainContainer.ascx" />
     <Content Include="Images\Default.gif" />
     <Content Include="Images\radmenu-bg.png" />
@@ -480,9 +478,7 @@
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Licenses\EULA-Enterprise.htm" />
-    <Content Include="Licenses\EULA-Professional.htm" />
-    <Content Include="Licenses\EULA-Standard.htm" />
+    <Content Include="Licenses\EULA-Free.htm" />
     <Content Include="Util\App_LocalResources\BreadCrumb.cs.resx">
       <SubType>Designer</SubType>
     </Content>
