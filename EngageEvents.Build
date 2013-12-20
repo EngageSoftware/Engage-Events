@@ -14,6 +14,7 @@
   <property name="projectDll" value="${binDirectory}\${projectDllName}"/>
   <patternset id="projectAssemblies">
     <include name="${projectDll}"/>
+    <include name="${binDirectory}\Engage.Events.dll"/>
   </patternset>
 
   <property name="testBuild" value="true" overwrite="false"/> <!-- testBuild is true if building from Visual Studio, false from Team Build (CI) -->
