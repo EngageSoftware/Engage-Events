@@ -18,6 +18,7 @@ namespace Engage.Dnn.Events
     using System.Web.UI.WebControls;
 
     using Engage.Events;
+    using Engage.Util;
 
     /// <summary>
     /// Allows the user to filter the list to one category
@@ -103,11 +104,7 @@ namespace Engage.Dnn.Events
                 return;
             }
 
-            var categoryId = categoryIds[0].ToString(CultureInfo.InvariantCulture);
-            if (this.CategoriesList.Items.Cast<ListItem>().Any(item => item.Value == categoryId))
-            {
-                this.CategoriesList.SelectedValue = categoryId;
-            }
+            this.CategoriesList.SetSelectedInt32(categoryIds[0]);
         }
 
         /// <summary>

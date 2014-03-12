@@ -15,6 +15,8 @@ namespace Engage.Dnn.Events
     using System.Web.UI;
     using System.Web.UI.WebControls;
 
+    using Engage.Util;
+
     /// <summary>
     /// Allows the user to choose whether to sort the events by date or title.
     /// </summary>
@@ -70,9 +72,10 @@ namespace Engage.Dnn.Events
                 return;
             }
 
-            this.SortRadioButtonList.SelectedValue = "TITLE".Equals(sortValue, StringComparison.OrdinalIgnoreCase)
-                                                         ? Utility.GetPropertyName(e => e.Title)
-                                                         : Utility.GetPropertyName(e => e.EventStart);
+            var sortField = "TITLE".Equals(sortValue, StringComparison.OrdinalIgnoreCase)
+                                ? Utility.GetPropertyName(e => e.Title)
+                                : Utility.GetPropertyName(e => e.EventStart);
+            this.SortRadioButtonList.SetSelectedString(sortField);
         }
 
         /// <summary>

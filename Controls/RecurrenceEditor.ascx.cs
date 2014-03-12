@@ -14,8 +14,14 @@ namespace Engage.Dnn.Events.Controls
     using System;
     using System.Globalization;
     using System.Web.UI.WebControls;
+
     using DotNetNuke.Services.Localization;
+
+    using Engage.Util;
+
     using Telerik.Web.UI;
+
+    using Utility = Engage.Dnn.Events.Utility;
 
     /// <summary>
     /// Displays the possible types of recurrence available when editing an event.
@@ -735,8 +741,8 @@ namespace Engage.Dnn.Events.Controls
             }
             else
             {
-                this.MonthlyDayOrdinalDropDown.SelectedValue = pattern.DayOrdinal.ToString(CultureInfo.CurrentCulture);
-                this.MonthlyDayMaskDropDown.SelectedValue = pattern.DaysOfWeekMask.ToString();
+                this.MonthlyDayOrdinalDropDown.SetSelectedInt32(pattern.DayOrdinal);
+                this.MonthlyDayMaskDropDown.SetSelectedEnum(pattern.DaysOfWeekMask);
                 this.MonthlyRepeatIntervalForGivenDayTextBox.Text = pattern.Interval.ToString(CultureInfo.CurrentCulture);
             }
         }
@@ -754,14 +760,14 @@ namespace Engage.Dnn.Events.Controls
 
             if (this.RepeatEveryYearOnDate.Checked)
             {
-                this.YearlyRepeatMonthForDate.SelectedValue = pattern.Month.ToString();
+                this.YearlyRepeatMonthForDate.SetSelectedEnum(pattern.Month);
                 this.YearlyRepeatDateTextBox.Text = pattern.DayOfMonth.ToString(CultureInfo.CurrentCulture);
             }
             else
             {
-                this.YearlyDayOrdinalDropDown.SelectedValue = pattern.DayOrdinal.ToString(CultureInfo.CurrentCulture);
-                this.YearlyDayMaskDropDown.SelectedValue = pattern.DaysOfWeekMask.ToString();
-                this.YearlyRepeatMonthForGivenDay.SelectedValue = pattern.Month.ToString();
+                this.YearlyDayOrdinalDropDown.SetSelectedInt32(pattern.DayOrdinal);
+                this.YearlyDayMaskDropDown.SetSelectedEnum(pattern.DaysOfWeekMask);
+                this.YearlyRepeatMonthForGivenDay.SetSelectedEnum(pattern.Month);
             }
         }
 

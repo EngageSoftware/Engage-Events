@@ -22,6 +22,7 @@ namespace Engage.Dnn.Events
     using DotNetNuke.Services.Exceptions;
 
     using Engage.Events;
+    using Engage.Util;
 
     using Telerik.Web.UI;
 
@@ -345,7 +346,7 @@ namespace Engage.Dnn.Events
             this.TimeZoneDropDownList.DataTextField = "DisplayName";
             this.TimeZoneDropDownList.DataValueField = "Id";
             this.TimeZoneDropDownList.DataBind();
-            this.TimeZoneDropDownList.SelectedValue = Dnn.Utility.GetUserTimeZone(this.UserInfo, this.PortalSettings).Id;
+            this.TimeZoneDropDownList.SetSelectedString(Dnn.Utility.GetUserTimeZone(this.UserInfo, this.PortalSettings).Id);
 
             var categories = (from category in CategoryCollection.Load(this.PortalId)
                              where !this.CategoryIds.Any() || this.CategoryIds.Contains(category.Id)
@@ -496,10 +497,10 @@ namespace Engage.Dnn.Events
 
             var hasCustomCapacityMetMessage = e.CapacityMetMessage != null;
             this.CustomCapacityMetMessagePanel.Visible = hasCustomCapacityMetMessage;
-            this.CapacityMetMessageRadioButtonList.SelectedValue = hasCustomCapacityMetMessage.ToString(CultureInfo.InvariantCulture);
+            this.CapacityMetMessageRadioButtonList.SetSelectedBoolean(hasCustomCapacityMetMessage);
             this.CustomCapacityMetMessageTextEditor.Text = e.CapacityMetMessage;
 
-            this.TimeZoneDropDownList.SelectedValue = e.TimeZoneId;
+            this.TimeZoneDropDownList.SetSelectedString(e.TimeZoneId);
         }
     }
 }

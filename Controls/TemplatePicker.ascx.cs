@@ -21,6 +21,8 @@ namespace Engage.Dnn.Events
 
     using DotNetNuke.Services.Exceptions;
 
+    using Engage.Util;
+
     using Framework.Templating;
 
     /// <summary>
@@ -118,7 +120,7 @@ namespace Engage.Dnn.Events
                     Dnn.Utility.LocalizeGridView(ref this.SettingsGrid, this.LocalResourceFile);
 #pragma warning restore 618
                     this.FillTemplatesList();
-                    this.TemplatesDropDownList.SelectedValue = this.selectedTemplateFolderName;
+                    this.TemplatesDropDownList.SetSelectedString(this.selectedTemplateFolderName);
                     this.FillTemplateTab();
                 }
             }
