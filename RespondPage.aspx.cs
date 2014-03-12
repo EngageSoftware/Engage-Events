@@ -231,14 +231,14 @@ namespace Engage.Dnn.Events
         }
 
         /// <summary>
-        /// Adds the stylesheet to the page header.
+        /// Adds the style-sheet to the page header.
         /// </summary>
         /// <remarks>
         /// Based on the method of the same name in <see cref="DotNetNuke.Framework.CDefault"/> (version 4.8.2),
         /// translated through <see href="http://www.codechanger.com/"/>.
         /// </remarks>
-        /// <param name="id">The id to use for the stylesheet link.</param>
-        /// <param name="path">The path to the stylesheet.</param>
+        /// <param name="id">The id to use for the style-sheet link.</param>
+        /// <param name="path">The path to the style-sheet.</param>
         [SuppressMessage("Microsoft.Reliability", "CA2000", Justification = "stylesheetLink is passed to the Page Controls collection and does not need to be manually disposed")]
         private void AddStylesheet(string id, string path)
         {

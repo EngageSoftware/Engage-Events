@@ -15,6 +15,8 @@ namespace Engage.Dnn.Events
     using System.Web.UI;
     using System.Web.UI.WebControls;
 
+    using Engage.Util;
+
     /// <summary>
     /// Allows the user to choose whether to display all events or only active events.
     /// </summary>
@@ -70,7 +72,7 @@ namespace Engage.Dnn.Events
                 return;
             }
 
-            this.StatusRadioButtonList.SelectedValue = status;
+            this.StatusRadioButtonList.SetSelectedString(status);
         }
 
         /// <summary>
