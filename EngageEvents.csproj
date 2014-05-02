@@ -404,6 +404,7 @@
       <DependentUpon>Module.less</DependentUpon>
     </Content>
     <Content Include="ReleaseNotes_01.07.03.htm" />
+    <Content Include="ReleaseNotes_01.07.03.htm" />
     <Content Include="ReleaseNotes_01.07.02.htm" />
     <Content Include="Images\error-icn.png" />
     <Content Include="Images\help-icn.png" />
